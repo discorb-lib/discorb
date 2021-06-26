@@ -1,0 +1,109 @@
+PATH
+  remote: .
+  specs:
+    discorb (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (2.4.2)
+    async (1.29.1)
+      console (~> 1.10)
+      nio4r (~> 2.3)
+      timers (~> 4.1)
+    async-http (0.56.3)
+      async (~> 1.25)
+      async-io (~> 1.28)
+      async-pool (~> 0.2)
+      protocol-http (~> 0.22.0)
+      protocol-http1 (~> 0.14.0)
+      protocol-http2 (~> 0.14.0)
+    async-io (1.32.1)
+      async (~> 1.14)
+    async-pool (0.3.7)
+      async (~> 1.25)
+    async-websocket (0.19.0)
+      async-http (~> 0.54)
+      async-io (~> 1.23)
+      protocol-websocket (~> 0.7.0)
+    backport (1.2.0)
+    benchmark (0.1.1)
+    console (1.13.1)
+      fiber-local
+    diff-lcs (1.4.4)
+    e2mmap (0.1.0)
+    fiber-local (1.0.0)
+    jaro_winkler (1.5.4)
+    kramdown (2.3.1)
+      rexml
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
+    nio4r (2.5.7)
+    nokogiri (1.11.7-x86-mingw32)
+      racc (~> 1.4)
+    parallel (1.20.1)
+    parser (3.0.1.1)
+      ast (~> 2.4.1)
+    protocol-hpack (1.4.2)
+    protocol-http (0.22.4)
+    protocol-http1 (0.14.1)
+      protocol-http (~> 0.22)
+    protocol-http2 (0.14.2)
+      protocol-hpack (~> 1.4)
+      protocol-http (~> 0.18)
+    protocol-websocket (0.7.5)
+      protocol-http (~> 0.2)
+      protocol-http1 (~> 0.2)
+    racc (1.5.2)
+    rainbow (3.0.0)
+    rake (13.0.3)
+    regexp_parser (2.1.1)
+    reverse_markdown (2.0.0)
+      nokogiri
+    rexml (3.2.5)
+    rubocop (1.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.0.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml
+      rubocop-ast (>= 1.7.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 3.0)
+    rubocop-ast (1.7.0)
+      parser (>= 3.0.1.1)
+    ruby-progressbar (1.11.0)
+    solargraph (0.42.3)
+      backport (~> 1.2)
+      benchmark
+      bundler (>= 1.17.2)
+      diff-lcs (~> 1.4)
+      e2mmap
+      jaro_winkler (~> 1.5)
+      kramdown (~> 2.3)
+      kramdown-parser-gfm (~> 1.1)
+      parser (~> 3.0)
+      reverse_markdown (>= 1.0.5, < 3)
+      rubocop (>= 0.52)
+      thor (~> 1.0)
+      tilt (~> 2.0)
+      yard (~> 0.9, >= 0.9.24)
+    thor (1.1.0)
+    tilt (2.0.10)
+    timers (4.3.3)
+    unicode-display_width (2.0.0)
+    yard (0.9.26)
+
+PLATFORMS
+  x86-mingw32
+
+DEPENDENCIES
+  async
+  async-http
+  async-websocket
+  discorb!
+  rake (~> 13.0)
+  solargraph (~> 0.42.3)
+
+BUNDLED WITH
+   2.2.3
