@@ -123,7 +123,7 @@ module Discorb
       end
 
       # Create new intent object with all intents.
-      def default
+      def all
         self.from_value(32767)
       end
 
