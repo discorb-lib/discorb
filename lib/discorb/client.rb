@@ -57,20 +57,19 @@ module Discorb
     end
 
     def send_gateway(opcode, **value)
-      @connection.write({ op: opcode, d: value }.to_json)
-      @connection.flush
+      @connection.write({ op: opcode, d: value })
       $log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, "[Token]")}"
     end
 
     def handle_gateway(payload)
       Async do
         data = payload[:d]
-        $log.debug "Received message with opcode #{payload[:op]} from gateway: #{data}"
+        $log.debug "Received message with opcode #{payload[:op]} from gateway: #{payload}"
         case payload[:op]
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
           handle_heartbeat(@heartbeat_interval)
-          send_gateway(2, token: "Bot " + @token, intents: @intents.value, properties: { "$os" => "windows", "$browser" => "discorb", "$device" => "discorb" })
+          send_gateway(2, token: @token, intents: @intents.value, compress: false, properties: { "$os" => "windows", "$browser" => "discorb", "$device" => "discorb" })
         end
       end
     end
@@ -79,8 +78,8 @@ module Discorb
       Async do |task|
         task.sleep(interval * rand)
         loop do
-          @connection.write({ "op": 11 }.to_json)
-          $log.debug "Sent opcode 11."
+          send_gateway(1)
+          $log.debug "Sent opcode 1."
           $log.debug "Waiting for heartbeat."
           task.sleep(interval / 1000.0)
         end
