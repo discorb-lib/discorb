@@ -1,5 +1,5 @@
-require "discorb"
-
+# require "discorb"
+require_relative "../lib/discorb"
 client = Discorb::Client.new()
 
 client.on :ready do |task|
@@ -15,4 +15,4 @@ client.on :message do |task, message|
   end
 end
 
-client.run("Th1sIsN0tT0k3n.B3cause.1fiShowB0tWillG3tH4cked")
+client.run("ODA0ODE4NjcwOTc0NDAyNTkx.YBR3yw.R_BDW6lnvQQ258KJlt7CVUUw9-k")
