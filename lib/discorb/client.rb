@@ -70,17 +70,20 @@ module Discorb
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
           handle_heartbeat(@heartbeat_interval)
-          send_gateway(2, token: @token, intents: @intents.value, properties: { "$os" => "windows", "$browser" => "discorb", "$device" => "discorb" })
+          send_gateway(2, token: "Bot " + @token, intents: @intents.value, properties: { "$os" => "windows", "$browser" => "discorb", "$device" => "discorb" })
         end
       end
     end
 
     def handle_heartbeat(interval)
       Async do |task|
-        $log.debug "Waiting for heartbeat."
-        task.sleep(interval / 1000.0)
-        @connection.write({ "op": 11 }.to_json)
-        $log.debug "Sent opcode 11."
+        task.sleep(interval * rand)
+        loop do
+          @connection.write({ "op": 11 }.to_json)
+          $log.debug "Sent opcode 11."
+          $log.debug "Waiting for heartbeat."
+          task.sleep(interval / 1000.0)
+        end
       end
     end
   end
