@@ -1,4 +1,7 @@
+require "overloader"
+require_relative "class"
 require_relative "flag"
+require_relative "error"
 
 module Discorb
   class UserFlag < Flag
@@ -19,11 +22,32 @@ module Discorb
     }
   end
 
-  class User
+  class User < DiscorbModel
     attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar
 
     def initialize(client, data)
       @client = client
+      set_data(data)
+    end
+
+    def update!()
+      Async do
+        _, data = @client.get("/users/#{@id}").wait
+        set_data(data)
+      end
+    end
+
+    def bot?
+      @bot
+    end
+
+    def to_s
+      @username + "#" + @discriminator.to_s
+    end
+
+    private
+
+    def set_data(data)
       @username = data[:username]
       @verified = data[:verified]
       @id = data[:id].to_i
@@ -33,14 +57,15 @@ module Discorb
       @avatar = data[:avatar]
       @bot = data[:bot]
       @raw_data = data
+      @client.users[@id] = self
     end
+  end
 
-    def bot?
-      @bot
-    end
-
-    def to_s
-      @username + "#" + @discriminator.to_s
+  class ClientUser < User
+    def edit(username: nil, avatar: nil)
+      Async do
+        @client.patch("/users/@me")
+      end
     end
   end
 end
