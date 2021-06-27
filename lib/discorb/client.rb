@@ -17,10 +17,11 @@ require "async/websocket/client"
 module Discorb
   class Client
     attr_accessor :intents
-    attr_reader :internet, :heartbeat_interval, :api_version, :token
+    attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions
     attr_reader :user, :guilds, :users, :channels, :emojis
 
-    def initialize(intents: nil, log: nil, colorize_log: false, log_level: :info)
+    def initialize(allowed_mentions: nil, intents: nil, log: nil, colorize_log: false, log_level: :info)
+      @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
       @intents = (intents or Intents.default())
       @events = {}
       @api_version = nil

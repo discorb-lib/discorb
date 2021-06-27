@@ -68,7 +68,8 @@ module Discorb
             nil
           end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
-        payload[:allowed_mentions] = allowed_mentions.to_hash if allowed_mentions
+        payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
+        payload[:message_reference] = message_reference.to_reference if message_reference
         Message.new(@client, @client.internet.post("/channels/#{self.id}/messages", payload).wait[1])
       end
     end

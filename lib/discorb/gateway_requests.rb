@@ -1,7 +1,7 @@
 require_relative "common"
 
 module Discorb
-  class PresenceRequest
+  class Activity
     @@types = {
       playing: 0,
       streaming: 1,

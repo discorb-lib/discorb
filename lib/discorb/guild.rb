@@ -69,7 +69,6 @@ module Discorb
       @permissions = nil  # TODO: Discorb::Permissions
       @region = data[:region]
       @afk_channel_id = data[:afk_channel_id]
-      # @afk_channel = nil  # TODO: Discorb::Channel
       @afk_timeout = data[:afk_timeout]
       @widget_enabled = data[:widget_enabled]
       @widget_channel_id = data[:widget_channel_id]
@@ -78,10 +77,8 @@ module Discorb
       @features = data[:features].map { |f| f.downcase.to_sym }
       @mfa_level = @@mfa_levels[data[:mfa_level]]
       @system_channel_id = data[:system_channel_id]
-      @system_channel = nil # TODO: Discorb::Channel
       @system_channel_flag = SystemChannelFlag.new(0b111 - data[:system_channel_flags])
       @rules_channel_id = data[:rules_channel_id]
-      # @rules_channel = nil # TODO: Discorb::Channel
       @vanity_url_code = data[:vanity_url_code]
       @description = data[:description]
       @banner_hash = data[:banner]
@@ -89,7 +86,6 @@ module Discorb
       @premium_subscription_count = data[:premium_tier_count].to_i
       @preferred_locale = data[:preferred_locale]
       @public_updates_channel_id = data[:public_updates_channel_id]
-      # @public_updates_channel = nil # TODO: Discorb::Channel
       @max_video_channel_users = data[:max_video_channel_users]
       @approximate_member_count = data[:approximate_member_count]
       @approximate_presence_count = data[:approximate_presence_count]

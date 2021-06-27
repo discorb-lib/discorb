@@ -1,14 +1,13 @@
 # require "discorb"
 require_relative "../lib/discorb"
 
-client = Discorb::Client.new(log: STDOUT, colorize_log: true, log_level: :info)
+client = Discorb::Client.new(log: STDOUT, colorize_log: true, log_level: :info, allowed_mentions: Discorb::AllowedMentions.new(replied_user: false))
 
 client.on :ready do |task|
   puts "Logged in as #{client.user}"
 end
 
 client.on :message do |task, message|
-  p message
   if message.author.bot?
     next
   elsif not message.content.start_with? "!"
@@ -29,8 +28,10 @@ client.on :message do |task, message|
     end
   when "react"
     message.add_reaction(Discorb::UnicodeEmoji["white_check_mark"])
+  when "reply"
+    message.reply "Test"
   end
 end
 
-client.update_presence(Discorb::PresenceRequest.new("開発"))
+client.update_presence(Discorb::Activity.new("開発", :listening))
 client.run(ENV["DISCORD_BOT_TOKEN"])

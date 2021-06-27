@@ -1,3 +1,5 @@
+require "json"
+
 module Discorb
   class DiscorbError < StandardError
   end
@@ -10,9 +12,11 @@ module Discorb
     end
   end
 
-  class BadRequestError < HTTPError
+  class BadRequestError < DiscorbError
     def initialize(resp, data)
-      super
+      @code = data[:code]
+      @response = resp
+      super(data[:message] + "\n" + data[:errors].to_s)
     end
   end
 
