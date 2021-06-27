@@ -11,6 +11,9 @@ module Discorb
   end
 
   class BadRequestError < HTTPError
+    def initialize(resp, data)
+      super
+    end
   end
 
   class ForbiddenError < HTTPError

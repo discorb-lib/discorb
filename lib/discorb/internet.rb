@@ -6,14 +6,16 @@ module Discorb
   class Internet < Async::HTTP::Internet
     def initialize(client)
       @client = client
+      @headers = { "User-Agent" => USER_AGENT, "authorization" => "Bot " + @client.token, "content-type" => "application/json" }
       super()
     end
 
     def get(path, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, { "User-Agent" => USER_AGENT, "authorization" => "Bot " + @client.token }, **kwargs)
+        resp = super(API_BASE_URL + path, @headers, **kwargs)
         data = JSON.parse(resp.read, symbolize_names: true)
         test_error(if resp.status == "429"
+          @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
           task.sleep(data[:retry_after])
           get(path, **kwargs)
         else
@@ -24,7 +26,7 @@ module Discorb
 
     def post(path, body, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, body.to_json, { "User-Agent" => USER_AGENT, "authorization" => "Bot " + @client.token }, **kwargs)
+        resp = super(API_BASE_URL + path, @headers, body.to_json, **kwargs)
         data = JSON.parse(resp.read, symbolize_names: true)
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])
@@ -37,7 +39,7 @@ module Discorb
 
     def patch(path, body, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, body.to_json, { "User-Agent" => USER_AGENT, "authorization" => "Bot " + @client.token }, **kwargs)
+        resp = super(API_BASE_URL + path, @headers, body.to_json, **kwargs)
         data = JSON.parse(resp.read, symbolize_names: true)
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])
@@ -50,7 +52,7 @@ module Discorb
 
     def put(path, body, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, body.to_json, { "User-Agent" => USER_AGENT, "authorization" => "Bot " + @client.token }, **kwargs)
+        resp = super(API_BASE_URL + path, @headers, body.to_json, **kwargs)
         data = JSON.parse(resp.read, symbolize_names: true)
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])
@@ -63,7 +65,7 @@ module Discorb
 
     def delete(path, body, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, body.to_json, { "User-Agent" => USER_AGENT, "authorization" => "Bot " + @client.token }, **kwargs)
+        resp = super(API_BASE_URL + path, @headers, body.to_json, **kwargs)
         data = JSON.parse(resp.read, symbolize_names: true)
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])

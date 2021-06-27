@@ -9,23 +9,24 @@ require_relative "user"
 require_relative "cache"
 require_relative "guild"
 require_relative "error"
+require_relative "log"
 
 require "async"
 require "async/websocket/client"
 
-$log = Logger.new(STDOUT)
-
 module Discorb
   class Client
     attr_accessor :intents
-    attr_reader :internet, :heartbeat_interval, :api_version, :user, :guilds, :token, :users
+    attr_reader :internet, :heartbeat_interval, :api_version, :user, :guilds, :token, :users, :channels
 
-    def initialize(intents: nil)
+    def initialize(intents: nil, log: nil, colorize_log: false, log_level: :info)
       @intents = (intents or Intents.default())
       @events = {}
       @api_version = nil
+      @log = Logger.new(log, colorize_log, log_level)
       @user = nil
       @users = Discorb::Cache.new
+      @channels = Discorb::Cache.new
       @guilds = Discorb::Cache.new
     end
 
@@ -41,10 +42,12 @@ module Discorb
     end
 
     def dispatch(event_name, *args)
-      Async do
+      Async do |task|
+        @log.debug "Dispatching event #{event_name}"
         @events[event_name].each do |block|
-          Async do |task|
-            block[:block].call(task, *args)
+          task.async do |event_task|
+            block[:block].call(event_task, *args)
+            @log.debug "Dispatched proc with ID #{block[:id].inspect}"
           end
         end
       end
@@ -66,13 +69,13 @@ module Discorb
     end
 
     def inspect
-      "#<Discorb::Client:0x#{self.object_id.to_s(16)} user=#{self.user}>"
+      "#<Discorb::Client user=\"#{self.user}\">"
     end
 
     private
 
     def connect_gateway(token)
-      $log.info "Connecting to gateway."
+      @log.info "Connecting to gateway."
       Async do |task|
         @internet = Internet.new(self)
         _, gateway_response = @internet.get("/gateway").wait
@@ -81,7 +84,7 @@ module Discorb
         Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]]) do |connection|
           @connection = connection
           def @connection.inspect
-            return "#<Connection:0x#{self.object_id.to_s(16)}>"
+            return "#<Connection>"
           end
           while message = @connection.read
             handle_gateway(message)
@@ -92,13 +95,13 @@ module Discorb
 
     def send_gateway(opcode, **value)
       @connection.write({ op: opcode, d: value })
-      $log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, "[Token]")}"
+      @log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, "[Token]")}"
     end
 
     def handle_gateway(payload)
       Async do
         data = payload[:d]
-        $log.debug "Received message with opcode #{payload[:op]} from gateway: #{data}"
+        @log.debug "Received message with opcode #{payload[:op]} from gateway: #{data}"
         case payload[:op]
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
@@ -112,11 +115,11 @@ module Discorb
 
     def handle_heartbeat(interval)
       Async do |task|
-        task.sleep(interval * rand)
+        task.sleep(interval / 1000.0 * rand)
         loop do
           send_gateway(1)
-          $log.debug "Sent opcode 1."
-          $log.debug "Waiting for heartbeat."
+          @log.debug "Sent opcode 1."
+          @log.debug "Waiting for heartbeat."
           task.sleep(interval / 1000.0)
         end
       end
@@ -139,7 +142,7 @@ module Discorb
           dispatch(:guild_create, guild)
         end
       when "MESSAGE_CREATE"
-        message = Discorb::Message.new(self, data)
+        message = Message.new(self, data)
         dispatch(:message, message)
       end
     end
