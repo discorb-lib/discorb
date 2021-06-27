@@ -3,4 +3,4 @@
 require_relative "discorb/version"
 require_relative "discorb/client"
 require_relative "discorb/intents"
-require_relative "discorb/class"
+require_relative "discorb/common"

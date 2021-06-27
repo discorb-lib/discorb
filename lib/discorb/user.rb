@@ -1,7 +1,8 @@
 require "overloader"
-require_relative "class"
+require_relative "common"
 require_relative "flag"
 require_relative "error"
+require_relative "avatar"
 
 module Discorb
   class UserFlag < Flag
@@ -22,7 +23,7 @@ module Discorb
     }
   end
 
-  class User < DiscorbModel
+  class User < DiscordModel
     attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar
 
     def initialize(client, data)
@@ -51,10 +52,10 @@ module Discorb
       @username = data[:username]
       @verified = data[:verified]
       @id = data[:id].to_i
-      @flag = UserFlag.new(data[:flags])
+      @flag = UserFlag.new(data[:public_flags])
       @email = data[:email]
       @discriminator = data[:discriminator].to_i
-      @avatar = data[:avatar]
+      @avatar = Avatar.new(self, data[:avatar])
       @bot = data[:bot]
       @raw_data = data
       @client.users[@id] = self
@@ -62,10 +63,5 @@ module Discorb
   end
 
   class ClientUser < User
-    def edit(username: nil, avatar: nil)
-      Async do
-        @client.patch("/users/@me")
-      end
-    end
   end
 end

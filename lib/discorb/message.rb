@@ -1,5 +1,7 @@
 require "time"
-require_relative "class"
+require_relative "common"
+require_relative "member"
+require_relative "channel"
 require_relative "flag"
 require_relative "error"
 
@@ -22,7 +24,7 @@ module Discorb
     }
   end
 
-  class Message < DiscorbModel
+  class Message < DiscordModel
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles, :mention_channels, :attachments, :embeds, :reactions,
                 :webhook_id, :type, :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message, :interaction, :thread, :components
     @@message_type = {
@@ -62,6 +64,14 @@ module Discorb
       end
     end
 
+    def channel
+      @client.channels[@channel_id]
+    end
+
+    def guild
+      @client.guilds[@guild_id]
+    end
+
     def tts?
       @tts
     end
@@ -86,10 +96,13 @@ module Discorb
 
     def set_data(data)
       @id = data[:id].to_i
-      @author = data[:author]
+      @author = Member.new(@client, data[:author], data[:member])
+      @channel_id = data[:channel_id]
+      @guild_id = data[:guild_id]
       @content = data[:content]
       @created_at = data[:timestamp]
       @updated_at = data[:edited_timestamp]
+
       @tts = data[:tts]
       @mention_everyone = data[:mention_everyone]
       @mention_roles = nil # TODO: Array<Discorb::Role>
@@ -105,7 +118,7 @@ module Discorb
       @message_reference = nil # TODO: Discorb::MessageReference
       @flag = MessageFlag.new(0b100 - data[:flags])
       @sticker = nil # TODO: Discorb::Sticker
-      @referenced_message = Message.new(@client, data[:referenced_message])
+      @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
       @interaction = nil # TODO: Discorb::InterctionFeedback
       @thread = nil # TODO: Discorb::Thread
       @components = nil # TODO: Array<Discorb::Components>
