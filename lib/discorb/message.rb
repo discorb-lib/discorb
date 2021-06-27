@@ -24,6 +24,82 @@ module Discorb
     }
   end
 
+  class MessageReference
+    attr_accessor :guild_id, :channel_id, :message_id, :fail_if_not_exists
+    alias_method :fail_if_not_exists?, :fail_if_not_exists
+
+    def initialize(guild_id, channel_id, message_id, fail_if_not_exists: true)
+      @guild_id = guild_id
+      @channel_id = channel_id
+      @message_id = message_id
+      @fail_if_not_exists = fail_if_not_exists
+    end
+
+    def to_hash
+      {
+        message_id: @message_id,
+        channel_id: @channel_id,
+        guild_id: @guild_id,
+        fail_if_not_exists: @fail_if_not_exists,
+      }
+    end
+
+    alias_method :to_reference, :to_hash
+
+    def self.from_hash(data)
+      self.new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
+    end
+  end
+
+  class AllowedMentions
+    attr_accessor :everyone, :roles, :users, :replied_user
+
+    def initialize(everyone: nil, roles: nil, users: nil, replied_user: nil)
+      @everyone = everyone
+      @roles = roles
+      @users = users
+      @replied_user = replied_user
+    end
+
+    def to_hash(other = nil)
+      payload = {
+        parse: ["everyone", "roles", "users", "replied_user"],
+      }
+      replied_user = nil_merge(@replied_user, other&.replied_user)
+      everyone = nil_merge(@everyone, other&.everyone)
+      roles = nil_merge(@roles, other&.roles)
+      users = nil_merge(@users, other&.users)
+      if replied_user == false
+        payload[:parse].delete("replied_user")
+      end
+      if everyone == false
+        payload[:parse].delete("everyone")
+      end
+      if roles == false or roles.is_a? Array
+        if roles.is_a? Array
+          payload[:roles] = roles.map { |u| u.id.to_s }
+        end
+        payload[:parse].delete("roles")
+      end
+      if users == false or users.is_a? Array
+        if users.is_a? Array
+          payload[:users] = users.map { |u| u.id.to_s }
+        end
+        payload[:parse].delete("users")
+      end
+      payload
+    end
+
+    def nil_merge(*args)
+      args.each do |a|
+        if a != nil
+          return a
+        end
+      end
+      return nil
+    end
+  end
+
   class Message < DiscordModel
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles, :mention_channels, :attachments, :embeds, :reactions,
                 :webhook_id, :type, :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message, :interaction, :thread, :components
@@ -90,6 +166,19 @@ module Discorb
 
     def to_s
       @content
+    end
+
+    def to_reference(fail_if_not_exists: true)
+      {
+        message_id: @id,
+        channel_id: @channel_id,
+        guild_id: @guild_id,
+        fail_if_not_exists: fail_if_not_exists,
+      }
+    end
+
+    def reply(*args, **kwargs)
+      self.channel.post(*args, message_reference: self, **kwargs)
     end
 
     def add_reaction(emoji)

@@ -136,7 +136,6 @@ module Discorb
       else
         ret = [body.to_json]
       end
-      p ret
       ret
     end
   end
