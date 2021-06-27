@@ -102,6 +102,10 @@ module Discorb
       res
     end
 
+    def inspect
+      "#<Discorb::Intents:0x#{self.object_id.to_s(16)} value=#{self.value}>"
+    end
+
     class << self
       # Create new intent object from raw value.
       # @param value [Integer] The value of the intent.

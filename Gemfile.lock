@@ -41,6 +41,7 @@ GEM
     nio4r (2.5.7)
     nokogiri (1.11.7-x86-mingw32)
       racc (~> 1.4)
+    overloader (0.2.1)
     parallel (1.20.1)
     parser (3.0.1.1)
       ast (~> 2.4.1)
@@ -102,6 +103,7 @@ DEPENDENCIES
   async-http
   async-websocket
   discorb!
+  overloader (~> 0.2.1)
   rake (~> 13.0)
   solargraph (~> 0.42.3)
 

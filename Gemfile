@@ -12,3 +12,5 @@ gem "async-http"
 gem "async-websocket"
 
 gem "solargraph", "~> 0.42.3"
+
+gem "overloader", "~> 0.2.1"
