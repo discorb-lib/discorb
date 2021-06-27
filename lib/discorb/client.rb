@@ -17,7 +17,8 @@ require "async/websocket/client"
 module Discorb
   class Client
     attr_accessor :intents
-    attr_reader :internet, :heartbeat_interval, :api_version, :user, :guilds, :token, :users, :channels
+    attr_reader :internet, :heartbeat_interval, :api_version, :token
+    attr_reader :user, :guilds, :users, :channels, :emojis
 
     def initialize(intents: nil, log: nil, colorize_log: false, log_level: :info)
       @intents = (intents or Intents.default())
@@ -28,6 +29,8 @@ module Discorb
       @users = Discorb::Cache.new
       @channels = Discorb::Cache.new
       @guilds = Discorb::Cache.new
+      @emojis = Discorb::Cache.new
+      @last_s = nil
     end
 
     def on(event_name, id: nil, &block)
@@ -69,7 +72,7 @@ module Discorb
     end
 
     def inspect
-      "#<Discorb::Client user=\"#{self.user}\">"
+      "#<#{self.class} user=\"#{self.user}\">"
     end
 
     private
@@ -95,18 +98,26 @@ module Discorb
 
     def send_gateway(opcode, **value)
       @connection.write({ op: opcode, d: value })
+      @connection.flush
       @log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, "[Token]")}"
     end
 
     def handle_gateway(payload)
       Async do
         data = payload[:d]
+        if payload[:s]
+          @last_s = payload[:s]
+        end
         @log.debug "Received message with opcode #{payload[:op]} from gateway: #{data}"
         case payload[:op]
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
           handle_heartbeat(@heartbeat_interval)
           send_gateway(2, token: @token, intents: @intents.value, compress: false, properties: { "$os" => "windows", "$browser" => "discorb", "$device" => "discorb" })
+        when 9
+          @connection.close
+          @log.warn "Received opcode 9, closing connection"
+          connect_gateway(@token)
         when 0
           handle_event(payload[:t], data)
         end
@@ -115,12 +126,13 @@ module Discorb
 
     def handle_heartbeat(interval)
       Async do |task|
-        task.sleep(interval / 1000.0 * rand)
+        task.sleep((interval / 1000.0 - 1) * rand)
         loop do
-          send_gateway(1)
+          @connection.write({ op: 1, d: @last_s })
+          @connection.flush
           @log.debug "Sent opcode 1."
           @log.debug "Waiting for heartbeat."
-          task.sleep(interval / 1000.0)
+          task.sleep(interval / 1000.0 - 1)
         end
       end
     end

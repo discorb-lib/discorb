@@ -103,7 +103,7 @@ module Discorb
     end
 
     def inspect
-      "#<Discorb::Intents:0x#{self.object_id.to_s(16)} value=#{self.value}>"
+      "#<#{self.class} value=#{self.value}>"
     end
 
     class << self

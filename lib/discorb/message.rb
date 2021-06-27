@@ -92,6 +92,16 @@ module Discorb
       @content
     end
 
+    def add_reaction(emoji)
+      Async do |task|
+        @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", { a: 1 })
+      end
+    end
+
+    def inspect
+      "#<#{self.class} #{@content.inspect} id=#{@id}>"
+    end
+
     private
 
     def set_data(data)
