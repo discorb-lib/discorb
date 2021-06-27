@@ -17,27 +17,27 @@ module Discorb
     end
 
     def debug(message)
-      return unless @level >= 0
+      return unless @level <= 0
       write_output("DEBUG", :light_black, message)
     end
 
     def info(message)
-      return unless @level >= 1
+      return unless @level <= 1
       write_output("INFO", :light_blue, message)
     end
 
     def warning(message)
-      return unless @level >= 2
+      return unless @level <= 2
       write_output("WARN", :yellow, message)
     end
 
     def error(message)
-      return unless @level >= 3
+      return unless @level <= 3
       write_output("ERROR", :red, message)
     end
 
     def fatal(message)
-      return unless @level >= 4
+      return unless @level <= 4
       write_output("FATAL", :light_red, message)
     end
 

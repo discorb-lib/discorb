@@ -31,6 +31,7 @@ module Discorb
       @guilds = Discorb::Cache.new
       @emojis = Discorb::Cache.new
       @last_s = nil
+      @identify_presence = nil
     end
 
     def on(event_name, id: nil, &block)
@@ -49,8 +50,12 @@ module Discorb
         @log.debug "Dispatching event #{event_name}"
         @events[event_name].each do |block|
           task.async do |event_task|
-            block[:block].call(event_task, *args)
-            @log.debug "Dispatched proc with ID #{block[:id].inspect}"
+            begin
+              block[:block].call(event_task, *args)
+              @log.debug "Dispatched proc with ID #{block[:id].inspect}"
+            rescue Exception => e
+              @log.error "Error occured while dispatching proc with ID #{block[:id].inspect}\n#{e.message}"
+            end
           end
         end
       end
@@ -69,6 +74,31 @@ module Discorb
     def fetch_guild(id)
       resp, data = self.internet.get("/guilds/#{id}").wait
       Guild.new(self, data, false)
+    end
+
+    def update_presence(activity = nil, activities: nil, idle: nil, status: nil, afk: nil)
+      payload = {}
+      if activity != nil
+        payload[:activities] = [activity.to_hash]
+      elsif activities != nil
+        payload[:activities] = activities.map(&:to_hash)
+      end
+      if idle != nil
+        payload[:idle] = (Time.now.to_f * 1000).floor
+      end
+      if status != nil
+        payload[:status] = status
+      end
+      if afk != nil
+        payload[:afk] = afk
+      end
+      if @connection
+        Async do |task|
+          send_gateway(3, **payload)
+        end
+      else
+        @identify_presence = payload
+      end
     end
 
     def inspect
@@ -113,7 +143,16 @@ module Discorb
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
           handle_heartbeat(@heartbeat_interval)
-          send_gateway(2, token: @token, intents: @intents.value, compress: false, properties: { "$os" => "windows", "$browser" => "discorb", "$device" => "discorb" })
+          payload = {
+            token: @token,
+            intents: @intents.value,
+            compress: false,
+            properties: { "$os" => RUBY_PLATFORM, "$browser" => "discorb", "$device" => "discorb" },
+          }
+          if @identify_presence
+            payload[:presence] = @identify_presence
+          end
+          send_gateway(2, **payload)
         when 9
           @connection.close
           @log.warn "Received opcode 9, closing connection"

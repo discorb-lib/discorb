@@ -4,7 +4,7 @@ require_relative "error"
 
 module Discorb
   class Internet < Async::HTTP::Internet
-    @@nil_body = ""
+    @@nil_body = nil
 
     def initialize(client)
       @client = client
@@ -14,7 +14,12 @@ module Discorb
     def get(path, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers, **kwargs)
-        data = JSON.parse(resp.read, symbolize_names: true)
+        rd = resp.read
+        if rd == nil
+          data = nil
+        else
+          data = JSON.parse(rd, symbolize_names: true)
+        end
         test_error(if resp.status == "429"
           @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
           task.sleep(data[:retry_after])
@@ -28,7 +33,12 @@ module Discorb
     def post(path, body, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
-        data = JSON.parse(resp.read, symbolize_names: true)
+        rd = resp.read
+        if rd == nil
+          data = nil
+        else
+          data = JSON.parse(rd, symbolize_names: true)
+        end
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])
           post(path, **kwargs)
@@ -41,7 +51,12 @@ module Discorb
     def patch(path, body, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
-        data = JSON.parse(resp.read, symbolize_names: true)
+        rd = resp.read
+        if rd == nil
+          data = nil
+        else
+          data = JSON.parse(rd, symbolize_names: true)
+        end
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])
           patch(path, **kwargs)
@@ -54,7 +69,12 @@ module Discorb
     def put(path, body, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
-        data = JSON.parse(resp.read, symbolize_names: true)
+        rd = resp.read
+        if rd == nil
+          data = nil
+        else
+          data = JSON.parse(rd, symbolize_names: true)
+        end
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])
           put(path, **kwargs)
@@ -67,7 +87,12 @@ module Discorb
     def delete(path, body, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
-        data = JSON.parse(resp.read, symbolize_names: true)
+        rd = resp.read
+        if rd == nil
+          data = nil
+        else
+          data = JSON.parse(rd, symbolize_names: true)
+        end
         test_error(if resp.status == "429"
           task.sleep(data[:retry_after])
           delete(path, **kwargs)
@@ -78,7 +103,7 @@ module Discorb
     end
 
     def inspect
-      return "#<Discorb::Internet:0x#{self.object_id.to_s(16)}>"
+      return "#<#{self.class} client=#{@client}>"
     end
 
     private
@@ -106,7 +131,13 @@ module Discorb
     end
 
     def get_body(body)
-      [body ? body.to_json : @@nil_body]
+      if body == nil
+        ret = []
+      else
+        ret = [body.to_json]
+      end
+      p ret
+      ret
     end
   end
 end

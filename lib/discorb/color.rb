@@ -26,7 +26,7 @@ module Discorb
       "#<#{self.class} #{@value}/##{to_hex}>"
     end
 
-    alias_method :to_rgb, :to_a
+    alias_method :to_a, :to_rgb
 
     def self.from_hex(hex)
       self.new(hex.to_i(16))
