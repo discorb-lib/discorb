@@ -94,7 +94,7 @@ module Discorb
 
     def add_reaction(emoji)
       Async do |task|
-        @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", { a: 1 })
+        @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil)
       end
     end
 
@@ -116,7 +116,6 @@ module Discorb
       @tts = data[:tts]
       @mention_everyone = data[:mention_everyone]
       @mention_roles = nil # TODO: Array<Discorb::Role>
-      @mention_channels = nil # TODO: Array<Discorb::Channel>
       @attachments = nil # TODO: Array<Discorb::Attachment>
       @embeds = nil # TODO: Array<Discorb::Embed>
       @reactions = nil # TODO: Array<Discorb::Reaction>
