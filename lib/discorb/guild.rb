@@ -47,6 +47,10 @@ module Discorb
       @client.channels[@public_updates_channel_id]
     end
 
+    def inspect
+      "#<#{self.class} \"#{@name}\" id=#{@id}>"
+    end
+
     private
 
     def set_data(data, is_create_event)

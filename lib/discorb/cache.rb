@@ -12,6 +12,10 @@ module Discorb
       @cache[id.to_i]
     end
 
+    def values
+      return @cache.values
+    end
+
     alias_method :[], :get
     alias_method :[]=, :register
   end

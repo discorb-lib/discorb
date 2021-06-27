@@ -11,8 +11,14 @@ client.on :message do |task, message|
   if message.author.bot?
     next
   end
-  if message.content == "!ping"
+  case message.content
+  when "ping"
     message.channel.post "Pong!"
+  when "emtest"
+    msg = message.channel.post(embed: Discorb::Embed.new("Embed Test", "てすとだよん")).wait
+  when /eval [\s\S+]/
+    code = message.content.delete_prefix("eval ").delete_prefix("```rb").delete_suffix("```")
+    eval(code)
   end
 end
 
