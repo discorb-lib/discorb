@@ -8,19 +8,14 @@ require_relative "error"
 module Discorb
   class MessageFlag < Flag
     @bits = {
-      discord_employee: 0,
-      partnered_server_owner: 1,
-      hypesquad_events: 2,
-      bug_hunter_level_1: 3,
-      house_bravery: 6,
-      house_brilliance: 7,
-      house_balance: 8,
-      early_supporter: 9,
-      team_user: 10,
-      bug_hunter_level_2: 14,
-      verified_bot: 16,
-      early_verified_bot_developer: 17,
-      discord_certified_moderator: 18,
+      crossposted: 0,
+      crosspost: 1,
+      supress_embeds: 2,
+      source_message_deleted: 3,
+      urgent: 4,
+      has_thread: 5,
+      ephemeral: 6,
+      loading: 7,
     }
   end
 
@@ -213,8 +208,8 @@ module Discorb
       @activity = nil # TODO: Discorb::MessageActivity
       @application = nil # TODO: Discorb::Application
       @application_id = data[:application_id]
-      @message_reference = nil # TODO: Discorb::MessageReference
-      @flag = MessageFlag.new(0b100 - data[:flags])
+      @message_reference = data[:message_reference] ? MessageReference.from_hash(data[:message_reference]) : nil # TODO: Discorb::MessageReference
+      @flag = MessageFlag.new(0b111 - data[:flags])
       @sticker = nil # TODO: Discorb::Sticker
       @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
       @interaction = nil # TODO: Discorb::InterctionFeedback

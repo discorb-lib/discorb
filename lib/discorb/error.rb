@@ -1,4 +1,4 @@
-require "json"
+require "yaml"
 
 module Discorb
   class DiscorbError < StandardError
@@ -16,7 +16,7 @@ module Discorb
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
-      super(data[:message] + "\n" + data[:errors].to_s)
+      super(data[:message] + "\n" + YAML.dump(data[:errors]))
     end
   end
 
@@ -24,5 +24,8 @@ module Discorb
   end
 
   class NotFoundError < HTTPError
+  end
+
+  class ClientError < DiscorbError
   end
 end

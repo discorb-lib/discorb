@@ -16,6 +16,14 @@ module Discorb
       end
     end
 
+    def level
+      @@levels[@level]
+    end
+
+    def level=(level)
+      @level = @@levels.index(level)
+    end
+
     def debug(message)
       return unless @level <= 0
       write_output("DEBUG", :light_black, message)

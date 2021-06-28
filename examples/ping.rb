@@ -24,7 +24,7 @@ client.on :message do |task, message|
     res = eval(code)
     message.add_reaction(Discorb::UnicodeEmoji["white_check_mark"])
     if res != nil
-      message.channel.post(res)
+      message.channel.post("```rb\n#{res.inspect[..2000]}\n```")
     end
   when "react"
     message.add_reaction(Discorb::UnicodeEmoji["white_check_mark"])
