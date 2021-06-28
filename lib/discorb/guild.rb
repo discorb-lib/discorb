@@ -62,7 +62,6 @@ module Discorb
       @unavailable = false
       @name = data[:name]
       @members = data[:members].map { |m| Member.new(@client, m[:user], m) }
-      @channels = data[:channels].map { |c| Discorb::make_channel(@client, c) }
       @splash = data[:splash]
       @discovery_splash = data[:discovery_splash]
       @owner_id = data[:owner_id]
@@ -96,8 +95,8 @@ module Discorb
         @joined_at = Time.iso8601(data[:joined_at])
         @large = data[:large]
         @member_count = data[:member_count]
+        @channels = data[:channels].map { |c| Discorb::make_channel(@client, c) }
         @voice_states = nil # TODO: Array<Discorb::VoiceState>
-        @channels = nil # TODO: Array<Discorb::GuildChannel>
         @threads = nil # TODO: Array<Discorb::Thread>
         @presences = nil # TODO: Array<Discorb::Presence>
         @max_presences = data[:max_presences]

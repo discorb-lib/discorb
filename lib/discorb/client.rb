@@ -4,6 +4,7 @@ require "logger"
 require_relative "intents"
 require_relative "internet"
 require_relative "common"
+require_relative "channel"
 require_relative "message"
 require_relative "user"
 require_relative "cache"
@@ -33,6 +34,7 @@ module Discorb
       @emojis = Discorb::Cache.new
       @last_s = nil
       @identify_presence = nil
+      @tasks = []
     end
 
     def on(event_name, id: nil, &block)
@@ -64,12 +66,17 @@ module Discorb
 
     def run(token)
       @token = token
-      self.connect_gateway(token)
+      self.connect_gateway(true)
     end
 
     def fetch_user(id)
       resp, data = self.internet.get("/users/#{id}").wait
       User.new(self, data)
+    end
+
+    def fetch_channel(id)
+      resp, data = self.internet.get("/channels/#{id}").wait
+      Channel.new(self, data)
     end
 
     def fetch_guild(id)
@@ -108,20 +115,32 @@ module Discorb
 
     private
 
-    def connect_gateway(token)
+    def connect_gateway(first)
       @log.info "Connecting to gateway."
       Async do |task|
         @internet = Internet.new(self)
+        @first = first
         _, gateway_response = @internet.get("/gateway").wait
         gateway_url = gateway_response[:url]
         endpoint = Async::HTTP::Endpoint.parse(gateway_url + "?v=9&encoding=json", alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
-        Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]]) do |connection|
-          @connection = connection
-          def @connection.inspect
-            return "#<Connection>"
+        begin
+          Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]]) do |connection|
+            @connection = connection
+            def @connection.inspect
+              return "#<#{self.class} target=#{gateway_url + "?v=9&encoding=json"}>"
+            end
+            while message = @connection.read
+              handle_gateway(message)
+            end
           end
-          while message = @connection.read
-            handle_gateway(message)
+        rescue Protocol::WebSocket::ClosedError => e
+          case e.message
+          when "Authentication failed."
+            @tasks.map(&:stop)
+            raise ClientError.new("Authentication failed."), cause: nil
+          when "Discord WebSocket requesting client reconnect."
+            @log.info "Discord WebSocket requesting client reconnect."
+            connect_gateway(@token, false)
           end
         end
       end
@@ -143,21 +162,33 @@ module Discorb
         case payload[:op]
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
-          handle_heartbeat(@heartbeat_interval)
-          payload = {
-            token: @token,
-            intents: @intents.value,
-            compress: false,
-            properties: { "$os" => RUBY_PLATFORM, "$browser" => "discorb", "$device" => "discorb" },
-          }
-          if @identify_presence
-            payload[:presence] = @identify_presence
+          @tasks << handle_heartbeat(@heartbeat_interval)
+          if @first
+            payload = {
+              token: @token,
+              intents: @intents.value,
+              compress: false,
+              properties: { "$os" => RUBY_PLATFORM, "$browser" => "discorb", "$device" => "discorb" },
+            }
+            if @identify_presence
+              payload[:presence] = @identify_presence
+            end
+            send_gateway(2, **payload)
+          else
+            payload = {
+              token: @token,
+              session_id: @session_id,
+              seq: @last_s,
+            }
+            send_gateway(6, **payload)
           end
-          send_gateway(2, **payload)
         when 9
           @connection.close
-          @log.warn "Received opcode 9, closing connection"
-          connect_gateway(@token)
+          @log.warn "Received opcode 9, closed connection"
+          if data
+            @log.info "Connection is resumable, reconnecting."
+            connect_gateway(false)
+          end
         when 0
           handle_event(payload[:t], data)
         end
@@ -181,6 +212,7 @@ module Discorb
       case event_name
       when "READY"
         @api_version = data[:v]
+        @session_id = data[:session_id]
         @user = User.new(self, data[:user])
         @uncached_guilds = data[:guilds].map { |g| g[:id].to_i }
       when "GUILD_CREATE"

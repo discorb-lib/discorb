@@ -26,6 +26,8 @@ module Discorb
       @client.channels[@parent_id]
     end
 
+    alias_method :category, :parent
+
     def guild
       @client.guilds[@guild]
     end
@@ -70,7 +72,31 @@ module Discorb
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:message_reference] = message_reference.to_reference if message_reference
+        if components
+          if components.filter { |c| c.is_a? Array }.length == 0
+            tmp_components = [components].map { |c| c }
+          else
+            tmp_components = components.map { |c| c.is_a?(Array) ? c : [c] }
+          end
+          payload[:components] = tmp_components.map { |c| { "type": 1, "components": c.map(&:to_hash) } }
+        end
         Message.new(@client, @client.internet.post("/channels/#{self.id}/messages", payload).wait[1])
+      end
+    end
+
+    def edit(name: nil, announce: nil, position: nil, topic: nil, nsfw: nil, slowmode: nil, bitrate: nil, category: nil, parent: nil)
+      Async do
+        payload = {}
+        payload[:name] = name if name
+        payload[:announce] = announce ? 5 : 0 if announce != nil
+        payload[:position] = position if position
+        payload[:topic] = topic || "" if topic != nil
+        payload[:nsfw] = nsfw if nsfw != nil
+        payload[:rate_limit_per_user] = slowmode || 0 if slowmode != nil
+        parent ||= category
+        payload[:parent_id] = parent.id if parent != nil
+
+        @client.internet.patch("/channels/#{@id}", payload)
       end
     end
 
