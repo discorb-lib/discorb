@@ -13,19 +13,11 @@ module Discorb
     end
 
     def to_s
-      if @unicode
-        @name
-      else
-        "<#{@animated ? "a" : ""}:#{@name}:#{id}"
-      end
+      "<#{@animated ? "a" : ""}:#{@name}:#{id}>"
     end
 
     def to_uri
-      if @unicode
-        URI.encode @name
-      else
-        @name + ":" + @id
-      end
+      "#{@name}:#{@id}"
     end
 
     def managed?
@@ -50,7 +42,7 @@ module Discorb
       @id = data[:id].to_i
       @name = data[:name]
       @roles = nil # TODO: Array<Discorb::Role>
-      @user = User.new(@client, data[:user])
+      @user = User.new(@client, data[:user]) if data[:user]
       @require_colons = data[:require_colons]
       @managed = data[:managed]
       @animated = data[:animated]

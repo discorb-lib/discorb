@@ -1,5 +1,5 @@
-require "time"
-require_relative "user"
+require 'time'
+require_relative 'user'
 
 module Discorb
   class Member < User
@@ -33,7 +33,8 @@ module Discorb
     private
 
     def set_data(user_data, member_data = nil)
-      return if member_data == nil
+      return if member_data.nil?
+
       @roles = nil # TODO: Array<Discorb::Role>
       @premium_since = member_data[:premium_since] ? Time.iso8601(member_data[:premium_since]) : nil
       @pending = member_data[:pending]

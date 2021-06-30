@@ -1,14 +1,14 @@
-require "time"
-require_relative "flag"
-require_relative "member"
-require_relative "channel"
+require 'time'
+require_relative 'flag'
+require_relative 'member'
+require_relative 'channel'
 
 module Discorb
   class SystemChannelFlag < Flag
     @bits = {
       member_join: 0,
       server_boost: 1,
-      setup_tips: 2,
+      setup_tips: 2
     }
   end
 
@@ -16,15 +16,15 @@ module Discorb
     attr_reader :id, :name, :splash, :discovery_splash, :owner_id, :permissions, :region, :afk_timeout, :roles, :emojis, :features, :mfa_level,
                 :application_id, :system_channel_flags, :joined_at, :large, :unavailable, :member_count, :voice_states, :members, :channels, :threads, :presences, :max_presences, :max_members, :vanity_url_code, :description, :banner, :premium_tier, :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users, :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances
 
-    @@mfa_levels = [:none, :low, :medium, :high, :very_high]
-    @@nsfw_levels = [:default, :explicit, :safe, :age_restricted]
+    @@mfa_levels = %i[none low medium high very_high]
+    @@nsfw_levels = %i[default explicit safe age_restricted]
 
     def initialize(client, data, is_create_event)
       @client = client
       set_data(data, is_create_event)
     end
 
-    def update!()
+    def update!
       Async do
         _, data = @client.get("/users/#{@id}").wait
         set_data(data, false)
@@ -72,7 +72,7 @@ module Discorb
       @widget_enabled = data[:widget_enabled]
       @widget_channel_id = data[:widget_channel_id]
       @roles = nil # TODO: Array<Discorb::Role>
-      @emojis = nil # TODO: Array<Discorb::Emoji>
+      @emojis = data[:emojis].map { |e| CustomEmoji.new(@client, e) }
       @features = data[:features].map { |f| f.downcase.to_sym }
       @mfa_level = @@mfa_levels[data[:mfa_level]]
       @system_channel_id = data[:system_channel_id]
@@ -95,7 +95,7 @@ module Discorb
         @joined_at = Time.iso8601(data[:joined_at])
         @large = data[:large]
         @member_count = data[:member_count]
-        @channels = data[:channels].map { |c| Discorb::make_channel(@client, c) }
+        @channels = data[:channels].map { |c| Discorb.make_channel(@client, c) }
         @voice_states = nil # TODO: Array<Discorb::VoiceState>
         @threads = nil # TODO: Array<Discorb::Thread>
         @presences = nil # TODO: Array<Discorb::Presence>
@@ -119,7 +119,7 @@ module Discorb
     end
 
     def available?
-      not @unavailable
+      !@unavailable
     end
   end
 end

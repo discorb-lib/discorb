@@ -16,6 +16,28 @@ require "async"
 require "async/websocket/client"
 
 module Discorb
+  class Event
+    attr_reader :block, :id
+
+    def initialize(block, id)
+      @block = block
+      @id = id
+      @rescue = nil
+    end
+
+    def call(...)
+      @block.call(...)
+    end
+
+    def rescue(&block)
+      if block_given?
+        @rescue = block
+      else
+        @rescue
+      end
+    end
+  end
+
   class Client
     attr_accessor :intents
     attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions
@@ -23,7 +45,7 @@ module Discorb
 
     def initialize(allowed_mentions: nil, intents: nil, log: nil, colorize_log: false, log_level: :info)
       @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
-      @intents = (intents or Intents.default())
+      @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
       @log = Logger.new(log, colorize_log, log_level)
@@ -41,25 +63,37 @@ module Discorb
       if @events[event_name] == nil
         @events[event_name] = []
       end
-      @events[event_name] << { block: block, id: id }
+      ne = Event.new(block, id)
+      @events[event_name] << ne
+      ne
     end
 
     def remove_event(event_name, id)
-      @events[event_name].delete_if { |e| e[:id] == id }
+      @events[event_name].delete_if { |e| e.id == id }
     end
 
     def dispatch(event_name, *args)
       Async do |task|
         @log.debug "Dispatching event #{event_name}"
         @events[event_name].each do |block|
-          task.async do |event_task|
-            begin
-              block[:block].call(event_task, *args)
-              @log.debug "Dispatched proc with ID #{block[:id].inspect}"
-            rescue Exception => e
-              @log.error "Error occured while dispatching proc with ID #{block[:id].inspect}\n#{e.message}"
+          ->(args) {
+            Async do |task|
+              begin
+                block.call(task, *args)
+                @log.debug "Dispatched proc with ID #{block.id.inspect}"
+              rescue Exception => e
+                if block.rescue == nil
+                  @log.error "An error occurred while dispatching proc with ID #{block.id.inspect}\n#{e.full_message}"
+                else
+                  begin
+                    block.rescue.call(task, e, *args)
+                  rescue Exception => e2
+                    @log.error "An error occurred while dispatching rescue proc with ID #{block.id.inspect}\n#{e2.full_message}\nBy an error:\n#{e.full_message}"
+                  end
+                end
+              end
             end
-          end
+          }.call(args)
         end
       end
     end
@@ -140,7 +174,7 @@ module Discorb
             raise ClientError.new("Authentication failed."), cause: nil
           when "Discord WebSocket requesting client reconnect."
             @log.info "Discord WebSocket requesting client reconnect."
-            connect_gateway(@token, false)
+            connect_gateway(false)
           end
         end
       end
@@ -183,11 +217,16 @@ module Discorb
             send_gateway(6, **payload)
           end
         when 9
-          @connection.close
           @log.warn "Received opcode 9, closed connection"
           if data
             @log.info "Connection is resumable, reconnecting."
+            @connection.close
             connect_gateway(false)
+          else
+            @log.info "Connection is not resumable, reconnecting with opcode 2."
+            task.sleep(2)
+            @connection.close
+            connect_gateway(true)
           end
         when 0
           handle_event(payload[:t], data)
@@ -228,6 +267,8 @@ module Discorb
       when "MESSAGE_CREATE"
         message = Message.new(self, data)
         dispatch(:message, message)
+      else
+        @log.warn "Unknown event: #{event_name}"
       end
     end
 

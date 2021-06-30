@@ -1,4 +1,4 @@
-require "base64"
+require 'base64'
 
 module Discorb
   class Image
