@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'time'
-require_relative 'flag'
-require_relative 'common'
+require "time"
+require_relative "flag"
+require_relative "common"
 
 module Discorb
   class GuildChannel < DiscordModel
@@ -43,7 +43,7 @@ module Discorb
     private
 
     def _set_data(data)
-      @id = data[:id].to_i
+      @id = Snowflake.new(data[:id])
       @name = name
       @guild_id = data[:guild_id]
       @position = data[:position]
@@ -68,20 +68,20 @@ module Discorb
         payload[:content] = content if content
         payload[:tts] = tts
         tmp_embed = if embed
-                      [embed]
-                    elsif embeds
-                      embeds
-                    end
+            [embed]
+          elsif embeds
+            embeds
+          end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] =
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:message_reference] = message_reference.to_reference if message_reference
         if components
           tmp_components = if components.filter { |c| c.is_a? Array }.length.zero?
-                             [components].map { |c| c }
-                           else
-                             components.map { |c| c.is_a?(Array) ? c : [c] }
-                           end
+              [components].map { |c| c }
+            else
+              components.map { |c| c.is_a?(Array) ? c : [c] }
+            end
           payload[:components] = tmp_components.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
         Message.new(@client, @client.internet.post("/channels/#{id}/messages", payload).wait[1])
@@ -94,7 +94,7 @@ module Discorb
         payload[:name] = name if name
         payload[:announce] = announce ? 5 : 0 unless announce.nil?
         payload[:position] = position if position
-        payload[:topic] = topic || '' unless topic.nil?
+        payload[:topic] = topic || "" unless topic.nil?
         payload[:nsfw] = nsfw unless nsfw.nil?
 
         payload[:rate_limit_per_user] = slowmode || 0 unless slowmode.nil?

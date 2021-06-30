@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'common'
+require_relative "common"
 
 module Discorb
   class Activity
@@ -9,12 +9,12 @@ module Discorb
       streaming: 1,
       listening: 2,
       watching: 3,
-      competing: 5
+      competing: 5,
     }
 
     def initialize(name, type = :playing, url = nil)
       @name = name
-      @type = @types[type]
+      @type = self.class.types[type]
       @url = url
     end
 
@@ -22,8 +22,12 @@ module Discorb
       {
         name: @name,
         type: @type,
-        url: @url
+        url: @url,
       }
+    end
+
+    def self.types
+      @types
     end
   end
 end

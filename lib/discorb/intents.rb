@@ -18,7 +18,7 @@ module Discorb
       typing: 1 << 11,
       dm_messages: 1 << 12,
       dm_reactions: 1 << 13,
-      dm_typing: 1 << 14
+      dm_typing: 1 << 14,
     }
 
     #
@@ -71,15 +71,15 @@ module Discorb
         typing: typing,
         dm_messages: dm_messages,
         dm_reactions: dm_reactions,
-        dm_typing: dm_typing
+        dm_typing: dm_typing,
       }
     end
 
     def method_missing(name, args = nil)
       if @raw_value.key?(name)
         @raw_value[name]
-      elsif name.end_with?('=') && @raw_value.key?(name[0..-2].to_sym)
-        raise ArgumentError, 'true/false expected' if (!args.is_a? TrueClass) || args.is_a?(FalseClass)
+      elsif name.end_with?("=") && @raw_value.key?(name[0..-2].to_sym)
+        raise ArgumentError, "true/false expected" if (!args.is_a? TrueClass) || args.is_a?(FalseClass)
 
         @raw_value[name[0..-2].to_sym] = args
       else
@@ -95,7 +95,7 @@ module Discorb
     # @return [Integer] The value of the intent.
     def value
       res = 0
-      @intent_bits.each do |intent, bit|
+      self.class.intent_bits.each do |intent, bit|
         res += bit if @raw_value[intent]
       end
       res
@@ -129,6 +129,10 @@ module Discorb
       # Create new intent object with no intents.
       def none
         from_value(0)
+      end
+
+      def intent_bits
+        @intent_bits
       end
     end
   end

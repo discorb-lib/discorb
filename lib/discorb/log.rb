@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 begin
-  require 'colorize'
+  require "colorize"
   LOADED_COLORIZE = true
 rescue LoadError
   LOADED_COLORIZE = false
@@ -13,9 +13,9 @@ module Discorb
 
     def initialize(out, colorize_log, level)
       @out = out
-      @level = @levels.index(level)
+      @level = self.class.levels.index(level)
       @colorize_log = colorize_log
-      raise 'colorize is required to use colorized log' unless LOADED_COLORIZE
+      raise "colorize is required to use colorized log" unless LOADED_COLORIZE
     end
 
     def level
@@ -29,31 +29,35 @@ module Discorb
     def debug(message)
       return unless @level <= 0
 
-      write_output('DEBUG', :light_black, message)
+      write_output("DEBUG", :light_black, message)
     end
 
     def info(message)
       return unless @level <= 1
 
-      write_output('INFO', :light_blue, message)
+      write_output("INFO", :light_blue, message)
     end
 
     def warn(message)
       return unless @level <= 2
 
-      write_output('WARN', :yellow, message)
+      write_output("WARN", :yellow, message)
     end
 
     def error(message)
       return unless @level <= 3
 
-      write_output('ERROR', :red, message)
+      write_output("ERROR", :red, message)
     end
 
     def fatal(message)
       return unless @level <= 4
 
-      write_output('FATAL', :light_red, message)
+      write_output("FATAL", :light_red, message)
+    end
+
+    def self.levels
+      @levels
     end
 
     private
@@ -62,20 +66,20 @@ module Discorb
       return unless @out
 
       if @colorize_log
-        @out.puts(format('%<info>s %<message>s', info: [
-          name[0].colorize(color),
-          Time.now.strftime('[%D %T]').colorize(:gray),
-          name.rjust(5).colorize(color),
-          ':'
-        ].join(' ').underline, message: message))
+        @out.puts(format("%<info>s %<message>s", info: [
+                                                   name[0].colorize(color),
+                                                   Time.now.strftime("[%D %T]").colorize(:gray),
+                                                   name.rjust(5).colorize(color),
+                                                   ":",
+                                                 ].join(" ").underline, message: message))
       else
         @out.puts([
           name[0],
-          Time.now.strftime('[%D %T]'),
+          Time.now.strftime("[%D %T]"),
           name.rjust(5),
-          ':',
-          message
-        ].join(' '))
+          ":",
+          message,
+        ].join(" "))
       end
     end
   end
