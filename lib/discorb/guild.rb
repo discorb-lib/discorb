@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'time'
-require_relative 'flag'
-require_relative 'member'
-require_relative 'channel'
+require "time"
+require_relative "flag"
+require_relative "member"
+require_relative "channel"
 
 module Discorb
   class SystemChannelFlag < Flag
     @bits = {
       member_join: 0,
       server_boost: 1,
-      setup_tips: 2
+      setup_tips: 2,
     }
   end
 
@@ -59,7 +59,7 @@ module Discorb
     private
 
     def _set_data(data, is_create_event)
-      @id = data[:id].to_i
+      @id = Snowflake.new(data[:id])
       if data[:unavailable]
         @unavailable = true
         return
@@ -79,7 +79,7 @@ module Discorb
       @roles = nil # TODO: Array<Discorb::Role>
       @emojis = data[:emojis].map { |e| CustomEmoji.new(@client, e) }
       @features = data[:features].map { |f| f.downcase.to_sym }
-      @mfa_level = @mfa_levels[data[:mfa_level]]
+      @mfa_level = self.class.mfa_levels[data[:mfa_level]]
       @system_channel_id = data[:system_channel_id]
       @system_channel_flag = SystemChannelFlag.new(0b111 - data[:system_channel_flags])
       @rules_channel_id = data[:rules_channel_id]
@@ -94,7 +94,7 @@ module Discorb
       @approximate_member_count = data[:approximate_member_count]
       @approximate_presence_count = data[:approximate_presence_count]
       @welcome_screen = nil # TODO: Discorb::WelcomeScreen
-      @nsfw_level = @nsfw_levels[data[:nsfw_level]]
+      @nsfw_level = self.class.nsfw_levels[data[:nsfw_level]]
 
       if is_create_event
         @joined_at = Time.iso8601(data[:joined_at])
@@ -125,6 +125,16 @@ module Discorb
 
     def available?
       !@unavailable
+    end
+
+    class << self
+      def nsfw_levels
+        @nsfw_levels
+      end
+
+      def mfa_levels
+        @mfa_levels
+      end
     end
   end
 end

@@ -10,21 +10,23 @@ client.on :ready do |_task|
   puts "Logged in as #{client.user}"
 end
 
-client.on(:message) do |_task, message|
-  if message.author.bot?
-    next
-  elsif !message.content.start_with? '!'
-    next
-  end
+event = client.on(:message) do |_task, message|
+  next if message.author.bot?
+
+  next unless message.content.start_with? '!'
 
   case message.content[1..]
   when 'ping'
     message.channel.post 'Pong!'
   when 'emtest'
-    msg = message.channel.post(embed: Discorb::Embed.new('Embed Test', 'I am test')).wait
+    message.channel.post(embed: Discorb::Embed.new('Embed Test', 'I am test'))
   when /eval [\s\S+]/
+    unless message.author.id == '686547120534454315'
+      message.reply('Only onwer of this bot can use eval')
+      next
+    end
     code = message.content.delete_prefix('!eval ').delete_prefix('```rb').delete_suffix('```')
-    res = eval(code)
+    res = eval(code)  # rubocop:disable Security/Eval
     message.add_reaction(Discorb::UnicodeEmoji['white_check_mark'])
     unless res.nil?
       res = res.wait if res.is_a? Async::Task
@@ -35,7 +37,8 @@ client.on(:message) do |_task, message|
   when 'reply'
     message.reply 'Test'
   end
-end.rescue do |_task, error, message|
+end
+event.rescue do |_task, error, message|
   message.reply embed: Discorb::Embed.new('Error!', "```rb\n#{error.full_message(highlight: false)[...1990]}\n```", color: Discorb::Color[:red])
 end
 

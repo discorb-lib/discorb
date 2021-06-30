@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'emoji'
+require_relative "emoji"
 
 module Discorb
   class Button
@@ -11,7 +11,7 @@ module Discorb
       secondary: 2,
       success: 3,
       danger: 4,
-      link: 5
+      link: 5,
     }
 
     def initialize(label, style = :primary, emoji: nil, custom_id: nil, url: nil, disabled: false)
@@ -32,25 +32,29 @@ module Discorb
         {
           type: 2,
           label: @label,
-          style: @styles[@style],
+          style: self.class.styles[@style],
           url: @url,
           emoji: hash_emoji(@emoji),
-          disabled: @disabled
+          disabled: @disabled,
         }
       else
         {
           type: 2,
           label: @label,
-          style: @styles[@style],
+          style: self.class.styles[@style],
           custom_id: @custom_id,
           emoji: hash_emoji(@emoji),
-          disabled: @disabled
+          disabled: @disabled,
         }
       end
     end
 
     def self.[](...)
       new(...)
+    end
+
+    def self.styles
+      @styles
     end
 
     private
@@ -61,13 +65,13 @@ module Discorb
         {
           id: nil,
           name: emoji.to_s,
-          animated: false
+          animated: false,
         }
       when CustomEmoji
         {
           id: emoji.id,
           name: emoji.name,
-          animated: emoji.animated?
+          animated: emoji.animated?,
         }
       end
     end

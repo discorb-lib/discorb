@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'uri'
-require_relative 'common'
-require_relative 'user'
-require_relative 'emoji_table'
+require "uri"
+require_relative "common"
+require_relative "user"
+require_relative "emoji_table"
 
 module Discorb
   class CustomEmoji < DiscordModel
@@ -15,7 +15,7 @@ module Discorb
     end
 
     def to_s
-      "<#{@animated ? 'a' : ''}:#{@name}:#{id}>"
+      "<#{@animated ? "a" : ""}:#{@name}:#{id}>"
     end
 
     def to_uri
@@ -41,7 +41,7 @@ module Discorb
     private
 
     def _set_data(data)
-      @id = data[:id].to_i
+      @id = Snowflake.new(data[:id])
       @name = data[:name]
       @roles = nil # TODO: Array<Discorb::Role>
       @user = User.new(@client, data[:user]) if data[:user]
