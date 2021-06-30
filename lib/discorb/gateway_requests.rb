@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require_relative 'common'
 
 module Discorb
   class Activity
-    @@types = {
+    @types = {
       playing: 0,
       streaming: 1,
       listening: 2,
@@ -12,7 +14,7 @@ module Discorb
 
     def initialize(name, type = :playing, url = nil)
       @name = name
-      @type = @@types[type]
+      @type = @types[type]
       @url = url
     end
 

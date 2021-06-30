@@ -1,7 +1,9 @@
-require "uri"
-require_relative "common"
-require_relative "user"
-require_relative "emoji_table"
+# frozen_string_literal: true
+
+require 'uri'
+require_relative 'common'
+require_relative 'user'
+require_relative 'emoji_table'
 
 module Discorb
   class CustomEmoji < DiscordModel
@@ -9,11 +11,11 @@ module Discorb
 
     def initialize(client, data)
       @client = client
-      set_data(data)
+      _set_data(data)
     end
 
     def to_s
-      "<#{@animated ? "a" : ""}:#{@name}:#{id}>"
+      "<#{@animated ? 'a' : ''}:#{@name}:#{id}>"
     end
 
     def to_uri
@@ -33,12 +35,12 @@ module Discorb
     end
 
     def self.[](...)
-      self.from_discord_name(...)
+      from_discord_name(...)
     end
 
     private
 
-    def set_data(data)
+    def _set_data(data)
       @id = data[:id].to_i
       @name = data[:name]
       @roles = nil # TODO: Array<Discorb::Role>
@@ -65,7 +67,7 @@ module Discorb
     end
 
     def self.[](...)
-      self.new(...)
+      new(...)
     end
   end
 end

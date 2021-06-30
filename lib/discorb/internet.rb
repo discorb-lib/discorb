@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'async/http/internet'
 require_relative 'common'
 require_relative 'error'
 
 module Discorb
   class Internet < Async::HTTP::Internet
-    @@nil_body = nil
+    @nil_body = nil
 
     def initialize(client)
       @client = client
@@ -124,9 +126,9 @@ module Discorb
 
     def get_headers(body = nil)
       if body.nil?
-        { 'User-Agent' => USER_AGENT, 'authorization' => 'Bot ' + @client.token }
+        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
       else
-        { 'User-Agent' => USER_AGENT, 'authorization' => 'Bot ' + @client.token, 'content-type' => 'application/json' }
+        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}", 'content-type' => 'application/json' }
       end
     end
 

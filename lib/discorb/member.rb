@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'time'
 require_relative 'user'
 
@@ -7,7 +9,7 @@ module Discorb
 
     def initialize(client, user_data, member_data)
       super(client, user_data)
-      set_data(user_data, member_data)
+      _set_data(user_data, member_data)
     end
 
     def user_avatar
@@ -32,7 +34,7 @@ module Discorb
 
     private
 
-    def set_data(user_data, member_data = nil)
+    def _set_data(user_data, member_data = nil)
       return if member_data.nil?
 
       @roles = nil # TODO: Array<Discorb::Role>

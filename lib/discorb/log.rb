@@ -1,25 +1,29 @@
+# frozen_string_literal: true
+
 begin
   require 'colorize'
+  LOADED_COLORIZE = true
 rescue LoadError
+  LOADED_COLORIZE = false
 end
 
 module Discorb
   class Logger
-    @@levels = %i[debug info warn error fatal]
+    @levels = %i[debug info warn error fatal]
 
     def initialize(out, colorize_log, level)
       @out = out
-      @level = @@levels.index(level)
+      @level = @levels.index(level)
       @colorize_log = colorize_log
-      raise 'colorize is required to use colorized log' if colorize_log && !defined? String.color_samples
+      raise 'colorize is required to use colorized log' unless LOADED_COLORIZE
     end
 
     def level
-      @@levels[@level]
+      @levels[@level]
     end
 
     def level=(level)
-      @level = @@levels.index(level)
+      @level = @levels.index(level)
     end
 
     def debug(message)
@@ -58,12 +62,12 @@ module Discorb
       return unless @out
 
       if @colorize_log
-        @out.puts([
+        @out.puts(format('%<info>s %<message>s', info: [
           name[0].colorize(color),
           Time.now.strftime('[%D %T]').colorize(:gray),
           name.rjust(5).colorize(color),
           ':'
-        ].join(' ').underline + ' ' + message)
+        ].join(' ').underline, message: message))
       else
         @out.puts([
           name[0],

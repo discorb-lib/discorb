@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'overloader'
 require_relative 'common'
 require_relative 'flag'
@@ -28,13 +30,13 @@ module Discorb
 
     def initialize(client, data)
       @client = client
-      set_data(data)
+      _set_data(data)
     end
 
     def update!
       Async do
         _, data = @client.get("/users/#{@id}").wait
-        set_data(data)
+        _set_data(data)
       end
     end
 
@@ -43,12 +45,12 @@ module Discorb
     end
 
     def to_s
-      @username + '#' + @discriminator.to_s
+      "#{@username}##{@discriminator}"
     end
 
     private
 
-    def set_data(data)
+    def _set_data(data)
       @username = data[:username]
       @verified = data[:verified]
       @id = data[:id].to_i

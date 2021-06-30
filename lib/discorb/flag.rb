@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Discorb
   class Flag
     attr_reader :values, :value
