@@ -1,7 +1,29 @@
-require "yaml"
+require 'yaml'
 
 module Discorb
   class DiscorbError < StandardError
+    private
+
+    def enumerate_errors(hash)
+      res = {}
+      _recr_items([], hash, res)
+      res
+    end
+
+    def _recr_items(key, item, res)
+      case item
+      when Array
+        item.each_with_index do |v, i|
+          _recr_items (key + [i]), v, res
+        end
+      when Hash
+        item.each do |k, v|
+          _recr_items (key + [k]), v, res
+        end
+      else
+        res[key.join('.').gsub('_errors.', '')] = item
+      end
+    end
   end
 
   class HTTPError < DiscorbError
@@ -16,7 +38,7 @@ module Discorb
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
-      super(data[:message] + "\n" + YAML.dump(data[:errors]))
+      super(data[:message] + "\n" + enumerate_errors(data[:errors]).map { |ek, ev| "#{ek}=>#{ev}" }.join("\n"))
     end
   end
 

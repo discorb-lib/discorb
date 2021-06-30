@@ -1,9 +1,9 @@
-require "time"
-require_relative "common"
-require_relative "member"
-require_relative "channel"
-require_relative "flag"
-require_relative "error"
+require 'time'
+require_relative 'common'
+require_relative 'member'
+require_relative 'channel'
+require_relative 'flag'
+require_relative 'error'
 
 module Discorb
   class MessageFlag < Flag
@@ -15,13 +15,13 @@ module Discorb
       urgent: 4,
       has_thread: 5,
       ephemeral: 6,
-      loading: 7,
+      loading: 7
     }
   end
 
   class MessageReference
     attr_accessor :guild_id, :channel_id, :message_id, :fail_if_not_exists
-    alias_method :fail_if_not_exists?, :fail_if_not_exists
+    alias fail_if_not_exists? fail_if_not_exists
 
     def initialize(guild_id, channel_id, message_id, fail_if_not_exists: true)
       @guild_id = guild_id
@@ -35,14 +35,14 @@ module Discorb
         message_id: @message_id,
         channel_id: @channel_id,
         guild_id: @guild_id,
-        fail_if_not_exists: @fail_if_not_exists,
+        fail_if_not_exists: @fail_if_not_exists
       }
     end
 
-    alias_method :to_reference, :to_hash
+    alias to_reference to_hash
 
     def self.from_hash(data)
-      self.new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
+      new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
     end
   end
 
@@ -58,46 +58,37 @@ module Discorb
 
     def to_hash(other = nil)
       payload = {
-        parse: ["everyone", "roles", "users", "replied_user"],
+        parse: %w[everyone roles users replied_user]
       }
       replied_user = nil_merge(@replied_user, other&.replied_user)
       everyone = nil_merge(@everyone, other&.everyone)
       roles = nil_merge(@roles, other&.roles)
       users = nil_merge(@users, other&.users)
-      if replied_user == false
-        payload[:parse].delete("replied_user")
+      payload[:parse].delete('replied_user') if replied_user == false
+      payload[:parse].delete('everyone') if everyone == false
+      if (roles == false) || roles.is_a?(Array)
+        payload[:roles] = roles.map { |u| u.id.to_s } if roles.is_a? Array
+        payload[:parse].delete('roles')
       end
-      if everyone == false
-        payload[:parse].delete("everyone")
-      end
-      if roles == false or roles.is_a? Array
-        if roles.is_a? Array
-          payload[:roles] = roles.map { |u| u.id.to_s }
-        end
-        payload[:parse].delete("roles")
-      end
-      if users == false or users.is_a? Array
-        if users.is_a? Array
-          payload[:users] = users.map { |u| u.id.to_s }
-        end
-        payload[:parse].delete("users")
+      if (users == false) || users.is_a?(Array)
+        payload[:users] = users.map { |u| u.id.to_s } if users.is_a? Array
+        payload[:parse].delete('users')
       end
       payload
     end
 
     def nil_merge(*args)
       args.each do |a|
-        if a != nil
-          return a
-        end
+        return a unless a.nil?
       end
-      return nil
+      nil
     end
   end
 
   class Message < DiscordModel
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles, :mention_channels, :attachments, :embeds, :reactions,
                 :webhook_id, :type, :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message, :interaction, :thread, :components
+
     @@message_type = {
       default: 0,
       recipient_add: 1,
@@ -120,7 +111,7 @@ module Discorb
       reply: 19,
       application_command: 20,
       thread_starter_message: 21,
-      guild_invite_reminder: 22,
+      guild_invite_reminder: 22
     }
 
     def initialize(client, data)
@@ -128,7 +119,7 @@ module Discorb
       set_data(data)
     end
 
-    def update!()
+    def update!
       Async do
         _, data = @client.get("/users/#{@id}").wait
         set_data(data)
@@ -168,19 +159,37 @@ module Discorb
         message_id: @id,
         channel_id: @channel_id,
         guild_id: @guild_id,
-        fail_if_not_exists: fail_if_not_exists,
+        fail_if_not_exists: fail_if_not_exists
       }
     end
 
+    # HTTP
+
     def reply(*args, **kwargs)
-      self.channel.post(*args, message_reference: self, **kwargs)
+      Async do |_task|
+        channel.post(*args, message_reference: self, **kwargs)
+      end
+    end
+
+    def publish
+      Async do |_task|
+        channel.post("/channels/#{@channel_id}/messages/#{@id}/crosspost", nil)
+      end
     end
 
     def add_reaction(emoji)
-      Async do |task|
+      Async do |_task|
         @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil)
       end
     end
+
+    def delete_reaction(emoji)
+      Async do |_task|
+        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil)
+      end
+    end
+
+    # Meta
 
     def inspect
       "#<#{self.class} #{@content.inspect} id=#{@id}>"

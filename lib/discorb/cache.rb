@@ -13,10 +13,10 @@ module Discorb
     end
 
     def values
-      return @cache.values
+      @cache.values
     end
 
-    alias_method :[], :get
-    alias_method :[]=, :register
+    alias [] get
+    alias []= register
   end
 end

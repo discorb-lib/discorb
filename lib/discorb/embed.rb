@@ -8,7 +8,7 @@ module Discorb
   class Embed
     attr_accessor :title, :description, :url, :timestamp, :color, :author, :fields, :footer, :image, :thumbnail
 
-    def initialize(title = nil, description = nil, color = nil, url: nil, timestamp: nil, author: nil, fields: nil, footer: nil, image: nil, thumbnail: nil)
+    def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil, fields: nil, footer: nil, image: nil, thumbnail: nil)
       @title = title
       @description = description
       @url = url
@@ -83,7 +83,7 @@ module Discorb
     class Field
       attr_accessor :name, :value, :inline
 
-      def initialize(name, value, inline = false)
+      def initialize(name, value, inline = true)
         @name = name
         @value = value
         @inline = inline
