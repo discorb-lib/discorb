@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'time'
 require_relative 'common'
 require_relative 'member'
@@ -89,7 +91,7 @@ module Discorb
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles, :mention_channels, :attachments, :embeds, :reactions,
                 :webhook_id, :type, :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message, :interaction, :thread, :components
 
-    @@message_type = {
+    @message_type = {
       default: 0,
       recipient_add: 1,
       recipient_remove: 2,
@@ -116,13 +118,13 @@ module Discorb
 
     def initialize(client, data)
       @client = client
-      set_data(data)
+      _set_data(data)
     end
 
     def update!
       Async do
         _, data = @client.get("/users/#{@id}").wait
-        set_data(data)
+        _set_data(data)
       end
     end
 
@@ -197,7 +199,7 @@ module Discorb
 
     private
 
-    def set_data(data)
+    def _set_data(data)
       @id = data[:id].to_i
       @author = Member.new(@client, data[:author], data[:member])
       @channel_id = data[:channel_id]
@@ -213,7 +215,7 @@ module Discorb
       @embeds = nil # TODO: Array<Discorb::Embed>
       @reactions = nil # TODO: Array<Discorb::Reaction>
       @pinned = data[:pinned]
-      @type = @@message_type[data[:type]]
+      @type = @message_type[data[:type]]
       @activity = nil # TODO: Discorb::MessageActivity
       @application = nil # TODO: Discorb::Application
       @application_id = data[:application_id]

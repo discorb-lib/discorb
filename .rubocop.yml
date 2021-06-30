@@ -1,0 +1,36 @@
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+
+Metrics/AbcSize:
+  Max: 80
+
+Metrics/PerceivedComplexity:
+  Max: 40
+
+Metrics/CyclomaticComplexity:
+  Max: 40
+
+Metrics/ParameterLists:
+  Max: 20
+
+Lint/MissingSuper:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 240
+
+Metrics/BlockLength:
+  Max: 240
+
+Style/Documentation:
+  Enabled: false
+
+Naming/VariableNumber:
+  CheckSymbols: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false

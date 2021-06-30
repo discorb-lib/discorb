@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable Layout/LineLength
 DISCORD_TO_UNICODE = {
   'flag_ni' => 0x0001f1f3.chr('utf-8') + 0x0001f1ee.chr('utf-8'),
   'flag_ne' => 0x0001f1f3.chr('utf-8') + 0x0001f1ea.chr('utf-8'),
@@ -1961,7 +1964,7 @@ DISCORD_TO_UNICODE = {
   'no_mouth' => 0x0001f636.chr('utf-8'),
   'neutral_face' => 0x0001f610.chr('utf-8'),
   'expressionless' => 0x0001f611.chr('utf-8')
-}
+}.freeze
 
 UNICODE_TO_DISCORD = {
   0x0001f1f3.chr('utf-8') + 0x0001f1ee.chr('utf-8') => ['flag_ni'],
@@ -3745,4 +3748,5 @@ UNICODE_TO_DISCORD = {
   0x0001f636.chr('utf-8') => ['no_mouth'],
   0x0001f610.chr('utf-8') => ['neutral_face'],
   0x0001f611.chr('utf-8') => ['expressionless']
-}
+}.freeze
+# rubocop:enable Layout/LineLength

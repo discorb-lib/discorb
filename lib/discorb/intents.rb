@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Discorb
   # Represents intents.
   class Intents
-    @@intent_bits = {
+    @intent_bits = {
       guilds: 1 << 0,
       members: 1 << 1,
       bans: 1 << 2,
@@ -93,7 +95,7 @@ module Discorb
     # @return [Integer] The value of the intent.
     def value
       res = 0
-      @@intent_bits.each do |intent, bit|
+      @intent_bits.each do |intent, bit|
         res += bit if @raw_value[intent]
       end
       res
@@ -108,7 +110,7 @@ module Discorb
       # @param value [Integer] The value of the intent.
       def from_value(value)
         raw_value = {}
-        @@intent_bits.each do |intent, bit|
+        @intent_bits.each do |intent, bit|
           raw_value[intent] = value & bit != 0
         end
         new(**raw_value)

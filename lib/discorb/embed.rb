@@ -1,8 +1,10 @@
-require "overloader"
-require_relative "common"
-require_relative "flag"
-require_relative "error"
-require_relative "avatar"
+# frozen_string_literal: true
+
+require 'overloader'
+require_relative 'common'
+require_relative 'flag'
+require_relative 'error'
+require_relative 'avatar'
 
 module Discorb
   class Embed
@@ -32,7 +34,7 @@ module Discorb
         image: @image ? { url: @image } : nil,
         thumbnail: @thumbnail ? { url: @thumbnail } : nil,
         author: @author&.to_hash,
-        fields: @fields&.map { |f| f.to_hash },
+        fields: @fields&.map { |f| f.to_hash }
       }
     end
 
@@ -49,12 +51,12 @@ module Discorb
         {
           name: @name,
           url: @url,
-          icon_url: @icon,
+          icon_url: @icon
         }
       end
 
       def self.[](...)
-        self.initialize(...)
+        initialize(...)
       end
     end
 
@@ -71,19 +73,19 @@ module Discorb
         {
           name: @name,
           url: @url,
-          icon_url: @icon,
+          icon_url: @icon
         }
       end
 
       def self.[](...)
-        self.initialize(...)
+        initialize(...)
       end
     end
 
     class Field
       attr_accessor :name, :value, :inline
 
-      def initialize(name, value, inline = true)
+      def initialize(name, value, inline: true)
         @name = name
         @value = value
         @inline = inline
@@ -93,12 +95,12 @@ module Discorb
         {
           name: @name,
           value: @value,
-          inline: @inline,
+          inline: @inline
         }
       end
 
       def self.[](...)
-        self.new(...)
+        new(...)
       end
     end
   end

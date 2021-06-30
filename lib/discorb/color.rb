@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Discorb
   class Color
     attr_accessor :value
 
-    @@discord_colors = {
+    @discord_colors = {
       teal: 0x1abc9c,
       dark_teal: 0x11806a,
       green: 0x2ecc71,
@@ -52,7 +54,7 @@ module Discorb
     end
 
     def to_s
-      '#' + @value.to_s(16)
+      "##{@value.to_s(16)}"
     end
 
     def inspect
@@ -64,12 +66,12 @@ module Discorb
       new(hex.to_i(16))
     end
 
-    def self.from_rgb(r, g, b)
+    def self.from_rgb(_red, _green, _blue)
       new(r * 256 * 256 + g * 256 + b)
     end
 
     def self.[](color)
-      new(@@discord_colors[color])
+      new(@discord_colors[color])
     end
   end
 end

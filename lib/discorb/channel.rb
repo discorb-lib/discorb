@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'time'
 require_relative 'flag'
 require_relative 'common'
@@ -11,7 +13,7 @@ module Discorb
 
     def initialize(client, data)
       @client = client
-      set_data(data)
+      _set_data(data)
     end
 
     def ==(other)
@@ -40,7 +42,7 @@ module Discorb
 
     private
 
-    def set_data(data)
+    def _set_data(data)
       @id = data[:id].to_i
       @name = name
       @guild_id = data[:guild_id]
@@ -75,18 +77,18 @@ module Discorb
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:message_reference] = message_reference.to_reference if message_reference
         if components
-          tmp_components = if components.filter { |c| c.is_a? Array }.length == 0
+          tmp_components = if components.filter { |c| c.is_a? Array }.length.zero?
                              [components].map { |c| c }
                            else
                              components.map { |c| c.is_a?(Array) ? c : [c] }
                            end
-          payload[:components] = tmp_components.map { |c| { "type": 1, "components": c.map(&:to_hash) } }
+          payload[:components] = tmp_components.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
         Message.new(@client, @client.internet.post("/channels/#{id}/messages", payload).wait[1])
       end
     end
 
-    def edit(name: nil, announce: nil, position: nil, topic: nil, nsfw: nil, slowmode: nil, bitrate: nil, category: nil, parent: nil)
+    def edit(name: nil, announce: nil, position: nil, topic: nil, nsfw: nil, slowmode: nil, category: nil, parent: nil)
       Async do
         payload = {}
         payload[:name] = name if name
@@ -94,6 +96,7 @@ module Discorb
         payload[:position] = position if position
         payload[:topic] = topic || '' unless topic.nil?
         payload[:nsfw] = nsfw unless nsfw.nil?
+
         payload[:rate_limit_per_user] = slowmode || 0 unless slowmode.nil?
         parent ||= category
         payload[:parent_id] = parent.id unless parent.nil?
@@ -104,7 +107,7 @@ module Discorb
 
     private
 
-    def set_data(data)
+    def _set_data(data)
       @topic = data[:topic]
       @nsfw = data[:nsfw]
       @last_message_id = data[:last_message_id]
@@ -121,7 +124,7 @@ module Discorb
 
     private
 
-    def set_data(data)
+    def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
       super
@@ -131,15 +134,11 @@ module Discorb
   class CategoryChannel < GuildChannel
     attr_reader :channels
 
-    def initialize(resp, data)
-      super
-    end
-
     def voice_channels; end
 
     private
 
-    def set_data
+    def _set_data
       super
       @channels = @client.channels.value.filter { |channel| channel.parent == self }
     end

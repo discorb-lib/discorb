@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 module Discorb
@@ -38,7 +40,7 @@ module Discorb
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
-      super(data[:message] + "\n" + enumerate_errors(data[:errors]).map { |ek, ev| "#{ek}=>#{ev}" }.join("\n"))
+      super([data[:message], "\n", enumerate_errors(data[:errors]).map { |ek, ev| "#{ek}=>#{ev}" }.join("\n")].join("\n"))
     end
   end
 

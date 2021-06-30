@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Discorb
   class Attachment
     attr_reader :id, :filename, :content_type, :size, :url, :proxy_url, :height, :width
