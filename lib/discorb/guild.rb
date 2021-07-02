@@ -2,6 +2,7 @@
 
 require 'time'
 require_relative 'flag'
+require_relative 'color'
 require_relative 'member'
 require_relative 'channel'
 
@@ -31,7 +32,7 @@ module Discorb
 
     def update!
       Async do
-        _, data = @client.get("/users/#{@id}").wait
+        _, data = @client.get("/guilds/#{@id}").wait
         _set_data(data, false)
       end
     end
@@ -76,7 +77,7 @@ module Discorb
       @afk_timeout = data[:afk_timeout]
       @widget_enabled = data[:widget_enabled]
       @widget_channel_id = data[:widget_channel_id]
-      @roles = nil # TODO: Array<Discorb::Role>
+      @roles = data[:roles].map { |r| Role.new(@client, r) }
       @emojis = data[:emojis].map { |e| CustomEmoji.new(@client, e) }
       @features = data[:features].map { |f| f.downcase.to_sym }
       @mfa_level = self.class.mfa_levels[data[:mfa_level]]
@@ -102,7 +103,7 @@ module Discorb
         @member_count = data[:member_count]
         @channels = data[:channels].map { |c| Channel.make_channel(@client, c) }
         @voice_states = nil # TODO: Array<Discorb::VoiceState>
-        @threads = nil # TODO: Array<Discorb::Thread>
+        @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
         @presences = nil # TODO: Array<Discorb::Presence>
         @max_presences = data[:max_presences]
         @stage_instances = nil # TODO: Array<Discorb::StageInstance>
@@ -129,6 +130,80 @@ module Discorb
 
     class << self
       attr_reader :nsfw_levels, :mfa_levels
+    end
+  end
+
+  class Role < DiscordModel
+    attr_reader :id, :name, :color, :permissions
+
+    def initialize(client, data)
+      @client = client
+      _set_data(data)
+    end
+
+    def to_s
+      "<@&#{@id}>"
+    end
+
+    def color?
+      @color != 0
+    end
+
+    def hoist?
+      @hoist
+    end
+
+    def managed?
+      @managed
+    end
+
+    def mentionable?
+      @mentionable
+    end
+
+    def update!
+      Async do
+        _resp, data = @client.internet.get("/guilds/#{@guild_id}/roles").wait
+        _set_data(data.find { |r| r[:id] == @id })
+      end
+    end
+
+    def inspect
+      "#<#{self.class} @#{@name} id=#{@id}>"
+    end
+
+    class Tag
+      def initialize(data)
+        @bot_id = Snowflake.new(data[:bot_id])
+        @integration_id = Snowflake.new(data[:bot_id])
+        @premium_subscriber = Snowflake.new(data[:bot_id])
+      end
+
+      def bot?
+        !@bot_id.nil?
+      end
+
+      def integration?
+        !@integration_id.nil?
+      end
+
+      def premium_subscriber?
+        !!@premium_subscriber
+      end
+    end
+
+    private
+
+    def _set_data(data)
+      @id = Snowflake.new(data[:id])
+      @name = data[:name]
+      @color = Color.new(data[:color])
+      @hoist = data[:hoist]
+      @position = data[:position]
+      @permissions = nil # TODO: Discorb::Permission
+      @managed = data[:managed]
+      @mentionable = data[:mentionable]
+      @tags = data[:tags] || {}
     end
   end
 end
