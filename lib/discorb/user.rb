@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "overloader"
-require_relative "common"
-require_relative "flag"
-require_relative "error"
-require_relative "avatar"
+require 'overloader'
+require_relative 'common'
+require_relative 'flag'
+require_relative 'error'
+require_relative 'avatar'
 
 module Discorb
   class UserFlag < Flag
@@ -21,7 +21,7 @@ module Discorb
       bug_hunter_level_2: 14,
       verified_bot: 16,
       early_verified_bot_developer: 17,
-      discord_certified_moderator: 18,
+      discord_certified_moderator: 18
     }
   end
 
