@@ -3,6 +3,7 @@
 require 'uri'
 require_relative 'common'
 require_relative 'user'
+require_relative 'guild'
 require_relative 'emoji_table'
 
 module Discorb
@@ -34,6 +35,10 @@ module Discorb
       @available
     end
 
+    def roles?
+      @roles != []
+    end
+
     def self.[](...)
       from_discord_name(...)
     end
@@ -43,7 +48,7 @@ module Discorb
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
-      @roles = nil # TODO: Array<Discorb::Role>
+      @roles = data[:role] ? data[:role].map { |r| Role.new(@client, r) } : []
       @user = User.new(@client, data[:user]) if data[:user]
       @require_colons = data[:require_colons]
       @managed = data[:managed]

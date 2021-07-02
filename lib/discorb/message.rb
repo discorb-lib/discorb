@@ -6,6 +6,7 @@ require_relative 'member'
 require_relative 'channel'
 require_relative 'flag'
 require_relative 'error'
+require_relative 'embed'
 
 module Discorb
   class MessageFlag < Flag
@@ -123,7 +124,7 @@ module Discorb
 
     def update!
       Async do
-        _, data = @client.get("/users/#{@id}").wait
+        _, data = @client.get("/channels/#{@channel_id}/messages/#{@id}").wait
         _set_data(data)
       end
     end
@@ -212,7 +213,7 @@ module Discorb
       @mention_everyone = data[:mention_everyone]
       @mention_roles = nil # TODO: Array<Discorb::Role>
       @attachments = nil # TODO: Array<Discorb::Attachment>
-      @embeds = nil # TODO: Array<Discorb::Embed>
+      @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
       @reactions = nil # TODO: Array<Discorb::Reaction>
       @pinned = data[:pinned]
       @type = self.class.message_type[data[:type]]
@@ -224,7 +225,7 @@ module Discorb
       @sticker = nil # TODO: Discorb::Sticker
       @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
       @interaction = nil # TODO: Discorb::InterctionFeedback
-      @thread = nil # TODO: Discorb::Thread
+      @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = nil # TODO: Array<Discorb::Components>
     end
 

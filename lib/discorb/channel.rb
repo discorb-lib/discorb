@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'time'
+require 'async'
 require_relative 'flag'
 require_relative 'common'
 
@@ -24,13 +25,12 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
-    def self.inherited(subclass)
-      @subclasses = [] if @subclasses.nil?
-      @subclasses << subclass
+    def self.descendants
+      ObjectSpace.each_object(Class).select { |klass| klass < self }
     end
 
     def self.make_channel(client, data)
-      @subclasses.each do |klass|
+      descendants.each do |klass|
         return klass.new(client, data) if !klass.channel_type.nil? && klass.channel_type == data[:type]
       end
     end
@@ -61,6 +61,10 @@ module Discorb
 
     def <=>(other)
       @position <=> other.position
+    end
+
+    def to_s
+      "<##{@id}>"
     end
 
     def parent
@@ -137,6 +141,13 @@ module Discorb
         payload[:parent_id] = parent.id unless parent.nil?
 
         @client.internet.patch("/channels/#{@id}", payload)
+      end
+    end
+
+    def fetch_message(id)
+      Async do
+        _resp, data = @client.internet.get("/channels/#{@id}/messages/#{id}").wait
+        Message.new(@client, data)
       end
     end
 
@@ -293,9 +304,9 @@ module Discorb
 
     private
 
-    def _set_data
+    def _set_data(data)
+      @channels = @client.channels.values.filter { |channel| channel.parent == self }
       super
-      @channels = @client.channels.value.filter { |channel| channel.parent == self }
     end
   end
 end
