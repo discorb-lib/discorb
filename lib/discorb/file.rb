@@ -16,7 +16,7 @@ module Discorb
     end
 
     def image?
-      @content_type.start_with? "image/"
+      @content_type.start_with? 'image/'
     end
   end
 end

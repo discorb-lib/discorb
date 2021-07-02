@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require "time"
-require_relative "flag"
-require_relative "member"
-require_relative "channel"
+require 'time'
+require_relative 'flag'
+require_relative 'member'
+require_relative 'channel'
 
 module Discorb
   class SystemChannelFlag < Flag
     @bits = {
       member_join: 0,
       server_boost: 1,
-      setup_tips: 2,
+      setup_tips: 2
     }
   end
 
@@ -100,7 +100,7 @@ module Discorb
         @joined_at = Time.iso8601(data[:joined_at])
         @large = data[:large]
         @member_count = data[:member_count]
-        @channels = data[:channels].map { |c| Discorb.make_channel(@client, c) }
+        @channels = data[:channels].map { |c| Channel.make_channel(@client, c) }
         @voice_states = nil # TODO: Array<Discorb::VoiceState>
         @threads = nil # TODO: Array<Discorb::Thread>
         @presences = nil # TODO: Array<Discorb::Presence>
@@ -128,13 +128,7 @@ module Discorb
     end
 
     class << self
-      def nsfw_levels
-        @nsfw_levels
-      end
-
-      def mfa_levels
-        @mfa_levels
-      end
+      attr_reader :nsfw_levels, :mfa_levels
     end
   end
 end

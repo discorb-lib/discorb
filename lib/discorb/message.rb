@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "time"
-require_relative "common"
-require_relative "member"
-require_relative "channel"
-require_relative "flag"
-require_relative "error"
+require 'time'
+require_relative 'common'
+require_relative 'member'
+require_relative 'channel'
+require_relative 'flag'
+require_relative 'error'
 
 module Discorb
   class MessageFlag < Flag
@@ -17,7 +17,7 @@ module Discorb
       urgent: 4,
       has_thread: 5,
       ephemeral: 6,
-      loading: 7,
+      loading: 7
     }
   end
 
@@ -37,7 +37,7 @@ module Discorb
         message_id: @message_id,
         channel_id: @channel_id,
         guild_id: @guild_id,
-        fail_if_not_exists: @fail_if_not_exists,
+        fail_if_not_exists: @fail_if_not_exists
       }
     end
 
@@ -60,21 +60,21 @@ module Discorb
 
     def to_hash(other = nil)
       payload = {
-        parse: %w[everyone roles users replied_user],
+        parse: %w[everyone roles users replied_user]
       }
       replied_user = nil_merge(@replied_user, other&.replied_user)
       everyone = nil_merge(@everyone, other&.everyone)
       roles = nil_merge(@roles, other&.roles)
       users = nil_merge(@users, other&.users)
-      payload[:parse].delete("replied_user") if replied_user == false
-      payload[:parse].delete("everyone") if everyone == false
+      payload[:parse].delete('replied_user') if replied_user == false
+      payload[:parse].delete('everyone') if everyone == false
       if (roles == false) || roles.is_a?(Array)
         payload[:roles] = roles.map { |u| u.id.to_s } if roles.is_a? Array
-        payload[:parse].delete("roles")
+        payload[:parse].delete('roles')
       end
       if (users == false) || users.is_a?(Array)
         payload[:users] = users.map { |u| u.id.to_s } if users.is_a? Array
-        payload[:parse].delete("users")
+        payload[:parse].delete('users')
       end
       payload
     end
@@ -113,7 +113,7 @@ module Discorb
       reply: 19,
       application_command: 20,
       thread_starter_message: 21,
-      guild_invite_reminder: 22,
+      guild_invite_reminder: 22
     }
 
     def initialize(client, data)
@@ -161,7 +161,7 @@ module Discorb
         message_id: @id,
         channel_id: @channel_id,
         guild_id: @guild_id,
-        fail_if_not_exists: fail_if_not_exists,
+        fail_if_not_exists: fail_if_not_exists
       }
     end
 
@@ -228,8 +228,8 @@ module Discorb
       @components = nil # TODO: Array<Discorb::Components>
     end
 
-    def self.message_type
-      @message_type
+    class << self
+      attr_reader :message_type
     end
   end
 end

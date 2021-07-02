@@ -33,7 +33,7 @@ event = client.on(:message) do |_task, message|
       message.channel.post("```rb\n#{res.inspect[...1990]}\n```")
     end
   when 'react'
-    message.add_reaction(Discorb::UnicodeEmoji['white_check_mark'])
+    message.add_reaction(Discorb::UnicodeEmoji['thinking'])
   when 'reply'
     message.reply 'Test'
   end

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "uri"
-require_relative "common"
-require_relative "user"
-require_relative "emoji_table"
+require 'uri'
+require_relative 'common'
+require_relative 'user'
+require_relative 'emoji_table'
 
 module Discorb
   class CustomEmoji < DiscordModel
@@ -15,7 +15,7 @@ module Discorb
     end
 
     def to_s
-      "<#{@animated ? "a" : ""}:#{@name}:#{id}>"
+      "<#{@animated ? 'a' : ''}:#{@name}:#{id}>"
     end
 
     def to_uri

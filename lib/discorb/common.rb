@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "time"
-require_relative "version"
+require 'time'
+require_relative 'version'
 
 module Discorb
-  API_BASE_URL = "https://discord.com/api/v9"
+  API_BASE_URL = 'https://discord.com/api/v9'
   USER_AGENT = "DiscordBot (https://github.com/sevenc-nanashi/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
 
   class DiscordModel
@@ -13,7 +13,7 @@ module Discorb
     end
   end
 
-  class Snowflake
+  class Snowflake < DiscordModel
     def initialize(value)
       @value = value.to_i
     end
