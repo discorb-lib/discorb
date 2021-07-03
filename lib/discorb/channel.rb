@@ -2,6 +2,7 @@
 
 require 'time'
 require 'async'
+require_relative 'modules'
 require_relative 'flag'
 require_relative 'common'
 
@@ -41,6 +42,10 @@ module Discorb
 
     def type
       self.class.channel_type
+    end
+
+    def post_url
+      "/channels/#{@id}/messages"
     end
 
     private
@@ -95,36 +100,16 @@ module Discorb
   end
 
   class TextChannel < GuildChannel
-    attr_reader :topic, :nsfw, :last_message_id, :rate_limit_per_user, :last_pin_timestamp
+    attr_reader :topic, :nsfw, :last_message_id, :rate_limit_per_user, :last_pin_timestamp, :threads
+
+    include Messageable
 
     @channel_type = 0
 
     alias slowmode rate_limit_per_user
-
-    def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, message_reference: nil, components: nil)
-      Async do |_task|
-        payload = {}
-        payload[:content] = content if content
-        payload[:tts] = tts
-        tmp_embed = if embed
-                      [embed]
-                    elsif embeds
-                      embeds
-                    end
-        payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
-        payload[:allowed_mentions] =
-          allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
-        payload[:message_reference] = message_reference.to_reference if message_reference
-        if components
-          tmp_components = if components.filter { |c| c.is_a? Array }.length.zero?
-                             [components].map { |c| c }
-                           else
-                             components.map { |c| c.is_a?(Array) ? c : [c] }
-                           end
-          payload[:components] = tmp_components.map { |c| { type: 1, components: c.map(&:to_hash) } }
-        end
-        Message.new(@client, @client.internet.post("/channels/#{id}/messages", payload).wait[1])
-      end
+    def initialize(client, data)
+      super
+      @threads = []
     end
 
     def edit(name: nil, announce: nil, position: nil, topic: nil, nsfw: nil, slowmode: nil, category: nil, parent: nil)
@@ -188,8 +173,10 @@ module Discorb
     end
   end
 
-  class ThreadChannel < DiscordModel
+  class ThreadChannel < Channel
     attr_reader :id, :name, :type, :message_count, :member_count, :rate_limit_per_user
+
+    include Messageable
 
     alias slowmode rate_limit_per_user
     @channel_type = nil
@@ -226,6 +213,9 @@ module Discorb
     class << self
       attr_reader :channel_type
     end
+    def post_url
+      "/channels/#{@id}/messages"
+    end
 
     private
 
@@ -240,7 +230,7 @@ module Discorb
     end
   end
 
-  class PublicThreadChannel < GuildChannel
+  class PublicThreadChannel < ThreadChannel
     attr_reader :bitrate, :user_limit
 
     @channel_type = 11
@@ -265,7 +255,7 @@ module Discorb
     end
   end
 
-  class PrivateThreadChannel < GuildChannel
+  class PrivateThreadChannel < ThreadChannel
     attr_reader :bitrate, :user_limit
 
     @channel_type = 12

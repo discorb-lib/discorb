@@ -2,6 +2,7 @@
 
 require 'time'
 require_relative 'flag'
+require_relative 'cache'
 require_relative 'color'
 require_relative 'member'
 require_relative 'channel'
@@ -57,6 +58,33 @@ module Discorb
       "#<#{self.class} \"#{@name}\" id=#{@id}>"
     end
 
+    def owner?
+      @owner_id == @client.user.id
+    end
+
+    def large?
+      @large
+    end
+
+    def widget_enabled?
+      @widget_enabled
+    end
+
+    def available?
+      !@unavailable
+    end
+
+    def leave
+      Async do
+        @client.internet.delete("/users/@me/guilds/#{@id}", nil).wait
+        @client.guilds.delete(@id)
+      end
+    end
+
+    class << self
+      attr_reader :nsfw_levels, :mfa_levels
+    end
+
     private
 
     def _set_data(data, is_create_event)
@@ -67,7 +95,7 @@ module Discorb
       end
       @unavailable = false
       @name = data[:name]
-      @members = data[:members].map { |m| Member.new(@client, m[:user], m) }
+      @members = data[:members].map { |m| Member.new(@client, @id, m[:user], m) }
       @splash = data[:splash]
       @discovery_splash = data[:discovery_splash]
       @owner_id = data[:owner_id]
@@ -77,7 +105,10 @@ module Discorb
       @afk_timeout = data[:afk_timeout]
       @widget_enabled = data[:widget_enabled]
       @widget_channel_id = data[:widget_channel_id]
-      @roles = data[:roles].map { |r| Role.new(@client, r) }
+      @roles = Cache.new
+      data[:roles].each do |r|
+        Role.new(@client, self, r)
+      end
       @emojis = data[:emojis].map { |e| CustomEmoji.new(@client, e) }
       @features = data[:features].map { |f| f.downcase.to_sym }
       @mfa_level = self.class.mfa_levels[data[:mfa_level]]
@@ -111,34 +142,20 @@ module Discorb
 
       @client.guilds[@id] = self
     end
-
-    def owner?
-      @owner_id == @client.user.id
-    end
-
-    def large?
-      @large
-    end
-
-    def widget_enabled?
-      @widget_enabled
-    end
-
-    def available?
-      !@unavailable
-    end
-
-    class << self
-      attr_reader :nsfw_levels, :mfa_levels
-    end
   end
 
   class Role < DiscordModel
-    attr_reader :id, :name, :color, :permissions
+    attr_reader :id, :name, :color, :permissions, :position
 
-    def initialize(client, data)
+    include Comparable
+    def initialize(client, guild, data)
       @client = client
+      @guild = guild
       _set_data(data)
+    end
+
+    def <=>(other)
+      @position <=> other.position
     end
 
     def to_s
@@ -173,6 +190,8 @@ module Discorb
     end
 
     class Tag
+      attr_reader :bot_id, :integration_id, :premium_subscriber
+
       def initialize(data)
         @bot_id = Snowflake.new(data[:bot_id])
         @integration_id = Snowflake.new(data[:bot_id])
@@ -204,6 +223,7 @@ module Discorb
       @managed = data[:managed]
       @mentionable = data[:mentionable]
       @tags = data[:tags] || {}
+      @guild.roles[@id] = self
     end
   end
 end

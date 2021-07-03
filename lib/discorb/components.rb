@@ -76,4 +76,93 @@ module Discorb
       end
     end
   end
+
+  class SelectMenu
+    attr_accessor :custom_id, :options, :position, :min_values, :max_values
+
+    def initialize(custom_id, options, placeholder: nil, min_values: 1, max_values: 1)
+      @custom_id = custom_id
+      @options = options
+      @placeholder = placeholder
+      @min_values = min_values
+      @max_values = max_values
+    end
+
+    def disabled?
+      @disabled
+    end
+
+    def to_hash
+      {
+        type: 3,
+        custom_id: @custom_id,
+        options: @options.map(&:to_hash),
+        placeholder: @placeholder,
+        min_values: @min_values,
+        max_values: @max_values
+      }
+    end
+
+    class Option
+      attr_accessor :label, :value, :description, :emoji, :default
+
+      def initialize(label, value, description: nil, emoji: nil, default: false)
+        @label = label
+        @value = value
+        @description = description
+        @emoji = emoji
+        @default = default
+      end
+
+      def to_hash
+        {
+          label: @label,
+          value: @value,
+          description: @description,
+          emoji: hash_emoji(@emoji),
+          default: @default
+        }
+      end
+
+      def hash_emoji(emoji)
+        case emoji
+        when UnicodeEmoji
+          {
+            id: nil,
+            name: emoji.to_s,
+            animated: false
+          }
+        when CustomEmoji
+          {
+            id: emoji.id,
+            name: emoji.name,
+            animated: emoji.animated?
+          }
+        end
+      end
+    end
+
+    def self.[](...)
+      new(...)
+    end
+
+    private
+
+    def hash_emoji(emoji)
+      case emoji
+      when UnicodeEmoji
+        {
+          id: nil,
+          name: emoji.to_s,
+          animated: false
+        }
+      when CustomEmoji
+        {
+          id: emoji.id,
+          name: emoji.name,
+          animated: emoji.animated?
+        }
+      end
+    end
+  end
 end
