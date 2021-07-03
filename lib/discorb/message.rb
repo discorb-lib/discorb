@@ -202,9 +202,10 @@ module Discorb
 
     def _set_data(data)
       @id = Snowflake.new(data[:id])
-      @author = Member.new(@client, data[:author], data[:member])
+
       @channel_id = data[:channel_id]
       @guild_id = data[:guild_id]
+      @author = Member.new(@client, @guild_id, data[:author], data[:member])
       @content = data[:content]
       @created_at = data[:timestamp]
       @updated_at = data[:edited_timestamp]
