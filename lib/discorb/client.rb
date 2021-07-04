@@ -13,33 +13,13 @@ require_relative 'cache'
 require_relative 'guild'
 require_relative 'error'
 require_relative 'log'
+require_relative 'event'
+require_relative 'extension'
 
 require 'async'
 require 'async/websocket/client'
 
 module Discorb
-  class Event
-    attr_reader :block, :id
-
-    def initialize(block, id)
-      @block = block
-      @id = id
-      @rescue = nil
-    end
-
-    def call(...)
-      @block.call(...)
-    end
-
-    def rescue(&block)
-      if block_given?
-        @rescue = block
-      else
-        @rescue
-      end
-    end
-  end
-
   class Client
     attr_accessor :intents
     attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions, :user, :guilds, :users, :channels, :emojis
@@ -60,9 +40,9 @@ module Discorb
       @tasks = []
     end
 
-    def on(event_name, id: nil, &block)
+    def on(event_name, id: nil, **discriminator, &block)
       @events[event_name] = [] if @events[event_name].nil?
-      ne = Event.new(block, id)
+      ne = Event.new(block, id, discriminator)
       @events[event_name] << ne
       ne
     end
@@ -73,6 +53,10 @@ module Discorb
 
     def dispatch(event_name, *args)
       Async do |_task|
+        if @events[event_name].nil?
+          @log.debug "Event #{event_name} doesn't have any proc, skipping"
+          next
+        end
         @log.debug "Dispatching event #{event_name}"
         @events[event_name].each do |block|
           lambda { |event_args|
@@ -136,6 +120,19 @@ module Discorb
 
     def inspect
       "#<#{self.class} user=\"#{user}\">"
+    end
+
+    def extend(mod)
+      if mod.respond_to?(:events)
+        mod.events.each do |name, events|
+          @events[name] = [] if @events[name].nil?
+          events.each do |event|
+            @events[name] << event
+          end
+        end
+        mod.client = self
+      end
+      super(mod)
     end
 
     private
