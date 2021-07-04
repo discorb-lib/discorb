@@ -6,6 +6,7 @@ require_relative 'cache'
 require_relative 'color'
 require_relative 'member'
 require_relative 'channel'
+require_relative 'permission'
 
 module Discorb
   class SystemChannelFlag < Flag
@@ -74,6 +75,10 @@ module Discorb
       !@unavailable
     end
 
+    def me
+      @members[@client.user.id]
+    end
+
     def leave
       Async do
         @client.internet.delete("/users/@me/guilds/#{@id}", nil).wait
@@ -104,7 +109,7 @@ module Discorb
       @splash = data[:splash]
       @discovery_splash = data[:discovery_splash]
       @owner_id = data[:owner_id]
-      @permissions = nil # TODO: Discorb::Permissions
+      @permissions = Permission.new(data[:permissions].to_i)
       @region = data[:region]
       @afk_channel_id = data[:afk_channel_id]
       @afk_timeout = data[:afk_timeout]
@@ -221,7 +226,7 @@ module Discorb
       @color = Color.new(data[:color])
       @hoist = data[:hoist]
       @position = data[:position]
-      @permissions = nil # TODO: Discorb::Permission
+      @permissions = Permission.new(data[:permissions].to_i)
       @managed = data[:managed]
       @mentionable = data[:mentionable]
       @tags = data[:tags] || {}

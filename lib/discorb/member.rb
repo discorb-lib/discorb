@@ -5,7 +5,7 @@ require_relative 'user'
 
 module Discorb
   class Member < User
-    attr_reader :premium_since, :nick, :joined_at, :custom_avatar, :display_avatar, :name, :avatar
+    attr_reader :premium_since, :nick, :joined_at, :custom_avatar, :display_avatar, :avatar
 
     def initialize(client, guild_id, user_data, member_data)
       @guild_id = guild_id
@@ -23,6 +23,10 @@ module Discorb
 
     def roles
       @role_ids.map { |r| guild.roles[r] }
+    end
+
+    def permissions
+      roles.map(&:permissions).sum(Permission.new(0))
     end
 
     def hoisted_role
