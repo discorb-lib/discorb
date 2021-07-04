@@ -4,7 +4,6 @@ require 'overloader'
 require_relative 'common'
 require_relative 'flag'
 require_relative 'error'
-require_relative 'avatar'
 require_relative 'color'
 
 module Discorb

@@ -172,7 +172,7 @@ module Discorb
     end
 
     def handle_gateway(payload)
-      Async do
+      Async do |task|
         data = payload[:d]
         @last_s = payload[:s] if payload[:s]
         @log.debug "Received message with opcode #{payload[:op]} from gateway: #{data}"

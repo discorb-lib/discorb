@@ -31,6 +31,21 @@ module Discorb
       @cache.values
     end
 
+    def method_missing(name, args, kwargs)
+      if values.respond_to?(name)
+        values.send(name, *args, **kwargs)
+      else
+        super
+      end
+    end
+
+    def respond_to_missing?(name, args, kwargs)
+      if values.respond_to?(name)
+        true
+      else
+        super
+      end
+    end
     alias [] get
     alias []= register
   end

@@ -61,13 +61,13 @@ module Discorb
 
     def to_hash(other = nil)
       payload = {
-        parse: %w[everyone roles users replied_user]
+        parse: %w[everyone roles users]
       }
       replied_user = nil_merge(@replied_user, other&.replied_user)
       everyone = nil_merge(@everyone, other&.everyone)
       roles = nil_merge(@roles, other&.roles)
       users = nil_merge(@users, other&.users)
-      payload[:parse].delete('replied_user') if replied_user == false
+      payload[:replied_user] = replied_user
       payload[:parse].delete('everyone') if everyone == false
       if (roles == false) || roles.is_a?(Array)
         payload[:roles] = roles.map { |u| u.id.to_s } if roles.is_a? Array
@@ -157,6 +157,10 @@ module Discorb
       @content
     end
 
+    def jump_url
+      "https://discord.com/channels/#{guild&.id || '@me'}/#{channel.id}/#{@id}"
+    end
+
     def to_reference(fail_if_not_exists: true)
       {
         message_id: @id,
@@ -205,10 +209,10 @@ module Discorb
 
       @channel_id = data[:channel_id]
       @guild_id = data[:guild_id]
-      @author = Member.new(@client, @guild_id, data[:author], data[:member])
+      @author = data[:member].nil? ? @client.guilds[@guild_id].members[data[:author][:id]] : Member.new(@client, @guild_id, data[:author], data[:member])
       @content = data[:content]
-      @created_at = data[:timestamp]
-      @updated_at = data[:edited_timestamp]
+      @created_at = Time.iso8601(data[:timestamp])
+      @updated_at = data[:edited_timestamp].nil? ? nil : Time.iso8601(data[:edited_timestamp])
 
       @tts = data[:tts]
       @mention_everyone = data[:mention_everyone]
