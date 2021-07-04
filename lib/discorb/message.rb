@@ -216,7 +216,7 @@ module Discorb
 
       @tts = data[:tts]
       @mention_everyone = data[:mention_everyone]
-      @mention_roles = nil # TODO: Array<Discorb::Role>
+      @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
       @attachments = nil # TODO: Array<Discorb::Attachment>
       @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
       @reactions = nil # TODO: Array<Discorb::Reaction>

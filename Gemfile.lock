@@ -38,6 +38,9 @@ GEM
       rexml
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2021.0225)
     nio4r (2.5.7)
     nokogiri (1.11.7-x86-mingw32)
       racc (~> 1.4)
@@ -104,6 +107,7 @@ DEPENDENCIES
   async-http
   async-websocket
   discorb!
+  mime-types (~> 3.3)
   overloader (~> 0.2.1)
   rake (~> 13.0)
   ricecream (~> 0.2.0)
