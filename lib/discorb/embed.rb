@@ -31,8 +31,8 @@ module Discorb
         @timestamp = data[:timestamp] ? Time.iso8601(data[:timestamp]) : nil
         @type = data[:type]
         @color = data[:color] ? Color.new(data[:color]) : nil
-        @footer = data[:footer] ? Footer.new(**data[:footer]) : nil
-        @author = data[:author] ? Author.new(**data[:author]) : nil
+        @footer = data[:footer] ? Footer.new(data[:footer][:text], **data[:footer]) : nil
+        @author = data[:author] ? Author.new(data[:author][:name], **data[:author]) : nil
         @thumbnail = data[:thumbnail] ? Thumbnail.new(data[:thumbnail]) : nil
         @image = data[:image] ? Image.new(data[:image]) : nil
         @video = data[:video] ? Video.new(data[:video]) : nil
@@ -87,16 +87,16 @@ module Discorb
     end
 
     class Footer
-      attr_accessor :name, :icon
+      attr_accessor :text, :icon
 
-      def initialize(name, icon: nil)
-        @name = name
+      def initialize(text, icon: nil)
+        @text = text
         @icon = icon
       end
 
       def to_hash
         {
-          name: @name,
+          text: @text,
           icon_url: @icon
         }
       end
