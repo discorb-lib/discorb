@@ -31,8 +31,8 @@ module Discorb
         @timestamp = data[:timestamp] ? Time.iso8601(data[:timestamp]) : nil
         @type = data[:type]
         @color = data[:color] ? Color.new(data[:color]) : nil
-        @footer = data[:footer] ? Footer.new(data[:footer][:text], **data[:footer]) : nil
-        @author = data[:author] ? Author.new(data[:author][:name], **data[:author]) : nil
+        @footer = data[:footer] ? Footer.new(data[:footer][:text], icon: data[:footer][:icon]) : nil
+        @author = data[:author] ? Author.new(data[:author][:name], icon: data[:author][:icon], url: data[:author][:url]) : nil
         @thumbnail = data[:thumbnail] ? Thumbnail.new(data[:thumbnail]) : nil
         @image = data[:image] ? Image.new(data[:image]) : nil
         @video = data[:video] ? Video.new(data[:video]) : nil
