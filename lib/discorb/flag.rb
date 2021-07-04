@@ -26,8 +26,32 @@ module Discorb
       @values.key?(name.to_s.delete_suffix('?').to_sym) ? true : super
     end
 
+    def +(other)
+      self.class.new(@value | other.value)
+    end
+
+    def -(other)
+      self.class.new(@value & (@value ^ other.value))
+    end
+
+    def |(other)
+      self.class.new(@value | other.value)
+    end
+
+    def &(other)
+      self.class.new(@value & other.value)
+    end
+
+    def ^(other)
+      self.class.new(@value ^ other.value)
+    end
+
     class << self
       attr_reader :bits
+
+      def max_value
+        2**@bits.values.max - 1
+      end
     end
   end
 end
