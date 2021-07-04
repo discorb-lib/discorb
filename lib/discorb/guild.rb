@@ -18,7 +18,7 @@ module Discorb
 
   class Guild < DiscordModel
     attr_reader :id, :name, :splash, :discovery_splash, :owner_id, :permissions, :region, :afk_timeout, :roles, :emojis, :features, :mfa_level,
-                :application_id, :system_channel_flags, :joined_at, :large, :unavailable, :member_count,
+                :application_id, :system_channel_flags, :joined_at, :large, :unavailable, :member_count, :icon,
                 :voice_states, :members, :channels, :threads, :presences, :max_presences, :max_members, :vanity_url_code,
                 :description, :banner, :premium_tier, :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
                 :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances
@@ -93,9 +93,14 @@ module Discorb
         @unavailable = true
         return
       end
+      @client.guilds[@id] = self
+      @icon = data[:icon].nil? ? nil : Asset.new(self, data[:icon])
       @unavailable = false
       @name = data[:name]
-      @members = data[:members].map { |m| Member.new(@client, @id, m[:user], m) }
+      @members = Discorb::Cache.new
+      data[:members].each do |m|
+        Member.new(@client, @id, m[:user], m)
+      end
       @splash = data[:splash]
       @discovery_splash = data[:discovery_splash]
       @owner_id = data[:owner_id]
@@ -127,20 +132,17 @@ module Discorb
       @approximate_presence_count = data[:approximate_presence_count]
       @welcome_screen = nil # TODO: Discorb::WelcomeScreen
       @nsfw_level = self.class.nsfw_levels[data[:nsfw_level]]
+      return unless is_create_event
 
-      if is_create_event
-        @joined_at = Time.iso8601(data[:joined_at])
-        @large = data[:large]
-        @member_count = data[:member_count]
-        @channels = data[:channels].map { |c| Channel.make_channel(@client, c) }
-        @voice_states = nil # TODO: Array<Discorb::VoiceState>
-        @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
-        @presences = nil # TODO: Array<Discorb::Presence>
-        @max_presences = data[:max_presences]
-        @stage_instances = nil # TODO: Array<Discorb::StageInstance>
-      end
-
-      @client.guilds[@id] = self
+      @joined_at = Time.iso8601(data[:joined_at])
+      @large = data[:large]
+      @member_count = data[:member_count]
+      @channels = data[:channels].map { |c| Channel.make_channel(@client, c) }
+      @voice_states = nil # TODO: Array<Discorb::VoiceState>
+      @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
+      @presences = nil # TODO: Array<Discorb::Presence>
+      @max_presences = data[:max_presences]
+      @stage_instances = nil # TODO: Array<Discorb::StageInstance>
     end
   end
 

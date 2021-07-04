@@ -14,3 +14,5 @@ gem 'async-websocket'
 gem 'solargraph', '~> 0.42.3'
 
 gem 'overloader', '~> 0.2.1'
+
+gem 'ricecream', '~> 0.2.0'

@@ -4,7 +4,7 @@ require 'overloader'
 require_relative 'common'
 require_relative 'flag'
 require_relative 'error'
-require_relative 'avatar'
+require_relative 'asset'
 
 module Discorb
   class UserFlag < Flag
@@ -40,6 +40,10 @@ module Discorb
       end
     end
 
+    def name
+      @username
+    end
+
     def bot?
       @bot
     end
@@ -57,7 +61,7 @@ module Discorb
       @flag = UserFlag.new(data[:public_flags])
       @email = data[:email]
       @discriminator = data[:discriminator].to_i
-      @avatar = Avatar.new(self, data[:avatar])
+      @avatar = Asset.new(self, data[:avatar])
       @bot = data[:bot]
       @raw_data = data
       @client.users[@id] = self
