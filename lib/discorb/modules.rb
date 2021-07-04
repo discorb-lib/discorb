@@ -3,7 +3,7 @@
 require_relative 'components'
 module Discorb
   module Messageable
-    def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, message_reference: nil, components: nil)
+    def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, message_reference: nil, components: nil, attachments: nil)
       Async do |_task|
         payload = {}
         payload[:content] = content if content
@@ -37,7 +37,31 @@ module Discorb
           tmp_components << tmp_row
           payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
-        Message.new(@client, @client.internet.post(post_url, payload).wait[1])
+        if attachments
+          boundary = "DiscorbChannels#{@channel_id}MessagesPost#{Time.now.to_f}"
+          headers = {
+            'content-type'=> "multipart/form-data; boundary=#{boundary}"
+          }
+          str_payloads = [<<~HTTP
+                        Content-Disposition: form-data; name="payload_json"
+                        Content-Type: application/json
+
+                        #{payload.to_json}
+          HTTP
+          ]
+          attachments.each do |file|
+            str_payloads << <<~HTTP
+                            Content-Disposition: form-data; name="file"; filename="#{file.filename}"
+                            Content-Type: #{file.content_type}
+
+                            #{file.io.read}
+            HTTP
+          end
+          payload = "--#{boundary}\n#{str_payloads.join("\n--#{boundary}\n")}\n--#{boundary}--"
+        else
+          headers = {}
+        end
+        Message.new(@client, @client.internet.post(post_url, payload, headers: headers).wait[1])
       end
     end
   end

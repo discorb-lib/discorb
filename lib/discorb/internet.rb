@@ -13,9 +13,9 @@ module Discorb
       super()
     end
 
-    def get(path, **kwargs)
+    def get(path, headers: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers, **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -32,9 +32,9 @@ module Discorb
       end
     end
 
-    def post(path, body, **kwargs)
+    def post(path, body, headers: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -50,9 +50,9 @@ module Discorb
       end
     end
 
-    def patch(path, body, **kwargs)
+    def patch(path, body, headers: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -68,9 +68,9 @@ module Discorb
       end
     end
 
-    def put(path, body, **kwargs)
+    def put(path, body, headers: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -86,9 +86,9 @@ module Discorb
       end
     end
 
-    def delete(path, body, **kwargs)
+    def delete(path, body, headers: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -124,17 +124,19 @@ module Discorb
       end
     end
 
-    def get_headers(body = nil)
+    def get_headers(headers, body = nil)
       if body.nil?
-        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
-      else
-        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}", 'content-type' => 'application/json' }
-      end
+          { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
+        else
+          { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}", 'content-type' => 'application/json' }
+        end.merge(headers || {})
     end
 
     def get_body(body)
       if body.nil?
         []
+      elsif body.is_a?(String)
+        [body]
       else
         [body.to_json]
       end
