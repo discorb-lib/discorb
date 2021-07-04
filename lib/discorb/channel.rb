@@ -52,8 +52,7 @@ module Discorb
 
     def _set_data(data)
       @id = Snowflake.new(data[:id])
-      @name = name
-      @guild_id = data[:guild_id]
+      @name = data[:name]
       @client.channels[@id] = self
     end
   end
