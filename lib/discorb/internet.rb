@@ -126,10 +126,11 @@ module Discorb
 
     def get_headers(headers, body = nil)
       if body.nil?
-          { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
-        else
-          { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}", 'content-type' => 'application/json' }
-        end.merge(headers || {})
+        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
+      else
+        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}",
+          'content-type' => 'application/json' }
+      end.merge(headers || {})
     end
 
     def get_body(body)
