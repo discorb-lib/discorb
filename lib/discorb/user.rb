@@ -60,7 +60,7 @@ module Discorb
       @id = Snowflake.new(data[:id])
       @flag = UserFlag.new(data[:public_flags])
       @email = data[:email]
-      @discriminator = data[:discriminator].to_i
+      @discriminator = data[:discriminator]
       @avatar = Asset.new(self, data[:avatar])
       @bot = data[:bot]
       @raw_data = data
