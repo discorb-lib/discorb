@@ -2,8 +2,8 @@
 
 module Discorb
   class Cache
-    def initialize
-      @cache = {}
+    def initialize(hash = {})
+      @cache = hash
     end
 
     def register(id, body)
