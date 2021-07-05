@@ -4,8 +4,10 @@ require 'time'
 require_relative 'common'
 require_relative 'member'
 require_relative 'channel'
+require_relative 'components'
 require_relative 'flag'
 require_relative 'error'
+require_relative 'file'
 require_relative 'embed'
 
 module Discorb
@@ -89,8 +91,10 @@ module Discorb
   end
 
   class Message < DiscordModel
-    attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles, :mention_channels, :attachments, :embeds, :reactions,
-                :webhook_id, :type, :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message, :interaction, :thread, :components
+    attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles,
+                :mention_channels, :attachments, :embeds, :reactions,                :webhook_id, :type,
+                :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message,
+                :interaction, :thread, :components
 
     @message_type = {
       default: 0,
@@ -209,7 +213,12 @@ module Discorb
 
       @channel_id = data[:channel_id]
       @guild_id = data[:guild_id]
-      @author = data[:member].nil? ? @client.guilds[@guild_id].members[data[:author][:id]] : Member.new(@client, @guild_id, data[:author], data[:member])
+      @author = if data[:member].nil?
+                  @client.guilds[@guild_id].members[data[:author][:id]]
+                else
+                  Member.new(@client,
+                             @guild_id, data[:author], data[:member])
+                end
       @content = data[:content]
       @created_at = Time.iso8601(data[:timestamp])
       @updated_at = data[:edited_timestamp].nil? ? nil : Time.iso8601(data[:edited_timestamp])
@@ -217,7 +226,7 @@ module Discorb
       @tts = data[:tts]
       @mention_everyone = data[:mention_everyone]
       @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
-      @attachments = nil # TODO: Array<Discorb::Attachment>
+      @attachments = data[:attachments].map { |a| Attachment.new(a) }
       @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
       @reactions = nil # TODO: Array<Discorb::Reaction>
       @pinned = data[:pinned]
@@ -225,13 +234,13 @@ module Discorb
       @activity = nil # TODO: Discorb::MessageActivity
       @application = nil # TODO: Discorb::Application
       @application_id = data[:application_id]
-      @message_reference = data[:message_reference] ? MessageReference.from_hash(data[:message_reference]) : nil # TODO: Discorb::MessageReference
+      @message_reference = data[:message_reference] ? MessageReference.from_hash(data[:message_reference]) : nil
       @flag = MessageFlag.new(0b111 - data[:flags])
       @sticker = nil # TODO: Discorb::Sticker
       @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
       @interaction = nil # TODO: Discorb::InterctionFeedback
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
-      @components = nil # TODO: Array<Discorb::Components>
+      @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
     end
 
     class << self
