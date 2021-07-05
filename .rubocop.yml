@@ -18,10 +18,10 @@ Lint/MissingSuper:
   Enabled: false
 
 Layout/LineLength:
-  Max: 240
+  Max: 160
 
 Metrics/BlockLength:
-  Max: 240
+  Max: 160
 
 Style/Documentation:
   Enabled: false
