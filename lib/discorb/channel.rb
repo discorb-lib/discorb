@@ -5,6 +5,7 @@ require 'async'
 require_relative 'modules'
 require_relative 'flag'
 require_relative 'common'
+require_relative 'error'
 
 module Discorb
   class Channel < DiscordModel
@@ -34,6 +35,8 @@ module Discorb
       descendants.each do |klass|
         return klass.new(client, data) if !klass.channel_type.nil? && klass.channel_type == data[:type]
       end
+      warn NotSupportedWarning.new("Channel type #{data[:type]}")
+      GuildChannel.new(client, data)
     end
 
     class << self
@@ -92,8 +95,11 @@ module Discorb
     def _set_data(data)
       @guild_id = data[:guild_id]
       @position = data[:position]
-      @permission_overwrites = nil # TODO: Hash<Discorb::PermissionOverwrite>
+      @permission_overwrites = data[:permission_overwrites].map do |ow|
+        [(ow[:type] == 1 ? guild.roles : guild.members)[ow[:id]], PermissionOverwrite.new(ow[:allow], ow[:deny])]
+      end.to_h
       @parent_id = data[:parent_id]
+
       super
     end
   end
@@ -147,17 +153,24 @@ module Discorb
     end
   end
 
+  class NewsChannel < TextChannel
+    include Messageable
+
+    @channel_type = 5
+  end
+
   class VoiceChannel < GuildChannel
     attr_reader :bitrate, :user_limit
 
     @channel_type = 2
-    def edit(name: nil, position: nil, bitrate: nil, user_limit: nil)
+    def edit(name: nil, position: nil, bitrate: nil, user_limit: nil, rtc_region: nil)
       Async do
         payload = {}
         payload[:name] = name if name
         payload[:position] = position if position
         payload[:bitrate] = bitrate unless bitrate.nil?
-        payload[:user_limit] = user_limit unless user_limit.nil?
+        payload[:user_limit] = user_limit == false ? nil : user_limit unless user_limit.nil?
+        payload[:rtc_region] = rtc_region == false ? nil : rtc_region unless rtc_region.nil?
 
         @client.internet.patch("/channels/#{@id}", payload)
       end
@@ -167,7 +180,35 @@ module Discorb
 
     def _set_data(data)
       @bitrate = data[:bitrate]
+      @user_limit = (data[:user_limit]).zero? ? nil : data[:user_limit]
+      @rtc_region = data[:rtc_region]&.to_sym
+      @video_quality_mode = data[:video_quality_mode] == 1 ? :auto : :full
+      super
+    end
+  end
+
+  class StageChannel < GuildChannel
+    attr_reader :bitrate, :user_limit
+
+    @channel_type = 13
+    def edit(name: nil, position: nil, bitrate: nil, user_limit: nil)
+      Async do
+        payload = {}
+        payload[:name] = name if name
+        payload[:position] = position if position
+        payload[:bitrate] = bitrate unless bitrate.nil?
+        payload[:user_limit] = user_limit unless user_limit.nil?
+        @client.internet.patch("/channels/#{@id}", payload)
+      end
+    end
+
+    private
+
+    def _set_data(data)
+      @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
+      @topic = data[:topic]
+      @rtc_region = data[:rtc_region]&.to_sym
       super
     end
   end
