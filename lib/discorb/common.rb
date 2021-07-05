@@ -8,6 +8,14 @@ module Discorb
   USER_AGENT = "DiscordBot (https://github.com/sevenc-nanashi/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
 
   class DiscordModel
+    def ==(other)
+      if respond_to?(:id) && other.respond_to?(:id)
+        id == other.id
+      else
+        super
+      end
+    end
+
     def discorb?
       true
     end
