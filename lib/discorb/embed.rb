@@ -11,7 +11,8 @@ module Discorb
     attr_accessor :title, :description, :url, :timestamp, :color, :author, :fields, :footer
     attr_reader :image, :thumbnail, :type
 
-    def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil, fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)
+    def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil,
+                   fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)
       if data.nil?
         @title = title
         @description = description
@@ -32,12 +33,15 @@ module Discorb
         @type = data[:type]
         @color = data[:color] ? Color.new(data[:color]) : nil
         @footer = data[:footer] ? Footer.new(data[:footer][:text], icon: data[:footer][:icon]) : nil
-        @author = data[:author] ? Author.new(data[:author][:name], icon: data[:author][:icon], url: data[:author][:url]) : nil
+        @author = if data[:author]
+                    Author.new(data[:author][:name], icon: data[:author][:icon],
+                                                     url: data[:author][:url])
+                  end
         @thumbnail = data[:thumbnail] ? Thumbnail.new(data[:thumbnail]) : nil
         @image = data[:image] ? Image.new(data[:image]) : nil
         @video = data[:video] ? Video.new(data[:video]) : nil
         @provider = data[:provider] ? Provider.new(data[:provider]) : nil
-        @fields = data[:fields] ? data[:fields].map { |f| Field.new(**f) } : []
+        @fields = data[:fields] ? data[:fields].map { |f| Field.new(f[:name], f[:value], inline: f[:inline]) } : []
       end
     end
 

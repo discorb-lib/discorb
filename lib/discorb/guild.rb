@@ -18,10 +18,11 @@ module Discorb
   end
 
   class Guild < DiscordModel
-    attr_reader :id, :name, :splash, :discovery_splash, :owner_id, :permissions, :region, :afk_timeout, :roles, :emojis, :features, :mfa_level,
-                :application_id, :system_channel_flags, :joined_at, :large, :unavailable, :member_count, :icon,
-                :voice_states, :members, :channels, :threads, :presences, :max_presences, :max_members, :vanity_url_code,
-                :description, :banner, :premium_tier, :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
+    attr_reader :id, :name, :splash, :discovery_splash, :owner_id, :permissions, :region, :afk_timeout, :roles, :emojis,
+                :features, :mfa_level, :application_id, :system_channel_flags, :joined_at, :large,
+                :unavailable, :member_count, :icon, :voice_states, :members, :channels, :threads,
+                :presences, :max_presences, :max_members, :vanity_url_code, :description, :banner, :premium_tier,
+                :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
                 :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances
 
     @mfa_levels = %i[none low medium high very_high]
@@ -119,7 +120,10 @@ module Discorb
       data[:roles].each do |r|
         Role.new(@client, self, r)
       end
-      @emojis = data[:emojis].map { |e| CustomEmoji.new(@client, e) }
+      @emojis = Cache.new
+      data[:emojis].map do |e|
+        CustomEmoji.new(@client, self, e)
+      end
       @features = data[:features].map { |f| f.downcase.to_sym }
       @mfa_level = self.class.mfa_levels[data[:mfa_level]]
       @system_channel_id = data[:system_channel_id]
@@ -135,14 +139,15 @@ module Discorb
       @max_video_channel_users = data[:max_video_channel_users]
       @approximate_member_count = data[:approximate_member_count]
       @approximate_presence_count = data[:approximate_presence_count]
-      @welcome_screen = nil # TODO: Discorb::WelcomeScreen
+      @welcome_screen = data[:welcome_screen].nil? ? nil : WelcomeScreen.new(@client, self, data[:welcome_screen])
       @nsfw_level = self.class.nsfw_levels[data[:nsfw_level]]
       return unless is_create_event
 
       @joined_at = Time.iso8601(data[:joined_at])
       @large = data[:large]
       @member_count = data[:member_count]
-      @channels = data[:channels].map { |c| Channel.make_channel(@client, c) }
+      @channels = Cache.new(data[:channels].map { |c| Channel.make_channel(@client, c) }.map { |c| [c.id, c] }.to_h)
+
       @voice_states = nil # TODO: Array<Discorb::VoiceState>
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
       @presences = nil # TODO: Array<Discorb::Presence>
@@ -231,6 +236,40 @@ module Discorb
       @mentionable = data[:mentionable]
       @tags = data[:tags] || {}
       @guild.roles[@id] = self
+    end
+  end
+
+  class WelcomeScreen < DiscordModel
+    attr_reader :description, :channels, :guild
+
+    def initialize(client, guild, data)
+      @client = client
+      @description = data[:description]
+      @guild = guild
+    end
+
+    class Channel
+      attr_reader :description
+
+      def initialize(screen, data)
+        @screen = screen
+        @channel_id = Snowflake.new(data[:channel_id])
+        @description = data[:description]
+        @emoji_id = Snowflake.new(data[:emoji_id])
+        @emoji_name = data[:emoji_name]
+      end
+
+      def channel
+        @screen.guild.channels[@channel_id]
+      end
+
+      def emoji
+        if @emoji_id.nil?
+          UnicodeEmoji.new(@emoji_name)
+        else
+          @screen.guild.emojis[@emoji_id]
+        end
+      end
     end
   end
 end
