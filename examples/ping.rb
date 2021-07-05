@@ -4,7 +4,8 @@
 require_relative '../lib/discorb'
 require 'async'
 
-client = Discorb::Client.new(log: $stdout, colorize_log: true, log_level: :debug, allowed_mentions: Discorb::AllowedMentions.new(replied_user: false))
+client = Discorb::Client.new(log: $stdout, colorize_log: true, log_level: :info,
+                             allowed_mentions: Discorb::AllowedMentions.new(replied_user: false))
 
 client.on :ready do |_task|
   puts "Logged in as #{client.user}"
@@ -39,8 +40,9 @@ event = client.on(:message) do |_task, message|
   end
 end
 event.rescue do |_task, error, message|
-  message.reply embed: Discorb::Embed.new('Error!', "```rb\n#{error.full_message(highlight: false)[...1990]}\n```", color: Discorb::Color[:red])
+  message.reply embed: Discorb::Embed.new('Error!', "```rb\n#{error.full_message(highlight: false)[...1990]}\n```",
+                                          color: Discorb::Color[:red])
 end
 
 client.update_presence(Discorb::Activity.new('Music', :listening))
-client.run(ENV['DISCORD_BOT_TOKEN'])
+client.run(ENV['discord_bot_token'])
