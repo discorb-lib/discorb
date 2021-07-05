@@ -3,7 +3,33 @@
 require_relative 'emoji'
 
 module Discorb
-  class Button
+  class Component
+    class << self
+      def from_hash(data)
+        case data[:type]
+        when 2
+          Button.new(
+            data[:label],
+            data[:style],
+            emoji: data[:emoji],
+            custom_id: data[:custom_id],
+            url: data[:url],
+            disabled: data[:disabled]
+          )
+        when 3
+          SelectMenu.new(
+            data[:custom_id],
+            data[:options].map { |o| SelectMenu::Option.from_hash(o) },
+            placeholder: data[:placeholder],
+            min_values: data[:min_values],
+            max_values: data[:max_values]
+          )
+        end
+      end
+    end
+  end
+
+  class Button < Component
     attr_accessor :label, :style, :emoji, :custom_id, :url, :disabled
 
     @styles = {
@@ -77,7 +103,7 @@ module Discorb
     end
   end
 
-  class SelectMenu
+  class SelectMenu < Component
     attr_accessor :custom_id, :options, :position, :min_values, :max_values
 
     def initialize(custom_id, options, placeholder: nil, min_values: 1, max_values: 1)
@@ -138,6 +164,12 @@ module Discorb
             name: emoji.name,
             animated: emoji.animated?
           }
+        end
+      end
+
+      class << self
+        def from_hash(data)
+          new(data[:label], data[:value], description: data[:description], emoji: data[:emoji], default: data[:default])
         end
       end
     end
