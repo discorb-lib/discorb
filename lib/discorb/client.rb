@@ -22,7 +22,8 @@ require 'async/websocket/client'
 module Discorb
   class Client
     attr_accessor :intents
-    attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions, :user, :guilds, :users, :channels, :emojis
+    attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions, :user, :guilds, :users,
+                :channels, :emojis
 
     def initialize(allowed_mentions: nil, intents: nil, log: nil, colorize_log: false, log_level: :info)
       @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
@@ -144,7 +145,8 @@ module Discorb
         @first = first
         _, gateway_response = @internet.get('/gateway').wait
         gateway_url = gateway_response[:url]
-        endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json", alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
+        endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json",
+                                               alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
         begin
           Async::WebSocket::Client.connect(endpoint, headers: [['User-Agent', Discorb::USER_AGENT]]) do |connection|
             @connection = connection

@@ -69,7 +69,5 @@ module Discorb
       super(user_data)
       @client.guilds[@guild_id].members[@id] = self
     end
-
-    #:roles=>["858521005340622849"], :premium_since=>nil, :pending=>false, :nick=>nil, :mute=>false, :joined_at=>"2021-06-27T01:35:58.256425+00:00", :is_pending=>false, :hoisted_role=>nil, :deaf=>false, :avatar=>nil
   end
 end

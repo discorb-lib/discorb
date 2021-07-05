@@ -40,7 +40,9 @@ module Discorb
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
-      super([data[:message], "\n", enumerate_errors(data[:errors]).map { |ek, ev| "#{ek}=>#{ev}" }.join("\n")].join("\n"))
+      super([data[:message], "\n", enumerate_errors(data[:errors]).map do |ek, ev|
+                                     "#{ek}=>#{ev}"
+                                   end.join("\n")].join("\n"))
     end
   end
 
@@ -51,5 +53,11 @@ module Discorb
   end
 
   class ClientError < DiscorbError
+  end
+
+  class NotSupportedWarning < DiscorbError
+    def initialize(message)
+      super("#{message} is not supported yet.")
+    end
   end
 end
