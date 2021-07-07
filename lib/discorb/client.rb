@@ -248,6 +248,13 @@ module Discorb
       when 'MESSAGE_CREATE'
         message = Message.new(self, data)
         dispatch(:message, message)
+      when 'GUILD_UPDATE'
+        if @guilds.has?(data[:id])
+          @guilds[data[:id]]._set_from_hash(data, false)
+          dispatch(:guild_update, @guilds[data[:id]])
+        else
+          @log.warn "Unknown guild id #{data[:id]}, ignoring"
+        end
       when 'GUILD_DELETE'
         @guilds.delete(data[:id])
         dispatch(:guild_delete, @guilds[data[:id]])

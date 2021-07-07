@@ -87,6 +87,10 @@ module Discorb
       end
     end
 
+    def _set_from_hash(hash, is_create_event)
+      _set_data(hash, is_create_event)
+    end
+
     class << self
       attr_reader :nsfw_levels, :mfa_levels
     end
