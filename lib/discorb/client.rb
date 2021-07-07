@@ -248,6 +248,99 @@ module Discorb
       when 'MESSAGE_CREATE'
         message = Message.new(self, data)
         dispatch(:message, message)
+      when 'GUILD_DELETE'
+        @guilds.delete(data[:id])
+        dispatch(:guild_delete, @guilds[data[:id]])
+      when 'GUILD_ROLE_CREATE'
+        # TODO: Gateway: GUILD_ROLE_CREATE
+      when 'GUILD_ROLE_UPDATE'
+        # TODO: Gateway: GUILD_ROLE_UPDATE
+      when 'GUILD_ROLE_DELETE'
+        # TODO: Gateway: GUILD_ROLE_DELETE
+      when 'CHANNEL_CREATE'
+        # TODO: Gateway: CHANNEL_CREATE
+      when 'CHANNEL_UPDATE'
+        # TODO: Gateway: CHANNEL_UPDATE
+      when 'CHANNEL_DELETE'
+        # TODO: Gateway: CHANNEL_DELETE
+      when 'CHANNEL_PINS_UPDATE'
+        # TODO: Gateway: CHANNEL_PINS_UPDATE
+      when 'THREAD_CREATE'
+        # TODO: Gateway: THREAD_CREATE
+      when 'THREAD_UPDATE'
+        # TODO: Gateway: THREAD_UPDATE
+      when 'THREAD_DELETE'
+        # TODO: Gateway: THREAD_DELETE
+      when 'THREAD_LIST_SYNC'
+        # TODO: Gateway: THREAD_LIST_SYNC
+      when 'THREAD_MEMBER_UPDATE'
+        # TODO: Gateway: THREAD_MEMBER_UPDATE
+      when 'THREAD_MEMBERS_UPDATE *'
+        # TODO: Gateway: THREAD_MEMBERS_UPDATE *
+      when 'STAGE_INSTANCE_CREATE'
+        # TODO: Gateway: STAGE_INSTANCE_CREATE
+      when 'STAGE_INSTANCE_UPDATE'
+        # TODO: Gateway: STAGE_INSTANCE_UPDATE
+      when 'STAGE_INSTANCE_DELETE'
+        # TODO: Gateway: STAGE_INSTANCE_DELETE
+      when 'GUILD_MEMBER_ADD'
+        # TODO: Gateway: GUILD_MEMBER_ADD
+      when 'GUILD_MEMBER_UPDATE'
+        # TODO: Gateway: GUILD_MEMBER_UPDATE
+      when 'GUILD_MEMBER_REMOVE'
+        # TODO: Gateway: GUILD_MEMBER_REMOVE
+      when 'THREAD_MEMBERS_UPDATE *'
+        # TODO: Gateway: THREAD_MEMBERS_UPDATE *
+      when 'GUILD_BAN_ADD'
+        # TODO: Gateway: GUILD_BAN_ADD
+      when 'GUILD_BAN_REMOVE'
+        # TODO: Gateway: GUILD_BAN_REMOVE
+      when 'GUILD_EMOJIS_UPDATE'
+        # TODO: Gateway: GUILD_EMOJIS_UPDATE
+      when 'GUILD_INTEGRATIONS_UPDATE'
+        # TODO: Gateway: GUILD_INTEGRATIONS_UPDATE
+      when 'INTEGRATION_CREATE'
+        # TODO: Gateway: INTEGRATION_CREATE
+      when 'INTEGRATION_UPDATE'
+        # TODO: Gateway: INTEGRATION_UPDATE
+      when 'INTEGRATION_DELETE'
+        # TODO: Gateway: INTEGRATION_DELETE
+      when 'WEBHOOKS_UPDATE'
+        # TODO: Gateway: WEBHOOKS_UPDATE
+      when 'INVITE_CREATE'
+        # TODO: Gateway: INVITE_CREATE
+      when 'INVITE_DELETE'
+        # TODO: Gateway: INVITE_DELETE
+      when 'VOICE_STATE_UPDATE'
+        # TODO: Gateway: VOICE_STATE_UPDATE
+      when 'PRESENCE_UPDATE'
+        # TODO: Gateway: PRESENCE_UPDATE
+      when 'MESSAGE_UPDATE'
+        # TODO: Gateway: MESSAGE_UPDATE
+      when 'MESSAGE_DELETE'
+        # TODO: Gateway: MESSAGE_DELETE
+      when 'MESSAGE_DELETE_BULK'
+        # TODO: Gateway: MESSAGE_DELETE_BULK
+      when 'MESSAGE_REACTION_ADD'
+        # TODO: Gateway: MESSAGE_REACTION_ADD
+      when 'MESSAGE_REACTION_REMOVE'
+        # TODO: Gateway: MESSAGE_REACTION_REMOVE
+      when 'MESSAGE_REACTION_REMOVE_ALL'
+        # TODO: Gateway: MESSAGE_REACTION_REMOVE_ALL
+      when 'MESSAGE_REACTION_REMOVE_EMOJI'
+        # TODO: Gateway: MESSAGE_REACTION_REMOVE_EMOJI
+      when 'TYPING_START'
+        # TODO: Gateway: TYPING_START
+      when 'MESSAGE_CREATE'
+        # TODO: Gateway: MESSAGE_CREATE
+      when 'MESSAGE_UPDATE'
+        # TODO: Gateway: MESSAGE_UPDATE
+      when 'MESSAGE_DELETE'
+        # TODO: Gateway: MESSAGE_DELETE
+      when 'CHANNEL_PINS_UPDATE'
+        # TODO: Gateway: CHANNEL_PINS_UPDATE
+      when 'TYPING_START'
+        # TODO: Gateway: TYPING_START
       else
         @log.warn "Unknown event: #{event_name}"
       end
