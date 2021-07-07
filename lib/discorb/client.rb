@@ -238,13 +238,18 @@ module Discorb
         @user = User.new(self, data[:user])
         @uncached_guilds = data[:guilds].map { |g| g[:id].to_i }
       when 'GUILD_CREATE'
-        guild = Guild.new(self, data, true)
-        if @uncached_guilds.include?(guild.id)
+        if @uncached_guilds.include?(data[:id])
+          guild = Guild.new(self, data, true)
           @uncached_guilds.delete(guild.id)
           dispatch(:ready) if @uncached_guilds == []
+        elsif @guilds.has?(data[:id])
+          @guilds[data[:id]]._set_from_hash(data)
+          dispatch(:guild_available, guild)
         else
-          dispatch(:guild_create, guild)
+          guild = Guild.new(self, data, true)
+          dispatch(:guild_join, guild)
         end
+        dispatch(:guild_create, @guilds[data[:id]])
       when 'MESSAGE_CREATE'
         message = Message.new(self, data)
         dispatch(:message, message)
@@ -296,8 +301,6 @@ module Discorb
         # TODO: Gateway: GUILD_MEMBER_UPDATE
       when 'GUILD_MEMBER_REMOVE'
         # TODO: Gateway: GUILD_MEMBER_REMOVE
-      when 'THREAD_MEMBERS_UPDATE *'
-        # TODO: Gateway: THREAD_MEMBERS_UPDATE *
       when 'GUILD_BAN_ADD'
         # TODO: Gateway: GUILD_BAN_ADD
       when 'GUILD_BAN_REMOVE'
@@ -336,16 +339,6 @@ module Discorb
         # TODO: Gateway: MESSAGE_REACTION_REMOVE_ALL
       when 'MESSAGE_REACTION_REMOVE_EMOJI'
         # TODO: Gateway: MESSAGE_REACTION_REMOVE_EMOJI
-      when 'TYPING_START'
-        # TODO: Gateway: TYPING_START
-      when 'MESSAGE_CREATE'
-        # TODO: Gateway: MESSAGE_CREATE
-      when 'MESSAGE_UPDATE'
-        # TODO: Gateway: MESSAGE_UPDATE
-      when 'MESSAGE_DELETE'
-        # TODO: Gateway: MESSAGE_DELETE
-      when 'CHANNEL_PINS_UPDATE'
-        # TODO: Gateway: CHANNEL_PINS_UPDATE
       when 'TYPING_START'
         # TODO: Gateway: TYPING_START
       else
