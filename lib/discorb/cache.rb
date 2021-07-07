@@ -31,6 +31,10 @@ module Discorb
       @cache.values
     end
 
+    def has?(id)
+      @cache.has?(id.to_s)
+    end
+
     def method_missing(name, args, kwargs)
       if values.respond_to?(name)
         values.send(name, *args, **kwargs)
