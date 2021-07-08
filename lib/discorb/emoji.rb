@@ -43,9 +43,6 @@ module Discorb
     def self.[](...)
       from_discord_name(...)
     end
-
-    private
-
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
