@@ -270,9 +270,9 @@ module Discorb
       when 'GUILD_ROLE_DELETE'
         # TODO: Gateway: GUILD_ROLE_DELETE
       when 'CHANNEL_CREATE'
-        # TODO: Gateway: CHANNEL_CREATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
       when 'CHANNEL_UPDATE'
-        # TODO: Gateway: CHANNEL_UPDATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
       when 'CHANNEL_DELETE'
         # TODO: Gateway: CHANNEL_DELETE
       when 'CHANNEL_PINS_UPDATE'

@@ -52,9 +52,6 @@ module Discorb
     def inspect
       "#<#{self.class} #{self} id=#{@id}>"
     end
-
-    private
-
     def _set_data(user_data, member_data)
       @role_ids = member_data[:roles]
       @premium_since = member_data[:premium_since] ? Time.iso8601(member_data[:premium_since]) : nil
