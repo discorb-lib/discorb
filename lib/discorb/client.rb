@@ -92,7 +92,7 @@ module Discorb
 
     def fetch_channel(id)
       _resp, data = internet.get("/channels/#{id}").wait
-      Channel.new(self, data)
+      Channel.make_channel(self, data)
     end
 
     def fetch_guild(id)
