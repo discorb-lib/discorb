@@ -19,4 +19,4 @@ gem 'ricecream', '~> 0.2.0'
 
 gem 'mime-types', '~> 3.3'
 
-gem "rubocop", "~> 1.17"
+gem 'rubocop', '~> 1.17'
