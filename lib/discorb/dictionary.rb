@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Discorb
-  class Cache
+  class Dictionary
     def initialize(hash = {})
       @cache = hash
     end
