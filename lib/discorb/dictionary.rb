@@ -8,6 +8,7 @@ module Discorb
 
     def register(id, body)
       @cache[id.to_s] = body
+      @cache = @cache.sort_by { |_, v| v.position }.to_h if body.respond_to?(:position)
     end
 
     def delete(id)
