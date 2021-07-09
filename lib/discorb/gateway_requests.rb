@@ -10,7 +10,7 @@ module Discorb
       listening: 2,
       watching: 3,
       competing: 5
-    }
+    }.freeze
 
     def initialize(name, type = :playing, url = nil)
       @name = name

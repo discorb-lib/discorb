@@ -22,7 +22,7 @@ module Discorb
       verified_bot: 16,
       early_verified_bot_developer: 17,
       discord_certified_moderator: 18
-    }
+    }.freeze
   end
 
   class User < DiscordModel

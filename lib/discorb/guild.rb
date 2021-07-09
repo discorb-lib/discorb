@@ -14,7 +14,7 @@ module Discorb
       member_join: 0,
       server_boost: 1,
       setup_tips: 2
-    }
+    }.freeze
   end
 
   class Guild < DiscordModel
@@ -26,8 +26,8 @@ module Discorb
                 :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances,
                 :_data
 
-    @mfa_levels = %i[none low medium high very_high]
-    @nsfw_levels = %i[default explicit safe age_restricted]
+    @mfa_levels = %i[none low medium high very_high].freeze
+    @nsfw_levels = %i[default explicit safe age_restricted].freeze
 
     def initialize(client, data, is_create_event)
       @client = client
