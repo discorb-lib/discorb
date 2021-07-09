@@ -5,11 +5,12 @@ require_relative 'user'
 
 module Discorb
   class Member < User
-    attr_reader :premium_since, :nick, :joined_at, :custom_avatar, :display_avatar, :avatar
+    attr_reader :premium_since, :nick, :joined_at, :custom_avatar, :display_avatar, :avatar, :_member_data
 
     def initialize(client, guild_id, user_data, member_data)
       @guild_id = guild_id
       @client = client
+      @_member_data = {}
       _set_data(user_data, member_data)
     end
 
@@ -66,6 +67,7 @@ module Discorb
       @display_avatar = Asset.new(self, member_data[:avatar] || user_data[:avatar])
       super(user_data)
       @client.guilds[@guild_id].members[@id] = self
+      @_member_data.update(member_data)
     end
   end
 end

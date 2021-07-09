@@ -94,7 +94,7 @@ module Discorb
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles,
                 :mention_channels, :attachments, :embeds, :reactions,                :webhook_id, :type,
                 :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message,
-                :interaction, :thread, :components
+                :interaction, :thread, :components, :_data
 
     @message_type = {
       default: 0,
@@ -123,6 +123,7 @@ module Discorb
 
     def initialize(client, data)
       @client = client
+      @_data = {}
       _set_data(data)
     end
 
@@ -239,6 +240,7 @@ module Discorb
       @interaction = nil # TODO: Discorb::InterctionFeedback
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
+      @_data.update(data)
     end
 
     class << self

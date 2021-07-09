@@ -23,13 +23,15 @@ module Discorb
                 :unavailable, :member_count, :icon, :voice_states, :members, :channels, :threads,
                 :presences, :max_presences, :max_members, :vanity_url_code, :description, :banner, :premium_tier,
                 :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
-                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances
+                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances,
+                :_data
 
     @mfa_levels = %i[none low medium high very_high]
     @nsfw_levels = %i[default explicit safe age_restricted]
 
     def initialize(client, data, is_create_event)
       @client = client
+      @_data = {}
       _set_data(data, is_create_event)
     end
 
@@ -151,6 +153,7 @@ module Discorb
       @presences = nil # TODO: Array<Discorb::Presence>
       @max_presences = data[:max_presences]
       @stage_instances = nil # TODO: Array<Discorb::StageInstance>
+      @_data.update(data)
     end
   end
 

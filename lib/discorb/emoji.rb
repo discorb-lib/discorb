@@ -8,11 +8,12 @@ require_relative 'emoji_table'
 
 module Discorb
   class CustomEmoji < DiscordModel
-    attr_reader :id, :name, :roles, :user, :require_colons, :guild
+    attr_reader :id, :name, :roles, :user, :require_colons, :guild, :data
 
     def initialize(client, guild, data)
       @client = client
       @guild = guild
+      @_data = {}
       _set_data(data)
     end
 
@@ -50,6 +51,7 @@ module Discorb
       @animated = data[:animated]
       @available = data[:available]
       @guild.emojis[@id] = self
+      @_data.update(data)
     end
   end
 

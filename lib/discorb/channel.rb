@@ -9,13 +9,14 @@ require_relative 'error'
 
 module Discorb
   class Channel < DiscordModel
-    attr_reader :id, :name, :channel_type
+    attr_reader :id, :name, :channel_type, :_data
 
     @channel_type = nil
     @subclasses = []
 
     def initialize(client, data)
       @client = client
+      @_data = {}
       _set_data(data)
     end
 
@@ -55,6 +56,7 @@ module Discorb
       @id = Snowflake.new(data[:id])
       @name = data[:name]
       @client.channels[@id] = self
+      @_data.update(data)
     end
   end
 
