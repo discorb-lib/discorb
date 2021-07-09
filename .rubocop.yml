@@ -34,3 +34,6 @@ Metrics/ClassLength:
 
 Metrics/MethodLength:
   Enabled: false
+
+Lint/ScriptPermission:
+  Enabled: false
