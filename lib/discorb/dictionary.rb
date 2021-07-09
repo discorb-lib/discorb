@@ -3,7 +3,7 @@
 module Discorb
   class Dictionary
     def initialize(hash = {})
-      @cache = hash
+      @cache = hash.transform_keys(&:to_s)
     end
 
     def register(id, body)
@@ -15,13 +15,13 @@ module Discorb
     end
 
     def get(id)
-      if @cache.length <= id.to_i
-        return id.is_a?(Integer) ? @cache.values[id] : @cache[id.to_s]
-      end
-
       res = @cache[id.to_s]
       if res.nil?
-        @cache.values[id.to_i]
+        begin
+          @cache.values[id.to_i]
+        rescue RangeError
+          nil
+        end
       else
         res
       end
@@ -32,7 +32,7 @@ module Discorb
     end
 
     def has?(id)
-      @cache.key?(id.to_s)
+      !self[id].nil?
     end
 
     def method_missing(name, args = [], kwargs = {}, &block)
