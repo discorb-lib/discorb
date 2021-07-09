@@ -273,9 +273,7 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
 
         nc = Channel.make_channel(self, data)
-        ic @guilds[data[:guild_id]].channels
         @guilds[data[:guild_id]].channels[data[:id]] = nc
-        ic @guilds[data[:guild_id]].channels
 
         dispatch(:channel_create, nc)
       when 'CHANNEL_UPDATE'
