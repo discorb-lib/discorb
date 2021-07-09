@@ -38,7 +38,7 @@ module Discorb
       success: 3,
       danger: 4,
       link: 5
-    }
+    }.freeze
 
     def initialize(label, style = :primary, emoji: nil, custom_id: nil, url: nil, disabled: false)
       @label = label
@@ -104,7 +104,7 @@ module Discorb
   end
 
   class SelectMenu < Component
-    attr_accessor :custom_id, :options, :position, :min_values, :max_values
+    attr_accessor :custom_id, :options, :min_values, :max_values
 
     def initialize(custom_id, options, placeholder: nil, min_values: 1, max_values: 1)
       @custom_id = custom_id
