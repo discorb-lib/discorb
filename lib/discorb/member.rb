@@ -11,6 +11,7 @@ module Discorb
       @guild_id = guild_id
       @client = client
       @_member_data = {}
+      @_data = {}
       _set_data(user_data, member_data)
     end
 
