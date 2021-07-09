@@ -111,6 +111,7 @@ DEPENDENCIES
   overloader (~> 0.2.1)
   rake (~> 13.0)
   ricecream (~> 0.2.0)
+  rubocop (~> 1.17)
   solargraph (~> 0.42.3)
 
 BUNDLED WITH
