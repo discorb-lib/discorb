@@ -26,10 +26,11 @@ module Discorb
   end
 
   class User < DiscordModel
-    attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar
+    attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar, :_data
 
     def initialize(client, data)
       @client = client
+      @_data = {}
       _set_data(data)
     end
 
@@ -63,6 +64,7 @@ module Discorb
       @bot = data[:bot]
       @raw_data = data
       @client.users[@id] = self
+      @_data.update(data)
     end
   end
 
