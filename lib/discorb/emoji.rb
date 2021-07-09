@@ -40,9 +40,6 @@ module Discorb
       @roles != []
     end
 
-    def self.[](...)
-      from_discord_name(...)
-    end
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
