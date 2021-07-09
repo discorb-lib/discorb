@@ -32,10 +32,10 @@ module Discorb
       @api_version = nil
       @log = Logger.new(log, colorize_log, log_level)
       @user = nil
-      @users = Discorb::Cache.new
-      @channels = Discorb::Cache.new
-      @guilds = Discorb::Cache.new
-      @emojis = Discorb::Cache.new
+      @users = Discorb::Dictionary.new
+      @channels = Discorb::Dictionary.new
+      @guilds = Discorb::Dictionary.new
+      @emojis = Discorb::Dictionary.new
       @last_s = nil
       @identify_presence = nil
       @tasks = []

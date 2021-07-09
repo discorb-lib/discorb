@@ -101,7 +101,7 @@ module Discorb
       @icon = data[:icon].nil? ? nil : Asset.new(self, data[:icon])
       @unavailable = false
       @name = data[:name]
-      @members = Discorb::Cache.new
+      @members = Discorb::Dictionary.new
       data[:members].each do |m|
         Member.new(@client, @id, m[:user], m)
       end
@@ -114,11 +114,11 @@ module Discorb
       @afk_timeout = data[:afk_timeout]
       @widget_enabled = data[:widget_enabled]
       @widget_channel_id = data[:widget_channel_id]
-      @roles = Cache.new
+      @roles = Dictionary.new
       data[:roles].each do |r|
         Role.new(@client, self, r)
       end
-      @emojis = Cache.new
+      @emojis = Dictionary.new
       data[:emojis].map do |e|
         CustomEmoji.new(@client, self, e)
       end
@@ -144,7 +144,7 @@ module Discorb
       @joined_at = Time.iso8601(data[:joined_at])
       @large = data[:large]
       @member_count = data[:member_count]
-      @channels = Cache.new(data[:channels].map { |c| Channel.make_channel(@client, c) }.map { |c| [c.id, c] }.to_h)
+      @channels = Dictionary.new(data[:channels].map { |c| Channel.make_channel(@client, c) }.map { |c| [c.id, c] }.to_h)
 
       @voice_states = nil # TODO: Array<Discorb::VoiceState>
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
