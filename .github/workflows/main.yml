@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Rubocop checks
+      - name: Rubocop GitHub Action
         # You may pin to the exact commit or the version.
-        # uses: gimenete/rubocop-action@649c2b18b5726302b6b120dad74c25d2b2f391e9
-        uses: gimenete/rubocop-action@1.0
+        # uses: ProZsolt/rubocop-github-action@09bb13d9f3b3d6d5542b0bbbf3468dcc5941f0ec
+        uses: ProZsolt/rubocop-github-action@v1.0
