@@ -273,6 +273,7 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
       when 'CHANNEL_UPDATE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+
       when 'CHANNEL_DELETE'
         # TODO: Gateway: CHANNEL_DELETE
       when 'CHANNEL_PINS_UPDATE'

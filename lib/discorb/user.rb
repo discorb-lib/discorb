@@ -51,6 +51,7 @@ module Discorb
     def to_s
       "#{@username}##{@discriminator}"
     end
+
     def _set_data(data)
       @username = data[:username]
       @verified = data[:verified]

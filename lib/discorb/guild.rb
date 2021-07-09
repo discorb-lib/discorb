@@ -220,6 +220,7 @@ module Discorb
         !!@premium_subscriber
       end
     end
+
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
