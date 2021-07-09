@@ -35,9 +35,9 @@ module Discorb
       @cache.key?(id.to_s)
     end
 
-    def method_missing(name, args, kwargs)
+    def method_missing(name, args = [], kwargs = {}, &block)
       if values.respond_to?(name)
-        values.send(name, *args, **kwargs)
+        values.send(name, *args, **kwargs, &block)
       else
         super
       end
