@@ -230,7 +230,7 @@ module Discorb
       end
     end
 
-    def handle_event(event_name, data)
+    def handle_event(event_name, data) # rubocop:disable Metrics/AbcSize
       case event_name
       when 'READY'
         @api_version = data[:v]
@@ -271,11 +271,26 @@ module Discorb
         # TODO: Gateway: GUILD_ROLE_DELETE
       when 'CHANNEL_CREATE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+
+        nc = Channel.make_channel(self, data)
+        ic @guilds[data[:guild_id]].channels
+        @guilds[data[:guild_id]].channels[data[:id]] = nc
+        ic @guilds[data[:guild_id]].channels
+
+        dispatch(:channel_create, nc)
       when 'CHANNEL_UPDATE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].channels.has? data[:id]
 
+        after = @guilds[data[:guild_id]].channels[data[:id]]
+        before = Channel.make_channel(self, after._data)
+        after._set_data(data)
+        dispatch(:channel_update, before, after)
       when 'CHANNEL_DELETE'
-        # TODO: Gateway: CHANNEL_DELETE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].channels.has? data[:id]
+
+        dispatch(:channel_delete, @guilds[data[:guild_id]].channels[data[:id]])
       when 'CHANNEL_PINS_UPDATE'
         # TODO: Gateway: CHANNEL_PINS_UPDATE
       when 'THREAD_CREATE'
