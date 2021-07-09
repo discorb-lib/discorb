@@ -15,6 +15,7 @@ require_relative 'error'
 require_relative 'log'
 require_relative 'event'
 require_relative 'extension'
+require_relative 'role'
 
 require 'async'
 require 'async/websocket/client'
@@ -236,7 +237,7 @@ module Discorb
         @api_version = data[:v]
         @session_id = data[:session_id]
         @user = User.new(self, data[:user])
-        @uncached_guilds = data[:guilds].map { |g| g[:id].to_i }
+        @uncached_guilds = data[:guilds].map { |g| g[:id] }
       when 'GUILD_CREATE'
         if @uncached_guilds.include?(data[:id])
           guild = Guild.new(self, data, true)
@@ -264,11 +265,24 @@ module Discorb
         @guilds.delete(data[:id])
         dispatch(:guild_delete, @guilds[data[:id]])
       when 'GUILD_ROLE_CREATE'
-        # TODO: Gateway: GUILD_ROLE_CREATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+
+        nr = Role.new(@client, @guilds[data[:guild_id]], data[:role])
+        @guilds[data[:guild_id]].roles[data[:role][:id]] = nr
+        dispatch(:role_create, nr)
       when 'GUILD_ROLE_UPDATE'
-        # TODO: Gateway: GUILD_ROLE_UPDATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown role id #{data[:role][:id]}, ignoring" unless @guilds[data[:guild_id]].roles.has?(data[:role][:id])
+
+        current = @guilds[data[:guild_id]].roles[data[:role][:id]]
+        before = Role.new(@client, @guilds[data[:guild_id]], current._data)
+        current._set_data(data[:role])
+        dispatch(:role_update, before, current)
       when 'GUILD_ROLE_DELETE'
-        # TODO: Gateway: GUILD_ROLE_DELETE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown role id #{data[:role_id]}, ignoring" unless @guilds[data[:guild_id]].roles.has?(data[:role_id])
+
+        dispatch(:role_delete, @guilds[data[:guild_id]].roles.delete(data[:role_id]))
       when 'CHANNEL_CREATE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
 
@@ -280,15 +294,15 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].channels.has? data[:id]
 
-        after = @guilds[data[:guild_id]].channels[data[:id]]
-        before = Channel.make_channel(self, after._data)
-        after._set_data(data)
-        dispatch(:channel_update, before, after)
+        current = @guilds[data[:guild_id]].channels[data[:id]]
+        before = Channel.make_channel(self, current._data)
+        current._set_data(data)
+        dispatch(:channel_update, before, current)
       when 'CHANNEL_DELETE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].channels.has? data[:id]
 
-        dispatch(:channel_delete, @guilds[data[:guild_id]].channels[data[:id]])
+        dispatch(:channel_delete, @guilds[data[:guild_id]].channels.delete(data[:id]))
       when 'CHANNEL_PINS_UPDATE'
         # TODO: Gateway: CHANNEL_PINS_UPDATE
       when 'THREAD_CREATE'
