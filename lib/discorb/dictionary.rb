@@ -15,13 +15,13 @@ module Discorb
     end
 
     def get(id)
+      if @cache.length <= id.to_i
+        return id.is_a?(Integer) ? @cache.values[id] : @cache[id.to_s]
+      end
+
       res = @cache[id.to_s]
       if res.nil?
-        begin
-          @cache.values[id.to_i]
-        rescue RangeError
-          nil
-        end
+        @cache.values[id.to_i]
       else
         res
       end
