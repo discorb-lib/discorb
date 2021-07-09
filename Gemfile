@@ -18,3 +18,5 @@ gem 'overloader', '~> 0.2.1'
 gem 'ricecream', '~> 0.2.0'
 
 gem 'mime-types', '~> 3.3'
+
+gem "rubocop", "~> 1.17"
