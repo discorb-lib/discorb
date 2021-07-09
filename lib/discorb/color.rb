@@ -35,7 +35,7 @@ module Discorb
       dark_theme: 0x36393f,
       fuchsia: 0xeb459e,
       yellow: 0xfee75c
-    }
+    }.freeze
 
     def initialize(value)
       @value = value

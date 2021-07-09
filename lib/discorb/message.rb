@@ -21,7 +21,7 @@ module Discorb
       has_thread: 5,
       ephemeral: 6,
       loading: 7
-    }
+    }.freeze
   end
 
   class MessageReference
@@ -119,7 +119,7 @@ module Discorb
       application_command: 20,
       thread_starter_message: 21,
       guild_invite_reminder: 22
-    }
+    }.freeze
 
     def initialize(client, data)
       @client = client

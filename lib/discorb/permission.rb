@@ -41,7 +41,7 @@ module Discorb
       manage_threads: 34,
       use_public_threads: 35,
       use_private_threads: 36
-    }
+    }.freeze
   end
 
   class PermissionOverwrite
@@ -82,8 +82,8 @@ module Discorb
       manage_threads: 34,
       use_public_threads: 35,
       use_private_threads: 36
-    }
-    @bits = @raw_bits.transform_values { |v| 1 << v }
+    }.freeze
+    @bits = @raw_bits.transform_values { |v| 1 << v }.freeze
     def initialize(allow, deny)
       @allow = allow
       @deny = deny

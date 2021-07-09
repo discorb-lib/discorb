@@ -9,7 +9,7 @@ end
 
 module Discorb
   class Logger
-    @levels = %i[debug info warn error fatal]
+    @levels = %i[debug info warn error fatal].freeze
 
     def initialize(out, colorize_log, level)
       @out = out

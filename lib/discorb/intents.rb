@@ -19,7 +19,7 @@ module Discorb
       dm_messages: 1 << 12,
       dm_reactions: 1 << 13,
       dm_typing: 1 << 14
-    }
+    }.freeze
 
     #
     # Create new intents object with default (no members and presence) intents.
