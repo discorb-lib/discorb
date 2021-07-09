@@ -2,7 +2,7 @@
 
 require 'time'
 require_relative 'flag'
-require_relative 'cache'
+require_relative 'dictionary'
 require_relative 'color'
 require_relative 'member'
 require_relative 'channel'
