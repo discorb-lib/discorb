@@ -131,7 +131,7 @@ module Discorb
       end
     end
 
-    def []=(_field, bool)
+    def []=(key, bool)
       case bool
       when true
         @allow |= self.class.bits[key]
