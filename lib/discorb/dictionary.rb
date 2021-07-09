@@ -32,7 +32,7 @@ module Discorb
     end
 
     def has?(id)
-      @cache.has?(id.to_s)
+      @cache.key?(id.to_s)
     end
 
     def method_missing(name, args, kwargs)
