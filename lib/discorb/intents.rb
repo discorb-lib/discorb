@@ -27,16 +27,16 @@ module Discorb
     # @param guilds [Boolean] Whether guild related events are enabled.
     # @param members [Boolean] Whether guild members related events are enabled.
     #   @note You must enable members intent on developers portal.
-    # @param ban [Boolean] Whether guild ban related events are enabled.
+    # @param bans [Boolean] Whether guild ban related events are enabled.
     # @param emojis [Boolean] Whether guild emojis related events are enabled.
-    # @param integration [Boolean] Whether guild integration related events are enabled.
+    # @param integrations [Boolean] Whether guild integration related events are enabled.
     # @param webhooks [Boolean] Whether guild webhooks related events are enabled.
     # @param invites [Boolean] Whether guild invite related events are enabled.
     # @param voice_states [Boolean] Whether guild voice state related events are enabled.
     # @param presences [Boolean] Whether guild presences related events are enabled.
     #   @note You must enable members intent on developers portal.
     # @param messages [Boolean] Whether guild messages related events are enabled.
-    # @param reaction [Boolean] Whether guild reaction related events are enabled.
+    # @param reactions [Boolean] Whether guild reaction related events are enabled.
     # @param dm_messages [Boolean] Whether dm messages related events are enabled.
     # @param dm_reactions [Boolean] Whether dm reactions related events are enabled.
     # @param dm_typing [Boolean] Whether dm typing related events are enabled.
