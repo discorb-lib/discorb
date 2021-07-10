@@ -56,7 +56,7 @@ module Discorb
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
-      @client.channels[@id] = self
+      @client.channels[@id] = self unless data[:no_cache]
       @_data.update(data)
     end
   end
@@ -262,7 +262,7 @@ module Discorb
       @parent_id = data[:parent_id]
       @client.channels[@parent_id]&.threads&.push(self) unless @parent_id.nil?
 
-      @client.channels[@id] = self
+      @client.channels[@id] = self unless data[:no_cache]
     end
   end
 

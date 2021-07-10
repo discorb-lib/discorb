@@ -64,7 +64,7 @@ module Discorb
       @avatar = Asset.new(self, data[:avatar])
       @bot = data[:bot]
       @raw_data = data
-      @client.users[@id] = self
+      @client.users[@id] = self unless data[:no_cache]
       @_data.update(data)
     end
   end
