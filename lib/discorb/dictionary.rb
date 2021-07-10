@@ -2,13 +2,18 @@
 
 module Discorb
   class Dictionary
-    def initialize(hash = {})
+    attr_accessor :limit
+
+    def initialize(hash = {}, limit: nil)
       @cache = hash.transform_keys(&:to_s)
+      @limit = limit
     end
 
     def register(id, body)
       @cache[id.to_s] = body
       @cache = @cache.sort_by { |_, v| v.position }.to_h if body.respond_to?(:position)
+      @cache.delete(@cache.values[-1]) if @cache.size > @limit
+      body
     end
 
     def delete(id)
