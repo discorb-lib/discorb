@@ -41,6 +41,7 @@ module Discorb
       @roles != []
     end
 
+    # @!visibility private
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]

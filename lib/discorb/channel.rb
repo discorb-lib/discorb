@@ -52,6 +52,7 @@ module Discorb
       "/channels/#{@id}/messages"
     end
 
+    # @!visibility private
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
@@ -90,6 +91,7 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
+    # @!visibility private
     def _set_data(data)
       @guild_id = data[:guild_id]
       @position = data[:position]
@@ -139,6 +141,7 @@ module Discorb
       end
     end
 
+    # @!visibility private
     def _set_data(data)
       @topic = data[:topic]
       @nsfw = data[:nsfw]
@@ -172,6 +175,7 @@ module Discorb
       end
     end
 
+    # @!visibility private
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = (data[:user_limit]).zero? ? nil : data[:user_limit]
@@ -196,6 +200,7 @@ module Discorb
       end
     end
 
+    # @!visibility private
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
@@ -249,6 +254,7 @@ module Discorb
       "/channels/#{@id}/messages"
     end
 
+    # @!visibility private
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = name
@@ -276,6 +282,7 @@ module Discorb
       end
     end
 
+    # @!visibility private
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
@@ -299,6 +306,7 @@ module Discorb
       end
     end
 
+    # @!visibility private
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
@@ -318,6 +326,7 @@ module Discorb
       @channels.filter { |c| c.is_a? VoiceChannel }
     end
 
+    # @!visibility private
     def _set_data(data)
       @channels = @client.channels.values.filter { |channel| channel.parent == self }
       super
