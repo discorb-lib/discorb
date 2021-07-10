@@ -68,7 +68,7 @@ module Discorb
       @custom_avatar = member_data[:avatar]
       @display_avatar = Asset.new(self, member_data[:avatar] || user_data[:avatar])
       super(user_data)
-      @client.guilds[@guild_id].members[@id] = self
+      @client.guilds[@guild_id].members[@id] = self unless @guild_id.nil?
       @_member_data.update(member_data)
     end
   end
