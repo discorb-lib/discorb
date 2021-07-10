@@ -94,6 +94,7 @@ module Discorb
       attr_reader :nsfw_levels, :mfa_levels
     end
 
+    # @!visibility private
     def _set_data(data, is_create_event)
       @id = Snowflake.new(data[:id])
       if data[:unavailable]

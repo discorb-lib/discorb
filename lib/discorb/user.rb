@@ -53,6 +53,7 @@ module Discorb
       "#{@username}##{@discriminator}"
     end
 
+    # @!visibility private
     def _set_data(data)
       @username = data[:username]
       @verified = data[:verified]
