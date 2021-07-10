@@ -231,7 +231,7 @@ module Discorb
       end
     end
 
-    def handle_event(event_name, data) # rubocop:disable Metrics/AbcSize
+    def handle_event(event_name, data) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
       case event_name
       when 'READY'
         @api_version = data[:v]
@@ -315,8 +315,6 @@ module Discorb
         # TODO: Gateway: THREAD_LIST_SYNC
       when 'THREAD_MEMBER_UPDATE'
         # TODO: Gateway: THREAD_MEMBER_UPDATE
-      when 'THREAD_MEMBERS_UPDATE *'
-        # TODO: Gateway: THREAD_MEMBERS_UPDATE *
       when 'STAGE_INSTANCE_CREATE'
         # TODO: Gateway: STAGE_INSTANCE_CREATE
       when 'STAGE_INSTANCE_UPDATE'
@@ -324,11 +322,24 @@ module Discorb
       when 'STAGE_INSTANCE_DELETE'
         # TODO: Gateway: STAGE_INSTANCE_DELETE
       when 'GUILD_MEMBER_ADD'
-        # TODO: Gateway: GUILD_MEMBER_ADD
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+
+        nm = Member.new(self, data[:guild_id], data[:user], data)
+        @guilds[data[:guild_id]] = nm
+        dispatch(:member_add, nm)
       when 'GUILD_MEMBER_UPDATE'
-        # TODO: Gateway: GUILD_MEMBER_UPDATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].members.has?(data[:id])
+
+        nm = @guilds[data[:guild_id]].members[data[:id]]
+        old = Member.new(self, nil, data[:user], data[:id])
+        nm._set_data(data[:user], data)
+        dispatch(:member_update, old, nm)
       when 'GUILD_MEMBER_REMOVE'
-        # TODO: Gateway: GUILD_MEMBER_REMOVE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].members.has?(data[:id])
+
+        dispatch(:member_remove, @guilds[data[:guild_id]].members.delete(data[:id]))
       when 'GUILD_BAN_ADD'
         # TODO: Gateway: GUILD_BAN_ADD
       when 'GUILD_BAN_REMOVE'
