@@ -5,7 +5,7 @@ require_relative 'version'
 
 module Discorb
   API_BASE_URL = 'https://discord.com/api/v9'
-  USER_AGENT = "DiscordBot (https://github.com/sevenc-nanashi/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
+  USER_AGENT = "DiscordBot (https://github.com/discorb-lib/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
 
   class DiscordModel
     def ==(other)
