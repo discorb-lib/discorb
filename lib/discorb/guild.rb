@@ -101,7 +101,7 @@ module Discorb
         @unavailable = true
         return
       end
-      @client.guilds[@id] = self
+      @client.guilds[@id] = self unless data[:no_cache]
       @icon = data[:icon].nil? ? nil : Asset.new(self, data[:icon])
       @unavailable = false
       @name = data[:name]

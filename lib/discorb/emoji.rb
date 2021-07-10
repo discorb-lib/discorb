@@ -51,7 +51,7 @@ module Discorb
       @managed = data[:managed]
       @animated = data[:animated]
       @available = data[:available]
-      @guild.emojis[@id] = self
+      @guild.emojis[@id] = self unless data[:no_cache]
       @_data.update(data)
     end
   end

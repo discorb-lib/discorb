@@ -82,7 +82,7 @@ module Discorb
       @managed = data[:managed]
       @mentionable = data[:mentionable]
       @tags = data[:tags] || {}
-      @guild.roles[@id] = self
+      @guild.roles[@id] = self unless data[:no_cache]
       @_data.update(data)
     end
   end
