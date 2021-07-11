@@ -24,7 +24,7 @@ module Discorb
   class Client
     attr_accessor :intents
     attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions, :user, :guilds, :users,
-                :channels, :emojis
+                :channels, :emojis, :messages
 
     def initialize(allowed_mentions: nil, intents: nil, log: nil, colorize_log: false, log_level: :info)
       @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
@@ -37,6 +37,7 @@ module Discorb
       @channels = Discorb::Dictionary.new
       @guilds = Discorb::Dictionary.new
       @emojis = Discorb::Dictionary.new
+      @messages = Discorb::Dictionary.new(limit: 1000)
       @last_s = nil
       @identify_presence = nil
       @tasks = []
@@ -275,7 +276,7 @@ module Discorb
         return @log.warn "Unknown role id #{data[:role][:id]}, ignoring" unless @guilds[data[:guild_id]].roles.has?(data[:role][:id])
 
         current = @guilds[data[:guild_id]].roles[data[:role][:id]]
-        before = Role.new(@client, @guilds[data[:guild_id]], current._data)
+        before = Role.new(@client, @guilds[data[:guild_id]].update({ no_cache: true }), current._data)
         current._set_data(data[:role])
         dispatch(:role_update, before, current)
       when 'GUILD_ROLE_DELETE'
@@ -324,7 +325,7 @@ module Discorb
       when 'GUILD_MEMBER_ADD'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
 
-        nm = Member.new(self, data[:guild_id], data[:user], data)
+        nm = Member.new(self, data[:guild_id], data[:user].update({ no_cache: true }), data)
         @guilds[data[:guild_id]] = nm
         dispatch(:member_add, nm)
       when 'GUILD_MEMBER_UPDATE'
@@ -332,7 +333,7 @@ module Discorb
         return @log.warn "Unknown member id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].members.has?(data[:id])
 
         nm = @guilds[data[:guild_id]].members[data[:id]]
-        old = Member.new(self, nil, data[:user], data[:id])
+        old = Member.new(self, nil, data[:user].update({ no_cache: true }), data[:id])
         nm._set_data(data[:user], data)
         dispatch(:member_update, old, nm)
       when 'GUILD_MEMBER_REMOVE'
@@ -341,9 +342,25 @@ module Discorb
 
         dispatch(:member_remove, @guilds[data[:guild_id]].members.delete(data[:id]))
       when 'GUILD_BAN_ADD'
-        # TODO: Gateway: GUILD_BAN_ADD
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+
+        user = if @users.has? data[:user][:id]
+                 @users[data[:user][:id]]
+               else
+                 User.new(self, data[:user].update({ no_cache: true }))
+               end
+
+        dispatch(:guild_ban_add, @guilds[data[:guild_id]], user)
       when 'GUILD_BAN_REMOVE'
-        # TODO: Gateway: GUILD_BAN_REMOVE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+
+        user = if @users.has? data[:user][:id]
+                 @users[data[:user][:id]]
+               else
+                 User.new(self, data[:user].update({ no_cache: true }))
+               end
+
+        dispatch(:guild_ban_remove, @guilds[data[:guild_id]], user)
       when 'GUILD_EMOJIS_UPDATE'
         # TODO: Gateway: GUILD_EMOJIS_UPDATE
       when 'GUILD_INTEGRATIONS_UPDATE'
