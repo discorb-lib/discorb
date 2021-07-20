@@ -76,8 +76,15 @@ module Discorb
     attr_reader :name, :value
 
     def initialize(name)
-      @name = name
-      @value = DISCORD_TO_UNICODE[name] or name
+      if DISCORD_TO_UNICODE.key?(name)
+        @name = name
+        @value = DISCORD_TO_UNICODE[name]
+      elsif UNICODE_TO_DISCORD.key?(name)
+        @name = UNICODE_TO_DISCORD[name][0]
+        @value = name
+      else
+        raise ArgumentError, "No such emoji: #{name}"
+      end
     end
 
     def to_s
@@ -88,8 +95,8 @@ module Discorb
       URI.encode_www_form_component(@value)
     end
 
-    def self.[](...)
-      new(...)
+    class << self
+      alias [] new
     end
   end
 end
