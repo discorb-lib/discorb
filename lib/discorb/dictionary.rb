@@ -12,12 +12,12 @@ module Discorb
     def register(id, body)
       @cache[id.to_s] = body
       @cache = @cache.sort_by { |_, v| v.position }.to_h if body.respond_to?(:position)
-      @cache.delete(@cache.values[-1]) if !@limit.nil? && @cache.size > @limit
+      @cache.remove(@cache.values[-1]) if !@limit.nil? && @cache.size > @limit
       body
     end
 
-    def delete(id)
-      @cache.delete(id.to_s)
+    def remove(id)
+      @cache.remove(id.to_s)
     end
 
     def get(id)
