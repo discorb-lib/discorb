@@ -138,7 +138,7 @@ module Discorb
         parent ||= category
         payload[:parent_id] = parent.id unless parent.nil?
 
-        @client.internet.patch("/channels/#{@id}", payload)
+        @client.internet.patch("/channels/#{@id}", payload).wait
       end
     end
 
@@ -181,7 +181,7 @@ module Discorb
         payload[:user_limit] = user_limit == false ? nil : user_limit unless user_limit.nil?
         payload[:rtc_region] = rtc_region == false ? nil : rtc_region unless rtc_region.nil?
 
-        @client.internet.patch("/channels/#{@id}", payload)
+        @client.internet.patch("/channels/#{@id}", payload).wait
       end
     end
 
@@ -208,7 +208,7 @@ module Discorb
         payload[:position] = position if position
         payload[:bitrate] = bitrate unless bitrate.nil?
         payload[:user_limit] = user_limit unless user_limit.nil?
-        @client.internet.patch("/channels/#{@id}", payload)
+        @client.internet.patch("/channels/#{@id}", payload).wait
       end
     end
 
@@ -294,7 +294,7 @@ module Discorb
         payload[:bitrate] = bitrate unless bitrate.nil?
         payload[:user_limit] = user_limit unless user_limit.nil?
 
-        @client.internet.patch("/channels/#{@id}", payload)
+        @client.internet.patch("/channels/#{@id}", payload).wait
       end
     end
 
@@ -320,7 +320,7 @@ module Discorb
         payload[:bitrate] = bitrate unless bitrate.nil?
         payload[:user_limit] = user_limit unless user_limit.nil?
 
-        @client.internet.patch("/channels/#{@id}", payload)
+        @client.internet.patch("/channels/#{@id}", payload).wait
       end
     end
 
