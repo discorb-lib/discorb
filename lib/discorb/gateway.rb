@@ -27,7 +27,13 @@ module Discorb
 
         @user = client.users[data[:user_id]] if data.key?(:user_id)
 
-        @member = @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, @data[:member][:user], @data[:member]) unless @guild.nil?
+        if !@guild.nil?
+          if data.key?(:member)
+            @member = @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
+          else
+            @member = @guild.members[data[:user_id]]
+          end
+        end
 
         @message = client.messages[data[:message_id]]
         @emoji = data['id'].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
@@ -269,7 +275,7 @@ module Discorb
         return @log.warn "Unknown member id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].members.has?(data[:id])
 
         nm = @guilds[data[:guild_id]].members[data[:id]]
-        old = Member.new(self, nil, data[:user].update({ no_cache: true }), data[:id])
+        old = Member.new(self, data[:guild_id], data[:user], data.update({ no_cache: true }))
         nm.send(:_set_data, data[:user], data)
         dispatch(:member_update, old, nm)
       when 'GUILD_MEMBER_REMOVE'
