@@ -8,7 +8,7 @@ require_relative 'emoji_table'
 
 module Discorb
   class CustomEmoji < DiscordModel
-    attr_reader :id, :name, :roles, :user, :require_colons, :guild, :data
+    attr_reader :id, :name, :roles, :user, :require_colons, :guild
 
     def initialize(client, guild, data)
       @client = client
@@ -42,6 +42,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
@@ -56,7 +58,23 @@ module Discorb
     end
   end
 
+  class PartialEmoji < DiscordModel
+    attr_reader :id, :name
+
+    def initialize(data)
+      @id = Snowflake.new(data[:id])
+      @name = data[:name]
+      @deleted = @name.nil?
+    end
+
+    def deleted?
+      @deleted
+    end
+  end
+
   class UnicodeEmoji
+    attr_reader :name, :value
+
     def initialize(name)
       @name = name
       @value = DISCORD_TO_UNICODE[name] or name
