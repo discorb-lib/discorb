@@ -64,7 +64,7 @@ module Discorb
         @log.debug "Dispatching event #{event_name}"
         @events[event_name].each do |block|
           lambda { |event_args|
-            Async do |task|
+            Async(annotation: "Discorb event: #{event_name}") do |task|
               block.call(task, *event_args)
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
