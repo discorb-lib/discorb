@@ -27,12 +27,12 @@ module Discorb
 
         @user = client.users[data[:user_id]] if data.key?(:user_id)
 
-        if !@guild.nil?
-          if data.key?(:member)
-            @member = @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
-          else
-            @member = @guild.members[data[:user_id]]
-          end
+        unless @guild.nil?
+          @member = if data.key?(:member)
+                      @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
+                    else
+                      @guild.members[data[:user_id]]
+                    end
         end
 
         @message = client.messages[data[:message_id]]
