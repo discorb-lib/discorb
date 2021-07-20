@@ -9,6 +9,7 @@ require_relative 'flag'
 require_relative 'error'
 require_relative 'file'
 require_relative 'embed'
+require_relative 'reaction'
 
 module Discorb
   class MessageFlag < Flag
@@ -233,7 +234,7 @@ module Discorb
       @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
       @attachments = data[:attachments].map { |a| Attachment.new(a) }
       @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
-      @reactions = nil # TODO: Array<Discorb::Reaction>
+      @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(@client, r) } : []
       @pinned = data[:pinned]
       @type = self.class.message_type[data[:type]]
       @activity = nil # TODO: Discorb::MessageActivity
