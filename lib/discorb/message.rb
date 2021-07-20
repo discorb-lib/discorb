@@ -191,16 +191,21 @@ module Discorb
 
     def add_reaction(emoji)
       Async do |_task|
-        @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil)
+        @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil).wait
       end
     end
 
     def delete_reaction(emoji)
       Async do |_task|
-        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil)
+        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil).wait
       end
     end
 
+    def delete_reaction_of(emoji, member)
+      Async do |_task|
+        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}", nil).wait
+      end
+    end
     # Meta
 
     def inspect

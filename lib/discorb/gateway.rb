@@ -11,25 +11,33 @@ module Discorb
     class ReactionEvent < GatewayEvent
       attr_reader :data, :user_id, :channel_id, :message_id, :guild_id, :user, :channel, :guild, :message, :member_raw, :member, :emoji
 
-      def initialize(data)
+      def initialize(client, data)
+        @client = client
         @data = data
-        @user_id = Snowflake.new(data[:user_id])
+        if data.key?(:user_id)
+          @user_id = Snowflake.new(data[:user_id])
+        else
+          @member_data = data[:member]
+        end
         @channel_id = Snowflake.new(data[:channel_id])
         @message_id = Snowflake.new(data[:message_id])
         @guild_id = Snowflake.new(data[:guild_id])
-        @user = @users[data[:user_id]]
-        @channel = @channels[data[:channel_id]]
-        @guild = @guilds[data[:guild_id]]
-        @message = @messages[data[:message_id]]
-        @member = @guild ? @guild.members[data['member']['user']['id']] : nil
-        @emoji = data['id'].nil ? DiscordEmoji.new(data['name']) : PartialEmoji.new(data['emoji'])
+        @guild = client.guilds[data[:guild_id]]
+        @channel = client.channels[data[:channel_id]] unless @guild.nil?
+
+        @user = client.users[data[:user_id]] if data.key?(:user_id)
+
+        @member = @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, @data[:member][:user], @data[:member]) unless @guild.nil?
+
+        @message = client.messages[data[:message_id]]
+        @emoji = data['id'].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
       end
 
       def fetch_message(force: false)
         return @message if !force && @message
 
         Async do |_task|
-          @channel.fetch_message(@message_id)
+          @channel.fetch_message(@message_id).wait
         end
       end
       alias member_id user_id
@@ -38,29 +46,31 @@ module Discorb
     class ReactionRemoveAllEvent < GatewayEvent
       attr_reader :data, :guild_id, :channel_id, :message_id, :guild, :channel, :message
 
-      def initialize(data)
+      def initialize(client, data)
+        @client = client
         @data = data
         @guild_id = Snowflake.new(data[:guild_id])
         @channel_id = Snowflake.new(data[:channel_id])
         @message_id = Snowflake.new(data[:message_id])
-        @guild = @guilds[data[:guild_id]]
-        @channel = @channels[data[:channel_id]]
-        @message = @messages[data[:message_id]]
+        @guild = client.guilds[data[:guild_id]]
+        @channel = client.channels[data[:channel_id]]
+        @message = client.messages[data[:message_id]]
       end
     end
 
     class ReactionRemoveEmojiEvent < GatewayEvent
       attr_reader :data, :guild_id, :channel_id, :message_id, :guild, :channel, :message, :emoji
 
-      def initialize(data)
+      def initialize(client, data)
+        @client = client
         @data = data
         @guild_id = Snowflake.new(data[:guild_id])
         @channel_id = Snowflake.new(data[:channel_id])
         @message_id = Snowflake.new(data[:message_id])
-        @guild = @guilds[data[:guild_id]]
-        @channel = @channels[data[:channel_id]]
-        @message = @messages[data[:message_id]]
-        @emoji = data['id'].nil ? DiscordEmoji.new(data['name']) : PartialEmoji.new(data['emoji'])
+        @guild = client.guilds[data[:guild_id]]
+        @channel = client.channels[data[:channel_id]]
+        @message = client.messages[data[:message_id]]
+        @emoji = data[:emoji][:id].nil? ? DiscordEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
       end
     end
 
@@ -327,19 +337,19 @@ module Discorb
             )
           end
         end
-        dispatch(:reaction_add, ReactionEvent.new(data))
+        dispatch(:reaction_add, ReactionEvent.new(self, data))
       when 'MESSAGE_REACTION_REMOVE'
         if (target_message = @messages[data[:message_id]]) &&
            (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
           target_reaction.set_instance_variable(:@count, target_reaction.count - 1)
           target_message.reactions.delete(target_reaction) if target_reaction.count.zero?
         end
-        dispatch(:reaction_remove, ReactionEvent.new(data))
+        dispatch(:reaction_remove, ReactionEvent.new(self, data))
       when 'MESSAGE_REACTION_REMOVE_ALL'
         if (target_message = @messages[data[:message_id]])
           target_message.reactions = []
         end
-        dispatch(:reaction_remove_all, ReactionRemoveAllEvent.new(data))
+        dispatch(:reaction_remove_all, ReactionRemoveAllEvent.new(self, data))
       when 'MESSAGE_REACTION_REMOVE_EMOJI'
         if (target_message = @messages[data[:message_id]]) &&
            (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
