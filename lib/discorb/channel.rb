@@ -74,6 +74,10 @@ module Discorb
     end
 
     def to_s
+      "##{@name}"
+    end
+
+    def mention
       "<##{@id}>"
     end
 
