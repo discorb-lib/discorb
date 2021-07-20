@@ -13,9 +13,9 @@ module Discorb
       super()
     end
 
-    def get(path, headers: nil, **kwargs)
+    def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, audit_log_reason), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -32,9 +32,9 @@ module Discorb
       end
     end
 
-    def post(path, body, headers: nil, **kwargs)
+    def post(path, body, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -50,9 +50,9 @@ module Discorb
       end
     end
 
-    def patch(path, body, headers: nil, **kwargs)
+    def patch(path, body, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -68,9 +68,9 @@ module Discorb
       end
     end
 
-    def put(path, body, headers: nil, **kwargs)
+    def put(path, body, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -86,9 +86,9 @@ module Discorb
       end
     end
 
-    def delete(path, body, headers: nil, **kwargs)
+    def delete(path, body, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -124,13 +124,16 @@ module Discorb
       end
     end
 
-    def get_headers(headers, body = nil)
-      if body.nil?
-        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
-      else
-        { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}",
-          'content-type' => 'application/json' }
-      end.merge(headers || {})
+    def get_headers(headers, body = nil, audit_log_reason = nil)
+      ret = if body.nil?
+              { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
+            else
+              { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}",
+                'content-type' => 'application/json' }
+            end
+      ret.merge(headers) if !headers.nil? && headers.length.positive?
+      ret['X-Audit-Log-Reason'] = audit_log_reason unless audit_log_reason.nil?
+      ret
     end
 
     def get_body(body)
