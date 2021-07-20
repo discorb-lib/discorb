@@ -9,7 +9,7 @@ require_relative 'error'
 
 module Discorb
   class Channel < DiscordModel
-    attr_reader :id, :name, :channel_type, :_data
+    attr_reader :id, :name, :channel_type
 
     @channel_type = nil
     @subclasses = []
@@ -53,6 +53,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
@@ -92,6 +94,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @guild_id = data[:guild_id]
       @position = data[:position]
@@ -142,6 +146,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @topic = data[:topic]
       @nsfw = data[:nsfw]
@@ -176,6 +182,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = (data[:user_limit]).zero? ? nil : data[:user_limit]
@@ -201,6 +209,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
@@ -255,6 +265,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = name
@@ -283,6 +295,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
@@ -307,6 +321,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @bitrate = data[:bitrate]
       @user_limit = data[:user_limit]
@@ -327,6 +343,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @channels = @client.channels.values.filter { |channel| channel.parent == self }
       super

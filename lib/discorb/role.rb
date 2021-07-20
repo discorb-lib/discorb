@@ -4,7 +4,7 @@ require_relative 'common'
 
 module Discorb
   class Role < DiscordModel
-    attr_reader :id, :name, :color, :permissions, :position, :_data, :guild
+    attr_reader :id, :name, :color, :permissions, :position, :guild
 
     include Comparable
     def initialize(client, guild, data)
@@ -72,6 +72,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]

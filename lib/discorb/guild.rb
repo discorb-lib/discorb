@@ -95,6 +95,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data, is_create_event)
       @id = Snowflake.new(data[:id])
       if data[:unavailable]

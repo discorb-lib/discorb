@@ -26,7 +26,7 @@ module Discorb
   end
 
   class User < DiscordModel
-    attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar, :_data
+    attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar
 
     def initialize(client, data)
       @client = client
@@ -54,6 +54,8 @@ module Discorb
     end
 
     # @!visibility private
+    private
+
     def _set_data(data)
       @username = data[:username]
       @verified = data[:verified]
