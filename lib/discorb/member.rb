@@ -15,6 +15,10 @@ module Discorb
       _set_data(user_data, member_data)
     end
 
+    def to_s
+      "@#{name}"
+    end
+
     def name
       @nick || @username
     end
