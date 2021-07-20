@@ -37,7 +37,7 @@ module Discorb
     def ==(other)
       case other
       when Snowflake
-        self.to_i = other.to_i
+        to_i == other.to_i
       when Integer
         to_i == other
       when String
