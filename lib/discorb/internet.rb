@@ -22,10 +22,10 @@ module Discorb
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == '429'
+        test_error(if resp.status == 429
                      @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
                      task.sleep(data[:retry_after])
-                     get(path, **kwargs)
+                     get(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
                      [resp, data]
                    end)
@@ -41,9 +41,9 @@ module Discorb
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == '429'
+        test_error(if resp.status == 429
                      task.sleep(data[:retry_after])
-                     post(path, **kwargs)
+                     post(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
                      [resp, data]
                    end)
@@ -59,9 +59,9 @@ module Discorb
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == '429'
+        test_error(if resp.status == 429
                      task.sleep(data[:retry_after])
-                     patch(path, **kwargs)
+                     patch(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
                      [resp, data]
                    end)
@@ -77,9 +77,9 @@ module Discorb
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == '429'
+        test_error(if resp.status == 429
                      task.sleep(data[:retry_after])
-                     put(path, **kwargs)
+                     put(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
                      [resp, data]
                    end)
@@ -95,9 +95,9 @@ module Discorb
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == '429'
+        test_error(if resp.status == 429
                      task.sleep(data[:retry_after])
-                     delete(path, **kwargs)
+                     delete(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
                      [resp, data]
                    end)
