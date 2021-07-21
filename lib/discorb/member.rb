@@ -59,7 +59,17 @@ module Discorb
       "#<#{self.class} #{self} id=#{@id}>"
     end
 
+    # HTTP
+
+    def add_role(role, reason: nil)
+      @client.internet.put("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason)
+    end
+
+    def remove_role(role, reason: nil)
+      @client.internet.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason)
+    end
     # @!visibility private
+
     private
 
     def _set_data(user_data, member_data)
