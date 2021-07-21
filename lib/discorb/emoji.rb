@@ -41,7 +41,6 @@ module Discorb
       @roles != []
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
