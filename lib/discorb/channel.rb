@@ -52,7 +52,6 @@ module Discorb
       "/channels/#{@id}/messages"
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -97,7 +96,6 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -149,7 +147,6 @@ module Discorb
       end
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -185,7 +182,6 @@ module Discorb
       end
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -212,7 +208,6 @@ module Discorb
       end
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -268,7 +263,6 @@ module Discorb
       "/channels/#{@id}/messages"
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -298,7 +292,6 @@ module Discorb
       end
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -324,7 +317,6 @@ module Discorb
       end
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
@@ -346,7 +338,6 @@ module Discorb
       @channels.filter { |c| c.is_a? VoiceChannel }
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)

@@ -213,7 +213,6 @@ module Discorb
       "#<#{self.class} #{@content.inspect} id=#{@id}>"
     end
 
-    # @!visibility private
     def _set_data(data)
       @id = Snowflake.new(data[:id])
 

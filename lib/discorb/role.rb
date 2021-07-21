@@ -75,7 +75,6 @@ module Discorb
       end
     end
 
-    # @!visibility private
     private
 
     def _set_data(data)
