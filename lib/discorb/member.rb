@@ -23,6 +23,14 @@ module Discorb
       @nick || @username
     end
 
+    def mention
+      "<@#{@nick.nil? ? '' : '!'}#{@id}>"
+    end
+
+    def voice_state
+      guild.voice_states[@id]
+    end
+
     def guild
       @client.guilds[@guild_id]
     end

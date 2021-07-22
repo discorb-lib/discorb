@@ -323,7 +323,103 @@ module Discorb
       when 'INVITE_DELETE'
         # TODO: Gateway: INVITE_DELETE
       when 'VOICE_STATE_UPDATE'
-        # TODO: Gateway: VOICE_STATE_UPDATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+
+        guild = @guilds[data[:guild_id]]
+        current = guild.voice_states[data[:user_id]]
+        if current.nil?
+          old = nil
+          current = VoiceState.new(self, data)
+          guild.voice_states[data[:user_id]] = current
+        else
+          old = VoiceState.new(self, current.instance_variable_get(:@data))
+          current.send(:_set_data, data)
+        end
+        dispatch(:voice_state_update, old, current)
+        if old&.channel != current&.channel
+          dispatch(:voice_channel_update, old, current)
+          case [old&.channel, current&.channel]
+          in [nil, _]
+            dispatch(:voice_channel_connect, current)
+          in [_, nil]
+            dispatch(:voice_channel_disconnect, old)
+          in _
+            dispatch(:voice_channel_move, old, current)
+          end
+        end
+        if old&.mute? != current&.mute?
+          dispatch(:voice_mute_update, old, current)
+          case [old&.mute?, current&.mute?]
+          when [false, true]
+            dispatch(:voice_mute_enable, current)
+          when [true, false]
+            dispatch(:voice_mute_disable, old)
+          end
+        end
+        if old&.deaf? != current&.deaf?
+          dispatch(:voice_deaf_update, old, current)
+          case [old&.deaf?, current&.deaf?]
+          when [false, true]
+            dispatch(:voice_deaf_enable, current)
+          when [true, false]
+            dispatch(:voice_deaf_disable, old)
+          end
+        end
+        if old&.self_mute? != current&.self_mute?
+          dispatch(:self_mute_update, old, current)
+          case [old&.self_mute?, current&.self_mute?]
+          when [false, true]
+            dispatch(:voice_self_mute_enable, current)
+          when [true, false]
+            dispatch(:voice_self_mute_disable, old)
+          end
+        end
+        if old&.self_deaf? != current&.self_deaf?
+          dispatch(:voice_self_deaf_update, old, current)
+          case [old&.self_deaf?, current&.self_deaf?]
+          when [false, true]
+            dispatch(:voice_self_deaf_enable, current)
+          when [true, false]
+            dispatch(:voice_self_deaf_disable, old)
+          end
+        end
+        if old&.server_mute? != current&.server_mute?
+          dispatch(:server_mute_update, old, current)
+          case [old&.server_mute?, current&.server_mute?]
+          when [false, true]
+            dispatch(:voice_server_mute_enable, current)
+          when [true, false]
+            dispatch(:voice_server_mute_disable, old)
+          end
+        end
+        if old&.server_deaf? != current&.server_deaf?
+          dispatch(:voice_server_deaf_enable, old, current)
+          case [old&.server_deaf?, current&.server_deaf?]
+          when [false, true]
+            dispatch(:voice_server_deaf_enable, current)
+          when [true, false]
+            dispatch(:voice_server_deaf_disable, old)
+          end
+        end
+        if old&.video? != current&.video?
+          dispatch(:voice_video_update, old, current)
+          case [old&.video?, current&.video?]
+          when [false, true]
+            dispatch(:voice_video_start, current)
+          when [true, false]
+            dispatch(:voice_video_end, old)
+          end
+        end
+        if old&.stream? != current&.stream?
+          dispatch(:voice_stream_update, old, current)
+          case [old&.stream?, current&.stream?]
+          when [false, true]
+            dispatch(:voice_stream_start, current)
+          when [true, false]
+            dispatch(:voice_stream_end, old)
+          end
+        end
+
       when 'PRESENCE_UPDATE'
         # TODO: Gateway: PRESENCE_UPDATE
       when 'MESSAGE_UPDATE'
