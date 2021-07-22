@@ -187,7 +187,7 @@ module Discorb
           @uncached_guilds.delete(guild.id)
           dispatch(:ready) if @uncached_guilds == []
         elsif @guilds.has?(data[:id])
-          @guilds[data[:id]]._set_from_hash(data)
+          @guilds[data[:id]].send(:_set_data, data)
           dispatch(:guild_available, guild)
         else
           guild = Guild.new(self, data, true)
@@ -199,7 +199,7 @@ module Discorb
         dispatch(:message, message)
       when 'GUILD_UPDATE'
         if @guilds.has?(data[:id])
-          @guilds[data[:id]]._set_from_hash(data, false)
+          @guilds[data[:id]].send(:_set_data, data, false)
           dispatch(:guild_update, @guilds[data[:id]])
         else
           @log.warn "Unknown guild id #{data[:id]}, ignoring"
