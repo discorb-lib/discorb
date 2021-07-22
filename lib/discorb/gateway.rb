@@ -104,7 +104,7 @@ module Discorb
             @tasks.map(&:stop)
             raise ClientError.new('Authentication failed.'), cause: nil
           when 'Discord WebSocket requesting client reconnect.'
-            @log.info 'Discord WebSocket requesting client reconnect.'
+            @log.info 'Discord WebSocket requesting client reconnect'
             connect_gateway(false)
           end
         end
@@ -146,11 +146,11 @@ module Discorb
         when 9
           @log.warn 'Received opcode 9, closed connection'
           if data
-            @log.info 'Connection is resumable, reconnecting.'
+            @log.info 'Connection is resumable, reconnecting'
             @connection.close
             connect_gateway(false)
           else
-            @log.info 'Connection is not resumable, reconnecting with opcode 2.'
+            @log.info 'Connection is not resumable, reconnecting with opcode 2'
             task.sleep(2)
             @connection.close
             connect_gateway(true)
@@ -183,9 +183,12 @@ module Discorb
         @uncached_guilds = data[:guilds].map { |g| g[:id] }
       when 'GUILD_CREATE'
         if @uncached_guilds.include?(data[:id])
-          guild = Guild.new(self, data, true)
-          @uncached_guilds.delete(guild.id)
-          dispatch(:ready) if @uncached_guilds == []
+          Guild.new(self, data, true)
+          @uncached_guilds.delete(data[:id])
+          if @uncached_guilds == []
+            dispatch(:ready)
+            @log.info('Guilds were cached')
+          end
         elsif @guilds.has?(data[:id])
           @guilds[data[:id]].send(:_set_data, data)
           dispatch(:guild_available, guild)
