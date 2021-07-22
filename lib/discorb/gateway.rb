@@ -174,7 +174,7 @@ module Discorb
       end
     end
 
-    def handle_event(event_name, data) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    def handle_event(event_name, data)
       case event_name
       when 'READY'
         @api_version = data[:v]

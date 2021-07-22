@@ -3,13 +3,13 @@ AllCops:
   NewCops: enable
 
 Metrics/AbcSize:
-  Max: 100
+  Enabled: false
 
 Metrics/PerceivedComplexity:
-  Max: 60
+  Enabled: false
 
 Metrics/CyclomaticComplexity:
-  Max: 60
+  Enabled: false
 
 Metrics/ParameterLists:
   Max: 20
