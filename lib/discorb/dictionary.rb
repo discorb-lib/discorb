@@ -4,14 +4,15 @@ module Discorb
   class Dictionary
     attr_accessor :limit
 
-    def initialize(hash = {}, limit: nil)
+    def initialize(hash = {}, limit: nil, sort: false)
       @cache = hash.transform_keys(&:to_s)
       @limit = limit
+      @sort = sort
     end
 
     def register(id, body)
       @cache[id.to_s] = body
-      @cache = @cache.sort_by { |_, v| v.position }.to_h if body.respond_to?(:position)
+      @cache = @cache.sort_by(&@sort).to_h if @sort
       @cache.remove(@cache.values[-1]) if !@limit.nil? && @cache.size > @limit
       body
     end
@@ -22,12 +23,8 @@ module Discorb
 
     def get(id)
       res = @cache[id.to_s]
-      if res.nil?
-        begin
-          @cache.values[id.to_i]
-        rescue RangeError
-          nil
-        end
+      if res.nil? && id.is_a?(Integer) && id < @cache.length
+        @cache.values[id]
       else
         res
       end

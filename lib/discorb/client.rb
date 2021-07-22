@@ -36,7 +36,7 @@ module Discorb
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
-      @guilds = Discorb::Dictionary.new
+      @guilds = Discorb::Dictionary.new(sort: ->(g) { g.id.to_i })
       @emojis = Discorb::Dictionary.new
       @messages = Discorb::Dictionary.new(limit: message_caches)
       @last_s = nil
