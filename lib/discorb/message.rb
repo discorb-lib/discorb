@@ -219,7 +219,7 @@ module Discorb
       @channel_id = data[:channel_id]
       @guild_id = data[:guild_id]
       @author = if data[:member].nil?
-                  @client.guilds[@guild_id].members[data[:author][:id]]
+                  guild.members[data[:author][:id]]
                 else
                   Member.new(@client,
                              @guild_id, data[:author], data[:member])
