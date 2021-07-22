@@ -8,6 +8,7 @@ require_relative 'member'
 require_relative 'channel'
 require_relative 'permission'
 require_relative 'role'
+require_relative 'voice_state'
 
 module Discorb
   class SystemChannelFlag < Flag
@@ -24,8 +25,7 @@ module Discorb
                 :unavailable, :member_count, :icon, :voice_states, :members, :channels, :threads,
                 :presences, :max_presences, :max_members, :vanity_url_code, :description, :banner, :premium_tier,
                 :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
-                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances,
-                :_data
+                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances
 
     @mfa_levels = %i[none low medium high very_high].freeze
     @nsfw_levels = %i[default explicit safe age_restricted].freeze
@@ -149,9 +149,8 @@ module Discorb
       @joined_at = Time.iso8601(data[:joined_at])
       @large = data[:large]
       @member_count = data[:member_count]
-      @channels = Dictionary.new(data[:channels].map { |c| Channel.make_channel(@client, c) }.map { |c| [c.id, c] }.to_h)
-
-      @voice_states = nil # TODO: Array<Discorb::VoiceState>
+      @channels = Dictionary.new(data[:channels].map { |c| Channel.make_channel(@client, c) }.map { |c| [c.id, c] }.to_h, sort: :position.to_proc)
+      @voice_states = Dictionary.new(data[:voice_states].map { |v| [v[:user_id], VoiceState.new(@client, v.merge({ guild_id: @id }))] }.to_h)
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
       @presences = nil # TODO: Array<Discorb::Presence>
       @max_presences = data[:max_presences]

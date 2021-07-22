@@ -69,6 +69,8 @@ module Discorb
     @channel_type = nil
 
     def <=>(other)
+      return 0  unless other.respond_to?(:position)
+
       @position <=> other.position
     end
 
