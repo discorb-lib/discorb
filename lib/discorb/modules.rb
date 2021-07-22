@@ -63,7 +63,7 @@ module Discorb
         else
           headers = {}
         end
-        Message.new(@client, @client.internet.post(post_url, payload, headers: headers).wait[1])
+        Message.new(@client, @client.internet.post(post_url, payload, headers: headers).wait[1].merge({ guild_id: @guild_id }))
       end
     end
   end
