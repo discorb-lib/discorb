@@ -21,6 +21,8 @@ module Discorb
     end
 
     def ==(other)
+      return false unless other.respond_to?(:id)
+
       @id == other.id
     end
 
@@ -74,6 +76,10 @@ module Discorb
       @position <=> other.position
     end
 
+    def ==(other)
+      super == other
+    end
+
     def to_s
       "##{@name}"
     end
@@ -91,7 +97,7 @@ module Discorb
     alias category parent
 
     def guild
-      @client.guilds[@guild]
+      @client.guilds[@guild_id]
     end
 
     def inspect
