@@ -41,6 +41,10 @@ module Discorb
       @roles != []
     end
 
+    def inspect
+      "#<#{self.class} id=#{@id} :#{@name}:>"
+    end
+
     private
 
     def _set_data(data)
@@ -69,6 +73,14 @@ module Discorb
     def deleted?
       @deleted
     end
+
+    def to_uri
+      "#{@name}:#{@id}"
+    end
+
+    def inspect
+      "#<#{self.class} id=#{@id} :#{@name}:>"
+    end
   end
 
   class UnicodeEmoji
@@ -92,6 +104,10 @@ module Discorb
 
     def to_uri
       URI.encode_www_form_component(@value)
+    end
+
+    def inspect
+      "#<#{self.class} :#{@name}:>"
     end
 
     class << self
