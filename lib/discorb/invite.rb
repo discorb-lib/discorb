@@ -6,7 +6,7 @@ require_relative 'common'
 require_relative 'user'
 
 module Discorb
-  class Invite
+  class Invite < DiscordModel
     attr_reader :code, :target_type, :target_user, :target_application,
                 :approximate_presence_count, :approximate_member_count,
                 :expires_at, :stage_instance, :uses, :max_uses, :max_age, :temporary, :created_at
