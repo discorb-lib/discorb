@@ -95,7 +95,7 @@ module Discorb
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles,
                 :mention_channels, :attachments, :embeds, :reactions,                :webhook_id, :type,
                 :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message,
-                :interaction, :thread, :components, :_data
+                :interaction, :thread, :components
 
     @message_type = {
       default: 0,
@@ -141,6 +141,10 @@ module Discorb
 
     def guild
       @client.guilds[@guild_id]
+    end
+
+    def deleted?
+      @deleted
     end
 
     def tts?
@@ -247,6 +251,7 @@ module Discorb
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
       @_data.update(data)
+      @deleted = false
     end
 
     class << self

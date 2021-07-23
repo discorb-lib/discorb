@@ -80,6 +80,60 @@ module Discorb
       end
     end
 
+    class MessageUpdateEvent < GatewayEvent
+      attr_reader :data, :before, :after, :id, :channel_id, :guild_id, :content, :timestamp, :mention_everyone, :mention_roles, :attachments, :embeds
+
+      def initialize(client, data)
+        @client = client
+        @data = data
+        @before = client.messages[data[:before][:id]]
+        @after = client.messages[data[:after][:id]]
+        @id = Snowflake.new(data[:id])
+        @channel_id = Snowflake.new(data[:channel_id])
+        @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
+        @content = data[:content]
+        @timestamp = Time.iso8601(data[:edited_timestamp])
+        @mention_everyone = data[:mention_everyone]
+        @mention_roles = data[:mention_roles].map { |r| guild.roles[r] } if data.key?(:mention_roles)
+        @attachments = data[:attachments].map { |a| Attachment.new(a) } if data.key?(:attachments)
+        @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : [] if data.key?(:embeds)
+      end
+
+      def channel
+        @client.channels[@channel_id]
+      end
+
+      def guild
+        @client.guilds[@guild_id]
+      end
+
+      def fetch_message
+        Async do
+          channel.fetch_message(@id).wait
+        end
+      end
+    end
+
+    class UnknownDeleteBulkMessage < GatewayEvent
+      attr_reader :id
+
+      def initialize(client, id, data)
+        @client = client
+        @id = id
+        @data = data
+        @channel_id = Snowflake.new(data[:channel_id])
+        @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
+      end
+
+      def channel
+        @client.channels[@channel_id]
+      end
+
+      def guild
+        @client.guilds[@guild_id]
+      end
+    end
+
     private
 
     def connect_gateway(first)
@@ -109,6 +163,7 @@ module Discorb
           end
         rescue EOFError
           connect_gateway(false)
+
         end
       end
     end
@@ -424,11 +479,31 @@ module Discorb
       when 'PRESENCE_UPDATE'
         # TODO: Gateway: PRESENCE_UPDATE
       when 'MESSAGE_UPDATE'
-        # TODO: Gateway: MESSAGE_UPDATE
+        if (message = @messages[data[:id]])
+          before = Message.new(self, message.instance_variable_get(:@data))
+          message.send(:_update_data, message.instance_variable_get(:@data).merge(data))
+        else
+          @log.info "Uncached message ID #{data[:id]}, ignoring"
+          before = nil
+          message = nil
+        end
+        dispatch(:message_update, MessageUpdateEvent.new(self, data, before, message))
       when 'MESSAGE_DELETE'
-        # TODO: Gateway: MESSAGE_DELETE
+        return @log.info "Uncached message ID #{data[:id]}, ignoring" unless (message = @messages[data[:id]])
+
+        message.instance_variable_set(:@deleted, true)
+        dispatch(:message_delete, message)
       when 'MESSAGE_DELETE_BULK'
-        # TODO: Gateway: MESSAGE_DELETE_BULK
+        messages = []
+        data[:ids].each do |id|
+          if (message = @messages[id])
+            message.instance_variable_set(:@deleted, true)
+            messages.push(message)
+          else
+            messages.push(UnknownDeleteBulkMessage.new(self, id))
+          end
+        end
+        dispatch(:message_delete_bulk, messages)
       when 'MESSAGE_REACTION_ADD'
         if (target_message = @messages[data[:message_id]])
           if (target_reaction = target_message.reactions.find { |r| r.id == data[:emoji][:id] })
