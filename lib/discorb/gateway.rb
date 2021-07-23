@@ -158,6 +158,18 @@ module Discorb
       end
     end
 
+    class GuildIntegrationsUpdateEvent < GatewayEvent
+      def initialize(client, data)
+        @client = client
+        @data = data
+        @guild_id = Snowflake.new(data[:guild_id])
+      end
+
+      def guild
+        @client.guilds[@guild_id]
+      end
+    end
+
     class TypingStartEvent < GatewayEvent
       attr_reader :client, :channel_id, :guild_id, :user_id
 
@@ -415,7 +427,7 @@ module Discorb
       when 'GUILD_EMOJIS_UPDATE'
         # TODO: Gateway: GUILD_EMOJIS_UPDATE
       when 'GUILD_INTEGRATIONS_UPDATE'
-        # TODO: Gateway: GUILD_INTEGRATIONS_UPDATE
+        dispatch(:guild_integrations_update, GuildIntegrationsUpdateEvent.new(self, data))
       when 'INTEGRATION_CREATE'
         # TODO: Gateway: INTEGRATION_CREATE
       when 'INTEGRATION_UPDATE'
