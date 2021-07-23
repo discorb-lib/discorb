@@ -87,4 +87,55 @@ module Discorb
       @request_to_speak_timestamp = data[:request_to_speak_timestamp] ? Time.iso8601(data[:request_to_speak_timestamp]) : nil
     end
   end
+
+  class StageInstance < DiscordModel
+    attr_reader :id, :topic, :privacy_level
+
+    @privacy_level = {
+      1 => :public,
+      2 => :guild_only
+    }
+
+    def initialize(client, data, no_cache: false)
+      @client = client
+      @data = data
+      _set_data(data)
+      channel.stage_instances[@id] = self unless no_cache
+    end
+
+    def guild
+      @client.guilds[@data[:guild_id]]
+    end
+
+    def channel
+      @client.channels[@data[:channel_id]]
+    end
+
+    def discoverable?
+      !@discoverable_disabled
+    end
+
+    def public?
+      @privacy_level == :public
+    end
+
+    def guild_only?
+      @privacy_level == :guild_only
+    end
+
+    private
+
+    def _set_data(data)
+      @id = Snowflake.new(data[:id])
+      @guild_id = Snowflake.new(data[:guild_id])
+      @channel_id = Snowflake.new(data[:channel_id])
+      @topic = data[:topic]
+      @privacy_level = self.class.privacy_level[data[:privacy_level]]
+      @discoverable_disabled = data[:discoverable_disabled]
+    end
+
+    class << self
+      attr_reader :privacy_level
+    end
+  end
 end
