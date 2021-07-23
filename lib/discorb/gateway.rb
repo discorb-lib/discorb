@@ -270,26 +270,26 @@ module Discorb
       when 'STAGE_INSTANCE_DELETE'
         # TODO: Gateway: STAGE_INSTANCE_DELETE
       when 'GUILD_MEMBER_ADD'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         nm = Member.new(self, data[:guild_id], data[:user].update({ no_cache: true }), data)
-        @guilds[data[:guild_id]] = nm
+        guild.members[nm.id] = nm
         dispatch(:member_add, nm)
       when 'GUILD_MEMBER_UPDATE'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
-        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].members.has?(data[:id])
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless guild.members.has?(data[:id])
 
-        nm = @guilds[data[:guild_id]].members[data[:id]]
+        nm = guild.members[data[:id]]
         old = Member.new(self, data[:guild_id], data[:user], data.update({ no_cache: true }))
         nm.send(:_set_data, data[:user], data)
         dispatch(:member_update, old, nm)
       when 'GUILD_MEMBER_REMOVE'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
-        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless @guilds[data[:guild_id]].members.has?(data[:id])
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless guild.members.has?(data[:id])
 
-        dispatch(:member_remove, @guilds[data[:guild_id]].members.delete(data[:id]))
+        dispatch(:member_remove, guild.members.delete(data[:id]))
       when 'GUILD_BAN_ADD'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         user = if @users.has? data[:user][:id]
                  @users[data[:user][:id]]
@@ -297,9 +297,9 @@ module Discorb
                  User.new(self, data[:user].update({ no_cache: true }))
                end
 
-        dispatch(:guild_ban_add, @guilds[data[:guild_id]], user)
+        dispatch(:guild_ban_add, guild, user)
       when 'GUILD_BAN_REMOVE'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         user = if @users.has? data[:user][:id]
                  @users[data[:user][:id]]
@@ -307,7 +307,7 @@ module Discorb
                  User.new(self, data[:user].update({ no_cache: true }))
                end
 
-        dispatch(:guild_ban_remove, @guilds[data[:guild_id]], user)
+        dispatch(:guild_ban_remove, guild, user)
       when 'GUILD_EMOJIS_UPDATE'
         # TODO: Gateway: GUILD_EMOJIS_UPDATE
       when 'GUILD_INTEGRATIONS_UPDATE'
@@ -325,9 +325,8 @@ module Discorb
       when 'INVITE_DELETE'
         # TODO: Gateway: INVITE_DELETE
       when 'VOICE_STATE_UPDATE'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless @guilds.has? data[:guild_id]
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
-        guild = @guilds[data[:guild_id]]
         current = guild.voice_states[data[:user_id]]
         if current.nil?
           old = nil
