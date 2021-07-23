@@ -4,6 +4,7 @@ require 'time'
 
 require_relative 'common'
 require_relative 'invite'
+require_relative 'integration'
 module Discorb
   module GatewayHandler
     class GatewayEvent
@@ -429,11 +430,19 @@ module Discorb
       when 'GUILD_INTEGRATIONS_UPDATE'
         dispatch(:guild_integrations_update, GuildIntegrationsUpdateEvent.new(self, data))
       when 'INTEGRATION_CREATE'
-        # TODO: Gateway: INTEGRATION_CREATE
+        dispatch(:integration_create, Integration.new(self, data, data[:guild_id]))
       when 'INTEGRATION_UPDATE'
-        # TODO: Gateway: INTEGRATION_UPDATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+        return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless (integration = guild.integrations[data[:id]])
+
+        before = Integration.new(self, integration.instance_variable_get(:@_data), data[:guild_id], no_cache: true)
+        integration.send(:_set_data, data)
+        dispatch(:integration_update, before, integration)
       when 'INTEGRATION_DELETE'
-        # TODO: Gateway: INTEGRATION_DELETE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+        return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless guild.integration.has?(data[:id])
+
+        dispatch(:integration_delete, guild.integrations.delete(data[:id]))
       when 'WEBHOOKS_UPDATE'
         # TODO: Gateway: WEBHOOKS_UPDATE
       when 'INVITE_CREATE'

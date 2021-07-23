@@ -25,7 +25,7 @@ module Discorb
                 :unavailable, :member_count, :icon, :voice_states, :members, :channels, :threads,
                 :presences, :max_presences, :max_members, :vanity_url_code, :description, :banner, :premium_tier,
                 :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
-                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances
+                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances, :integrations
 
     @mfa_levels = %i[none low medium high very_high].freeze
     @nsfw_levels = %i[default explicit safe age_restricted].freeze
@@ -119,6 +119,7 @@ module Discorb
       @afk_timeout = data[:afk_timeout]
       @widget_enabled = data[:widget_enabled]
       @widget_channel_id = data[:widget_channel_id]
+      @integrations = Dictionary.new
       @roles = Dictionary.new
       data[:roles].each do |r|
         Role.new(@client, self, r)
