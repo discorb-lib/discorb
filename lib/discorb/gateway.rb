@@ -107,6 +107,8 @@ module Discorb
             @log.info 'Discord WebSocket requesting client reconnect'
             connect_gateway(false)
           end
+        rescue EOFError
+          connect_gateway(false)
         end
       end
     end
