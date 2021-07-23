@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'time'
+
+require_relative 'common'
+require_relative 'invite'
 module Discorb
   module GatewayHandler
     class GatewayEvent
@@ -123,6 +127,26 @@ module Discorb
         @data = data
         @channel_id = Snowflake.new(data[:channel_id])
         @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
+      end
+
+      def channel
+        @client.channels[@channel_id]
+      end
+
+      def guild
+        @client.guilds[@guild_id]
+      end
+    end
+
+    class InviteDeleteEvent < GatewayEvent
+      attr_reader :code
+
+      def initialize(client, data)
+        @client = client
+        @data = data
+        @channel_id = Snowflake.new(data[:channel])
+        @guild_id = Snowflake.new(data[:guild_id])
+        @code = data[:code]
       end
 
       def channel
@@ -401,9 +425,9 @@ module Discorb
       when 'WEBHOOKS_UPDATE'
         # TODO: Gateway: WEBHOOKS_UPDATE
       when 'INVITE_CREATE'
-        # TODO: Gateway: INVITE_CREATE
+        dispatch(:invite_create, Invite.new(self, data, true))
       when 'INVITE_DELETE'
-        # TODO: Gateway: INVITE_DELETE
+        dispatch(:invite_delete, InviteDeleteEvent.new(self, data))
       when 'VOICE_STATE_UPDATE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
