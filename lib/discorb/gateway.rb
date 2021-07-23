@@ -330,6 +330,12 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:id]}, ignoring" unless (guild = @guilds.delete(data[:id]))
 
         dispatch(:guild_delete, guild)
+        if guild.has?(:unavailable)
+          dispatch(:guild_destroy, guild)
+        else
+          dispatch(:guild_leave, guild)
+        end
+
       when 'GUILD_ROLE_CREATE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
