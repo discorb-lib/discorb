@@ -1,0 +1,991 @@
+# TypeProf 0.14.1
+
+# Classes
+class Object
+  DISCORD_TO_UNICODE: untyped
+  UNICODE_TO_DISCORD: untyped
+  LOADED_COLORIZE: false
+end
+
+module Discorb
+  VERSION: String
+  API_BASE_URL: String
+  USER_AGENT: String
+
+  class DiscordModel
+    def ==: (untyped other) -> bool
+    def discorb?: -> true
+  end
+
+  class Snowflake < DiscordModel
+    @value: untyped
+
+    def initialize: (untyped value) -> untyped
+    def to_s: -> untyped
+    def to_i: -> untyped
+    def ==: (untyped other) -> nil
+    def timestamp: -> Time
+    def worker_id: -> untyped
+    def process_id: -> untyped
+    def increment: -> untyped
+  end
+
+  class Flag
+    self.@bits: Hash[bot, bot]
+
+    attr_reader values: Hash[untyped, bool]
+    attr_reader value: Complex | Float | Integer | Rational
+    def initialize: (Complex | Float | Integer | Rational value) -> untyped
+    def method_missing: (:name name, ?nil args) -> bool?
+    def respond_to_missing?: (untyped sym, untyped include_private) -> true
+    def +: (untyped other) -> Flag
+    def -: (untyped other) -> Flag
+    def |: (untyped other) -> Flag
+    def &: (untyped other) -> Flag
+    def ^: (untyped other) -> Flag
+    def self.max_value: -> untyped
+  end
+
+  class DiscorbError < StandardError
+    private
+    def enumerate_errors: (untyped hash) -> Hash[bot, bot]
+    def _recr_items: (Array[untyped] key, untyped item, Hash[bot, bot] res) -> untyped
+  end
+
+  class HTTPError < DiscorbError
+    @code: untyped
+    @response: Async::Task?
+
+    def initialize: (Async::Task? resp, nil data) -> void
+  end
+
+  class BadRequestError < DiscorbError
+    @code: untyped
+    @response: Async::Task?
+
+    def initialize: (Async::Task? resp, nil data) -> void
+  end
+
+  class ForbiddenError < HTTPError
+    @code: untyped
+    @response: Async::Task?
+  end
+
+  class NotFoundError < HTTPError
+    @code: untyped
+    @response: Async::Task?
+  end
+
+  class ClientError < DiscorbError
+  end
+
+  class NotSupportedWarning < DiscorbError
+    def initialize: (untyped message) -> void
+  end
+
+  class Member
+    @guild_id: Snowflake
+    @client: Client?
+    @_data: Hash[bot, bot]
+    @role_ids: untyped
+    @pending: untyped
+    @mute: untyped
+    @hoisted_role_id: untyped
+    @deaf: untyped
+    @id: bot
+    @username: bot
+
+    attr_reader premium_since: Time?
+    attr_reader nick: untyped
+    attr_reader joined_at: Time?
+    attr_reader custom_avatar: untyped
+    attr_reader display_avatar: Asset
+    attr_reader avatar: untyped
+    attr_reader _member_data: Hash[untyped, untyped]
+    def initialize: (Client? client, untyped guild_id, untyped user_data, untyped member_data) -> Hash[untyped, untyped]
+    def name: -> nil
+    def guild: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def roles: -> untyped
+    def permissions: -> untyped
+    def hoisted_role: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def hoisted?: -> untyped
+    def mute?: -> untyped
+    def deaf?: -> untyped
+    def pending?: -> untyped
+    def inspect: -> String
+    private
+def _set_data: (untyped user_data, untyped member_data) -> Hash[untyped, untyped]
+  end
+
+  class Dictionary
+    @cache: Hash[String, CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel]
+
+    def initialize: (?Hash[bot, bot] hash) -> Hash[untyped, bot]
+    def register: (Snowflake? id, CustomEmoji | Guild | Member | Role | User body) -> (CustomEmoji | Guild | Member | Role | User)
+    def remove: (Snowflake id) -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def get: (Snowflake? id) -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def values: -> (Array[CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel])
+    def has?: (untyped id) -> bool
+    def method_missing: (untyped name, ?Array[bot] args, ?Hash[bot, bot] kwargs) -> untyped
+    def respond_to_missing?: (untyped name, untyped args, untyped kwargs) -> true
+    alias [] get
+    alias []= register
+  end
+
+  class Color
+    self.@discord_colors: {teal: Integer, dark_teal: Integer, green: Integer, dark_green: Integer, blue: Integer, dark_blue: Integer, purple: Integer, dark_purple: Integer, magenta: Integer, dark_magenta: Integer, gold: Integer, dark_gold: Integer, orange: Integer, dark_orange: Integer, red: Integer, dark_red: Integer, lighter_grey: Integer, lighter_gray: Integer, dark_grey: Integer, dark_gray: Integer, light_grey: Integer, light_gray: Integer, darker_grey: Integer, darker_gray: Integer, og_blurple: Integer, blurple: Integer, greyple: Integer, dark_theme: Integer, fuchsia: Integer, yellow: Integer}
+
+    attr_accessor value: Integer
+    def initialize: (Integer value) -> Integer
+    def to_i: -> Integer
+    def to_hex: -> String
+    def to_rgb: -> ([Integer, Integer | Numeric, Integer | Numeric])
+    def to_s: -> String
+    def inspect: -> String
+    alias to_a to_rgb
+    def self.from_hex: (untyped hex) -> Color
+    def self.from_rgb: (untyped _red, untyped _green, untyped _blue) -> Color
+    def self.[]: (untyped color) -> Color
+  end
+
+  class CustomEmoji < DiscordModel
+    @client: Client
+    @_data: Hash[untyped, untyped]
+    @managed: untyped
+    @animated: untyped
+    @available: untyped
+
+    attr_reader id: Snowflake
+    attr_reader name: untyped
+    attr_reader roles: Array[bot]
+    attr_reader user: User
+    attr_reader require_colons: untyped
+    attr_reader guild: Guild
+    attr_reader data: untyped
+    def initialize: (Client client, Guild guild, untyped data) -> Hash[untyped, untyped]
+    def to_s: -> String
+    def to_uri: -> String
+    def managed?: -> untyped
+    def animated?: -> untyped
+    def available?: -> untyped
+    def roles?: -> bool
+    private
+def _set_data: (untyped data) -> Hash[untyped, untyped]
+  end
+
+  class UnicodeEmoji
+    @name: untyped
+    @value: untyped
+
+    def initialize: (untyped name) -> untyped
+    def to_s: -> untyped
+    def to_uri: -> String
+    def self.[]: (*untyped) -> UnicodeEmoji
+  end
+
+  class Component
+    def self.from_hash: (untyped data) -> ((Button | SelectMenu)?)
+  end
+
+  class Button < Component
+    self.@styles: {primary: Integer, secondary: Integer, success: Integer, danger: Integer, link: Integer}
+
+    attr_accessor label: untyped
+    attr_accessor style: :primary
+    attr_accessor emoji: nil
+    attr_accessor custom_id: nil
+    attr_accessor url: nil
+    attr_accessor disabled: false
+    def initialize: (untyped label, ?:primary style, ?emoji: nil, ?custom_id: nil, ?url: nil, ?disabled: false) -> false
+    def disabled?: -> false
+    def to_hash: -> {type: Integer, label: untyped, style: untyped, url: nil, emoji: {id: nil, name: untyped, animated: false}?, disabled: false, custom_id: nil}
+    def self.[]: (*untyped) -> Button
+
+    private
+    def hash_emoji: (nil emoji) -> {id: nil, name: untyped, animated: false}?
+  end
+
+  class SelectMenu < Component
+    @placeholder: String
+    @disabled: bool
+
+    attr_accessor custom_id: String | Symbol
+    attr_accessor options: Array[Option]
+    attr_accessor min_values: Integer
+    attr_accessor max_values: Integer
+    def initialize: (String | Symbol custom_id, Array[Option] options, ?placeholder: nil, ?min_values: Integer, ?max_values: Integer) -> Integer
+    def disabled?: -> nil
+    def to_hash: -> {type: Integer, custom_id: String, options: Array[Option], placeholder: String, min_values: Integer, max_values: Integer}
+    def self.[]: (*untyped) -> SelectMenu
+
+    private
+    def hash_emoji: (untyped emoji) -> {id: nil, name: untyped, animated: false}?
+
+    class Option
+      attr_accessor label: untyped
+      attr_accessor value: untyped
+      attr_accessor description: nil
+      attr_accessor emoji: nil
+      attr_accessor default: false
+      def initialize: (untyped label, untyped value, ?description: nil, ?emoji: nil, ?default: false) -> false
+      def to_hash: -> {label: untyped, value: untyped, description: nil, emoji: {id: nil, name: untyped, animated: false}?, default: false}
+      def hash_emoji: (nil emoji) -> {id: nil, name: untyped, animated: false}?
+      def self.from_hash: (untyped data) -> Option
+    end
+  end
+
+  module Messageable
+    @client: bot
+    @channel_id: bot
+
+    def post: (?nil content, ?tts: false, ?embed: Embed, ?allowed_mentions: AllowedMentions, ?message_reference: MessageReference | Message, ?components: Array[Component | Array[Component]], ?file: File) -> Message
+            | (?nil content, ?tts: false, ?embeds: Array[Embed], ?allowed_mentions: AllowedMentions, ?message_reference: MessageReference | Message, ?components: Array[Component | Array[Component]], ?file: File) -> Message
+            | (?nil content, ?tts: false, ?embed: Embed, ?allowed_mentions: AllowedMentions, ?message_reference: MessageReference | Message, ?components: Array[Component | Array[Component]], ?files: Array[File]) -> Message
+            | (?nil content, ?tts: false, ?embeds: Array[Embed], ?allowed_mentions: AllowedMentions, ?message_reference: MessageReference | Message, ?components: Array[Component | Array[Component]], ?files: Array[File]) -> Message
+  end
+
+  class Channel < DiscordModel
+    self.@channel_type: nil
+    self.@subclasses: Array[bot]
+    @client: Client?
+    self.@client: bot
+
+    attr_reader id: Snowflake
+    attr_reader name: untyped
+    attr_reader channel_type: untyped
+    attr_reader _data: Hash[untyped, untyped]
+    def initialize: (Client? client, (Async::Task | Hash[untyped, untyped])? data) -> Hash[untyped, untyped]
+    def ==: (untyped other) -> nil
+    def inspect: -> String
+    def self.descendants: -> Array[untyped]
+    def self.make_channel: (Client? client, (Async::Task | Hash[untyped, untyped])? data) -> GuildChannel
+    def type: -> untyped
+    def post_url: -> String
+    private
+def _set_data: ((Async::Task | Hash[untyped, untyped])? data) -> Hash[untyped, untyped]
+  end
+
+  class GuildChannel < Channel
+    include Comparable
+    self.@channel_type: nil
+    @client: Client?
+    @_data: Hash[untyped, untyped]
+    @guild_id: untyped
+    @parent_id: untyped
+    @id: Snowflake
+    @name: untyped
+    @guild: bot
+
+    attr_reader position: untyped
+    attr_reader permission_overwrites: untyped
+    def <=>: (untyped other) -> untyped
+    def to_s: -> String
+    def parent: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    alias category parent
+    def guild: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def inspect: -> String
+    private
+def _set_data: ((Async::Task | Hash[untyped, untyped])? data) -> Hash[untyped, untyped]
+  end
+
+  class TextChannel < GuildChannel
+    include Messageable
+    self.@channel_type: Integer
+    @client: Client?
+    @_data: Hash[untyped, untyped]
+    @guild_id: untyped
+    @position: untyped
+    @permission_overwrites: untyped
+    @parent_id: untyped
+    @id: Snowflake
+    @name: untyped
+    @guild: bot
+
+    attr_reader topic: untyped
+    attr_reader nsfw: untyped
+    attr_reader last_message_id: untyped
+    attr_reader rate_limit_per_user: untyped
+    attr_reader last_pin_timestamp: Time?
+    attr_reader threads: Array[bot]
+    alias slowmode rate_limit_per_user
+    def initialize: (untyped client, untyped data) -> Array[bot]
+    def edit: (?name: nil, ?announce: nil, ?position: nil, ?topic: nil, ?nsfw: nil, ?slowmode: nil, ?category: nil, ?parent: nil) -> Async::Task?
+    def fetch_message: (untyped id) -> Async::Task?
+    private
+def _set_data: ((Async::Task | Hash[untyped, untyped])? data) -> Hash[untyped, untyped]
+  end
+
+  class NewsChannel < TextChannel
+    include Messageable
+    self.@channel_type: Integer
+  end
+
+  class VoiceChannel < GuildChannel
+    self.@channel_type: Integer
+    @client: bot
+    @id: Snowflake
+    @rtc_region: untyped
+    @video_quality_mode: :auto | :full
+    @guild_id: untyped
+    @position: untyped
+    @permission_overwrites: untyped
+    @parent_id: untyped
+    @name: untyped
+    @_data: Hash[untyped, untyped]
+    @guild: bot
+
+    attr_reader bitrate: untyped
+    attr_reader user_limit: nil
+    def edit: (?name: nil, ?position: nil, ?bitrate: nil, ?user_limit: nil, ?rtc_region: nil) -> Async::Task?
+    private
+def _set_data: (untyped data) -> Hash[untyped, untyped]
+  end
+
+  class StageChannel < GuildChannel
+    self.@channel_type: Integer
+    @client: bot
+    @id: Snowflake
+    @topic: untyped
+    @rtc_region: untyped
+    @guild_id: untyped
+    @position: untyped
+    @permission_overwrites: untyped
+    @parent_id: untyped
+    @name: untyped
+    @_data: Hash[untyped, untyped]
+    @guild: bot
+
+    attr_reader bitrate: untyped
+    attr_reader user_limit: untyped
+    def edit: (?name: nil, ?position: nil, ?bitrate: nil, ?user_limit: nil) -> Async::Task?
+    private
+def _set_data: (untyped data) -> Hash[untyped, untyped]
+  end
+
+  class ThreadChannel < Channel
+    include Messageable
+    self.@channel_type: nil
+    @client: untyped
+    @guild_id: untyped
+    @parent_id: untyped
+    @guild: bot
+    @owner_id: bot
+
+    attr_reader id: Snowflake
+    attr_reader name: nil
+    attr_reader type: untyped
+    attr_reader message_count: untyped
+    attr_reader member_count: untyped
+    attr_reader rate_limit_per_user: untyped
+    alias slowmode rate_limit_per_user
+    def initialize: (untyped client, untyped data) -> (PrivateThreadChannel | PublicThreadChannel | ThreadChannel)
+    def ==: (untyped other) -> nil
+    def parent: -> nil
+    alias channel parent
+    def guild: -> untyped
+    def owner: -> untyped
+    def inspect: -> String
+    def post_url: -> String
+    private
+def _set_data: (untyped data) -> (PrivateThreadChannel | PublicThreadChannel | ThreadChannel)
+  end
+
+  class PublicThreadChannel < ThreadChannel
+    self.@channel_type: Integer
+    @client: bot
+    @id: Snowflake
+    @name: nil
+    @guild_id: untyped
+    @parent_id: untyped
+
+    attr_reader bitrate: untyped
+    attr_reader user_limit: untyped
+    def edit: (?name: nil, ?position: nil, ?bitrate: nil, ?user_limit: nil) -> Async::Task?
+    private
+def _set_data: (untyped data) -> (PrivateThreadChannel | PublicThreadChannel | ThreadChannel)
+  end
+
+  class PrivateThreadChannel < ThreadChannel
+    self.@channel_type: Integer
+    @client: bot
+    @id: Snowflake
+    @name: nil
+    @guild_id: untyped
+    @parent_id: untyped
+
+    attr_reader bitrate: untyped
+    attr_reader user_limit: untyped
+    def edit: (?name: nil, ?position: nil, ?bitrate: nil, ?user_limit: nil) -> Async::Task?
+    private
+def _set_data: (untyped data) -> (PrivateThreadChannel | PublicThreadChannel | ThreadChannel)
+  end
+
+  class CategoryChannel < GuildChannel
+    self.@channel_type: Integer
+    @client: bot
+    @guild_id: untyped
+    @position: untyped
+    @permission_overwrites: untyped
+    @parent_id: untyped
+    @id: Snowflake
+    @name: untyped
+    @_data: Hash[untyped, untyped]
+    @guild: bot
+
+    attr_reader channels: untyped
+    def text_channels: -> untyped
+    def voice_channels: -> untyped
+    private
+def _set_data: (untyped data) -> Hash[untyped, untyped]
+  end
+
+  class Permission < Flag
+    self.@bits: {create_instant_invite: Integer, kick_members: Integer, ban_members: Integer, administrator: Integer, manage_channels: Integer, manage_guild: Integer, add_reactions: Integer, view_audit_log: Integer, priority_speaker: Integer, stream: Integer, view_channel: Integer, send_messages: Integer, send_tts_messages: Integer, manage_messages: Integer, embed_links: Integer, attach_files: Integer, read_message_history: Integer, mention_everyone: Integer, use_external_emojis: Integer, view_guild_insights: Integer, connect: Integer, speak: Integer, mute_members: Integer, deafen_members: Integer, move_members: Integer, use_vad: Integer, change_nickname: Integer, manage_nicknames: Integer, manage_roles: Integer, manage_webhooks: Integer, manage_emojis: Integer, use_slash_commands: Integer, request_to_speak: Integer, manage_threads: Integer, use_public_threads: Integer, use_private_threads: Integer}
+    @value: Complex | Float | Integer | Rational
+    @values: Hash[untyped, bool]
+  end
+
+  class PermissionOverwrite
+    self.@raw_bits: {create_instant_invite: Integer, kick_members: Integer, ban_members: Integer, administrator: Integer, manage_channels: Integer, manage_guild: Integer, add_reactions: Integer, view_audit_log: Integer, priority_speaker: Integer, stream: Integer, view_channel: Integer, send_messages: Integer, send_tts_messages: Integer, manage_messages: Integer, embed_links: Integer, attach_files: Integer, read_message_history: Integer, mention_everyone: Integer, use_external_emojis: Integer, view_guild_insights: Integer, connect: Integer, speak: Integer, mute_members: Integer, deafen_members: Integer, move_members: Integer, use_vad: Integer, change_nickname: Integer, manage_nicknames: Integer, manage_roles: Integer, manage_webhooks: Integer, manage_emojis: Integer, use_slash_commands: Integer, request_to_speak: Integer, manage_threads: Integer, use_public_threads: Integer, use_private_threads: Integer}
+    self.@bits: {create_instant_invite: Integer, kick_members: Integer, ban_members: Integer, administrator: Integer, manage_channels: Integer, manage_guild: Integer, add_reactions: Integer, view_audit_log: Integer, priority_speaker: Integer, stream: Integer, view_channel: Integer, send_messages: Integer, send_tts_messages: Integer, manage_messages: Integer, embed_links: Integer, attach_files: Integer, read_message_history: Integer, mention_everyone: Integer, use_external_emojis: Integer, view_guild_insights: Integer, connect: Integer, speak: Integer, mute_members: Integer, deafen_members: Integer, move_members: Integer, use_vad: Integer, change_nickname: Integer, manage_nicknames: Integer, manage_roles: Integer, manage_webhooks: Integer, manage_emojis: Integer, use_slash_commands: Integer, request_to_speak: Integer, manage_threads: Integer, use_public_threads: Integer, use_private_threads: Integer}
+    @allow: Integer
+    @deny: Integer
+
+    def initialize: (Integer allow, Integer deny) -> Integer
+    def allow: -> untyped
+    def deny: -> untyped
+    def allow_value: -> Integer
+    def deny_value: -> Integer
+    def to_hash: -> untyped
+    def +: (untyped other) -> PermissionOverwrite
+    def []: (untyped field) -> bool?
+    def []=: (untyped, bool | nil) -> Integer
+    def method_missing: (untyped, bool | nil) -> bool?
+    def respond_to_missing?: (untyped method, untyped _arg) -> true
+    def self.from_hash: (untyped hash) -> PermissionOverwrite
+  end
+
+  class SystemChannelFlag < Flag
+    self.@bits: {member_join: Integer, server_boost: Integer, setup_tips: Integer}
+    @value: Complex | Float | Integer | Rational
+    @values: Hash[untyped, bool]
+  end
+
+  class Guild < DiscordModel
+    self.@mfa_levels: [:none, :low, :medium, :high, :very_high]
+    self.@nsfw_levels: [:default, :explicit, :safe, :age_restricted]
+    @client: Client
+    @afk_channel_id: untyped
+    @widget_enabled: untyped
+    @widget_channel_id: untyped
+    @system_channel_id: untyped
+    @system_channel_flag: SystemChannelFlag
+    @rules_channel_id: untyped
+    @banner_hash: untyped
+
+    attr_reader id: Snowflake
+    attr_reader name: untyped
+    attr_reader splash: untyped
+    attr_reader discovery_splash: untyped
+    attr_reader owner_id: untyped
+    attr_reader permissions: Permission
+    attr_reader region: untyped
+    attr_reader afk_timeout: untyped
+    attr_reader roles: Dictionary
+    attr_reader emojis: Dictionary
+    attr_reader features: untyped
+    attr_reader mfa_level: untyped
+    attr_reader application_id: untyped
+    attr_reader system_channel_flags: untyped
+    attr_reader joined_at: Time
+    attr_reader large: untyped
+    attr_reader unavailable: bool
+    attr_reader member_count: untyped
+    attr_reader icon: Asset?
+    attr_reader voice_states: nil
+    attr_reader members: Dictionary
+    attr_reader channels: Dictionary
+    attr_reader threads: Array[bot]
+    attr_reader presences: nil
+    attr_reader max_presences: untyped
+    attr_reader max_members: untyped
+    attr_reader vanity_url_code: untyped
+    attr_reader description: untyped
+    attr_reader banner: untyped
+    attr_reader premium_tier: untyped
+    attr_reader premium_subscription_count: untyped
+    attr_reader preferred_locale: untyped
+    attr_reader public_updates_channel_id: untyped
+    attr_reader max_video_channel_users: untyped
+    attr_reader approximate_member_count: untyped
+    attr_reader approximate_presence_count: untyped
+    attr_reader welcome_screen: WelcomeScreen?
+    attr_reader nsfw_level: untyped
+    attr_reader stage_instances: nil
+    attr_reader _data: Hash[untyped, untyped]
+    def initialize: (untyped client, untyped data, untyped is_create_event) -> Hash[untyped, untyped]?
+    def update!: -> Async::Task?
+    def afk_channel: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def system_channel: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def rules_channel: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def public_updates_channel: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def inspect: -> String
+    def owner?: -> untyped
+    def large?: -> untyped
+    def widget_enabled?: -> untyped
+    def available?: -> bool
+    def me: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def leave: -> Async::Task?
+    private
+def _set_data: (untyped data, false is_create_event) -> Hash[untyped, untyped]?
+  end
+
+  class Role < DiscordModel
+    include Comparable
+    @client: Client
+    @guild: Guild
+    @hoist: untyped
+    @managed: untyped
+    @mentionable: untyped
+    @tags: Hash[bot, bot]
+    @guild_id: bot
+
+    attr_reader id: Snowflake
+    attr_reader name: untyped
+    attr_reader color: Color
+    attr_reader permissions: Permission
+    attr_reader position: untyped
+    def initialize: (Client client, Guild guild, untyped data) -> Role
+    def <=>: (untyped other) -> untyped
+    def to_s: -> String
+    def color?: -> bool
+    def hoist?: -> untyped
+    def managed?: -> untyped
+    def mentionable?: -> untyped
+    def update!: -> Async::Task?
+    def inspect: -> String
+    private
+def _set_data: (untyped data) -> Role
+
+    class Tag
+      attr_reader bot_id: Snowflake
+      attr_reader integration_id: Snowflake
+      attr_reader premium_subscriber: Snowflake
+      def initialize: (untyped data) -> Snowflake
+      def bot?: -> bool
+      def integration?: -> bool
+      def premium_subscriber?: -> bool
+    end
+  end
+
+  class WelcomeScreen < DiscordModel
+    @client: Client
+
+    attr_reader description: untyped
+    attr_reader channels: untyped
+    attr_reader guild: Guild
+    def initialize: (Client client, Guild guild, untyped data) -> Guild
+
+    class Channel
+      @screen: untyped
+      @channel_id: Snowflake
+      @emoji_id: Snowflake
+      @emoji_name: untyped
+
+      attr_reader description: untyped
+      def initialize: (untyped screen, untyped data) -> untyped
+      def channel: -> untyped
+      def emoji: -> UnicodeEmoji
+    end
+  end
+
+  class Asset < DiscordModel
+    @target: Guild | Member | User
+
+    attr_reader hash: untyped
+    def initialize: (Guild | Member | User target, untyped hash) -> (Guild | Member | User)
+    def animated?: -> untyped
+    def url: (?image_format: nil, ?size: Integer) -> String
+
+    private
+    def endpoint: -> String?
+  end
+
+  class UserFlag < Flag
+    self.@bits: {discord_employee: Integer, partnered_server_owner: Integer, hypesquad_events: Integer, bug_hunter_level_1: Integer, house_bravery: Integer, house_brilliance: Integer, house_balance: Integer, early_supporter: Integer, team_user: Integer, bug_hunter_level_2: Integer, verified_bot: Integer, early_verified_bot_developer: Integer, discord_certified_moderator: Integer}
+    @value: Complex | Float | Integer | Rational
+    @values: Hash[untyped, bool]
+  end
+
+  class User < DiscordModel
+    @bot: untyped
+    @raw_data: Async::Task?
+
+    attr_reader client: Client
+    attr_reader verified: untyped
+    attr_reader username: untyped
+    attr_reader mfa_enabled: untyped
+    attr_reader id: Snowflake
+    attr_reader flag: UserFlag
+    attr_reader email: untyped
+    attr_reader discriminator: untyped
+    attr_reader avatar: Asset
+    attr_reader _data: Hash[untyped, untyped]
+    def initialize: (untyped client, untyped data) -> Hash[untyped, untyped]
+    def update!: -> Async::Task?
+    def name: -> untyped
+    def bot?: -> untyped
+    def to_s: -> String
+    private
+def _set_data: (untyped data) -> Hash[untyped, untyped]
+  end
+
+  class ClientUser < User
+  end
+
+  class Intents
+    self.@intent_bits: {guilds: Integer, members: Integer, bans: Integer, emojis: Integer, integrations: Integer, webhooks: Integer, invites: Integer, voice_states: Integer, presences: Integer, messages: Integer, reactions: Integer, typing: Integer, dm_messages: Integer, dm_reactions: Integer, dm_typing: Integer}
+    @raw_value: Hash[:bans | :dm_messages | :dm_reactions | :dm_typing | :emojis | :guilds | :integrations | :invites | :members | :messages | :presences | :reactions | :typing | :voice_states | :webhooks, bool?]
+
+    def initialize: (?guilds: true, ?members: false, ?bans: true, ?emojis: true, ?integrations: true, ?webhooks: true, ?invites: true, ?voice_states: true, ?presences: false, ?messages: true, ?reactions: true, ?typing: true, ?dm_messages: true, ?dm_reactions: true, ?dm_typing: true) -> {guilds: true, members: false, bans: true, emojis: true, integrations: true, webhooks: true, invites: true, voice_states: true, presences: false, messages: true, reactions: true, typing: true, dm_messages: true, dm_reactions: true, dm_typing: true}
+    def method_missing: (:name name, ?nil args) -> bool?
+    def respond_to_missing?: (untyped sym, untyped include_private) -> true
+    def value: -> Integer
+    def inspect: -> String
+    def self.from_value: (Integer value) -> Intents
+    def self.default: -> Intents
+    def self.all: -> Intents
+    def self.none: -> Intents
+  end
+
+  class Internet
+    self.@nil_body: nil
+    @client: Client
+
+    def initialize: (untyped client) -> void
+    def get: (untyped path, ?headers: nil, **untyped) -> Async::Task?
+    def post: (untyped path, untyped body, ?headers: nil, **untyped) -> Async::Task?
+    def patch: (untyped path, untyped body, ?headers: nil, **untyped) -> Async::Task?
+    def put: (String path, nil body, ?headers: nil, **untyped) -> Async::Task?
+    def remove: (String path, nil body, ?headers: nil, **untyped) -> Async::Task?
+    def inspect: -> String
+
+    private
+    def test_error: ((Async::Task | [untyped, nil])? ary) -> [Async::Task?, nil]
+    def get_headers: (nil headers, ?nil body) -> Hash[String, String]
+    def get_body: (untyped body) -> Array[untyped]
+  end
+
+  class Attachment
+    attr_reader io: untyped
+    attr_reader id: Snowflake
+    attr_reader filename: untyped
+    attr_reader content_type: untyped
+    attr_reader size: untyped
+    attr_reader url: untyped
+    attr_reader proxy_url: untyped
+    attr_reader height: untyped
+    attr_reader width: untyped
+    def initialize: (untyped data) -> untyped
+    def image?: -> untyped
+  end
+
+  class File
+    attr_accessor io: untyped
+    attr_accessor filename: Integer
+    attr_accessor content_type: String
+    def initialize: (untyped io, ?nil filename, ?content_type: nil) -> String?
+  end
+
+  class Embed
+    @video: Video?
+    @provider: Provider?
+
+    attr_accessor title: nil
+    attr_accessor description: nil
+    attr_accessor url: nil
+    attr_accessor timestamp: Time?
+    attr_accessor color: Color?
+    attr_accessor author: Author?
+    attr_accessor fields: Array[bot]
+    attr_accessor footer: Footer?
+    attr_reader image: Image?
+    attr_reader thumbnail: Thumbnail?
+    attr_reader type: String
+    def initialize: (?nil title, ?nil description, ?color: nil, ?url: nil, ?timestamp: nil, ?author: nil, ?fields: nil, ?footer: nil, ?image: nil, ?thumbnail: nil, ?data: nil) -> (Array[bot] | String)
+    def image=: (untyped value) -> Image?
+    def thumbnail=: (untyped value) -> Thumbnail?
+    def to_hash: -> {title: nil, description: nil, url: nil, timestamp: String?, color: Integer?, footer: {text: untyped, icon_url: nil}?, image: {url: untyped}?, thumbnail: {url: untyped}?, author: {name: untyped, url: nil, icon_url: nil}?, fields: Array[untyped]}
+
+    class Author
+      attr_accessor name: untyped
+      attr_accessor url: nil
+      attr_accessor icon: nil
+      def initialize: (untyped name, ?url: nil, ?icon: nil) -> nil
+      def to_hash: -> {name: untyped, url: nil, icon_url: nil}
+      def self.[]: (*untyped) -> void
+    end
+
+    class Footer
+      attr_accessor text: untyped
+      attr_accessor icon: nil
+      def initialize: (untyped text, ?icon: nil) -> nil
+      def to_hash: -> {text: untyped, icon_url: nil}
+      def self.[]: (*untyped) -> void
+    end
+
+    class Field
+      attr_accessor name: untyped
+      attr_accessor value: untyped
+      attr_accessor inline: true
+      def initialize: (untyped name, untyped value, ?inline: true) -> true
+      def to_hash: -> {name: untyped, value: untyped, inline: true}
+      def self.[]: (*untyped) -> Field
+    end
+
+    class Image
+      attr_accessor url: untyped
+      attr_reader proxy_url: untyped
+      attr_reader height: untyped
+      attr_reader width: untyped
+      def initialize: (untyped data) -> untyped
+      def to_hash: -> {url: untyped}
+    end
+
+    class Thumbnail
+      attr_accessor url: untyped
+      attr_reader proxy_url: untyped
+      attr_reader height: untyped
+      attr_reader width: untyped
+      def initialize: (untyped data) -> untyped
+      def to_hash: -> {url: untyped}
+    end
+
+    class Video
+      attr_reader url: untyped
+      attr_reader proxy_url: untyped
+      attr_reader height: untyped
+      attr_reader width: untyped
+      def initialize: (untyped data) -> untyped
+    end
+
+    class Provider
+      attr_reader name: untyped
+      attr_reader url: untyped
+      def initialize: (untyped name, untyped url) -> untyped
+    end
+  end
+
+  class MessageFlag < Flag
+    self.@bits: {crossposted: Integer, crosspost: Integer, supress_embeds: Integer, source_message_deleted: Integer, urgent: Integer, has_thread: Integer, ephemeral: Integer, loading: Integer}
+    @value: Complex | Float | Integer | Rational
+    @values: Hash[untyped, bool]
+  end
+
+  class MessageReference
+    attr_accessor guild_id: untyped
+    attr_accessor channel_id: untyped
+    attr_accessor message_id: untyped
+    attr_accessor fail_if_not_exists: true
+    alias fail_if_not_exists? fail_if_not_exists
+    def initialize: (untyped guild_id, untyped channel_id, untyped message_id, ?fail_if_not_exists: true) -> true
+    def to_hash: -> {message_id: untyped, channel_id: untyped, guild_id: untyped, fail_if_not_exists: true}
+    alias to_reference to_hash
+    def self.from_hash: (untyped data) -> MessageReference
+  end
+
+  class AllowedMentions
+    attr_accessor everyone: true?
+    attr_accessor roles: true?
+    attr_accessor users: true?
+    attr_accessor replied_user: nil
+    def initialize: (?everyone: true?, ?roles: true?, ?users: true?, ?replied_user: nil) -> nil
+    def to_hash: (?nil other) -> {parse: [String, String, String], replied_user: true?, roles: untyped, users: untyped}
+    def nil_merge: (*true? args) -> true?
+  end
+
+  class Message < DiscordModel
+    self.@message_type: {default: Integer, recipient_add: Integer, recipient_remove: Integer, call: Integer, channel_name_change: Integer, channel_icon_change: Integer, channel_pinned_message: Integer, guild_member_join: Integer, user_premium_guild_subscription: Integer, user_premium_guild_subscription_tier_1: Integer, user_premium_guild_subscription_tier_2: Integer, user_premium_guild_subscription_tier_3: Integer, channel_follow_add: Integer, guild_discovery_disqualified: Integer, guild_discovery_requalified: Integer, guild_discovery_grace_period_initial_warning: Integer, guild_discovery_grace_period_final_warning: Integer, thread_created: Integer, reply: Integer, application_command: Integer, thread_starter_message: Integer, guild_invite_reminder: Integer}
+    @channel_id: untyped
+    @guild_id: untyped
+    @tts: untyped
+    @mention_everyone: untyped
+    @pinned: untyped
+    @sticker: nil
+
+    attr_reader client: Client?
+    attr_reader id: Snowflake
+    attr_reader author: (CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?
+    attr_reader content: untyped
+    attr_reader created_at: Time
+    attr_reader updated_at: Time?
+    attr_reader mentions: untyped
+    attr_reader mention_roles: untyped
+    attr_reader mention_channels: untyped
+    attr_reader attachments: untyped
+    attr_reader embeds: Array[bot]
+    attr_reader reactions: nil
+    attr_reader webhook_id: bot
+    attr_reader type: untyped
+    attr_reader activity: nil
+    attr_reader application: nil
+    attr_reader application_id: untyped
+    attr_reader message_reference: MessageReference?
+    attr_reader flag: MessageFlag
+    attr_reader stickers: untyped
+    attr_reader referenced_message: Message?
+    attr_reader interaction: nil
+    attr_reader thread: untyped
+    attr_reader components: untyped
+    attr_reader _data: Hash[untyped, untyped]
+    def initialize: (Client? client, Async::Task? data) -> Hash[untyped, untyped]
+    def update!: -> Async::Task?
+    def channel: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def guild: -> ((CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Role | StageChannel | TextChannel | User | VoiceChannel)?)
+    def tts?: -> untyped
+    def mention_everyone?: -> untyped
+    def pinned?: -> untyped
+    def webhook?: -> bool
+    def to_s: -> untyped
+    def jump_url: -> String
+    def to_reference: (?fail_if_not_exists: true) -> {message_id: Snowflake, channel_id: untyped, guild_id: untyped, fail_if_not_exists: true}
+    def reply: (*untyped args, **untyped) -> Async::Task?
+    def publish: -> Async::Task?
+    def add_reaction: (untyped emoji) -> Async::Task?
+    def remove_reaction: (untyped emoji) -> Async::Task?
+    def inspect: -> String
+    private
+def _set_data: (Async::Task? data) -> Hash[untyped, untyped]
+  end
+
+  class Logger
+    self.@levels: [:debug, :info, :warn, :error, :fatal]
+    @out: nil
+    @level: untyped
+    @colorize_log: false
+    @levels: bot
+
+    def initialize: (untyped, untyped, untyped) -> nil
+    def level: -> untyped
+    def level=: (untyped level) -> untyped
+    def debug: (untyped message) -> nil
+    def info: (untyped message) -> nil
+    def warn: (untyped message) -> nil
+    def error: (untyped message) -> nil
+    def fatal: (untyped message) -> nil
+
+    private
+    def write_output: (String name, :light_black | :light_blue | :light_red | :red | :yellow color, untyped message) -> nil
+  end
+
+  class Event
+    @rescue: nil
+
+    attr_reader block: nil
+    attr_reader id: nil
+    attr_reader discriminator: untyped
+    def initialize: (nil block, nil id, untyped discriminator) -> nil
+    def call: (*untyped) -> untyped
+    def rescue: -> nil
+  end
+
+  module Extension
+    self.@events: Hash[bot, bot]
+    self.@client: nil
+
+    def event: (untyped event_name, ?id: nil, **untyped) -> Array[bot]
+    attr_reader events: Hash[untyped, Array[bot]]
+    attr_accessor client: untyped
+  end
+
+  class Client
+    @events: Hash[untyped, Array[bot]]
+    @log: Logger
+    @last_s: nil
+    @identify_presence: {activities: [untyped], idle: Integer, status: nil, afk: nil}?
+    @tasks: Array[bot]
+    @first: true
+    @connection: untyped
+    @session_id: untyped
+    @uncached_guilds: untyped
+
+    attr_accessor intents: Intents
+    attr_reader internet: Internet
+    attr_reader heartbeat_interval: untyped
+    attr_reader api_version: nil
+    attr_reader token: untyped
+    attr_reader allowed_mentions: AllowedMentions
+    attr_reader user: User?
+    attr_reader guilds: Dictionary
+    attr_reader users: Dictionary
+    attr_reader channels: Dictionary
+    attr_reader emojis: Dictionary
+    def initialize: (?allowed_mentions: nil, ?intents: nil, ?log: nil, ?colorize_log: false, ?log_level: :info) -> Array[bot]
+    def on: (untyped event_name, ?id: nil, **untyped) -> Event
+    def remove_event: (untyped event_name, untyped id) -> Array[bot]
+    def dispatch: (:channel_create | :channel_delete | :channel_update | :guild_available | :guild_create | :guild_delete | :guild_join | :guild_update | :message | :ready event_name, *(CategoryChannel | Channel | CustomEmoji | Guild | GuildChannel | Member | Message | Role | StageChannel | TextChannel | User | VoiceChannel)? args) -> Async::Task?
+    def run: (untyped token) -> Async::Task?
+    def fetch_user: (untyped id) -> User
+    def fetch_channel: (untyped id) -> GuildChannel
+    def fetch_guild: (untyped id) -> Guild
+    def update_presence: (?nil activity, ?activities: nil, ?idle: nil, ?status: nil, ?afk: nil) -> ((Async::Task | {activities: [untyped], idle: Integer, status: nil, afk: nil})?)
+    def inspect: -> String
+    def extend: (untyped mod) -> Client
+
+    private
+    def connect_gateway: (bool first) -> Async::Task?
+    def send_gateway: (Integer opcode, **(Integer | [untyped])?) -> nil
+    def handle_gateway: (untyped payload) -> Async::Task?
+    def handle_heartbeat: (untyped interval) -> Async::Task?
+    def handle_event: (untyped event_name, untyped data) -> Async::Task?
+
+    public
+    alias add_event on
+    alias event on
+  end
+
+  class Activity
+    self.@types: {playing: Integer, streaming: Integer, listening: Integer, watching: Integer, competing: Integer}
+    @name: untyped
+    @type: untyped
+    @url: nil
+
+    def initialize: (untyped name, ?:playing type_, ?nil url) -> nil
+    def to_hash: -> {name: untyped, type: untyped, url: nil}
+  end
+
+  class Image
+    @bytes: untyped
+    @type: untyped
+
+    def initialize: (untyped bytes, untyped type_) -> untyped
+    def to_s: -> String
+  end
+end
+
+module Async
+  class Task
+  end
+end
+
+module Console
+  class Buffer < StringIO
+    alias << puts
+  end
+end
+
+module NIO
+  class Monitor
+  end
+
+  class ByteBuffer
+  end
+end
+
+module Timers
+  class Timer
+  end
+
+  class Group
+  end
+end
