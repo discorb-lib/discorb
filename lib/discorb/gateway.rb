@@ -134,6 +134,32 @@ module Discorb
       end
     end
 
+    class TypingStartEvent < GatewayEvent
+      attr_reader :client, :channel_id, :guild_id, :user_id
+
+      def initialize(client, data)
+        @client = client
+        @data = data
+        @channel_id = Snowflake.new(data[:channel_id])
+        @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
+        @user_id = Snowflake.new(data[:user_id])
+        @timestamp = Time.at(data[:timestamp])
+        @member = guild.members[@user_id] || Member.new(@client, @guild_id, @client.users[@user_id], data[:member]) if guild
+      end
+
+      def user
+        @client.users[@user_id]
+      end
+
+      def channel
+        @client.channels[@channel_id]
+      end
+
+      def guild
+        @client.guilds[@guild_id]
+      end
+    end
+
     private
 
     def connect_gateway(first)
@@ -163,7 +189,6 @@ module Discorb
           end
         rescue EOFError
           connect_gateway(false)
-
         end
       end
     end
@@ -538,7 +563,7 @@ module Discorb
         end
         dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(data))
       when 'TYPING_START'
-        # TODO: Gateway: TYPING_START
+        dispatch(:typing_start, TypingStartEvent.new(self, data))
       else
         @log.warn "Unknown event: #{event_name}"
       end
