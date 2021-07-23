@@ -4,7 +4,7 @@ require 'time'
 
 require_relative 'common'
 require_relative 'invite'
-require_relative 'integration'
+require_relative 'voice_state'
 module Discorb
   module GatewayHandler
     class GatewayEvent
@@ -381,11 +381,20 @@ module Discorb
       when 'THREAD_MEMBER_UPDATE'
         # TODO: Gateway: THREAD_MEMBER_UPDATE
       when 'STAGE_INSTANCE_CREATE'
-        # TODO: Gateway: STAGE_INSTANCE_CREATE
+        instance = StageInstance.new(self, data)
+        dispatch(:stage_instance_create, instance)
       when 'STAGE_INSTANCE_UPDATE'
-        # TODO: Gateway: STAGE_INSTANCE_UPDATE
+        return @log.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
+        return @log.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances[data[:id]])
+
+        old = StageInstance.new(self, instance.instance_variable_get(:@_data), no_cache: true)
+        current.send(:_set_data, data)
+        dispatch(:stage_instance_update, old, current)
       when 'STAGE_INSTANCE_DELETE'
-        # TODO: Gateway: STAGE_INSTANCE_DELETE
+        return @log.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
+        return @log.warn "Unknown stage instance id #{data[:id]}, ignoring" unless channel.stage_instances.has?(data[:id])
+
+        dispatch(:stage_instance_delete, channel.stage_instances.delete(data[:id]))
       when 'GUILD_MEMBER_ADD'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 

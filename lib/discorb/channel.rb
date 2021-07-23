@@ -205,6 +205,11 @@ module Discorb
     attr_reader :bitrate, :user_limit
 
     @channel_type = 13
+    def initialize(...)
+      @stage_instances = Dictionary.new
+      super(...)
+    end
+
     def edit(name: nil, position: nil, bitrate: nil, user_limit: nil, reason: nil)
       Async do
         payload = {}
