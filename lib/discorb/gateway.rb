@@ -640,9 +640,10 @@ module Discorb
             target_reaction.set_instance_variable(:@count, target_reaction.count + 1)
           else
             target_message.reactions << Reaction.new(
+              self,
               {
                 count: 1,
-                me: @client.user.id == data[:user_id],
+                me: @user.id == data[:user_id],
                 emoji: data[:emoji]
               }
             )
