@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'time'
 require_relative 'user'
 
 module Discorb
