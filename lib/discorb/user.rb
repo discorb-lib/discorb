@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'overloader'
 require_relative 'common'
 require_relative 'flag'
 require_relative 'error'
