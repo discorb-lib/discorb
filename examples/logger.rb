@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # require "discorb"
-require 'time'
 require_relative '../lib/discorb'
 
 client = Discorb::Client.new(log: $stdout, colorize_log: true, log_level: :info)

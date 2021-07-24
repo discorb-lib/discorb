@@ -11,14 +11,16 @@ gem 'async'
 gem 'async-http'
 gem 'async-websocket'
 
-gem 'solargraph', '~> 0.42.3'
-
-gem 'overloader', '~> 0.2.1'
-
-gem 'ricecream', '~> 0.2.0'
-
 gem 'mime-types', '~> 3.3'
 
-gem 'rubocop', '~> 1.17'
+group :ci, optional: true do
+  gem 'rubocop', '~> 1.17'
+end
 
-gem 'colorize', '~> 0.8.1'
+group :colorize, optional: true do
+  gem 'colorize', '~> 0.8.1'
+end
+
+group :debug, optional: true do
+  gem 'ricecream', '~> 0.2.0'
+end
