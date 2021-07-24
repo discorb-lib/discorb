@@ -122,10 +122,12 @@ module Discorb
       guild_invite_reminder: 22
     }.freeze
 
-    def initialize(client, data)
+    def initialize(client, data, no_cache: false)
       @client = client
       @_data = {}
+      @no_cache = no_cache
       _set_data(data)
+      @client.messages[@id] = self unless @no_cache
     end
 
     def update!

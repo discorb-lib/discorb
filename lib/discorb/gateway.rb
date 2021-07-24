@@ -197,6 +197,31 @@ module Discorb
       end
     end
 
+    class MessagePinEvent < GatewayEvent
+      attr_reader :message, :type
+
+      def initialize(client, data, message)
+        @client = client
+        @data = data
+        @message = message
+        @type = if message.nil?
+                  :unknown
+                elsif @message.pinned?
+                  :pinned
+                else
+                  :unpinned
+                end
+      end
+
+      def pinned?
+        @type == :pinned
+      end
+
+      def unpinned?
+        @type = :unpinned
+      end
+    end
+
     private
 
     def connect_gateway(first)
@@ -366,20 +391,10 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = guild.channels[data[:id]])
 
-        if data.has?(:edited_timestamp)
-          before = Channel.make_channel(self, current.instance_variable_get(:@_data))
-          current.send(:_set_data, data)
-          dispatch(:channel_update, before, current)
-        else
-          dispatch(:message_pin_update, current)
-          if current.pinned?
-            current.instance_variable_set(:@pinned, false)
-            dispatch(:message_unpin, current)
-          else
-            current.instance_variable_set(:@pinned, true)
-            dispatch(:message_pin, current)
-          end
-        end
+        before = Channel.make_channel(self, current.instance_variable_get(:@_data))
+        current.send(:_set_data, data)
+        dispatch(:channel_update, before, current)
+
       when 'CHANNEL_DELETE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (channel = guild.channels.delete(data[:id]))
@@ -575,14 +590,25 @@ module Discorb
         # TODO: Gateway: PRESENCE_UPDATE
       when 'MESSAGE_UPDATE'
         if (message = @messages[data[:id]])
-          before = Message.new(self, message.instance_variable_get(:@data))
-          message.send(:_update_data, message.instance_variable_get(:@data).merge(data))
+          before = Message.new(self, message.instance_variable_get(:@_data), no_cache: true)
+          message.send(:_set_data, message.instance_variable_get(:@_data).merge(data))
         else
           @log.info "Uncached message ID #{data[:id]}, ignoring"
           before = nil
           message = nil
         end
-        dispatch(:message_update, MessageUpdateEvent.new(self, data, before, current))
+        if data[:edited_timestamp].nil?
+          if message.nil?
+            nil
+          elsif message.pinned?
+            message.instance_variable_set(:@pinned, false)
+          else
+            message.instance_variable_set(:@pinned, true)
+          end
+          dispatch(:message_pin_update, MessagePinEvent.new(self, data, message))
+        else
+          dispatch(:message_update, MessageUpdateEvent.new(self, data, before, current))
+        end
       when 'MESSAGE_DELETE'
         return @log.info "Uncached message ID #{data[:id]}, ignoring" unless (message = @messages[data[:id]])
 
