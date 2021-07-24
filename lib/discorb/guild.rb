@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'time'
 require_relative 'flag'
 require_relative 'dictionary'
 require_relative 'color'
