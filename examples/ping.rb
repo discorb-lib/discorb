@@ -10,7 +10,6 @@ client = Discorb::Client.new(log: $stdout, colorize_log: true, log_level: :info,
 client.on :ready do |_task|
   puts "Logged in as #{client.user}"
 end
-
 event = client.on(:message) do |_task, message|
   next if message.author.bot?
 
@@ -27,7 +26,7 @@ event = client.on(:message) do |_task, message|
       next
     end
     code = message.content.delete_prefix('!eval ').delete_prefix('```rb').delete_suffix('```')
-    res = eval(code)  # rubocop:disable Security/Eval
+    res = eval("Async { |task| #{code} }")  # rubocop:disable Security/Eval
     message.add_reaction(Discorb::UnicodeEmoji['white_check_mark'])
     unless res.nil?
       res = res.wait if res.is_a? Async::Task
