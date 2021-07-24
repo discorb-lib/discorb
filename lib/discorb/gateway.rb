@@ -88,11 +88,11 @@ module Discorb
     class MessageUpdateEvent < GatewayEvent
       attr_reader :data, :before, :after, :id, :channel_id, :guild_id, :content, :timestamp, :mention_everyone, :mention_roles, :attachments, :embeds
 
-      def initialize(client, data)
+      def initialize(client, data, before, after)
         @client = client
         @data = data
-        @before = client.messages[data[:before][:id]]
-        @after = client.messages[data[:after][:id]]
+        @before = before
+        @after = after
         @id = Snowflake.new(data[:id])
         @channel_id = Snowflake.new(data[:channel_id])
         @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
@@ -571,7 +571,7 @@ module Discorb
           before = nil
           message = nil
         end
-        dispatch(:message_update, MessageUpdateEvent.new(self, data, before, message))
+        dispatch(:message_update, MessageUpdateEvent.new(self, data, before, current))
       when 'MESSAGE_DELETE'
         return @log.info "Uncached message ID #{data[:id]}, ignoring" unless (message = @messages[data[:id]])
 
