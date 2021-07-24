@@ -366,16 +366,27 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = guild.channels[data[:id]])
 
-        before = Channel.make_channel(self, current.instance_variable_get(:@_data))
-        current.send(:_set_data, data)
-        dispatch(:channel_update, before, current)
+        if data.has?(:edited_timestamp)
+          before = Channel.make_channel(self, current.instance_variable_get(:@_data))
+          current.send(:_set_data, data)
+          dispatch(:channel_update, before, current)
+        else
+          dispatch(:message_pin_update, current)
+          if current.pinned?
+            current.instance_variable_set(:@pinned, false)
+            dispatch(:message_unpin, current)
+          else
+            current.instance_variable_set(:@pinned, true)
+            dispatch(:message_pin, current)
+          end
+        end
       when 'CHANNEL_DELETE'
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (channel = guild.channels.delete(data[:id]))
 
         dispatch(:channel_delete, channel)
       when 'CHANNEL_PINS_UPDATE'
-        # TODO: Gateway: CHANNEL_PINS_UPDATE
+        nil # do in MESSAGE_UPDATE
       when 'THREAD_CREATE'
         # TODO: Gateway: THREAD_CREATE
       when 'THREAD_UPDATE'
