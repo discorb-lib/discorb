@@ -41,7 +41,7 @@ module Discorb
         end
 
         @message = client.messages[data[:message_id]]
-        @emoji = data['id'].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
+        @emoji = data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
       end
 
       def fetch_message(force: false)
