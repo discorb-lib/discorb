@@ -7,27 +7,28 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    async (1.29.1)
+    async (1.30.0)
       console (~> 1.10)
       nio4r (~> 2.3)
       timers (~> 4.1)
-    async-http (0.56.3)
-      async (~> 1.25)
-      async-io (~> 1.28)
-      async-pool (~> 0.2)
+    async-http (0.56.5)
+      async (>= 1.25)
+      async-io (>= 1.28)
+      async-pool (>= 0.2)
       protocol-http (~> 0.22.0)
       protocol-http1 (~> 0.14.0)
       protocol-http2 (~> 0.14.0)
-    async-io (1.32.1)
-      async (~> 1.14)
-    async-pool (0.3.7)
-      async (~> 1.25)
+    async-io (1.32.2)
+      async
+    async-pool (0.3.8)
+      async (>= 1.25)
     async-websocket (0.19.0)
       async-http (~> 0.54)
       async-io (~> 1.23)
       protocol-websocket (~> 0.7.0)
     backport (1.2.0)
     benchmark (0.1.1)
+    colorize (0.8.1)
     console (1.13.1)
       fiber-local
     diff-lcs (1.4.4)
@@ -40,7 +41,7 @@ GEM
       kramdown (~> 2.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2021.0225)
+    mime-types-data (3.2021.0704)
     nio4r (2.5.7)
     nokogiri (1.11.7-x86-mingw32)
       racc (~> 1.4)
@@ -49,7 +50,7 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     protocol-hpack (1.4.2)
-    protocol-http (0.22.4)
+    protocol-http (0.22.5)
     protocol-http1 (0.14.1)
       protocol-http (~> 0.22)
     protocol-http2 (0.14.2)
@@ -60,19 +61,19 @@ GEM
       protocol-http1 (~> 0.2)
     racc (1.5.2)
     rainbow (3.0.0)
-    rake (13.0.3)
+    rake (13.0.6)
     regexp_parser (2.1.1)
     reverse_markdown (2.0.0)
       nokogiri
     rexml (3.2.5)
     ricecream (0.2.0)
-    rubocop (1.18.3)
+    rubocop (1.18.4)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.7.0, < 2.0)
+      rubocop-ast (>= 1.8.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.8.0)
@@ -106,6 +107,7 @@ DEPENDENCIES
   async
   async-http
   async-websocket
+  colorize (~> 0.8.1)
   discorb!
   mime-types (~> 3.3)
   overloader (~> 0.2.1)
@@ -115,4 +117,4 @@ DEPENDENCIES
   solargraph (~> 0.42.3)
 
 BUNDLED WITH
-   2.2.3
+   2.2.22
