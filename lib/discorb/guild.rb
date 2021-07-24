@@ -158,7 +158,7 @@ module Discorb
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
       @presences = nil # TODO: Array<Discorb::Presence>
       @max_presences = data[:max_presences]
-      @stage_instances = nil # TODO: Array<Discorb::StageInstance>
+      @stage_instances = Dictionary.new(data[:stage_instances].map { |s| [s[:id], StageInstance.new(@client, s)] }.to_h)
       @_data.update(data)
     end
   end
