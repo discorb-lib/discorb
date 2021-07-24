@@ -40,3 +40,6 @@ Metrics/MethodLength:
 
 Lint/ScriptPermission:
   Enabled: false
+
+Layout/EndOfLine:
+  Enabled: false
