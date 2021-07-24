@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'time'
-
 require_relative 'common'
 require_relative 'user'
 

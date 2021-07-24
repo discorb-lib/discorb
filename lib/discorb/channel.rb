@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'time'
 require 'async'
 require_relative 'modules'
 require_relative 'flag'
