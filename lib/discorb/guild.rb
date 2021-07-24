@@ -122,11 +122,11 @@ module Discorb
       @integrations = Dictionary.new
       @roles = Dictionary.new
       data[:roles].each do |r|
-        Role.new(@client, self, r)
+        @roles[r[:id]] = Role.new(@client, self, r)
       end
       @emojis = Dictionary.new
       data[:emojis].map do |e|
-        CustomEmoji.new(@client, self, e)
+        @emojis[e[:id]] = CustomEmoji.new(@client, self, e)
       end
       @features = data[:features].map { |f| f.downcase.to_sym }
       @mfa_level = self.class.mfa_levels[data[:mfa_level]]
