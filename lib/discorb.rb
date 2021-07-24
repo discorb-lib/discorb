@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'ricecream'
+# require 'ricecream'
 Dir.glob("#{__dir__}/discorb/*.rb") do |f|
   Kernel.require_relative f
 end
