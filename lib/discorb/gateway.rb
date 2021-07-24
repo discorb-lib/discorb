@@ -466,7 +466,16 @@ module Discorb
 
         dispatch(:guild_ban_remove, guild, user)
       when 'GUILD_EMOJIS_UPDATE'
-        # TODO: Gateway: GUILD_EMOJIS_UPDATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+
+        before_emojis = guild.emojis.values.map(&:id).to_set
+        data[:emojis].each do |emoji|
+          guild.emojis[emoji[:id]] = CustomEmoji.new(self, guild, emoji)
+        end
+        deleted_emojis = before_emojis - guild.emojis.values.map(&:id).to_set
+        deleted_emojis.each do |emoji|
+          guild.emojis.delete(emoji)
+        end
       when 'GUILD_INTEGRATIONS_UPDATE'
         dispatch(:guild_integrations_update, GuildIntegrationsUpdateEvent.new(self, data))
       when 'INTEGRATION_CREATE'
