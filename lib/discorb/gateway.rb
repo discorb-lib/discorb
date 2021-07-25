@@ -220,6 +220,23 @@ module Discorb
       end
     end
 
+    class WebhooksUpdateEvent < GatewayEvent
+      def initialize(client, data)
+        @client = client
+        @data = data
+        @guild_id = Snowflake.new(data[:guild_id])
+        @channel_id = Snowflake.new(data[:channel_id])
+      end
+
+      def guild
+        @client.guilds[@guild_id]
+      end
+
+      def channel
+        @client.channels[@channel_id]
+      end
+    end
+
     private
 
     def connect_gateway(first)
@@ -491,7 +508,7 @@ module Discorb
 
         dispatch(:integration_delete, integration)
       when 'WEBHOOKS_UPDATE'
-        # TODO: Gateway: WEBHOOKS_UPDATE
+        dispatch(:webhooks_update, WebhooksUpdateEvent.new(self, data))
       when 'INVITE_CREATE'
         dispatch(:invite_create, Invite.new(self, data, true))
       when 'INVITE_DELETE'
