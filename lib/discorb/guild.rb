@@ -155,7 +155,7 @@ module Discorb
       @channels = Dictionary.new(tmp_channels.map { |c| [c.id, c] }.to_h, sort: :position.to_proc)
       @voice_states = Dictionary.new(data[:voice_states].map { |v| [v[:user_id], VoiceState.new(@client, v.merge({ guild_id: @id }))] }.to_h)
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
-      @presences = nil # TODO: Array<Discorb::Presence>
+      @presences = Dictionary.new(data[:presences].map { |pr| [pr[:user][:id], Presence.new(@client, pr)] }.to_h)
       @max_presences = data[:max_presences]
       @stage_instances = Dictionary.new(data[:stage_instances].map { |s| [s[:id], StageInstance.new(@client, s)] }.to_h)
       @_data.update(data)

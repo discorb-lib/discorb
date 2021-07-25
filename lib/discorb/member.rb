@@ -62,6 +62,14 @@ module Discorb
       @pending
     end
 
+    def presence
+      guild.presences[@id]
+    end
+
+    def status
+      presence.status
+    end
+
     def inspect
       "#<#{self.class} #{self} id=#{@id}>"
     end
