@@ -334,6 +334,9 @@ module Discorb
     end
 
     def handle_event(event_name, data)
+      return @log.debug "Client isn't ready; event #{event_name} wasn't handled" if @wait_until_ready && !@ready && !%w[READY GUILD_CREATE].include?(event_name)
+
+      @log.debug "Handling event #{event_name}"
       case event_name
       when 'READY'
         @api_version = data[:v]
@@ -345,6 +348,7 @@ module Discorb
           Guild.new(self, data, true)
           @uncached_guilds.delete(data[:id])
           if @uncached_guilds == []
+            @ready = true
             dispatch(:ready)
             @log.info('Guilds were cached')
           end

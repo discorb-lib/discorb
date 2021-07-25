@@ -142,7 +142,26 @@ module Discorb
       elsif body.is_a?(String)
         [body]
       else
-        [body.to_json]
+        [recr_utf8(body).to_json]
+      end
+    end
+
+    
+    def recr_utf8(data)
+      if data.is_a?(Hash)
+        data.each do |k, v|
+          data[k] = recr_utf8(v)
+        end
+        data
+      elsif data.is_a?(Array)
+        data.each_index do |i|
+          data[i] = recr_utf8(data[i])
+        end
+        data
+      elsif data.is_a?(String)
+        data.dup.force_encoding(Encoding::UTF_8)
+      else
+        data
       end
     end
   end
