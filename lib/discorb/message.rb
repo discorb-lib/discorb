@@ -11,46 +11,6 @@ require_relative 'embed'
 require_relative 'reaction'
 
 module Discorb
-  class MessageFlag < Flag
-    @bits = {
-      crossposted: 0,
-      crosspost: 1,
-      supress_embeds: 2,
-      source_message_deleted: 3,
-      urgent: 4,
-      has_thread: 5,
-      ephemeral: 6,
-      loading: 7
-    }.freeze
-  end
-
-  class MessageReference
-    attr_accessor :guild_id, :channel_id, :message_id, :fail_if_not_exists
-    alias fail_if_not_exists? fail_if_not_exists
-
-    def initialize(guild_id, channel_id, message_id, fail_if_not_exists: true)
-      @guild_id = guild_id
-      @channel_id = channel_id
-      @message_id = message_id
-      @fail_if_not_exists = fail_if_not_exists
-    end
-
-    def to_hash
-      {
-        message_id: @message_id,
-        channel_id: @channel_id,
-        guild_id: @guild_id,
-        fail_if_not_exists: @fail_if_not_exists
-      }
-    end
-
-    alias to_reference to_hash
-
-    def self.from_hash(data)
-      new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
-    end
-  end
-
   class AllowedMentions
     attr_accessor :everyone, :roles, :users, :replied_user
 
@@ -218,6 +178,48 @@ module Discorb
       "#<#{self.class} #{@content.inspect} id=#{@id}>"
     end
 
+    class Flag < Discorb::Flag
+      @bits = {
+        crossposted: 0,
+        crosspost: 1,
+        supress_embeds: 2,
+        source_message_deleted: 3,
+        urgent: 4,
+        has_thread: 5,
+        ephemeral: 6,
+        loading: 7
+      }.freeze
+    end
+
+    class Reference
+      attr_accessor :guild_id, :channel_id, :message_id, :fail_if_not_exists
+      alias fail_if_not_exists? fail_if_not_exists
+
+      def initialize(guild_id, channel_id, message_id, fail_if_not_exists: true)
+        @guild_id = guild_id
+        @channel_id = channel_id
+        @message_id = message_id
+        @fail_if_not_exists = fail_if_not_exists
+      end
+
+      def to_hash
+        {
+          message_id: @message_id,
+          channel_id: @channel_id,
+          guild_id: @guild_id,
+          fail_if_not_exists: @fail_if_not_exists
+        }
+      end
+
+      alias to_reference to_hash
+
+      def self.from_hash(data)
+        new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
+      end
+    end
+
+    private
+
     def _set_data(data)
       @id = Snowflake.new(data[:id])
 
@@ -244,8 +246,8 @@ module Discorb
       @activity = nil # TODO: Discorb::MessageActivity
       @application = nil # TODO: Discorb::Application
       @application_id = data[:application_id]
-      @message_reference = data[:message_reference] ? MessageReference.from_hash(data[:message_reference]) : nil
-      @flag = MessageFlag.new(0b111 - data[:flags])
+      @message_reference = data[:message_reference] ? Reference.from_hash(data[:message_reference]) : nil
+      @flag = Flag.new(0b111 - data[:flags])
       @sticker = nil # TODO: Discorb::Sticker
       # @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
       @interaction = nil # TODO: Discorb::InterctionFeedback
