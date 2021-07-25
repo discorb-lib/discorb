@@ -66,6 +66,14 @@ module Discorb
       guild.presences[@id]
     end
 
+    def activity
+      presence&.activity
+    end
+
+    def activities
+      presence&.activities
+    end
+
     def status
       presence&.status
     end
