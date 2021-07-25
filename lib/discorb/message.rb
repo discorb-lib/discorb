@@ -92,8 +92,8 @@ module Discorb
 
   class Message < DiscordModel
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles,
-                :mention_channels, :attachments, :embeds, :reactions,                :webhook_id, :type,
-                :activity, :application, :application_id, :message_reference, :flag, :stickers, :referenced_message,
+                :mention_channels, :attachments, :embeds, :reactions, :webhook_id, :type,
+                :activity, :application, :application_id, :message_reference, :flag, :stickers,
                 :interaction, :thread, :components
 
     @message_type = {
@@ -247,7 +247,7 @@ module Discorb
       @message_reference = data[:message_reference] ? MessageReference.from_hash(data[:message_reference]) : nil
       @flag = MessageFlag.new(0b111 - data[:flags])
       @sticker = nil # TODO: Discorb::Sticker
-      @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
+      # @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
       @interaction = nil # TODO: Discorb::InterctionFeedback
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
