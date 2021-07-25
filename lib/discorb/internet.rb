@@ -146,19 +146,19 @@ module Discorb
       end
     end
 
-    
     def recr_utf8(data)
-      if data.is_a?(Hash)
+      case data
+      when Hash
         data.each do |k, v|
           data[k] = recr_utf8(v)
         end
         data
-      elsif data.is_a?(Array)
+      when Array
         data.each_index do |i|
           data[i] = recr_utf8(data[i])
         end
         data
-      elsif data.is_a?(String)
+      when String
         data.dup.force_encoding(Encoding::UTF_8)
       else
         data
