@@ -611,7 +611,9 @@ module Discorb
         end
 
       when 'PRESENCE_UPDATE'
-        # TODO: Gateway: PRESENCE_UPDATE
+        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+
+        guild.presences[data[:user][:id]] = Presence.new(self, data)
       when 'MESSAGE_UPDATE'
         if (message = @messages[data[:id]])
           before = Message.new(self, message.instance_variable_get(:@_data), no_cache: true)

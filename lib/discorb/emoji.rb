@@ -67,6 +67,7 @@ module Discorb
     def initialize(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
+      @animated = data[:animated]
       @deleted = @name.nil?
     end
 
@@ -80,6 +81,10 @@ module Discorb
 
     def inspect
       "#<#{self.class} id=#{@id} :#{@name}:>"
+    end
+
+    def to_s
+      "<#{@animated ? 'a' : ''}:#{@name}:#{@id}>"
     end
   end
 
