@@ -67,7 +67,7 @@ module Discorb
     end
 
     def status
-      presence.status
+      presence&.status
     end
 
     def inspect
