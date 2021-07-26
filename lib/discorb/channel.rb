@@ -13,9 +13,10 @@ module Discorb
     @channel_type = nil
     @subclasses = []
 
-    def initialize(client, data)
+    def initialize(client, data, no_cache: false)
       @client = client
-      @_data = {}
+      @data = {}
+      @no_cache = no_cache
       _set_data(data)
     end
 
@@ -33,11 +34,11 @@ module Discorb
       ObjectSpace.each_object(Class).select { |klass| klass < self }
     end
 
-    def self.make_channel(client, data)
+    def self.make_channel(client, data, no_cache: false)
       descendants.each do |klass|
-        return klass.new(client, data) if !klass.channel_type.nil? && klass.channel_type == data[:type]
+        return klass.new(client, data, no_cache: no_cache) if !klass.channel_type.nil? && klass.channel_type == data[:type]
       end
-      @client.log.warn("Unknown channel type #{data[:type]}, initialized GuildChannel")
+      client.log.warn("Unknown channel type #{data[:type]}, initialized GuildChannel")
       GuildChannel.new(client, data)
     end
 
@@ -58,8 +59,8 @@ module Discorb
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
-      @client.channels[@id] = self unless data[:no_cache]
-      @_data.update(data)
+      @client.channels[@id] = self if !@no_cache && !(data[:no_cache])
+      @data.update(data)
     end
   end
 
@@ -108,9 +109,13 @@ module Discorb
     def _set_data(data)
       @guild_id = data[:guild_id]
       @position = data[:position]
-      @permission_overwrites = data[:permission_overwrites].map do |ow|
-        [(ow[:type] == 1 ? guild.roles : guild.members)[ow[:id]], PermissionOverwrite.new(ow[:allow], ow[:deny])]
-      end.to_h
+      @permission_overwrites = if data[:permission_overwrites]
+                                 data[:permission_overwrites].map do |ow|
+                                   [(ow[:type] == 1 ? guild.roles : guild.members)[ow[:id]], PermissionOverwrite.new(ow[:allow], ow[:deny])]
+                                 end.to_h
+                               else
+                                 {}
+                               end
       @parent_id = data[:parent_id]
 
       super
@@ -125,9 +130,9 @@ module Discorb
     @channel_type = 0
 
     alias slowmode rate_limit_per_user
-    def initialize(client, data)
+    def initialize(client, data, no_cache: false)
       super
-      @threads = []
+      @threads = Dictionary.new
     end
 
     def edit(name: nil, announce: nil, position: nil, topic: nil, nsfw: nil, slowmode: nil, category: nil, parent: nil, reason: nil)
@@ -161,7 +166,7 @@ module Discorb
       @nsfw = data[:nsfw]
       @last_message_id = data[:last_message_id]
       @rate_limit_per_user = data[:rate_limit_per_user]
-      @last_pin_timestamp = data[:last_pin_timestamp] ? Time.iso8601(data[:last_pin_timestamp]) : nil
+      @last_pin_timestamp = data[:last_pin_timestamp] && Time.iso8601(data[:last_pin_timestamp])
       super
     end
   end
@@ -232,16 +237,19 @@ module Discorb
   end
 
   class ThreadChannel < Channel
-    attr_reader :id, :name, :type, :message_count, :member_count, :rate_limit_per_user
+    attr_reader :id, :name, :type, :message_count, :member_count, :rate_limit_per_user, :members
 
     include Messageable
 
     alias slowmode rate_limit_per_user
     @channel_type = nil
 
-    def initialize(client, data)
-      @client = client
-      _set_data(data)
+    def initialize(client, data, no_cache: false)
+      @members = Dictionary.new
+      super
+      @client.channels[@parent_id].threads[@id] = self
+
+      @client.channels[@id] = self unless no_cache
     end
 
     def ==(other)
@@ -256,6 +264,14 @@ module Discorb
 
     alias channel parent
 
+    def me
+      @members[@client.user.id]
+    end
+
+    def joined?
+      @members[@client.user.id]
+    end
+
     def guild
       @client.guilds[@guild]
     end
@@ -268,73 +284,78 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
+    def archived?
+      @archived
+    end
+
+    def post_url
+      "/channels/#{@id}/messages"
+    end
+
+    class Public < ThreadChannel
+      @channel_type = 11
+    end
+
+    class Private < ThreadChannel
+      @channel_type = 12
+    end
+
     class << self
       attr_reader :channel_type
     end
-    def post_url
-      "/channels/#{@id}/messages"
+
+    class Member < DiscordModel
+      attr_reader :joined_at
+
+      def initialize(cilent, data)
+        @cilent = cilent
+        @thread_id = data[:id]
+        @user_id = data[:user_id]
+        @joined_at = Time.iso8601(data[:join_timestamp])
+        # p data[:flags]
+        # @flag = Flag.new(data[:flags])
+      end
+
+      def thread
+        @client.channels[@thread_id]
+      end
+
+      def member
+        thread && thread.members[@user_id]
+      end
+
+      def id
+        @user_id
+      end
+
+      def user
+        @cilent.users[@user_id]
+      end
+
+      def inspect
+        "#<#{self.class} id=#{@id.inspect}>"
+      end
+
+      class Flag < Discorb::Flag
+        @bits = {
+          # TODO: Fill this
+        }
+      end
     end
 
     private
 
     def _set_data(data)
       @id = Snowflake.new(data[:id])
-      @name = name
+      @name = data[:name]
       @guild_id = data[:guild_id]
       @parent_id = data[:parent_id]
-      @client.channels[@parent_id]&.threads&.push(self) unless @parent_id.nil?
-
-      @client.channels[@id] = self unless data[:no_cache]
-    end
-  end
-
-  class PublicThreadChannel < ThreadChannel
-    attr_reader :bitrate, :user_limit
-
-    @channel_type = 11
-    def edit(name: nil, position: nil, bitrate: nil, user_limit: nil, reason: nil)
-      Async do
-        payload = {}
-        payload[:name] = name if name
-        payload[:position] = position if position
-        payload[:bitrate] = bitrate unless bitrate.nil?
-        payload[:user_limit] = user_limit unless user_limit.nil?
-
-        @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
-      end
-    end
-
-    private
-
-    def _set_data(data)
-      @bitrate = data[:bitrate]
-      @user_limit = data[:user_limit]
-      super
-    end
-  end
-
-  class PrivateThreadChannel < ThreadChannel
-    attr_reader :bitrate, :user_limit
-
-    @channel_type = 12
-    def edit(name: nil, position: nil, bitrate: nil, user_limit: nil, reason: nil)
-      Async do
-        payload = {}
-        payload[:name] = name if name
-        payload[:position] = position if position
-        payload[:bitrate] = bitrate unless bitrate.nil?
-        payload[:user_limit] = user_limit unless user_limit.nil?
-
-        @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
-      end
-    end
-
-    private
-
-    def _set_data(data)
-      @bitrate = data[:bitrate]
-      @user_limit = data[:user_limit]
-      super
+      @archived = data[:thread_metadata][:archived]
+      @owner_id = data[:thread_metadata][:owner_id]
+      @member_count = data[:member_count]
+      @message_count = data[:message_count]
+      @members[@client.user.id] = ThreadChannel::Member.new(@client, data[:member].merge({ id: data[:id], user_id: @client.user.id })) if data[:member]
+      @data.merge!(data)
     end
   end
 
