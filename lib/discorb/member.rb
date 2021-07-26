@@ -43,7 +43,7 @@ module Discorb
     end
 
     def hoisted_role
-      @hoisted_role_id ? guild.roles[@hoisted_role_id] : nil
+      @hoisted_role_id && guild.roles[@hoisted_role_id]
     end
 
     def hoisted?
@@ -96,11 +96,11 @@ module Discorb
 
     def _set_data(user_data, member_data)
       @role_ids = member_data[:roles]
-      @premium_since = member_data[:premium_since] ? Time.iso8601(member_data[:premium_since]) : nil
+      @premium_since = member_data[:premium_since] && Time.iso8601(member_data[:premium_since])
       @pending = member_data[:pending]
       @nick = member_data[:nick]
       @mute = member_data[:mute]
-      @joined_at = member_data[:joined_at] ? Time.iso8601(member_data[:joined_at]) : nil
+      @joined_at = member_data[:joined_at] && Time.iso8601(member_data[:joined_at])
       @hoisted_role_id = member_data[:hoisted_role]
       @deaf = member_data[:deaf]
       @custom_avatar = member_data[:avatar]

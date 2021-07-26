@@ -44,18 +44,18 @@ module Discorb
         @type = self.class.activity_types[data[:type]]
         @url = data[:url]
         @created_at = Time.at(data[:created_at])
-        @timestamps = data[:timestamps] ? Timestamps.new(data[:timestamps]) : nil
-        @application_id = data[:application_id] ? Snowflake.new(data[:application_id]) : nil
+        @timestamps = data[:timestamps] && Timestamps.new(data[:timestamps])
+        @application_id = data[:application_id] && Snowflake.new(data[:application_id])
         @details = data[:details]
         @state = data[:state]
         @emoji = if data[:emoji]
                    data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
                  end
-        @party = data[:party] ? Party.new(data[:party]) : nil
-        @assets = data[:assets] ? Assets.new(data[:assets]) : nil
+        @party = data[:party] && Party.new(data[:party])
+        @assets = data[:assets] && Assets.new(data[:assets])
         @instance = data[:instance]
-        @buttons = data[:buttons] ? Button.new(data[:buttons]) : nil
-        @flags = data[:flags] ? Flag.new(data[:flags]) : nil
+        @buttons = data[:buttons] && Button.new(data[:buttons])
+        @flags = data[:flags] && Flag.new(data[:flags])
       end
 
       def to_s
@@ -79,8 +79,8 @@ module Discorb
         attr_reader :start, :end
 
         def initialize(data)
-          @start = data[:start] ? Time.at(data[:start]) : nil
-          @end = data[:end] ? Time.at(data[:end]) : nil
+          @start = data[:start] && Time.at(data[:start])
+          @end = data[:end] && Time.at(data[:end])
         end
       end
 
