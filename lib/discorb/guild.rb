@@ -149,7 +149,7 @@ module Discorb
       @joined_at = Time.iso8601(data[:joined_at])
       @large = data[:large]
       @member_count = data[:member_count]
-      tmp_channels = data[:channels].map do |c|
+      tmp_channels = data[:channels].filter { |c| !c.key?(:thread_metadata) }.map do |c|
         Channel.make_channel(@client, c.merge({ guild_id: @id }))
       end
       @channels = Dictionary.new(tmp_channels.map { |c| [c.id, c] }.to_h, sort: :position.to_proc)
