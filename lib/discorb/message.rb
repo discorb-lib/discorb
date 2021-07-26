@@ -246,10 +246,10 @@ module Discorb
       @activity = nil # TODO: Discorb::MessageActivity
       @application = nil # TODO: Discorb::Application
       @application_id = data[:application_id]
-      @message_reference = data[:message_reference] ? Reference.from_hash(data[:message_reference]) : nil
+      @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
       @flag = Flag.new(0b111 - data[:flags])
       @sticker = nil # TODO: Discorb::Sticker
-      # @referenced_message = data[:referenced_message] ? Message.new(@client, data[:referenced_message]) : nil
+      # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
       @interaction = nil # TODO: Discorb::InterctionFeedback
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }

@@ -50,11 +50,11 @@ module Discorb
     end
 
     def guild
-      @guild_id ? @client.guilds[@guild_id] : nil
+      @guild_id && @client.guilds[@guild_id]
     end
 
     def channel
-      @channel_id ? @client.channels[@channel_id] : nil
+      @channel_id && @client.channels[@channel_id]
     end
 
     def user
@@ -83,7 +83,7 @@ module Discorb
       @self_stream = data[:self_stream]
       @self_video = data[:self_video]
       @suppress = data[:suppress]
-      @request_to_speak_timestamp = data[:request_to_speak_timestamp] ? Time.iso8601(data[:request_to_speak_timestamp]) : nil
+      @request_to_speak_timestamp = data[:request_to_speak_timestamp] && Time.iso8601(data[:request_to_speak_timestamp])
     end
   end
 

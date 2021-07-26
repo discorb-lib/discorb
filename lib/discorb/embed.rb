@@ -28,18 +28,18 @@ module Discorb
         @title = data[:title]
         @description = data[:description]
         @url = data[:url]
-        @timestamp = data[:timestamp] ? Time.iso8601(data[:timestamp]) : nil
+        @timestamp = data[:timestamp] && Time.iso8601(data[:timestamp])
         @type = data[:type]
-        @color = data[:color] ? Color.new(data[:color]) : nil
-        @footer = data[:footer] ? Footer.new(data[:footer][:text], icon: data[:footer][:icon]) : nil
+        @color = data[:color] && Color.new(data[:color])
+        @footer = data[:footer] && Footer.new(data[:footer][:text], icon: data[:footer][:icon])
         @author = if data[:author]
                     Author.new(data[:author][:name], icon: data[:author][:icon],
                                                      url: data[:author][:url])
                   end
-        @thumbnail = data[:thumbnail] ? Thumbnail.new(data[:thumbnail]) : nil
-        @image = data[:image] ? Image.new(data[:image]) : nil
-        @video = data[:video] ? Video.new(data[:video]) : nil
-        @provider = data[:provider] ? Provider.new(data[:provider]) : nil
+        @thumbnail = data[:thumbnail] && Thumbnail.new(data[:thumbnail])
+        @image = data[:image] && Image.new(data[:image])
+        @video = data[:video] && Video.new(data[:video])
+        @provider = data[:provider] && Provider.new(data[:provider])
         @fields = data[:fields] ? data[:fields].map { |f| Field.new(f[:name], f[:value], inline: f[:inline]) } : []
       end
     end
