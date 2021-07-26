@@ -24,7 +24,7 @@ event = client.on(:message) do |_task, message|
   end
 end
 
-event.rescue do |error|
+event.rescue do |_task, message, error|
   message.reply embed: Discorb::Embed.new('Error!', "```rb\n#{error.full_message(highlight: false)[...1990]}\n```",
                                           color: Discorb::Color[:red])
 end
