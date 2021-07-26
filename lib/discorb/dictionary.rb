@@ -17,6 +17,10 @@ module Discorb
       body
     end
 
+    def merge(other)
+      @cache.merge!(other)
+    end
+
     def remove(id)
       @cache.remove(id.to_s)
     end
@@ -55,5 +59,9 @@ module Discorb
     end
     alias [] get
     alias []= register
+
+    def inspect
+      "#<#{self.class} #{values.length} items>"
+    end
   end
 end
