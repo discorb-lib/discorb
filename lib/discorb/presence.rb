@@ -52,7 +52,7 @@ module Discorb
                    data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
                  end
         @party = data[:party] && Party.new(data[:party])
-        @assets = data[:assets] && Assets.new(data[:assets])
+        @assets = data[:assets] && Asset.new(data[:assets])
         @instance = data[:instance]
         @buttons = data[:buttons] && Button.new(data[:buttons])
         @flags = data[:flags] && Flag.new(data[:flags])
@@ -140,8 +140,8 @@ module Discorb
         attr_reader :label, :url
 
         def initialize(data)
-          @label = data[:label]
-          @url = data[:url]
+          @label = data[0]
+          @url = data[1]
         end
         alias text label
       end
