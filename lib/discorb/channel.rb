@@ -394,7 +394,7 @@ module Discorb
       @parent_id = data[:parent_id]
       @archived = data[:thread_metadata][:archived]
       @owner_id = data[:owner_id]
-      @archived_timestamp = Time.iso8601(data[:thread_metadata][:archived_timestamp])
+      @archived_timestamp = Time.iso8601(data[:thread_metadata][:archived_timestamp]) if @archived
       @auto_archive_duration = data[:thread_metadata][:auto_archive_duration]
       @locked = data[:thread_metadata][:locked]
       @member_count = data[:member_count]
