@@ -29,7 +29,7 @@ module Discorb
 
     def initialize(client, data)
       @client = client
-      @_data = {}
+      @data = {}
       _set_data(data)
     end
 
@@ -65,7 +65,7 @@ module Discorb
       @bot = data[:bot]
       @raw_data = data
       @client.users[@id] = self unless data[:no_cache]
-      @_data.update(data)
+      @data.update(data)
     end
   end
 

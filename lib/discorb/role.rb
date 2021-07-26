@@ -10,7 +10,7 @@ module Discorb
     def initialize(client, guild, data)
       @client = client
       @guild = guild
-      @_data = {}
+      @data = {}
       _set_data(data)
     end
 
@@ -88,7 +88,7 @@ module Discorb
       @mentionable = data[:mentionable]
       @tags = data[:tags] || {}
       @guild.roles[@id] = self unless data[:no_cache]
-      @_data.update(data)
+      @data.update(data)
     end
   end
 end
