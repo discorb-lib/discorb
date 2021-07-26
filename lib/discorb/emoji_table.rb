@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
+# rubocop:disable Layout/LineLength, Metrics/ModuleLength
 module Discorb
   module EmojiTable
     DISCORD_TO_UNICODE = {
@@ -3752,6 +3752,6 @@ module Discorb
       0x0001f610.chr('utf-8') => ['neutral_face'],
       0x0001f611.chr('utf-8') => ['expressionless']
     }.freeze
-    # rubocop:enable Layout/LineLength
+    # rubocop:enable Layout/LineLength, Metrics/ModuleLength
   end
 end

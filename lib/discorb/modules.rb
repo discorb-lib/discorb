@@ -93,7 +93,7 @@ module Discorb
           around: Discorb::Utils.try(before, :id)
         }.filter { |_k, v| !v.nil? }.to_h
         _resp, messages = @client.internet.get("#{base_url.wait}/messages?#{URI.encode_www_form(params)}").wait
-        messages.map { |m| Message.new(@client, m.merge({guild_id: @guild_id.to_s})) }
+        messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
       end
     end
   end
