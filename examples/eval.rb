@@ -16,7 +16,7 @@ event = client.on(:message) do |_task, message|
   next unless message.content.start_with?('eval ')
 
   code = message.content.delete_prefix('eval ').delete_prefix('```rb').delete_suffix('```')
-  res = eval("Async { |task| #{code} }", binding, __FILE__, __LINE__)  # rubocop:disable Security/Eval
+  res = eval("Async { |task| #{code} }", binding, __FILE__, __LINE__).wait  # rubocop:disable Security/Eval
   message.add_reaction(Discorb::UnicodeEmoji['white_check_mark'])
   unless res.nil?
     res = res.wait if res.is_a? Async::Task
@@ -24,7 +24,7 @@ event = client.on(:message) do |_task, message|
   end
 end
 
-event.rescue do |_task, message, error|
+event.rescue do |_task, error, message|
   message.reply embed: Discorb::Embed.new('Error!', "```rb\n#{error.full_message(highlight: false)[...1990]}\n```",
                                           color: Discorb::Color[:red])
 end
