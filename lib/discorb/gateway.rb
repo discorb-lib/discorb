@@ -733,6 +733,8 @@ module Discorb
         dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(data))
       when 'TYPING_START'
         dispatch(:typing_start, TypingStartEvent.new(self, data))
+      when 'INTERACTION_CREATE'
+        dispatch(:integration_create, Interaction.make_interaction(self, data))
       else
         @log.warn "Unknown event: #{event_name}\n#{data.inspect}"
       end
