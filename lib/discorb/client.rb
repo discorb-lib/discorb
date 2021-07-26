@@ -25,7 +25,7 @@ module Discorb
   class Client
     attr_accessor :intents
     attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions, :user, :guilds, :users,
-                :channels, :emojis, :messages
+                :channels, :emojis, :messages, :log
 
     def initialize(allowed_mentions: nil, intents: nil, message_caches: 1000, log: nil, colorize_log: false, log_level: :info, wait_until_ready: true)
       @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
