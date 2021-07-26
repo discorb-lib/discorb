@@ -407,30 +407,72 @@ module Discorb
 
         dispatch(:channel_create, nc)
       when 'CHANNEL_UPDATE'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-        return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = guild.channels[data[:id]])
+        return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = @channels[data[:id]])
 
         before = Channel.make_channel(self, current.instance_variable_get(:@data), no_cache: true)
         current.send(:_set_data, data)
         dispatch(:channel_update, before, current)
 
       when 'CHANNEL_DELETE'
-        return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-        return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (channel = guild.channels.delete(data[:id]))
+        return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (channel = @channels.delete(data[:id]))
 
+        @guilds[data[:guild_id]]&.channels&.delete(data[:id])
         dispatch(:channel_delete, channel)
       when 'CHANNEL_PINS_UPDATE'
         nil # do in MESSAGE_UPDATE
       when 'THREAD_CREATE'
-        # TODO: Gateway: THREAD_CREATE
+        thread = Channel.make_channel(self, data)
+
+        dispatch(:thread_create, thread)
+        if data.key?(:member)
+          dispatch(:thread_join, thread)
+        else
+          dispatch(:thread_new, thread)
+        end
       when 'THREAD_UPDATE'
-        # TODO: Gateway: THREAD_UPDATE
+        return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
+
+        before = Channel.make_channel(self, thread.instance_variable_get(:@data), no_cache: true)
+        thread.send(:_set_data, data)
+        dispatch(:thread_update, before, thread)
       when 'THREAD_DELETE'
-        # TODO: Gateway: THREAD_DELETE
+        return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels.delete(data[:id]))
+
+        @guilds[data[:guild_id]]&.channels&.delete(data[:id])
+        dispatch(:thread_delete, thread)
       when 'THREAD_LIST_SYNC'
-        # TODO: Gateway: THREAD_LIST_SYNC
+        data[:threads].each do |raw_thread|
+          thread = Channel.make_channel(self, raw_thread.merge({ member: raw_thread[:members].find { |m| m[:id] == raw_thread[:id] } }))
+          @channels[thread.id] = thread
+        end
       when 'THREAD_MEMBER_UPDATE'
-        # TODO: Gateway: THREAD_MEMBER_UPDATE
+        return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
+
+        if (member = thread.members[data[:id]])
+          old = ThreadChannel::Member.new(self, member.instance_variable_get(:@data))
+          member._set_data(data)
+        else
+          old = nil
+          member = ThreadChannel::Member.new(self, data)
+          thread.members[data[:user_id]] = member
+        end
+        dispatch(:thread_member_update, old, member)
+
+      when 'THREAD_MEMBERS_UPDATE'
+        return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
+
+        thread.instance_variable_set(:@member_count, data[:member_count])
+        members = []
+        (data[:added_members] || []).each do |raw_member|
+          member = ThreadChannel::Member.new(self, raw_member)
+          thread.members[member.id] = member
+          members << member
+        end
+        removed_members = []
+        (data[:removed_member_ids] || []).each do |id|
+          removed_members << thread.members.delete(id)
+        end
+        dispatch(:thread_members_update, thread, members, removed_members)
       when 'STAGE_INSTANCE_CREATE'
         instance = StageInstance.new(self, data)
         dispatch(:stage_instance_create, instance)
@@ -692,7 +734,7 @@ module Discorb
       when 'TYPING_START'
         dispatch(:typing_start, TypingStartEvent.new(self, data))
       else
-        @log.warn "Unknown event: #{event_name}"
+        @log.warn "Unknown event: #{event_name}\n#{data.inspect}"
       end
     end
   end
