@@ -391,7 +391,7 @@ module Discorb
         return @log.warn "Unknown role id #{data[:role][:id]}, ignoring" unless guild.roles.has?(data[:role][:id])
 
         current = guild.roles[data[:role][:id]]
-        before = Role.new(@client, guild, current.instance_variable_get(:@_data).update({ no_cache: true }))
+        before = Role.new(@client, guild, current.instance_variable_get(:@data).update({ no_cache: true }))
         current.send(:_set_data, data[:role])
         dispatch(:role_update, before, current)
       when 'GUILD_ROLE_DELETE'
@@ -410,7 +410,7 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = guild.channels[data[:id]])
 
-        before = Channel.make_channel(self, current.instance_variable_get(:@_data))
+        before = Channel.make_channel(self, current.instance_variable_get(:@data), no_cache: true)
         current.send(:_set_data, data)
         dispatch(:channel_update, before, current)
 
@@ -438,7 +438,7 @@ module Discorb
         return @log.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
         return @log.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances[data[:id]])
 
-        old = StageInstance.new(self, instance.instance_variable_get(:@_data), no_cache: true)
+        old = StageInstance.new(self, instance.instance_variable_get(:@data), no_cache: true)
         current.send(:_set_data, data)
         dispatch(:stage_instance_update, old, current)
       when 'STAGE_INSTANCE_DELETE'
@@ -503,7 +503,7 @@ module Discorb
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless (integration = guild.integrations[data[:id]])
 
-        before = Integration.new(self, integration.instance_variable_get(:@_data), data[:guild_id], no_cache: true)
+        before = Integration.new(self, integration.instance_variable_get(:@data), data[:guild_id], no_cache: true)
         integration.send(:_set_data, data)
         dispatch(:integration_update, before, integration)
       when 'INTEGRATION_DELETE'
@@ -620,8 +620,8 @@ module Discorb
         guild.presences[data[:user][:id]] = Presence.new(self, data)
       when 'MESSAGE_UPDATE'
         if (message = @messages[data[:id]])
-          before = Message.new(self, message.instance_variable_get(:@_data), no_cache: true)
-          message.send(:_set_data, message.instance_variable_get(:@_data).merge(data))
+          before = Message.new(self, message.instance_variable_get(:@data), no_cache: true)
+          message.send(:_set_data, message.instance_variable_get(:@data).merge(data))
         else
           @log.info "Uncached message ID #{data[:id]}, ignoring"
           before = nil

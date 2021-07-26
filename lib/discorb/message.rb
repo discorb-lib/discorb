@@ -83,7 +83,7 @@ module Discorb
 
     def initialize(client, data, no_cache: false)
       @client = client
-      @_data = {}
+      @data = {}
       @no_cache = no_cache
       _set_data(data)
       @client.messages[@id] = self unless @no_cache
@@ -253,7 +253,7 @@ module Discorb
       @interaction = nil # TODO: Discorb::InterctionFeedback
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
-      @_data.update(data)
+      @data.update(data)
       @deleted = false
     end
 

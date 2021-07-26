@@ -31,7 +31,7 @@ module Discorb
 
     def initialize(client, data, is_create_event)
       @client = client
-      @_data = {}
+      @data = {}
       _set_data(data, is_create_event)
     end
 
@@ -158,7 +158,7 @@ module Discorb
       @presences = Dictionary.new(data[:presences].map { |pr| [pr[:user][:id], Presence.new(@client, pr)] }.to_h)
       @max_presences = data[:max_presences]
       @stage_instances = Dictionary.new(data[:stage_instances].map { |s| [s[:id], StageInstance.new(@client, s)] }.to_h)
-      @_data.update(data)
+      @data.update(data)
     end
   end
 
