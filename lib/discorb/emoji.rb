@@ -92,11 +92,11 @@ module Discorb
     attr_reader :name, :value
 
     def initialize(name)
-      if DISCORD_TO_UNICODE.key?(name)
+      if EmojiTable::DISCORD_TO_UNICODE.key?(name)
         @name = name
-        @value = DISCORD_TO_UNICODE[name]
-      elsif UNICODE_TO_DISCORD.key?(name)
-        @name = UNICODE_TO_DISCORD[name][0]
+        @value = EmojiTable::DISCORD_TO_UNICODE[name]
+      elsif EmojiTable::UNICODE_TO_DISCORD.key?(name)
+        @name = EmojiTable::UNICODE_TO_DISCORD[name][0]
         @value = name
       else
         raise ArgumentError, "No such emoji: #{name}"
