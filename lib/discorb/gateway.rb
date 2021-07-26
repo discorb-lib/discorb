@@ -264,7 +264,7 @@ module Discorb
             @log.info 'Discord WebSocket requesting client reconnect'
             connect_gateway(false)
           end
-        rescue EOFError
+        rescue EOFError, Async::Wrapper::Cancelled
           connect_gateway(false)
         end
       end
