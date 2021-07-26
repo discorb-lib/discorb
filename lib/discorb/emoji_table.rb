@@ -2424,6 +2424,7 @@ UNICODE_TO_DISCORD = {
   0x0000002a.chr('utf-8') + 0x0000fe0f.chr('utf-8') + 0x000020e3.chr('utf-8') => %w[asterisk keycap_asterisk],
   0x000023cf.chr('utf-8') + 0x0000fe0f.chr('utf-8') => %w[eject eject_symbol],
   0x000025b6.chr('utf-8') + 0x0000fe0f.chr('utf-8') => ['arrow_forward'],
+  "\xe2\x96\xb6" => ['arrow_forward'],
   0x000023f8.chr('utf-8') + 0x0000fe0f.chr('utf-8') => %w[pause_button double_vertical_bar],
   0x000023ef.chr('utf-8') + 0x0000fe0f.chr('utf-8') => ['play_pause'],
   0x000023f9.chr('utf-8') + 0x0000fe0f.chr('utf-8') => ['stop_button'],
