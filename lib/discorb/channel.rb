@@ -106,6 +106,17 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
+    def delete!(reason: nil)
+      Async do
+        @client.internet.delete(base_url.wait.to_s, audit_log_reason: reason).wait
+        @deleted = true
+        self
+      end
+    end
+
+    alias close! delete!
+    alias destroy! delete!
+
     private
 
     def _set_data(data)
@@ -137,7 +148,10 @@ module Discorb
       @threads = Dictionary.new
     end
 
-    def edit(name: nil, announce: nil, position: nil, topic: nil, nsfw: nil, slowmode: nil, category: nil, parent: nil, reason: nil)
+    def edit(name: nil, position: nil, category: nil, parent: nil,
+             topic: nil, nsfw: nil, announce: nil,
+             slowmode: nil, default_auto_archive_duration: nil,
+             archive_in: nil, reason: nil)
       Async do
         payload = {}
         payload[:name] = name if name
@@ -150,7 +164,11 @@ module Discorb
         parent ||= category
         payload[:parent_id] = parent.id unless parent.nil?
 
+        default_auto_archive_duration ||= archive_in
+        payload[:default_auto_archive_duration] = default_auto_archive_duration unless default_auto_archive_duration.nil?
+
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        self
       end
     end
 
@@ -186,6 +204,7 @@ module Discorb
         payload[:rtc_region] = rtc_region == false ? nil : rtc_region unless rtc_region.nil?
 
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        self
       end
     end
 
@@ -217,6 +236,7 @@ module Discorb
         payload[:bitrate] = bitrate unless bitrate.nil?
         payload[:user_limit] = user_limit unless user_limit.nil?
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        self
       end
     end
 
@@ -232,11 +252,13 @@ module Discorb
   end
 
   class ThreadChannel < Channel
-    attr_reader :id, :name, :type, :message_count, :member_count, :rate_limit_per_user, :members
+    attr_reader :id, :name, :type, :message_count, :member_count, :rate_limit_per_user, :members, :archived_timestamp, :auto_archive_duration
 
     include Messageable
 
     alias slowmode rate_limit_per_user
+    alias archived_at archived_timestamp
+    alias archive_in auto_archive_duration
     @channel_type = nil
 
     def initialize(client, data, no_cache: false)
@@ -249,6 +271,27 @@ module Discorb
 
     def ==(other)
       @id == other.id
+    end
+
+    def edit(name: nil, archived: nil, auto_archive_duration: nil, archive_in: nil, locked: nil, reason: nil)
+      Async do
+        payload = {}
+        payload[:name] = name if name
+        payload[:archived] = archived unless archived.nil?
+        auto_archive_duration ||= archive_in
+        payload[:auto_archive_duration] = auto_archive_duration unless auto_archive_duration.nil?
+        payload[:locked] = locked unless locked.nil?
+        @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        self
+      end
+    end
+
+    def archive!(reason: nil)
+      edit(archived: true, reason: reason)
+    end
+
+    def lock!(reason: nil)
+      edit(archived: true, locked: true, reason: reason)
     end
 
     def parent
@@ -281,6 +324,10 @@ module Discorb
 
     def archived?
       @archived
+    end
+
+    def locked?
+      @locked
     end
 
     def post_url
@@ -346,7 +393,10 @@ module Discorb
       @guild_id = data[:guild_id]
       @parent_id = data[:parent_id]
       @archived = data[:thread_metadata][:archived]
-      @owner_id = data[:thread_metadata][:owner_id]
+      @owner_id = data[:owner_id]
+      @archived_timestamp = Time.iso8601(data[:thread_metadata][:archived_timestamp])
+      @auto_archive_duration = data[:thread_metadata][:auto_archive_duration]
+      @locked = data[:thread_metadata][:locked]
       @member_count = data[:member_count]
       @message_count = data[:message_count]
       @members[@client.user.id] = ThreadChannel::Member.new(@client, data[:member].merge({ id: data[:id], user_id: @client.user.id })) if data[:member]

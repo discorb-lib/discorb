@@ -76,14 +76,6 @@ module Discorb
       end
     end
 
-    def close
-      Async do
-        @client.internet.delete(base_url.wait.to_s).wait
-        @deleted = true
-        self
-      end
-    end
-
     def fetch_messages(limit = 50, before: nil, after: nil, around: nil)
       Async do
         params = {
