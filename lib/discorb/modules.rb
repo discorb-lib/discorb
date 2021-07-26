@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'components'
+require_relative 'utils'
 module Discorb
   module Messageable
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
@@ -63,8 +64,36 @@ module Discorb
         else
           headers = {}
         end
-        _resp, data = @client.internet.post(post_url, payload, headers: headers).wait
-        Message.new(@client, data.merge({ guild_id: @guild_id }))
+        _resp, data = @client.internet.post("#{base_url.wait}/messages", payload, headers: headers).wait
+        Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
+      end
+    end
+
+    def fetch_message(id)
+      Async do
+        _resp, data = @client.internet.get("#{base_url.wait}/messages/#{id}").wait
+        Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
+      end
+    end
+
+    def close
+      Async do
+        @client.internet.delete(base_url.wait.to_s).wait
+        @deleted = true
+        self
+      end
+    end
+
+    def fetch_messages(limit = 50, before: nil, after: nil, around: nil)
+      Async do
+        params = {
+          limit: limit,
+          before: Discorb::Utils.try(after, :id),
+          after: Discorb::Utils.try(around, :id),
+          around: Discorb::Utils.try(before, :id)
+        }.filter { |_k, v| !v.nil? }.to_h
+        _resp, messages = @client.internet.get("#{base_url.wait}/messages?#{URI.encode_www_form(params)}").wait
+        messages.map { |m| Message.new(@client, m.merge({guild_id: @guild_id.to_s})) }
       end
     end
   end

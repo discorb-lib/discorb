@@ -50,8 +50,10 @@ module Discorb
       self.class.channel_type
     end
 
-    def post_url
-      "/channels/#{@id}/messages"
+    def base_url
+      Async do
+        "/channels/#{@id}"
+      end
     end
 
     private
@@ -149,13 +151,6 @@ module Discorb
         payload[:parent_id] = parent.id unless parent.nil?
 
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
-      end
-    end
-
-    def fetch_message(id)
-      Async do
-        _resp, data = @client.internet.get("/channels/#{@id}/messages/#{id}").wait
-        Message.new(@client, data)
       end
     end
 
