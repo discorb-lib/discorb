@@ -179,7 +179,7 @@ module Discorb
         @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
         @user_id = Snowflake.new(data[:user_id])
         @timestamp = Time.at(data[:timestamp])
-        @member = guild.members[@user_id] || Member.new(@client, @guild_id, @client.users[@user_id], data[:member]) if guild
+        @member = guild.members[@user_id] || Member.new(@client, @guild_id, @client.users[@user_id].instance_variable_get(:@data), data[:member]) if guild
       end
 
       def user
@@ -715,7 +715,9 @@ module Discorb
         dispatch(:reaction_add, ReactionEvent.new(self, data))
       when 'MESSAGE_REACTION_REMOVE'
         if (target_message = @messages[data[:message_id]]) &&
-           (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
+           (target_reaction = target_message.reactions.find do |r|
+              data[:emoji][:id].nil? ? r.emoji.name == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
+            end)
           target_reaction.set_instance_variable(:@count, target_reaction.count - 1)
           target_message.reactions.delete(target_reaction) if target_reaction.count.zero?
         end
@@ -734,7 +736,10 @@ module Discorb
       when 'TYPING_START'
         dispatch(:typing_start, TypingStartEvent.new(self, data))
       when 'INTERACTION_CREATE'
-        dispatch(:integration_create, Interaction.make_interaction(self, data))
+        interaction = Interaction.make_interaction(self, data)
+        dispatch(:integration_create, interaction)
+
+        dispatch(interaction.class.event_name, interaction)
       else
         @log.warn "Unknown event: #{event_name}\n#{data.inspect}"
       end
