@@ -121,7 +121,7 @@ module Discorb
     end
 
     def webhook?
-      webhook_id != nil
+      @webhook_id != nil
     end
 
     def to_s
@@ -224,13 +224,14 @@ module Discorb
       @id = Snowflake.new(data[:id])
 
       @channel_id = data[:channel_id]
-      @guild_id = data[:guild_id]
-      @author = if data[:member].nil? && !guild.nil?
-                  guild.members[data[:author][:id]]
-                else
-                  Member.new(@client,
-                             @guild_id, data[:author], data[:member])
-                end
+      @guild_id = data[:guild_id] || channel&.guild&.id
+      if data[:author].nil? && data[:webhook_id]
+        @webhook_id = Snowflake.new(data[:webhook_id])
+        # @author = WebhookAuthor.new(data[:webhook_id])
+      else
+        @author = guild.members[data[:author][:id]] || Member.new(@client,
+                                                                  @guild_id, data[:author], data[:member])
+      end
       @content = data[:content]
       @created_at = Time.iso8601(data[:timestamp])
       @updated_at = data[:edited_timestamp].nil? ? nil : Time.iso8601(data[:edited_timestamp])
