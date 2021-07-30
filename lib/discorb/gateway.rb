@@ -341,7 +341,7 @@ module Discorb
       when 'READY'
         @api_version = data[:v]
         @session_id = data[:session_id]
-        @user = User.new(self, data[:user])
+        @user = ClientUser.new(self, data[:user])
         @uncached_guilds = data[:guilds].map { |g| g[:id] }
       when 'GUILD_CREATE'
         if @uncached_guilds.include?(data[:id])
