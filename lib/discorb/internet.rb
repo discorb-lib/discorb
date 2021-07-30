@@ -15,7 +15,7 @@ module Discorb
 
     def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, audit_log_reason), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, '', audit_log_reason), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -32,7 +32,7 @@ module Discorb
       end
     end
 
-    def post(path, body, headers: nil, audit_log_reason: nil, **kwargs)
+    def post(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
@@ -50,7 +50,7 @@ module Discorb
       end
     end
 
-    def patch(path, body, headers: nil, audit_log_reason: nil, **kwargs)
+    def patch(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
@@ -68,7 +68,7 @@ module Discorb
       end
     end
 
-    def put(path, body, headers: nil, audit_log_reason: nil, **kwargs)
+    def put(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
@@ -86,9 +86,9 @@ module Discorb
       end
     end
 
-    def delete(path, body, headers: nil, audit_log_reason: nil, **kwargs)
+    def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
+        resp = super(API_BASE_URL + path, get_headers(headers, '', audit_log_reason), '')
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -97,7 +97,7 @@ module Discorb
                end
         test_error(if resp.status == 429
                      task.sleep(data[:retry_after])
-                     delete(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+                     delete(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
                      [resp, data]
                    end)
@@ -124,7 +124,7 @@ module Discorb
       end
     end
 
-    def get_headers(headers, body = nil, audit_log_reason = nil)
+    def get_headers(headers, body = '', audit_log_reason = nil)
       ret = if body.nil?
               { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
             else
