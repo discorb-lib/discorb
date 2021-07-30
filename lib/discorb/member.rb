@@ -89,7 +89,7 @@ module Discorb
     end
 
     def remove_role(role, reason: nil)
-      @client.internet.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason)
+      @client.internet.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", audit_log_reason: reason)
     end
 
     private

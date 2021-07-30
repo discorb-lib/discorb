@@ -163,13 +163,13 @@ module Discorb
 
     def remove_reaction(emoji)
       Async do |_task|
-        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil).wait
+        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me").wait
       end
     end
 
     def remove_reaction_of(emoji, member)
       Async do |_task|
-        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}", nil).wait
+        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}").wait
       end
     end
     # Meta

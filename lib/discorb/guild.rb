@@ -84,7 +84,7 @@ module Discorb
 
     def leave
       Async do
-        @client.internet.delete("/users/@me/guilds/#{@id}", nil).wait
+        @client.internet.delete("/users/@me/guilds/#{@id}").wait
         @client.guilds.delete(@id)
       end
     end
