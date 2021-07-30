@@ -220,7 +220,7 @@ module Discorb
   end
 
   class StageChannel < GuildChannel
-    attr_reader :bitrate, :user_limit
+    attr_reader :bitrate, :user_limit, :stage_instances
 
     @channel_type = 13
     def initialize(...)
@@ -228,15 +228,29 @@ module Discorb
       super(...)
     end
 
-    def edit(name: nil, position: nil, bitrate: nil, user_limit: nil, reason: nil)
+    def edit(name: nil, position: nil, bitrate: nil, rtc_region: nil, reason: nil)
       Async do
         payload = {}
         payload[:name] = name if name
         payload[:position] = position if position
         payload[:bitrate] = bitrate unless bitrate.nil?
-        payload[:user_limit] = user_limit unless user_limit.nil?
+        payload[:rtc_region] = rtc_region unless rtc_region.nil?
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
+      end
+    end
+
+    def start(topic, public: false, reason: nil)
+      Async do
+        _resp, data = @client.internet.post('/stage-instances', { channel_id: @id, topic: topic, public: public ? 2 : 1 }, audit_log_reason: reason).wait
+        StageInstance.new(@client, data)
+      end
+    end
+
+    def fetch_stage_instance
+      Async do
+        _resp, data = @client.internet.get("/stage-instances/#{@id}").wait
+        StageInstance.new(@client, data)
       end
     end
 

@@ -122,6 +122,30 @@ module Discorb
       @privacy_level == :guild_only
     end
 
+    def inspect
+      "#<#{self.class} topic=#{@topic.inspect}>"
+    end
+
+    def edit(topic: nil, privacy_level: nil)
+      Async do
+        payload = {}
+        payload[:topic] = topic if topic
+        payload[:privacy_level] = self.class.privacy_level[privacy_level] if privacy_level
+        @client.internet.edit("/stage-instances/#{@channel_id}", payload).wait
+        self
+      end
+    end
+
+    def delete!(reason: nil)
+      Async do
+        @client.internet.delete("/stage-instances/#{@channel_id}", reason: reason).wait
+        self
+      end
+    end
+
+    alias destroy! delete!
+    alias end! delete!
+
     private
 
     def _set_data(data)
