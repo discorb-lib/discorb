@@ -6,24 +6,6 @@ require_relative 'error'
 require_relative 'asset'
 
 module Discorb
-  class UserFlag < Flag
-    @bits = {
-      discord_employee: 0,
-      partnered_server_owner: 1,
-      hypesquad_events: 2,
-      bug_hunter_level_1: 3,
-      house_bravery: 6,
-      house_brilliance: 7,
-      house_balance: 8,
-      early_supporter: 9,
-      team_user: 10,
-      bug_hunter_level_2: 14,
-      verified_bot: 16,
-      early_verified_bot_developer: 17,
-      discord_certified_moderator: 18
-    }.freeze
-  end
-
   class User < DiscordModel
     attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar
 
@@ -52,14 +34,31 @@ module Discorb
       "#{@username}##{@discriminator}"
     end
 
+    class Flag < Discorb::Flag
+      @bits = {
+        discord_employee: 0,
+        partnered_server_owner: 1,
+        hypesquad_events: 2,
+        bug_hunter_level_1: 3,
+        house_bravery: 6,
+        house_brilliance: 7,
+        house_balance: 8,
+        early_supporter: 9,
+        team_user: 10,
+        bug_hunter_level_2: 14,
+        verified_bot: 16,
+        early_verified_bot_developer: 17,
+        discord_certified_moderator: 18
+      }.freeze
+    end
+
     private
 
     def _set_data(data)
       @username = data[:username]
       @verified = data[:verified]
       @id = Snowflake.new(data[:id])
-      @flag = UserFlag.new(data[:public_flags])
-      @email = data[:email]
+      @flag = User::Flag.new(data[:public_flags])
       @discriminator = data[:discriminator]
       @avatar = Asset.new(self, data[:avatar])
       @bot = data[:bot]
@@ -70,5 +69,18 @@ module Discorb
   end
 
   class ClientUser < User
+    def edit(name: false, avatar: false)
+      Async do
+        payload = {}
+        payload[:username] = name if name
+        if avatar.nil?
+          payload[:avatar] = nil
+        elsif avatar
+          payload[:avatar] = avatar.to_s
+        end
+        @client.internet.patch('/users/@me', payload).wait
+        self
+      end
+    end
   end
 end
