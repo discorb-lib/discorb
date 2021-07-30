@@ -45,6 +45,25 @@ module Discorb
       "#<#{self.class} id=#{@id} :#{@name}:>"
     end
 
+    def edit(name: nil, roles: [], reason: nil)
+      Async do
+        payload = {}
+        payload[:name] = name if name
+        payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles
+        @client.internet.patch("/guilds/#{@guild.id}/emojis/#{@id}", payload, reason: reason)
+      end
+    end
+
+    def delete!(reason: nil)
+      Async do
+        @client.internet.delete("/guilds/#{@guild.id}/emojis/#{@id}", reason: reason).wait
+        @available = false
+        self
+      end
+    end
+
+    alias destroy! delete!
+
     private
 
     def _set_data(data)

@@ -89,6 +89,38 @@ module Discorb
       end
     end
 
+    def fetch_emoji_list
+      Async do
+        _resp, data = @client.internet.get("/guilds/#{@id}/emojis").wait
+        @emojis = Dictionary.new
+        ids = @emojis.map(&:id).map(&:to_s)
+        data.map do |e|
+          next if ids.include?(e[:id])
+
+          @emojis[e[:id]] = CustomEmoji.new(@client, self, e)
+        end
+      end
+    end
+
+    alias fetch_emojis fetch_emoji_list
+
+    def fetch_emoji(id)
+      _resp, data = @client.internet.get("/guilds/#{@id}/emojis/#{id}").wait
+      @emojis[e[:id]] = CustomEmoji.new(@client, self, data)
+    end
+
+    def create_emoji(name, image, roles: [])
+      _resp, data = @client.internet.post(
+        "/guilds/#{@id}/emojis",
+        {
+          name: name,
+          image: image.to_s,
+          roles: roles.map { |r| Discorb::Utils.try(r, :id) }
+        }
+      ).wait
+      @emojis[data[:id]] = CustomEmoji.new(@client, self, data)
+    end
+
     class << self
       attr_reader :nsfw_levels, :mfa_levels
     end
