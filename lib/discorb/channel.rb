@@ -148,29 +148,30 @@ module Discorb
       @threads = Dictionary.new
     end
 
-    def edit(name: nil, position: nil, category: nil, parent: nil,
-             topic: nil, nsfw: nil, announce: nil,
-             slowmode: nil, default_auto_archive_duration: nil,
-             archive_in: nil, reason: nil)
+    def edit(name: :unset, position: :unset, category: :unset, parent: :unset,
+             topic: :unset, nsfw: :unset, announce: :unset,
+             slowmode: :unset, default_auto_archive_duration: :unset,
+             archive_in: :unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name
-        payload[:announce] = announce ? 5 : 0 unless announce.nil?
-        payload[:position] = position if position
-        payload[:topic] = topic || '' unless topic.nil?
-        payload[:nsfw] = nsfw unless nsfw.nil?
+        payload[:name] = name if name != :unset
+        payload[:announce] = announce ? 5 : 0 if announce != :unset
+        payload[:position] = position if position != :unset
+        payload[:topic] = topic || '' if topic != :unset
+        payload[:nsfw] = nsfw if nsfw != :unset
 
-        payload[:rate_limit_per_user] = slowmode || 0 unless slowmode.nil?
+        payload[:rate_limit_per_user] = slowmode || 0 if slowmode != :unset
         parent ||= category
-        payload[:parent_id] = parent.id unless parent.nil?
+        payload[:parent_id] = parent&.id if parent != :unset
 
         default_auto_archive_duration ||= archive_in
-        payload[:default_auto_archive_duration] = default_auto_archive_duration unless default_auto_archive_duration.nil?
+        payload[:default_auto_archive_duration] = default_auto_archive_duration if default_auto_archive_duration != :unset
 
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
     end
+    alias modify edit
 
     private
 
@@ -194,19 +195,20 @@ module Discorb
     attr_reader :bitrate, :user_limit
 
     @channel_type = 2
-    def edit(name: nil, position: nil, bitrate: nil, user_limit: nil, rtc_region: nil, reason: nil)
+    def edit(name: :unset, position: :unset, bitrate: :unset, user_limit: :unset, rtc_region: :unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name
-        payload[:position] = position if position
-        payload[:bitrate] = bitrate unless bitrate.nil?
-        payload[:user_limit] = user_limit == false ? nil : user_limit unless user_limit.nil?
-        payload[:rtc_region] = rtc_region == false ? nil : rtc_region unless rtc_region.nil?
+        payload[:name] = name if name != :unset
+        payload[:position] = position if position != :unset
+        payload[:bitrate] = bitrate if bitrate != :unset
+        payload[:user_limit] = user_limit if user_limit != :unset
+        payload[:rtc_region] = rtc_region if rtc_region != :unset
 
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
     end
+    alias modify edit
 
     private
 
@@ -228,17 +230,18 @@ module Discorb
       super(...)
     end
 
-    def edit(name: nil, position: nil, bitrate: nil, rtc_region: nil, reason: nil)
+    def edit(name: :unset, position: :unset, bitrate: :unset, rtc_region: :unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name
-        payload[:position] = position if position
-        payload[:bitrate] = bitrate unless bitrate.nil?
-        payload[:rtc_region] = rtc_region unless rtc_region.nil?
+        payload[:name] = name if name != :unset
+        payload[:position] = position if position != :unset
+        payload[:bitrate] = bitrate if bitrate != :unset
+        payload[:rtc_region] = rtc_region if rtc_region != :unset
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
     end
+    alias modify edit
 
     def start(topic, public: false, reason: nil)
       Async do
@@ -287,14 +290,14 @@ module Discorb
       @id == other.id
     end
 
-    def edit(name: nil, archived: nil, auto_archive_duration: nil, archive_in: nil, locked: nil, reason: nil)
+    def edit(name: :unset, archived: :unset, auto_archive_duration: :unset, archive_in: :unset, locked: :unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name
-        payload[:archived] = archived unless archived.nil?
+        payload[:name] = name if name != :unset
+        payload[:archived] = archived if archived != :unset
         auto_archive_duration ||= archive_in
-        payload[:auto_archive_duration] = auto_archive_duration unless auto_archive_duration.nil?
-        payload[:locked] = locked unless locked.nil?
+        payload[:auto_archive_duration] = auto_archive_duration if auto_archive_duration != :unset
+        payload[:locked] = locked if locked != :unset
         @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end

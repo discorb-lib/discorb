@@ -45,14 +45,15 @@ module Discorb
       "#<#{self.class} id=#{@id} :#{@name}:>"
     end
 
-    def edit(name: nil, roles: [], reason: nil)
+    def edit(name: :unset, roles: :unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name
-        payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles
+        payload[:name] = name if name != :unset
+        payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles != :unset
         @client.internet.patch("/guilds/#{@guild.id}/emojis/#{@id}", payload, audit_log_reason: reason)
       end
     end
+    alias modify edit
 
     def delete!(reason: nil)
       Async do
