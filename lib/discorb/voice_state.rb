@@ -126,15 +126,16 @@ module Discorb
       "#<#{self.class} topic=#{@topic.inspect}>"
     end
 
-    def edit(topic: nil, privacy_level: nil)
+    def edit(topic: :unset, privacy_level: :unsetm, reason: nil)
       Async do
         payload = {}
-        payload[:topic] = topic if topic
-        payload[:privacy_level] = self.class.privacy_level[privacy_level] if privacy_level
-        @client.internet.edit("/stage-instances/#{@channel_id}", payload).wait
+        payload[:topic] = topic if topic != :unset
+        payload[:privacy_level] = self.class.privacy_level[privacy_level] if privacy_level != :unset
+        @client.internet.edit("/stage-instances/#{@channel_id}", payload, audit_log_reason: reason).wait
         self
       end
     end
+    alias modify edit
 
     def delete!(reason: nil)
       Async do
