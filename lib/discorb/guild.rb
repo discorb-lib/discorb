@@ -82,7 +82,7 @@ module Discorb
       @members[@client.user.id]
     end
 
-    def leave
+    def leave!
       Async do
         @client.internet.delete("/users/@me/guilds/#{@id}").wait
         @client.guilds.delete(@id)
