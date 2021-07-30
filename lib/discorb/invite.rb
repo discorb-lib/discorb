@@ -28,6 +28,12 @@ module Discorb
       @client.guilds[@guild_data[:id]]
     end
 
+    def delete!(reason: nil)
+      Async do
+        @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)
+      end
+    end
+
     private
 
     def _set_data(data, gateway)

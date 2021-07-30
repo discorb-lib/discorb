@@ -91,18 +91,31 @@ module Discorb
     end
 
     def fetch_user(id)
-      _resp, data = internet.get("/users/#{id}").wait
-      User.new(self, data)
+      Async do
+        _resp, data = internet.get("/users/#{id}").wait
+        User.new(self, data)
+      end
     end
 
     def fetch_channel(id)
-      _resp, data = internet.get("/channels/#{id}").wait
-      Channel.make_channel(self, data)
+      Async do
+        _resp, data = internet.get("/channels/#{id}").wait
+        Channel.make_channel(self, data)
+      end
     end
 
     def fetch_guild(id)
-      _resp, data = internet.get("/guilds/#{id}").wait
-      Guild.new(self, data, false)
+      Async do
+        _resp, data = internet.get("/guilds/#{id}").wait
+        Guild.new(self, data, false)
+      end
+    end
+
+    def fetch_invite(code, with_count: false, with_expiration: false)
+      Async do
+        _resp, data = internet.get("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}").wait
+        Invite.new(self, data, false)
+      end
     end
 
     def update_presence(activity = nil, activities: nil, idle: nil, status: nil, afk: nil)
