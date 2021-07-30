@@ -21,7 +21,7 @@ SECTIONS = [
 
     Already present at this stage of development were many of the features familiar in later releases of Ruby, including object-oriented design, classes with inheritance, mixins, iterators, closures, exception handling and garbage collection.
   WIKI
-    ]
+  ]
 ].freeze
 
 WIKIPEDIA_CREDIT = '(From: [Wikipedia](https://en.wikipedia.org/wiki/Ruby_(programming_language)))'
