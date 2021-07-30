@@ -303,11 +303,11 @@ module Discorb
       end
     end
 
-    def archive!(reason: nil)
+    def archive(reason: nil)
       edit(archived: true, reason: reason)
     end
 
-    def lock!(reason: nil)
+    def lock(reason: nil)
       edit(archived: true, locked: true, reason: reason)
     end
 
