@@ -22,13 +22,17 @@ module Discorb
       "https://cdn.discordapp.com/#{endpoint}/#{@target.id}/#{@hash}.#{image_format or (animated? ? 'gif' : 'webp')}?size=#{size}"
     end
 
+    def inspect
+      "#<#{self.class} #{@target.class} #{@hash}>"
+    end
+
     private
 
     def endpoint
       case @target
-      when User, Member
+      when User, Member, Webhook
         'avatars'
-      when Guild
+      when Guild, IncomingWebhook::Guild
         'icons'
       end
     end

@@ -173,6 +173,23 @@ module Discorb
     end
     alias modify edit
 
+    def create_webhook(name, avatar: nil)
+      Async do
+        payload = {}
+        payload[:name] = name
+        payload[:avatar] = avatar.to_s if avatar
+        _resp, data = @client.internet.post("/channels/#{@id}/webhooks", payload).wait
+        Webhook.new([@client, data])
+      end
+    end
+
+    def fetch_webhooks
+      Async do
+        _resp, data = @client.internet.get("/channels/#{@id}/webhooks").wait
+        data.map { |webhook| Webhook.new([@client, webhook]) }
+      end
+    end
+
     private
 
     def _set_data(data)
@@ -345,10 +362,6 @@ module Discorb
 
     def locked?
       @locked
-    end
-
-    def post_url
-      "/channels/#{@id}/messages"
     end
 
     class Public < ThreadChannel

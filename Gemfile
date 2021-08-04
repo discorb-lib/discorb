@@ -22,5 +22,6 @@ group :colorize, optional: true do
 end
 
 group :debug, optional: true do
+  gem 'pry', '~> 0.14.1'
   gem 'ricecream', '~> 0.2.0'
 end
