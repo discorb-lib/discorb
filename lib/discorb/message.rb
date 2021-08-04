@@ -56,6 +56,10 @@ module Discorb
                 :activity, :application, :application_id, :message_reference, :flag, :stickers,
                 :interaction, :thread, :components
 
+    alias timestamp created_at
+    alias sent_at created_at
+    alias edited_at updated_at
+    alias edited_timestamp updated_at
     @message_type = {
       default: 0,
       recipient_add: 1,
@@ -129,7 +133,7 @@ module Discorb
     end
 
     def jump_url
-      "https://discord.com/channels/#{guild&.id || '@me'}/#{channel.id}/#{@id}"
+      "https://discord.com/channels/#{@guild_id || '@me'}/#{@channel_id}/#{@id}"
     end
 
     def to_reference(fail_if_not_exists: true)
@@ -139,6 +143,10 @@ module Discorb
         guild_id: @guild_id,
         fail_if_not_exists: fail_if_not_exists
       }
+    end
+
+    def embed
+      @embeds[0]
     end
 
     # HTTP

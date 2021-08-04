@@ -121,6 +121,13 @@ module Discorb
       @emojis[data[:id]] = CustomEmoji.new(@client, self, data)
     end
 
+    def fetch_webhooks
+      Async do
+        _resp, data = @client.internet.get("/guilds/#{@id}/webhooks").wait
+        data.map { |webhook| Webhook.new([@client, webhook]) }
+      end
+    end
+
     class << self
       attr_reader :nsfw_levels, :mfa_levels
     end

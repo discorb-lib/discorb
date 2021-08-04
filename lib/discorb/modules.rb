@@ -41,26 +41,7 @@ module Discorb
         end
         files = [file] if file
         if files
-          boundary = "DiscorbChannels#{@channel_id}MessagesPost#{Time.now.to_f}"
-          headers = {
-            'content-type' => "multipart/form-data; boundary=#{boundary}"
-          }
-          str_payloads = [<<~HTTP
-            Content-Disposition: form-data; name="payload_json"
-            Content-Type: application/json
-
-            #{payload.to_json}
-          HTTP
-          ]
-          files.each do |single_file|
-            str_payloads << <<~HTTP
-              Content-Disposition: form-data; name="file"; filename="#{single_file.filename}"
-              Content-Type: #{single_file.content_type}
-
-              #{single_file.io.read}
-            HTTP
-          end
-          payload = "--#{boundary}\n#{str_payloads.join("\n--#{boundary}\n")}\n--#{boundary}--"
+          headers, payload = Internet.multipart(payload, files)
         else
           headers = {}
         end

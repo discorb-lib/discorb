@@ -15,7 +15,7 @@ module Discorb
 
     def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, '', audit_log_reason), **kwargs)
+        resp = super(get_path(path), get_headers(headers, '', audit_log_reason), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -34,7 +34,7 @@ module Discorb
 
     def post(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
+        resp = super(get_path(path), get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -52,7 +52,7 @@ module Discorb
 
     def patch(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
+        resp = super(get_path(path), get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -70,7 +70,7 @@ module Discorb
 
     def put(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
+        resp = super(get_path(path), get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -88,7 +88,7 @@ module Discorb
 
     def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(API_BASE_URL + path, get_headers(headers, '', audit_log_reason), '')
+        resp = super(get_path(path), get_headers(headers, '', audit_log_reason), '')
         rd = resp.read
         data = if rd.nil?
                  nil
@@ -106,6 +106,26 @@ module Discorb
 
     def inspect
       "#<#{self.class} client=#{@client}>"
+    end
+
+    def self.multipart(payload, files)
+      boundary = "DiscorbBySevenC7CMultipartFormData#{Time.now.to_f}"
+      str_payloads = [<<~HTTP
+        Content-Disposition: form-data; name="payload_json"
+        Content-Type: application/json
+
+        #{payload.to_json}
+      HTTP
+      ]
+      files.each do |single_file|
+        str_payloads << <<~HTTP
+          Content-Disposition: form-data; name="file"; filename="#{single_file.filename}"
+          Content-Type: #{single_file.content_type}
+
+          #{single_file.io.read}
+        HTTP
+      end
+      [boundary, "--#{boundary}\n#{str_payloads.join("\n--#{boundary}\n")}\n--#{boundary}--"]
     end
 
     private
@@ -143,6 +163,14 @@ module Discorb
         [body]
       else
         [recr_utf8(body).to_json]
+      end
+    end
+
+    def get_path(path)
+      if path.start_with?('https://')
+        path
+      else
+        API_BASE_URL + path
       end
     end
 
