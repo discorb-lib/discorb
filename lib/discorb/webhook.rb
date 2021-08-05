@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'async/http/internet'
-require 'ricecream'
 
 require_relative 'common'
 
