@@ -44,17 +44,17 @@ module Discorb
       else
         @guild_data = data[:guild]
         @channel_data = data[:channel]
-        @approximate_presence_count = @data[:approximate_presence_count]
-        @approximate_member_count = @data[:approximate_member_count]
-        @expires_at = Time.iso8601(data[:expires_at])
+        @approximate_presence_count = data[:approximate_presence_count]
+        @approximate_member_count = data[:approximate_member_count]
+        @expires_at = data[:expires_at] && Time.iso8601(data[:expires_at])
       end
-      @inviter_data = @data[:inviter]
-      @target_type = self.class.target_types[@data[:target_type]]
-      @target_user = @client.users[@data[:target_user][:id]] || User.new(@client, @data[:target_user]) if @data[:target_user]
+      @inviter_data = data[:inviter]
+      @target_type = self.class.target_types[data[:target_type]]
+      @target_user = @client.users[data[:target_user][:id]] || User.new(@client, data[:target_user]) if data[:target_user]
       @target_application = nil # TODO: Application
 
-      @stage_instance = nil # TODO: StageInstance
-      return unless data.has?(:uses)
+      # @stage_instance = data[:stage_instance] && Invite::StageInstance.new(self, data[:stage_instance])
+      return unless data.key?(:uses)
 
       @uses = data[:uses]
       @max_uses = data[:max_uses]
@@ -62,6 +62,34 @@ module Discorb
       @temporary = data[:temporary]
       @created_at = Time.iso8601(data[:created_at])
     end
+
+    # class StageInstance
+    #   def initialize(invite, data)
+    #     @invite = invite
+    #     @topic = data[:topic]
+    #     @participant_count = data[:participant_count]
+    #     @speaker_count = data[:speaker_count]
+    #     @members = data[:members].map do |member_data|
+    #       next member if (member = invite.guild&.members&.[](member_data[:id]))
+
+    #       Invite::StageInstance::Member.new(member)
+    #     end
+    #   end
+
+    #   class Member
+    #     attr_reader :roles, :nick, :avatar, :premium_since, :joined_at
+
+    #     def initialize(data)
+          
+    #       @roles = data[:roles].map { |role| Snowflake.new(role) }
+    #       @nick = data[:nick]
+    #       @avatar = Asset.new(self, data[:avatar])
+    #       @premium_since = data[:premium_since] && Time.iso8601(data[:premium_since])
+    #       @joined_at = Time.iso8601(data[:joined_at])
+    #       @pending = data[:pending]
+    #     end
+    #   end
+    # end
 
     class << self
       attr_reader :target_types
