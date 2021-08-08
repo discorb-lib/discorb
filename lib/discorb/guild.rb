@@ -191,7 +191,7 @@ module Discorb
       tmp_channels = data[:channels].filter { |c| !c.key?(:thread_metadata) }.map do |c|
         Channel.make_channel(@client, c.merge({ guild_id: @id }))
       end
-      @channels = Dictionary.new(tmp_channels.map { |c| [c.id, c] }.to_h, sort: ->(c){c[1].position})
+      @channels = Dictionary.new(tmp_channels.map { |c| [c.id, c] }.to_h, sort: ->(c) { c[1].position })
       @voice_states = Dictionary.new(data[:voice_states].map { |v| [v[:user_id], VoiceState.new(@client, v.merge({ guild_id: @id }))] }.to_h)
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
       @presences = Dictionary.new(data[:presences].map { |pr| [pr[:user][:id], Presence.new(@client, pr)] }.to_h)

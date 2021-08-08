@@ -80,7 +80,7 @@ module Discorb
     #     attr_reader :roles, :nick, :avatar, :premium_since, :joined_at
 
     #     def initialize(data)
-          
+
     #       @roles = data[:roles].map { |role| Snowflake.new(role) }
     #       @nick = data[:nick]
     #       @avatar = Asset.new(self, data[:avatar])
