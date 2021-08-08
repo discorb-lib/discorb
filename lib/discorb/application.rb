@@ -21,6 +21,10 @@ module Discorb
       @team = data[:team] && Team.new(@client, data[:team])
     end
 
+    def inspect
+      "#<#{self.class} id=#{@id}>"
+    end
+
     def bot_public?
       @bot_public
     end
@@ -41,6 +45,10 @@ module Discorb
         @name = data[:name]
         @owner_user_id = data[:owner_user_id]
         @members = data[:members] || data[:member].map { |m| Team::Member.new(@client, m) }
+      end
+
+      def inspect
+        "#<#{self.class} id=#{@id}>"
       end
 
       class Member < DiscordModel
@@ -67,6 +75,10 @@ module Discorb
 
         def accepted?
           @membership_state == :accepted
+        end
+
+        def inspect
+          "#<#{self.class} id=#{@id}>"
         end
 
         class << self
