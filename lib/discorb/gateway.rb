@@ -304,6 +304,7 @@ module Discorb
           end
         when 9
           @log.warn 'Received opcode 9, closed connection'
+          @tasks.map(&:stop)
           if data
             @log.info 'Connection is resumable, reconnecting'
             @connection.close
