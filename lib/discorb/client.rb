@@ -24,7 +24,7 @@ require 'async/websocket/client'
 module Discorb
   class Client
     attr_accessor :intents
-    attr_reader :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions, :user, :guilds, :users,
+    attr_reader :application, :internet, :heartbeat_interval, :api_version, :token, :allowed_mentions, :user, :guilds, :users,
                 :channels, :emojis, :messages, :log
 
     def initialize(allowed_mentions: nil, intents: nil, message_caches: 1000, log: nil, colorize_log: false, log_level: :info, wait_until_ready: true)
@@ -39,6 +39,7 @@ module Discorb
       @guilds = Discorb::Dictionary.new(sort: ->(k) { k[0].to_i })
       @emojis = Discorb::Dictionary.new
       @messages = Discorb::Dictionary.new(limit: message_caches)
+      @application = nil
       @last_s = nil
       @identify_presence = nil
       @wait_until_ready = wait_until_ready
@@ -115,6 +116,16 @@ module Discorb
       Async do
         _resp, data = internet.get("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}").wait
         Invite.new(self, data, false)
+      end
+    end
+
+    def fetch_application(force: false)
+      Async do
+        next @application if @application && !force
+
+        _resp, data = internet.get('/oauth2/applications/@me').wait
+        @application = Application.new(self, data)
+        @application
       end
     end
 

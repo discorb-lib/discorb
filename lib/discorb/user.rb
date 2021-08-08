@@ -58,7 +58,7 @@ module Discorb
       @username = data[:username]
       @verified = data[:verified]
       @id = Snowflake.new(data[:id])
-      @flag = User::Flag.new(data[:public_flags])
+      @flag = User::Flag.new(data[:public_flags] | (data[:flags] || 0))
       @discriminator = data[:discriminator]
       @avatar = Asset.new(self, data[:avatar])
       @bot = data[:bot]
