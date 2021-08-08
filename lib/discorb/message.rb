@@ -232,10 +232,12 @@ module Discorb
       @id = Snowflake.new(data[:id])
 
       @channel_id = data[:channel_id]
-      @guild_id = data[:guild_id] || channel&.guild&.id
+      @guild_id = data[:guild_id]
       if data[:author].nil? && data[:webhook_id]
         @webhook_id = Snowflake.new(data[:webhook_id])
         # @author = WebhookAuthor.new(data[:webhook_id])
+      elsif data[:guild_id].nil?
+        @author = @client.users[data[:author][:id]] || User.new(@client, data[:author])
       else
         @author = guild.members[data[:author][:id]] || Member.new(@client,
                                                                   @guild_id, data[:author], data[:member])
@@ -253,7 +255,6 @@ module Discorb
       @pinned = data[:pinned]
       @type = self.class.message_type[data[:type]]
       @activity = nil # TODO: Discorb::MessageActivity
-      @application = nil # TODO: Discorb::Application
       @application_id = data[:application_id]
       @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
       @flag = Flag.new(0b111 - data[:flags])
