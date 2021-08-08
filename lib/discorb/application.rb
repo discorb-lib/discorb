@@ -38,13 +38,19 @@ module Discorb
     alias require_code_grant? bot_require_code_grant?
 
     class Team < DiscordModel
+      attr_reader :id, :icon, :name, :owner_user_id, :members
+
       def initialize(client, data)
         @client = client
         @id = Snowflake.new(data[:id])
         @icon = Asset.new(self, data)
         @name = data[:name]
         @owner_user_id = data[:owner_user_id]
-        @members = data[:members] || data[:member].map { |m| Team::Member.new(@client, m) }
+        @members = data[:members].map { |m| Team::Member.new(@client, self, m) }
+      end
+
+      def owner
+        @members.find { |m| m.user.id == @owner_user_id }
       end
 
       def inspect
@@ -60,9 +66,10 @@ module Discorb
           2 => :accepted
         }.freeze
 
-        def initialize(client, data)
+        def initialize(client, team, data)
           @client = client
           @data = data
+          @team = team
           @user = client.users[data[:user][:id]] || User.new(client, data[:user])
           @team_id = Snowflake.new(data[:team_id])
           @membership_state = self.class.membership_state[data[:membership_state]]
@@ -78,7 +85,15 @@ module Discorb
         end
 
         def inspect
-          "#<#{self.class} id=#{@id}>"
+          "#<#{self.class} id=#{@user.id}>"
+        end
+
+        def owner?
+          @team.owner_user_id == @user.id
+        end
+
+        def ==(other)
+          super || @user == other
         end
 
         class << self

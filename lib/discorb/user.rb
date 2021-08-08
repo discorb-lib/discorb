@@ -38,10 +38,16 @@ module Discorb
       "#<#{self.class} #{self}>"
     end
 
-    def bot_owner?
+    def bot_owner?(strict: false)
       Async do
         app = @client.fetch_application.wait
-        app.owner.user == self
+        if app.team.nil?
+          app.owner == self
+        elsif strict
+          app.team.owner == self
+        else
+          app.team.members.any? { |m| m.user == self }
+        end
       end
     end
 
