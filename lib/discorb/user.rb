@@ -34,6 +34,19 @@ module Discorb
       "#{@username}##{@discriminator}"
     end
 
+    def inspect
+      "#<#{self.class} #{self}>"
+    end
+
+    def bot_owner?
+      Async do
+        app = @client.fetch_application.wait
+        app.owner.user == self
+      end
+    end
+
+    alias app_owner? bot_owner?
+
     class Flag < Discorb::Flag
       @bits = {
         discord_employee: 0,
