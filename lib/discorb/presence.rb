@@ -117,12 +117,12 @@ module Discorb
 
       class Flag < Discorb::Flag
         @bits = {
-          0 => :instance,
-          1 => :join,
-          2 => :spectate,
-          3 => :join_request,
-          4 => :sync,
-          5 => :play
+          instance: 0,
+          join: 1,
+          spectate: 2,
+          join_request: 3,
+          sync: 4,
+          play: 5
         }
       end
 
