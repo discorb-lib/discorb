@@ -15,6 +15,11 @@ event = client.on(:message) do |_task, message|
   next if message.author.bot?
   next unless message.content.start_with?('eval ')
 
+  unless message.author.bot_owner?.wait
+    message.reply("You don't have permission to use this command.")
+    next
+  end
+
   code = message.content.delete_prefix('eval ').delete_prefix('```rb').delete_suffix('```')
   res = eval("Async { |task| #{code} }", binding, __FILE__, __LINE__).wait  # rubocop:disable Security/Eval
   message.add_reaction(Discorb::UnicodeEmoji['white_check_mark'])
