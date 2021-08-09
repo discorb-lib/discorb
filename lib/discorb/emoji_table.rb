@@ -3106,6 +3106,7 @@ module Discorb
       0x0001fa90.chr('utf-8') => ['ringed_planet'],
       0x0001f4ab.chr('utf-8') => ['dizzy'],
       0x0001f31f.chr('utf-8') => ['star'],
+      0x00002b50.chr('utf-8') => ['star'],
       0x00002728.chr('utf-8') => ['sparkles'],
       0x000026a1.chr('utf-8') => ['zap'],
       0x00002604.chr('utf-8') + 0x0000fe0f.chr('utf-8') => ['comet'],
