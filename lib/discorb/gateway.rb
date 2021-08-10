@@ -242,7 +242,7 @@ module Discorb
     def connect_gateway(first)
       @log.info 'Connecting to gateway.'
       Async do |_task|
-        @internet = Internet.new(self)
+        @internet = Internet.new(self) if first
         @first = first
         _, gateway_response = @internet.get('/gateway').wait
         gateway_url = gateway_response[:url]
