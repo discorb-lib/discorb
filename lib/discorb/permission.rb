@@ -93,9 +93,13 @@ module Discorb
       self.class.bits.keys.filter { |field| @allow & self.class.bits[field] != 0 }
     end
 
+    alias +@ allow
+
     def deny
       self.class.bits.keys.filter { |field| @deny & self.class.bits[field] != 0 }
     end
+
+    alias -@ deny
 
     def allow_value
       @allow
