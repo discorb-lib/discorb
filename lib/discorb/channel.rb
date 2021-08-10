@@ -190,6 +190,177 @@ module Discorb
       end
     end
 
+    def delete_messages!(*messages, force: false)
+      Async do
+        messages = messages.first if messages.length == 1 && messages.first.is_a?(Array)
+        unless force
+          time = Time.now
+          messages.delete_if do |message|
+            next false unless message.is_a?(Message)
+
+            time - message.created_at > 60 * 60 * 24 * 14
+          end
+        end
+
+        message_ids = messages.map { |m| Discorb::Utils.try(m, :id).to_s }
+
+        @client.internet.post("/channels/#{@id}/messages/bulk-delete", { messages: message_ids }).wait
+      end
+    end
+
+    alias bulk_delete! delete_messages!
+    alias destroy_messages! delete_messages!
+
+    def set_permissions(target, reason: nil, **perms)
+      Async do
+        allow_value = @permission_overwrites[target]&.allow_value.to_i
+        deny_value = @permission_overwrites[target]&.deny_value.to_i
+        perms.each do |perm, value|
+          allow_value[Discorb::Permission.bits[perm]] = 1 if value == true
+          deny_value[Discorb::Permission.bits[perm]] = 1 if value == false
+        end
+        payload = {
+          allow: allow_value,
+          deny: deny_value,
+          type: target.is_a?(Member) ? 1 : 0
+        }
+        @client.internet.put("/channels/#{@id}/permissions/#{target.id}", payload, audit_log_reason: reason).wait
+      end
+    end
+    alias modify_permissions set_permissions
+    alias modify_permisssion set_permissions
+    alias edit_permissions set_permissions
+    alias edit_permission set_permissions
+
+    def delete_permissions(target, reason: nil)
+      Async do
+        @client.internet.delete("/channels/#{@id}/permissions/#{target.id}", audit_log_reason: reason).wait
+      end
+    end
+    alias delete_permission delete_permissions
+    alias destroy_permissions delete_permissions
+    alias destroy_permission delete_permissions
+
+    def fetch_invites
+      Async do
+        _resp, data = @client.internet.get("/channels/#{@id}/invites").wait
+        data.map { |invite| Invite.new(@client, invite) }
+      end
+    end
+
+    def create_invite(max_age: nil, max_uses: nil, temporary: false, unique: false, reason: nil)
+      Async do
+        _resp, data = @client.internet.post("/channels/#{@id}/invites", {
+                                              max_age: max_age,
+                                              max_uses: max_uses,
+                                              temporary: temporary,
+                                              unique: unique
+                                            }, audit_log_reason: reason).wait
+        Invite.new(@client, data)
+      end
+    end
+
+    def follow_of(target, reason: nil)
+      Async do
+        @client.internet.post("/channels/#{target.id}/followers", { webhook_channel_id: @id }, audit_log_reason: reason).wait
+      end
+    end
+
+    def follow_to(target, reason: nil)
+      Async do
+        @client.internet.post("/channels/#{@id}/followers", { webhook_channel_id: target.id }, audit_log_reason: reason).wait
+      end
+    end
+
+    def typing
+      Async do |task|
+        if block_given?
+          begin
+            post_task = task.async do |loop_task|
+              @client.internet.post("/channels/#{@id}/typing", {})
+              loop_task.sleep(5)
+            end
+            yield
+          ensure
+            post_task.stop
+          end
+        else
+          @client.internet.post("/channels/#{@id}/typing").wait
+        end
+      end
+    end
+
+    def fetch_pins
+      Async do
+        _resp, data = @client.internet.get("/channels/#{@id}/pins").wait
+        data.map { |pin| Message.new(@client, pin) }
+      end
+    end
+
+    def pin_message(message, reason: nil)
+      Async do
+        @client.internet.put("/channels/#{@id}/pins/#{message.id}", {}, audit_log_reason: reason).wait
+      end
+    end
+
+    def unpin_message(message, reason: nil)
+      Async do
+        @client.internet.delete("/channels/#{@id}/pins/#{message.id}", {}, audit_log_reason: reason).wait
+      end
+    end
+
+    def start_thread(name, message: nil, auto_archive_duration: 1440, public: true, reason: nil)
+      Async do
+        _resp, data = if message.nil?
+                        @client.internet.post("/channels/#{@id}/threads", {
+                                                name: name, auto_archive_duration: auto_archive_duration, type: public ? 11 : 10
+                                              },
+                                              audit_log_reason: reason).wait
+                      else
+                        @client.internet.post("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads", {
+                                                name: name, auto_archive_duration: auto_archive_duration
+                                              }, audit_log_reason: reason).wait
+                      end
+        Channel.make_channel(@client, data)
+      end
+    end
+
+    alias create_thread start_thread
+
+    def fetch_archived_public_threads
+      Async do
+        _resp, data = @client.internet.get("/channels/#{@id}/threads/archived/public").wait
+        data.map { |thread| Channel.make_channel(@client, thread) }
+      end
+    end
+
+    def fetch_archived_private_threads
+      Async do
+        _resp, data = @client.internet.get("/channels/#{@id}/threads/archived/private").wait
+        data.map { |thread| Channel.make_channel(@client, thread) }
+      end
+    end
+
+    def fetch_joined_archived_private_threads(limit: nil, before: nil)
+      Async do
+        if limit.nil?
+          before = 0
+          threads = []
+          loop do
+            _resp, data = @client.internet.get("/channels/#{@id}/users/@me/threads/archived/private?before=#{before}").wait
+            threads += data[:threads].map { |thread| Channel.make_channel(@client, thread) }
+            before = data[:threads][-1][:id]
+
+            break unless data[:has_more]
+          end
+          threads
+        else
+          _resp, data = @client.internet.get("/channels/#{@id}/users/@me/threads/archived/private?limit=#{limit}&before=#{before}").wait
+          data.map { |thread| Channel.make_channel(@client, thread) }
+        end
+      end
+    end
+
     private
 
     def _set_data(data)
@@ -362,6 +533,35 @@ module Discorb
 
     def locked?
       @locked
+    end
+
+    def add_member(member = :me)
+      Async do
+        if member == :me
+          @client.internet.post("/channels/#{@id}/thread-members/@me").wait
+        else
+          @client.internet.post("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}").wait
+        end
+      end
+    end
+    alias join add_member
+
+    def remove_member(member = :me)
+      Async do
+        if member == :me
+          @client.internet.delete("/channels/#{@id}/thread-members/@me").wait
+        else
+          @client.internet.delete("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}").wait
+        end
+      end
+    end
+    alias leave remove_member
+
+    def fetch_members
+      Async do
+        _resp, data = @client.internet.get("/channels/#{@id}/thread-members").wait
+        data.map { |d| @members[d[:id]] = Member.new(@client, d) }
+      end
     end
 
     class Public < ThreadChannel

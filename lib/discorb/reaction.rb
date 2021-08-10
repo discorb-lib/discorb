@@ -16,6 +16,10 @@ module Discorb
     end
     alias reacted? me?
 
+    def fetch_users(...)
+      message.fetch_reacted_users(@emoji, ...)
+    end
+
     private
 
     def _set_data(data)
@@ -24,7 +28,7 @@ module Discorb
       @emoji = if data[:emoji][:id].nil?
                  UnicodeEmoji.new(data[:emoji][:name])
                else
-                 PartialEmoji.new(data)
+                 PartialEmoji.new(data[:emoji])
                end
     end
   end

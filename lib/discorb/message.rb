@@ -169,17 +169,67 @@ module Discorb
       end
     end
 
+    alias react_with add_reaction
+
     def remove_reaction(emoji)
       Async do |_task|
         @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me").wait
       end
     end
 
+    alias delete_reaction remove_reaction
+
     def remove_reaction_of(emoji, member)
       Async do |_task|
         @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}").wait
       end
     end
+
+    alias delete_reaction_of remove_reaction_of
+
+    def fetch_reacted_users(emoji, limit: nil, after: 0)
+      Async do |_task|
+        if limit.nil? || !limit.positive?
+          after = 0
+          users = []
+          loop do
+            _resp, data = @client.internet.get("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=100&after=#{after}").wait
+            break if data.empty?
+
+            users += data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
+
+            break if data.length < 100
+
+            after = data[-1][:id]
+          end
+          next users
+        else
+          _resp, data = @client.internet.get("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=#{limit}&after=#{after}").wait
+          next data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
+        end
+      end
+    end
+
+    def pin(reason: nil)
+      Async do
+        channel.pin_message(self, reason: reason).wait
+      end
+    end
+
+    def unpin
+      Async do
+        channel.unpin_message(self, reason: reason).wait
+      end
+    end
+
+    def start_thread(*args, **kwargs)
+      Async do
+        channel.start_thread(*args, message: self, **kwargs).wait
+      end
+    end
+
+    alias create_thread start_thread
+
     # Meta
 
     def inspect
@@ -251,7 +301,7 @@ module Discorb
       @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
       @attachments = data[:attachments].map { |a| Attachment.new(a) }
       @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
-      @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(@client, r) } : []
+      @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
       @pinned = data[:pinned]
       @type = self.class.message_type[data[:type]]
       @activity = nil # TODO: Discorb::MessageActivity
