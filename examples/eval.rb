@@ -21,7 +21,9 @@ event = client.on(:message) do |_task, message|
   end
 
   code = message.content.delete_prefix('eval ').delete_prefix('```rb').delete_suffix('```')
-  res = eval("Async { |task| #{code} }", binding, __FILE__, __LINE__).wait  # rubocop:disable Security/Eval
+  message.add_reaction(Discorb::UnicodeEmoji['clock3'])
+  res = eval("Async { |task| #{code} }.wait", binding, __FILE__, __LINE__) # rubocop:disable Security/Eval
+  message.remove_reaction(Discorb::UnicodeEmoji['clock3'])
   message.add_reaction(Discorb::UnicodeEmoji['white_check_mark'])
   unless res.nil?
     res = res.wait if res.is_a? Async::Task
