@@ -128,6 +128,13 @@ module Discorb
       end
     end
 
+    def fetch_audit_log
+      Async do
+        _resp, data = @client.internet.get("/guilds/#{@id}/audit-logs").wait
+        AuditLog.new(@client, data, self)
+      end
+    end
+
     class << self
       attr_reader :nsfw_levels, :mfa_levels
     end
