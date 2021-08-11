@@ -700,7 +700,9 @@ module Discorb
         dispatch(:message_delete_bulk, messages)
       when 'MESSAGE_REACTION_ADD'
         if (target_message = @messages[data[:message_id]])
-          if (target_reaction = target_message.reactions.find { |r| r.emoji.id == data[:emoji][:id] })
+          if (target_reaction = target_message.reactions.find do |r|
+                r.emoji.is_a?(UnicodeEmoji) ? r.emoji.value == data[:emoji][:name] : r.emoji.id == data[:emoji][:id] # rubocop:disable Metrics/BlockNesting
+              end)
             target_reaction.set_instance_variable(:@count, target_reaction.count + 1)
           else
             target_message.reactions << Reaction.new(
