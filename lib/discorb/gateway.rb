@@ -285,6 +285,7 @@ module Discorb
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
           @tasks << handle_heartbeat(@heartbeat_interval)
+          @tasks << keep_alive_internet
           if @first
             payload = {
               token: @token,
@@ -331,6 +332,13 @@ module Discorb
           @log.debug 'Waiting for heartbeat.'
           task.sleep(interval / 1000.0 - 1)
         end
+      end
+    end
+
+    def keep_alive_internet
+      Async do |task|
+        @internet.get('/')
+        task.sleep(450)
       end
     end
 
