@@ -43,7 +43,7 @@ module Discorb
       def initialize(client, data)
         @client = client
         @id = Snowflake.new(data[:id])
-        @icon = Asset.new(self, data)
+        @icon = Asset.new(self, data[:icon])
         @name = data[:name]
         @owner_user_id = data[:owner_user_id]
         @members = data[:members].map { |m| Team::Member.new(@client, self, m) }
