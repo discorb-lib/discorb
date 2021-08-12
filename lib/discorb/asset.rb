@@ -34,6 +34,11 @@ module Discorb
         'avatars'
       when Guild, IncomingWebhook::Guild
         'icons'
+      when Application
+        'app-icons'
+      when Application::Team
+        'team-icons'
+        
       end
     end
   end
