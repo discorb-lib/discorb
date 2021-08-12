@@ -117,6 +117,17 @@ module Discorb
     alias close! delete!
     alias destroy! delete!
 
+    def move(position, lock_permissions: false, parent: :unset, reason: nil)
+      Async do
+        payload = {
+          position: position
+        }
+        payload[:lock_permissions] = lock_permissions
+        payload[:parent_id] = parent&.id if parent != :unset
+        @client.internet.patch("/guilds/#{@guild_id}/channels", payload, audit_log_reason: reason).wait
+      end
+    end
+
     private
 
     def _set_data(data)
@@ -644,6 +655,30 @@ module Discorb
 
     def voice_channels
       @channels.filter { |c| c.is_a? VoiceChannel }
+    end
+
+    def news_channel
+      @channels.filter { |c| c.is_a? NewsChannel }
+    end
+
+    def stage_channels
+      @channels.filter { |c| c.is_a? StageChannel }
+    end
+
+    def create_text_channel(*args, **kwargs)
+      guild.create_text_channel(*args, parent: self, **kwargs)
+    end
+
+    def create_voice_channel(*args, **kwargs)
+      guild.create_voice_channel(*args, parent: self, **kwargs)
+    end
+
+    def create_news_channel(*args, **kwargs)
+      guild.create_news_channel(*args, parent: self, **kwargs)
+    end
+
+    def create_stage_channel(*args, **kwargs)
+      guild.create_stage_channel(*args, parent: self, **kwargs)
     end
 
     private

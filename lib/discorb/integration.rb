@@ -23,6 +23,14 @@ module Discorb
       @client.guilds[@guild_id]
     end
 
+    def delete!(reason: nil)
+      Async do
+        @client.internet.delete("/guilds/#{@guild}/integrations/#{@id}", reason: reason).wait
+      end
+    end
+
+    alias destroy! delete!
+
     private
 
     def _set_data(data)
@@ -38,7 +46,7 @@ module Discorb
       @account = Account.new(data[:account])
       @subscriber_count = data[:subscriber_count]
       @revoked = data[:revoked]
-      @application = nil # TODO: Application.new(client, data[:application])
+      @application = Application.new(@client, data[:application])
     end
 
     class << self

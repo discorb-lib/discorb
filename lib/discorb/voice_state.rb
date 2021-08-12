@@ -162,4 +162,33 @@ module Discorb
       attr_reader :privacy_level
     end
   end
+
+  class VoiceRegion
+    attr_reader :id, :name
+
+    def initialize(data)
+      @id = data[:id]
+      @name = data[:name]
+      @vip = data[:vip]
+      @optimal = data[:optimal]
+      @deprecated = data[:deprecated]
+      @custom = data[:custom]
+    end
+
+    def vip?
+      @vip
+    end
+
+    def optimal?
+      @optimal
+    end
+
+    def deprecated?
+      @deprecated
+    end
+
+    def custom?
+      @custom
+    end
+  end
 end
