@@ -260,7 +260,7 @@ module Discorb
       end
     end
 
-    def follow_of(target, reason: nil)
+    def follow_from(target, reason: nil)
       Async do
         @client.internet.post("/channels/#{target.id}/followers", { webhook_channel_id: @id }, audit_log_reason: reason).wait
       end
