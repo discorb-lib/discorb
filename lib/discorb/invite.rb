@@ -28,6 +28,10 @@ module Discorb
       @client.guilds[@guild_data[:id]]
     end
 
+    def url
+      "https://discord.gg/#{@code}"
+    end
+
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)
