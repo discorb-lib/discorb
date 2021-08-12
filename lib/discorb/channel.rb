@@ -595,8 +595,6 @@ module Discorb
         @thread_id = data[:id]
         @user_id = data[:user_id]
         @joined_at = Time.iso8601(data[:join_timestamp])
-        # p data[:flags]
-        # @flag = Flag.new(data[:flags])
       end
 
       def thread
