@@ -53,6 +53,34 @@ module Discorb
       "#<#{self.class} @#{@name} id=#{@id}>"
     end
 
+    def move(position, reason: nil)
+      Async do
+        @client.internet.patch("/guilds/#{@guild_id}/roles", { id: @id, position: position }, reason: reason).wait
+      end
+    end
+
+    def edit(name: :unset, position: :unset, color: :unset, hoist: :unset, mentionable: :unset, reason: nil)
+      Async do
+        payload = {}
+        payload[:name] = name if name != :unset
+        payload[:position] = position if position != :unset
+        payload[:color] = color.to_i if color != :unset
+        payload[:hoist] = hoist if hoist != :unset
+        payload[:mentionable] = mentionable if mentionable != :unset
+        @client.internet.patch("/guilds/#{@guild_id}/roles/#{@id}", payload, reason: reason).wait
+      end
+    end
+
+    alias modify edit
+
+    def delete!(reason: nil)
+      Async do
+        @client.internet.delete("/guilds/#{@guild_id}/roles/#{@id}", reason: reason).wait
+      end
+    end
+
+    alias destroy! delete!
+
     class Tag
       attr_reader :bot_id, :integration_id, :premium_subscriber
 

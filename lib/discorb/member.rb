@@ -92,6 +92,32 @@ module Discorb
       @client.internet.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", audit_log_reason: reason)
     end
 
+    def edit(nick: :unset, role: :unset, mute: :unset, deaf: :unset, channel: :unset, reason: nil)
+      Async do
+        payload = {}
+        payload[:nick] = nick if nick != :unset
+        payload[:roles] = role if role != :unset
+        payload[:mute] = mute if mute != :unset
+        payload[:deaf] = deaf if deaf != :unset
+        payload[:channel_id] = channel&.id if channel != :unset
+        @client.internet.patch("/guilds/#{@guild_id}/members/#{@id}", payload, audit_log_reason: reason).wait
+      end
+    end
+
+    alias modify edit
+
+    def kick(reason: nil)
+      Async do
+        guild.kick_member(self, reason: reason).wait
+      end
+    end
+
+    def ban(delete_message_days: 0, reason: nil)
+      Async do
+        guild.ban_member(self, delete_message_days: delete_message_days, reason: reason).wait
+      end
+    end
+
     private
 
     def _set_data(user_data, member_data)
