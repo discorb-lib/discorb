@@ -55,6 +55,9 @@ module Discorb
   class ClientError < DiscorbError
   end
 
+  class TimeoutError < DiscorbError
+  end
+
   class NotSupportedWarning < DiscorbError
     def initialize(message)
       super("#{message} is not supported yet.")
