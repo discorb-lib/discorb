@@ -441,6 +441,20 @@ module Discorb
       end
     end
 
+    def fetch_stickers
+      Async do
+        _resp, data = @client.internet.get("/guilds/#{@id}/stickers").wait
+        data.map { |d| Sticker::GuildSticker.new(@client, d) }
+      end
+    end
+
+    def fetch_sticker(id)
+      Async do
+        _resp, data = @client.internet.get("/guilds/#{@id}/stickers/#{id}").wait
+        Sticker::GuildSticker.new(@client, data)
+      end
+    end
+
     class VanityInvite < DiscordModel
       attr_reader :code, :uses
 
@@ -567,6 +581,7 @@ module Discorb
       @nsfw_level = self.class.nsfw_levels[data[:nsfw_level]]
       return unless is_create_event
 
+      @stickers = data[:stickers].nil? ? [] : data[:stickers].map { |s| Sticker::GuildSticker.new(self, s) }
       @joined_at = Time.iso8601(data[:joined_at])
       @large = data[:large]
       @member_count = data[:member_count]
