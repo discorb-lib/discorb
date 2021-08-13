@@ -79,7 +79,7 @@ module Discorb
     end
 
     def ==(other)
-      super == other
+      @id == other.id
     end
 
     def to_s
