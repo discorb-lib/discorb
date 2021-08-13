@@ -43,3 +43,6 @@ Lint/ScriptPermission:
 
 Layout/EndOfLine:
   Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
