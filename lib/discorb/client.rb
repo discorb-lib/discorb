@@ -97,7 +97,7 @@ module Discorb
     end
 
     def run(token)
-      @token = token
+      @token = token.to_s
       connect_gateway(true)
     end
 
