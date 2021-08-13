@@ -62,12 +62,17 @@ module Discorb
     def dispatch(event_name, *args)
       Async do |_task|
         if (conditions = @conditions[event_name])
-          ids = Set[*conditions.map(&:object_id)]
+          ids = Set[*conditions.map(&:first).map(&:object_id)]
           conditions.delete_if do |condition|
-            next unless ids.include?(condition.object_id)
+            next unless ids.include?(condition.first.object_id)
 
-            condition.signal(args)
-            true
+            check_result = condition[1].nil? || condition[1].call(*args)
+            if check_result
+              condition.first.signal(args)
+              true
+            else
+              false
+            end
           end
         end
         if @events[event_name].nil?
