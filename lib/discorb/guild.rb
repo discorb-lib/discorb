@@ -24,10 +24,14 @@ module Discorb
                 :unavailable, :member_count, :icon, :voice_states, :members, :channels, :threads,
                 :presences, :max_presences, :max_members, :vanity_url_code, :description, :banner, :premium_tier,
                 :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
-                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances, :integrations
+                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances, :integrations,
+                :verification_level, :default_message_notifications, :explicit_content_filter
 
-    @mfa_levels = %i[none low medium high very_high].freeze
+    @mfa_levels = %i[none elevated].freeze
     @nsfw_levels = %i[default explicit safe age_restricted].freeze
+    @verification_level = %i[none low medium high very_high].freeze
+    @default_message_notifications = %i[all_messages only_mentions].freeze
+    @explicit_content_filter = %i[disabled_in_text members_without_roles all_members].freeze
 
     def initialize(client, data, is_create_event)
       @client = client
@@ -455,6 +459,28 @@ module Discorb
       end
     end
 
+    def fetch_templates
+      Async do
+        _resp, data = @client.internet.get("/guilds/#{@id}/templates").wait
+        data.map { |d| GuildTemplate.new(@client, d) }
+      end
+    end
+
+    def fetch_template
+      Async do
+        fetch_templates.wait.first
+      end
+    end
+
+    def create_template(name, description = nil, reason: nil)
+      Async do
+        _resp, data = @client.internet.post(
+          "/guilds/#{@id}/templates", { name: name, description: description }, audit_log_reason: reason
+        )
+        GuildTemplate.new(@client, data)
+      end
+    end
+
     class VanityInvite < DiscordModel
       attr_reader :code, :uses
 
@@ -521,7 +547,7 @@ module Discorb
     end
 
     class << self
-      attr_reader :nsfw_levels, :mfa_levels
+      attr_reader :nsfw_levels, :mfa_levels, :verification_levels, :default_notification_level, :explicit_content_filter
 
       def banner(guild_id, style: 'banner')
         "#{Discorb::API_BASE_URL}/guilds/#{guild_id}/widget.png&style=#{style}"
@@ -564,6 +590,9 @@ module Discorb
       end
       @features = data[:features].map { |f| f.downcase.to_sym }
       @mfa_level = self.class.mfa_levels[data[:mfa_level]]
+      @verification_level = self.class.verification_levels[data[:verification_level]]
+      @default_message_notifications = self.class.default_message_notifications[data[:default_message_notifications]]
+      @explicit_content_filter = self.class.explicit_content_filter[data[:explicit_content_filter]]
       @system_channel_id = data[:system_channel_id]
       @system_channel_flag = SystemChannelFlag.new(0b111 - data[:system_channel_flags])
       @rules_channel_id = data[:rules_channel_id]
