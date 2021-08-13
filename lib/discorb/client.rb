@@ -129,6 +129,13 @@ module Discorb
       end
     end
 
+    def fetch_nitro_sticker_packs
+      Async do
+        _resp, data = internet.get('/stickers-packs').wait
+        data.map { |pack| Sticker::Pack.new(self, pack) }
+      end
+    end
+
     def update_presence(activity = nil, activities: nil, idle: nil, status: nil, afk: nil)
       payload = {}
       if !activity.nil?

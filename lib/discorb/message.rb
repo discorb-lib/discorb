@@ -276,6 +276,16 @@ module Discorb
       end
     end
 
+    class Sticker
+      attr_reader :id, :name, :format
+
+      def initialize(data)
+        @id = Snowflake.new(data[:id])
+        @name = data[:name]
+        @format = Discorb::Sticker.sticker_format[data[:format]]
+      end
+    end
+
     private
 
     def _set_data(data)
@@ -308,7 +318,7 @@ module Discorb
       @application_id = data[:application_id]
       @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
       @flag = Flag.new(0b111 - data[:flags])
-      @sticker = nil # TODO: Discorb::Sticker
+      @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
       # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
       @interaction = nil # TODO: Discorb::InterctionFeedback
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
