@@ -337,7 +337,11 @@ module Discorb
 
     def keep_alive_internet
       Async do |task|
-        @internet.get('/')
+        begin
+          @internet.get('/oauth2/applications/@me')
+        rescue Discorb::NotFoundError
+          # None
+        end
         task.sleep(450)
       end
     end
