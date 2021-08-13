@@ -34,14 +34,7 @@ module Discorb
     end
 
     def ==(other)
-      case other
-      when Snowflake
-        to_i == other.to_i
-      when Integer
-        to_i == other
-      when String
-        to_s == other
-      end
+      to_s == other.to_s
     end
 
     def timestamp
