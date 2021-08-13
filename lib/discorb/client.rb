@@ -180,6 +180,8 @@ module Discorb
       end
     end
 
+    alias change_presence update_presence
+
     def event_lock(event, timeout = nil, &check)
       Async do |task|
         condition = Async::Condition.new
