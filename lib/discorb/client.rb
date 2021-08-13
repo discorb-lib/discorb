@@ -182,25 +182,24 @@ module Discorb
 
     def event_lock(event, timeout = nil, &check)
       Async do |task|
-        event_value = loop do
-          condition = Async::Condition.new
-          @conditions[event] ||= []
-          @conditions[event] << condition
-          if timeout.nil?
-            value = condition.wait
-          else
-            timeout_task = task.with_timeout(timeout) do
-              condition.wait
-            rescue Async::TimeoutError
-              raise Discorb::TimeoutError, "Timeout waiting for event #{event}"
-            end
-            value = timeout_task.wait
+        condition = Async::Condition.new
+        @conditions[event] ||= []
+        @conditions[event] << [condition, check]
+        if timeout.nil?
+          value = condition.wait
+        else
+          timeout_task = task.with_timeout(timeout) do
+            condition.wait
+          rescue Async::TimeoutError
+            raise Discorb::TimeoutError, "Timeout waiting for event #{event}"
           end
-          break value if check.nil? || check.call(*value)
+          value = timeout_task
         end
-        event_value.length <= 1 ? event_value.first : event_value
+        value.length <= 1 ? value.first : value
       end
     end
+
+    alias await event_lock
 
     def inspect
       "#<#{self.class} user=\"#{user}\">"
