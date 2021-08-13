@@ -45,11 +45,12 @@ module Discorb
       @wait_until_ready = wait_until_ready
       @ready = false
       @tasks = []
+      @conditions = {}
     end
 
     def on(event_name, id: nil, **discriminator, &block)
-      @events[event_name] = [] if @events[event_name].nil?
       ne = Event.new(block, id, discriminator)
+      @events[event_name] ||= []
       @events[event_name] << ne
       ne
     end
@@ -60,6 +61,15 @@ module Discorb
 
     def dispatch(event_name, *args)
       Async do |_task|
+        if (conditions = @conditions[event_name])
+          ids = Set[*conditions.map(&:object_id)]
+          conditions.delete_if do |condition|
+            next unless ids.include?(condition.object_id)
+
+            condition.signal(args)
+            true
+          end
+        end
         if @events[event_name].nil?
           @log.debug "Event #{event_name} doesn't have any proc, skipping"
           next
@@ -152,6 +162,28 @@ module Discorb
         end
       else
         @identify_presence = payload
+      end
+    end
+
+    def event_lock(event, timeout = nil, &check)
+      Async do |task|
+        event_value = loop do
+          condition = Async::Condition.new
+          @conditions[event] ||= []
+          @conditions[event] << condition
+          if timeout.nil?
+            value = condition.wait
+          else
+            timeout_task = task.with_timeout(timeout) do
+              condition.wait
+            rescue Async::TimeoutError
+              raise Discorb::TimeoutError, "Timeout waiting for event #{event}"
+            end
+            value = timeout_task.wait
+          end
+          break value if check.nil? || check.call(*value)
+        end
+        event_value.length <= 1 ? event_value.first : event_value
       end
     end
 
