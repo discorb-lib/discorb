@@ -15,7 +15,6 @@ module DispanderForRuby
 
     message.content.to_enum(:scan, @message_regex).map { Regexp.last_match }.each do |match|
       ch = @client.channels[match[:channel]]
-      ic ch
       next if ch.nil?
 
       begin
