@@ -29,7 +29,7 @@ module Discorb
 
     @mfa_levels = %i[none elevated].freeze
     @nsfw_levels = %i[default explicit safe age_restricted].freeze
-    @verification_level = %i[none low medium high very_high].freeze
+    @verification_levels = %i[none low medium high very_high].freeze
     @default_message_notifications = %i[all_messages only_mentions].freeze
     @explicit_content_filter = %i[disabled_in_text members_without_roles all_members].freeze
 
@@ -547,7 +547,7 @@ module Discorb
     end
 
     class << self
-      attr_reader :nsfw_levels, :mfa_levels, :verification_levels, :default_notification_level, :explicit_content_filter
+      attr_reader :nsfw_levels, :mfa_levels, :verification_levels, :default_message_notifications, :explicit_content_filter
 
       def banner(guild_id, style: 'banner')
         "#{Discorb::API_BASE_URL}/guilds/#{guild_id}/widget.png&style=#{style}"
