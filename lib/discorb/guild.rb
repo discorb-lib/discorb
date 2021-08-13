@@ -441,7 +441,7 @@ module Discorb
       end
     end
 
-    class VanityInvite
+    class VanityInvite < DiscordModel
       attr_reader :code, :uses
 
       def initialize(client, guild, data)
@@ -456,7 +456,7 @@ module Discorb
       end
     end
 
-    class Widget
+    class Widget < DiscordModel
       attr_reader :guild_id, :channel_id
 
       def initialize(client, guild_id, data)
@@ -495,7 +495,7 @@ module Discorb
       end
     end
 
-    class Ban
+    class Ban < DiscordModel
       attr_reader :user, :reason
 
       def initialize(client, guild, data)
@@ -593,7 +593,7 @@ module Discorb
       @channels = data[:channels].map { |c| WelcomeScreen::Channel.new(client, c, nil) }
     end
 
-    class Channel
+    class Channel < DiscordModel
       attr_reader :description
 
       def initialize(channel, description, emoji)

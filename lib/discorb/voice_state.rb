@@ -163,7 +163,7 @@ module Discorb
     end
   end
 
-  class VoiceRegion
+  class VoiceRegion < DiscordModel
     attr_reader :id, :name
 
     def initialize(data)

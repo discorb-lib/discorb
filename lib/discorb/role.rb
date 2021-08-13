@@ -81,7 +81,7 @@ module Discorb
 
     alias destroy! delete!
 
-    class Tag
+    class Tag < DiscordModel
       attr_reader :bot_id, :integration_id, :premium_subscriber
 
       def initialize(data)

@@ -38,7 +38,6 @@ module Discorb
         'app-icons'
       when Application::Team
         'team-icons'
-        
       end
     end
   end
