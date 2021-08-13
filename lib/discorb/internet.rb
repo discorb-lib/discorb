@@ -1,28 +1,27 @@
 # frozen_string_literal: true
 
-require 'async/http/internet'
+require 'net/https'
 require_relative 'common'
 require_relative 'error'
 
 module Discorb
-  class Internet < Async::HTTP::Internet
+  class Internet
     @nil_body = nil
 
     def initialize(client)
       @client = client
-      super()
     end
 
     def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(get_path(path), get_headers(headers, '', audit_log_reason), **kwargs)
-        rd = resp.read
-        data = if rd.nil?
+        resp = http.get(get_path(path), get_headers(headers, '', audit_log_reason), **kwargs)
+        rd = resp.body
+        data = if rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == 429
+        test_error(if resp.code == '429'
                      @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
                      task.sleep(data[:retry_after])
                      get(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -34,14 +33,14 @@ module Discorb
 
     def post(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(get_path(path), get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
+        resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.read
-        data = if rd.nil?
+        data = if rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == 429
+        test_error(if resp.code == '429'
                      task.sleep(data[:retry_after])
                      post(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
@@ -52,14 +51,14 @@ module Discorb
 
     def patch(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(get_path(path), get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
+        resp = http.patch(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.read
-        data = if rd.nil?
+        data = if rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == 429
+        test_error(if resp.code == '429'
                      task.sleep(data[:retry_after])
                      patch(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
@@ -70,14 +69,14 @@ module Discorb
 
     def put(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(get_path(path), get_headers(headers, body, audit_log_reason), get_body(body), **kwargs)
+        resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.read
-        data = if rd.nil?
+        data = if rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == 429
+        test_error(if resp.code == '429'
                      task.sleep(data[:retry_after])
                      put(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
@@ -88,14 +87,14 @@ module Discorb
 
     def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = super(get_path(path), get_headers(headers, '', audit_log_reason), '')
+        resp = http.delete(get_path(path), get_headers(headers, '', audit_log_reason))
         rd = resp.read
-        data = if rd.nil?
+        data = if rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
                end
-        test_error(if resp.status == 429
+        test_error(if resp.code == '429'
                      task.sleep(data[:retry_after])
                      delete(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
                    else
@@ -132,7 +131,7 @@ module Discorb
 
     def test_error(ary)
       resp, data = *ary
-      case resp.status
+      case resp.code
       when 400
         raise BadRequestError.new(resp, data)
       when 403
@@ -141,6 +140,14 @@ module Discorb
         raise NotFoundError.new(resp, data)
       else
         [resp, data]
+      end
+    end
+
+    def try_twice(&block)
+      Async do |task2|
+        timeout = task2.with_timeout(2, &block).wait
+        p timeout
+        timeout
       end
     end
 
@@ -167,11 +174,18 @@ module Discorb
     end
 
     def get_path(path)
-      if path.start_with?('https://')
-        path
-      else
-        API_BASE_URL + path
-      end
+      full_path = if path.start_with?('https://')
+                    path
+                  else
+                    API_BASE_URL + path
+                  end
+      URI(full_path).path
+    end
+
+    def http
+      https = Net::HTTP.new('discord.com', 443)
+      https.use_ssl = true
+      https
     end
 
     def recr_utf8(data)

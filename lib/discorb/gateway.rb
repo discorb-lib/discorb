@@ -262,6 +262,7 @@ module Discorb
             raise ClientError.new('Authentication failed.'), cause: nil
           when 'Discord WebSocket requesting client reconnect.'
             @log.info 'Discord WebSocket requesting client reconnect'
+            @tasks.map(&:stop)
             connect_gateway(false)
           end
         rescue EOFError, Async::Wrapper::Cancelled
@@ -285,7 +286,6 @@ module Discorb
         when 10
           @heartbeat_interval = data[:heartbeat_interval]
           @tasks << handle_heartbeat(@heartbeat_interval)
-          @tasks << keep_alive_internet
           if @first
             payload = {
               token: @token,
@@ -332,17 +332,6 @@ module Discorb
           @log.debug 'Waiting for heartbeat.'
           task.sleep(interval / 1000.0 - 1)
         end
-      end
-    end
-
-    def keep_alive_internet
-      Async do |task|
-        begin
-          @internet.get('/oauth2/applications/@me')
-        rescue Discorb::NotFoundError
-          # None
-        end
-        task.sleep(450)
       end
     end
 
