@@ -87,12 +87,22 @@ module Discorb
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
               if block.rescue.nil?
-                @log.error "An error occurred while dispatching proc with ID #{block.id.inspect}\n#{e.full_message}"
+                message = "An error occurred while dispatching proc with ID #{block.id.inspect}\n#{e.full_message}"
+                if @log.out
+                  @log.error message
+                else
+                  warn message
+                end
               else
                 begin
                   block.rescue.call(task, e, *args)
                 rescue StandardError, ScriptError => e2
-                  @log.error "An error occurred while dispatching rescue proc with ID #{block.id.inspect}\n#{e2.full_message}\nBy an error:\n#{e.full_message}"
+                  message = "An error occurred while dispatching rescue proc with ID #{block.id.inspect}\n#{e2.full_message}\nBy an error:\n#{e.full_message}"
+                  if @log.out
+                    @log.error message
+                  else
+                    warn message
+                  end
                 end
               end
             end
