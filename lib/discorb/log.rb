@@ -9,6 +9,8 @@ end
 
 module Discorb
   class Logger
+    attr_reader :out, :colorize_log
+
     @levels = %i[debug info warn error fatal].freeze
 
     def initialize(out, colorize_log, level)
