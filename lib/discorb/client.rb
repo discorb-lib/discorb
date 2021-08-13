@@ -193,7 +193,8 @@ module Discorb
           timeout_task = task.with_timeout(timeout) do
             condition.wait
           rescue Async::TimeoutError
-            raise Discorb::TimeoutError, "Timeout waiting for event #{event}"
+            @conditions[event].delete_if { |c| c.first == condition }
+            raise Discorb::TimeoutError, "Timeout waiting for event #{event}", cause: nil
           end
           value = timeout_task
         end
