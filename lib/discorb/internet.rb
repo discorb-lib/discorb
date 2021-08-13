@@ -34,7 +34,7 @@ module Discorb
     def post(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        rd = resp.read
+        rd = resp.body
         data = if rd.empty?
                  nil
                else
@@ -52,7 +52,7 @@ module Discorb
     def patch(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.patch(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        rd = resp.read
+        rd = resp.body
         data = if rd.empty?
                  nil
                else
@@ -70,7 +70,7 @@ module Discorb
     def put(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        rd = resp.read
+        rd = resp.body
         data = if rd.empty?
                  nil
                else
@@ -88,7 +88,7 @@ module Discorb
     def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.delete(get_path(path), get_headers(headers, '', audit_log_reason))
-        rd = resp.read
+        rd = resp.body
         data = if rd.empty?
                  nil
                else
@@ -143,14 +143,6 @@ module Discorb
       end
     end
 
-    def try_twice(&block)
-      Async do |task2|
-        timeout = task2.with_timeout(2, &block).wait
-        p timeout
-        timeout
-      end
-    end
-
     def get_headers(headers, body = '', audit_log_reason = nil)
       ret = if body.nil? || body.empty?
               { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
@@ -165,11 +157,11 @@ module Discorb
 
     def get_body(body)
       if body.nil?
-        []
+        ''
       elsif body.is_a?(String)
-        [body]
+        body
       else
-        [recr_utf8(body).to_json]
+        recr_utf8(body).to_json
       end
     end
 
