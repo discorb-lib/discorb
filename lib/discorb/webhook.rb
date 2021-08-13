@@ -223,7 +223,7 @@ module Discorb
         @webhook_id = Snowflake.new(data[:webhook_id])
       end
 
-      class Author
+      class Author < DiscordModel
         attr_reader :bot, :id, :username, :avatar, :discriminator
         alias name username
 
