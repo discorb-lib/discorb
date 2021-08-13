@@ -80,7 +80,6 @@ module Discorb
         @guild_id = Snowflake.new(data[:guild_id])
         @user = data[:user] && (@client.users[data[:user][:id]] || User.new(@client, data[:user]))
       end
-      
     end
 
     class << self
