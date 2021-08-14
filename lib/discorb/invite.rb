@@ -6,9 +6,42 @@ module Discorb
   # Represents invite of discord.
   #
   class Invite < DiscordModel
-    attr_reader :code, :target_type, :target_user,
-                :approximate_presence_count, :approximate_member_count,
-                :expires_at, :uses, :max_uses, :max_age, :created_at
+    # @return [String] The code of invite.
+    attr_reader :code
+
+    # @return [:voice, :stream, :guild] The type of invite.
+    attr_reader :target_type
+
+    # @return [User] The user of invite.
+    attr_reader :target_user
+
+    # @return [Integer] The approximate number of online users of invite.
+    attr_reader :approximate_presence_count
+
+    # @return [Integer] The approximate number of members of invite.
+    attr_reader :approximate_member_count
+
+    # @return [Time] The time when invite expires.
+    # @return [nil] The invite never expires.
+    # @macro [new] nometa
+    #   @return [nil] The invite doesn't have metadata.
+    attr_reader :expires_at
+
+    # @return [Integer] The number of uses of invite.
+    # @macro nometa
+    attr_reader :uses
+
+    # @return [Integer] The maximum number of uses of invite.
+    # @macro nometa
+    attr_reader :max_uses
+
+    # @return [Integer] Duration of invite in seconds.
+    # @macro nometa
+    attr_reader :max_age
+
+    # @return [Time] The time when invite was created.
+    # @macro nometa
+    attr_reader :created_at
 
     @target_types = {
       nil => :voice,
@@ -26,9 +59,8 @@ module Discorb
     #
     # Channel of the invite.
     #
-    # @!macro client_cache
-    # @!macro async
-    # @return [Async::Task<Discorb::Channel>]
+    # @return [Discorb::Channel] Channel of invite.
+    # @macro client_cache
     #
     def channel
       @client.channels[@channel_data[:id]]
@@ -37,15 +69,15 @@ module Discorb
     #
     # Guild of the invite.
     #
-    # @!macro client_cache
-    # @!macro async
-    # @return [Async::Task<Discorb::Guild>]
+    # @return [Discorb::Guild] Guild of invite.
+    # @macro client_cache
     #
     def guild
       @client.guilds[@guild_data[:id]]
     end
 
     # Full url of invite.
+    # @return [String]
     def url
       "https://discord.gg/#{@code}"
     end
@@ -62,8 +94,9 @@ module Discorb
       @temporary
     end
 
-    # |task|
     # Delete the invite.
+    # @!macro async
+    # @return [Async::Task<void>]
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)
