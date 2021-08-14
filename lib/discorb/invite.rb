@@ -55,7 +55,7 @@ module Discorb
       @inviter_data = data[:inviter]
       @target_type = self.class.target_types[data[:target_type]]
       @target_user = @client.users[data[:target_user][:id]] || User.new(@client, data[:target_user]) if data[:target_user]
-      @target_application = nil # TODO: Application
+      # @target_application = nil
 
       # @stage_instance = data[:stage_instance] && Invite::StageInstance.new(self, data[:stage_instance])
       return unless data.key?(:uses)
