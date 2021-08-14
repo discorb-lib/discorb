@@ -49,7 +49,7 @@ module Discorb
     end
 
     class Pack < DiscordModel
-      attr_reader :id, :name, :sku_id, :cover_sticker_id, :description, :banner_asset_id, :stickers
+      attr_reader :id, :name, :sku_id, :cover_sticker_id, :description, :banner_asset_id, :stickers, :banner
 
       def initialize(client, data)
         @client = client
@@ -59,6 +59,7 @@ module Discorb
         @cover_sticker_id = Snowflake.new(data[:cover_sticker_id])
         @description = data[:description]
         @banner_asset_id = Snowflake.new(data[:banner_asset_id])
+        @banner = Asset.new(self, data[:banner_asset_id], path: 'app-assets/710982414301790216/store')
         @stickers = data[:stickers].map { |s| Sticker.new(@client, s) }
       end
     end
