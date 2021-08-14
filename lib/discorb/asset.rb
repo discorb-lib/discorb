@@ -30,7 +30,8 @@ module Discorb
     # @return [String] URL of the asset.
     #
     def url(image_format: nil, size: 1024)
-      "https://cdn.discordapp.com/#{endpoint}/#{@target.id}/#{@hash}.#{image_format or (animated? ? 'gif' : 'webp')}?size=#{size}"
+      path = @path || "#{endpoint}/#{@target.id}"
+      "https://cdn.discordapp.com/#{path}/#{@hash}.#{image_format or (animated? ? 'gif' : 'webp')}?size=#{size}"
     end
 
     def inspect
@@ -40,16 +41,16 @@ module Discorb
     private
 
     def endpoint
-      @path || case @target
-               when User, Member, Webhook
-                 'avatars'
-               when Guild, IncomingWebhook::Guild
-                 'icons'
-               when Application
-                 'app-icons'
-               when Application::Team
-                 'team-icons'
-               end
+      case @target
+      when User, Member, Webhook
+        'avatars'
+      when Guild, IncomingWebhook::Guild
+        'icons'
+      when Application
+        'app-icons'
+      when Application::Team
+        'team-icons'
+      end
     end
   end
 end
