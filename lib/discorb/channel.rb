@@ -616,12 +616,6 @@ module Discorb
       def inspect
         "#<#{self.class} id=#{@id.inspect}>"
       end
-
-      class Flag < Discorb::Flag
-        @bits = {
-          # TODO: Fill this
-        }
-      end
     end
 
     private
