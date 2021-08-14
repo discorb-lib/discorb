@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'lib/discorb/version'
+require_relative 'lib/discorb/common'
 
 Gem::Specification.new do |spec|
   spec.name = 'discorb'
