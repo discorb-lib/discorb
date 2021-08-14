@@ -1,14 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'common'
-require_relative 'member'
-require_relative 'channel'
-require_relative 'components'
-require_relative 'flag'
-require_relative 'error'
-require_relative 'file'
-require_relative 'embed'
-require_relative 'reaction'
 
 module Discorb
   class AllowedMentions

@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'common'
-require_relative 'user'
-require_relative 'member'
-require_relative 'guild'
 
 module Discorb
   class Asset < DiscordModel

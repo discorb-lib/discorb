@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
-require_relative 'common'
-require_relative 'flag'
-require_relative 'error'
-require_relative 'asset'
 
 module Discorb
   class User < DiscordModel
     attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar
 
+    include Discorb::Messageable
+
     def initialize(client, data)
       @client = client
       @data = {}
+      @dm_channel_id = nil
       _set_data(data)
     end
 
@@ -48,6 +47,16 @@ module Discorb
         else
           app.team.members.any? { |m| m.user == self }
         end
+      end
+    end
+
+    def base_url
+      Async do
+        next @dm_channel_id if @dm_channel_id
+
+        dm_channel = @client.internet.post("/users/#{@id}/channels", { recipient_id: @client.user.id }).wait
+        @dm_channel_id = dm_channel[:id]
+        "/channels/#{@dm_channel_id}"
       end
     end
 

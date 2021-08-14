@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'version'
-
 module Discorb
   API_BASE_URL = 'https://discord.com/api/v9'
+  VERSION = '0.0.1'
   USER_AGENT = "DiscordBot (https://github.com/discorb-lib/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
 
   class DiscordModel

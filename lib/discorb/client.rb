@@ -3,20 +3,6 @@
 require 'pp'
 require 'json'
 require 'logger'
-require_relative 'intents'
-require_relative 'internet'
-require_relative 'common'
-require_relative 'channel'
-require_relative 'message'
-require_relative 'user'
-require_relative 'dictionary'
-require_relative 'guild'
-require_relative 'error'
-require_relative 'log'
-require_relative 'event'
-require_relative 'gateway'
-require_relative 'extension'
-require_relative 'role'
 
 require 'async'
 require 'async/websocket/client'
@@ -221,7 +207,7 @@ module Discorb
       super(mod)
     end
 
-    include GatewayHandler
+    include Discorb::GatewayHandler
 
     alias add_event on
     alias event on

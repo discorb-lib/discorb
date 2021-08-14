@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'components'
-require_relative 'utils'
 module Discorb
   module Messageable
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,

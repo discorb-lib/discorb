@@ -2,7 +2,6 @@
 
 require 'async/http/internet'
 
-require_relative 'common'
 
 module Discorb
   class Webhook
