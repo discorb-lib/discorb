@@ -1,10 +1,33 @@
 # frozen_string_literal: true
 
-
 module Discorb
   #
   # Represents invite of discord.
   #
+  # @!attribute [r] channel
+  #   Channel of the invite.
+  #
+  #   @return [Discorb::Channel] Channel of invite.
+  #   @macro client_cache
+  #
+  #
+  # @!attribute [r] guild
+  #   Guild of the invite.
+  #
+  #   @return [Discorb::Guild] Guild of invite.
+  #   @macro client_cache
+  #
+  # @!attribute [r] remain_uses
+  #   Number of remaining uses of invite.
+  #   @return [Integer] Number of remaining uses of invite.
+  #
+  # @!attribute [r] url
+  #   Full url of invite.
+  #   @return [String] Full url of invite.
+  #
+  # @!attribute [r] temporary?
+  #   Whether the invite is temporary.
+  #   @return [Boolean]
   class Invite < DiscordModel
     # @return [String] The code of invite.
     attr_reader :code
@@ -56,47 +79,29 @@ module Discorb
       _set_data(data, gateway)
     end
 
-    #
-    # Channel of the invite.
-    #
-    # @return [Discorb::Channel] Channel of invite.
-    # @macro client_cache
-    #
     def channel
       @client.channels[@channel_data[:id]]
     end
 
-    #
-    # Guild of the invite.
-    #
-    # @return [Discorb::Guild] Guild of invite.
-    # @macro client_cache
-    #
     def guild
       @client.guilds[@guild_data[:id]]
     end
 
-    # Full url of invite.
-    # @return [String]
     def url
       "https://discord.gg/#{@code}"
     end
 
-    # Returns the number of uses of invite.
-    # @return [Integer]
     def remain_uses
       @max_uses && @max_uses - @uses
     end
 
-    # Whether the invite is temporary.
-    # @return [Boolean]
     def temporary?
       @temporary
     end
 
     # Delete the invite.
     # @!macro async
-    # @return [Async::Task<void>]
+    # @return [Async::Task<nil>]
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)
