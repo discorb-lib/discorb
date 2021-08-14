@@ -320,11 +320,40 @@ module Discorb
       @flag = Flag.new(0b111 - data[:flags])
       @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
       # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
-      @interaction = nil # TODO: Discorb::InterctionFeedback
+      @interaction = Message::Interaction.new(@client, data)
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
       @data.update(data)
       @deleted = false
+    end
+
+    class Interaction < DiscordModel
+      attr_reader :id, :name, :type, :user
+
+      def initialize(client, data)
+        @id = Snowflake.new(data[:id])
+        @name = data[:name]
+        @type = Discorb::Interaction.descendants.find { |c| c.interaction_type == data[:type] }
+        @user = client.users[data[:user][:id]] || User.new(client, data[:user])
+      end
+    end
+
+    class Activity < DiscordModel
+      @type = {
+        1 => :join,
+        2 => :spectate,
+        3 => :listen,
+        5 => :join_request
+      }
+
+      def initialize(data)
+        @name = data[:name]
+        @type = self.class.type(data[:type])
+      end
+
+      class << self
+        attr_reader :type
+      end
     end
 
     class << self
