@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 require 'async'
-require_relative 'modules'
-require_relative 'flag'
-require_relative 'common'
-require_relative 'error'
 
 module Discorb
   class Channel < DiscordModel

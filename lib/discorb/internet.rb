@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'net/https'
-require_relative 'common'
-require_relative 'error'
 
 module Discorb
   class Internet

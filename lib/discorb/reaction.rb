@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'common'
-require_relative 'emoji'
 module Discorb
   class Reaction < DiscordModel
     attr_reader :count, :emoji, :message

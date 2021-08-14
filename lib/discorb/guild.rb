@@ -1,13 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'flag'
-require_relative 'dictionary'
-require_relative 'color'
-require_relative 'member'
-require_relative 'channel'
-require_relative 'permission'
-require_relative 'role'
-require_relative 'voice_state'
 
 module Discorb
   class SystemChannelFlag < Flag

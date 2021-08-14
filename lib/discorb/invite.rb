@@ -1,37 +1,69 @@
 # frozen_string_literal: true
 
-require_relative 'common'
-require_relative 'user'
 
 module Discorb
+  #
+  # Represents invite of discord.
+  #
   class Invite < DiscordModel
-    attr_reader :code, :target_type, :target_user, :target_application,
+    attr_reader :code, :target_type, :target_user,
                 :approximate_presence_count, :approximate_member_count,
-                :expires_at, :stage_instance, :uses, :max_uses, :max_age, :temporary, :created_at
+                :expires_at, :uses, :max_uses, :max_age, :created_at
 
     @target_types = {
       nil => :voice,
       1 => :stream,
       2 => :guild
     }.freeze
+
+    # @!visibility private
     def initialize(client, data, gateway)
       @client = client
       @data = data[:data]
       _set_data(data, gateway)
     end
 
+    #
+    # Channel of the invite.
+    #
+    # @!macro client_cache
+    # @!macro async
+    # @return [Async::Task<Discorb::Channel>]
+    #
     def channel
       @client.channels[@channel_data[:id]]
     end
 
+    #
+    # Guild of the invite.
+    #
+    # @!macro client_cache
+    # @!macro async
+    # @return [Async::Task<Discorb::Guild>]
+    #
     def guild
       @client.guilds[@guild_data[:id]]
     end
 
+    # Full url of invite.
     def url
       "https://discord.gg/#{@code}"
     end
 
+    # Returns the number of uses of invite.
+    # @return [Integer]
+    def remain_uses
+      @max_uses && @max_uses - @uses
+    end
+
+    # Whether the invite is temporary.
+    # @return [Boolean]
+    def temporary?
+      @temporary
+    end
+
+    # |task|
+    # Delete the invite.
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)
@@ -67,35 +99,8 @@ module Discorb
       @created_at = Time.iso8601(data[:created_at])
     end
 
-    # class StageInstance
-    #   def initialize(invite, data)
-    #     @invite = invite
-    #     @topic = data[:topic]
-    #     @participant_count = data[:participant_count]
-    #     @speaker_count = data[:speaker_count]
-    #     @members = data[:members].map do |member_data|
-    #       next member if (member = invite.guild&.members&.[](member_data[:id]))
-
-    #       Invite::StageInstance::Member.new(member)
-    #     end
-    #   end
-
-    #   class Member
-    #     attr_reader :roles, :nick, :avatar, :premium_since, :joined_at
-
-    #     def initialize(data)
-
-    #       @roles = data[:roles].map { |role| Snowflake.new(role) }
-    #       @nick = data[:nick]
-    #       @avatar = Asset.new(self, data[:avatar])
-    #       @premium_since = data[:premium_since] && Time.iso8601(data[:premium_since])
-    #       @joined_at = Time.iso8601(data[:joined_at])
-    #       @pending = data[:pending]
-    #     end
-    #   end
-    # end
-
     class << self
+      # @!visibility private
       attr_reader :target_types
     end
   end

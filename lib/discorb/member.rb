@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'user'
 
 module Discorb
   class Member < User

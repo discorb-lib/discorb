@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 require 'uri'
-require_relative 'common'
-require_relative 'user'
-require_relative 'guild'
-require_relative 'emoji_table'
 
 module Discorb
   class CustomEmoji < DiscordModel

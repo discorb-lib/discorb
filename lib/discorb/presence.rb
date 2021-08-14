@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'common'
 
 module Discorb
   class Presence < DiscordModel

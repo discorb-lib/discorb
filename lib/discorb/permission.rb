@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'flag'
 
 module Discorb
   class Permission < Flag

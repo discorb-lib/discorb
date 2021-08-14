@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'emoji'
 
 module Discorb
   class Component
