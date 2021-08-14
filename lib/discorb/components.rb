@@ -1,9 +1,19 @@
 # frozen_string_literal: true
 
-
 module Discorb
+  #
+  # @abstract
+  # Represents a Discord component.
+  #
   class Component
     class << self
+      #
+      # Create a new component from hash data.
+      #
+      # @param [Hash] data Hash data.
+      #
+      # @return [Component] A new component.
+      #
       def from_hash(data)
         case data[:type]
         when 2
