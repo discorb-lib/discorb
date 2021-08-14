@@ -314,13 +314,13 @@ module Discorb
       @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
       @pinned = data[:pinned]
       @type = self.class.message_type[data[:type]]
-      @activity = nil # TODO: Discorb::MessageActivity
+      @activity = data[:activity] && Activity.new(data[:activity])
       @application_id = data[:application_id]
       @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
       @flag = Flag.new(0b111 - data[:flags])
       @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
       # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
-      @interaction = Message::Interaction.new(@client, data)
+      @interaction = data[:interaction] && Message::Interaction.new(@client, data[:interaction])
       @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
       @data.update(data)
