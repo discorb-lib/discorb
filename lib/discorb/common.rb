@@ -5,6 +5,10 @@ module Discorb
   VERSION = '0.0.1'
   USER_AGENT = "DiscordBot (https://github.com/discorb-lib/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
 
+  #
+  # @abstract
+  # Represents Discord model.
+  #
   class DiscordModel
     def ==(other)
       if respond_to?(:id) && other.respond_to?(:id)
@@ -13,26 +17,64 @@ module Discorb
         super
       end
     end
-
-    def discorb?
-      true
-    end
   end
 
+  #
+  # Represents Snowflake of Discord.
+  #
+  # @see https://discord.com/developers/docs/reference#snowflakes Official Discord API docs
+  # @!attribute [r] timestamp
+  #   Timestamp of snowflake.
+  #
+  #   @return [Time] Timestamp of snowflake.
+  #
+  # @!attribute [r] worker_id
+  #   Worker ID of snowflake.
+  #
+  #   @return [Integer] Worker ID of snowflake.
+  #
+  # @!attribute [r] process_id
+  #   Process ID of snowflake.
+  #
+  #   @return [Integer] Process ID of snowflake.
+  # @!attribute [r] increment
+  #   Increment of snowflake.
+  #
+  #   @return [Integer] Increment of snowflake.
   class Snowflake < DiscordModel
+    # @!visibility private
     def initialize(value)
       @value = value.to_i
     end
 
+    #
+    # Stringify snowflake.
+    #
+    # @return [String] Stringified snowflake.
+    #
     def to_s
       @value.to_s
     end
 
+    #
+    # Integerize snowflake.
+    #
+    # @return [Integer] Integerized snowflake.
+    #
     def to_i
       @value.to_i
     end
 
+    #
+    # Compares snowflake with other object.
+    #
+    # @param [#to_s] other Object to compare with.
+    #
+    # @return [Boolean] True if snowflake is equal to other object.
+    #
     def ==(other)
+      return false unless other.respond_to?(:to_s)
+
       to_s == other.to_s
     end
 
