@@ -25,3 +25,8 @@ group :debug, optional: true do
   gem 'pry', '~> 0.14.1'
   gem 'ricecream', '~> 0.2.0'
 end
+
+group :docs, optional: true do
+  gem 'redcarpet'
+  gem 'yard', '~> 0.9.26'
+end

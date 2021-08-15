@@ -1,0 +1,5 @@
+--protected
+--no-private
+--markup markdown
+-
+docs/*.md
