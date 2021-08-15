@@ -108,12 +108,12 @@ module Discorb
       class Member < DiscordModel
         # @return [Discorb::User] The user.
         attr_reader :user
-        # @return [Snowflake] The ID of member's team. 
+        # @return [Snowflake] The ID of member's team.
         attr_reader :team_id
         # @return [:invited, :accepted] The member's membership state.
         attr_reader :membership_state
-        # @return [Array<Permissions>] The permissions of the member. 
-        # @note This always return +:*+.
+        # @return [Array<Permissions>] The permissions of the member.
+        # @note This always return `:*`.
         attr_reader :permissions
 
         alias state membership_state
