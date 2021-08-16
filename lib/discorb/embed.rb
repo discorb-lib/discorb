@@ -1,11 +1,48 @@
 # frozen_string_literal: true
 
-
 module Discorb
+  #
+  # Represents an embed of discord.
+  #
+  # @!attribute [rw] image
+  #   @return [Discorb::Embed::Image] The image of embed.
+  # @!attribute [rw] thumbnail
+  #   @return [Discorb::Embed::Thumbnail] The thumbnail of embed.
   class Embed
-    attr_accessor :title, :description, :url, :timestamp, :color, :author, :fields, :footer
-    attr_reader :image, :thumbnail, :type
+    # @return [String, nil] The title of embed.
+    attr_accessor :title
+    # @return [String, nil] The description of embed.
+    attr_accessor :description
+    # @return [String, nil] The url of embed.
+    attr_accessor :url
+    # @return [Time, nil] The timestamp of embed.
+    attr_accessor :timestamp
+    # @return [Discorb::Color, nil] The color of embed.
+    attr_accessor :color
+    # @return [Discorb::Embed::Author, nil] The author of embed.
+    attr_accessor :author
+    # @return [Array<Discorb::Embed::Field>] The fields of embed.
+    attr_accessor :fields
+    # @return [Discorb::Embed::Footer, nil] The footer of embed.
+    attr_accessor :footer
+    # @return [Symbol] The type of embed.
+    attr_reader :type
+    attr_reader :image, :thumbnail
 
+    #
+    # Initialize a new Embed object.
+    #
+    # @param [String] title The title of embed.
+    # @param [String] description The description of embed.
+    # @param [Discorb::Color] color The color of embed.
+    # @param [String] url The url of embed.
+    # @param [Time] timestamp The timestamp of embed.
+    # @param [Discorb::Embed::Author] author The author field of embed.
+    # @param [Array<Discorb::Embed::Field>] fields The fields of embed.
+    # @param [Discorb::Embed::Footer] footer The footer of embed.
+    # @param [Discorb::Embed::Image] image The image of embed.
+    # @param [Discorb::Embed::Thumbnail] thumbnail The thumbnail of embed.
+    #
     def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil,
                    fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)
       if data.nil?
@@ -41,13 +78,19 @@ module Discorb
     end
 
     def image=(value)
-      @image = Image.new(value) if value.is_a? String
+      @image = value.is_a? String ? Image.new(value) : value
     end
 
     def thumbnail=(value)
-      @thumbnail = Thumbnail.new(value) if value.is_a? String
+      @thumbnail = value.is_a? String ? Thumbnail.new(value) : value
     end
 
+    #
+    # Convert embed to hash.
+    #
+    # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-structure Offical Discord API Docs
+    # @return [Hash] Converted embed.
+    #
     def to_hash
       {
         title: @title,
@@ -63,15 +106,36 @@ module Discorb
       }
     end
 
+    #
+    # Represents an author of embed.
+    #
     class Author
-      attr_accessor :name, :url, :icon
+      # @return [String] The name of author.
+      attr_accessor :name
+      # @return [String, nil] The url of author.
+      attr_accessor :url
+      # @return [String, nil] The icon url of author.
+      attr_accessor :icon
 
+      #
+      # Initialize a new Author object.
+      #
+      # @param [String] name The name of author.
+      # @param [String] url The url of author.
+      # @param [String] icon The icon url of author.
+      #
       def initialize(name, url: nil, icon: nil)
         @name = name
         @url = url
         @icon = icon
       end
 
+      #
+      # Convert author to hash.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure Offical Discord API Docs
+      # @return [Hash] Converted author.
+      #
       def to_hash
         {
           name: @name,
@@ -79,41 +143,69 @@ module Discorb
           icon_url: @icon
         }
       end
-
-      def self.[](...)
-        initialize(...)
-      end
     end
 
+    #
+    # Represemts a footer of embed.
+    #
     class Footer
       attr_accessor :text, :icon
 
+      #
+      # Initialize a new Footer object.
+      #
+      # @param [String] text The text of footer.
+      # @param [String] icon The icon url of footer.
+      #
       def initialize(text, icon: nil)
         @text = text
         @icon = icon
       end
 
+      #
+      # Convert footer to hash.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure Offical Discord API Docs
+      # @return [Hash] Converted footer.
+      #
       def to_hash
         {
           text: @text,
           icon_url: @icon
         }
       end
-
-      def self.[](...)
-        initialize(...)
-      end
     end
 
+    #
+    # Represents a field of embed.
+    #
     class Field
-      attr_accessor :name, :value, :inline
+      # @return [String] The name of field.
+      attr_accessor :name
+      # @return [String] The value of field.
+      attr_accessor :value
+      # @return [Boolean] Whether the field is inline.
+      attr_accessor :inline
 
+      #
+      # Initialize a new Field object.
+      #
+      # @param [String] name The name of field.
+      # @param [String] value The value of field.
+      # @param [Boolean] inline Whether the field is inline.
+      #
       def initialize(name, value, inline: true)
         @name = name
         @value = value
         @inline = inline
       end
 
+      #
+      # Convert field to hash.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure Offical Discord API Docs
+      # @return [Hash] Converted field.
+      #
       def to_hash
         {
           name: @name,
@@ -121,17 +213,31 @@ module Discorb
           inline: @inline
         }
       end
-
-      def self.[](...)
-        new(...)
-      end
     end
 
+    #
+    # Represents an image of embed.
+    #
     class Image
+      # @return [String] The url of image.
       attr_accessor :url
-      attr_reader :proxy_url, :height, :width
+      # @return [String] The proxy url of image.
+      # @return [nil] The Image object wasn't created from gateway.
+      attr_reader :proxy_url
+      # @return [Integer] The height of image.
+      # @return [nil] The Image object wasn't created from gateway.
+      attr_reader :height
+      # @return [Integer] The width of image.
+      # @return [nil] The Image object wasn't created from gateway.
+      attr_reader :width
 
-      def initialize(data)
+      #
+      # Initialize a new Image object.
+      #
+      # @param [String] url URL of image.
+      #
+      def initialize(url)
+        data = url
         if data.is_a? String
           @url = data
         else
@@ -142,16 +248,40 @@ module Discorb
         end
       end
 
+      #
+      # Convert image to hash for sending.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure Offical Discord API Docs
+      # @return [Hash] Converted image.
+      #
       def to_hash
         { url: @url }
       end
     end
 
+    #
+    # Represents a thumbnail of embed.
+    #
     class Thumbnail
+      # @return [String] The url of thumbnail.
       attr_accessor :url
-      attr_reader :proxy_url, :height, :width
+      # @return [String] The proxy url of thumbnail.
+      # @return [nil] The Thumbnail object wasn't created from gateway.
+      attr_reader :proxy_url
+      # @return [Integer] The height of thumbnail.
+      # @return [nil] The Thumbnail object wasn't created from gateway.
+      attr_reader :height
+      # @return [Integer] The width of thumbnail.
+      # @return [nil] The Thumbnail object wasn't created from gateway.
+      attr_reader :width
 
-      def initialize(data)
+      #
+      # Initialize a new Thumbnail object.
+      #
+      # @param [String] url URL of thumbnail.
+      #
+      def initialize(url)
+        data = url
         if data.is_a? String
           @url = data
         else
@@ -162,14 +292,31 @@ module Discorb
         end
       end
 
+      #
+      # Convert thumbnail to hash for sending.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure Offical Discord API Docs
+      # @return [Hash] Converted thumbnail.
+      #
       def to_hash
         { url: @url }
       end
     end
 
+    #
+    # Represents a video of embed.
+    #
     class Video
-      attr_reader :url, :proxy_url, :height, :width
+      # @return [String] The url of video.
+      attr_reader :url
+      # @return [String] The proxy url of video.
+      attr_reader :proxy_url
+      # @return [Integer] The height of video.
+      attr_reader :height
+      # @return [Integer] The width of video.
+      attr_reader :width
 
+      # @!visibility private
       def initialize(data)
         @url = data[:url]
         @proxy_url = data[:proxy_url]
@@ -178,9 +325,16 @@ module Discorb
       end
     end
 
+    #
+    # Represents a provider of embed.
+    #
     class Provider
-      attr_reader :name, :url
+      # @return [String] The name of provider.
+      attr_reader :name
+      # @return [String] The url of provider.
+      attr_reader :url
 
+      # @!visibility private
       def initialize(name, url)
         @name = name
         @url = url
