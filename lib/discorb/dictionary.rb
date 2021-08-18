@@ -55,10 +55,9 @@ module Discorb
     # Get an item from the dictionary.
     #
     # @param [#to_s] id The ID of the item.
-    #
     # @return [Object] The item.
-    # @return [nil] if the item is not found.
-    # 
+    # @return [nil] if the item was not found.
+    #
     # @overload get(index)
     #   @param [Integer] index The index of the item.
     #
