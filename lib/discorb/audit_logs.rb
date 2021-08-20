@@ -1,9 +1,20 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a Discord audit log.
+  #
   class AuditLog < DiscordModel
-    attr_reader :webhooks, :users, :threads, :entries
+    # @return [Array<Discorb::Webhook>] The webhooks in this audit log.
+    attr_reader :webhooks
+    # @return [Array<Discorb::User>] The users in this audit log.
+    attr_reader :users
+    # @return [Array<Discorb::ThreadChannel>] The threads in this audit log.
+    attr_reader :threads
+    # @return [Array<Discorb::AuditLog::Entry>] The entries in this audit log.
+    attr_reader :entries
 
+    # @!visibility private
     def initialize(client, data, guild)
       @client = client
       @guild = guild
@@ -13,13 +24,87 @@ module Discorb
       @entries = data[:audit_log_entries].map { |entry| AuditLog::Entry.new(@client, entry, guild.id) }
     end
 
+    #
+    # Gets an entry from entries.
+    #
+    # @param [Integer] index The index of the entry.
+    #
+    # @return [Discorb::AuditLog::Entry] The entry.
+    # @return [nil] If the index is out of range.
+    #
     def [](index)
       @entries[index]
     end
 
+    #
+    # Represents an entry in an audit log.
+    #
+    # @!attribute [r] user
+    #   @return [Discorb::User] The user who performed the action.
     class Entry < DiscordModel
-      attr_reader :id, :user_id, :target_id, :type, :changes, :target
+      # @return [Discorb::Snowflake] The ID of the entry.
+      attr_reader :id
+      # @return [Discorb::Snowflake] The ID of the user who performed the action.
+      attr_reader :user_id
+      # @return [Discorb::Snowflake] The ID of the target of the action.
+      attr_reader :target_id
+      # @return [Symbol] The type of the entry.
+      # These symbols will be used:
+      #
+      # * `:guild_update`
+      # * `:channel_create`
+      # * `:channel_update`
+      # * `:channel_delete`
+      # * `:channel_overwrite_create`
+      # * `:channel_overwrite_update`
+      # * `:channel_overwrite_delete`
+      # * `:member_kick`
+      # * `:member_prune`
+      # * `:member_ban_add`
+      # * `:member_ban_remove`
+      # * `:member_update`
+      # * `:member_role_update`
+      # * `:member_move`
+      # * `:member_disconnect`
+      # * `:bot_add`
+      # * `:role_create`
+      # * `:role_update`
+      # * `:role_delete`
+      # * `:invite_create`
+      # * `:invite_update`
+      # * `:invite_delete`
+      # * `:webhook_create`
+      # * `:webhook_update`
+      # * `:webhook_delete`
+      # * `:emoji_create`
+      # * `:emoji_update`
+      # * `:emoji_delete`
+      # * `:message_delete`
+      # * `:message_bulk_delete`
+      # * `:message_pin`
+      # * `:message_unpin`
+      # * `:integration_create`
+      # * `:integration_update`
+      # * `:integration_delete`
+      # * `:stage_instance_create`
+      # * `:stage_instance_update`
+      # * `:stage_instance_delete`
+      # * `:sticker_create`
+      # * `:sticker_update`
+      # * `:sticker_delete`
+      # * `:thread_create`
+      # * `:thread_update`
+      # * `:thread_delete`
+      attr_reader :type
+      # @return [Discorb::AuditLog::Entry::Changes] The changes in this entry.
+      attr_reader :changes
+      # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message] The target of the entry.
+      attr_reader :target
+      # @return [Hash{Symbol => Object}] The optional data for this entry.
+      # @note You can use dot notation to access the data.
+      attr_reader :options
 
+      # @!visibility private
       @events = {
         1 => :guild_update,
         10 => :channel_create,
@@ -66,6 +151,8 @@ module Discorb
         111 => :thread_update,
         112 => :thread_delete
       }.freeze
+
+      # @!visibility private
       @converts = {
         channel: ->(client, id, _guild_id) { client.channels[id] },
         thread: ->(client, id, _guild_id) { client.channels[id] },
@@ -74,6 +161,8 @@ module Discorb
         guild: ->(client, id, _guild_id) { client.guilds[id] },
         message: ->(client, id, _guild_id) { client.messages[id] }
       }
+
+      # @!visibility private
       def initialize(client, data, guild_id)
         @client = client
         @guild_id = Snowflake.new(guild_id)
@@ -85,12 +174,29 @@ module Discorb
         @target ||= Snowflake.new(data[:target_id])
         @changes = data[:changes] && Changes.new(data[:changes])
         @reason = data[:reason]
+        data[:options]&.each do |option, value|
+          define_singleton_method(option) { value }
+          if option.end_with?('_id')
+            define_singleton_method(option.to_s.sub('_id', '')) do
+              self.class.converts[option.to_s.split('_')[0].to_sym]&.call(client, value, @guild_id)
+            end
+          end
+        end
+        @options = data[:options] || {}
       end
 
       def user
         @client.users[@user_id]
       end
 
+      #
+      # Get a change with the given key.
+      #
+      # @param [Symbol] key The key to get.
+      #
+      # @return [Discorb::AuditLog::Entry::Change] The change with the given key.
+      # @return [nil] The change with the given key does not exist.
+      #
       def [](key)
         @changes[key]
       end
@@ -103,9 +209,15 @@ module Discorb
         attr_reader :events, :converts
       end
 
+      #
+      # Represents the changes in an audit log entry.
+      #
       class Changes < DiscordModel
         attr_reader :data
 
+        #
+        # @!visibility private
+        #
         def initialize(data)
           @data = data.map { |d| [d[:key].to_sym, d] }.to_h
           @data.each do |k, v|
@@ -117,18 +229,41 @@ module Discorb
           "#<#{self.class} #{@data.length} changes>"
         end
 
+        #
+        # Get keys of changes.
+        #
+        # @return [Array<Symbol>] The keys of the changes.
+        #
         def keys
           @data.keys
         end
 
+        #
+        # Get a change with the given key.
+        #
+        # @param [Symbol] key The key to get.
+        #
+        # @return [Discorb::AuditLog::Entry::Change] The change with the given key.
+        # @return [nil] The change with the given key does not exist.
+        #
         def [](key)
           @data[key.to_sym]
         end
       end
 
+      #
+      # Represents a change in an audit log entry.
+      # @note This instance will try to call a method of {#new_value} if the method wasn't defined.
+      #
       class Change < DiscordModel
-        attr_reader :key, :old_value, :new_value
+        # @return [Symbol] The key of the change.
+        attr_reader :key
+        # @return [Object] The old value of the change.
+        attr_reader :old_value
+        # @return [Object] The new value of the change.
+        attr_reader :new_value
 
+        # @!visibility private
         def initialize(data)
           @key = data[:key].to_sym
           method = case @key.to_s
@@ -148,7 +283,7 @@ module Discorb
         end
 
         def inspect
-          "#<#{self.class} #{@key.inspect}>"
+          "#<#{self.class} #{@key.inspect} #{@old_value.inspect} -> #{@new_value.inspect}>"
         end
 
         def respond_to_missing?(method, include_private = false)
@@ -157,15 +292,30 @@ module Discorb
       end
     end
 
+    #
+    # Represents an integration in an audit log entry.
+    #
     class Integration < DiscordModel
-      attr_reader :id, :type, :name, :account
+      # @return [Discorb::Snowflake] The ID of the integration.
+      attr_reader :id
+      # @return [Symbol] The type of the integration.
+      attr_reader :type
+      # @return [String] The name of the integration.
+      attr_reader :name
+      # @return [Discorb::Integration::Account] The account of the integration.
+      attr_reader :account
 
+      # @!visibility private
       def initialize(data)
         @id = Snowflake.new(data[:id])
         @type = data[:type].to_sym
         @name = data[:name]
         @data = data
         @account = Discorb::Integration::Account.new(@data[:account]) if @data[:account]
+      end
+
+      def inspect
+        "#<#{self.class} #{@id}>"
       end
     end
   end
