@@ -10,12 +10,20 @@ module Discorb
   # Represents Discord model.
   #
   class DiscordModel
+    def eql?(other)
+      self == other
+    end
+
     def ==(other)
       if respond_to?(:id) && other.respond_to?(:id)
         id == other.id
       else
         super
       end
+    end
+
+    def hash
+      @id.hash
     end
   end
 
@@ -76,6 +84,18 @@ module Discorb
       return false unless other.respond_to?(:to_s)
 
       to_s == other.to_s
+    end
+
+    #
+    # Alias of {#==}.
+    #
+    def eql?(other)
+      self == other
+    end
+
+    # Return hash of snowflake.
+    def hash
+      to_s.hash
     end
 
     def timestamp
