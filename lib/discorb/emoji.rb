@@ -3,9 +3,31 @@
 require 'uri'
 
 module Discorb
+  # Represents a custom emoji in discord.
+  # @!attribute [r] roles?
+  #   @return [Boolean] whether or not this emoji is restricted to certain roles.
   class CustomEmoji < DiscordModel
-    attr_reader :id, :name, :roles, :user, :require_colons, :guild
+    # @return [Discorb::Snowflake] The ID of the emoji.
+    attr_reader :id
+    # @return [String] The name of the emoji.
+    attr_reader :name
+    # @return [Array<Discorb::Role>] The roles that can use this emoji.
+    attr_reader :roles
+    # @return [Discorb::User] The user that created this emoji.
+    attr_reader :user
+    # @return [Boolean] Whether the emoji requires colons.
+    attr_reader :guild
+    # @return [Boolean] whether the emoji is managed by integration (ex: Twitch).
+    attr_reader :managed
+    alias managed? managed
+    # @return [Boolean] whether the emoji requires colons.
+    attr_reader :require_colons
+    alias require_colons? require_colons
+    # @return [Boolean] whether the emoji is available.
+    attr_reader :available
+    alias available? available
 
+    # @!visibility private
     def initialize(client, guild, data)
       @client = client
       @guild = guild
@@ -13,44 +35,62 @@ module Discorb
       _set_data(data)
     end
 
+    #
+    # Format the emoji for sending.
+    #
+    # @return [String] the formatted emoji.
+    #
     def to_s
       "<#{@animated ? 'a' : ''}:#{@name}:#{id}>"
     end
 
+    #
+    # Format the emoji for URI.
+    #
+    # @return [String] the formatted emoji.
+    #
     def to_uri
       "#{@name}:#{@id}"
-    end
-
-    def managed?
-      @managed
-    end
-
-    def animated?
-      @animated
-    end
-
-    def available?
-      @available
     end
 
     def roles?
       @roles != []
     end
+    alias role? roles?
 
     def inspect
       "#<#{self.class} id=#{@id} :#{@name}:>"
     end
 
+    #
+    # Edit the emoji.
+    # @macro async
+    # @macro edit
+    #
+    # @param [String] name The new name of the emoji.
+    # @param [Array<Discorb::Role>] roles The new roles that can use this emoji.
+    # @param [String] reason The reason for editing the emoji.
+    #
+    # @return [self] The edited emoji.
+    #
     def edit(name: :unset, roles: :unset, reason: nil)
       Async do
         payload = {}
         payload[:name] = name if name != :unset
         payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles != :unset
         @client.internet.patch("/guilds/#{@guild.id}/emojis/#{@id}", payload, audit_log_reason: reason)
+        self
       end
     end
     alias modify edit
 
+    #
+    # Delete the emoji.
+    #
+    # @param [String] reason The reason for deleting the emoji.
+    #
+    # @return [self] The deleted emoji.
+    #
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/guilds/#{@guild.id}/emojis/#{@id}", audit_log_reason: reason).wait
@@ -77,9 +117,19 @@ module Discorb
     end
   end
 
+  #
+  # Represents a partial custom emoji in discord.
+  #
   class PartialEmoji < DiscordModel
-    attr_reader :id, :name
+    # @return [Discorb::Snowflake] The ID of the emoji.
+    attr_reader :id
+    # @return [String] The name of the emoji.
+    attr_reader :name
+    # @return [Boolean] Whether the emoji is deleted.
+    attr_reader :deleted
+    alias deleted? deleted
 
+    # @!visibility private
     def initialize(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
@@ -87,10 +137,11 @@ module Discorb
       @deleted = @name.nil?
     end
 
-    def deleted?
-      @deleted
-    end
-
+    #
+    # Format the emoji for URI.
+    #
+    # @return [String] the formatted emoji.
+    #
     def to_uri
       "#{@name}:#{@id}"
     end
@@ -99,14 +150,26 @@ module Discorb
       "#<#{self.class} id=#{@id} :#{@name}:>"
     end
 
+    #
+    # Format the emoji for sending.
+    #
+    # @return [String] the formatted emoji.
+    #
     def to_s
       "<#{@animated ? 'a' : ''}:#{@name}:#{@id}>"
     end
   end
 
+  #
+  # Represents a unicode emoji (default emoji) in discord.
+  #
   class UnicodeEmoji
-    attr_reader :name, :value
+    # @return [String] The name of the emoji. (e.g. :grinning:)
+    attr_reader :name
+    # @return [String] The unicode value of the emoji. (e.g. U+1F600)
+    attr_reader :value
 
+    # @!visibility private
     def initialize(name)
       if EmojiTable::DISCORD_TO_UNICODE.key?(name)
         @name = name
@@ -119,10 +182,16 @@ module Discorb
       end
     end
 
+    # @return [String] The unicode string of the emoji.
     def to_s
       @value
     end
 
+    #
+    # Format the emoji for URI.
+    #
+    # @return [String] the formatted emoji.
+    #
     def to_uri
       URI.encode_www_form_component(@value)
     end
