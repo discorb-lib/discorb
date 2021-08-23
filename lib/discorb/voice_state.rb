@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class VoiceState < DiscordModel
     attr_reader :guild_id, :channel_id, :user_id, :member, :session_id,
-                :request_to_speak_timestamp
+                :request_to_speak_timestamp, :self_deaf, :self_mute, :self_stream, :self_video, :suppress
+    alias self_deaf? self_deaf
+    alias self_mute? self_mute
+    alias stream? self_stream
+    alias live? stream?
+    alias video? self_video
+    alias suppress? suppress
 
     def initialize(client, data)
       @client = client
@@ -19,33 +24,12 @@ module Discorb
       @mute || @self_mute
     end
 
-    def video?
-      @self_video
-    end
-
-    def stream?
-      @self_stream
-    end
-    alias live? stream?
-
     def server_deaf?
       @deaf
     end
 
     def server_mute?
       @mute
-    end
-
-    def self_deaf?
-      @self_deaf
-    end
-
-    def self_mute?
-      @self_mute
-    end
-
-    def supress?
-      @suppress
     end
 
     def guild
@@ -163,7 +147,11 @@ module Discorb
   end
 
   class VoiceRegion < DiscordModel
-    attr_reader :id, :name
+    attr_reader :id, :name, :vip, :optimal, :deprecated, :custom
+    alias vip? vip
+    alias optimal? optimal
+    alias deprecated? deprecated
+    alias custom? custom
 
     def initialize(data)
       @id = data[:id]
@@ -174,20 +162,5 @@ module Discorb
       @custom = data[:custom]
     end
 
-    def vip?
-      @vip
-    end
-
-    def optimal?
-      @optimal
-    end
-
-    def deprecated?
-      @deprecated
-    end
-
-    def custom?
-      @custom
-    end
   end
 end

@@ -41,9 +41,6 @@ module Discorb
 
   #
   # Represents a button component.
-  # @!attribute [r] disabled?
-  #   Whether the button is disabled.
-  #   @return [Boolean] Whether the button is disabled.
   #
   class Button < Component
     # @return [String] The label of the button.
@@ -60,6 +57,7 @@ module Discorb
     attr_accessor :url
     # @return [Boolean] Whether the button is disabled.
     attr_accessor :disabled
+    alias disabled? disabled
 
     @styles = {
       primary: 1,
@@ -86,10 +84,6 @@ module Discorb
       @custom_id = custom_id
       @url = url
       @disabled = disabled
-    end
-
-    def disabled?
-      @disabled
     end
 
     #
@@ -148,9 +142,6 @@ module Discorb
   #
   # Represents a select menu component.
   #
-  # @!attribute [r] disabled?
-  #   Whether the button is disabled.
-  #   @return [Boolean] `true` if the select menu is disabled.
   class SelectMenu < Component
     # @return [String] The custom ID of the select menu.
     attr_accessor :custom_id
@@ -160,6 +151,9 @@ module Discorb
     attr_accessor :min_values
     # @return [Integer] The maximum number of values.
     attr_accessor :max_values
+    # @return [Boolean] Whether the select menu is disabled.
+    attr_reader :disabled
+    alias disabled? disabled
 
     #
     # Initialize a new select menu.
@@ -176,10 +170,6 @@ module Discorb
       @placeholder = placeholder
       @min_values = min_values
       @max_values = max_values
-    end
-
-    def disabled?
-      @disabled
     end
 
     #

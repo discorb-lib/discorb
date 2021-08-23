@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a single asset.
+  # @!attribute [r] animated?
+  #   @return [Boolean] Whether the asset is animated.
+  #
   class Asset < DiscordModel
     # @return [String] The hash of asset.
     attr_reader :hash
@@ -12,11 +17,6 @@ module Discorb
       @path = path
     end
 
-    #
-    # Whether the asset is animated.
-    #
-    # @return [Boolean] Whether the asset is animated.
-    #
     def animated?
       @hash.start_with? 'a_'
     end

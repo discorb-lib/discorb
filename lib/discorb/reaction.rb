@@ -2,17 +2,14 @@
 
 module Discorb
   class Reaction < DiscordModel
-    attr_reader :count, :emoji, :message
+    attr_reader :count, :emoji, :message, :me
+    alias me? me
+    alias reacted? me?
 
     def initialize(message, data)
       @message = message
       _set_data(data)
     end
-
-    def me?
-      @me
-    end
-    alias reacted? me?
 
     def fetch_users(...)
       message.fetch_reacted_users(@emoji, ...)

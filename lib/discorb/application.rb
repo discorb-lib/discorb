@@ -21,6 +21,12 @@ module Discorb
     attr_reader :owner
     # @return [Discorb::Application::Team] The application's team.
     attr_reader :team
+    # @return [Boolean] Whether the application's bot is public.
+    attr_reader :bot_public
+    alias bot_public? bot_public
+    # @return [Boolean] Whether the application's bot requires a code grant.
+    attr_reader :bot_require_code_grant
+    alias bot_require_code_grant? bot_require_code_grant
 
     # @!visibility private
     def initialize(client, data)
@@ -42,25 +48,7 @@ module Discorb
       "#<#{self.class} id=#{@id}>"
     end
 
-    #
-    # Whether the application's bot is public.
-    #
-    # @return [Boolean] Whether the application's bot is public.
-    #
-    def bot_public?
-      @bot_public
-    end
-
     alias public? bot_public?
-
-    #
-    # Whether the application's bot requires a code grant.
-    #
-    # @return [Boolean] Whether the application's bot requires a code grant.
-    #
-    def bot_require_code_grant?
-      @bot_require_code_grant
-    end
 
     alias require_code_grant? bot_require_code_grant?
 
@@ -104,6 +92,12 @@ module Discorb
 
       #
       # Represents a member of team.
+      # @!attribute [r] pending?
+      #   @return [Boolean] Whether the member is not joined to the team.
+      # @!attribute [r] accepted?
+      #   @return [Boolean] Whether the member accepted joining the team.
+      # @!attribute [r] owner?
+      #   @return [Boolean] Whether the member is the team's owner.
       #
       class Member < DiscordModel
         # @return [Discorb::User] The user.
@@ -133,20 +127,10 @@ module Discorb
           @permissions = data[:permissions].map(&:to_sym)
         end
 
-        #
-        # Whether the member is not joined to the team.
-        #
-        # @return [Boolean] Whether the member is not joined to the team.
-        #
         def pending?
           @membership_state == :invited
         end
 
-        #
-        # Whether the member accepted joining the team.
-        #
-        # @return [Boolean] Whether the member accepted joining the team.
-        #
         def accepted?
           @membership_state == :accepted
         end
@@ -155,11 +139,6 @@ module Discorb
           "#<#{self.class} id=#{@user.id}>"
         end
 
-        #
-        # Whether the member is the team's owner.
-        #
-        # @return [Boolean] Whether the member is the team's owner.
-        #
         def owner?
           @team.owner_user_id == @user.id
         end
