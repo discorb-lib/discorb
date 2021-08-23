@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents RGB color.
+  #
   class Color
     attr_accessor :value
 
@@ -93,7 +96,7 @@ module Discorb
     # @return [String] Converted string.
     #
     def to_s
-      "##{@value.to_s(16)}"
+      "##{to_hex}"
     end
 
     def inspect
