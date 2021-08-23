@@ -2,17 +2,15 @@
 
 module Discorb
   class GuildTemplate < DiscordModel
-    attr_reader :code, :name, :description, :usage_count, :creator, :created_at, :updated_at, :source_guild_id, :serialized_source_guild
+    attr_reader :code, :name, :description, :usage_count, :creator, :created_at, :updated_at, :source_guild_id, :serialized_source_guild, :is_dirty
     alias content serialized_source_guild
+    alias dirty? is_dirty
 
     def initialize(client, data)
       @client = client
       _set_data(data)
     end
 
-    def dirty?
-      @is_dirty
-    end
 
     def source_guild
       @client.guilds[@source_guild_id]
@@ -69,14 +67,6 @@ module Discorb
           @color = Color.new(data[:color])
           @hoist = data[:hoist]
           @mentionable = data[:mentionable]
-        end
-
-        def hoist?
-          @hoist
-        end
-
-        def mentionable?
-          @mentionable
         end
       end
 

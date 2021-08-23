@@ -2,7 +2,8 @@
 
 module Discorb
   class Sticker < DiscordModel
-    attr_reader :id, :name, :tags, :type, :format, :description, :pack_id, :sort_value, :guild_id, :user
+    attr_reader :id, :name, :tags, :type, :format, :description, :pack_id, :sort_value, :guild_id, :user, :available
+    alias available? available
 
     @sticker_type = {
       1 => :official,
@@ -13,13 +14,10 @@ module Discorb
       2 => :apng,
       3 => :lottie
     }
+    # @!visibility private
     def initialize(client, data)
       @client = client
       _set_data(data)
-    end
-
-    def available?
-      @available
     end
 
     class GuildSticker < Sticker

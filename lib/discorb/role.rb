@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class Role < DiscordModel
-    attr_reader :id, :name, :color, :permissions, :position, :guild
+    attr_reader :id, :name, :color, :permissions, :position, :guild, :hoist, :managed, :mentionable
 
     include Comparable
     def initialize(client, guild, data)
@@ -27,18 +26,6 @@ module Discorb
 
     def color?
       @color != 0
-    end
-
-    def hoist?
-      @hoist
-    end
-
-    def managed?
-      @managed
-    end
-
-    def mentionable?
-      @mentionable
     end
 
     def update!
@@ -79,6 +66,12 @@ module Discorb
     end
 
     alias destroy! delete!
+
+    def tag
+      Tag.new(@tags)
+    end
+
+    alias tags tag
 
     class Tag < DiscordModel
       attr_reader :bot_id, :integration_id, :premium_subscriber

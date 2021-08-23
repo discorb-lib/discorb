@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class AllowedMentions
     attr_accessor :everyone, :roles, :users, :replied_user
@@ -45,12 +44,16 @@ module Discorb
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles,
                 :mention_channels, :attachments, :embeds, :reactions, :webhook_id, :type,
                 :activity, :application, :application_id, :message_reference, :flag, :stickers,
-                :interaction, :thread, :components
+                :interaction, :thread, :components, :deleted, :tts, :mention_everyone, :pinned
 
     alias timestamp created_at
     alias sent_at created_at
     alias edited_at updated_at
     alias edited_timestamp updated_at
+    alias deleted? deleted
+    alias tts? tts
+    alias mention_everyone? mention_everyone
+    alias pinned? pinned
     @message_type = {
       default: 0,
       recipient_add: 1,
@@ -97,22 +100,6 @@ module Discorb
 
     def guild
       @client.guilds[@guild_id]
-    end
-
-    def deleted?
-      @deleted
-    end
-
-    def tts?
-      @tts
-    end
-
-    def mention_everyone?
-      @mention_everyone
-    end
-
-    def pinned?
-      @pinned
     end
 
     def webhook?
