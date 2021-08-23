@@ -101,7 +101,6 @@ module Discorb
 
     # Delete the invite.
     # @!macro async
-    # @return [Async::Task<nil>]
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)
