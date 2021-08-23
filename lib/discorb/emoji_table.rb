@@ -2,7 +2,11 @@
 
 # rubocop:disable Metrics/ModuleLength
 module Discorb
+  #
+  # A table of emoji names and their unicode values.
+  #
   module EmojiTable
+    # A hash of Discord's emoji names to their unicode characters.
     DISCORD_TO_UNICODE = {
       'flag_ni' => "\xF0\x9F\x87\xB3\xF0\x9F\x87\xAE",
       'flag_ne' => "\xF0\x9F\x87\xB3\xF0\x9F\x87\xAA",
@@ -1993,6 +1997,7 @@ module Discorb
       'clock1230' => "\xF0\x9F\x95\xA7"
     }.freeze
 
+    # A hash of unicode charcaters to their Discord's emoji names.
     UNICODE_TO_DISCORD = {
       "\xF0\x9F\x87\xB3\xF0\x9F\x87\xAE" => %w[flag_ni],
       "\xF0\x9F\x87\xB3\xF0\x9F\x87\xAA" => %w[flag_ne],
