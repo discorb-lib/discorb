@@ -11,7 +11,6 @@ module Discorb
       _set_data(data)
     end
 
-
     def source_guild
       @client.guilds[@source_guild_id]
     end
