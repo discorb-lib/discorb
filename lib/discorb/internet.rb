@@ -14,7 +14,7 @@ module Discorb
       Async do |task|
         resp = http.get(get_path(path), get_headers(headers, '', audit_log_reason), **kwargs)
         rd = resp.body
-        data = if rd.empty?
+        data = if rd.nil? || rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
@@ -33,7 +33,7 @@ module Discorb
       Async do |task|
         resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.body
-        data = if rd.empty?
+        data = if rd.nil? || rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
@@ -51,7 +51,7 @@ module Discorb
       Async do |task|
         resp = http.patch(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.body
-        data = if rd.empty?
+        data = if rd.nil? || rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
@@ -69,7 +69,7 @@ module Discorb
       Async do |task|
         resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.body
-        data = if rd.empty?
+        data = if rd.nil? || rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
@@ -87,7 +87,7 @@ module Discorb
       Async do |task|
         resp = http.delete(get_path(path), get_headers(headers, '', audit_log_reason))
         rd = resp.body
-        data = if rd.empty?
+        data = if rd.nil? || rd.empty?
                  nil
                else
                  JSON.parse(rd, symbolize_names: true)
