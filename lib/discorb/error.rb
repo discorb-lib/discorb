@@ -36,7 +36,7 @@ module Discorb
     end
   end
 
-  class BadRequestError < DiscorbError
+  class BadRequestError < HTTPError
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
