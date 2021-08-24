@@ -24,20 +24,20 @@ module Discorb
   # @!macro http
   #   @note This method calls HTTP request.
   #   @raise [Discorb::HTTPError] HTTP request failed.
-  #   
+  #
   def macro
     # NOTE: this method is only for YARD.
     puts 'Wow, You found the easter egg!\n\n'
     red = "\e[31m"
     reset = "\e[m"
     puts <<~"EASTEREGG"
-        | .               #{red}   |     #{reset}
-      __|                 #{red}   |__   #{reset}
-     /  | |  __   __  _   #{red} _ |  \\  #{reset}
-    (   | | (__  /   / \\ #{red}|/  |   ) #{reset}
-     \\__| |  __) \\__ \\_/ #{red}|   |__/  #{reset}
+          | .               #{red}   |     #{reset}
+        __|                 #{red}   |__   #{reset}
+       /  | |  __   __  _   #{red} _ |  \\  #{reset}
+      (   | | (__  /   / \\ #{red}|/  |   ) #{reset}
+       \\__| |  __) \\__ \\_/ #{red}|   |__/  #{reset}
 
-          https://github.com/discorb-lib/discorb
+            https://github.com/discorb-lib/discorb
     EASTEREGG
   end
 end
