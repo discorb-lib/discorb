@@ -40,9 +40,11 @@ module Discorb
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
-      super([data[:message], "\n", enumerate_errors(data[:errors]).map do |ek, ev|
-                                     "#{ek}=>#{ev}"
-                                   end.join("\n")].join("\n"))
+      DiscorbError.instance_method(:initialize).bind(self).call(
+        [data[:message], "\n", enumerate_errors(data[:errors]).map do |ek, ev|
+                                 "#{ek}=>#{ev}"
+                               end.join("\n")].join("\n")
+      )
     end
   end
 
