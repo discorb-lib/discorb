@@ -1,103 +1,184 @@
 # frozen_string_literal: true
 
-require 'net/https'
+require "net/https"
 
 module Discorb
+  #
+  # A class to handle internet requests.
+  # This class is internal use only.
+  #
   class Internet
     @nil_body = nil
 
+    # @!visibility private
     def initialize(client)
       @client = client
     end
 
+    #
+    # Execute a GET request.
+    # @macro async
+    #
+    # @param [String] path The path to the resource.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    #
     def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = http.get(get_path(path), get_headers(headers, '', audit_log_reason), **kwargs)
+        resp = http.get(get_path(path), get_headers(headers, "", audit_log_reason), **kwargs)
         rd = resp.body
         data = if rd.nil? || rd.empty?
-                 nil
-               else
-                 JSON.parse(rd, symbolize_names: true)
-               end
-        test_error(if resp.code == '429'
-                     @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
-                     task.sleep(data[:retry_after])
-                     get(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-                   else
-                     [resp, data]
-                   end)
+            nil
+          else
+            JSON.parse(rd, symbolize_names: true)
+          end
+        test_error(if resp.code == "429"
+          @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
+          task.sleep(data[:retry_after])
+          get(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        else
+          [resp, data]
+        end)
       end
     end
 
-    def post(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
+    #
+    # Execute a POST request.
+    # @macro async
+    #
+    # @param [String] path The path to the resource.
+    # @param [String] body The body of the request.
+    # @param [Hash] body The body of the request as JSON.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    #
+    def post(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.body
         data = if rd.nil? || rd.empty?
-                 nil
-               else
-                 JSON.parse(rd, symbolize_names: true)
-               end
-        test_error(if resp.code == '429'
-                     task.sleep(data[:retry_after])
-                     post(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-                   else
-                     [resp, data]
-                   end)
+            nil
+          else
+            JSON.parse(rd, symbolize_names: true)
+          end
+        test_error(if resp.code == "429"
+          task.sleep(data[:retry_after])
+          post(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        else
+          [resp, data]
+        end)
       end
     end
 
-    def patch(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
+    #
+    # Execute a PATCH request.
+    # @macro async
+    #
+    # @param [String] path The path to the resource.
+    # @param [String] body The body of the request.
+    # @param [Hash] body The body of the request as JSON.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    #
+    def patch(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.patch(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.body
         data = if rd.nil? || rd.empty?
-                 nil
-               else
-                 JSON.parse(rd, symbolize_names: true)
-               end
-        test_error(if resp.code == '429'
-                     task.sleep(data[:retry_after])
-                     patch(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-                   else
-                     [resp, data]
-                   end)
+            nil
+          else
+            JSON.parse(rd, symbolize_names: true)
+          end
+        test_error(if resp.code == "429"
+          task.sleep(data[:retry_after])
+          patch(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        else
+          [resp, data]
+        end)
       end
     end
 
-    def put(path, body = '', headers: nil, audit_log_reason: nil, **kwargs)
+    #
+    # Execute a PUT request.
+    # @macro async
+    #
+    # @param [String] path The path to the resource.
+    # @param [String] body The body of the request.
+    # @param [Hash] body The body of the request as JSON.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    #
+    def put(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         rd = resp.body
         data = if rd.nil? || rd.empty?
-                 nil
-               else
-                 JSON.parse(rd, symbolize_names: true)
-               end
-        test_error(if resp.code == '429'
-                     task.sleep(data[:retry_after])
-                     put(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-                   else
-                     [resp, data]
-                   end)
+            nil
+          else
+            JSON.parse(rd, symbolize_names: true)
+          end
+        test_error(if resp.code == "429"
+          task.sleep(data[:retry_after])
+          put(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        else
+          [resp, data]
+        end)
       end
     end
 
+    #
+    # Execute a DELETE request.
+    # @macro async
+    #
+    # @param [String] path The path to the resource.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    #
     def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        resp = http.delete(get_path(path), get_headers(headers, '', audit_log_reason))
+        resp = http.delete(get_path(path), get_headers(headers, "", audit_log_reason))
         rd = resp.body
         data = if rd.nil? || rd.empty?
-                 nil
-               else
-                 JSON.parse(rd, symbolize_names: true)
-               end
-        test_error(if resp.code == '429'
-                     task.sleep(data[:retry_after])
-                     delete(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-                   else
-                     [resp, data]
-                   end)
+            nil
+          else
+            JSON.parse(rd, symbolize_names: true)
+          end
+        test_error(if resp.code == "429"
+          task.sleep(data[:retry_after])
+          delete(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        else
+          [resp, data]
+        end)
       end
     end
 
@@ -105,15 +186,22 @@ module Discorb
       "#<#{self.class} client=#{@client}>"
     end
 
+    #
+    # A helper method to send multipart/form-data requests.
+    #
+    # @param [Hash] payload The payload to send.
+    # @param [Array<Discorb::File>] files The files to send.
+    #
+    # @return [Array[String, String]] The boundary and body.
+    #
     def self.multipart(payload, files)
       boundary = "DiscorbBySevenC7CMultipartFormData#{Time.now.to_f}"
-      str_payloads = [<<~HTTP
+      str_payloads = [<<~HTTP]
         Content-Disposition: form-data; name="payload_json"
         Content-Type: application/json
 
         #{payload.to_json}
       HTTP
-      ]
       files.each do |single_file|
         str_payloads << <<~HTTP
           Content-Disposition: form-data; name="file"; filename="#{single_file.filename}"
@@ -141,21 +229,21 @@ module Discorb
       end
     end
 
-    def get_headers(headers, body = '', audit_log_reason = nil)
+    def get_headers(headers, body = "", audit_log_reason = nil)
       ret = if body.nil? || body.empty?
-              { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}" }
-            else
-              { 'User-Agent' => USER_AGENT, 'authorization' => "Bot #{@client.token}",
-                'content-type' => 'application/json' }
-            end
+          { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}" }
+        else
+          { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}",
+            "content-type" => "application/json" }
+        end
       ret.merge(headers) if !headers.nil? && headers.length.positive?
-      ret['X-Audit-Log-Reason'] = audit_log_reason unless audit_log_reason.nil?
+      ret["X-Audit-Log-Reason"] = audit_log_reason unless audit_log_reason.nil?
       ret
     end
 
     def get_body(body)
       if body.nil?
-        ''
+        ""
       elsif body.is_a?(String)
         body
       else
@@ -164,16 +252,16 @@ module Discorb
     end
 
     def get_path(path)
-      full_path = if path.start_with?('https://')
-                    path
-                  else
-                    API_BASE_URL + path
-                  end
+      full_path = if path.start_with?("https://")
+          path
+        else
+          API_BASE_URL + path
+        end
       URI(full_path).path
     end
 
     def http
-      https = Net::HTTP.new('discord.com', 443)
+      https = Net::HTTP.new("discord.com", 443)
       https.use_ssl = true
       https
     end
