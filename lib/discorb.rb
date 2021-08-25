@@ -13,10 +13,7 @@ module Discorb
   #   @return [nil] The object wasn't cached.
   #
   # @!macro members_intent
-  #   @note This method requires `members` intent. {file:docs/Intents.md Learn more here}.
-  #
-  # @!macro presence_intent
-  #   @note This method requires `presence` intent. {file:docs/Intents.md Learn more here}.
+  #   @note You must enable `GUILD_MEMBERS` intent to use this method.
   #
   # @!macro edit
   #   @note The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`.
@@ -31,16 +28,17 @@ module Discorb
     red = "\e[31m"
     reset = "\e[m"
     puts <<~"EASTEREGG"
-          | .               #{red}   |     #{reset}
-        __|                 #{red}   |__   #{reset}
-       /  | |  __   __  _   #{red} _ |  \\  #{reset}
-      (   | | (__  /   / \\ #{red}|/  |   ) #{reset}
-       \\__| |  __) \\__ \\_/ #{red}|   |__/  #{reset}
+               | .               #{red}   |     #{reset}
+             __|                 #{red}   |__   #{reset}
+            /  | |  __   __  _   #{red} _ |  \\  #{reset}
+           (   | | (__  /   / \\ #{red}|/  |   ) #{reset}
+            \\__| |  __) \\__ \\_/ #{red}|   |__/  #{reset}
 
-            https://github.com/discorb-lib/discorb
-    EASTEREGG
+                 https://github.com/discorb-lib/discorb
+         EASTEREGG
   end
 end
+
 require_order = %w[common flag dictionary error internet intents emoji_table modules] +
                 %w[user member guild emoji channel embed message] +
                 %w[application audit_logs color components event extension] +
