@@ -53,8 +53,7 @@ module Discorb
     # @macro async
     #
     # @param [String] path The path to the resource.
-    # @param [String] body The body of the request.
-    # @param [Hash] body The body of the request as JSON.
+    # @param [String, Hash] body The body of the request.
     # @param [Hash] headers The headers to send with the request.
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
@@ -87,8 +86,7 @@ module Discorb
     # @macro async
     #
     # @param [String] path The path to the resource.
-    # @param [String] body The body of the request.
-    # @param [Hash] body The body of the request as JSON.
+    # @param [String, Hash] body The body of the request.
     # @param [Hash] headers The headers to send with the request.
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
@@ -121,8 +119,7 @@ module Discorb
     # @macro async
     #
     # @param [String] path The path to the resource.
-    # @param [String] body The body of the request.
-    # @param [Hash] body The body of the request as JSON.
+    # @param [String, Hash] body The body of the request.
     # @param [Hash] headers The headers to send with the request.
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.

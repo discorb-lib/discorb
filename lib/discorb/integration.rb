@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class Integration < DiscordModel
     attr_reader :id, :type, :enabled, :syncing, :role_id, :enable_emoticons, :expire_behavior,
@@ -8,8 +7,9 @@ module Discorb
 
     @expire_behavior = {
       0 => :remove_role,
-      1 => :kick
+      1 => :kick,
     }
+
     def initialize(client, data, guild_id, no_cache: false)
       @client = client
       @data = data

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class Permission < Flag
     @bits = {
@@ -39,7 +38,7 @@ module Discorb
       request_to_speak: 32,
       manage_threads: 34,
       use_public_threads: 35,
-      use_private_threads: 36
+      use_private_threads: 36,
     }.freeze
   end
 
@@ -80,9 +79,10 @@ module Discorb
       request_to_speak: 32,
       manage_threads: 34,
       use_public_threads: 35,
-      use_private_threads: 36
+      use_private_threads: 36,
     }.freeze
     @bits = @raw_bits.transform_values { |v| 1 << v }.freeze
+
     def initialize(allow, deny)
       @allow = allow
       @deny = deny
@@ -111,10 +111,10 @@ module Discorb
     def to_hash
       self.class.bits.keys.map do |field|
         [field, if @allow & self.class.bits[field] != 0
-                  true
-                elsif @deny & self.class.bits[method] != 0
-                  false
-                end]
+          true
+        elsif @deny & self.class.bits[method] != 0
+          false
+        end]
       end.to_h
     end
 
@@ -151,8 +151,8 @@ module Discorb
     def method_missing(method, bool = nil)
       if self.class.bits.key?(method)
         self[method]
-      elsif self.class.bits.key?(method.to_s.delete_suffix('=').to_sym)
-        key = method.to_s.delete_suffix('=').to_sym
+      elsif self.class.bits.key?(method.to_s.delete_suffix("=").to_sym)
+        key = method.to_s.delete_suffix("=").to_sym
         self[key] = bool
       else
         super
@@ -160,8 +160,9 @@ module Discorb
     end
 
     def respond_to_missing?(method, _arg)
-      self.class.bits.key?(method.to_s.delete_suffix('=').to_sym) ? true : super
+      self.class.bits.key?(method.to_s.delete_suffix("=").to_sym) ? true : super
     end
+
     class << self
       attr_reader :bits
 

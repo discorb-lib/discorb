@@ -24,7 +24,7 @@ module Discorb
             emoji: data[:emoji],
             custom_id: data[:custom_id],
             url: data[:url],
-            disabled: data[:disabled]
+            disabled: data[:disabled],
           )
         when 3
           SelectMenu.new(
@@ -32,7 +32,7 @@ module Discorb
             data[:options].map { |o| SelectMenu::Option.from_hash(o) },
             placeholder: data[:placeholder],
             min_values: data[:min_values],
-            max_values: data[:max_values]
+            max_values: data[:max_values],
           )
         end
       end
@@ -64,7 +64,7 @@ module Discorb
       secondary: 2,
       success: 3,
       danger: 4,
-      link: 5
+      link: 5,
     }.freeze
 
     #
@@ -100,7 +100,7 @@ module Discorb
           style: self.class.styles[@style],
           url: @url,
           emoji: hash_emoji(@emoji),
-          disabled: @disabled
+          disabled: @disabled,
         }
       else
         {
@@ -109,7 +109,7 @@ module Discorb
           style: self.class.styles[@style],
           custom_id: @custom_id,
           emoji: hash_emoji(@emoji),
-          disabled: @disabled
+          disabled: @disabled,
         }
       end
     end
@@ -127,13 +127,13 @@ module Discorb
         {
           id: nil,
           name: emoji.to_s,
-          animated: false
+          animated: false,
         }
       when CustomEmoji
         {
           id: emoji.id,
           name: emoji.name,
-          animated: emoji.animated?
+          animated: emoji.animated?,
         }
       end
     end
@@ -185,7 +185,7 @@ module Discorb
         options: @options.map(&:to_hash),
         placeholder: @placeholder,
         min_values: @min_values,
-        max_values: @max_values
+        max_values: @max_values,
       }
     end
 
@@ -232,7 +232,7 @@ module Discorb
           value: @value,
           description: @description,
           emoji: hash_emoji(@emoji),
-          default: @default
+          default: @default,
         }
       end
 
@@ -243,13 +243,13 @@ module Discorb
           {
             id: nil,
             name: emoji.to_s,
-            animated: false
+            animated: false,
           }
         when CustomEmoji
           {
             id: emoji.id,
             name: emoji.name,
-            animated: emoji.animated?
+            animated: emoji.animated?,
           }
         end
       end
@@ -276,13 +276,13 @@ module Discorb
         {
           id: nil,
           name: emoji.to_s,
-          animated: false
+          animated: false,
         }
       when CustomEmoji
         {
           id: emoji.id,
           name: emoji.name,
-          animated: emoji.animated?
+          animated: emoji.animated?,
         }
       end
     end

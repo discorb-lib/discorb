@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yaml'
+require "yaml"
 
 module Discorb
   class DiscorbError < StandardError
@@ -23,7 +23,7 @@ module Discorb
           _recr_items (key + [k]), v, res
         end
       else
-        res[key.join('.').gsub('_errors.', '')] = item
+        res[key.join(".").gsub("_errors.", "")] = item
       end
     end
   end
@@ -42,8 +42,8 @@ module Discorb
       @response = resp
       DiscorbError.instance_method(:initialize).bind(self).call(
         [data[:message], "\n", enumerate_errors(data[:errors]).map do |ek, ev|
-                                 "#{ek}=>#{ev}"
-                               end.join("\n")].join("\n")
+          "#{ek}=>#{ev}"
+        end.join("\n")].join("\n")
       )
     end
   end

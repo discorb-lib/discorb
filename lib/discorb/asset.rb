@@ -18,7 +18,7 @@ module Discorb
     end
 
     def animated?
-      @hash.start_with? 'a_'
+      @hash.start_with? "a_"
     end
 
     #
@@ -31,7 +31,7 @@ module Discorb
     #
     def url(image_format: nil, size: 1024)
       path = @path || "#{endpoint}/#{@target.id}"
-      "https://cdn.discordapp.com/#{path}/#{@hash}.#{image_format or (animated? ? 'gif' : 'webp')}?size=#{size}"
+      "https://cdn.discordapp.com/#{path}/#{@hash}.#{image_format or (animated? ? "gif" : "webp")}?size=#{size}"
     end
 
     def inspect
@@ -43,13 +43,13 @@ module Discorb
     def endpoint
       case @target
       when User, Member, Webhook
-        'avatars'
+        "avatars"
       when Guild, IncomingWebhook::Guild
-        'icons'
+        "icons"
       when Application
-        'app-icons'
+        "app-icons"
       when Application::Team
-        'team-icons'
+        "team-icons"
       end
     end
   end

@@ -53,10 +53,10 @@ module Discorb
       @user_id = data[:user_id]
       unless guild.nil?
         @member = if data.key?(:member)
-                    guild.members[data[:user_id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
-                  else
-                    guild.members[data[:user_id]]
-                  end
+            guild.members[data[:user_id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
+          else
+            guild.members[data[:user_id]]
+          end
       end
       @session_id = data[:session_id]
       @deaf = data[:deaf]
@@ -75,7 +75,7 @@ module Discorb
 
     @privacy_level = {
       1 => :public,
-      2 => :guild_only
+      2 => :guild_only,
     }
 
     def initialize(client, data, no_cache: false)
@@ -118,6 +118,7 @@ module Discorb
         self
       end
     end
+
     alias modify edit
 
     def delete!(reason: nil)
@@ -161,6 +162,5 @@ module Discorb
       @deprecated = data[:deprecated]
       @custom = data[:custom]
     end
-
   end
 end

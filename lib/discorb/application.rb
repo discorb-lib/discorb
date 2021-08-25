@@ -114,7 +114,7 @@ module Discorb
 
         @membership_state = {
           1 => :invited,
-          2 => :accepted
+          2 => :accepted,
         }.freeze
 
         def initialize(client, team, data)

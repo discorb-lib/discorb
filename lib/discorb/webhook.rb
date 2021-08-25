@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'async/http/internet'
-
+require "async/http/internet"
 
 module Discorb
   class Webhook
@@ -15,7 +14,7 @@ module Discorb
       @user = data[:user]
       @name = data[:name]
       @avatar = Asset.new(self, data[:avatar])
-      @token = ''
+      @token = ""
       # @token = data[:token]
       @application_id = data[:application_id]
       # @source_guild = data[:source_guild]
@@ -31,16 +30,16 @@ module Discorb
     end
 
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
-             file: nil, files: nil, username: nil, avatar_url: :unset, wait: true)
+                            file: nil, files: nil, username: nil, avatar_url: :unset, wait: true)
       Async do |_task|
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
         tmp_embed = if embed
-                      [embed]
-                    elsif embeds
-                      embeds
-                    end
+            [embed]
+          elsif embeds
+            embeds
+          end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = allowed_mentions&.to_hash
         payload[:username] = username if username
@@ -50,7 +49,7 @@ module Discorb
           headers, payload = Internet.multipart(payload, files)
         else
           headers = {
-            'Content-Type' => 'application/json'
+            "Content-Type" => "application/json",
           }
         end
         _resp, data = @internet.post("#{url}?wait=#{wait}", payload, headers: headers).wait
@@ -100,7 +99,7 @@ module Discorb
         files = [file] if file != :unset
         if files == :unset
           headers = {
-            'Content-Type' => 'application/json'
+            "Content-Type" => "application/json",
           }
         else
           headers, payload = Internet.multipart(payload, files)
@@ -123,7 +122,7 @@ module Discorb
 
       def initialize(url)
         @url = url
-        @token = ''
+        @token = ""
         @internet = Discorb::Internet.new(self)
       end
     end

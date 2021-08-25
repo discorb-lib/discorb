@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'uri'
+require "uri"
 
 module Discorb
   # Represents a custom emoji in discord.
@@ -41,7 +41,7 @@ module Discorb
     # @return [String] the formatted emoji.
     #
     def to_s
-      "<#{@animated ? 'a' : ''}:#{@name}:#{id}>"
+      "<#{@animated ? "a" : ""}:#{@name}:#{id}>"
     end
 
     #
@@ -56,6 +56,7 @@ module Discorb
     def roles?
       @roles != []
     end
+
     alias role? roles?
 
     def inspect
@@ -64,7 +65,8 @@ module Discorb
 
     #
     # Edit the emoji.
-    # @macro async http
+    # @macro async
+    # @macro http
     # @macro edit
     #
     # @param [String] name The new name of the emoji.
@@ -82,11 +84,13 @@ module Discorb
         self
       end
     end
+
     alias modify edit
 
     #
     # Delete the emoji.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [String] reason The reason for deleting the emoji.
     #
@@ -157,7 +161,7 @@ module Discorb
     # @return [String] the formatted emoji.
     #
     def to_s
-      "<#{@animated ? 'a' : ''}:#{@name}:#{@id}>"
+      "<#{@animated ? "a" : ""}:#{@name}:#{@id}>"
     end
   end
 

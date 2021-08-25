@@ -93,9 +93,9 @@ module Discorb
       !self[id].nil?
     end
 
-    def method_missing(name, args = [], kwargs = {}, &block)
+    def method_missing(name, ...)
       if values.respond_to?(name)
-        values.send(name, *args, **kwargs, &block)
+        values.send(name, ...)
       else
         super
       end
@@ -108,6 +108,7 @@ module Discorb
         super
       end
     end
+
     alias [] get
     alias []= register
 
