@@ -1,23 +1,115 @@
 # frozen_string_literal: true
 
-
 module Discorb
-  class SystemChannelFlag < Flag
-    @bits = {
-      member_join: 0,
-      server_boost: 1,
-      setup_tips: 2
-    }.freeze
-  end
-
+  #
+  # Represents a guild in the Discord.
+  #
+  # @!attribute [r] afk_channel
+  #   @return [Discorb::VoiceChannel] The AFK channel for this guild.
+  #   @macro client_cache
+  # @!attribute [r] system_channel
+  #   @return [Discorb::TextChannel] The system message channel for this guild.
+  #   @macro client_cache
+  # @!attribute [r] rules_channel
+  #   @return [Discorb::TextChannel] The rules channel for this guild.
+  #   @macro client_cache
+  # @!attribute [r] public_updates_channel
+  #   @return [Discorb::TextChannel] The public updates channel (`#moderator-only`) for this guild.
+  #   @macro client_cache
+  # @!attribute [r] me
+  #   @return [Discorb::Member] The client's member in the guild.
   class Guild < DiscordModel
-    attr_reader :id, :name, :splash, :discovery_splash, :owner_id, :permissions, :region, :afk_timeout, :roles, :emojis,
-                :features, :mfa_level, :application_id, :system_channel_flags, :joined_at, :large,
-                :unavailable, :member_count, :icon, :voice_states, :members, :channels, :threads,
-                :presences, :max_presences, :max_members, :vanity_url_code, :description, :banner, :premium_tier,
-                :premium_subscription_count, :preferred_locale, :public_updates_channel_id, :max_video_channel_users,
-                :approximate_member_count, :approximate_presence_count, :welcome_screen, :nsfw_level, :stage_instances, :integrations,
-                :verification_level, :default_message_notifications, :explicit_content_filter
+    # @return [Discorb::Snowflake] ID of the guild.
+    attr_reader :id
+    # @return [String] The name of the guild.
+    attr_reader :name
+    # @return [Discorb::Asset] The splash of the guild.
+    attr_reader :splash
+    # @return [Discorb::Asset] The discovery splash of the guild.
+    attr_reader :discovery_splash
+    # @return [Discorb::Snowflake] ID of the guild owner.
+    attr_reader :owner_id
+    # @return [Discorb::Permission] The bot's permission in the guild.
+    attr_reader :permissions
+    # @return [Integer] The AFK timeout of the guild.
+    attr_reader :afk_timeout
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
+    attr_reader :roles
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}] A dictionary of custom emojis in the guild.
+    attr_reader :emojis
+    # @return [Array<Symbol>] features that are enabled in the guild.
+    # @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features Official Discord API docs
+    attr_reader :features
+    # @return [:none, :elevated] The MFA level of the guild.
+    attr_reader :mfa_level
+    # @return [Discorb::Guild::SystemChannelFlag] The flag for the system channel.
+    attr_reader :system_channel_flags
+    # @return [Time] Time that representing when bot has joined the guild.
+    attr_reader :joined_at
+    # @return [Boolean] Whether the guild is unavailable.
+    attr_reader :unavailable
+    # @return [Integer] The amount of members in the guild.
+    attr_reader :member_count
+    # @return [Discorb::Asset] The icon of the guild.
+    attr_reader :icon
+    # @return [Discorb::Dictionary{Discorb::User => Discorb::VoiceState}] A dictionary of voice states in the guild.
+    attr_reader :voice_states
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Member}] A dictionary of members in the guild.
+    # @macro members_intent
+    attr_reader :members
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}] A dictionary of channels in the guild.
+    attr_reader :channels
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::ThreadChannel}] A dictionary of threads in the guild.
+    attr_reader :threads
+    # @return [Discorb::Dictionary{Discorb::User => Discorb::Presence}] A dictionary of presence in the guild.
+    attr_reader :presences
+    # @return [Integer] Number of online members in the guild.
+    attr_reader :max_presences
+    # @return [String] The vanity invite URL for the guild.
+    # @return [nil] If the guild does not have a vanity invite URL.
+    attr_reader :vanity_url_code
+    # @return [String] The description of the guild.
+    attr_reader :description
+    # @return [Discorb::Asset] The banner of the guild.
+    # @return [nil] If the guild does not have a banner.
+    attr_reader :banner
+    # @return [Integer] The premium tier (Boost Level) of the guild.
+    attr_reader :premium_tier
+    # @return [Integer] The amount of premium subscriptions (Server Boosts) the guild has.
+    attr_reader :premium_subscription_count
+    # @return [Symbol] The preffered language of the guild.
+    # @note This modifies the language code, `-` will be replaced with `_`.
+    attr_reader :preferred_locale
+    # @return [Integer] The maximum amount of users in a video channel.
+    attr_reader :max_video_channel_users
+    # @return [Integer] The approxmate amount of members in the guild.
+    attr_reader :approximate_member_count
+    # @return [Integer] The approxmate amount of non-offline members in the guild.
+    attr_reader :approximate_presence_count
+    # @return [Discorb::WelcomeScreen] The welcome screen of the guild.
+    attr_reader :welcome_screen
+    # @return [:default, :explicit, :safe, :age_restricted] The nsfw level of the guild.
+    attr_reader :nsfw_level
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::StageInstance}] A dictionary of stage instances in the guild.
+    attr_reader :stage_instances
+    # @return [:none, :low, :medium, :high, :very_high] The verification level of the guild.
+    attr_reader :verification_level
+    # @return [:all_messages, :only_mentions] The default message notification level of the guild.
+    attr_reader :default_message_notifications
+    # @return [:disabled_in_text, :members_without_roles, :all_members] The explict content filter level of the guild.
+    attr_reader :explicit_content_filter
+    # @return [Boolean] Whether the client is the owner of the guild.
+    attr_reader :owner
+    alias owner? owner
+    # @return [Boolean] Whether the guild is large.
+    attr_reader :large
+    alias large? large
+    # @return [Boolean] Whether the guild enabled the widget.
+    attr_reader :widget_enabled
+    alias widget_enabled? widget_enabled
+    # @return [Boolean] Whether the guild is available.
+    attr_reader :available
+    alias available? available
 
     @mfa_levels = %i[none elevated].freeze
     @nsfw_levels = %i[default explicit safe age_restricted].freeze
@@ -25,12 +117,14 @@ module Discorb
     @default_message_notifications = %i[all_messages only_mentions].freeze
     @explicit_content_filter = %i[disabled_in_text members_without_roles all_members].freeze
 
+    # @!visibility private
     def initialize(client, data, is_create_event)
       @client = client
       @data = {}
       _set_data(data, is_create_event)
     end
 
+    # @!visibility private
     def update!
       Async do
         _, data = @client.get("/guilds/#{@id}").wait
@@ -58,26 +152,15 @@ module Discorb
       "#<#{self.class} \"#{@name}\" id=#{@id}>"
     end
 
-    def owner?
-      @owner_id == @client.user.id
-    end
-
-    def large?
-      @large
-    end
-
-    def widget_enabled?
-      @widget_enabled
-    end
-
-    def available?
-      !@unavailable
-    end
-
     def me
       @members[@client.user.id]
     end
 
+    #
+    # Leave the guild.
+    # @macro async
+    # @macro http
+    #
     def leave!
       Async do
         @client.internet.delete("/users/@me/guilds/#{@id}").wait
@@ -85,6 +168,14 @@ module Discorb
       end
     end
 
+    #
+    # Fetch emoji list of the guild.
+    # @macro async
+    # @macro http
+    # @note This querys the API every time. We recommend using {#emojis} instead.
+    #
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}] A dictionary of emoji in the guild.
+    #
     def fetch_emoji_list
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/emojis").wait
@@ -95,28 +186,57 @@ module Discorb
 
           @emojis[e[:id]] = CustomEmoji.new(@client, self, e)
         end
+        @emojis
       end
     end
 
     alias fetch_emojis fetch_emoji_list
 
+    #
+    # Fetch emoji id of the guild.
+    # @macro async
+    # @macro http
+    # @note This querys the API every time. We recommend using {#emojis} instead.
+    #
+    # @param [#to_s] id The emoji id.
+    #
+    # @return [Discorb::CustomEmoji] The emoji with the given id.
+    #
     def fetch_emoji(id)
       _resp, data = @client.internet.get("/guilds/#{@id}/emojis/#{id}").wait
       @emojis[e[:id]] = CustomEmoji.new(@client, self, data)
     end
 
+    #
+    # Create a custom emoji.
+    # @macro async
+    # @macro http
+    #
+    # @param [#to_s] name The name of the emoji.
+    # @param [Discorb::Image] image The image of the emoji.
+    # @param [Array<Discorb::Role>] roles A list of roles to give the emoji.
+    #
+    # @return [Discorb::CustomEmoji] The created emoji.
+    #
     def create_emoji(name, image, roles: [])
       _resp, data = @client.internet.post(
         "/guilds/#{@id}/emojis",
         {
           name: name,
           image: image.to_s,
-          roles: roles.map { |r| Discorb::Utils.try(r, :id) }
+          roles: roles.map { |r| Discorb::Utils.try(r, :id) },
         }
       ).wait
       @emojis[data[:id]] = CustomEmoji.new(@client, self, data)
     end
 
+    #
+    # Fetch webhooks of the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::Webhook>] A list of webhooks in the guild.
+    #
     def fetch_webhooks
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/webhooks").wait
@@ -124,6 +244,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch audit log of the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Discorb::AuditLog] The audit log of the guild.
+    #
     def fetch_audit_log
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/audit-logs").wait
@@ -131,6 +258,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch channels of the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::Channel>] A list of channels in the guild.
+    #
     def fetch_channels
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/channels").wait
@@ -138,6 +272,24 @@ module Discorb
       end
     end
 
+    
+    #
+    # Create a new text channel.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] name The name of the channel.
+    # @param [String] topic The topic of the channel.
+    # @param [Integer] rate_limit_per_user The rate limit per user in the channel.
+    # @param [Integer] slowmode Alias for `rate_limit_per_user`.
+    # @param [Integer] position The position of the channel.
+    # @param [Boolean] nsfw Whether the channel is nsfw.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Discorb::TextChannel] The created text channel.
+    #
     def create_text_channel(
       name, topic: nil, rate_limit_per_user: nil, slowmode: nil, position: nil, nsfw: nil, permission_overwrites: nil, parent: nil, reason: nil
     )
@@ -155,19 +307,34 @@ module Discorb
               type: target.is_a?(Role) ? 0 : 1,
               id: target.id,
               allow: overwrite.allow_value,
-              deny: overwrite.deny_value
+              deny: overwrite.deny_value,
             }
           end
         end
         payload[:parent_id] = parent.id if parent
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason
+          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
         ).wait
         payload[:parent_id] = parent&.id
         Channel.make_channel(@client, data)
       end
     end
 
+    #
+    # Create a new voice channel.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] bitrate The bitrate of the channel.
+    # @param [Integer] user_limit The user limit of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Discorb::VoiceChannel] The created voice channel.
+    #
     def create_voice_channel(
       name, bitrate: 64, user_limit: nil, position: nil, permission_overwrites: nil, parent: nil, reason: nil
     )
@@ -183,36 +350,49 @@ module Discorb
               type: target.is_a?(Role) ? 0 : 1,
               id: target.id,
               allow: overwrite.allow_value,
-              deny: overwrite.deny_value
+              deny: overwrite.deny_value,
             }
           end
         end
         payload[:parent_id] = parent.id if parent
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason
+          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
         ).wait
         payload[:parent_id] = parent&.id
         Channel.make_channel(@client, data)
       end
     end
 
-    def create_category_channel(name, permission_overwrites: nil, parent: nil, reason: nil)
+    # Create a new category channel.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Discorb::CategoryChannel] The created category channel.
+    #
+    def create_category_channel(name, position: nil, permission_overwrites: nil, parent: nil, reason: nil)
       Async do
         payload = { type: CategoryChannel.channel_type }
         payload[:name] = name
+        payload[:position] = position if position
         if permission_overwrites
           payload[:permission_overwrites] = permission_overwrites.map do |target, overwrite|
             {
               type: target.is_a?(Role) ? 0 : 1,
               id: target.id,
               allow: overwrite.allow_value,
-              deny: overwrite.deny_value
+              deny: overwrite.deny_value,
             }
           end
         end
         payload[:parent_id] = parent&.id
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason
+          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
         ).wait
         Channel.make_channel(@client, data)
       end
@@ -220,6 +400,21 @@ module Discorb
 
     alias create_category create_category_channel
 
+    
+    #
+    # Create a new stage channel.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] bitrate The bitrate of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Discorb::StageChannel] The created stage channel.
+    #
     def create_stage_channel(name, bitrate: 64, position: nil, permission_overwrites: nil, parent: nil, reason: nil)
       Async do
         payload = { type: StageChannel.channel_type }
@@ -232,20 +427,38 @@ module Discorb
               type: target.is_a?(Role) ? 0 : 1,
               id: target.id,
               allow: overwrite.allow_value,
-              deny: overwrite.deny_value
+              deny: overwrite.deny_value,
             }
           end
         end
         payload[:parent_id] = parent&.id
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason
+          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
         ).wait
         Channel.make_channel(@client, data)
       end
     end
 
+    
+    #
+    # Create a new news channel.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] name The name of the channel.
+    # @param [String] topic The topic of the channel.
+    # @param [Integer] rate_limit_per_user The rate limit per user in the channel.
+    # @param [Integer] slowmode Alias for `rate_limit_per_user`.
+    # @param [Integer] position The position of the channel.
+    # @param [Boolean] nsfw Whether the channel is nsfw.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Discorb::NewsChannel] The created news channel.
+    #
     def create_news_channel(
-      name, topic: nil, rate_limit_per_user: nil, slowmode: nil, position: nil, permission_overwrites: nil, parent: nil, reason: nil
+      name, topic: nil, rate_limit_per_user: nil, slowmode: nil, position: nil, nsfw: nil, permission_overwrites: nil, parent: nil, reason: nil
     )
       Async do
         payload = { type: NewsChannel.channel_type }
@@ -260,18 +473,26 @@ module Discorb
               type: target.is_a?(Role) ? 0 : 1,
               id: target.id,
               allow: overwrite.allow_value,
-              deny: overwrite.deny_value
+              deny: overwrite.deny_value,
             }
           end
         end
+        payload[:nsfw] = nsfw unless nsfw.nil?
         payload[:parent_id] = parent&.id
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason
+          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
         ).wait
         Channel.make_channel(@client, data)
       end
     end
 
+    #
+    # Fetch a list of active threads in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::ThreadChannel>] The list of threads.
+    #
     def fetch_active_threads
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/threads/active").wait
@@ -279,13 +500,37 @@ module Discorb
       end
     end
 
+    #
+    # Fetch a member in the guild.
+    # @macro async
+    # @macro http
+    # @macro members_intent
+    #
+    # @param [#to_s] id The ID of the member to fetch.
+    #
+    # @return [Discorb::Member] The member.
+    # @return [nil] If the member is not found.
+    #
     def fetch_member(id)
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/members/#{id}").wait
+      rescue Discorb::NotFoundError
+        nil
+      else
         Member.new(@client, @id, data[:user], data)
       end
     end
 
+    #
+    # Search for members by name in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] name The name of the member to search for.
+    # @param [Integer] limit The maximum number of members to return.
+    #
+    # @return [Array<Discorb::Member>] The list of members.
+    #
     def fetch_members_named(name, limit: 1)
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/members/search?#{URI.encode_www_form({ query: name, limit: limit })}").wait
@@ -293,12 +538,26 @@ module Discorb
       end
     end
 
+    #
+    # Almost the same as {#fetch_members_named}, but returns a single member.
+    # @macro async
+    # @macro http
+    #
+    # @return [Discorb::Member] The member.
+    # @return [nil] If the member is not found.
+    #
     def fetch_member_named(...)
       Async do
         fetch_members_named(...).first
       end
     end
 
+    #
+    # Change nickname of client member.
+    #
+    # @param [String] nickname The nickname to set.
+    # @param [String] reason The reason for changing the nickname.
+    #
     def edit_nickname(nickname, reason: nil)
       Async do
         @client.internet.patch("/guilds/#{@id}/members/@me/nick", { nick: nickname }, audit_log_reason: reason).wait
@@ -309,12 +568,27 @@ module Discorb
     alias modify_nickname edit_nickname
     alias modify_nick modify_nickname
 
+    #
+    # Kick a member from the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::Member] member The member to kick.
+    # @param [String] reason The reason for kicking the member.
+    #
     def kick_member(member, reason: nil)
       Async do
         @client.internet.delete("/guilds/#{@id}/members/#{member.id}", audit_log_reason: reason).wait
       end
     end
 
+    #
+    # Fetch a list of bans in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::Guild::Ban>] The list of bans.
+    #
     def fetch_bans
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/bans").wait
@@ -322,6 +596,16 @@ module Discorb
       end
     end
 
+    #
+    # Fetch a ban in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::User] user The user to fetch.
+    #
+    # @return [Discorb::Guild::Ban] The ban.
+    # @return [nil] If the ban is not found.
+    #
     def fetch_ban(user)
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/bans/#{user.id}").wait
@@ -332,27 +616,62 @@ module Discorb
       end
     end
 
+    #
+    # Checks the user was banned from the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::User] user The user to check.
+    #
+    # @return [Boolean] Whether the user was banned.
+    #
     def banned?(user)
       Async do
         !fetch_ban(user).wait.nil?
       end
     end
 
-    def ban_member(user, delete_message_days: 0, reason: nil)
+    #
+    # Ban a member from the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::Member] member The member to ban.
+    # @param [Integer] delete_message_days The number of days to delete messages.
+    # @param [String] reason The reason for banning the member.
+    #
+    # @return [Discorb::Guild::Ban] The ban.
+    #
+    def ban_member(member, delete_message_days: 0, reason: nil)
       Async do
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/bans", { user: user.id, delete_message_days: delete_message_days }, audit_log_reason: reason
+          "/guilds/#{@id}/bans", { user: member.id, delete_message_days: delete_message_days }, audit_log_reason: reason,
         ).wait
         Ban.new(@client, self, data)
       end
     end
 
+    #
+    # Unban a user from the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::User] user The user to unban.
+    # @param [String] reason The reason for unbanning the user.
+    #
     def unban_user(user, reason: nil)
       Async do
         @client.internet.delete("/guilds/#{@id}/bans/#{user.id}", audit_log_reason: reason).wait
       end
     end
 
+    #
+    # Fetch a list of roles in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::Role>] The list of roles.
+    #
     def fetch_roles
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/roles").wait
@@ -360,6 +679,19 @@ module Discorb
       end
     end
 
+    #
+    # Create a role in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] name The name of the role.
+    # @param [Discorb::Color] color The color of the role.
+    # @param [Boolean] hoist Whether the role should be hoisted.
+    # @param [Boolean] mentionable Whether the role should be mentionable.
+    # @param [String] reason The reason for creating the role.
+    #
+    # @return [Discorb::Role] The role.
+    #
     def create_role(name = nil, color: nil, hoist: nil, mentionable: nil, reason: nil)
       Async do
         payload = {}
@@ -368,33 +700,61 @@ module Discorb
         payload[:hoist] = hoist if hoist
         payload[:mentionable] = mentionable if mentionable
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/roles", payload, audit_log_reason: reason
-        )
+          "/guilds/#{@id}/roles", payload, audit_log_reason: reason,
+        ).wait
         Role.new(@client, self, data)
       end
     end
 
+    #
+    # Fetch how many members will be pruned.
+    # @macro async
+    # @macro http
+    #
+    # @param [Integer] days The number of days to prune.
+    # @param [Array<Discorb::Role>] roles The roles that include for pruning.
+    #
+    # @return [Integer] The number of members that will be pruned.
+    #
     def fetch_prune(days = 7, roles: [])
       Async do
         params = {
           days: days,
-          include_roles: @id.to_s
+          include_roles: @id.to_s,
         }
-        param[:include_roles] = roles.map(&:id).map(&:to_s).join(';') if roles.any?
+        param[:include_roles] = roles.map(&:id).map(&:to_s).join(";") if roles.any?
         _resp, data = @client.internet.get("/guilds/#{@id}/prune?#{URI.encode_www_form(params)}").wait
         data[:pruned]
       end
     end
 
+    #
+    # Prune members from the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [Integer] days The number of days to prune.
+    # @param [Array<Discorb::Role>] roles The roles that include for pruning.
+    # @param [String] reason The reason for pruning.
+    #
+    # @return [Integer] The number of members that were pruned.
+    #
     def prune(days = 7, roles: [], reason: nil)
       Async do
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/prune", { days: days, roles: roles.map(&:id) }, audit_log_reason: reason
+          "/guilds/#{@id}/prune", { days: days, roles: roles.map(&:id) }, audit_log_reason: reason,
         ).wait
         data[:pruned]
       end
     end
 
+    #
+    # Fetch voice regions that are available in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::VoiceRegion>] The available voice regions.
+    #
     def fetch_voice_regions
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/voice").wait
@@ -402,6 +762,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch invites in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Invite>] The invites.
+    #
     def fetch_invites
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/invites").wait
@@ -409,6 +776,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch integrations in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::Integration>] The integrations.
+    #
     def fetch_integrations
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/integrations").wait
@@ -416,6 +790,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch the widget of the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Discorb::Guild::Widget] The widget.
+    #
     def fetch_widget
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/widget").wait
@@ -423,6 +804,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch the vanity URL of the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Discorb::Guild::VanityInvite] The vanity URL.
+    #
     def fetch_vanity_invite
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/vanity-url").wait
@@ -430,6 +818,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch the welcome screen of the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Discorb::Guild::WelcomeScreen] The welcome screen.
+    #
     def fetch_welcome_screen
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/welcome-screen").wait
@@ -437,6 +832,13 @@ module Discorb
       end
     end
 
+    #
+    # Fetch stickers in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Array<Discorb::Sticker::GuildSticker>] The stickers.
+    #
     def fetch_stickers
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/stickers").wait
@@ -444,13 +846,33 @@ module Discorb
       end
     end
 
+    #
+    # Fetch the sticker by ID.
+    # @macro async
+    # @macro http
+    #
+    # @param [#to_s] id The ID of the sticker.
+    #
+    # @return [Discorb::Sticker::GuildSticker] The sticker.
+    # @return [nil] If the sticker does not exist.
+    #
     def fetch_sticker(id)
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/stickers/#{id}").wait
+      rescue Discorb::NotFoundError
+        nil
+      else
         Sticker::GuildSticker.new(@client, data)
       end
     end
 
+    #
+    # Fetch templates in the guild.
+    # @macro async
+    # @macro http
+    #
+    # @return [Discorb::GuildTemplate] The templates.
+    #
     def fetch_templates
       Async do
         _resp, data = @client.internet.get("/guilds/#{@id}/templates").wait
@@ -458,24 +880,49 @@ module Discorb
       end
     end
 
+    #
+    # Almost the same as {#fetch_templates}, but returns a single template.
+    #
+    # @return [Discorb::GuildTemplate] The template.
+    # @return [nil] If the template does not exist.
+    #
     def fetch_template
       Async do
         fetch_templates.wait.first
       end
     end
 
+    #
+    # Create a new template in the guild.
+    #
+    # @param [String] name The name of the template.
+    # @param [String] description The description of the template.
+    # @param [String] reason The reason for creating the template.
+    #
+    # @return [Discorb::GuildTemplate] The template.
+    #
     def create_template(name, description = nil, reason: nil)
       Async do
         _resp, data = @client.internet.post(
-          "/guilds/#{@id}/templates", { name: name, description: description }, audit_log_reason: reason
-        )
+          "/guilds/#{@id}/templates", { name: name, description: description }, audit_log_reason: reason,
+        ).wait
         GuildTemplate.new(@client, data)
       end
     end
 
+    #
+    # Represents a vanity invite.
+    #
+    # @!attribute [r] url
+    #   @return [String] The vanity URL.
+    #
     class VanityInvite < DiscordModel
-      attr_reader :code, :uses
+      # @return [String] The vanity invite code.
+      attr_reader :code
+      # @return [Integer] The number of uses.
+      attr_reader :uses
 
+      # @!visibility private
       def initialize(client, guild, data)
         @client = client
         @guild = guild
@@ -488,24 +935,50 @@ module Discorb
       end
     end
 
+    #
+    # Represents a guild widget.
+    #
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild.
+    # @!attribute [r] json_url
+    #   @return [String] The JSON URL.
+    #
     class Widget < DiscordModel
-      attr_reader :guild_id, :channel_id
+      # @return [Discorb::Snowflake] The guild ID.
+      attr_reader :guild_id
+      # @return [Discorb::Snowflake] The channel ID.
+      attr_reader :channel_id
+      # @return [Boolean] Whether the widget is enabled.
+      attr_reader :enabled
+      alias enabled? enabled
+      alias enable? enabled
 
+      # @!visibility private
       def initialize(client, guild_id, data)
         @client = client
-        @guild_id = guild_id
         @enabled = data[:enabled]
-        @channel_id = data[:channel_id]
+        @guild_id = Snowflake.new(guild_id)
+        @channel_id = Snowflake.new(data[:channel_id])
       end
 
       def channel
         @client.channels[@channel_id]
       end
 
-      def enable?
-        @enabled
-      end
-
+      #
+      # Edit the widget.
+      # @macro async
+      # @macro http
+      # @macro edit
+      #
+      # @param [Boolean] enabled Whether the widget is enabled.
+      # @param [Discorb::GuildChannel] channel The channel.
+      # @param [String] reason The reason for editing the widget.
+      #
       def edit(enabled: nil, channel: nil, reason: nil)
         Async do
           payload = {}
@@ -515,21 +988,39 @@ module Discorb
         end
       end
 
+      alias modify edit
+
       def json_url
         "#{Discorb::API_BASE_URL}/guilds/#{@guild_id}/widget.json"
       end
 
-      def iframe(theme: 'dark', width: 350, height: 500)
+      #
+      # Return iframe HTML of the widget.
+      #
+      # @param ["dark", "light"] theme The theme of the widget.
+      # @param [Integer] width The width of the widget.
+      # @param [Integer] height The height of the widget.
+      #
+      # @return [String] The iframe HTML.
+      #
+      def iframe(theme: "dark", width: 350, height: 500)
         [
           %(<iframe src="https://canary.discord.com/widget?id=#{@guild_id}&theme=#{theme}" width="#{width}" height="#{height}"),
-          %(allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>)
+          %(allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>),
         ].join
       end
     end
 
+    #
+    # Represents a ban.
+    #
     class Ban < DiscordModel
-      attr_reader :user, :reason
+      # @return [Discorb::User] The user.
+      attr_reader :user
+      # @return [String] The reason for the ban.
+      attr_reader :reason
 
+      # @!visibility private
       def initialize(client, guild, data)
         @client = client
         @guild = guild
@@ -539,9 +1030,18 @@ module Discorb
     end
 
     class << self
+      # @!visibility private
       attr_reader :nsfw_levels, :mfa_levels, :verification_levels, :default_message_notifications, :explicit_content_filter
 
-      def banner(guild_id, style: 'banner')
+      #
+      # Returns a banner url from the guild's ID.
+      #
+      # @param [#to_s] guild_id The ID of the guild.
+      # @param [:shield, :banner1, :banner2, :banner3, :banner4] style The style of the banner.
+      #
+      # @return [String] The url of the banner.
+      #
+      def banner(guild_id, style: "banner")
         "#{Discorb::API_BASE_URL}/guilds/#{guild_id}/widget.png&style=#{style}"
       end
     end
@@ -555,23 +1055,21 @@ module Discorb
         return
       end
       @client.guilds[@id] = self unless data[:no_cache]
-      @icon = data[:icon].nil? ? nil : Asset.new(self, data[:icon])
+      @icon = data[:icon] && Asset.new(self, data[:icon])
       @unavailable = false
       @name = data[:name]
       @members = Discorb::Dictionary.new
       data[:members].each do |m|
         Member.new(@client, @id, m[:user], m)
       end
-      @splash = data[:splash]
-      @discovery_splash = data[:discovery_splash]
+      @splash = data[:splash] && Asset.new(self, data[:splash], path: "splashes/#{@id}")
+      @discovery_splash = data[:discovery_splash] && Asset.new(self, data[:discovery_splash], path: "discovery-splashes/#{@id}")
       @owner_id = data[:owner_id]
       @permissions = Permission.new(data[:permissions].to_i)
-      @region = data[:region]
       @afk_channel_id = data[:afk_channel_id]
       @afk_timeout = data[:afk_timeout]
       @widget_enabled = data[:widget_enabled]
       @widget_channel_id = data[:widget_channel_id]
-      @integrations = Dictionary.new
       @roles = Dictionary.new
       data[:roles].each do |r|
         @roles[r[:id]] = Role.new(@client, self, r)
@@ -590,10 +1088,10 @@ module Discorb
       @rules_channel_id = data[:rules_channel_id]
       @vanity_url_code = data[:vanity_url_code]
       @description = data[:description]
-      @banner_hash = data[:banner]
+      @banner = data[:banner] && Asset.new(self, data[:banner], path: "banners/#{@id}")
       @premium_tier = data[:premium_tier]
       @premium_subscription_count = data[:premium_tier_count].to_i
-      @preferred_locale = data[:preferred_locale]
+      @preferred_locale = data[:preferred_locale].gsub("-", "_").to_sym
       @public_updates_channel_id = data[:public_updates_channel_id]
       @max_video_channel_users = data[:max_video_channel_users]
       @approximate_member_count = data[:approximate_member_count]
@@ -610,13 +1108,21 @@ module Discorb
         Channel.make_channel(@client, c.merge({ guild_id: @id }))
       end
       @channels = Dictionary.new(tmp_channels.map { |c| [c.id, c] }.to_h, sort: ->(c) { c[1].position })
-      @voice_states = Dictionary.new(data[:voice_states].map { |v| [v[:user_id], VoiceState.new(@client, v.merge({ guild_id: @id }))] }.to_h)
+      @voice_states = Dictionary.new(data[:voice_states].map { |v| [Snowflake.new(v[:user_id]), VoiceState.new(@client, v.merge({ guild_id: @id }))] }.to_h)
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
-      @presences = Dictionary.new(data[:presences].map { |pr| [pr[:user][:id], Presence.new(@client, pr)] }.to_h)
+      @presences = Dictionary.new(data[:presences].map { |pr| [Snowflake.new(pr[:user][:id]), Presence.new(@client, pr)] }.to_h)
       @max_presences = data[:max_presences]
-      @stage_instances = Dictionary.new(data[:stage_instances].map { |s| [s[:id], StageInstance.new(@client, s)] }.to_h)
+      @stage_instances = Dictionary.new(data[:stage_instances].map { |s| [Snowflake.new(s[:id]), StageInstance.new(@client, s)] }.to_h)
       @data.update(data)
     end
+  end
+
+  class SystemChannelFlag < Flag
+    @bits = {
+      member_join: 0,
+      server_boost: 1,
+      setup_tips: 2,
+    }.freeze
   end
 
   class WelcomeScreen < DiscordModel
@@ -658,7 +1164,7 @@ module Discorb
           channel_id: @channel_id,
           description: @description,
           emoji_id: @emoji_id,
-          emoji_name: @emoji_name
+          emoji_name: @emoji_name,
         }
       end
 
