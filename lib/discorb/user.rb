@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class User < DiscordModel
-    attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar
+    attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar, :bot
+    alias bot? bot
 
     include Discorb::Messageable
 
@@ -23,10 +23,6 @@ module Discorb
 
     def name
       @username
-    end
-
-    def bot?
-      @bot
     end
 
     def to_s
@@ -76,7 +72,7 @@ module Discorb
         bug_hunter_level_2: 14,
         verified_bot: 16,
         early_verified_bot_developer: 17,
-        discord_certified_moderator: 18
+        discord_certified_moderator: 18,
       }.freeze
     end
 
@@ -106,7 +102,7 @@ module Discorb
         elsif avatar
           payload[:avatar] = avatar.to_s
         end
-        @client.internet.patch('/users/@me', payload).wait
+        @client.internet.patch("/users/@me", payload).wait
         self
       end
     end
