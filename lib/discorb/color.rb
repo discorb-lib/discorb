@@ -37,7 +37,7 @@ module Discorb
       greyple: 0x99aab5,
       dark_theme: 0x36393f,
       fuchsia: 0xeb459e,
-      yellow: 0xfee75c
+      yellow: 0xfee75c,
     }.freeze
 
     #
@@ -64,7 +64,7 @@ module Discorb
     # @return [String] A hexadecimal value.
     #
     def to_hex
-      @value.to_s(16).rjust(6, '0')
+      @value.to_s(16).rjust(6, "0")
     end
 
     #

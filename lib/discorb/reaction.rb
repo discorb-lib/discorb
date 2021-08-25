@@ -21,10 +21,10 @@ module Discorb
       @count = data[:count]
       @me = data[:me]
       @emoji = if data[:emoji][:id].nil?
-                 UnicodeEmoji.new(data[:emoji][:name])
-               else
-                 PartialEmoji.new(data[:emoji])
-               end
+          UnicodeEmoji.new(data[:emoji][:name])
+        else
+          PartialEmoji.new(data[:emoji])
+        end
     end
   end
 end

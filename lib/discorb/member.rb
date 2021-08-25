@@ -24,7 +24,7 @@ module Discorb
     end
 
     def mention
-      "<@#{@nick.nil? ? '' : '!'}#{@id}>"
+      "<@#{@nick.nil? ? "" : "!"}#{@id}>"
     end
 
     def voice_state

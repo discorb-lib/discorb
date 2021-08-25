@@ -44,7 +44,7 @@ module Discorb
     # @param [Discorb::Embed::Thumbnail] thumbnail The thumbnail of embed.
     #
     def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil,
-                   fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)
+                                                   fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)
       if data.nil?
         @title = title
         @description = description
@@ -56,7 +56,7 @@ module Discorb
         @footer = footer
         @image = image
         @thumbnail = thumbnail
-        @type = 'rich'
+        @type = "rich"
       else
         @title = data[:title]
         @description = data[:description]
@@ -66,9 +66,9 @@ module Discorb
         @color = data[:color] && Color.new(data[:color])
         @footer = data[:footer] && Footer.new(data[:footer][:text], icon: data[:footer][:icon])
         @author = if data[:author]
-                    Author.new(data[:author][:name], icon: data[:author][:icon],
-                                                     url: data[:author][:url])
-                  end
+            Author.new(data[:author][:name], icon: data[:author][:icon],
+                                             url: data[:author][:url])
+          end
         @thumbnail = data[:thumbnail] && Thumbnail.new(data[:thumbnail])
         @image = data[:image] && Image.new(data[:image])
         @video = data[:video] && Video.new(data[:video])
@@ -102,7 +102,7 @@ module Discorb
         image: @image&.to_hash,
         thumbnail: @thumbnail&.to_hash,
         author: @author&.to_hash,
-        fields: @fields&.map { |f| f.to_hash }
+        fields: @fields&.map { |f| f.to_hash },
       }
     end
 
@@ -140,7 +140,7 @@ module Discorb
         {
           name: @name,
           url: @url,
-          icon_url: @icon
+          icon_url: @icon,
         }
       end
     end
@@ -171,7 +171,7 @@ module Discorb
       def to_hash
         {
           text: @text,
-          icon_url: @icon
+          icon_url: @icon,
         }
       end
     end
@@ -210,7 +210,7 @@ module Discorb
         {
           name: @name,
           value: @value,
-          inline: @inline
+          inline: @inline,
         }
       end
     end

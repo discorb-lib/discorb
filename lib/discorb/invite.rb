@@ -69,7 +69,7 @@ module Discorb
     @target_types = {
       nil => :voice,
       1 => :stream,
-      2 => :guild
+      2 => :guild,
     }.freeze
 
     # @!visibility private
@@ -100,7 +100,8 @@ module Discorb
     end
 
     # Delete the invite.
-    # @macro async http
+    # @macro async
+    # @macro http
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)

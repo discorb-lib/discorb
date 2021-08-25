@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'mime/types'
+require "mime/types"
 
 module Discorb
   class Attachment
@@ -18,7 +18,7 @@ module Discorb
     end
 
     def image?
-      @content_type.start_with? 'image/'
+      @content_type.start_with? "image/"
     end
   end
 
@@ -29,7 +29,7 @@ module Discorb
       @io = io
       @filename = filename || (io.respond_to?(:path) ? io.path : object_id)
       @content_type = content_type || MIME::Types.type_for(@filename)[0].to_s
-      @content_type = 'application/octet-stream' if @content_type == ''
+      @content_type = "application/octet-stream" if @content_type == ""
     end
   end
 end

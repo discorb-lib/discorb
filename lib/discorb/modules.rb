@@ -3,16 +3,16 @@
 module Discorb
   module Messageable
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
-             message_reference: nil, components: nil, file: nil, files: nil)
+                            message_reference: nil, components: nil, file: nil, files: nil)
       Async do |_task|
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
         tmp_embed = if embed
-                      [embed]
-                    elsif embeds
-                      embeds
-                    end
+            [embed]
+          elsif embeds
+            embeds
+          end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] =
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
@@ -61,7 +61,7 @@ module Discorb
           limit: limit,
           before: Discorb::Utils.try(after, :id),
           after: Discorb::Utils.try(around, :id),
-          around: Discorb::Utils.try(before, :id)
+          around: Discorb::Utils.try(before, :id),
         }.filter { |_k, v| !v.nil? }.to_h
         _resp, messages = @client.internet.get("#{base_url.wait}/messages?#{URI.encode_www_form(params)}").wait
         messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }

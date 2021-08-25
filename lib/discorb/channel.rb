@@ -129,6 +129,8 @@ module Discorb
     # @return [Boolean] `true` if the channel is same as another.
     #
     def ==(other)
+      return false unless other.respond_to?(:id)
+
       @id == other.id
     end
 
@@ -163,7 +165,8 @@ module Discorb
 
     #
     # Deletes the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [String] reason The reason of deleting the channel.
     #
@@ -182,7 +185,8 @@ module Discorb
 
     #
     # Moves the channel to another position.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Integer] position The position to move the channel.
     # @param [Boolean] lock_permissions Whether to lock the permissions of the channel.
@@ -251,7 +255,8 @@ module Discorb
 
     #
     # Edits the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     # @macro edit
     #
     # @param [String] name The name of the channel.
@@ -298,7 +303,8 @@ module Discorb
 
     #
     # Create webhook in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [String] name The name of the webhook.
     # @param [Discorb::Image] avatar The avatar of the webhook.
@@ -317,7 +323,8 @@ module Discorb
 
     #
     # Fetch webhooks in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @return [Array<Discorb::Webhook>] The webhooks in the channel.
     #
@@ -330,7 +337,8 @@ module Discorb
 
     #
     # Bulk delete messages in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::Message] messages The messages to delete.
     # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
@@ -358,7 +366,8 @@ module Discorb
 
     #
     # Set the channel's permission overwrite.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of setting the overwrite.
@@ -388,7 +397,8 @@ module Discorb
 
     #
     # Delete the channel's permission overwrite.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of deleting the overwrite.
@@ -405,7 +415,8 @@ module Discorb
 
     #
     # Fetch the channel's invites.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @return [Array<Discorb::Invite>] The invites in the channel.
     #
@@ -418,7 +429,8 @@ module Discorb
 
     #
     # Create an invite in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Integer] max_age The max age of the invite.
     # @param [Integer] max_uses The max uses of the invite.
@@ -443,7 +455,8 @@ module Discorb
 
     #
     # Follow the existing announcement channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::NewsChannel] target The channel to follow.
     # @param [String] reason The reason of following the channel.
@@ -456,7 +469,8 @@ module Discorb
 
     #
     # Follow the existing announcement channel from self.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::TextChannel] target The channel to follow to.
     # @param [String] reason The reason of following the channel.
@@ -469,7 +483,8 @@ module Discorb
 
     #
     # Trigger the typing indicator in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # If block is given, trigger typing indicator during executing block.
     # @example
@@ -499,7 +514,8 @@ module Discorb
 
     #
     # Fetch the pinned messages in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @return [Array<Discorb::Message>] The pinned messages in the channel.
     #
@@ -512,7 +528,8 @@ module Discorb
 
     #
     # Pin a message in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -525,7 +542,8 @@ module Discorb
 
     #
     # Unpin a message in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -538,7 +556,8 @@ module Discorb
 
     #
     # Start thread in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [String] name The name of the thread.
     # @param [Discorb::Message] message The message to start the thread.
@@ -568,7 +587,8 @@ module Discorb
 
     #
     # Fetch archived threads in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @return [Array<Discorb::ThreadChannel>] The archived threads in the channel.
     #
@@ -581,7 +601,8 @@ module Discorb
 
     #
     # Fetch archived private threads in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @return [Array<Discorb::ThreadChannel>] The archived private threads in the channel.
     #
@@ -594,7 +615,8 @@ module Discorb
 
     #
     # Fetch joined archived private threads in the channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [Integer] limit The limit of threads to fetch.
     # @param [Time] before <description>
@@ -656,7 +678,8 @@ module Discorb
     @channel_type = 2
     #
     # Edit the voice channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     # @macro edit
     #
     # @param [String] name The name of the voice channel.
@@ -721,7 +744,8 @@ module Discorb
 
     #
     # Edit the stage channel.
-    # @macro async http
+    # @macro async
+    # @macro http
     # @macro edit
     #
     # @param [String] name The name of the stage channel.
@@ -748,7 +772,8 @@ module Discorb
 
     #
     # Start a stage instance.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @param [String] topic The topic of the stage instance.
     # @param [Boolean] public Whether the stage instance is public or not.
@@ -765,7 +790,8 @@ module Discorb
 
     #
     # Fetch a current stage instance.
-    # @macro async http
+    # @macro async
+    # @macro http
     #
     # @return [StageInstance] The current stage instance.
     # @return [nil] If there is no current stage instance.
@@ -841,7 +867,8 @@ module Discorb
 
     #
     # Edit the thread.
-    # @macro async http
+    # @macro async
+    # @macro http
     # @macro edit
     #
     # @param [String] name The name of the thread.

@@ -5,6 +5,7 @@ module Discorb
     attr_reader :id, :name, :color, :permissions, :position, :guild, :hoist, :managed, :mentionable
 
     include Comparable
+
     def initialize(client, guild, data)
       @client = client
       @guild = guild

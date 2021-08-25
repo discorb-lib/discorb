@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'pp'
-require 'json'
-require 'logger'
+require "pp"
+require "json"
+require "logger"
 
-require 'async'
-require 'async/websocket/client'
+require "async"
+require "async/websocket/client"
 
 module Discorb
   class Client
@@ -134,7 +134,7 @@ module Discorb
       Async do
         next @application if @application && !force
 
-        _resp, data = internet.get('/oauth2/applications/@me').wait
+        _resp, data = internet.get("/oauth2/applications/@me").wait
         @application = Application.new(self, data)
         @application
       end
@@ -142,7 +142,7 @@ module Discorb
 
     def fetch_nitro_sticker_packs
       Async do
-        _resp, data = internet.get('/stickers-packs').wait
+        _resp, data = internet.get("/stickers-packs").wait
         data.map { |pack| Sticker::Pack.new(self, pack) }
       end
     end

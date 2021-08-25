@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class Interaction < DiscordModel
     attr_reader :id, :application_id, :type, :member, :user, :version, :token
 
     @interaction_type = nil
     @interaction_name = nil
+
     def initialize(client, data)
       @client = client
       @id = Snowflake.new(data[:id])
@@ -61,8 +61,8 @@ module Discorb
                                 {
                                   type: 5,
                                   data: {
-                                    flags: (hide ? 1 << 6 : 0)
-                                  }
+                                    flags: (hide ? 1 << 6 : 0),
+                                  },
                                 }).wait
         end
       end
@@ -72,10 +72,10 @@ module Discorb
         payload[:content] = content if content
         payload[:tts] = tts
         tmp_embed = if embed
-                      [embed]
-                    elsif embeds
-                      embeds
-                    end
+            [embed]
+          elsif embeds
+            embeds
+          end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         if components
@@ -110,8 +110,8 @@ module Discorb
                                 {
                                   type: 7,
                                   data: {
-                                    flags: (hide ? 1 << 6 : 0)
-                                  }
+                                    flags: (hide ? 1 << 6 : 0),
+                                  },
                                 }).wait
         end
       end
@@ -121,10 +121,10 @@ module Discorb
         payload[:content] = content if content
         payload[:tts] = tts
         tmp_embed = if embed
-                      [embed]
-                    elsif embeds
-                      embeds
-                    end
+            [embed]
+          elsif embeds
+            embeds
+          end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         if components

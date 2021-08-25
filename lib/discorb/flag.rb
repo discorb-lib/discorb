@@ -15,15 +15,15 @@ module Discorb
     end
 
     def method_missing(name, args = nil)
-      if @values.key?(name.to_s.delete_suffix('?').to_sym)
-        @values[name.to_s.delete_suffix('?').to_sym]
+      if @values.key?(name.to_s.delete_suffix("?").to_sym)
+        @values[name.to_s.delete_suffix("?").to_sym]
       else
         super
       end
     end
 
     def respond_to_missing?(sym, include_private)
-      @values.key?(name.to_s.delete_suffix('?').to_sym) ? true : super
+      @values.key?(name.to_s.delete_suffix("?").to_sym) ? true : super
     end
 
     def +(other)
@@ -50,7 +50,7 @@ module Discorb
       attr_reader :bits
 
       def max_value
-        2**@bits.values.max - 1
+        2 ** @bits.values.max - 1
       end
     end
   end

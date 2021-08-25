@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require 'base64'
-require 'mime/types'
+require "base64"
+require "mime/types"
 
 module Discorb
   class Image
     def initialize(source, type = nil)
       if ::File.exist?(source)
-        ::File.open(source, 'rb') do |file|
+        ::File.open(source, "rb") do |file|
           @bytes = file.read
         end
         @type = MIME::Types.type_for(source).first.to_s
       elsif type.nil?
-        raise ArgumentError, 'File not found and type is not specified'
+        raise ArgumentError, "File not found and type is not specified"
       else
         @bytes = bytes
         @type = "image/#{type}"

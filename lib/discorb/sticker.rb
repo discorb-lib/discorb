@@ -7,12 +7,12 @@ module Discorb
 
     @sticker_type = {
       1 => :official,
-      2 => :guild
+      2 => :guild,
     }.freeze
     @sticker_format = {
       1 => :png,
       2 => :apng,
-      3 => :lottie
+      3 => :lottie,
     }
     # @!visibility private
     def initialize(client, data)
@@ -57,7 +57,7 @@ module Discorb
         @cover_sticker_id = Snowflake.new(data[:cover_sticker_id])
         @description = data[:description]
         @banner_asset_id = Snowflake.new(data[:banner_asset_id])
-        @banner = Asset.new(self, data[:banner_asset_id], path: 'app-assets/710982414301790216/store')
+        @banner = Asset.new(self, data[:banner_asset_id], path: "app-assets/710982414301790216/store")
         @stickers = data[:stickers].map { |s| Sticker.new(@client, s) }
       end
     end
@@ -67,7 +67,7 @@ module Discorb
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
-      @tags = data[:tags].split(',')
+      @tags = data[:tags].split(",")
       @type = self.class.sticker_type[data[:type]]
       @format = self.class.sticker_format[data[:format]]
       @description = data[:description]

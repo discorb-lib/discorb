@@ -10,7 +10,7 @@ module Discorb
       streaming: 1,
       listening: 2,
       watching: 3,
-      competing: 5
+      competing: 5,
     }.freeze
 
     #
@@ -35,7 +35,7 @@ module Discorb
       {
         name: @name,
         type: @type,
-        url: @url
+        url: @url,
       }
     end
 

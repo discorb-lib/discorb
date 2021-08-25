@@ -272,7 +272,6 @@ module Discorb
       end
     end
 
-    
     #
     # Create a new text channel.
     # @macro async
@@ -400,7 +399,6 @@ module Discorb
 
     alias create_category create_category_channel
 
-    
     #
     # Create a new stage channel.
     # @macro async
@@ -439,7 +437,6 @@ module Discorb
       end
     end
 
-    
     #
     # Create a new news channel.
     # @macro async

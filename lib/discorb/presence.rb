@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Discorb
   class Presence < DiscordModel
     attr_reader :status, :activities, :client_status
@@ -36,8 +35,9 @@ module Discorb
         2 => :listening,
         3 => :watching,
         4 => :custom,
-        5 => :competing
+        5 => :competing,
       }
+
       def initialize(data)
         @name = data[:name]
         @type = self.class.activity_types[data[:type]]
@@ -48,8 +48,8 @@ module Discorb
         @details = data[:details]
         @state = data[:state]
         @emoji = if data[:emoji]
-                   data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
-                 end
+            data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
+          end
         @party = data[:party] && Party.new(data[:party])
         @assets = data[:assets] && Asset.new(data[:assets])
         @instance = data[:instance]
@@ -121,7 +121,7 @@ module Discorb
           spectate: 2,
           join_request: 3,
           sync: 4,
-          play: 5
+          play: 5,
         }
       end
 
@@ -142,6 +142,7 @@ module Discorb
           @label = data[0]
           @url = data[1]
         end
+
         alias text label
       end
 
