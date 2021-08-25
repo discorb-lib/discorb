@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require "yaml"
-
 module Discorb
+  #
+  # Error class for Discorb.
+  # @abstract
+  #
   class DiscorbError < StandardError
     private
 
@@ -28,7 +30,16 @@ module Discorb
     end
   end
 
+  #
+  # Represents a HTTP error.
+  #
   class HTTPError < DiscorbError
+    # @return [String] the HTTP response code.
+    attr_reader :code
+    # @return [Net::HTTPResponse] the HTTP response.
+    attr_reader :response
+
+    # @!visibility private
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
@@ -36,7 +47,11 @@ module Discorb
     end
   end
 
+  #
+  # Represents a 400 error.
+  #
   class BadRequestError < HTTPError
+    # @!visibility private
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
@@ -48,18 +63,33 @@ module Discorb
     end
   end
 
+  #
+  # Represents a 403 error.
+  #
   class ForbiddenError < HTTPError
   end
 
+  #
+  # Represents a 404 error.
+  #
   class NotFoundError < HTTPError
   end
 
+  #
+  # Represents a error in client-side.
+  #
   class ClientError < DiscorbError
   end
 
+  #
+  # Represents a timeout error.
+  #
   class TimeoutError < DiscorbError
   end
 
+  #
+  # Represents a warning.
+  #
   class NotSupportedWarning < DiscorbError
     def initialize(message)
       super("#{message} is not supported yet.")
