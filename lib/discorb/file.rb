@@ -3,9 +3,34 @@
 require "mime/types"
 
 module Discorb
-  class Attachment
-    attr_reader :io, :id, :filename, :content_type, :size, :url, :proxy_url, :height, :width
+  #
+  # Represents a attachment file.
+  # @!attribute [r] image?
+  #   @return [Boolean] whether the file is an image.
+  #
+  class Attachment < DiscordModel
+    # @return [#read] The file content.
+    attr_reader :io
+    # @return [Discorb::Snowflake] The attachment id.
+    attr_reader :id
+    # @return [String] The attachment filename.
+    attr_reader :filename
+    # @return [String] The attachment content type.
+    attr_reader :content_type
+    # @return [Integer] The attachment size in bytes.
+    attr_reader :size
+    # @return [String] The attachment url.
+    attr_reader :url
+    # @return [String] The attachment proxy url.
+    attr_reader :proxy_url
+    # @return [Integer] The image height.
+    # @return [nil] If the attachment is not an image.
+    attr_reader :height
+    # @return [Integer] The image width.
+    # @return [nil] If the attachment is not an image.
+    attr_reader :width
 
+    # @!visibility private
     def initialize(data)
       @id = Snowflake.new(data[:id])
       @filename = data[:filename]
@@ -22,12 +47,20 @@ module Discorb
     end
   end
 
+  #
+  # Represents a file to send as an attachment.
+  #
   class File
-    attr_accessor :io, :filename, :content_type
+    # @return [#read] The IO of the file.
+    attr_accessor :io
+    # @return [String] The filename of the file. If not set, path or object_id of the IO is used.
+    attr_accessor :filename
+    # @return [String] The content type of the file. If not set, it is guessed from the filename.
+    attr_accessor :content_type
 
     def initialize(io, filename = nil, content_type: nil)
       @io = io
-      @filename = filename || (io.respond_to?(:path) ? io.path : object_id)
+      @filename = filename || (io.respond_to?(:path) ? io.path : io.object_id)
       @content_type = content_type || MIME::Types.type_for(@filename)[0].to_s
       @content_type = "application/octet-stream" if @content_type == ""
     end
