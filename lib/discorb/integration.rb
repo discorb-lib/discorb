@@ -1,15 +1,48 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a integration.
+  # @!attribute [r] guild
+  #   @macro client_cache
+  #   @return [Discorb::Guild] The guild this integration is in.
+  #
   class Integration < DiscordModel
-    attr_reader :id, :type, :enabled, :syncing, :role_id, :enable_emoticons, :expire_behavior,
-                :expire_grace_period, :user, :account, :subscriber_count, :revoked, :application
+    # @return [Discorb::Snowflake] The ID of the integration.
+    attr_reader :id
+    # @return [Symbol] The type of integration.
+    attr_reader :type
+    # @return [Boolean] Whether the integration is enabled.
+    attr_reader :enabled
+    alias enabled? enabled
+    # @return [Boolean] Whether the integration is syncing.
+    attr_reader :syncing
+    alias syncing? syncing
+    # @return [Boolean] Whether the integration is enabled emoticons.
+    attr_reader :enable_emoticons
+    alias enable_emoticons? enable_emoticons
+    # @return [:remove_role, :kick] The behavior of the integration when it expires.
+    attr_reader :expire_behavior
+    # @return [Integer] The grace period of the integration.
+    attr_reader :expire_grace_period
+    # @return [Discorb::User] The user for the integration.
+    attr_reader :user
+    # @return [Discorb::Integration::Account] The account for the integration.
+    attr_reader :account
+    # @return [Integer] The number of subscribers for the integration.
+    attr_reader :subscriber_count
+    # @return [Boolean] Whether the integration is revoked.
+    attr_reader :revoked
+    alias revoked? revoked
+    # @return [Discorb::Application] The application for the integration.
+    attr_reader :application
 
     @expire_behavior = {
       0 => :remove_role,
       1 => :kick,
     }
 
+    # @!visibility private
     def initialize(client, data, guild_id, no_cache: false)
       @client = client
       @data = data
@@ -22,6 +55,11 @@ module Discorb
       @client.guilds[@guild_id]
     end
 
+    #
+    # Delete the integration.
+    #
+    # @param [String] reason The reason for deleting the integration.
+    #
     def delete!(reason: nil)
       Async do
         @client.internet.delete("/guilds/#{@guild}/integrations/#{@id}", reason: reason).wait
@@ -49,12 +87,20 @@ module Discorb
     end
 
     class << self
+      # @!visibility private
       attr_reader :expire_behavior
     end
 
+    #
+    # Represents an account for an integration.
+    #
     class Account < DiscordModel
-      attr_reader :id, :name
+      # @return [String] The ID of the account.
+      attr_reader :id
+      # @return [String] The name of the account.
+      attr_reader :name
 
+      # @!visibility private
       def initialize(data)
         @id = data[:id]
         @name = data[:name]
