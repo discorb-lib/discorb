@@ -1,16 +1,55 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # A module to handle gateway.
+  # This module is internal use only.
+  #
   module GatewayHandler
+    #
+    # Represents an event.
+    #
     class GatewayEvent
+      # @!visibility private
       def initialize(data)
         @data = data
       end
     end
 
+    #
+    # Represents a reaction event.
+    #
     class ReactionEvent < GatewayEvent
-      attr_reader :data, :user_id, :channel_id, :message_id, :guild_id, :user, :channel, :guild, :message, :member_raw, :member, :emoji
+      # @return [Hash] The raw data of the event.
+      attr_reader :data
+      # @return [Discorb::Snowflake] The ID of the user who reacted.
+      attr_reader :user_id
+      alias member_id user_id
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader :channel_id
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader :message_id
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader :guild_id
+      # @macro client_cache
+      # @return [Discorb::User] The user who reacted.
+      attr_reader :user
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader :channel
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader :guild
+      # @macro client_cache
+      # @return [Discorb::Message] The message the reaction was sent in.
+      attr_reader :message
+      # @macro client_cache
+      # @return [Discorb::Member] The member who reacted.
+      attr_reader :member
+      # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
+      attr_reader :emoji
 
+      # @!visibility private
       def initialize(client, data)
         @client = client
         @data = data
@@ -29,29 +68,54 @@ module Discorb
 
         unless @guild.nil?
           @member = if data.key?(:member)
-                      @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
-                    else
-                      @guild.members[data[:user_id]]
-                    end
+              @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
+            else
+              @guild.members[data[:user_id]]
+            end
         end
 
         @message = client.messages[data[:message_id]]
         @emoji = data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
       end
 
+      # Fetch the message.
+      # If message is cached, it will be returned.
+      # @macro async
+      # @macro http
+      #
+      # @param [Boolean] force Whether to force fetching the message.
+      #
+      # @return [Discorb::Message] The message.
       def fetch_message(force: false)
-        return @message if !force && @message
-
         Async do |_task|
-          @channel.fetch_message(@message_id).wait
+          next @message if !force && @message
+
+          @message = @channel.fetch_message(@message_id).wait
         end
       end
-      alias member_id user_id
     end
 
+    #
+    # Represents a `MESSAGE_REACTION_REMOVE_ALL` event.
+    #
     class ReactionRemoveAllEvent < GatewayEvent
-      attr_reader :data, :guild_id, :channel_id, :message_id, :guild, :channel, :message
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader :channel_id
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader :message_id
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader :guild_id
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader :channel
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader :guild
+      # @macro client_cache
+      # @return [Discorb::Message] The message the reaction was sent in.
+      attr_reader :message
 
+      # @!visibility private
       def initialize(client, data)
         @client = client
         @data = data
@@ -62,11 +126,47 @@ module Discorb
         @channel = client.channels[data[:channel_id]]
         @message = client.messages[data[:message_id]]
       end
+
+      # Fetch the message.
+      # If message is cached, it will be returned.
+      # @macro async
+      # @macro http
+      #
+      # @param [Boolean] force Whether to force fetching the message.
+      #
+      # @return [Discorb::Message] The message.
+      def fetch_message(force: false)
+        Async do |_task|
+          next @message if !force && @message
+
+          @message = @channel.fetch_message(@message_id).wait
+        end
+      end
     end
 
+    #
+    # Represents a `MESSAGE_REACTION_REMOVE_EMOJI` event.
+    #
     class ReactionRemoveEmojiEvent < GatewayEvent
-      attr_reader :data, :guild_id, :channel_id, :message_id, :guild, :channel, :message, :emoji
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader :channel_id
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader :message_id
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader :guild_id
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader :channel
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader :guild
+      # @macro client_cache
+      # @return [Discorb::Message] The message the reaction was sent in.
+      attr_reader :message
+      # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
+      attr_reader :emoji
 
+      # @!visibility private
       def initialize(client, data)
         @client = client
         @data = data
@@ -78,10 +178,58 @@ module Discorb
         @message = client.messages[data[:message_id]]
         @emoji = data[:emoji][:id].nil? ? DiscordEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
       end
+
+      # Fetch the message.
+      # If message is cached, it will be returned.
+      # @macro async
+      # @macro http
+      #
+      # @param [Boolean] force Whether to force fetching the message.
+      #
+      # @return [Discorb::Message] The message.
+      def fetch_message(force: false)
+        Async do |_task|
+          next @message if !force && @message
+
+          @message = @channel.fetch_message(@message_id).wait
+        end
+      end
     end
 
+    #
+    # Represents a `MESSAGE_UPDATE` event.
+    #
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel the message was sent in.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild the message was sent in.
+
     class MessageUpdateEvent < GatewayEvent
-      attr_reader :data, :before, :after, :id, :channel_id, :guild_id, :content, :timestamp, :mention_everyone, :mention_roles, :attachments, :embeds
+      # @return [Discorb::Message] The message before update.
+      attr_reader :before
+      # @return [Discorb::Message] The message after update.
+      attr_reader :after
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader :id
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader :channel_id
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader :guild_id
+      # @return [String] The new content of the message.
+      attr_reader :content
+      # @return [Time] The time the message was edited.
+      attr_reader :timestamp
+      # @return [Boolean] Whether the message pings @everyone.
+      attr_reader :mention_everyone
+      # @macro client_cache
+      # @return [Array<Discorb::Role>] The roles mentioned in the message.
+      attr_reader :mention_roles
+      # @return [Array<Discorb::Attachment>] The attachments in the message.
+      attr_reader :attachments
+      # @return [Array<Discorb::Embed>] The embeds in the message.
+      attr_reader :embeds
 
       def initialize(client, data, before, after)
         @client = client
@@ -107,6 +255,11 @@ module Discorb
         @client.guilds[@guild_id]
       end
 
+      # Fetch the message.
+      # @macro async
+      # @macro http
+      #
+      # @return [Discorb::Message] The message.
       def fetch_message
         Async do
           channel.fetch_message(@id).wait
@@ -114,9 +267,20 @@ module Discorb
       end
     end
 
+    #
+    # Represents a message but it has only ID.
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel the message was sent in.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild the message was sent in.
+    #
     class UnknownDeleteBulkMessage < GatewayEvent
+      # @return [Discorb::Snowflake] The ID of the message.
       attr_reader :id
 
+      # @!visibility private
       def initialize(client, id, data)
         @client = client
         @id = id
@@ -134,9 +298,20 @@ module Discorb
       end
     end
 
+    #
+    # Represents a `INVITE_DELETE` event.
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel the message was sent in.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild the message was sent in.
+    #
     class InviteDeleteEvent < GatewayEvent
+      # @return [String] The invite code.
       attr_reader :code
 
+      # @!visibility private
       def initialize(client, data)
         @client = client
         @data = data
@@ -166,9 +341,27 @@ module Discorb
       end
     end
 
+    #
+    # Represents a `TYPING_START` event.
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel the user is typing in.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild the user is typing in.
+    # @!attribute [r] user
+    #   @macro client_cache
+    #   @return [Discorb::User] The user that is typing.
+    #
     class TypingStartEvent < GatewayEvent
-      attr_reader :client, :channel_id, :guild_id, :user_id
+      # @return [Discorb::Channel] The ID of channel the user is typing in.
+      attr_reader :channel_id
+      # @return [Discorb::Guild] The ID of the user that is typing.
+      attr_reader :guild_id
+      # @return [Discorb::User] The ID of user that is typing.
+      attr_reader :user_id
 
+      # @!visibility private
       def initialize(client, data)
         @client = client
         @data = data
@@ -192,20 +385,30 @@ module Discorb
       end
     end
 
+    #
+    # Represents a message pin event.
+    # @!attribute [r] pinned?
+    #   @return [Boolean] Whether the message was pinned.
+    # @!attribute [r] unpinned?
+    #   @return [Boolean] Whether the message was unpinned.
+    #
     class MessagePinEvent < GatewayEvent
-      attr_reader :message, :type
+      # @return [Discorb::Message] The message that was pinned.
+      attr_reader :message
+      # @return [:pinned, :unpinned] The type of event.
+      attr_reader :type
 
       def initialize(client, data, message)
         @client = client
         @data = data
         @message = message
         @type = if message.nil?
-                  :unknown
-                elsif @message.pinned?
-                  :pinned
-                else
-                  :unpinned
-                end
+            :unknown
+          elsif @message.pinned?
+            :pinned
+          else
+            :unpinned
+          end
       end
 
       def pinned?
@@ -217,7 +420,17 @@ module Discorb
       end
     end
 
+    #
+    # Represents a `WEBHOOKS_UPDATE` event.
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel where the webhook was updated.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild where the webhook was updated.
+    #
     class WebhooksUpdateEvent < GatewayEvent
+      # @!visibility private
       def initialize(client, data)
         @client = client
         @data = data
@@ -237,16 +450,16 @@ module Discorb
     private
 
     def connect_gateway(first)
-      @log.info 'Connecting to gateway.'
+      @log.info "Connecting to gateway."
       Async do |_task|
         @internet = Internet.new(self) if first
         @first = first
-        _, gateway_response = @internet.get('/gateway').wait
+        _, gateway_response = @internet.get("/gateway").wait
         gateway_url = gateway_response[:url]
         endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json",
                                                alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
         begin
-          Async::WebSocket::Client.connect(endpoint, headers: [['User-Agent', Discorb::USER_AGENT]]) do |connection|
+          Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]]) do |connection|
             @connection = connection
             while (message = @connection.read)
               handle_gateway(message)
@@ -254,11 +467,11 @@ module Discorb
           end
         rescue Protocol::WebSocket::ClosedError => e
           case e.message
-          when 'Authentication failed.'
+          when "Authentication failed."
             @tasks.map(&:stop)
-            raise ClientError.new('Authentication failed.'), cause: nil
-          when 'Discord WebSocket requesting client reconnect.'
-            @log.info 'Discord WebSocket requesting client reconnect'
+            raise ClientError.new("Authentication failed."), cause: nil
+          when "Discord WebSocket requesting client reconnect."
+            @log.info "Discord WebSocket requesting client reconnect"
             @tasks.map(&:stop)
             connect_gateway(false)
           end
@@ -271,7 +484,7 @@ module Discorb
     def send_gateway(opcode, **value)
       @connection.write({ op: opcode, d: value })
       @connection.flush
-      @log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, '[Token]')}"
+      @log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, "[Token]")}"
     end
 
     def handle_gateway(payload)
@@ -288,7 +501,7 @@ module Discorb
               token: @token,
               intents: @intents.value,
               compress: false,
-              properties: { '$os' => RUBY_PLATFORM, '$browser' => 'discorb', '$device' => 'discorb' }
+              properties: { "$os" => RUBY_PLATFORM, "$browser" => "discorb", "$device" => "discorb" },
             }
             payload[:presence] = @identify_presence if @identify_presence
             send_gateway(2, **payload)
@@ -296,19 +509,19 @@ module Discorb
             payload = {
               token: @token,
               session_id: @session_id,
-              seq: @last_s
+              seq: @last_s,
             }
             send_gateway(6, **payload)
           end
         when 9
-          @log.warn 'Received opcode 9, closed connection'
+          @log.warn "Received opcode 9, closed connection"
           @tasks.map(&:stop)
           if data
-            @log.info 'Connection is resumable, reconnecting'
+            @log.info "Connection is resumable, reconnecting"
             @connection.close
             connect_gateway(false)
           else
-            @log.info 'Connection is not resumable, reconnecting with opcode 2'
+            @log.info "Connection is not resumable, reconnecting with opcode 2"
             task.sleep(2)
             @connection.close
             connect_gateway(true)
@@ -325,9 +538,9 @@ module Discorb
         loop do
           @connection.write({ op: 1, d: @last_s })
           @connection.flush
-          @log.debug 'Sent opcode 1.'
-          @log.debug 'Waiting for heartbeat.'
-          task.sleep(interval / 1000.0 - 1)
+          @log.debug "Sent opcode 1."
+          @log.debug "Waiting for heartbeat."
+          sleep(interval / 1000.0 - 1)
         end
       end
     end
@@ -335,21 +548,22 @@ module Discorb
     def handle_event(event_name, data)
       return @log.debug "Client isn't ready; event #{event_name} wasn't handled" if @wait_until_ready && !@ready && !%w[READY GUILD_CREATE].include?(event_name)
 
+      dispatch(:event_receive, event_name, data)
       @log.debug "Handling event #{event_name}"
       case event_name
-      when 'READY'
+      when "READY"
         @api_version = data[:v]
         @session_id = data[:session_id]
         @user = ClientUser.new(self, data[:user])
         @uncached_guilds = data[:guilds].map { |g| g[:id] }
-      when 'GUILD_CREATE'
+      when "GUILD_CREATE"
         if @uncached_guilds.include?(data[:id])
           Guild.new(self, data, true)
           @uncached_guilds.delete(data[:id])
           if @uncached_guilds == []
             @ready = true
             dispatch(:ready)
-            @log.info('Guilds were cached')
+            @log.info("Guilds were cached")
           end
         elsif @guilds.has?(data[:id])
           @guilds[data[:id]].send(:_set_data, data)
@@ -359,17 +573,17 @@ module Discorb
           dispatch(:guild_join, guild)
         end
         dispatch(:guild_create, @guilds[data[:id]])
-      when 'MESSAGE_CREATE'
+      when "MESSAGE_CREATE"
         message = Message.new(self, data)
         dispatch(:message, message)
-      when 'GUILD_UPDATE'
+      when "GUILD_UPDATE"
         if @guilds.has?(data[:id])
           @guilds[data[:id]].send(:_set_data, data, false)
           dispatch(:guild_update, @guilds[data[:id]])
         else
           @log.warn "Unknown guild id #{data[:id]}, ignoring"
         end
-      when 'GUILD_DELETE'
+      when "GUILD_DELETE"
         return @log.warn "Unknown guild id #{data[:id]}, ignoring" unless (guild = @guilds.delete(data[:id]))
 
         dispatch(:guild_delete, guild)
@@ -378,14 +592,13 @@ module Discorb
         else
           dispatch(:guild_leave, guild)
         end
-
-      when 'GUILD_ROLE_CREATE'
+      when "GUILD_ROLE_CREATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         nr = Role.new(@client, guild, data[:role])
         guild.roles[data[:role][:id]] = nr
         dispatch(:role_create, nr)
-      when 'GUILD_ROLE_UPDATE'
+      when "GUILD_ROLE_UPDATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown role id #{data[:role][:id]}, ignoring" unless guild.roles.has?(data[:role][:id])
 
@@ -393,33 +606,32 @@ module Discorb
         before = Role.new(@client, guild, current.instance_variable_get(:@data).update({ no_cache: true }))
         current.send(:_set_data, data[:role])
         dispatch(:role_update, before, current)
-      when 'GUILD_ROLE_DELETE'
+      when "GUILD_ROLE_DELETE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown role id #{data[:role_id]}, ignoring" unless (role = guild.roles.delete(data[:role_id]))
 
         dispatch(:role_delete, role)
-      when 'CHANNEL_CREATE'
+      when "CHANNEL_CREATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         nc = Channel.make_channel(self, data)
         guild.channels[data[:id]] = nc
 
         dispatch(:channel_create, nc)
-      when 'CHANNEL_UPDATE'
+      when "CHANNEL_UPDATE"
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = @channels[data[:id]])
 
         before = Channel.make_channel(self, current.instance_variable_get(:@data), no_cache: true)
         current.send(:_set_data, data)
         dispatch(:channel_update, before, current)
-
-      when 'CHANNEL_DELETE'
+      when "CHANNEL_DELETE"
         return @log.warn "Unknown channel id #{data[:id]}, ignoring" unless (channel = @channels.delete(data[:id]))
 
         @guilds[data[:guild_id]]&.channels&.delete(data[:id])
         dispatch(:channel_delete, channel)
-      when 'CHANNEL_PINS_UPDATE'
+      when "CHANNEL_PINS_UPDATE"
         nil # do in MESSAGE_UPDATE
-      when 'THREAD_CREATE'
+      when "THREAD_CREATE"
         thread = Channel.make_channel(self, data)
 
         dispatch(:thread_create, thread)
@@ -428,23 +640,23 @@ module Discorb
         else
           dispatch(:thread_new, thread)
         end
-      when 'THREAD_UPDATE'
+      when "THREAD_UPDATE"
         return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
         before = Channel.make_channel(self, thread.instance_variable_get(:@data), no_cache: true)
         thread.send(:_set_data, data)
         dispatch(:thread_update, before, thread)
-      when 'THREAD_DELETE'
+      when "THREAD_DELETE"
         return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels.delete(data[:id]))
 
         @guilds[data[:guild_id]]&.channels&.delete(data[:id])
         dispatch(:thread_delete, thread)
-      when 'THREAD_LIST_SYNC'
+      when "THREAD_LIST_SYNC"
         data[:threads].each do |raw_thread|
           thread = Channel.make_channel(self, raw_thread.merge({ member: raw_thread[:members].find { |m| m[:id] == raw_thread[:id] } }))
           @channels[thread.id] = thread
         end
-      when 'THREAD_MEMBER_UPDATE'
+      when "THREAD_MEMBER_UPDATE"
         return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
         if (member = thread.members[data[:id]])
@@ -456,8 +668,7 @@ module Discorb
           thread.members[data[:user_id]] = member
         end
         dispatch(:thread_member_update, old, member)
-
-      when 'THREAD_MEMBERS_UPDATE'
+      when "THREAD_MEMBERS_UPDATE"
         return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
         thread.instance_variable_set(:@member_count, data[:member_count])
@@ -472,60 +683,60 @@ module Discorb
           removed_members << thread.members.delete(id)
         end
         dispatch(:thread_members_update, thread, members, removed_members)
-      when 'STAGE_INSTANCE_CREATE'
+      when "STAGE_INSTANCE_CREATE"
         instance = StageInstance.new(self, data)
         dispatch(:stage_instance_create, instance)
-      when 'STAGE_INSTANCE_UPDATE'
+      when "STAGE_INSTANCE_UPDATE"
         return @log.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
         return @log.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances[data[:id]])
 
         old = StageInstance.new(self, instance.instance_variable_get(:@data), no_cache: true)
         current.send(:_set_data, data)
         dispatch(:stage_instance_update, old, current)
-      when 'STAGE_INSTANCE_DELETE'
+      when "STAGE_INSTANCE_DELETE"
         return @log.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
         return @log.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances.delete(data[:id]))
 
         dispatch(:stage_instance_delete, instance)
-      when 'GUILD_MEMBER_ADD'
+      when "GUILD_MEMBER_ADD"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         nm = Member.new(self, data[:guild_id], data[:user].update({ no_cache: true }), data)
         guild.members[nm.id] = nm
         dispatch(:member_add, nm)
-      when 'GUILD_MEMBER_UPDATE'
+      when "GUILD_MEMBER_UPDATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown member id #{data[:id]}, ignoring" unless (nm = guild.members[data[:id]])
 
         old = Member.new(self, data[:guild_id], data[:user], data.update({ no_cache: true }))
         nm.send(:_set_data, data[:user], data)
         dispatch(:member_update, old, nm)
-      when 'GUILD_MEMBER_REMOVE'
+      when "GUILD_MEMBER_REMOVE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown member id #{data[:id]}, ignoring" unless (member = guild.members.delete(data[:id]))
 
         dispatch(:member_remove, member)
-      when 'GUILD_BAN_ADD'
+      when "GUILD_BAN_ADD"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         user = if @users.has? data[:user][:id]
-                 @users[data[:user][:id]]
-               else
-                 User.new(self, data[:user].update({ no_cache: true }))
-               end
+            @users[data[:user][:id]]
+          else
+            User.new(self, data[:user].update({ no_cache: true }))
+          end
 
         dispatch(:guild_ban_add, guild, user)
-      when 'GUILD_BAN_REMOVE'
+      when "GUILD_BAN_REMOVE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         user = if @users.has? data[:user][:id]
-                 @users[data[:user][:id]]
-               else
-                 User.new(self, data[:user].update({ no_cache: true }))
-               end
+            @users[data[:user][:id]]
+          else
+            User.new(self, data[:user].update({ no_cache: true }))
+          end
 
         dispatch(:guild_ban_remove, guild, user)
-      when 'GUILD_EMOJIS_UPDATE'
+      when "GUILD_EMOJIS_UPDATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         before_emojis = guild.emojis.values.map(&:id).to_set
@@ -536,29 +747,29 @@ module Discorb
         deleted_emojis.each do |emoji|
           guild.emojis.delete(emoji)
         end
-      when 'GUILD_INTEGRATIONS_UPDATE'
+      when "GUILD_INTEGRATIONS_UPDATE"
         dispatch(:guild_integrations_update, GuildIntegrationsUpdateEvent.new(self, data))
-      when 'INTEGRATION_CREATE'
+      when "INTEGRATION_CREATE"
         dispatch(:integration_create, Integration.new(self, data, data[:guild_id]))
-      when 'INTEGRATION_UPDATE'
+      when "INTEGRATION_UPDATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless (integration = guild.integrations[data[:id]])
 
         before = Integration.new(self, integration.instance_variable_get(:@data), data[:guild_id], no_cache: true)
         integration.send(:_set_data, data)
         dispatch(:integration_update, before, integration)
-      when 'INTEGRATION_DELETE'
+      when "INTEGRATION_DELETE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
         return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless (integration = guild.integrations.delete(data[:id]))
 
         dispatch(:integration_delete, integration)
-      when 'WEBHOOKS_UPDATE'
+      when "WEBHOOKS_UPDATE"
         dispatch(:webhooks_update, WebhooksUpdateEvent.new(self, data))
-      when 'INVITE_CREATE'
+      when "INVITE_CREATE"
         dispatch(:invite_create, Invite.new(self, data, true))
-      when 'INVITE_DELETE'
+      when "INVITE_DELETE"
         dispatch(:invite_delete, InviteDeleteEvent.new(self, data))
-      when 'VOICE_STATE_UPDATE'
+      when "VOICE_STATE_UPDATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         current = guild.voice_states[data[:user_id]]
@@ -654,12 +865,11 @@ module Discorb
             dispatch(:voice_stream_end, old)
           end
         end
-
-      when 'PRESENCE_UPDATE'
+      when "PRESENCE_UPDATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
         guild.presences[data[:user][:id]] = Presence.new(self, data)
-      when 'MESSAGE_UPDATE'
+      when "MESSAGE_UPDATE"
         if (message = @messages[data[:id]])
           before = Message.new(self, message.instance_variable_get(:@data), no_cache: true)
           message.send(:_set_data, message.instance_variable_get(:@data).merge(data))
@@ -680,12 +890,12 @@ module Discorb
         else
           dispatch(:message_update, MessageUpdateEvent.new(self, data, before, current))
         end
-      when 'MESSAGE_DELETE'
+      when "MESSAGE_DELETE"
         return @log.info "Uncached message ID #{data[:id]}, ignoring" unless (message = @messages[data[:id]])
 
         message.instance_variable_set(:@deleted, true)
         dispatch(:message_delete, message)
-      when 'MESSAGE_DELETE_BULK'
+      when "MESSAGE_DELETE_BULK"
         messages = []
         data[:ids].each do |id|
           if (message = @messages[id])
@@ -696,11 +906,11 @@ module Discorb
           end
         end
         dispatch(:message_delete_bulk, messages)
-      when 'MESSAGE_REACTION_ADD'
+      when "MESSAGE_REACTION_ADD"
         if (target_message = @messages[data[:message_id]])
           if (target_reaction = target_message.reactions.find do |r|
-                r.emoji.is_a?(UnicodeEmoji) ? r.emoji.value == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
-              end)
+            r.emoji.is_a?(UnicodeEmoji) ? r.emoji.value == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
+          end)
             target_reaction.set_instance_variable(:@count, target_reaction.count + 1)
           else
             target_message.reactions << Reaction.new(
@@ -708,41 +918,41 @@ module Discorb
               {
                 count: 1,
                 me: @user.id == data[:user_id],
-                emoji: data[:emoji]
+                emoji: data[:emoji],
               }
             )
           end
         end
         dispatch(:reaction_add, ReactionEvent.new(self, data))
-      when 'MESSAGE_REACTION_REMOVE'
+      when "MESSAGE_REACTION_REMOVE"
         if (target_message = @messages[data[:message_id]]) &&
            (target_reaction = target_message.reactions.find do |r|
-              data[:emoji][:id].nil? ? r.emoji.name == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
-            end)
+             data[:emoji][:id].nil? ? r.emoji.name == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
+           end)
           target_reaction.set_instance_variable(:@count, target_reaction.count - 1)
           target_message.reactions.delete(target_reaction) if target_reaction.count.zero?
         end
         dispatch(:reaction_remove, ReactionEvent.new(self, data))
-      when 'MESSAGE_REACTION_REMOVE_ALL'
+      when "MESSAGE_REACTION_REMOVE_ALL"
         if (target_message = @messages[data[:message_id]])
           target_message.reactions = []
         end
         dispatch(:reaction_remove_all, ReactionRemoveAllEvent.new(self, data))
-      when 'MESSAGE_REACTION_REMOVE_EMOJI'
+      when "MESSAGE_REACTION_REMOVE_EMOJI"
         if (target_message = @messages[data[:message_id]]) &&
            (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
           target_message.reactions.delete(target_reaction)
         end
         dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(data))
-      when 'TYPING_START'
+      when "TYPING_START"
         dispatch(:typing_start, TypingStartEvent.new(self, data))
-      when 'INTERACTION_CREATE'
+      when "INTERACTION_CREATE"
         interaction = Interaction.make_interaction(self, data)
         dispatch(:integration_create, interaction)
 
         dispatch(interaction.class.event_name, interaction)
-      when 'RESUMED'
-        @log.info('Successfully resumed connection')
+      when "RESUMED"
+        @log.info("Successfully resumed connection")
       else
         @log.warn "Unknown event: #{event_name}\n#{data.inspect}"
       end
