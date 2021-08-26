@@ -4,7 +4,7 @@ class Time
   #
   # Format a time object to a Discord formatted string.
   #
-  # @param ["f", "F", "d", "D", "t", "T", "R"] format The format to use.
+  # @param ["f", "F", "d", "D", "t", "T", "R"] type The format to use.
   #
   # @return [String] The formatted time.
   #
