@@ -17,7 +17,7 @@ module Discorb
       @out = out
       @level = self.class.levels.index(level)
       @colorize_log = colorize_log
-      raise "colorize is required to use colorized log" unless LOADED_COLORIZE
+      raise "colorize is required to use colorized log" if !LOADED_COLORIZE && @colorize_log
     end
 
     def level
