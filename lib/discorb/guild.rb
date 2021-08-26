@@ -1114,6 +1114,15 @@ module Discorb
     end
   end
 
+  #
+  # Represents a system channel flag.
+  # ## Flags
+  # |field|value|
+  # |-|-|
+  # |0|member_join|
+  # |1|server_boost|
+  # |2|setup_tips|
+  #
   class SystemChannelFlag < Flag
     @bits = {
       member_join: 0,
@@ -1122,9 +1131,18 @@ module Discorb
     }.freeze
   end
 
+  #
+  # Represents a welcome screen.
+  #
   class WelcomeScreen < DiscordModel
-    attr_reader :description, :channels, :guild
+    # @return [String] The description of the welcome screen.
+    attr_reader :description
+    # @return [Array<Discorb::WelcomeScreen::Channel>] The channels to display the welcome screen.
+    attr_reader :channels
+    # @return [Discorb::Guild] The guild the welcome screen belongs to.
+    attr_reader :guild
 
+    # @!visibility private
     def initialize(client, guild, data)
       @client = client
       @description = data[:description]
@@ -1132,9 +1150,25 @@ module Discorb
       @channels = data[:channels].map { |c| WelcomeScreen::Channel.new(client, c, nil) }
     end
 
+    #
+    # Represents a channel to display the welcome screen.
+    # @!attribute [r] emoji
+    #   @return [Discorb::UnicodeEmoji, Discorb::CustomEmoji] The emoji to display.
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel to display the welcome screen.
+    #
     class Channel < DiscordModel
+      # @return [String] The channel's name.
       attr_reader :description
 
+      #
+      # Initialize a new welcome screen channel.
+      #
+      # @param [Discorb::TextChannel] channel The channel to display the welcome screen.
+      # @param [String] description The channel's name.
+      # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to display.
+      #
       def initialize(channel, description, emoji)
         if description.is_a?(Hash)
           @screen = channel
@@ -1156,6 +1190,12 @@ module Discorb
         end
       end
 
+      #
+      # Converts the channel to a hash.
+      #
+      # @return [Hash] The hash.
+      # @see https://discord.com/developers/docs/resources/guild#welcome-screen-object
+      #
       def to_hash
         {
           channel_id: @channel_id,
@@ -1177,12 +1217,25 @@ module Discorb
         end
       end
 
-      def edit(enabled: nil, channels: nil, description: nil, reason: nil)
-        payload = {}
-        payload[:enabled] = enabled unless enabled.nil?
-        payload[:welcome_channels] = channels.map(&:to_hash) unless channels.nil?
-        payload[:description] = description unless description.nil?
-        @client.internet.patch("/guilds/#{@guild.id}/welcome-screen", payload, audit_log_reason: reason).wait
+      #
+      # Edits the welcome screen.
+      # @macro async
+      # @macro http
+      # @macro edit
+      #
+      # @param [Boolean] enabled Whether the welcome screen is enabled.
+      # @param [Array<Discorb::WelcomeScreen::Channel>] channels The channels to display the welcome screen.
+      # @param [String] description The description of the welcome screen.
+      # @param [String] reason The reason for editing the welcome screen.
+      #
+      def edit(enabled: :unset, channels: :unset, description: :unset, reason: nil)
+        Async do
+          payload = {}
+          payload[:enabled] = enabled unless enabled == :unset
+          payload[:welcome_channels] = channels.map(&:to_hash) unless channels == :unset
+          payload[:description] = description unless description == :unset
+          @client.internet.patch("/guilds/#{@guild.id}/welcome-screen", payload, audit_log_reason: reason).wait
+        end
       end
     end
   end
