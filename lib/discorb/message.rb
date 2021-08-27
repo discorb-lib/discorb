@@ -63,18 +63,84 @@ module Discorb
   # Represents a message.
   #
   class Message < DiscordModel
-    attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles,
-                :mention_channels, :attachments, :embeds, :reactions, :webhook_id, :type,
-                :activity, :application, :application_id, :message_reference, :flag, :stickers,
-                :interaction, :thread, :components, :deleted, :tts, :mention_everyone, :pinned
-
+    # @return [Discorb::Snowflake] The ID of the message.
+    attr_reader :id
+    # @return [Discorb::User, Discorb::Member] The user that sent the message.
+    attr_reader :author
+    # @return [String] The content of the message.
+    attr_reader :content
+    alias to_s content
+    # @return [Time] The time the message was created.
+    attr_reader :created_at
     alias timestamp created_at
     alias sent_at created_at
+    # @return [Time] The time the message was edited.
+    # @return [nil] If the message was not edited.
+    attr_reader :updated_at
     alias edited_at updated_at
     alias edited_timestamp updated_at
+    # @return [Array<Discorb::Attachment>] The attachments of the message.
+    attr_reader :attachments
+    # @return [Array<Discorb::Embed>] The embeds of the message.
+    attr_reader :embeds
+    # @return [Array<Discorb::Reaction>] The reactions of the message.
+    attr_reader :reactions
+    # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+    attr_reader :webhook_id
+    # @return [Symbol] The type of the message.
+    # Currently, this will be one of:
+    #
+    # * `:default`
+    # * `:recipient_add`
+    # * `:recipient_remove`
+    # * `:call`
+    # * `:channel_name_change`
+    # * `:channel_icon_change`
+    # * `:channel_pinned_message`
+    # * `:guild_member_join`
+    # * `:user_premium_guild_subscription`
+    # * `:user_premium_guild_subscription_tier_1`
+    # * `:user_premium_guild_subscription_tier_2`
+    # * `:user_premium_guild_subscription_tier_3`
+    # * `:channel_follow_add`
+    # * `:guild_discovery_disqualified`
+    # * `:guild_discovery_requalified`
+    # * `:guild_discovery_grace_period_initial_warning`
+    # * `:guild_discovery_grace_period_final_warning`
+    # * `:thread_created`
+    # * `:reply`
+    # * `:application_command`
+    # * `:thread_starter_message`
+    # * `:guild_invite_reminder`
+    attr_reader :type
+    # @return [Discorb::Message::Activity] The activity of the message.
+    attr_reader :activity
+    # @return [Discorb::Application] The application of the message.
+    attr_reader :application_id
+    # @return [Discorb::Message::Reference] The reference of the message.
+    attr_reader :message_reference
+    # @return [Discorb::Message::Flag] The flag of the message.
+    # @see Discorb::Message::Flag
+    attr_reader :flag
+    # @return [Discorb::Message::Sticker] The sticker of the message.
+    attr_reader :stickers
+    # @return [Discorb::Message::Interaction] The interaction of the message.
+    attr_reader :interaction
+    # @return [Discorb::ThreadChannel] The thread channel of the message.
+    attr_reader :thread
+    # @return [Array<Array<Discorb::Components>>] The components of the message.
+    attr_reader :components
+    # @return [Boolean] Whether the message is deleted.
+    attr_reader :deleted
     alias deleted? deleted
+    # @return [Boolean] Whether the message is tts.
+    attr_reader :tts
     alias tts? tts
+    # @return [Boolean] Whether the message mentions everyone.
+    attr_reader :mention_everyone
     alias mention_everyone? mention_everyone
+    # @return [Boolean] Whether the message is pinned.
+    attr_reader :pinned
     alias pinned? pinned
     @message_type = {
       default: 0,
@@ -101,19 +167,30 @@ module Discorb
       guild_invite_reminder: 22,
     }.freeze
 
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel the message was sent in.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild the message was sent in.
+    #   @return [nil] If the message was not sent in a guild.
+    # @!attribute [r] webhook?
+    #   @return [Boolean] Whether the message was sent by a webhook.
+    # @!attribute [r] edited?
+    #   @return [Boolean] Whether the message was edited.
+    # @!attribute [r] jump_url
+    #   @return [String] The URL to jump to the message.
+    # @!attribute [r] embed
+    #   @return [Discorb::Embed] The embed of the message.
+    #   @return [nil] If the message has no embed.
+
+    # @!visibility private
     def initialize(client, data, no_cache: false)
       @client = client
       @data = {}
       @no_cache = no_cache
       _set_data(data)
       @client.messages[@id] = self unless @no_cache
-    end
-
-    def update!
-      Async do
-        _, data = @client.get("/channels/#{@channel_id}/messages/#{@id}").wait
-        _set_data(data)
-      end
     end
 
     def channel
@@ -128,14 +205,21 @@ module Discorb
       @webhook_id != nil
     end
 
-    def to_s
-      @content
-    end
-
     def jump_url
       "https://discord.com/channels/#{@guild_id || "@me"}/#{@channel_id}/#{@id}"
     end
 
+    def edited?
+      !@updated_at.nil?
+    end
+
+    #
+    # Convert the message to reference object.
+    #
+    # @param [Boolean] fail_if_not_exists Whether to raise an error if the message does not exist.
+    #
+    # @return [Hash] The reference object.
+    #
     def to_reference(fail_if_not_exists: true)
       {
         message_id: @id,
@@ -149,20 +233,35 @@ module Discorb
       @embeds[0]
     end
 
-    # HTTP
-
+    # Reply to the message.
+    # @macro async
+    # @macro http
+    # @param (see #post)
+    # @return [Discorb::Message] The message.
     def reply(*args, **kwargs)
       Async do |_task|
-        channel.post(*args, message_reference: self, **kwargs)
+        channel.post(*args, message_reference: self, **kwargs).wait
       end
     end
 
+    #
+    # Publish the message.
+    # @macro async
+    # @macro http
+    #
     def publish
       Async do |_task|
-        channel.post("/channels/#{@channel_id}/messages/#{@id}/crosspost", nil)
+        channel.post("/channels/#{@channel_id}/messages/#{@id}/crosspost", nil).wait
       end
     end
 
+    #
+    # Add a reaction to the message.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to react with.
+    #
     def add_reaction(emoji)
       Async do |_task|
         @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil).wait
@@ -171,6 +270,13 @@ module Discorb
 
     alias react_with add_reaction
 
+    #
+    # Remove a reaction from the message.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to remove.
+    #
     def remove_reaction(emoji)
       Async do |_task|
         @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me").wait
@@ -179,6 +285,14 @@ module Discorb
 
     alias delete_reaction remove_reaction
 
+    #
+    # Remove other member's reaction from the message.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to remove.
+    # @param [Discorb::Member] member The member to remove the reaction from.
+    #
     def remove_reaction_of(emoji, member)
       Async do |_task|
         @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}").wait
@@ -187,6 +301,17 @@ module Discorb
 
     alias delete_reaction_of remove_reaction_of
 
+    #
+    # Fetch reacted users of reaction.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to fetch.
+    # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
+    # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
+    #
+    # @return [Array<Discorb::User>] The users.
+    #
     def fetch_reacted_users(emoji, limit: nil, after: 0)
       Async do |_task|
         if limit.nil? || !limit.positive?
@@ -210,18 +335,37 @@ module Discorb
       end
     end
 
+    #
+    # Pin the message.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] reason The reason for pinning the message.
+    #
     def pin(reason: nil)
       Async do
         channel.pin_message(self, reason: reason).wait
       end
     end
 
+    #
+    # Unpin the message.
+    # @macro async
+    # @macro http
+    #
     def unpin
       Async do
         channel.unpin_message(self, reason: reason).wait
       end
     end
 
+    #
+    # Start thread from the message.
+    #
+    # @param (see Discorb::Channel#start_thread)
+    #
+    # @return [<Type>] <description>
+    #
     def start_thread(*args, **kwargs)
       Async do
         channel.start_thread(*args, message: self, **kwargs).wait
@@ -236,6 +380,20 @@ module Discorb
       "#<#{self.class} #{@content.inspect} id=#{@id}>"
     end
 
+    #
+    # Represents message flag.
+    # ## Flag fields
+    # |Field|Value|
+    # |-|-|
+    # |`1 << 0`|`:crossposted`|
+    # |`1 << 1`|`:crosspost`|
+    # |`1 << 2`|`:supress_embeds`|
+    # |`1 << 3`|`:source_message_deleted`|
+    # |`1 << 4`|`:urgent`|
+    # |`1 << 5`|`:has_thread`|
+    # |`1 << 6`|`:ephemeral`|
+    # |`1 << 7`|`:loading`|
+    #
     class Flag < Discorb::Flag
       @bits = {
         crossposted: 0,
@@ -249,10 +407,29 @@ module Discorb
       }.freeze
     end
 
+    #
+    # Represents reference of message.
+    #
     class Reference
-      attr_accessor :guild_id, :channel_id, :message_id, :fail_if_not_exists
+      # @return [Discorb::Snowflake] The guild ID.
+      attr_accessor :guild_id
+      # @return [Discorb::Snowflake] The channel ID.
+      attr_accessor :channel_id
+      # @return [Discorb::Snowflake] The message ID.
+      attr_accessor :message_id
+      # @return [Boolean] Whether fail the request if the message is not found.
+      attr_accessor :fail_if_not_exists
+
       alias fail_if_not_exists? fail_if_not_exists
 
+      #
+      # Initialize a new reference.
+      #
+      # @param [Discorb::Snowflake] guild_id The guild ID.
+      # @param [Discorb::Snowflake] channel_id The channel ID.
+      # @param [Discorb::Snowflake] message_id The message ID.
+      # @param [Boolean] fail_if_not_exists Whether fail the request if the message is not found.
+      #
       def initialize(guild_id, channel_id, message_id, fail_if_not_exists: true)
         @guild_id = guild_id
         @channel_id = channel_id
@@ -260,6 +437,11 @@ module Discorb
         @fail_if_not_exists = fail_if_not_exists
       end
 
+      #
+      # Convert the reference to a hash.
+      #
+      # @return [Hash] The hash.
+      #
       def to_hash
         {
           message_id: @message_id,
@@ -271,6 +453,14 @@ module Discorb
 
       alias to_reference to_hash
 
+      #
+      # Initialize a new reference from a hash.
+      #
+      # @param [Hash] data The hash.
+      #
+      # @return [Discorb::Message::Reference] The reference.
+      # @see https://discord.com/developers/docs/resources/channel#message-reference-object
+      #
       def self.from_hash(data)
         new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
       end
@@ -328,15 +518,27 @@ module Discorb
       @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
       # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
       @interaction = data[:interaction] && Message::Interaction.new(@client, data[:interaction])
-      @thread = data[:thread]&.map { |t| Channel.make_channel(@client, t) }
+      @thread = Channel.make_channel(@client, data[:thread])
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
       @data.update(data)
       @deleted = false
     end
 
+    #
+    # Represents a interaction of message.
+    #
     class Interaction < DiscordModel
-      attr_reader :id, :name, :type, :user
+      # @return [Discorb::Snowflake] The user ID.
+      attr_reader :id
+      # @return [String] The name of command.
+      # @return [nil] If the message is not a command.
+      attr_reader :name
+      # @return [Class] The type of interaction.
+      attr_reader :type
+      # @return [Discorb::User] The user.
+      attr_reader :user
 
+      # @!visibility private
       def initialize(client, data)
         @id = Snowflake.new(data[:id])
         @name = data[:name]
@@ -345,7 +547,15 @@ module Discorb
       end
     end
 
+    #
+    # Represents a activity of message.
+    #
     class Activity < DiscordModel
+      # @return [String] The name of activity.
+      attr_reader :name
+      # @return [Symbol] The type of activity.
+      attr_reader :type
+
       @type = {
         1 => :join,
         2 => :spectate,
@@ -353,17 +563,20 @@ module Discorb
         5 => :join_request,
       }
 
+      # @!visibility private
       def initialize(data)
         @name = data[:name]
         @type = self.class.type(data[:type])
       end
 
       class << self
+        # @!visibility private
         attr_reader :type
       end
     end
 
     class << self
+      # @!visibility private
       attr_reader :message_type
     end
   end
