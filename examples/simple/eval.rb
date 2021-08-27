@@ -2,16 +2,13 @@
 
 require_relative "../lib/discorb"
 
-client = Discorb::Client.new(
-  log: $stdout, colorize_log: true, log_level: :info,
-  wait_until_ready: true, intents: Discorb::Intents.all,
-)
+client = Discorb::Client.new
 
-client.on(:ready) do |_task|
+client.once :ready do |_task|
   puts "Logged in as #{client.user}"
 end
 
-client.on(:message) do |_task, message|
+client.on :message do |_task, message|
   next if message.author.bot?
   next unless message.content.start_with?("eval ")
 

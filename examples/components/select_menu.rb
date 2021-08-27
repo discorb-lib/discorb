@@ -1,8 +1,6 @@
-# frozen_string_literal: true
+require "discorb"
 
-require_relative "../lib/discorb"
-
-client = Discorb::Client.new(log: $stdout, colorize_log: true)
+client = Discorb::Client.new
 
 SECTIONS = [
   ["About", <<~WIKI],
@@ -34,60 +32,30 @@ SECTIONS = [
 
 WIKIPEDIA_CREDIT = "(From: [Wikipedia](https://en.wikipedia.org/wiki/Ruby_(programming_language)))"
 
-def convert_role(guild, string)
-  guild.roles.find do |role|
-    role.id == string || role.name == string || role.mention == string
-  end
-end
-
-client.on :ready do
+client.once :ready do
   puts "Logged in as #{client.user}"
 end
 
 client.on :message do |_task, message|
   next if message.author.bot?
+  next unless message.content == "!ruby"
 
-  case message.content.split[0]
-  when "auth"
-    role = convert_role(message.guild, message.content.delete_prefix("auth "))
-    if role.nil?
-      message.reply("Unknown role: #{message.content.delete_prefix("auth ")}").wait
-      next
-    end
-    message.channel.post(
-      "Click this button if you are human:",
-      components: [
-        Discorb::Button.new(
-          "Get role", custom_id: "auth:#{role.id}",
-        ),
-      ],
-    ).wait
-  when "ruby"
-    options = SECTIONS.map.with_index { |section, i| Discorb::SelectMenu::Option.new("Page #{i + 1}", "sections:#{i}", description: section[0]) }
-    message.channel.post(
-      "Select a section", components: [Discorb::SelectMenu.new("sections", options)],
-    )
-  end
-end
-
-client.on :button_click do |_task, response|
-  if response.custom_id.start_with?("auth:")
-    id = response.custom_id.delete_prefix("auth:")
-    response.fired_by.add_role(id).wait
-    response.post("You got it!\nHere's your role: <@&#{id}>", hide: true)
-  end
+  options = SECTIONS.map.with_index { |section, i| Discorb::SelectMenu::Option.new("Page #{i + 1}", "sections:#{i}", description: section[0]) }
+  message.channel.post(
+    "Select a section", components: [Discorb::SelectMenu.new("sections", options)],
+  )
 end
 
 client.on :select_menu_select do |_task, response|
-  if response.custom_id == "sections"
-    id = response.value.delete_prefix("sections:")
-    selected_section = SECTIONS[id.to_i]
-    response.post(
-      "**#{selected_section[0]}**\n" \
-      "#{selected_section[1].strip}\n\n" \
-      "#{WIKIPEDIA_CREDIT}", hide: true,
-    )
-  end
+  next unless response.custom_id == "sections"
+
+  id = response.value.delete_prefix("sections:")
+  selected_section = SECTIONS[id.to_i]
+  response.post(
+    "**#{selected_section[0]}**\n" \
+    "#{selected_section[1].strip}\n\n" \
+    "#{WIKIPEDIA_CREDIT}", hide: true,
+  )
 end
 
-client.run(ENV["discord_bot_token"])
+client.run(ENV["DISCORD_BOT_TOKEN"])
