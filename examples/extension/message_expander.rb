@@ -1,8 +1,6 @@
-# frozen_string_literal: true
+require "discorb"
 
-require_relative "../lib/discorb"
-
-module DispanderForRuby
+module MessageExpander
   extend Discorb::Extension
 
   @message_regex = Regexp.new(
@@ -41,9 +39,3 @@ module DispanderForRuby
     end
   end
 end
-
-client = Discorb::Client.new(log: $stdout, colorize_log: true)
-
-client.extend(DispanderForRuby)
-
-client.run(ENV["discord_bot_token"])

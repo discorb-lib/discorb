@@ -11,6 +11,10 @@ def convert_role(guild, string)
   end
 end
 
+client.once :ready do
+  puts "Logged in as #{client.user}"
+end
+
 client.on :reaction_add do |_task, event|
   next unless event.emoji.value.end_with?(0x0000fe0f.chr("utf-8") + 0x000020e3.chr("utf-8"))
   next if event.member.bot?
@@ -59,4 +63,5 @@ client.on :message do |_task, message|
     rp_msg.add_reaction(Discorb::UnicodeEmoji["#{i}\ufe0f\u20e3"]).wait
   end
 end
-client.run(ENV["discord_bot_token"])
+
+client.run(ENV["DISCORD_BOT_TOKEN"])
