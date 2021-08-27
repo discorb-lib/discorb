@@ -41,6 +41,14 @@ module Discorb
       ne
     end
 
+    def once(event_name, id: nil, **discriminator, &block)
+      discriminator[:once] = true
+      ne = Event.new(block, id, discriminator)
+      @events[event_name] ||= []
+      @events[event_name] << ne
+      ne
+    end
+
     def remove_event(event_name, id)
       @events[event_name].delete_if { |e| e.id == id }
     end
@@ -69,27 +77,16 @@ module Discorb
         @events[event_name].each do |block|
           lambda { |event_args|
             Async(annotation: "Discorb event: #{event_name}") do |task|
+              @events[event_name].delete(block) if block.discriminator[:once]
               block.call(task, *event_args)
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
-              if block.rescue.nil?
-                message = "An error occurred while dispatching proc with ID #{block.id.inspect}\n#{e.full_message}"
-                if @log.out
-                  @log.error message
-                else
-                  warn message
-                end
+              message = "An error occurred while dispatching proc with ID #{block.id.inspect}\n#{e.full_message}"
+              dispatch(:error, event_name, event_args, e)
+              if @log.out
+                @log.error message
               else
-                begin
-                  block.rescue.call(task, e, *args)
-                rescue StandardError, ScriptError => e2
-                  message = "An error occurred while dispatching rescue proc with ID #{block.id.inspect}\n#{e2.full_message}\nBy an error:\n#{e.full_message}"
-                  if @log.out
-                    @log.error message
-                  else
-                    warn message
-                  end
-                end
+                warn message
               end
             end
           }.call(args)
