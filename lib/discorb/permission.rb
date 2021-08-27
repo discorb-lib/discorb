@@ -1,6 +1,46 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a permission per guild.
+  # ## Flag fields
+  # |`1 << 0`|`:create_instant_invite`|
+  # |`1 << 1`|`:kick_members`|
+  # |`1 << 2`|`:ban_members`|
+  # |`1 << 3`|`:administrator`|
+  # |`1 << 4`|`:manage_channels`|
+  # |`1 << 5`|`:manage_guild`|
+  # |`1 << 6`|`:add_reactions`|
+  # |`1 << 7`|`:view_audit_log`|
+  # |`1 << 8`|`:priority_speaker`|
+  # |`1 << 9`|`:stream`|
+  # |`1 << 10`|`:view_channel`|
+  # |`1 << 11`|`:send_messages`|
+  # |`1 << 12`|`:send_tts_messages`|
+  # |`1 << 13`|`:manage_messages`|
+  # |`1 << 14`|`:embed_links`|
+  # |`1 << 15`|`:attach_files`|
+  # |`1 << 16`|`:read_message_history`|
+  # |`1 << 17`|`:mention_everyone`|
+  # |`1 << 18`|`:use_external_emojis`|
+  # |`1 << 19`|`:view_guild_insights`|
+  # |`1 << 20`|`:connect`|
+  # |`1 << 21`|`:speak`|
+  # |`1 << 22`|`:mute_members`|
+  # |`1 << 23`|`:deafen_members`|
+  # |`1 << 24`|`:move_members`|
+  # |`1 << 25`|`:use_vad`|
+  # |`1 << 26`|`:change_nickname`|
+  # |`1 << 27`|`:manage_nicknames`|
+  # |`1 << 28`|`:manage_roles`|
+  # |`1 << 29`|`:manage_webhooks`|
+  # |`1 << 30`|`:manage_emojis`|
+  # |`1 << 31`|`:use_slash_commands`|
+  # |`1 << 32`|`:request_to_speak`|
+  # |`1 << 34`|`:manage_threads`|
+  # |`1 << 35`|`:use_public_threads`|
+  # |`1 << 36`|`:use_private_threads`|
+  #
   class Permission < Flag
     @bits = {
       create_instant_invite: 0,
@@ -42,7 +82,19 @@ module Discorb
     }.freeze
   end
 
+  #
+  # Represents a permission per channel.
+  #
   class PermissionOverwrite
+    # @!attribute [r] allow
+    #   @return [Discorb::Permission] The allowed permissions.
+    # @!attribute [r] deny
+    #   @return [Discorb::Permission] The denied permissions.
+    # @!attribute [r] allow_value
+    #   @return [Integer] The allowed permissions as an integer.
+    # @!attribute [r] deny_value
+    #   @return [Integer] The denied permissions as an integer.
+
     @raw_bits = {
       create_instant_invite: 0,
       kick_members: 1,
@@ -83,6 +135,7 @@ module Discorb
     }.freeze
     @bits = @raw_bits.transform_values { |v| 1 << v }.freeze
 
+    # @!visibility private
     def initialize(allow, deny)
       @allow = allow
       @deny = deny
@@ -108,6 +161,11 @@ module Discorb
       @deny
     end
 
+    #
+    # Converts the permission overwrite to a hash.
+    #
+    # @return [Hash] The permission overwrite as a hash.
+    #
     def to_hash
       self.class.bits.keys.map do |field|
         [field, if @allow & self.class.bits[field] != 0
@@ -118,6 +176,13 @@ module Discorb
       end.to_h
     end
 
+    #
+    # Union of the permission overwrites.
+    #
+    # @param [Discorb::PermissionOverwrite] other The other permission overwrite.
+    #
+    # @return [Discorb::PermissionOverwrite] The union of the permission overwrites.
+    #
     def +(other)
       result = to_hash
       self.class.bits.each_key do |field|
@@ -126,6 +191,13 @@ module Discorb
       self.class.from_hash(result)
     end
 
+    #
+    # Returns whether overwrite of the given field.
+    #
+    # @param [Symbol] field The field to check.
+    #
+    # @return [true, false, nil] Whether the field is allowed, denied or not set.
+    #
     def [](field)
       if @allow & self.class.bits[field] != 0
         true
@@ -134,6 +206,12 @@ module Discorb
       end
     end
 
+    #
+    # Sets the given field to the given value.
+    #
+    # @param [Symbol] key The field to set.
+    # @param [Boolean] bool The value to set.
+    #
     def []=(key, bool)
       case bool
       when true
@@ -164,8 +242,16 @@ module Discorb
     end
 
     class << self
+      # @!visibility private
       attr_reader :bits
 
+      #
+      # Initializes a permission overwrite from a hash.
+      #
+      # @param [Hash] hash The hash to initialize the permission overwrite from.
+      #
+      # @return [Discorb::PermissionOverwrite] The permission overwrite.
+      #
       def from_hash(hash)
         allow = 0
         deny = 0
