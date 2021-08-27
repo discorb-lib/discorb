@@ -67,5 +67,36 @@ module Discorb
         messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
       end
     end
+
+    #
+    # Trigger the typing indicator in the channel.
+    # @macro async
+    # @macro http
+    #
+    # If block is given, trigger typing indicator during executing block.
+    # @example
+    #   channel.typing do
+    #     channel.post("Waiting for 60 seconds...")
+    #     sleep 60
+    #     channel.post("Done!")
+    #   end
+    #
+    def typing
+      Async do |task|
+        if block_given?
+          begin
+            post_task = task.async do
+              @client.internet.post("/channels/#{@id}/typing", {})
+              sleep(5)
+            end
+            yield
+          ensure
+            post_task.stop
+          end
+        else
+          @client.internet.post("/channels/#{@id}/typing", {})
+        end
+      end
+    end
   end
 end

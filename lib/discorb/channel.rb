@@ -483,37 +483,6 @@ module Discorb
     end
 
     #
-    # Trigger the typing indicator in the channel.
-    # @macro async
-    # @macro http
-    #
-    # If block is given, trigger typing indicator during executing block.
-    # @example
-    #   channel.typing do
-    #     channel.post("Waiting for 60 seconds...")
-    #     sleep 60
-    #     channel.post("Done!")
-    #   end
-    #
-    def typing
-      Async do |task|
-        if block_given?
-          begin
-            post_task = task.async do
-              @client.internet.post("/channels/#{@id}/typing", {})
-              sleep(5)
-            end
-            yield
-          ensure
-            post_task.stop
-          end
-        else
-          @client.internet.post("/channels/#{@id}/typing", {})
-        end
-      end
-    end
-
-    #
     # Fetch the pinned messages in the channel.
     # @macro async
     # @macro http
@@ -1110,6 +1079,23 @@ module Discorb
     def _set_data(data)
       @channels = @client.channels.values.filter { |channel| channel.parent == self }
       super
+    end
+  end
+
+  class DMChannel < Channel
+    include Messageable
+
+    # @!visibility private
+    def base_url
+      Async do
+        "/channels/#{@id}"
+      end
+    end
+
+    private
+
+    def _set_data(data)
+      @id = Snowflake.new(data)
     end
   end
 end
