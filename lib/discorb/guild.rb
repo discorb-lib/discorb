@@ -1117,12 +1117,12 @@ module Discorb
 
   #
   # Represents a system channel flag.
-  # ## Flags
-  # |field|value|
+  # ## Flag fields
+  # |Field|Value|
   # |-|-|
-  # |0|member_join|
-  # |1|server_boost|
-  # |2|setup_tips|
+  # |`1 << 0`|`:member_join`|
+  # |`1 << 1`|`:server_boost`|
+  # |`1 << 2`|`:setup_tips`|
   #
   class SystemChannelFlag < Flag
     @bits = {
