@@ -8,6 +8,7 @@ rescue LoadError
 end
 
 module Discorb
+  # @!visibility private
   class Logger
     attr_reader :out, :colorize_log
 
@@ -68,12 +69,15 @@ module Discorb
       return unless @out
 
       if @colorize_log
-        @out.puts(format("%<info>s %<message>s", info: [
-                                                   name[0].colorize(color),
-                                                   Time.now.strftime("[%D %T]").colorize(:gray),
-                                                   name.rjust(5).colorize(color),
-                                                   ":",
-                                                 ].join(" ").underline, message: message))
+        @out.puts(format(
+          "%<info>s %<message>s",
+          info: [
+            name[0].colorize(color),
+            Time.now.strftime("[%D %T]").colorize(:gray),
+            name.rjust(5).colorize(color),
+            ":",
+          ].join(" ").underline, message: message,
+        ))
       else
         @out.puts([
           name[0],
