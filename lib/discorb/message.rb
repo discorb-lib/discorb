@@ -1,9 +1,27 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a allowed mentions in a message.
+  #
   class AllowedMentions
-    attr_accessor :everyone, :roles, :users, :replied_user
+    # @return [Boolean] Whether to allow @everyone or @here.
+    attr_accessor :everyone
+    # @return [Boolean, Array<Discorb::Role>] The roles to allow, or false to disable.
+    attr_accessor :roles
+    # @return [Boolean, Array<Discorb::User>] The users to allow, or false to disable.
+    attr_accessor :users
+    # @return [Boolean] Whether to ping the user that sent the message to reply.
+    attr_accessor :replied_user
 
+    #
+    # Initializes a new instance of the AllowedMentions class.
+    #
+    # @param [Boolean] everyone Whether to allow @everyone or @here.
+    # @param [Boolean, Array<Discorb::Role>] roles The roles to allow, or false to disable.
+    # @param [Boolean, Array<Discorb::User>] users The users to allow, or false to disable.
+    # @param [Boolean] replied_user Whether to ping the user that sent the message to reply.
+    #
     def initialize(everyone: nil, roles: nil, users: nil, replied_user: nil)
       @everyone = everyone
       @roles = roles
@@ -11,6 +29,7 @@ module Discorb
       @replied_user = replied_user
     end
 
+    # @!visibility private
     def to_hash(other = nil)
       payload = {
         parse: %w[everyone roles users],
@@ -40,6 +59,9 @@ module Discorb
     end
   end
 
+  #
+  # Represents a message.
+  #
   class Message < DiscordModel
     attr_reader :client, :id, :author, :content, :created_at, :updated_at, :mentions, :mention_roles,
                 :mention_channels, :attachments, :embeds, :reactions, :webhook_id, :type,
@@ -95,7 +117,7 @@ module Discorb
     end
 
     def channel
-      @client.channels[@channel_id]
+      @dm || @client.channels[@channel_id]
     end
 
     def guild
@@ -268,13 +290,20 @@ module Discorb
 
     def _set_data(data)
       @id = Snowflake.new(data[:id])
-
       @channel_id = data[:channel_id]
-      @guild_id = data[:guild_id]
+
+      if data[:guild_id]
+        @guild_id = data[:guild_id]
+        @dm = nil
+      else
+        @dm = Discorb::DMChannel.new(@client, data[:channel_id])
+        @guild_id = nil
+      end
+
       if data[:author].nil? && data[:webhook_id]
         @webhook_id = Snowflake.new(data[:webhook_id])
         # @author = WebhookAuthor.new(data[:webhook_id])
-      elsif data[:guild_id].nil?
+      elsif data[:guild_id].nil? || data[:guild_id].empty?
         @author = @client.users[data[:author][:id]] || User.new(@client, data[:author])
       else
         @author = guild.members[data[:author][:id]] || Member.new(@client,
