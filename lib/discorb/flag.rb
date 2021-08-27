@@ -13,7 +13,10 @@ module Discorb
 
     @bits = {}
 
-    # @!visibility private
+    # Initialize the flag.
+    # @note This is usually called by the subclass.
+    #
+    # @param [Integer] value The value of the flag.
     def initialize(value)
       @value = value
       @values = {}
