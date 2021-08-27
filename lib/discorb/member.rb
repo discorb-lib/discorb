@@ -1,12 +1,66 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a member of a guild.
+  #
   class Member < User
-    attr_reader :premium_since, :nick, :joined_at, :custom_avatar, :display_avatar, :avatar, :mute, :deaf, :pending
+    # @return [Time] The time the member boosted the guild.
+    attr_reader :premium_since
+    # @return [String] The nickname of the member.
+    # @return [nil] If the member has no nickname.
+    attr_reader :nick
+    # @return [Time] The time the member joined the guild.
+    attr_reader :joined_at
+    # @return [Discorb::Asset] The custom avatar of the member.
+    # @return [nil] If the member has no custom avatar.
+    attr_reader :custom_avatar
+    # @return [Discorb::Asset] The display avatar of the member.
+    attr_reader :display_avatar
+    # @return [Boolean] Whether the member is muted.
+    attr_reader :mute
     alias mute? mute
+    # @return [Boolean] Whether the member is deafened.
+    attr_reader :deaf
     alias deaf? deaf
+    # @return [Boolean] Whether the member is pending (Not passed member screening).
+    attr_reader :pending
     alias pending? pending
 
+    # @!attribute [r] name
+    #   @return [String] The display name of the member.
+    # @!attribute [r] mention
+    #   @return [String] The mention of the member.
+    # @!attribute [r] voice_state
+    #   @return [Discorb::VoiceState] The voice state of the member.
+    # @!attribute [r] roles
+    #   @macro client_cache
+    #   @return [Array<Discorb::Role>] The roles of the member.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild the member is in.
+    # @!attribute [r] hoisted_role
+    #   @macro client_cache
+    #   @return [Discorb::Role] The hoisted role of the member.
+    #   @return [nil] If the member has no hoisted role.
+    # @!attribute [r] hoisted?
+    #   @return [Boolean] Whether the member has a hoisted role.
+    # @!attribute [r] permissions
+    #   @return [Discorb::Permission] The permissions of the member.
+    # @!attribute [r] presence
+    #   @macro client_cache
+    #   @return [Discorb::Presence] The presence of the member.
+    # @!attribute [r] activity
+    #   @macro client_cache
+    #   @return [Discorb::Activity] The activity of the member. It's from the {#presence}.
+    # @!attribute [r] activities
+    #   @macro client_cache
+    #   @return [Array<Discorb::Activity>] The activities of the member. It's from the {#presence}.
+    # @!attribute [r] status
+    #   @macro client_cache
+    #   @return [Symbol] The status of the member. It's from the {#presence}.
+
+    # @!visibility private
     def initialize(client, guild_id, user_data, member_data)
       @guild_id = guild_id
       @client = client
@@ -15,6 +69,11 @@ module Discorb
       _set_data(user_data, member_data)
     end
 
+    #
+    # Format the member to `@name` style.
+    #
+    # @return [String] The formatted member.
+    #
     def to_s
       "@#{name}"
     end
@@ -71,16 +130,47 @@ module Discorb
       "#<#{self.class} #{self} id=#{@id}>"
     end
 
-    # HTTP
-
+    #
+    # Add a role to the member.
+    # @macro http
+    # @macro async
+    #
+    # @param [Discorb::Role] role The role to add.
+    # @param [String] reason The reason for the action.
+    #
     def add_role(role, reason: nil)
-      @client.internet.put("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason)
+      Async do
+        @client.internet.put("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason).wait
+      end
     end
 
+    #
+    # Remove a role to the member.
+    # @macro http
+    # @macro async
+    #
+    # @param [Discorb::Role] role The role to add.
+    # @param [String] reason The reason for the action.
+    #
     def remove_role(role, reason: nil)
-      @client.internet.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", audit_log_reason: reason)
+      Async do
+        @client.internet.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", audit_log_reason: reason).wait
+      end
     end
 
+    #
+    # Edit the member.
+    # @macro http
+    # @macro async
+    # @macro edit
+    #
+    # @param [String] nick The nickname of the member.
+    # @param [Discorb::Role] role The roles of the member.
+    # @param [Boolean] mute Whether the member is muted.
+    # @param [Boolean] deaf Whether the member is deafened.
+    # @param [Discorb::StageChannel] channel The channel the member is moved to.
+    # @param [String] reason The reason for the action.
+    #
     def edit(nick: :unset, role: :unset, mute: :unset, deaf: :unset, channel: :unset, reason: nil)
       Async do
         payload = {}
@@ -95,12 +185,25 @@ module Discorb
 
     alias modify edit
 
+    #
+    # Kick the member.
+    #
+    # @param [String] reason The reason for the action.
+    #
     def kick(reason: nil)
       Async do
         guild.kick_member(self, reason: reason).wait
       end
     end
 
+    #
+    # Ban the member.
+    #
+    # @param [Integer] delete_message_days The number of days to delete messages.
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Discorb::Guild::Ban] The ban.
+    #
     def ban(delete_message_days: 0, reason: nil)
       Async do
         guild.ban_member(self, delete_message_days: delete_message_days, reason: reason).wait
@@ -119,7 +222,7 @@ module Discorb
       @joined_at = member_data[:joined_at] && Time.iso8601(member_data[:joined_at])
       @hoisted_role_id = member_data[:hoisted_role]
       @deaf = member_data[:deaf]
-      @custom_avatar = member_data[:avatar]
+      @custom_avatar = member_data[:avatar] && Asset.new(member_data[:avatar])
       @display_avatar = Asset.new(self, member_data[:avatar] || user_data[:avatar])
       super(user_data)
       @client.guilds[@guild_id].members[@id] = self unless @guild_id.nil?
