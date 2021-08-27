@@ -3,14 +3,6 @@
 module Discorb
   #
   # Represents a user interaction with the bot.
-  # @!attribute [r] guild
-  #   @macro client_cache
-  #   @return [Discorb::Guild] The guild the interaction took place in.
-  # @!attribute [r] channel
-  #   @macro client_cache
-  #   @return [Discorb::Channel] The channel the interaction took place in.
-  # @!attribute [r] target
-  #   @return [Discorb::User, Discorb::Member] The user or member the interaction took place with.
   #
   class Interaction < DiscordModel
     # @return [Discorb::Snowflake] The ID of the interaction.
@@ -28,6 +20,15 @@ module Discorb
     attr_reader :version
     # @return [String] The token for the interaction.
     attr_reader :token
+
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild the interaction took place in.
+    # @!attribute [r] channel
+    #   @macro client_cache
+    #   @return [Discorb::Channel] The channel the interaction took place in.
+    # @!attribute [r] target
+    #   @return [Discorb::User, Discorb::Member] The user or member the interaction took place with.
 
     @interaction_type = nil
     @interaction_name = nil
@@ -305,8 +306,6 @@ module Discorb
 
     #
     # Represents a select menu interaction.
-    # @!attribute [r] value
-    #   @return [String] The first selected value.
     #
     class SelectMenu < MessageComponentInteraction
       @component_type = 3
@@ -315,6 +314,9 @@ module Discorb
       attr_reader :custom_id
       # @return [Array<String>] The selected options.
       attr_reader :values
+
+      # @!attribute [r] value
+      #   @return [String] The first selected value.
 
       def value
         @values[0]

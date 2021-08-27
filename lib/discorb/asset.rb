@@ -3,12 +3,13 @@
 module Discorb
   #
   # Represents a single asset.
-  # @!attribute [r] animated?
-  #   @return [Boolean] Whether the asset is animated.
   #
   class Asset < DiscordModel
     # @return [String] The hash of asset.
     attr_reader :hash
+
+    # @!attribute [r] animated?
+    #   @return [Boolean] Whether the asset is animated.
 
     # @!visibility private
     def initialize(target, hash, path: nil)

@@ -3,9 +3,6 @@
 module Discorb
   #
   # Represents a integration.
-  # @!attribute [r] guild
-  #   @macro client_cache
-  #   @return [Discorb::Guild] The guild this integration is in.
   #
   class Integration < DiscordModel
     # @return [Discorb::Snowflake] The ID of the integration.
@@ -36,6 +33,10 @@ module Discorb
     alias revoked? revoked
     # @return [Discorb::Application] The application for the integration.
     attr_reader :application
+
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild this integration is in.
 
     @expire_behavior = {
       0 => :remove_role,

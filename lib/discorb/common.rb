@@ -36,29 +36,30 @@ module Discorb
   # Represents Snowflake of Discord.
   #
   # @see https://discord.com/developers/docs/reference#snowflakes Official Discord API docs
-  # @!attribute [r] timestamp
-  #   Timestamp of snowflake.
-  #
-  #   @return [Time] Timestamp of snowflake.
-  #
-  # @!attribute [r] worker_id
-  #   Worker ID of snowflake.
-  #
-  #   @return [Integer] Worker ID of snowflake.
-  #
-  # @!attribute [r] process_id
-  #   Process ID of snowflake.
-  #
-  #   @return [Integer] Process ID of snowflake.
-  # @!attribute [r] increment
-  #   Increment of snowflake.
-  #
-  #   @return [Integer] Increment of snowflake.
   class Snowflake < DiscordModel
     # @!visibility private
     def initialize(value)
       @value = value.to_i
     end
+
+    # @!attribute [r] timestamp
+    #   Timestamp of snowflake.
+    #
+    #   @return [Time] Timestamp of snowflake.
+    #
+    # @!attribute [r] worker_id
+    #   Worker ID of snowflake.
+    #
+    #   @return [Integer] Worker ID of snowflake.
+    #
+    # @!attribute [r] process_id
+    #   Process ID of snowflake.
+    #
+    #   @return [Integer] Process ID of snowflake.
+    # @!attribute [r] increment
+    #   Increment of snowflake.
+    #
+    #   @return [Integer] Increment of snowflake.
 
     #
     # Stringify snowflake.

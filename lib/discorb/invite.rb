@@ -4,30 +4,6 @@ module Discorb
   #
   # Represents invite of discord.
   #
-  # @!attribute [r] channel
-  #   Channel of the invite.
-  #
-  #   @return [Discorb::Channel] Channel of invite.
-  #   @macro client_cache
-  #
-  #
-  # @!attribute [r] guild
-  #   Guild of the invite.
-  #
-  #   @return [Discorb::Guild] Guild of invite.
-  #   @macro client_cache
-  #
-  # @!attribute [r] remain_uses
-  #   Number of remaining uses of invite.
-  #   @return [Integer] Number of remaining uses of invite.
-  #
-  # @!attribute [r] url
-  #   Full url of invite.
-  #   @return [String] Full url of invite.
-  #
-  # @!attribute [r] temporary?
-  #   Whether the invite is temporary.
-  #   @return [Boolean]
   class Invite < DiscordModel
     # @return [String] The code of invite.
     attr_reader :code
@@ -65,6 +41,30 @@ module Discorb
     # @return [Time] The time when invite was created.
     # @macro nometa
     attr_reader :created_at
+
+    # @!attribute [r] channel
+    #   Channel of the invite.
+    #
+    #   @return [Discorb::Channel] Channel of invite.
+    #   @macro client_cache
+    #
+    # @!attribute [r] guild
+    #   Guild of the invite.
+    #
+    #   @return [Discorb::Guild] Guild of invite.
+    #   @macro client_cache
+    #
+    # @!attribute [r] remain_uses
+    #   Number of remaining uses of invite.
+    #   @return [Integer] Number of remaining uses of invite.
+    #
+    # @!attribute [r] url
+    #   Full url of invite.
+    #   @return [String] Full url of invite.
+    #
+    # @!attribute [r] temporary?
+    #   Whether the invite is temporary.
+    #   @return [Boolean]
 
     @target_types = {
       nil => :voice,

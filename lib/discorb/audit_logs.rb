@@ -39,8 +39,6 @@ module Discorb
     #
     # Represents an entry in an audit log.
     #
-    # @!attribute [r] user
-    #   @return [Discorb::User] The user who performed the action.
     class Entry < DiscordModel
       # @return [Discorb::Snowflake] The ID of the entry.
       attr_reader :id
@@ -103,6 +101,9 @@ module Discorb
       # @return [Hash{Symbol => Object}] The optional data for this entry.
       # @note You can use dot notation to access the data.
       attr_reader :options
+
+      # @!attribute [r] user
+      #   @return [Discorb::User] The user who performed the action.
 
       # @!visibility private
       @events = {

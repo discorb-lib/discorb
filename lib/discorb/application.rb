@@ -92,12 +92,6 @@ module Discorb
 
       #
       # Represents a member of team.
-      # @!attribute [r] pending?
-      #   @return [Boolean] Whether the member is not joined to the team.
-      # @!attribute [r] accepted?
-      #   @return [Boolean] Whether the member accepted joining the team.
-      # @!attribute [r] owner?
-      #   @return [Boolean] Whether the member is the team's owner.
       #
       class Member < DiscordModel
         # @return [Discorb::User] The user.
@@ -106,11 +100,17 @@ module Discorb
         attr_reader :team_id
         # @return [:invited, :accepted] The member's membership state.
         attr_reader :membership_state
+        alias state membership_state
         # @return [Array<Permissions>] The permissions of the member.
         # @note This always return `:*`.
         attr_reader :permissions
 
-        alias state membership_state
+        # @!attribute [r] pending?
+        #   @return [Boolean] Whether the member is not joined to the team.
+        # @!attribute [r] accepted?
+        #   @return [Boolean] Whether the member accepted joining the team.
+        # @!attribute [r] owner?
+        #   @return [Boolean] Whether the member is the team's owner.
 
         @membership_state = {
           1 => :invited,
