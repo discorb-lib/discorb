@@ -47,7 +47,7 @@ module Discorb
     attr_accessor :label
     # @return [:primary, :secondary, :success, :danger, :link] The style of the button.
     attr_accessor :style
-    # @return [Discorb::UnicodeEmoji, Discorb::CustomEmoji] The emoji of the button.
+    # @return [Discorb::Emoji] The emoji of the button.
     attr_accessor :emoji
     # @return [String] The custom ID of the button.
     #   Won't be used if the style is `:link`.
@@ -72,7 +72,7 @@ module Discorb
     #
     # @param [String] label The label of the button.
     # @param [:primary, :secondary, :success, :danger, :link] style The style of the button.
-    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji of the button.
+    # @param [Discorb::Emoji] emoji The emoji of the button.
     # @param [String] custom_id The custom ID of the button.
     # @param [String] url The URL of the button.
     # @param [Boolean] disabled Whether the button is disabled.
@@ -199,7 +199,7 @@ module Discorb
       attr_accessor :value
       # @return [String] The description of the option.
       attr_accessor :description
-      # @return [Discorb::UnicodeEmoji, Discorb::CustomEmoji] The emoji of the option.
+      # @return [Discorb::Emoji] The emoji of the option.
       attr_accessor :emoji
       # @return [Boolean] Whether the option is default.
       attr_accessor :default
@@ -210,7 +210,7 @@ module Discorb
       # @param [String] label The label of the option.
       # @param [String] value The value of the option.
       # @param [String] description The description of the option.
-      # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji of the option.
+      # @param [Discorb::Emoji] emoji The emoji of the option.
       # @param [Boolean] default Whether the option is default.
       def initialize(label, value, description: nil, emoji: nil, default: false)
         @label = label

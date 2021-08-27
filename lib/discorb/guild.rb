@@ -1159,7 +1159,7 @@ module Discorb
       attr_reader :description
 
       # @!attribute [r] emoji
-      #   @return [Discorb::UnicodeEmoji, Discorb::CustomEmoji] The emoji to display.
+      #   @return [Discorb::Emoji] The emoji to display.
       # @!attribute [r] channel
       #   @macro client_cache
       #   @return [Discorb::Channel] The channel to display the welcome screen.
@@ -1169,7 +1169,7 @@ module Discorb
       #
       # @param [Discorb::TextChannel] channel The channel to display the welcome screen.
       # @param [String] description The channel's name.
-      # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to display.
+      # @param [Discorb::Emoji] emoji The emoji to display.
       #
       def initialize(channel, description, emoji)
         if description.is_a?(Hash)

@@ -3,8 +3,13 @@
 require "uri"
 
 module Discorb
+  # Represents a Discord emoji.
+  # @absract
+  class Emoji
+  end
+
   # Represents a custom emoji in discord.
-  class CustomEmoji < DiscordModel
+  class CustomEmoji < Emoji
     # @return [Discorb::Snowflake] The ID of the emoji.
     attr_reader :id
     # @return [String] The name of the emoji.
@@ -169,7 +174,7 @@ module Discorb
   #
   # Represents a unicode emoji (default emoji) in discord.
   #
-  class UnicodeEmoji
+  class UnicodeEmoji < Emoji
     # @return [String] The name of the emoji. (e.g. :grinning:)
     attr_reader :name
     # @return [String] The unicode value of the emoji. (e.g. U+1F600)

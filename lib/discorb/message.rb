@@ -260,7 +260,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to react with.
+    # @param [Discorb::Emoji] emoji The emoji to react with.
     #
     def add_reaction(emoji)
       Async do |_task|
@@ -275,7 +275,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to remove.
+    # @param [Discorb::Emoji] emoji The emoji to remove.
     #
     def remove_reaction(emoji)
       Async do |_task|
@@ -290,7 +290,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to remove.
+    # @param [Discorb::Emoji] emoji The emoji to remove.
     # @param [Discorb::Member] member The member to remove the reaction from.
     #
     def remove_reaction_of(emoji, member)
@@ -306,7 +306,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @param [Discorb::UnicodeEmoji, Discorb::CustomEmoji] emoji The emoji to fetch.
+    # @param [Discorb::Emoji] emoji The emoji to fetch.
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #
