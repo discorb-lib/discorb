@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-require_relative "../lib/discorb"
+require "discorb"
 
 client = Discorb::Client.new
 

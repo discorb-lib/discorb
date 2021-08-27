@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-require_relative "../lib/discorb"
+require "discorb"
 intents = Discorb::Intents.new
 intents.members = true
 client = Discorb::Client.new(intents: intents, log: $stdout, colorize_log: true)
