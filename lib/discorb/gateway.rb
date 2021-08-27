@@ -199,12 +199,6 @@ module Discorb
     #
     # Represents a `MESSAGE_UPDATE` event.
     #
-    # @!attribute [r] channel
-    #   @macro client_cache
-    #   @return [Discorb::Channel] The channel the message was sent in.
-    # @!attribute [r] guild
-    #   @macro client_cache
-    #   @return [Discorb::Guild] The guild the message was sent in.
 
     class MessageUpdateEvent < GatewayEvent
       # @return [Discorb::Message] The message before update.
@@ -230,6 +224,13 @@ module Discorb
       attr_reader :attachments
       # @return [Array<Discorb::Embed>] The embeds in the message.
       attr_reader :embeds
+
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel the message was sent in.
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild the message was sent in.
 
       def initialize(client, data, before, after)
         @client = client
@@ -269,16 +270,17 @@ module Discorb
 
     #
     # Represents a message but it has only ID.
-    # @!attribute [r] channel
-    #   @macro client_cache
-    #   @return [Discorb::Channel] The channel the message was sent in.
-    # @!attribute [r] guild
-    #   @macro client_cache
-    #   @return [Discorb::Guild] The guild the message was sent in.
     #
     class UnknownDeleteBulkMessage < GatewayEvent
       # @return [Discorb::Snowflake] The ID of the message.
       attr_reader :id
+
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel the message was sent in.
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild the message was sent in.
 
       # @!visibility private
       def initialize(client, id, data)
@@ -300,16 +302,17 @@ module Discorb
 
     #
     # Represents a `INVITE_DELETE` event.
-    # @!attribute [r] channel
-    #   @macro client_cache
-    #   @return [Discorb::Channel] The channel the message was sent in.
-    # @!attribute [r] guild
-    #   @macro client_cache
-    #   @return [Discorb::Guild] The guild the message was sent in.
     #
     class InviteDeleteEvent < GatewayEvent
       # @return [String] The invite code.
       attr_reader :code
+
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel the message was sent in.
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild the message was sent in.
 
       # @!visibility private
       def initialize(client, data)
@@ -343,23 +346,20 @@ module Discorb
 
     #
     # Represents a `TYPING_START` event.
-    # @!attribute [r] channel
-    #   @macro client_cache
-    #   @return [Discorb::Channel] The channel the user is typing in.
-    # @!attribute [r] guild
-    #   @macro client_cache
-    #   @return [Discorb::Guild] The guild the user is typing in.
-    # @!attribute [r] user
-    #   @macro client_cache
-    #   @return [Discorb::User] The user that is typing.
     #
     class TypingStartEvent < GatewayEvent
-      # @return [Discorb::Channel] The ID of channel the user is typing in.
-      attr_reader :channel_id
-      # @return [Discorb::Guild] The ID of the user that is typing.
-      attr_reader :guild_id
-      # @return [Discorb::User] The ID of user that is typing.
+      # @return [Discorb::Snowflake] The ID of the channel the user is typing in.
       attr_reader :user_id
+
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel the user is typing in.
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild the user is typing in.
+      # @!attribute [r] user
+      #   @macro client_cache
+      #   @return [Discorb::User] The user that is typing.
 
       # @!visibility private
       def initialize(client, data)
@@ -387,16 +387,17 @@ module Discorb
 
     #
     # Represents a message pin event.
-    # @!attribute [r] pinned?
-    #   @return [Boolean] Whether the message was pinned.
-    # @!attribute [r] unpinned?
-    #   @return [Boolean] Whether the message was unpinned.
     #
     class MessagePinEvent < GatewayEvent
       # @return [Discorb::Message] The message that was pinned.
       attr_reader :message
       # @return [:pinned, :unpinned] The type of event.
       attr_reader :type
+
+      # @!attribute [r] pinned?
+      #   @return [Boolean] Whether the message was pinned.
+      # @!attribute [r] unpinned?
+      #   @return [Boolean] Whether the message was unpinned.
 
       def initialize(client, data, message)
         @client = client
@@ -422,14 +423,15 @@ module Discorb
 
     #
     # Represents a `WEBHOOKS_UPDATE` event.
-    # @!attribute [r] channel
-    #   @macro client_cache
-    #   @return [Discorb::Channel] The channel where the webhook was updated.
-    # @!attribute [r] guild
-    #   @macro client_cache
-    #   @return [Discorb::Guild] The guild where the webhook was updated.
     #
     class WebhooksUpdateEvent < GatewayEvent
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel where the webhook was updated.
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild where the webhook was updated.
+
       # @!visibility private
       def initialize(client, data)
         @client = client

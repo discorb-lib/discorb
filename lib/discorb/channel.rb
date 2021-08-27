@@ -7,14 +7,14 @@ module Discorb
   # Represents a channel of Discord.
   # @abstract
   #
-  # @!attribute [r] type
-  #   @return [Integer] The type of the channel as integer.
-  #
   class Channel < DiscordModel
     # @return [Discorb::Snowflake] The ID of the channel.
     attr_reader :id
     # @return [String] The name of the channel.
     attr_reader :name
+
+    # @!attribute [r] type
+    #   @return [Integer] The type of the channel as integer.
 
     @channel_type = nil
     @subclasses = []
@@ -87,23 +87,24 @@ module Discorb
   #
   # Represents a channel in guild.
   # @abstract
-  # @!attribute [r] mention
-  #   @return [String] The mention of the channel.
-  #
-  # @!attribute [r] parent
-  #   @macro client_cache
-  #   @return [Discorb::CategoryChannel] The parent of channel.
-  #   @return [nil] If the channel is not a child of category.
-  #
-  # @!attribute [r] guild
-  #   @return [Discorb::Guild] The guild of channel.
-  #   @macro client_cache
   #
   class GuildChannel < Channel
     # @return [Integer] The position of the channel as integer.
     attr_reader :position
     # @return [Hash{Discorb::Role, Discorb::Member => PermissionOverwrite}] The permission overwrites of the channel.
     attr_reader :permission_overwrites
+
+    # @!attribute [r] mention
+    #   @return [String] The mention of the channel.
+    #
+    # @!attribute [r] parent
+    #   @macro client_cache
+    #   @return [Discorb::CategoryChannel] The parent of channel.
+    #   @return [nil] If the channel is not a child of category.
+    #
+    # @!attribute [r] guild
+    #   @return [Discorb::Guild] The guild of channel.
+    #   @macro client_cache
 
     include Comparable
     @channel_type = nil
@@ -720,8 +721,6 @@ module Discorb
 
   #
   # Represents a stage channel.
-  # @!attribute [r] stage_instance
-  #   @return [Discorb::StageInstance] The stage instance of the channel.
   #
   class StageChannel < GuildChannel
     # @return [Integer] The bitrate of the voice channel.
@@ -730,6 +729,9 @@ module Discorb
     attr_reader :user_limit
     # @!visibility private
     attr_reader :stage_instances
+
+    # @!attribute [r] stage_instance
+    #   @return [Discorb::StageInstance] The stage instance of the channel.
 
     @channel_type = 13
     # @!visibility private
@@ -820,9 +822,6 @@ module Discorb
   #
   # Represents a thread.
   # @abstract
-  # @!attribute [r] parent
-  #   @macro client_cache
-  #   @return [Discorb::GuildChannel] The parent channel of the thread.
   #
   class ThreadChannel < Channel
     # @return [Discorb::Snowflake] The ID of the channel.
@@ -852,6 +851,10 @@ module Discorb
     # @return [Boolean] Whether the thread is archived or not.
     attr_reader :archived
     alias archived? archived
+
+    # @!attribute [r] parent
+    #   @macro client_cache
+    #   @return [Discorb::GuildChannel] The parent channel of the thread.
 
     include Messageable
     @channel_type = nil

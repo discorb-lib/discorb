@@ -4,10 +4,6 @@ module Discorb
   #
   # Represents an embed of discord.
   #
-  # @!attribute [rw] image
-  #   @return [Discorb::Embed::Image] The image of embed.
-  # @!attribute [rw] thumbnail
-  #   @return [Discorb::Embed::Thumbnail] The thumbnail of embed.
   class Embed
     # @return [String, nil] The title of embed.
     attr_accessor :title
@@ -28,6 +24,11 @@ module Discorb
     # @return [Symbol] The type of embed.
     attr_reader :type
     attr_reader :image, :thumbnail
+
+    # @!attribute [rw] image
+    #   @return [Discorb::Embed::Image] The image of embed.
+    # @!attribute [rw] thumbnail
+    #   @return [Discorb::Embed::Thumbnail] The thumbnail of embed.
 
     #
     # Initialize a new Embed object.

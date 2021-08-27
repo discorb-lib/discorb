@@ -4,8 +4,6 @@ require "uri"
 
 module Discorb
   # Represents a custom emoji in discord.
-  # @!attribute [r] roles?
-  #   @return [Boolean] whether or not this emoji is restricted to certain roles.
   class CustomEmoji < DiscordModel
     # @return [Discorb::Snowflake] The ID of the emoji.
     attr_reader :id
@@ -26,6 +24,9 @@ module Discorb
     # @return [Boolean] whether the emoji is available.
     attr_reader :available
     alias available? available
+
+    # @!attribute [r] roles?
+    #   @return [Boolean] whether or not this emoji is restricted to certain roles.
 
     # @!visibility private
     def initialize(client, guild, data)

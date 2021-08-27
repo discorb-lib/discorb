@@ -3,10 +3,6 @@
 module Discorb
   #
   # Represents a guild template.
-  # @!attribute [r] source_guild
-  #   @macro client_cache
-  #   @return [Discorb::Guild] The guild this template is based on.
-  #   @return [nil] Client wasn't able to find the guild this template is based on.
   #
   class GuildTemplate < DiscordModel
     # @return [String] The code of the template.
@@ -31,6 +27,11 @@ module Discorb
     # @return [Boolean] Whether this template is dirty.
     attr_reader :is_dirty
     alias dirty? is_dirty
+
+    # @!attribute [r] source_guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild this template is based on.
+    #   @return [nil] Client wasn't able to find the guild this template is based on.
 
     # @!visibility private
     def initialize(client, data)

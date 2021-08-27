@@ -4,20 +4,6 @@ module Discorb
   #
   # Represents a guild in the Discord.
   #
-  # @!attribute [r] afk_channel
-  #   @return [Discorb::VoiceChannel] The AFK channel for this guild.
-  #   @macro client_cache
-  # @!attribute [r] system_channel
-  #   @return [Discorb::TextChannel] The system message channel for this guild.
-  #   @macro client_cache
-  # @!attribute [r] rules_channel
-  #   @return [Discorb::TextChannel] The rules channel for this guild.
-  #   @macro client_cache
-  # @!attribute [r] public_updates_channel
-  #   @return [Discorb::TextChannel] The public updates channel (`#moderator-only`) for this guild.
-  #   @macro client_cache
-  # @!attribute [r] me
-  #   @return [Discorb::Member] The client's member in the guild.
   class Guild < DiscordModel
     # @return [Discorb::Snowflake] ID of the guild.
     attr_reader :id
@@ -110,6 +96,21 @@ module Discorb
     # @return [Boolean] Whether the guild is available.
     attr_reader :available
     alias available? available
+
+    # @!attribute [r] afk_channel
+    #   @return [Discorb::VoiceChannel] The AFK channel for this guild.
+    #   @macro client_cache
+    # @!attribute [r] system_channel
+    #   @return [Discorb::TextChannel] The system message channel for this guild.
+    #   @macro client_cache
+    # @!attribute [r] rules_channel
+    #   @return [Discorb::TextChannel] The rules channel for this guild.
+    #   @macro client_cache
+    # @!attribute [r] public_updates_channel
+    #   @return [Discorb::TextChannel] The public updates channel (`#moderator-only`) for this guild.
+    #   @macro client_cache
+    # @!attribute [r] me
+    #   @return [Discorb::Member] The client's member in the guild.
 
     @mfa_levels = %i[none elevated].freeze
     @nsfw_levels = %i[default explicit safe age_restricted].freeze
@@ -910,14 +911,14 @@ module Discorb
     #
     # Represents a vanity invite.
     #
-    # @!attribute [r] url
-    #   @return [String] The vanity URL.
-    #
     class VanityInvite < DiscordModel
       # @return [String] The vanity invite code.
       attr_reader :code
       # @return [Integer] The number of uses.
       attr_reader :uses
+
+      # @!attribute [r] url
+      #   @return [String] The vanity URL.
 
       # @!visibility private
       def initialize(client, guild, data)
@@ -935,15 +936,6 @@ module Discorb
     #
     # Represents a guild widget.
     #
-    # @!attribute [r] channel
-    #   @macro client_cache
-    #   @return [Discorb::Channel] The channel.
-    # @!attribute [r] guild
-    #   @macro client_cache
-    #   @return [Discorb::Guild] The guild.
-    # @!attribute [r] json_url
-    #   @return [String] The JSON URL.
-    #
     class Widget < DiscordModel
       # @return [Discorb::Snowflake] The guild ID.
       attr_reader :guild_id
@@ -953,6 +945,15 @@ module Discorb
       attr_reader :enabled
       alias enabled? enabled
       alias enable? enabled
+
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel.
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild.
+      # @!attribute [r] json_url
+      #   @return [String] The JSON URL.
 
       # @!visibility private
       def initialize(client, guild_id, data)
@@ -1152,15 +1153,16 @@ module Discorb
 
     #
     # Represents a channel to display the welcome screen.
-    # @!attribute [r] emoji
-    #   @return [Discorb::UnicodeEmoji, Discorb::CustomEmoji] The emoji to display.
-    # @!attribute [r] channel
-    #   @macro client_cache
-    #   @return [Discorb::Channel] The channel to display the welcome screen.
     #
     class Channel < DiscordModel
       # @return [String] The channel's name.
       attr_reader :description
+
+      # @!attribute [r] emoji
+      #   @return [Discorb::UnicodeEmoji, Discorb::CustomEmoji] The emoji to display.
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel to display the welcome screen.
 
       #
       # Initialize a new welcome screen channel.

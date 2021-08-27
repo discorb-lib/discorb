@@ -5,8 +5,6 @@ require "mime/types"
 module Discorb
   #
   # Represents a attachment file.
-  # @!attribute [r] image?
-  #   @return [Boolean] whether the file is an image.
   #
   class Attachment < DiscordModel
     # @return [#read] The file content.
@@ -29,6 +27,9 @@ module Discorb
     # @return [Integer] The image width.
     # @return [nil] If the attachment is not an image.
     attr_reader :width
+
+    # @!attribute [r] image?
+    #   @return [Boolean] whether the file is an image.
 
     # @!visibility private
     def initialize(data)
