@@ -752,7 +752,8 @@ module Discorb
           guild.emojis.delete(emoji)
         end
       when "GUILD_INTEGRATIONS_UPDATE"
-        dispatch(:guild_integrations_update, GuildIntegrationsUpdateEvent.new(self, data))
+        # dispatch(:guild_integrations_update, GuildIntegrationsUpdateEvent.new(self, data))
+        # Currently not implemented
       when "INTEGRATION_CREATE"
         dispatch(:integration_create, Integration.new(self, data, data[:guild_id]))
       when "INTEGRATION_UPDATE"
@@ -895,10 +896,10 @@ module Discorb
           dispatch(:message_update, MessageUpdateEvent.new(self, data, before, current))
         end
       when "MESSAGE_DELETE"
-        return @log.info "Uncached message ID #{data[:id]}, ignoring" unless (message = @messages[data[:id]])
+        message.instance_variable_set(:@deleted, true) if (message = @messages[data[:id]])
 
-        message.instance_variable_set(:@deleted, true)
-        dispatch(:message_delete, message)
+        dispatch(:message_delete_id, Snowflake.new(data[:id]), channels[data[:channel_id]], data[:guild_id] && guilds[data[:guild_id]])
+        dispatch(:message_delete, message, channels[data[:channel_id]], data[:guild_id] && guilds[data[:guild_id]])
       when "MESSAGE_DELETE_BULK"
         messages = []
         data[:ids].each do |id|
