@@ -286,7 +286,7 @@ module Discorb
     # @param [Discorb::Activity] activity The activity to update.
     # @param [:online, :idle, :dnd, :invisible] status The status to update.
     #
-    def update_presence(activity = nil, activity: nil, status: nil)
+    def update_presence(activity = nil, status: nil)
       payload = {}
       if !activity.nil?
         payload[:activities] = [activity.to_hash]
