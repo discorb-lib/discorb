@@ -1,12 +1,30 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a user of discord.
+  #
   class User < DiscordModel
-    attr_reader :client, :verified, :username, :mfa_enabled, :id, :flag, :email, :discriminator, :avatar, :bot
+    # @return [Boolean] Whether the user is verified.
+    attr_reader :verified
+    # @return [String] The user's username.
+    attr_reader :username
+    alias name username
+    # @return [Discorb::Snowflake] The user's ID.
+    attr_reader :id
+    # @return [Discorb::User::Flag] The user's flags.
+    attr_reader :flag
+    # @return [String] The user's discriminator.
+    attr_reader :discriminator
+    # @return [Discorb::Asset] The user's avatar.
+    attr_reader :avatar
+    # @return [Boolean] Whether the user is a bot.
+    attr_reader :bot
     alias bot? bot
 
     include Discorb::Messageable
 
+    # @!visibility private
     def initialize(client, data)
       @client = client
       @data = {}
@@ -14,17 +32,11 @@ module Discorb
       _set_data(data)
     end
 
-    def update!
-      Async do
-        _, data = @client.get("/users/#{@id}").wait
-        _set_data(data)
-      end
-    end
-
-    def name
-      @username
-    end
-
+    #
+    # Format the user as `Username#Discriminator` style.
+    #
+    # @return [String] The formatted username.
+    #
     def to_s
       "#{@username}##{@discriminator}"
     end
@@ -33,6 +45,15 @@ module Discorb
       "#<#{self.class} #{self}>"
     end
 
+    #
+    # Whether the user is a owner of the client.
+    # @macro async
+    # @macro http
+    #
+    # @param [Boolean] strict Whether don't allow if the user is a member of the team.
+    #
+    # @return [Boolean] Whether the user is a owner of the client.
+    #
     def bot_owner?(strict: false)
       Async do
         app = @client.fetch_application.wait
@@ -46,6 +67,9 @@ module Discorb
       end
     end
 
+    alias app_owner? bot_owner?
+
+    # @!visibility private
     def base_url
       Async do
         next @dm_channel_id if @dm_channel_id
@@ -56,8 +80,23 @@ module Discorb
       end
     end
 
-    alias app_owner? bot_owner?
-
+    #
+    # Represents the user's flags.
+    # ## Flag fields
+    # |`1 << 0`|`:discord_employee`|
+    # |`1 << 1`|`:partnered_server_owner`|
+    # |`1 << 2`|`:hypesquad_events`|
+    # |`1 << 3`|`:bug_hunter_level_1`|
+    # |`1 << 6`|`:house_bravery`|
+    # |`1 << 7`|`:house_brilliance`|
+    # |`1 << 8`|`:house_balance`|
+    # |`1 << 9`|`:early_supporter`|
+    # |`1 << 10`|`:team_user`|
+    # |`1 << 14`|`:bug_hunter_level_2`|
+    # |`1 << 16`|`:verified_bot`|
+    # |`1 << 17`|`:early_verified_bot_developer`|
+    # |`1 << 18`|`:discord_certified_moderator`|
+    #
     class Flag < Discorb::Flag
       @bits = {
         discord_employee: 0,
@@ -92,14 +131,28 @@ module Discorb
     end
   end
 
+  #
+  # Represents a client user.
+  #
   class ClientUser < User
-    def edit(name: false, avatar: false)
+    #
+    # Edit the client user.
+    # @macro async
+    # @macro http
+    # @macro edit
+    #
+    # @param [String] name The new username.
+    # @param [Discorb::Image] avatar The new avatar.
+    #
+    def edit(name: :unset, avatar: :unset)
       Async do
         payload = {}
-        payload[:username] = name if name
-        if avatar.nil?
+        payload[:username] = name unless name == :unset
+        if avatar == :unset
+          # Nothing
+        elsif avatar.nil?
           payload[:avatar] = nil
-        elsif avatar
+        else
           payload[:avatar] = avatar.to_s
         end
         @client.internet.patch("/users/@me", payload).wait
