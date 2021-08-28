@@ -182,7 +182,7 @@ module Discorb
         attr_reader :large_text
         # @return [String] The small image ID of the activity.
         attr_reader :small_image
-        alias small_id small_text
+        alias small_id small_image
         # @return [String] The small text of the activity.
         attr_reader :small_text
 
