@@ -671,7 +671,7 @@ module Discorb
           member = ThreadChannel::Member.new(self, data)
           thread.members[data[:user_id]] = member
         end
-        dispatch(:thread_member_update, old, member)
+        dispatch(:thread_member_update, thread, old, member)
       when "THREAD_MEMBERS_UPDATE"
         return @log.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
@@ -817,7 +817,7 @@ module Discorb
           end
         end
         if old&.self_mute? != current&.self_mute?
-          dispatch(:self_mute_update, old, current)
+          dispatch(:voice_self_mute_update, old, current)
           case [old&.self_mute?, current&.self_mute?]
           when [false, true]
             dispatch(:voice_self_mute_enable, current)
@@ -835,7 +835,7 @@ module Discorb
           end
         end
         if old&.server_mute? != current&.server_mute?
-          dispatch(:server_mute_update, old, current)
+          dispatch(:voice_server_mute_update, old, current)
           case [old&.server_mute?, current&.server_mute?]
           when [false, true]
             dispatch(:voice_server_mute_enable, current)
@@ -844,7 +844,7 @@ module Discorb
           end
         end
         if old&.server_deaf? != current&.server_deaf?
-          dispatch(:voice_server_deaf_enable, old, current)
+          dispatch(:voice_server_deaf_update, old, current)
           case [old&.server_deaf?, current&.server_deaf?]
           when [false, true]
             dispatch(:voice_server_deaf_enable, current)
