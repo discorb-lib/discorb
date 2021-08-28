@@ -3,9 +3,28 @@
 require "async/http/internet"
 
 module Discorb
+  #
+  # Represents a webhook.
+  # @abstract
+  #
   class Webhook
-    attr_reader :name, :guild_id, :channel_id, :user, :avatar, :application_id, :internet, :token
+    # @return [String] The name of the webhook.
+    attr_reader :name
+    # @return [Discorb::Snowflake] The ID of the guild this webhook belongs to.
+    attr_reader :guild_id
+    # @return [Discorb::Snowflake] The ID of the channel this webhook belongs to.
+    attr_reader :channel_id
+    # @return [Discorb::User] The user that created this webhook.
+    attr_reader :user
+    # @return [Discorb::Asset] The avatar of the webhook.
+    attr_reader :avatar
+    # @return [Discorb::Snowflake] The application ID of the webhook.
+    # @return [nil] If the webhook is not an application webhook.
+    attr_reader :application_id
+    # @return [String] The URL of the webhook.
+    attr_reader :token
 
+    # @!visibility private
     def initialize(client, data)
       @name = data[:name]
       @guild_id = data[:guild_id] && Snowflake.new(data[:guild_id])
@@ -15,12 +34,7 @@ module Discorb
       @name = data[:name]
       @avatar = Asset.new(self, data[:avatar])
       @token = ""
-      # @token = data[:token]
       @application_id = data[:application_id]
-      # @source_guild = data[:source_guild]
-      # @source_channel = Snowflake.new(data[:source_channel])
-      # @url = data[:url]
-      # p data
       @client = client
       @internet = Discorb::Internet.new(client)
     end
@@ -29,6 +43,25 @@ module Discorb
       "#<#{self.class} #{@name.inspect} id=#{@id}>"
     end
 
+    #
+    # Posts a message to the webhook.
+    # @macro async
+    # @macro http
+    #
+    # @param [String] content The content of the message.
+    # @param [Boolean] tts Whether the message should be sent as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Discorb::File] file The file to send.
+    # @param [Array<Discorb::File>] files The files to send.
+    # @param [String] username The username of the message.
+    # @param [String] avatar_url The avatar URL of the message.
+    # @param [Boolean] wait Whether to wait for the message to be sent.
+    #
+    # @return [Discorb::Webhook::Message] The message that was sent.
+    # @return [nil] If `wait` is false.
+    #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
                             file: nil, files: nil, username: nil, avatar_url: :unset, wait: true)
       Async do |_task|
@@ -60,6 +93,16 @@ module Discorb
 
     alias execute post
 
+    #
+    # Edits the webhook.
+    # @macro async
+    # @macro http
+    # @macro edit
+    #
+    # @param [String] name The new name of the webhook.
+    # @param [Discorb::Image] avatar The new avatar of the webhook.
+    # @param [Discorb::GuildChannel] channel The new channel of the webhook.
+    #
     def edit(name: :unset, avatar: :unset, channel: :unset)
       Async do |_task|
         payload = {}
@@ -72,6 +115,11 @@ module Discorb
 
     alias modify edit
 
+    #
+    # Deletes the webhook.
+    # @macro async
+    # @macro http
+    #
     def delete!
       Async do
         @internet.delete(url).wait
@@ -81,11 +129,26 @@ module Discorb
 
     alias destroy! delete!
 
+    #
+    # Edits the webhook's message.
+    # @macro async
+    # @macro http
+    # @macro edit
+    #
+    # @param [Discorb::Webhook::Message] message The message to edit.
+    # @param [String] content The new content of the message.
+    # @param [Discorb::Embed] embed The new embed of the message.
+    # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
+    # @param [Discorb::File] file The file to send.
+    # @param [Array<Discorb::File>] files The files to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    #
     def edit_message(
       message, content = :unset,
       embed: :unset, embeds: :unset,
       file: :unset, files: :unset,
-      attachment: :unset, attachments: :unset,
+      attachments: :unset,
       allowed_mentions: :unset
     )
       Async do
@@ -110,6 +173,11 @@ module Discorb
       end
     end
 
+    #
+    # Deletes the webhook's message.
+    #
+    # @param [Discorb::Webhook::Message] message The message to delete.
+    #
     def delete_message!(message)
       Async do
         @internet.delete("#{url}/messages/#{Utils.try(message, :id)}").wait
@@ -117,9 +185,18 @@ module Discorb
       end
     end
 
+    #
+    # Represents a webhook from URL.
+    #
     class URLWebhook < Webhook
+      # @return [String] The URL of the webhook.
       attr_reader :url
 
+      #
+      # Initializes the webhook from URL.
+      #
+      # @param [String] url The URL of the webhook.
+      #
       def initialize(url)
         @url = url
         @token = ""
@@ -127,7 +204,14 @@ module Discorb
       end
     end
 
+    #
+    # Represents a bot created webhook.
+    #
     class IncomingWebhook < Webhook
+      # @!attribute [r] url
+      #   @return [String] The URL of the webhook.
+
+      # @!visibility private
       def initialize(client, data)
         super
         @token = data[:token]
@@ -138,7 +222,18 @@ module Discorb
       end
     end
 
+    #
+    # Represents a webhook of channel following.
+    #
     class FollowerWebhook < Webhook
+      # @!attribute [r] source_guild
+      #   Represents a source guild of follower webhook.
+      #   @return [Discorb::Guild, Discorb::Webhook::FollowerWebhook::Guild] The source guild of follower webhook.
+      # @!attribute [r] source_channel
+      #   Represents a source channel of follower webhook.
+      #   @return [Discorb::Channel, Discorb::Webhook::FollowerWebhook::Channel] The source channel of follower webhook.
+
+      # @!visibility private
       def initialize(client, data)
         super
         @source_guild = FollowerWebhook::Guild.new(data[:source_guild])
@@ -153,9 +248,18 @@ module Discorb
         @client.channels[@source_channel.id] || @source_channel
       end
 
+      #
+      # Represents a guild of follower webhook.
+      #
       class Guild < DiscordModel
-        attr_reader :id, :name, :icon
+        # @return [Discorb::Snowflake] The ID of the guild.
+        attr_reader :id
+        # @return [String] The name of the guild.
+        attr_reader :name
+        # @return [Discorb::Asset] The icon of the guild.
+        attr_reader :icon
 
+        # @!visibility private
         def initialize(data)
           @id = Snowflake.new(data[:id])
           @name = data[:name]
@@ -163,9 +267,16 @@ module Discorb
         end
       end
 
+      #
+      # Represents a channel of follower webhook.
+      #
       class Channel < DiscordModel
-        attr_reader :id, :name
+        # @return [Discorb::Snowflake] The ID of the channel.
+        attr_reader :id
+        # @return [String] The name of the channel.
+        attr_reader :name
 
+        # @!visibility private
         def initialize(data)
           @id = Snowflake.new(data[:id])
           @name = data[:name]
@@ -173,14 +284,24 @@ module Discorb
       end
     end
 
+    #
+    # Represents a webhook from oauth2.
+    #
     class ApplicationWebhook < Webhook
     end
 
     # private
 
+    #
+    # Represents a webhook message.
+    #
     class Message < Discorb::Message
-      attr_reader :channel_id, :guild_id
+      # @return [Discorb::Snowflake] The ID of the channel.
+      attr_reader :channel_id
+      # @return [Discorb::Snowflake] The ID of the guild.
+      attr_reader :guild_id
 
+      # @!visibility private
       def initialize(webhook, data, client = nil)
         @client = client
         @webhook = webhook
@@ -188,12 +309,25 @@ module Discorb
         _set_data(data)
       end
 
+      #
+      # Edits the message.
+      # @macro async
+      # @macro http
+      # @macro edit
+      #
+      # @param (see Webhook#edit_message)
+      #
       def edit(...)
         Async do
           @webhook.edit_message(self, ...).wait
         end
       end
 
+      #
+      # Deletes the message.
+      # @macro async
+      # @macro http
+      #
       def delete!
         Async do
           @webhook.delete_message!(self).wait
@@ -221,10 +355,24 @@ module Discorb
         @webhook_id = Snowflake.new(data[:webhook_id])
       end
 
+      #
+      # Represents an author of webhook message.
+      #
       class Author < DiscordModel
-        attr_reader :bot, :id, :username, :avatar, :discriminator
+        # @return [Boolean] Whether the author is a bot.
+        # @note This will be always `true`.
+        attr_reader :bot
+        # @return [Discorb::Snowflake] The ID of the author.
+        attr_reader :id
+        # @return [String] The name of the author.
+        attr_reader :username
         alias name username
+        # @return [Discorb::Asset] The avatar of the author.
+        attr_reader :avatar
+        # @return [String] The discriminator of the author.
+        attr_reader :discriminator
 
+        # @!visibility private
         def initialize(data)
           @data = data
           @bot = data[:bot]
@@ -237,6 +385,13 @@ module Discorb
     end
 
     class << self
+      #
+      # Creates URLWebhook.
+      #
+      # @param [String] url The URL of the webhook.
+      #
+      # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
+      #
       def new(url)
         if self != Webhook
           return super(*url) if url.is_a?(Array)
