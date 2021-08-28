@@ -518,7 +518,7 @@ module Discorb
       @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
       # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
       @interaction = data[:interaction] && Message::Interaction.new(@client, data[:interaction])
-      @thread = Channel.make_channel(@client, data[:thread])
+      @thread = data[:thread] && Channel.make_channel(@client, data[:thread])
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
       @data.update(data)
       @deleted = false
