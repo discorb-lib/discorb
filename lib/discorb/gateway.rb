@@ -955,6 +955,7 @@ module Discorb
         dispatch(interaction.class.event_name, interaction)
       when "RESUMED"
         @log.info("Successfully resumed connection")
+        dispatch(:resumed)
       else
         @log.warn "Unknown event: #{event_name}\n#{data.inspect}"
       end
