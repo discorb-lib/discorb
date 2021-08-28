@@ -197,12 +197,12 @@ module Discorb
       #
       # Represents the flags of an activity.
       # ## Flag fields
-      # |`0`|`:instance`|
-      # |`1`|`:join`|
-      # |`2`|`:spectate`|
-      # |`3`|`:join_request`|
-      # |`4`|`:sync`|
-      # |`5`|`:play`|
+      # |`1 << 0`|`:instance`|
+      # |`1 << 1`|`:join`|
+      # |`1 << 2`|`:spectate`|
+      # |`1 << 3`|`:join_request`|
+      # |`1 << 4`|`:sync`|
+      # |`1 << 5`|`:play`|
       #
       class Flag < Discorb::Flag
         @bits = {
