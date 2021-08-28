@@ -1,16 +1,34 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a reaction to a message.
+  #
   class Reaction < DiscordModel
-    attr_reader :count, :emoji, :message, :me
+    # @return [Integer] The number of users that have reacted with this emoji.
+    attr_reader :count
+    # @return [Discorb::Emoji] The emoji that was reacted with.
+    attr_reader :emoji
+    # @return [Discorb::Message] The message that this reaction is on.
+    attr_reader :message
+    # @return [Boolean] Whether client user reacted with this emoji.
+    attr_reader :me
     alias me? me
-    alias reacted? me?
+    alias reacted? me
 
+    # @!visibility private
     def initialize(message, data)
       @message = message
       _set_data(data)
     end
 
+    #
+    # Fetch the user that reacted with this emoji.
+    #
+    # @param (see Message#fetch_reacted_users)
+    #
+    # @return [Array<Discorb::User>] The users that reacted with this emoji.
+    #
     def fetch_users(...)
       message.fetch_reacted_users(@emoji, ...)
     end
