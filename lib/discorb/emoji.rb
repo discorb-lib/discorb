@@ -4,7 +4,7 @@ require "uri"
 
 module Discorb
   # Represents a Discord emoji.
-  # @absract
+  # @abstract
   class Emoji
   end
 

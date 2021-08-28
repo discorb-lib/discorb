@@ -64,7 +64,7 @@ module Discorb
       #
       # @param [String] name The new name of the sticker.
       # @param [String] description The new description of the sticker.
-      # @param [Discorb::Emoji] tags The new tags of the sticker.
+      # @param [Discorb::Emoji] tag The new tags of the sticker.
       # @param [String] reason The reason for the edit.
       #
       def edit(name: :unset, description: :unset, tag: :unset, reason: :unset)
