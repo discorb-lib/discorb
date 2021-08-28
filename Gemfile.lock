@@ -1,7 +1,11 @@
 PATH
   remote: .
   specs:
-    discorb (0.0.2)
+    discorb (0.0.3)
+      async
+      async-http
+      async-websocket
+      mime-types (~> 3.3)
 
 GEM
   remote: https://rubygems.org/
