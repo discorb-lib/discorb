@@ -240,7 +240,7 @@ module Discorb
     # @return [Discorb::Message] The message.
     def reply(*args, **kwargs)
       Async do |_task|
-        channel.post(*args, message_reference: self, **kwargs).wait
+        channel.post(*args, reference: self, **kwargs).wait
       end
     end
 
