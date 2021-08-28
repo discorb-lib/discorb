@@ -215,11 +215,11 @@ module Discorb
     def test_error(ary)
       resp, data = *ary
       case resp.code
-      when 400
+      when "400"
         raise BadRequestError.new(resp, data)
-      when 403
+      when "403"
         raise ForbiddenError.new(resp, data)
-      when 404
+      when "404"
         raise NotFoundError.new(resp, data)
       else
         [resp, data]
