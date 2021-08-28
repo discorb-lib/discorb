@@ -580,8 +580,10 @@ module Discorb
         dispatch(:message, message)
       when "GUILD_UPDATE"
         if @guilds.has?(data[:id])
-          @guilds[data[:id]].send(:_set_data, data, false)
-          dispatch(:guild_update, @guilds[data[:id]])
+          current = @guilds[data[:id]]
+          before = Guild.new(self, current.instance_variable_get(:@data).merge(no_cache: true), false)
+          current.send(:_set_data, data, false)
+          dispatch(:guild_update, before, current)
         else
           @log.warn "Unknown guild id #{data[:id]}, ignoring"
         end
