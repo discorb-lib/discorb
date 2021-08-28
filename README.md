@@ -1,6 +1,7 @@
-# Discorb
-[![Gem](https://img.shields.io/gem/dt/discorb)](https://rubygems.org/gems/discorb)
-[![Gem](https://img.shields.io/gem/v/discorb)](https://rubygems.org/gems/discorb)  
+# discorb
+[![rubydoc](https://img.shields.io/badge/Document-rubydoc.info-blue.svg)](https://rubydoc.info/gems/discorb)
+[![Gem](https://img.shields.io/gem/dt/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)
+[![Gem](https://img.shields.io/gem/v/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)  
 
 discorb is a Discord API wrapper for Ruby.
 
