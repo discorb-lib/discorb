@@ -9,7 +9,6 @@ Gem::Specification.new do |spec|
   spec.email = ["sevenc-nanashi@sevenbot.jp"]
 
   spec.summary = "discorb is a Discord API wrapper for Ruby."
-  spec.description = File.read(File.join(__dir__, "README.md"))
   spec.homepage = "https://github.com/sevenc-nanashi/discorb"
   spec.license = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
