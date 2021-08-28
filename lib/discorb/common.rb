@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 module Discorb
+  # @return [String] The API base URL.
   API_BASE_URL = "https://discord.com/api/v9"
-  VERSION = "0.0.1"
+  # @return [String] The version of discorb.
+  VERSION = "0.0.2"
+  # @return [String] The user agent for the bot.
   USER_AGENT = "DiscordBot (https://github.com/discorb-lib/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
 
   #
