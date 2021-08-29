@@ -52,8 +52,13 @@ module Discorb
     # @param [Boolean] colorize_log Whether to colorize the log.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
+    # @param [Boolean] overwrite_application_commands Whether to overwrite application commands on ready.
     #
-    def initialize(allowed_mentions: nil, intents: nil, message_caches: 1000, log: nil, colorize_log: false, log_level: :info, wait_until_ready: true)
+    def initialize(
+      allowed_mentions: nil, intents: nil, message_caches: 1000,
+      log: nil, colorize_log: false, log_level: :info,
+      wait_until_ready: true, overwrite_application_commands: true
+    )
       @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
       @intents = (intents or Intents.default)
       @events = {}
@@ -72,6 +77,8 @@ module Discorb
       @ready = false
       @tasks = []
       @conditions = {}
+      @commands = []
+      @command_pair = {}
     end
 
     #
@@ -359,5 +366,6 @@ module Discorb
     end
 
     include Discorb::Gateway::Handler
+    include Discorb::Command::Handler
   end
 end

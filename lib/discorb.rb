@@ -24,17 +24,17 @@ module Discorb
   #
   def macro
     # NOTE: this method is only for YARD.
-    puts 'Wow, You found the easter egg!\n\n'
+    puts "Wow, You found the easter egg!\n"
     red = "\e[31m"
     reset = "\e[m"
     puts <<~"EASTEREGG"
-               | .               #{red}   |     #{reset}
-             __|                 #{red}   |__   #{reset}
-            /  | |  __   __  _   #{red} _ |  \\  #{reset}
-           (   | | (__  /   / \\ #{red}|/  |   ) #{reset}
+                 .               #{red}         #{reset}
+               |                 #{red}   |     #{reset}
+             __| |  __   __  _   #{red} _ |__    #{reset}
+            /  | | (__  /   / \\ #{red}|/  |  \\ #{reset}
             \\__| |  __) \\__ \\_/ #{red}|   |__/  #{reset}
 
-                 https://github.com/discorb-lib/discorb
+           Thank you for using this library!
          EASTEREGG
   end
 end
@@ -44,7 +44,7 @@ require_order = %w[common flag dictionary error http intents emoji_table modules
                 %w[application audit_logs color components event extension] +
                 %w[file guild_template image integration interaction invite log permission] +
                 %w[presence reaction role sticker utils voice_state webhook] +
-                %w[gateway_requests gateway] +
+                %w[gateway_requests gateway command] +
                 %w[asset client extend]
 require_order.each do |name|
   require_relative "discorb/#{name}.rb"

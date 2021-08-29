@@ -227,7 +227,7 @@ module Discorb
     end
 
     def get_headers(headers, body = "", audit_log_reason = nil)
-      ret = if body.nil? || body.empty?
+      ret = if body.nil? || body == ""
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}" }
         else
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}",
