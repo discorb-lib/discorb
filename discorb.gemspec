@@ -9,15 +9,15 @@ Gem::Specification.new do |spec|
   spec.email = ["sevenc-nanashi@sevenbot.jp"]
 
   spec.summary = "discorb is a Discord API wrapper for Ruby."
-  spec.homepage = "https://github.com/sevenc-nanashi/discorb"
+  spec.homepage = "https://github.com/discorb-lib/discorb"
   spec.license = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/sevenc-nanashi/discorb"
-  spec.metadata["changelog_uri"] = "https://github.com/sevenc-nanashi/discorb/blob/main/Changelog.md"
+  spec.metadata["source_code_uri"] = "https://github.com/discorb-lib/discorb"
+  spec.metadata["changelog_uri"] = "https://github.com/discorb-lib/discorb/blob/main/Changelog.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

@@ -46,7 +46,7 @@ client.run(ENV["DISCORD_BOT_TOKEN"])
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/sevenc-nanashi/discorb.
+Bug reports and pull requests are welcome on GitHub at https://github.com/discorb-lib/discorb.
 
 ## License
 
