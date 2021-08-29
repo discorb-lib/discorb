@@ -306,7 +306,7 @@ module Discorb
     #
     # Method to wait for a event.
     #
-    # @param [Symbol] event_name The name of the event.
+    # @param [Symbol] event The name of the event.
     # @param [Integer] timeout The timeout in seconds.
     # @param [Proc] check The check to use.
     #
