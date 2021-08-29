@@ -1059,7 +1059,7 @@ module Discorb
       @members = Discorb::Dictionary.new
       data[:members].each do |m|
         Member.new(@client, @id, m[:user], m)
-      end
+      end if data[:members]
       @splash = data[:splash] && Asset.new(self, data[:splash], path: "splashes/#{@id}")
       @discovery_splash = data[:discovery_splash] && Asset.new(self, data[:discovery_splash], path: "discovery-splashes/#{@id}")
       @owner_id = data[:owner_id]
