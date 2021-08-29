@@ -451,6 +451,9 @@ module Discorb
       end
     end
 
+    #
+    # A module to handle gateway events.
+    #
     module Handler
       private
 
