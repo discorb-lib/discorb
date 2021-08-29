@@ -712,14 +712,14 @@ module Discorb
         dispatch(:member_add, nm)
       when "GUILD_MEMBER_UPDATE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless (nm = guild.members[data[:id]])
+        return @log.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (nm = guild.members[data[:user][:id]])
 
         old = Member.new(self, data[:guild_id], data[:user], data.update({ no_cache: true }))
         nm.send(:_set_data, data[:user], data)
         dispatch(:member_update, old, nm)
       when "GUILD_MEMBER_REMOVE"
         return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-        return @log.warn "Unknown member id #{data[:id]}, ignoring" unless (member = guild.members.delete(data[:id]))
+        return @log.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (member = guild.members.delete(data[:user][:id]))
 
         dispatch(:member_remove, member)
       when "GUILD_BAN_ADD"
