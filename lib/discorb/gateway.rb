@@ -570,6 +570,7 @@ module Discorb
             @uncached_guilds.delete(data[:id])
             if @uncached_guilds == []
               @ready = true
+              setup_commands.wait if @overwrite_application_commands
               dispatch(:ready)
               @log.info("Guilds were cached")
             end
