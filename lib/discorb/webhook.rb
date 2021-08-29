@@ -62,7 +62,7 @@ module Discorb
     #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
                             file: nil, files: nil, username: nil, avatar_url: :unset, wait: true)
-      Async do |_task|
+      Async do
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
@@ -102,7 +102,7 @@ module Discorb
     # @param [Discorb::GuildChannel] channel The new channel of the webhook.
     #
     def edit(name: :unset, avatar: :unset, channel: :unset)
-      Async do |_task|
+      Async do
         payload = {}
         payload[:name] = name if name != :unset
         payload[:avatar] = avatar if avatar != :unset

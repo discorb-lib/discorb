@@ -35,7 +35,7 @@ client.once :ready do
   puts "Logged in as #{client.user}"
 end
 
-client.on :message do |_task, message|
+client.on :message do |message|
   next if message.author.bot?
   next unless message.content == "ping"
 

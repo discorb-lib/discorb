@@ -89,7 +89,7 @@ module Discorb
       #
       # @return [Discorb::Message] The message.
       def fetch_message(force: false)
-        Async do |_task|
+        Async do
           next @message if !force && @message
 
           @message = @channel.fetch_message(@message_id).wait
@@ -138,7 +138,7 @@ module Discorb
       #
       # @return [Discorb::Message] The message.
       def fetch_message(force: false)
-        Async do |_task|
+        Async do
           next @message if !force && @message
 
           @message = @channel.fetch_message(@message_id).wait
@@ -190,7 +190,7 @@ module Discorb
       #
       # @return [Discorb::Message] The message.
       def fetch_message(force: false)
-        Async do |_task|
+        Async do
           next @message if !force && @message
 
           @message = @channel.fetch_message(@message_id).wait
@@ -455,7 +455,7 @@ module Discorb
 
     def connect_gateway(first)
       @log.info "Connecting to gateway."
-      Async do |_task|
+      Async do
         @http = HTTP.new(self) if first
         @first = first
         _, gateway_response = @http.get("/gateway").wait

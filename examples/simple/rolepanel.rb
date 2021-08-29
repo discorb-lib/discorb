@@ -13,7 +13,7 @@ client.once :ready do
   puts "Logged in as #{client.user}"
 end
 
-client.on :reaction_add do |_task, event|
+client.on :reaction_add do |event|
   next unless event.emoji.value.end_with?(0x0000fe0f.chr("utf-8") + 0x000020e3.chr("utf-8"))
   next if event.member.bot?
 
@@ -28,7 +28,7 @@ client.on :reaction_add do |_task, event|
   end
 end
 
-client.on :reaction_remove do |_task, event|
+client.on :reaction_remove do |event|
   next unless event.emoji.value.end_with?(0x0000fe0f.chr("utf-8") + 0x000020e3.chr("utf-8"))
   next if event.member.bot?
 
@@ -43,7 +43,7 @@ client.on :reaction_remove do |_task, event|
   end
 end
 
-client.on :message do |_task, message|
+client.on :message do |message|
   next unless message.content.start_with?("/rp ")
   next if message.author.bot?
 

@@ -12,7 +12,7 @@ client.once :ready do
   puts "Logged in as #{client.user}"
 end
 
-client.on :message do |_task, message|
+client.on :message do |message|
   next if message.author.bot?
   next unless message.content.start_with?("!auth ")
 
@@ -32,7 +32,7 @@ client.on :message do |_task, message|
   )
 end
 
-client.on :button_click do |_task, response|
+client.on :button_click do |response|
   if response.custom_id.start_with?("auth:")
     id = response.custom_id.delete_prefix("auth:")
     response.fired_by.add_role(id).wait

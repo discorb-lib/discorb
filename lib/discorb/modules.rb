@@ -22,7 +22,7 @@ module Discorb
     #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
                             reference: nil, components: nil, file: nil, files: nil)
-      Async do |_task|
+      Async do
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
