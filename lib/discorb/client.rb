@@ -358,6 +358,6 @@ module Discorb
       super(mod)
     end
 
-    include Discorb::GatewayHandler
+    include Discorb::Gateway::Handler
   end
 end
