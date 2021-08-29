@@ -492,7 +492,7 @@ module Discorb
 
       if data[:member].nil? && data[:webhook_id]
         @webhook_id = Snowflake.new(data[:webhook_id])
-        # @author = WebhookAuthor.new(data[:webhook_id])
+        @author = Webhook::Message::Author.new(data[:author])
       elsif data[:guild_id].nil? || data[:guild_id].empty?
         @author = @client.users[data[:author][:id]] || User.new(@client, data[:author])
       else
