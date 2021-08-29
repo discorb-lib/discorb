@@ -975,6 +975,10 @@ module Discorb
       end
     end
 
+    class News < ThreadChannel
+      @channel_type = 10
+    end
+
     class Public < ThreadChannel
       @channel_type = 11
     end
