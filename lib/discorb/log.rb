@@ -61,7 +61,7 @@ module Discorb
       return unless @out
 
       if @colorize_log
-        @out.puts("[#{Time.now.iso8601}] #{color}#{name}\e[m -- #{message}")
+        @out.puts("\e[2;90m[#{Time.now.iso8601}] #{color}#{name}\e[m -- #{message}")
       else
         @out.puts("[#{Time.now.iso8601}] #{name} -- #{message}")
       end
