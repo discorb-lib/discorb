@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    discorb (0.0.7)
+    discorb (0.0.8)
       async
       async-http
       async-websocket
