@@ -124,7 +124,7 @@ module Discorb
     # @param [Object] args The arguments to pass to the event.
     #
     def dispatch(event_name, *args)
-      Async do |_task|
+      Async do
         if (conditions = @conditions[event_name])
           ids = Set[*conditions.map(&:first).map(&:object_id)]
           conditions.delete_if do |condition|
@@ -148,7 +148,7 @@ module Discorb
           lambda { |event_args|
             Async(annotation: "Discorb event: #{event_name}") do |task|
               @events[event_name].delete(block) if block.discriminator[:once]
-              block.call(task, *event_args)
+              block.call(*event_args)
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
               message = "An error occurred while dispatching proc with ID #{block.id.inspect}\n#{e.full_message}"
@@ -293,7 +293,7 @@ module Discorb
       end
       payload[:status] = status unless status.nil?
       if @connection
-        Async do |_task|
+        Async do
           send_gateway(3, **payload)
         end
       else

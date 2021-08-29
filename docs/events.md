@@ -9,7 +9,7 @@ You can register event handlers with {Client#on}.
 Alternatively, you can use {Client#once} to register a one-time event handler.
 
 ```ruby
-client.on :message do |_task, event|
+client.on :message do |event|
   puts event.message.content
 end
 ```
@@ -18,13 +18,9 @@ This example will print the content of every message received.
 
 ## Event reference
 
-### Note
-
-`Async::Task` object will be passed to the event handler in the first argument: `task`.
-
 ### Client events
 
-#### `event_receive(task, event_name, data)`
+#### `event_receive(event_name, data)`
 Fires when a event is received.  
 
 | Parameter  | Type  | Description |
@@ -42,7 +38,7 @@ Fires when the client is resumed connection.
 
 ### Guild events
 
-#### `guild_join(task, guild)`
+#### `guild_join(guild)`
 
 Fires when client joins a guild.
 
@@ -50,7 +46,7 @@ Fires when client joins a guild.
 | ---------- | ----- | ----------- |
 |`guild`     | {Discorb::Guild} | The guild that was joined. |
 
-#### `guild_available(task, guild)`
+#### `guild_available(guild)`
 
 Fires when a guild becomes available.
 
@@ -58,7 +54,7 @@ Fires when a guild becomes available.
 | ---------- | ----- | ----------- |
 |`guild`     | {Discorb::Guild} | The guild that became available. |
 
-#### `guild_update(task, before, after)`
+#### `guild_update(before, after)`
 
 Fires when client updates a guild.
 
@@ -67,7 +63,7 @@ Fires when client updates a guild.
 |`before`    | {Discorb::Guild} | The guild before the update. |
 |`after`     | {Discorb::Guild} | The guild after the update. |
 
-#### `guild_leave(task, guild)`
+#### `guild_leave(guild)`
 
 Fires when client leaves a guild.
 
@@ -75,7 +71,7 @@ Fires when client leaves a guild.
 | ---------- | ----- | ----------- |
 |`guild`     | {Discorb::Guild} | The guild that was left. |
 
-#### `guild_destroy(task, guild)`
+#### `guild_destroy(guild)`
 
 Fires when guild is destroyed.
 
@@ -83,7 +79,7 @@ Fires when guild is destroyed.
 | ---------- | ----- | ----------- |
 |`guild`     | {Discorb::Guild} | The guild that was destroyed. |
 
-#### `guild_integrations_update(task, guild)`
+#### `guild_integrations_update(guild)`
 
 Fires when guild integrations are updated.
 
@@ -91,7 +87,7 @@ Fires when guild integrations are updated.
 | ---------- | ----- | ----------- |
 |`guild`     | {Discorb::Guild} | The guild that integrations were updated for. |
 
-#### `guild_ban_add(task, guild, user)`
+#### `guild_ban_add(guild, user)`
 
 Fires when a user is banned from a guild.
 
@@ -101,7 +97,7 @@ Fires when a user is banned from a guild.
 |`guild`     | {Discorb::Guild} | The guild that the user was banned from. |
 |`user`      | {Discorb::User}  | The user that was banned. |
 
-#### `guild_ban_remove(task, guild, user)`
+#### `guild_ban_remove(guild, user)`
 
 Fires when a user is unbanned from a guild.
 
@@ -112,7 +108,7 @@ Fires when a user is unbanned from a guild.
 
 ### Channel events
 
-#### `channel_create(task, channel)`
+#### `channel_create(channel)`
 
 Fires when a channel is created.
 
@@ -120,7 +116,7 @@ Fires when a channel is created.
 | ---------- | ----- | ----------- |
 |`channel`   | {Discorb::Channel} | The channel that was created. |
 
-#### `channel_update(task, before, after)`
+#### `channel_update(before, after)`
 
 Fires when a channel is updated.
 
@@ -129,7 +125,7 @@ Fires when a channel is updated.
 |`before`    | {Discorb::Channel} | The channel before the update. |
 |`after`     | {Discorb::Channel} | The channel after the update. |
 
-#### `channel_delete(task, channel)`
+#### `channel_delete(channel)`
 
 Fires when a channel is deleted.
 
@@ -137,7 +133,7 @@ Fires when a channel is deleted.
 | ---------- | ----- | ----------- |
 |`channel`   | {Discorb::Channel} | The channel that was deleted. |
 
-#### `webhooks_update(task, event)`
+#### `webhooks_update(event)`
 
 Fires when a webhook is updated.
 
@@ -145,7 +141,7 @@ Fires when a webhook is updated.
 | ---------- | ----- | ----------- |
 |`event`     | {Discorb::WebhooksUpdateEvent} | The webhook update event. |
 
-#### `thread_new(task, thread)`
+#### `thread_new(thread)`
 
 Fires when a thread is created.
 
@@ -153,7 +149,7 @@ Fires when a thread is created.
 | ---------- | ----- | ----------- |
 |`thread`    | {Discorb::ThreadChannel} | The thread that was created. |
 
-#### `thread_join(task, thread)`
+#### `thread_join(thread)`
 
 Fires when client joins a thread.
 
@@ -162,7 +158,7 @@ Fires when client joins a thread.
 |`thread`    | {Discorb::ThreadChannel} | The thread that was joined. |
 
 
-#### `thread_delete(task, thread)`
+#### `thread_delete(thread)`
 
 Fires when a thread is deleted.
 
@@ -170,7 +166,7 @@ Fires when a thread is deleted.
 | ---------- | ----- | ----------- |
 |`thread`    | {Discorb::ThreadChannel} | The thread that was deleted. |
 
-#### `thread_update(task, before, after)`
+#### `thread_update(before, after)`
 
 Fires when a thread is updated.
 
@@ -179,7 +175,7 @@ Fires when a thread is updated.
 |`before`    | {Discorb::ThreadChannel} | The thread before the update. |
 |`after`     | {Discorb::ThreadChannel} | The thread after the update. |
 
-#### `thread_members_update(task, thread, added, removed)`
+#### `thread_members_update(thread, added, removed)`
 
 Fires when a thread's members are updated.
 
@@ -189,7 +185,7 @@ Fires when a thread's members are updated.
 |`added`     | Array<{ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were added to the thread. |
 |`removed`   | Array<{ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were removed from the thread. |
 
-#### `thread_member_update(task, before, after)`
+#### `thread_member_update(before, after)`
 
 Fires when a thread member is updated.
 
@@ -201,7 +197,7 @@ Fires when a thread member is updated.
 
 ### Integration events
 
-#### `integration_create(task, integration)`
+#### `integration_create(integration)`
 
 Fires when a guild integration is created.
 
@@ -209,7 +205,7 @@ Fires when a guild integration is created.
 | ---------- | ----- | ----------- |
 |`integration`| {Discorb::Integration}| The created integration. |
 
-#### `integration_update(task, before, after)`
+#### `integration_update(before, after)`
 
 Fires when a guild integration is updated.
 
@@ -219,7 +215,7 @@ Fires when a guild integration is updated.
 |`before`    | {Discorb::Integration}| The integration before the update. |
 |`after`     | {Discorb::Integration}| The integration after the update. |
 
-#### `integration_delete(task, integration)`
+#### `integration_delete(integration)`
 
 Fires when a guild integration is deleted.
 
@@ -229,7 +225,7 @@ Fires when a guild integration is deleted.
 
 ### Message events
 
-#### `message(task, message)`
+#### `message(message)`
 
 Fires when a message is created.
 
@@ -237,7 +233,7 @@ Fires when a message is created.
 | ---------- | ----- | ----------- |
 |`message`   | {Discorb::Message}| The created message. |
 
-#### `message_update(task, event)`
+#### `message_update(event)`
 
 Fires when a message is updated.
 
@@ -245,7 +241,7 @@ Fires when a message is updated.
 | ---------- | ----- | ----------- |
 |`event`     | {Discorb::GatewayHandler::MessageUpdateEvent}| The message after the update. |
 
-#### `message_delete(task, message, channel, guild)`
+#### `message_delete(message, channel, guild)`
 
 Fires when a message is deleted.
 
@@ -259,7 +255,7 @@ Fires when a message is deleted.
 
 This will fire when cached messages are deleted.
 
-#### `message_delete_id(task, message_id, channel, guild)`
+#### `message_delete_id(message_id, channel, guild)`
 
 Fires when a message is deleted.
 Not like {#message_delete} this will fire even message is not cached.
@@ -270,7 +266,7 @@ Not like {#message_delete} this will fire even message is not cached.
 |`channel`   | {Discorb::Channel}| The channel the message was deleted from. |
 |`guild`     | ?{Discorb::Guild} | The guild the message was deleted from. |
 
-#### `message_delete_bulk(task, messages)`
+#### `message_delete_bulk(messages)`
 
 Fires when a bulk of messages are deleted.
 
@@ -278,7 +274,7 @@ Fires when a bulk of messages are deleted.
 | ---------- | ----- | ----------- |
 |`messages`  | Array<{Discorb::Message}, {Discorb::GatewayHandler::UnknownDeleteBulkMessage}> | The deleted messages. |
 
-#### `message_pin_update(task, event)`
+#### `message_pin_update(event)`
 
 Fires when a message is pinned or unpinned.
 
@@ -286,7 +282,7 @@ Fires when a message is pinned or unpinned.
 | ---------- | ----- | ----------- |
 |`event`     | {Discorb::GatewayHandler::MessagePinUpdateEvent}| The event object. |
 
-#### `typing_start(task, event)`
+#### `typing_start(event)`
 
 Fires when a user starts typing.
 
@@ -296,7 +292,7 @@ Fires when a user starts typing.
 
 ### Reaction events
 
-#### `reaction_add(task, event)`
+#### `reaction_add(event)`
 
 Fires when a reaction is added to a message.
 
@@ -304,7 +300,7 @@ Fires when a reaction is added to a message.
 | ---------- | ----- | ----------- |
 |`event`     | {Discorb::GatewayHandler::ReactionEvent}| The event object. |
 
-#### `reaction_remove(task, event)`
+#### `reaction_remove(event)`
 
 Fires when someone removes a reaction from a message.
 
@@ -312,7 +308,7 @@ Fires when someone removes a reaction from a message.
 | ---------- | ----- | ----------- |
 |`event`     | {Discorb::GatewayHandler::ReactionEvent}| The event object. |
 
-#### `reaction_remove_all(task, event)`
+#### `reaction_remove_all(event)`
 
 Fires when all reactions are removed from a message.
 
@@ -320,7 +316,7 @@ Fires when all reactions are removed from a message.
 | ---------- | ----- | ----------- |
 |`event`     | {Discorb::GatewayHandler::ReactionRemoveAllEvent}| The event object. |
 
-#### `reaction_remove_emoji(task, event)`
+#### `reaction_remove_emoji(event)`
 
 Fires when a reaction is removed from a message.
 
@@ -330,7 +326,7 @@ Fires when a reaction is removed from a message.
 
 ### Role events
 
-#### `role_create(task, role)`
+#### `role_create(role)`
 
 Fires when a role is created.
 
@@ -338,7 +334,7 @@ Fires when a role is created.
 | ---------- | ----- | ----------- |
 |`role`      | {Discorb::Role}| The created role. |
 
-#### `role_update(task, before, after)`
+#### `role_update(before, after)`
 
 Fires when a role is updated.
 
@@ -347,7 +343,7 @@ Fires when a role is updated.
 |`before`    | {Discorb::Role}| The role before the update. |
 |`after`     | {Discorb::Role}| The role after the update. |
 
-#### `role_remove(task, role)`
+#### `role_remove(role)`
 
 Fires when a role is deleted.
 
@@ -361,7 +357,7 @@ Fires when a role is deleted.
 
 These events requires the `guild_members` intent.
 
-#### `member_add(task, member)`
+#### `member_add(member)`
 
 Fires when a member joins a guild.
 
@@ -369,7 +365,7 @@ Fires when a member joins a guild.
 | ---------- | ----- | ----------- |
 |`member`    | {Discorb::Member}| The member that joined. |
 
-#### `member_update(task, before, after)`
+#### `member_update(before, after)`
 
 Fires when a member is updated.
 
@@ -378,7 +374,7 @@ Fires when a member is updated.
 |`before`    | {Discorb::Member}| The member before the update. |
 |`after`     | {Discorb::Member}| The member after the update. |
 
-#### `member_remove(task, member)`
+#### `member_remove(member)`
 
 Fires when a member is removed from a guild.
 
@@ -388,7 +384,7 @@ Fires when a member is removed from a guild.
 
 ### Role events
 
-#### `role_create(task, role)`
+#### `role_create(role)`
 
 Fires when a role is created.
 
@@ -396,7 +392,7 @@ Fires when a role is created.
 | ---------- | ----- | ----------- |
 |`role`      | {Discorb::Role}| The created role. |
 
-#### `role_update(task, before, after)`
+#### `role_update(before, after)`
 
 Fires when a role is updated.
 
@@ -405,7 +401,7 @@ Fires when a role is updated.
 |`before`    | {Discorb::Role}| The role before the update. |
 |`after`     | {Discorb::Role}| The role after the update. |
 
-#### `role_remove(task, role)`
+#### `role_remove(role)`
 
 Fires when a role is deleted.
 
@@ -415,7 +411,7 @@ Fires when a role is deleted.
 
 ### Invite events
 
-#### `invite_create(task, invite)`
+#### `invite_create(invite)`
 
 Fires when a invite is created.
 
@@ -423,7 +419,7 @@ Fires when a invite is created.
 | ---------- | ----- | ----------- |
 |`invite`    | {Discorb::Invite}| The created invite. |
 
-#### `invite_delete(task, invite)`
+#### `invite_delete(invite)`
 
 Fires when a invite is deleted.
 
@@ -433,7 +429,7 @@ Fires when a invite is deleted.
 
 ### Interaction events
 
-#### `button_click(task, interaction)`
+#### `button_click(interaction)`
 
 Fires when a button is clicked.
 
@@ -441,7 +437,7 @@ Fires when a button is clicked.
 | ---------- | ----- | ----------- |
 |`interaction`| {Discorb::MessageComponentInteraction::Button}| The interaction object. |
 
-#### `select_menu_select(task, interaction)`
+#### `select_menu_select(interaction)`
 
 Fires when a select menu is selected.
 
@@ -455,7 +451,7 @@ It's too big, so they're documented in {file:docs/voice_events.md}
 
 ### Low-level events
 
-#### `guild_create(task, guild)`
+#### `guild_create(guild)`
 
 Fires when `GUILD_CREATE` is received.
 
@@ -463,7 +459,7 @@ Fires when `GUILD_CREATE` is received.
 | ---------- | ----- | ----------- |
 |`guild`     | {Discorb::Guild}| The guild of the event. |
 
-#### `guild_delete(task, guild)`
+#### `guild_delete(guild)`
 
 Fires when `GUILD_DELETE` is received.
 
@@ -471,7 +467,7 @@ Fires when `GUILD_DELETE` is received.
 | ---------- | ----- | ----------- |
 |`guild`     | {Discorb::Guild}| The guild of the event. |
 
-#### `thread_create(task, thread)`
+#### `thread_create(thread)`
 
 Fires when `THREAD_CREATE` is received.
 

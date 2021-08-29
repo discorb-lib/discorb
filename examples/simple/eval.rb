@@ -2,11 +2,11 @@ require "discorb"
 
 client = Discorb::Client.new
 
-client.once :ready do |_task|
+client.once :ready do
   puts "Logged in as #{client.user}"
 end
 
-client.on :message do |_task, message|
+client.on :message do |message|
   next if message.author.bot?
   next unless message.content.start_with?("eval ")
 

@@ -8,7 +8,7 @@ module MessageExpander
     "(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18})(?!>)"
   )
 
-  event :message do |_task, message|
+  event :message do |message|
     next if message.author.bot?
 
     message.content.to_enum(:scan, @message_regex).map { Regexp.last_match }.each do |match|

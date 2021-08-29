@@ -239,7 +239,7 @@ module Discorb
     # @param (see #post)
     # @return [Discorb::Message] The message.
     def reply(*args, **kwargs)
-      Async do |_task|
+      Async do
         channel.post(*args, reference: self, **kwargs).wait
       end
     end
@@ -250,7 +250,7 @@ module Discorb
     # @macro http
     #
     def publish
-      Async do |_task|
+      Async do
         channel.post("/channels/#{@channel_id}/messages/#{@id}/crosspost", nil).wait
       end
     end
@@ -263,7 +263,7 @@ module Discorb
     # @param [Discorb::Emoji] emoji The emoji to react with.
     #
     def add_reaction(emoji)
-      Async do |_task|
+      Async do
         @client.http.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil).wait
       end
     end
@@ -278,7 +278,7 @@ module Discorb
     # @param [Discorb::Emoji] emoji The emoji to remove.
     #
     def remove_reaction(emoji)
-      Async do |_task|
+      Async do
         @client.http.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me").wait
       end
     end
@@ -294,7 +294,7 @@ module Discorb
     # @param [Discorb::Member] member The member to remove the reaction from.
     #
     def remove_reaction_of(emoji, member)
-      Async do |_task|
+      Async do
         @client.http.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}").wait
       end
     end
@@ -313,7 +313,7 @@ module Discorb
     # @return [Array<Discorb::User>] The users.
     #
     def fetch_reacted_users(emoji, limit: nil, after: 0)
-      Async do |_task|
+      Async do
         if limit.nil? || !limit.positive?
           after = 0
           users = []

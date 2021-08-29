@@ -36,7 +36,7 @@ client.once :ready do
   puts "Logged in as #{client.user}"
 end
 
-client.on :message do |_task, message|
+client.on :message do |message|
   next if message.author.bot?
   next unless message.content == "!ruby"
 
@@ -46,7 +46,7 @@ client.on :message do |_task, message|
   )
 end
 
-client.on :select_menu_select do |_task, response|
+client.on :select_menu_select do |response|
   next unless response.custom_id == "sections"
 
   id = response.value.delete_prefix("sections:")
