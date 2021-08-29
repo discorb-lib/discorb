@@ -362,6 +362,7 @@ module Discorb
         # @return [Boolean] Whether the author is a bot.
         # @note This will be always `true`.
         attr_reader :bot
+        alias bot? bot
         # @return [Discorb::Snowflake] The ID of the author.
         attr_reader :id
         # @return [String] The name of the author.
