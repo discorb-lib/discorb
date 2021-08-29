@@ -239,7 +239,6 @@ module Discorb
           super(name, guild_ids, enabled, block, type)
           @description = description
           @commands = []
-          @command_type = nil
         end
 
         #
@@ -256,7 +255,6 @@ module Discorb
         #   | `:optional` | Boolean | Whether the option is optional or not. |
         #   | `:type` | Object | Type of the option. |
         #
-        # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
         # @param [Boolean] enabled Boolean value to enable/disable the command.
         # @param [Proc] block Command block.
         #
@@ -264,10 +262,8 @@ module Discorb
         #
         # @see file:docs/slash_command.md
         #
-        def slash(command_name, description, options = {}, guild_ids: [], enabled: true, &block)
-          raise "You mustn't register subcommand group to use slash command" if @command_type == :group
-          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, enabled, block, 1, @name)
-          @command_type = :slash
+        def slash(command_name, description, options = {}, enabled: true, &block)
+          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], enabled, block, 1, @name)
           options_payload = options.map do |name, value|
             ret = {
               type: case (value[:type].is_a?(Array) ? value[:type].first : value[:type])
@@ -313,17 +309,14 @@ module Discorb
         #
         # @param [String] command_name Group name.
         # @param [String] description Group description.
-        # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
         # @param [Boolean] enabled Boolean value to enable/disable the command.
         #
         # @return [Discorb::Command::Command::SubcommandGroup] Command object.
         #
         # @see file:docs/slash_command.md
         #
-        def group(command_name, description, guild_ids: [], enabled: true)
-          raise "You mustn't register slash command to use subcommand group" if @command_type == :slash
-          @command_type = :group
-          command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, guild_ids, enabled, @name)
+        def group(command_name, description, enabled: true)
+          command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, enabled, @name)
           @commands << command
           command
         end
@@ -376,8 +369,8 @@ module Discorb
         attr_reader :commands
 
         # @!visibility private
-        def initialize(name, description, guild_ids, enabled, parent)
-          super(name, description, guild_ids, enabled, 1)
+        def initialize(name, description, enabled, parent)
+          super(name, description, [], enabled, 1)
 
           @commands = []
           @parent = parent
@@ -401,7 +394,6 @@ module Discorb
         #   | `:optional` | Boolean | Whether the option is optional or not. |
         #   | `:type` | Object | Type of the option. |
         #
-        # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
         # @param [Boolean] enabled Boolean value to enable/disable the command.
         # @param [Proc] block Command block.
         #
@@ -409,8 +401,8 @@ module Discorb
         #
         # @see file:docs/slash_command.md
         #
-        def slash(command_name, description, options = {}, guild_ids: [], enabled: true, &block)
-          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, enabled, block, 1, @parent + " " + @name)
+        def slash(command_name, description, options = {}, enabled: true, &block)
+          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], enabled, block, 1, @parent + " " + @name)
           @commands << command
           command
         end
