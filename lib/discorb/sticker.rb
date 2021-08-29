@@ -73,7 +73,7 @@ module Discorb
           payload[:name] = name unless name == :unset
           payload[:description] = description unless description == :unset
           payload[:tags] = tag.name unless tag == :unset
-          @client.internet.patch("/guilds/#{@guild_id}/stickers/#{@id}", payload, audit_log_reason: reason).wait
+          @client.http.patch("/guilds/#{@guild_id}/stickers/#{@id}", payload, audit_log_reason: reason).wait
         end
       end
 
@@ -88,7 +88,7 @@ module Discorb
       #
       def delete!(reason: nil)
         Async do
-          @client.internet.delete("/guilds/#{@guild_id}/stickers/#{@id}", audit_log_reason: reason).wait
+          @client.http.delete("/guilds/#{@guild_id}/stickers/#{@id}", audit_log_reason: reason).wait
         end
       end
 

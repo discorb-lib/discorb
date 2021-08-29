@@ -86,7 +86,7 @@ module Discorb
         payload = {}
         payload[:name] = name if name != :unset
         payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles != :unset
-        @client.internet.patch("/guilds/#{@guild.id}/emojis/#{@id}", payload, audit_log_reason: reason)
+        @client.http.patch("/guilds/#{@guild.id}/emojis/#{@id}", payload, audit_log_reason: reason)
         self
       end
     end
@@ -104,7 +104,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.internet.delete("/guilds/#{@guild.id}/emojis/#{@id}", audit_log_reason: reason).wait
+        @client.http.delete("/guilds/#{@guild.id}/emojis/#{@id}", audit_log_reason: reason).wait
         @available = false
         self
       end

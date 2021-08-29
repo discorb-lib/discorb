@@ -99,7 +99,7 @@ module Discorb
       #
       def defer_source(hide: false)
         Async do
-          @client.internet.post("/interactions/#{@id}/#{@token}/callback", {
+          @client.http.post("/interactions/#{@id}/#{@token}/callback", {
             type: 5,
             data: {
               flags: (hide ? 1 << 6 : 0),
@@ -153,11 +153,11 @@ module Discorb
         end
         payload[:flags] = (hide ? 1 << 6 : 0)
         if @responded
-          @client.internet.post("/webhooks/#{@id}/#{@token}", { type: 4, data: payload }).wait
+          @client.http.post("/webhooks/#{@id}/#{@token}", { type: 4, data: payload }).wait
         elsif @defered
-          @client.internet.post("/interactions/#{@id}/#{@token}/@original/edit", { type: 4, data: payload }).wait
+          @client.http.post("/interactions/#{@id}/#{@token}/@original/edit", { type: 4, data: payload }).wait
         else
-          @client.internet.post("/interactions/#{@id}/#{@token}/callback", { type: 4, data: payload }).wait
+          @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 4, data: payload }).wait
         end
         @responded = true
       end
@@ -174,7 +174,7 @@ module Discorb
       #
       def defer_update(hide: false)
         Async do
-          @client.internet.post("/interactions/#{@id}/#{@token}/callback", {
+          @client.http.post("/interactions/#{@id}/#{@token}/callback", {
             type: 7,
             data: {
               flags: (hide ? 1 << 6 : 0),
@@ -226,7 +226,7 @@ module Discorb
           payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
         payload[:flags] = (hide ? 1 << 6 : 0)
-        @client.internet.post("/interactions/#{@id}/#{@token}/callback", { type: 6, data: payload }).wait
+        @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 6, data: payload }).wait
       end
     end
 

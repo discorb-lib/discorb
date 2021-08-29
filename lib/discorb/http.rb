@@ -4,10 +4,10 @@ require "net/https"
 
 module Discorb
   #
-  # A class to handle internet requests.
+  # A class to handle http requests.
   # This class is internal use only.
   #
-  class Internet
+  class HTTP
     @nil_body = nil
 
     # @!visibility private

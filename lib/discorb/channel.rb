@@ -175,7 +175,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.internet.delete(base_url.wait.to_s, audit_log_reason: reason).wait
+        @client.http.delete(base_url.wait.to_s, audit_log_reason: reason).wait
         @deleted = true
         self
       end
@@ -203,7 +203,7 @@ module Discorb
         }
         payload[:lock_permissions] = lock_permissions
         payload[:parent_id] = parent&.id if parent != :unset
-        @client.internet.patch("/guilds/#{@guild_id}/channels", payload, audit_log_reason: reason).wait
+        @client.http.patch("/guilds/#{@guild_id}/channels", payload, audit_log_reason: reason).wait
       end
     end
 
@@ -295,7 +295,7 @@ module Discorb
         default_auto_archive_duration ||= archive_in
         payload[:default_auto_archive_duration] = default_auto_archive_duration if default_auto_archive_duration != :unset
 
-        @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
     end
@@ -317,7 +317,7 @@ module Discorb
         payload = {}
         payload[:name] = name
         payload[:avatar] = avatar.to_s if avatar
-        _resp, data = @client.internet.post("/channels/#{@id}/webhooks", payload).wait
+        _resp, data = @client.http.post("/channels/#{@id}/webhooks", payload).wait
         Webhook.new([@client, data])
       end
     end
@@ -331,7 +331,7 @@ module Discorb
     #
     def fetch_webhooks
       Async do
-        _resp, data = @client.internet.get("/channels/#{@id}/webhooks").wait
+        _resp, data = @client.http.get("/channels/#{@id}/webhooks").wait
         data.map { |webhook| Webhook.new([@client, webhook]) }
       end
     end
@@ -358,7 +358,7 @@ module Discorb
 
         message_ids = messages.map { |m| Discorb::Utils.try(m, :id).to_s }
 
-        @client.internet.post("/channels/#{@id}/messages/bulk-delete", { messages: message_ids }).wait
+        @client.http.post("/channels/#{@id}/messages/bulk-delete", { messages: message_ids }).wait
       end
     end
 
@@ -387,7 +387,7 @@ module Discorb
           deny: deny_value,
           type: target.is_a?(Member) ? 1 : 0,
         }
-        @client.internet.put("/channels/#{@id}/permissions/#{target.id}", payload, audit_log_reason: reason).wait
+        @client.http.put("/channels/#{@id}/permissions/#{target.id}", payload, audit_log_reason: reason).wait
       end
     end
 
@@ -406,7 +406,7 @@ module Discorb
     #
     def delete_permissions(target, reason: nil)
       Async do
-        @client.internet.delete("/channels/#{@id}/permissions/#{target.id}", audit_log_reason: reason).wait
+        @client.http.delete("/channels/#{@id}/permissions/#{target.id}", audit_log_reason: reason).wait
       end
     end
 
@@ -423,7 +423,7 @@ module Discorb
     #
     def fetch_invites
       Async do
-        _resp, data = @client.internet.get("/channels/#{@id}/invites").wait
+        _resp, data = @client.http.get("/channels/#{@id}/invites").wait
         data.map { |invite| Invite.new(@client, invite) }
       end
     end
@@ -444,7 +444,7 @@ module Discorb
     #
     def create_invite(max_age: nil, max_uses: nil, temporary: false, unique: false, reason: nil)
       Async do
-        _resp, data = @client.internet.post("/channels/#{@id}/invites", {
+        _resp, data = @client.http.post("/channels/#{@id}/invites", {
           max_age: max_age,
           max_uses: max_uses,
           temporary: temporary,
@@ -464,7 +464,7 @@ module Discorb
     #
     def follow_from(target, reason: nil)
       Async do
-        @client.internet.post("/channels/#{target.id}/followers", { webhook_channel_id: @id }, audit_log_reason: reason).wait
+        @client.http.post("/channels/#{target.id}/followers", { webhook_channel_id: @id }, audit_log_reason: reason).wait
       end
     end
 
@@ -478,7 +478,7 @@ module Discorb
     #
     def follow_to(target, reason: nil)
       Async do
-        @client.internet.post("/channels/#{@id}/followers", { webhook_channel_id: target.id }, audit_log_reason: reason).wait
+        @client.http.post("/channels/#{@id}/followers", { webhook_channel_id: target.id }, audit_log_reason: reason).wait
       end
     end
 
@@ -491,7 +491,7 @@ module Discorb
     #
     def fetch_pins
       Async do
-        _resp, data = @client.internet.get("/channels/#{@id}/pins").wait
+        _resp, data = @client.http.get("/channels/#{@id}/pins").wait
         data.map { |pin| Message.new(@client, pin) }
       end
     end
@@ -506,7 +506,7 @@ module Discorb
     #
     def pin_message(message, reason: nil)
       Async do
-        @client.internet.put("/channels/#{@id}/pins/#{message.id}", {}, audit_log_reason: reason).wait
+        @client.http.put("/channels/#{@id}/pins/#{message.id}", {}, audit_log_reason: reason).wait
       end
     end
 
@@ -520,7 +520,7 @@ module Discorb
     #
     def unpin_message(message, reason: nil)
       Async do
-        @client.internet.delete("/channels/#{@id}/pins/#{message.id}", {}, audit_log_reason: reason).wait
+        @client.http.delete("/channels/#{@id}/pins/#{message.id}", {}, audit_log_reason: reason).wait
       end
     end
 
@@ -540,12 +540,12 @@ module Discorb
     def start_thread(name, message: nil, auto_archive_duration: 1440, public: true, reason: nil)
       Async do
         _resp, data = if message.nil?
-            @client.internet.post("/channels/#{@id}/threads", {
+            @client.http.post("/channels/#{@id}/threads", {
               name: name, auto_archive_duration: auto_archive_duration, type: public ? 11 : 10,
             },
-                                  audit_log_reason: reason).wait
+                              audit_log_reason: reason).wait
           else
-            @client.internet.post("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads", {
+            @client.http.post("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads", {
               name: name, auto_archive_duration: auto_archive_duration,
             }, audit_log_reason: reason).wait
           end
@@ -564,7 +564,7 @@ module Discorb
     #
     def fetch_archived_public_threads
       Async do
-        _resp, data = @client.internet.get("/channels/#{@id}/threads/archived/public").wait
+        _resp, data = @client.http.get("/channels/#{@id}/threads/archived/public").wait
         data.map { |thread| Channel.make_channel(@client, thread) }
       end
     end
@@ -578,7 +578,7 @@ module Discorb
     #
     def fetch_archived_private_threads
       Async do
-        _resp, data = @client.internet.get("/channels/#{@id}/threads/archived/private").wait
+        _resp, data = @client.http.get("/channels/#{@id}/threads/archived/private").wait
         data.map { |thread| Channel.make_channel(@client, thread) }
       end
     end
@@ -599,7 +599,7 @@ module Discorb
           before = 0
           threads = []
           loop do
-            _resp, data = @client.internet.get("/channels/#{@id}/users/@me/threads/archived/private?before=#{before}").wait
+            _resp, data = @client.http.get("/channels/#{@id}/users/@me/threads/archived/private?before=#{before}").wait
             threads += data[:threads].map { |thread| Channel.make_channel(@client, thread) }
             before = data[:threads][-1][:id]
 
@@ -607,7 +607,7 @@ module Discorb
           end
           threads
         else
-          _resp, data = @client.internet.get("/channels/#{@id}/users/@me/threads/archived/private?limit=#{limit}&before=#{before}").wait
+          _resp, data = @client.http.get("/channels/#{@id}/users/@me/threads/archived/private?limit=#{limit}&before=#{before}").wait
           data.map { |thread| Channel.make_channel(@client, thread) }
         end
       end
@@ -670,7 +670,7 @@ module Discorb
         payload[:user_limit] = user_limit if user_limit != :unset
         payload[:rtc_region] = rtc_region if rtc_region != :unset
 
-        @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
     end
@@ -734,7 +734,7 @@ module Discorb
         payload[:position] = position if position != :unset
         payload[:bitrate] = bitrate if bitrate != :unset
         payload[:rtc_region] = rtc_region if rtc_region != :unset
-        @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
     end
@@ -754,7 +754,7 @@ module Discorb
     #
     def start(topic, public: false, reason: nil)
       Async do
-        _resp, data = @client.internet.post("/stage-instances", { channel_id: @id, topic: topic, public: public ? 2 : 1 }, audit_log_reason: reason).wait
+        _resp, data = @client.http.post("/stage-instances", { channel_id: @id, topic: topic, public: public ? 2 : 1 }, audit_log_reason: reason).wait
         StageInstance.new(@client, data)
       end
     end
@@ -769,7 +769,7 @@ module Discorb
     #
     def fetch_stage_instance
       Async do
-        _resp, data = @client.internet.get("/stage-instances/#{@id}").wait
+        _resp, data = @client.http.get("/stage-instances/#{@id}").wait
       rescue Discorb::NotFoundError
         nil
       else
@@ -865,7 +865,7 @@ module Discorb
         auto_archive_duration ||= archive_in
         payload[:auto_archive_duration] = auto_archive_duration if auto_archive_duration != :unset
         payload[:locked] = locked if locked != :unset
-        @client.internet.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
+        @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
     end
@@ -947,9 +947,9 @@ module Discorb
     def add_member(member = :me)
       Async do
         if member == :me
-          @client.internet.post("/channels/#{@id}/thread-members/@me").wait
+          @client.http.post("/channels/#{@id}/thread-members/@me").wait
         else
-          @client.internet.post("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}").wait
+          @client.http.post("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}").wait
         end
       end
     end
@@ -959,9 +959,9 @@ module Discorb
     def remove_member(member = :me)
       Async do
         if member == :me
-          @client.internet.delete("/channels/#{@id}/thread-members/@me").wait
+          @client.http.delete("/channels/#{@id}/thread-members/@me").wait
         else
-          @client.internet.delete("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}").wait
+          @client.http.delete("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}").wait
         end
       end
     end
@@ -970,7 +970,7 @@ module Discorb
 
     def fetch_members
       Async do
-        _resp, data = @client.internet.get("/channels/#{@id}/thread-members").wait
+        _resp, data = @client.http.get("/channels/#{@id}/thread-members").wait
         data.map { |d| @members[d[:id]] = Member.new(@client, d) }
       end
     end

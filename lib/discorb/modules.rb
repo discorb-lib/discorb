@@ -57,11 +57,11 @@ module Discorb
         end
         files = [file] if file
         if files
-          headers, payload = Internet.multipart(payload, files)
+          headers, payload = HTTP.multipart(payload, files)
         else
           headers = {}
         end
-        _resp, data = @client.internet.post("#{base_url.wait}/messages", payload, headers: headers).wait
+        _resp, data = @client.http.post("#{base_url.wait}/messages", payload, headers: headers).wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -76,7 +76,7 @@ module Discorb
     #
     def fetch_message(id)
       Async do
-        _resp, data = @client.internet.get("#{base_url.wait}/messages/#{id}").wait
+        _resp, data = @client.http.get("#{base_url.wait}/messages/#{id}").wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -99,7 +99,7 @@ module Discorb
           after: Discorb::Utils.try(around, :id),
           around: Discorb::Utils.try(before, :id),
         }.filter { |_k, v| !v.nil? }.to_h
-        _resp, messages = @client.internet.get("#{base_url.wait}/messages?#{URI.encode_www_form(params)}").wait
+        _resp, messages = @client.http.get("#{base_url.wait}/messages?#{URI.encode_www_form(params)}").wait
         messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
       end
     end
@@ -122,7 +122,7 @@ module Discorb
         if block_given?
           begin
             post_task = task.async do
-              @client.internet.post("/channels/#{@id}/typing", {})
+              @client.http.post("/channels/#{@id}/typing", {})
               sleep(5)
             end
             yield
@@ -130,7 +130,7 @@ module Discorb
             post_task.stop
           end
         else
-          @client.internet.post("/channels/#{@id}/typing", {})
+          @client.http.post("/channels/#{@id}/typing", {})
         end
       end
     end

@@ -16,8 +16,8 @@ module Discorb
     # @return [Discorb::Application] The application that the client is using.
     # @return [nil] If never fetched application by {#fetch_application}.
     attr_reader :application
-    # @return [Discorb::Internet] The internet client.
-    attr_reader :internet
+    # @return [Discorb::HTTP] The http client.
+    attr_reader :http
     # @return [Integer] The heartbeat interval.
     attr_reader :heartbeat_interval
     # @return [Integer] The API version of the Discord gateway.
@@ -187,7 +187,7 @@ module Discorb
     #
     def fetch_user(id)
       Async do
-        _resp, data = internet.get("/users/#{id}").wait
+        _resp, data = http.get("/users/#{id}").wait
         User.new(self, data)
       end
     end
@@ -205,7 +205,7 @@ module Discorb
     #
     def fetch_channel(id)
       Async do
-        _resp, data = internet.get("/channels/#{id}").wait
+        _resp, data = http.get("/channels/#{id}").wait
         Channel.make_channel(self, data)
       end
     end
@@ -223,7 +223,7 @@ module Discorb
     #
     def fetch_guild(id)
       Async do
-        _resp, data = internet.get("/guilds/#{id}").wait
+        _resp, data = http.get("/guilds/#{id}").wait
         Guild.new(self, data, false)
       end
     end
@@ -241,7 +241,7 @@ module Discorb
     #
     def fetch_invite(code, with_count: false, with_expiration: false)
       Async do
-        _resp, data = internet.get("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}").wait
+        _resp, data = http.get("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}").wait
         Invite.new(self, data, false)
       end
     end
@@ -260,7 +260,7 @@ module Discorb
       Async do
         next @application if @application && !force
 
-        _resp, data = internet.get("/oauth2/applications/@me").wait
+        _resp, data = http.get("/oauth2/applications/@me").wait
         @application = Application.new(self, data)
         @application
       end
@@ -275,7 +275,7 @@ module Discorb
     #
     def fetch_nitro_sticker_packs
       Async do
-        _resp, data = internet.get("/stickers-packs").wait
+        _resp, data = http.get("/stickers-packs").wait
         data.map { |pack| Sticker::Pack.new(self, pack) }
       end
     end
