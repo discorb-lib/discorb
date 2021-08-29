@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "async/http/internet"
-
 module Discorb
   #
   # Represents a webhook.
@@ -36,7 +34,7 @@ module Discorb
       @token = ""
       @application_id = data[:application_id]
       @client = client
-      @internet = Discorb::Internet.new(client)
+      @http = Discorb::HTTP.new(client)
     end
 
     def inspect
@@ -79,13 +77,13 @@ module Discorb
         payload[:avatar_url] = avatar_url if avatar_url != :unset
         files = [file] if file
         if files
-          headers, payload = Internet.multipart(payload, files)
+          headers, payload = HTTP.multipart(payload, files)
         else
           headers = {
             "Content-Type" => "application/json",
           }
         end
-        _resp, data = @internet.post("#{url}?wait=#{wait}", payload, headers: headers).wait
+        _resp, data = @http.post("#{url}?wait=#{wait}", payload, headers: headers).wait
 
         data && Webhook::Message.new(self, data)
       end
@@ -109,7 +107,7 @@ module Discorb
         payload[:name] = name if name != :unset
         payload[:avatar] = avatar if avatar != :unset
         payload[:channel_id] = Utils.try(channel, :id) if channel != :unset
-        @internet.patch(url.to_s, payload).wait
+        @http.patch(url.to_s, payload).wait
       end
     end
 
@@ -122,7 +120,7 @@ module Discorb
     #
     def delete!
       Async do
-        @internet.delete(url).wait
+        @http.delete(url).wait
         self
       end
     end
@@ -165,9 +163,9 @@ module Discorb
             "Content-Type" => "application/json",
           }
         else
-          headers, payload = Internet.multipart(payload, files)
+          headers, payload = HTTP.multipart(payload, files)
         end
-        _resp, data = @internet.patch("#{url}/messages/#{Utils.try(message, :id)}", payload, headers: headers).wait
+        _resp, data = @http.patch("#{url}/messages/#{Utils.try(message, :id)}", payload, headers: headers).wait
         message.send(:_set_data, data)
         message
       end
@@ -180,7 +178,7 @@ module Discorb
     #
     def delete_message!(message)
       Async do
-        @internet.delete("#{url}/messages/#{Utils.try(message, :id)}").wait
+        @http.delete("#{url}/messages/#{Utils.try(message, :id)}").wait
         message
       end
     end
@@ -200,7 +198,7 @@ module Discorb
       def initialize(url)
         @url = url
         @token = ""
-        @internet = Discorb::Internet.new(self)
+        @http = Discorb::HTTP.new(self)
       end
     end
 

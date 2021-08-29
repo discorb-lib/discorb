@@ -264,7 +264,7 @@ module Discorb
     #
     def add_reaction(emoji)
       Async do |_task|
-        @client.internet.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil).wait
+        @client.http.put("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", nil).wait
       end
     end
 
@@ -279,7 +279,7 @@ module Discorb
     #
     def remove_reaction(emoji)
       Async do |_task|
-        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me").wait
+        @client.http.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me").wait
       end
     end
 
@@ -295,7 +295,7 @@ module Discorb
     #
     def remove_reaction_of(emoji, member)
       Async do |_task|
-        @client.internet.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}").wait
+        @client.http.delete("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}").wait
       end
     end
 
@@ -318,7 +318,7 @@ module Discorb
           after = 0
           users = []
           loop do
-            _resp, data = @client.internet.get("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=100&after=#{after}").wait
+            _resp, data = @client.http.get("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=100&after=#{after}").wait
             break if data.empty?
 
             users += data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
@@ -329,7 +329,7 @@ module Discorb
           end
           next users
         else
-          _resp, data = @client.internet.get("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=#{limit}&after=#{after}").wait
+          _resp, data = @client.http.get("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=#{limit}&after=#{after}").wait
           next data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
         end
       end

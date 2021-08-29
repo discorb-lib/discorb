@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "async/http"
+
 module Discorb
   #
   # A module to handle gateway.
@@ -454,9 +456,9 @@ module Discorb
     def connect_gateway(first)
       @log.info "Connecting to gateway."
       Async do |_task|
-        @internet = Internet.new(self) if first
+        @http = HTTP.new(self) if first
         @first = first
-        _, gateway_response = @internet.get("/gateway").wait
+        _, gateway_response = @http.get("/gateway").wait
         gateway_url = gateway_response[:url]
         endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json",
                                                alpn_protocols: Async::HTTP::Protocol::HTTP11.names)

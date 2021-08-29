@@ -63,7 +63,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.internet.delete("/guilds/#{@guild}/integrations/#{@id}", reason: reason).wait
+        @client.http.delete("/guilds/#{@guild}/integrations/#{@id}", reason: reason).wait
       end
     end
 

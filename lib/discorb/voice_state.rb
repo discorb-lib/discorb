@@ -179,7 +179,7 @@ module Discorb
         payload = {}
         payload[:topic] = topic if topic != :unset
         payload[:privacy_level] = self.class.privacy_level.key(privacy_level) if privacy_level != :unset
-        @client.internet.edit("/stage-instances/#{@channel_id}", payload, audit_log_reason: reason).wait
+        @client.http.edit("/stage-instances/#{@channel_id}", payload, audit_log_reason: reason).wait
         self
       end
     end
@@ -193,7 +193,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.internet.delete("/stage-instances/#{@channel_id}", reason: reason).wait
+        @client.http.delete("/stage-instances/#{@channel_id}", reason: reason).wait
         self
       end
     end

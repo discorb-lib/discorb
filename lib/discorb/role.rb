@@ -88,7 +88,7 @@ module Discorb
     #
     def move(position, reason: nil)
       Async do
-        @client.internet.patch("/guilds/#{@guild_id}/roles", { id: @id, position: position }, reason: reason).wait
+        @client.http.patch("/guilds/#{@guild_id}/roles", { id: @id, position: position }, reason: reason).wait
       end
     end
 
@@ -113,7 +113,7 @@ module Discorb
         payload[:color] = color.to_i if color != :unset
         payload[:hoist] = hoist if hoist != :unset
         payload[:mentionable] = mentionable if mentionable != :unset
-        @client.internet.patch("/guilds/#{@guild_id}/roles/#{@id}", payload, reason: reason).wait
+        @client.http.patch("/guilds/#{@guild_id}/roles/#{@id}", payload, reason: reason).wait
       end
     end
 
@@ -126,7 +126,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.internet.delete("/guilds/#{@guild_id}/roles/#{@id}", reason: reason).wait
+        @client.http.delete("/guilds/#{@guild_id}/roles/#{@id}", reason: reason).wait
       end
     end
 

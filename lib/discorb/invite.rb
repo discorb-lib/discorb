@@ -104,7 +104,7 @@ module Discorb
     # @macro http
     def delete!(reason: nil)
       Async do
-        @client.internet.delete("/invites/#{@code}", audit_log_reason: reason)
+        @client.http.delete("/invites/#{@code}", audit_log_reason: reason)
       end
     end
 

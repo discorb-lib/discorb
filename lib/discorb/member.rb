@@ -140,7 +140,7 @@ module Discorb
     #
     def add_role(role, reason: nil)
       Async do
-        @client.internet.put("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason).wait
+        @client.http.put("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason).wait
       end
     end
 
@@ -154,7 +154,7 @@ module Discorb
     #
     def remove_role(role, reason: nil)
       Async do
-        @client.internet.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", audit_log_reason: reason).wait
+        @client.http.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", audit_log_reason: reason).wait
       end
     end
 
@@ -179,7 +179,7 @@ module Discorb
         payload[:mute] = mute if mute != :unset
         payload[:deaf] = deaf if deaf != :unset
         payload[:channel_id] = channel&.id if channel != :unset
-        @client.internet.patch("/guilds/#{@guild_id}/members/#{@id}", payload, audit_log_reason: reason).wait
+        @client.http.patch("/guilds/#{@guild_id}/members/#{@id}", payload, audit_log_reason: reason).wait
       end
     end
 
