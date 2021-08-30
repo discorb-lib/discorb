@@ -25,7 +25,6 @@ module Discorb
       raise ArgumentError, "Event name must be a symbol" unless event_name.is_a?(Symbol)
       raise ArgumentError, "block must be a Proc" unless block.is_a?(Proc)
 
-      @events = {} if @events.nil?
       @events[event_name] ||= []
       discriminator[:extension] = Extension
       @events[event_name] << Discorb::Event.new(block, id, discriminator)
@@ -50,5 +49,9 @@ module Discorb
 
     # @!visibility private
     attr_accessor :client
+
+    def self.extended(obj)
+      obj.instance_variable_set(:@events, {})
+    end
   end
 end
