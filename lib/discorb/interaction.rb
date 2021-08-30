@@ -99,7 +99,7 @@ module Discorb
       #
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       #
-      # @param [Boolean] ephemeral Whether to ephemeral the response.
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def defer_source(ephemeral: false)
         Async do
@@ -122,7 +122,7 @@ module Discorb
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
       # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
-      # @param [Boolean] ephemeral Whether to ephemeral the response.
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
         payload = {}
@@ -174,7 +174,7 @@ module Discorb
       #
       # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
       #
-      # @param [Boolean] ephemeral Whether to ephemeral the response.
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def defer_update(ephemeral: false)
         Async do
@@ -196,7 +196,7 @@ module Discorb
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
       # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
-      # @param [Boolean] ephemeral Whether to ephemeral the response.
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def edit(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
         payload = {}
