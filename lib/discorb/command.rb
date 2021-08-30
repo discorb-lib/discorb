@@ -127,6 +127,8 @@ module Discorb
       attr_reader :block
       # @return [:chat_input, :user, :message] The type of the command.
       attr_reader :type
+      # @return [Integer] The raw type of the command.
+      attr_reader :type_raw
 
       @types = {
         1 => :chat_input,
