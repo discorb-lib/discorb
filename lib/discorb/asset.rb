@@ -54,4 +54,38 @@ module Discorb
       end
     end
   end
+
+  #
+  # Represents a default avatar.
+  #
+  class DefaultAvatar < DiscordModel
+
+    # @!attribute [r] animated?
+    #   @return [false] For compatibility with {Asset}, always `false`.
+
+    # @!visibility private
+    def initialize(discriminator)
+      @discriminator = discriminator.to_s.rjust(4, "0")
+    end
+
+    def animated?
+      false
+    end
+
+    #
+    # Returns the URL of the avatar.
+    #
+    # @param [String] image_format The image format. This is compatible with {Asset#url}, will be ignored.
+    # @param [Integer] size The size of the image. This is compatible with {Asset#url}, will be ignored.
+    #
+    # @return [String] URL of the avatar.
+    #
+    def url(image_format: nil, size: 1024)
+      "https://cdn.discordapp.com/embed/avatars/#{@discriminator.to_i % 5}.png"
+    end
+
+    def inspect
+      "#<#{self.class} #{@discriminator}>"
+    end
+  end
 end

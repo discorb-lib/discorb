@@ -232,8 +232,8 @@ module Discorb
       @hoisted_role_id = member_data[:hoisted_role]
       @deaf = member_data[:deaf]
       @custom_avatar = member_data[:avatar] && Asset.new(member_data[:avatar])
-      @display_avatar = Asset.new(self, member_data[:avatar] || user_data[:avatar])
       super(user_data)
+      @display_avatar = @avatar || @custom_avatar
       @client.guilds[@guild_id].members[@id] = self unless @guild_id.nil?
       @_member_data.update(member_data)
     end
