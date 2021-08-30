@@ -66,7 +66,7 @@ module Discorb
       # @return [Discorb::Command::Command] Command object.
       #
       def message_menu(command_name, guild_ids: [], enabled: true, &block)
-        command = Discorb::Command::Command.new(command_name, guild_ids, enabled, block, 2)
+        command = Discorb::Command::Command.new(command_name, guild_ids, enabled, block, 3)
         @commands << command
         command
       end
@@ -82,7 +82,7 @@ module Discorb
       # @return [Discorb::Command::Command] Command object.
       #
       def user_menu(command_name, guild_ids: [], enabled: true, &block)
-        command = Discorb::Command::Command.new(command_name, guild_ids, enabled, block, 3)
+        command = Discorb::Command::Command.new(command_name, guild_ids, enabled, block, 2)
         @commands << command
         command
       end
@@ -106,7 +106,7 @@ module Discorb
           guild_ids.each do |guild_id|
             commands = @commands.select { |c| c.guild_ids.include?(guild_id) }
             http.put("/applications/#{app_info.id}/guilds/#{guild_id}/commands", commands.map(&:to_hash)).wait
-          end unless global_commands.empty?
+          end unless guild_ids.empty?
           @log.info "Successfully setup commands"
         end
       end
@@ -142,6 +142,7 @@ module Discorb
         @block = block
         @raw_type = type
         @type = Discorb::Command::Command.types[type]
+        @type_raw = type
       end
 
       # @!visibility private
@@ -149,7 +150,7 @@ module Discorb
         {
           name: @name,
           default_permission: @default_permission,
-          type: @type,
+          type: @type_raw,
         }
       end
 
