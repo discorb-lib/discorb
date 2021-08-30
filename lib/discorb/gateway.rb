@@ -886,7 +886,6 @@ module Discorb
             before = Message.new(self, message.instance_variable_get(:@data), no_cache: true)
             message.send(:_set_data, message.instance_variable_get(:@data).merge(data))
           else
-            @log.info "Uncached message ID #{data[:id]}, ignoring"
             before = nil
             message = nil
           end
