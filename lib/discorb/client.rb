@@ -356,6 +356,9 @@ module Discorb
     #
     def extend(mod)
       if mod.respond_to?(:events)
+        @events.each_value do |event|
+          event.delete_if { |c| c.discriminator[:extension] == mod.name }
+        end
         mod.events.each do |name, events|
           @events[name] = [] if @events[name].nil?
           events.each do |event|

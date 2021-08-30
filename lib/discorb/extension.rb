@@ -26,7 +26,7 @@ module Discorb
       raise ArgumentError, "block must be a Proc" unless block.is_a?(Proc)
 
       @events[event_name] ||= []
-      discriminator[:extension] = Extension
+      discriminator[:extension] = self.name
       @events[event_name] << Discorb::Event.new(block, id, discriminator)
     end
 
