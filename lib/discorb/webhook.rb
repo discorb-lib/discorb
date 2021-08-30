@@ -377,9 +377,20 @@ module Discorb
           @bot = data[:bot]
           @id = Snowflake.new(data[:id])
           @username = data[:username]
-          @avatar = data[:avatar]
+          @avatar = data[:avatar] ? Asset.new(self, data[:avatar]) : DefaultAvatar.new(data[:discriminator])
           @discriminator = data[:discriminator]
         end
+
+        #
+        # Format author with `Name#Discriminator` style.
+        #
+        # @return [String] Formatted author.
+        #
+        def to_s
+          "#{@username}##{@discriminator}"
+        end
+
+        alias to_s_user to_s
       end
     end
 
