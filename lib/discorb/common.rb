@@ -108,19 +108,19 @@ module Discorb
     end
 
     def timestamp
-      Time.at(((sf >> 22) + 1_420_070_400_000) / 1000)
+      Time.at(((@value >> 22) + 1_420_070_400_000) / 1000)
     end
 
     def worker_id
-      (snowflake & 0x3E0000) >> 17
+      (@value & 0x3E0000) >> 17
     end
 
     def process_id
-      (snowflake & 0x1F000) >> 12
+      (@value & 0x1F000) >> 12
     end
 
     def increment
-      snowflake & 0xFFF
+      @value & 0xFFF
     end
   end
 end
