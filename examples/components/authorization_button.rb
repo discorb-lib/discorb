@@ -36,7 +36,7 @@ client.on :button_click do |response|
   if response.custom_id.start_with?("auth:")
     id = response.custom_id.delete_prefix("auth:")
     response.fired_by.add_role(id).wait
-    response.post("You got your role!\nHere's your role: <@&#{id}>", hide: true)
+    response.post("You got your role!\nHere's your role: <@&#{id}>", ephemeral: true)
   end
 end
 

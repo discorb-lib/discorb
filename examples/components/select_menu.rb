@@ -54,7 +54,7 @@ client.on :select_menu_select do |response|
   response.post(
     "**#{selected_section[0]}**\n" \
     "#{selected_section[1].strip}\n\n" \
-    "#{WIKIPEDIA_CREDIT}", hide: true,
+    "#{WIKIPEDIA_CREDIT}", ephemeral: true,
   )
 end
 
