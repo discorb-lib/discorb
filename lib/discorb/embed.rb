@@ -336,9 +336,9 @@ module Discorb
       attr_reader :url
 
       # @!visibility private
-      def initialize(name, url)
-        @name = name
-        @url = url
+      def initialize(data)
+        @name = data[:name]
+        @url = data[:url]
       end
     end
   end
