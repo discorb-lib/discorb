@@ -43,6 +43,8 @@ module Discorb
       "#{@username}##{@discriminator}"
     end
 
+    alias to_s_user to_s
+
     def inspect
       "#<#{self.class} #{self}>"
     end
