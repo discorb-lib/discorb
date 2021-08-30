@@ -25,15 +25,14 @@ module Discorb
       #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
-      # @param [Boolean] enabled Boolean value to enable/disable the command.
       # @param [Proc] block Command block.
       #
       # @return [Discorb::Command::Command::SlashCommand]
       #
       # @see file:docs/application_command.md#register-slash-command
       #
-      def slash(command_name, description, options = {}, guild_ids: [], enabled: true, &block)
-        command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, enabled, block, 1, "")
+      def slash(command_name, description, options = {}, guild_ids: [], &block)
+        command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
         @commands << command
         command
       end
