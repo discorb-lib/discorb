@@ -15,3 +15,26 @@
 ## v0.0.4
 
 - Fix: Fix NoMethodError by webhook message
+- Add: Add `#author` to webhook message
+- Fix: Add `#bot?` to webhook author
+
+## v0.0.5
+
+- Fix: Fix GitHub link
+- Change: Internet to HTTP
+
+## v0.0.6
+
+- Fix: Fix error in client without members intent
+- Add: Add ThreadChannel::News
+- Add: Add official discord link
+
+## v0.0.7
+
+- Fix: Fix `member_xxx` event
+
+## 0.0.8
+
+- Delete: Delete task parameter
+
+## 0.0.9
