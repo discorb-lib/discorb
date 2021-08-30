@@ -29,7 +29,7 @@ module Discorb
     def register(id, body)
       @cache[id.to_s] = body
       @cache = @cache.sort_by(&@sort).to_h if @sort
-      @cache.delete(@cache.values[-1]) if !@limit.nil? && @cache.size > @limit
+      @cache.delete(@cache.keys[0]) if !@limit.nil? && @cache.size > @limit
       body
     end
 
