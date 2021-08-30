@@ -78,6 +78,15 @@ module Discorb
       "@#{name}"
     end
 
+    #
+    # Format the member to `Username#Discriminator` style.
+    #
+    # @return [String] The formatted member.
+    #
+    def to_s_user
+      "@#{name}"
+    end
+
     def name
       @nick || @username
     end
