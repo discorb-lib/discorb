@@ -41,6 +41,8 @@ module Discorb
     attr_reader :messages
     # @return [Discorb::Logger] The logger.
     attr_reader :log
+    # @return [Array<Discorb::Command::Command>] The commands that the client is using.
+    attr_reader :commands
 
     #
     # Initializes a new client.
@@ -78,7 +80,7 @@ module Discorb
       @tasks = []
       @conditions = {}
       @commands = []
-      @command_pair = {}
+      @overwrite_application_commands = overwrite_application_commands
     end
 
     #
