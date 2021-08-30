@@ -35,6 +35,8 @@ client.run(ENV["DISCORD_BOT_TOKEN"])
 
 {Discorb::Command::Handler#slash} takes 5 arguments:
 
+| Argument | Description |
+|---------|-------------|
 | `command_name` | The name of the command. |
 | `description` | The description of the command. |
 | `options` | A hash of options. |
@@ -52,6 +54,7 @@ In `options`, hash should be like this:
     }
 }
 ```
+
 | Key | Description |
 | --- | --- |
 | `type` | The type of the argument. |
