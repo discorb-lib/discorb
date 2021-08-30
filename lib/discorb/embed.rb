@@ -41,8 +41,8 @@ module Discorb
     # @param [Discorb::Embed::Author] author The author field of embed.
     # @param [Array<Discorb::Embed::Field>] fields The fields of embed.
     # @param [Discorb::Embed::Footer] footer The footer of embed.
-    # @param [Discorb::Embed::Image] image The image of embed.
-    # @param [Discorb::Embed::Thumbnail] thumbnail The thumbnail of embed.
+    # @param [Discorb::Embed::Image, String] image The image of embed.
+    # @param [Discorb::Embed::Thumbnail, String] thumbnail The thumbnail of embed.
     #
     def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil,
                                                    fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)
@@ -55,8 +55,8 @@ module Discorb
         @author = author
         @fields = fields || []
         @footer = footer
-        @image = image
-        @thumbnail = thumbnail
+        @image = image && (image.is_a?(String) ? Image.new(image) : image)
+        @thumbnail = thumbnail && (thumbnail.is_a?(String) ? Thumbnail.new(thumbnail) : thumbnail)
         @type = "rich"
       else
         @title = data[:title]
