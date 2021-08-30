@@ -99,14 +99,14 @@ module Discorb
       #
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       #
-      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      # @param [Boolean] ephemeral Whether to ephemeral the response.
       #
-      def defer_source(hide: false)
+      def defer_source(ephemeral: false)
         Async do
           @client.http.post("/interactions/#{@id}/#{@token}/callback", {
             type: 5,
             data: {
-              flags: (hide ? 1 << 6 : 0),
+              flags: (ephemeral ? 1 << 6 : 0),
             },
           }).wait
           @defered = true
@@ -122,9 +122,9 @@ module Discorb
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
       # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
-      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      # @param [Boolean] ephemeral Whether to ephemeral the response.
       #
-      def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, hide: false)
+      def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
@@ -155,7 +155,7 @@ module Discorb
           tmp_components << tmp_row
           payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
-        payload[:flags] = (hide ? 1 << 6 : 0)
+        payload[:flags] = (ephemeral ? 1 << 6 : 0)
         if @responded
           @client.http.post("/webhooks/#{@id}/#{@token}", { type: 4, data: payload }).wait
         elsif @defered
@@ -174,14 +174,14 @@ module Discorb
       #
       # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
       #
-      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      # @param [Boolean] ephemeral Whether to ephemeral the response.
       #
-      def defer_update(hide: false)
+      def defer_update(ephemeral: false)
         Async do
           @client.http.post("/interactions/#{@id}/#{@token}/callback", {
             type: 7,
             data: {
-              flags: (hide ? 1 << 6 : 0),
+              flags: (ephemeral ? 1 << 6 : 0),
             },
           }).wait
         end
@@ -196,9 +196,9 @@ module Discorb
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
       # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
-      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      # @param [Boolean] ephemeral Whether to ephemeral the response.
       #
-      def edit(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, hide: false)
+      def edit(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
@@ -229,7 +229,7 @@ module Discorb
           tmp_components << tmp_row
           payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
-        payload[:flags] = (hide ? 1 << 6 : 0)
+        payload[:flags] = (ephemeral ? 1 << 6 : 0)
         @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 6, data: payload }).wait
       end
     end
