@@ -75,11 +75,15 @@ module Discorb
 
       # @!visibility private
       def make_interaction(client, data)
+        interaction = nil
         descendants.each do |klass|
-          return klass.make_interaction(client, data) if !klass.interaction_type.nil? && klass.interaction_type == data[:type]
+          interaction = klass.make_interaction(client, data) if !klass.interaction_type.nil? && klass.interaction_type == data[:type]
         end
-        client.log.warn("Unknown interaction type #{data[:type]}, initialized Interaction")
-        Interaction.new(client, data)
+        if interaction.nil?
+          client.log.warn("Unknown interaction type #{data[:type]}, initialized Interaction")
+          interaction = Interaction.new(client, data)
+        end
+        interaction
       end
 
       # @!visibility private
@@ -238,15 +242,93 @@ module Discorb
   end
 
   #
-  # Represents a slash command interaction.
+  # Represents a command interaction.
   # @todo Implement this.
   #
-  class SlashCommandInteraction < Interaction
+  class CommandInteraction < Interaction
     @interaction_type = 2
+    @interaction_name = :application_command
+    include Interaction::SourceResponse
+
+    #
+    # Represents a slash command interaction.
+    #
+    class SlashCommand < CommandInteraction
+      @command_type = 1
+
+      def _set_data(data)
+        super
+        Sync do
+          name = data[:name]
+          options = nil
+          if (option = data[:options]&.first)
+            case option[:type]
+            when 1
+              name += " #{option[:name]}"
+              options = option[:options]
+            when 2
+              name += " #{option[:name]}"
+              if (option_sub = option[:options]&.first)
+                if option_sub[:type] == 1
+                  name += " #{option_sub[:name]}"
+                  options = option_sub[:options]
+                else
+                  options = option[:options]
+                end
+              end
+            else
+              options = data[:options]
+            end
+          end
+          options ||= []
+          options.map! do |option|
+            case option[:type]
+            when 3, 4, 5, 10
+              option[:value]
+            when 6
+              guild.members[option[:value]] || guild.fetch_member(option[:value]).wait
+            when 7
+              guild.channels[option[:value]] || guild.fetch_channels.wait.find { |channel| channel.id == option[:value] }
+            when 8
+              guild.roles[option[:value]] || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+            when 9
+              guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+            end
+          end
+
+          unless (command = @client.commands.find { |c| c.to_s == name })
+            @client.log.warn "Unknown command name #{name}, ignoreing"
+            next
+          end
+
+          command.block.call(self, *options)
+        end
+      end
+    end
     @interaction_name = :slash_command
+    private
 
     def _set_data(data)
-      p data
+      @name = data[:name]
+    end
+
+    class << self
+      # @!visibility private
+      attr_reader :command_type
+
+      # @!visibility private
+      def make_interaction(client, data)
+        nested_classes.each do |klass|
+          return klass.new(client, data) if !klass.command_type.nil? && klass.command_type == data[:data][:type]
+        end
+        client.log.warn("Unknown command type #{data[:type]}, initialized CommandInteraction")
+        CommandInteraction.new(client, data)
+      end
+
+      # @!visibility private
+      def nested_classes
+        constants.select { |c| const_get(c).is_a? Class }.map { |c| const_get(c) }
+      end
     end
   end
 

@@ -102,11 +102,11 @@ module Discorb
           global_commands = @commands.select { |c| c.guild_ids.empty? }
           guild_ids = Set[*@commands.map(&:guild_ids).flatten]
           app_info = fetch_application.wait
-          http.put("/applications/#{app_info.id}/commands", global_commands.map(&:to_hash)).wait
+          http.put("/applications/#{app_info.id}/commands", global_commands.map(&:to_hash)).wait unless global_commands.empty?
           guild_ids.each do |guild_id|
             commands = @commands.select { |c| c.guild_ids.include?(guild_id) }
             http.put("/applications/#{app_info.id}/guilds/#{guild_id}/commands", commands.map(&:to_hash)).wait
-          end
+          end unless global_commands.empty?
           @log.info "Successfully setup commands"
         end
       end
@@ -191,7 +191,7 @@ module Discorb
               type: case (value[:type].is_a?(Array) ? value[:type].first : value[:type])
               when String, :string
                 3
-              when Integer
+              when Integer, :integer
                 4
               when TrueClass, FalseClass, :boolean
                 5
@@ -205,6 +205,8 @@ module Discorb
                 9
               when Float
                 10
+              else
+                raise ArgumentError, "Invalid option type: #{value[:type]}"
               end,
               name: name,
               description: value[:description],
