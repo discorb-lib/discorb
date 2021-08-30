@@ -534,6 +534,9 @@ module Discorb
               @connection.close
               connect_gateway(true)
             end
+          when 11
+            @log.info "Received opcode 11"
+            @ping = Time.now.to_f - @heartbeat_before
           when 0
             handle_event(payload[:t], data)
           end
@@ -544,6 +547,7 @@ module Discorb
         Async do |task|
           task.sleep((interval / 1000.0 - 1) * rand)
           loop do
+            @heartbeat_before = Time.now.to_f
             @connection.write({ op: 1, d: @last_s })
             @connection.flush
             @log.debug "Sent opcode 1."

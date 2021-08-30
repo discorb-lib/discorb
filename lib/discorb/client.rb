@@ -43,6 +43,10 @@ module Discorb
     attr_reader :log
     # @return [Array<Discorb::Command::Command>] The commands that the client is using.
     attr_reader :commands
+    # @return [Float] The ping of the client.
+    #   @note This will be calculated from heartbeat and heartbeat_ack.
+    # @return [nil] If not connected to the gateway.
+    attr_reader :ping
 
     #
     # Initializes a new client.
