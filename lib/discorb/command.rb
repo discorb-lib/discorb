@@ -190,11 +190,11 @@ module Discorb
           options_payload = options.map do |name, value|
             ret = {
               type: case value[:type]
-              when String, :string
+              when String, :string, :str
                 3
-              when Integer, :integer
+              when Integer, :integer, :int
                 4
-              when TrueClass, FalseClass, :boolean
+              when TrueClass, FalseClass, :boolean, :bool
                 5
               when Discorb::User, Discorb::Member, :user, :member
                 6
@@ -204,7 +204,7 @@ module Discorb
                 8
               when :mentionable
                 9
-              when Float
+              when Float, :float
                 10
               else
                 raise ArgumentError, "Invalid option type: #{value[:type]}"
