@@ -10,7 +10,7 @@ From: [Discord API docs](https://discord.com/developers/docs/interactions/applic
 
 ## How do I register an application command?
 
-Use {Discorb::Command::Handler#slash}, {Discorb::Command::Handler#group} for slash commands, {Discorb::Command::Handler#user_menu} for user menu commands, and {Discorb::Command::Handler#message_menu} for message menu commands.
+Use {Discorb::Command::Handler#slash}, {Discorb::Command::Handler#group} for slash commands, {Discorb::Command::Handler#user_command} for user menu commands, and {Discorb::Command::Handler#message_command} for message menu commands.
 
 ### Note
 
@@ -204,11 +204,11 @@ end
 ### Register User Context Menu Command
 
 ```ruby
-client.user_menu("hello") do |interaction, user|
+client.user_command("hello") do |interaction, user|
   interaction.post("Hello, #{user.name}!")
 end
 ```
-{Discorb::Command::Handler#user_menu} takes 3 arguments:
+{Discorb::Command::Handler#user_command} takes 3 arguments:
 
 | Parameter | Description |
 | --- | --- |
@@ -227,12 +227,12 @@ end
 ### Register Message Context Menu Command
 
 ```ruby
-client.message_menu("Bookmark") do |interaction, message|
+client.message_command("Bookmark") do |interaction, message|
   # ...
 end
 ```
 
-{Discorb::Command::Handler#message_menu} takes 3 arguments:
+{Discorb::Command::Handler#message_command} takes 3 arguments:
 
 | Parameter | Description |
 | --- | --- |
