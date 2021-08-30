@@ -84,7 +84,7 @@ module Discorb
     # @return [String] The formatted member.
     #
     def to_s_user
-      "@#{name}"
+      "#{name}##{discriminator}"
     end
 
     def name
