@@ -44,14 +44,13 @@ module Discorb
       # @param [String] command_name Command name.
       # @param [String] description Command description.
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
-      # @param [Boolean] enabled Boolean value to enable/disable the command.
       #
       # @return [Discorb::Command::Command::GroupCommand] Command object.
       #
       # @see file:docs/slash_command.md
       #
-      def slash_group(command_name, description, guild_ids: [], enabled: true)
-        command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, enabled, nil)
+      def slash_group(command_name, description, guild_ids: [])
+        command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil)
         @commands << command
         command
       end
@@ -61,13 +60,12 @@ module Discorb
       #
       # @param [String] command_name Command name.
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
-      # @param [Boolean] enabled Boolean value to enable/disable the command.
       # @param [Proc] block Command block.
       #
       # @return [Discorb::Command::Command] Command object.
       #
-      def message_menu(command_name, guild_ids: [], enabled: true, &block)
-        command = Discorb::Command::Command.new(command_name, guild_ids, enabled, block, 3)
+      def message_menu(command_name, guild_ids: [], &block)
+        command = Discorb::Command::Command.new(command_name, guild_ids, block, 3)
         @commands << command
         command
       end
@@ -77,13 +75,12 @@ module Discorb
       #
       # @param [String] command_name Command name.
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
-      # @param [Boolean] enabled Boolean value to enable/disable the command.
       # @param [Proc] block Command block.
       #
       # @return [Discorb::Command::Command] Command object.
       #
-      def user_menu(command_name, guild_ids: [], enabled: true, &block)
-        command = Discorb::Command::Command.new(command_name, guild_ids, enabled, block, 2)
+      def user_menu(command_name, guild_ids: [], &block)
+        command = Discorb::Command::Command.new(command_name, guild_ids, block, 2)
         @commands << command
         command
       end
@@ -122,14 +119,14 @@ module Discorb
       attr_reader :name
       # @return [Array<#to_s>] The guild ids that the command is enabled in.
       attr_reader :guild_ids
-      # @return [Boolean] Whether the command is enabled.
-      attr_reader :enabled
       # @return [Proc] The block of the command.
       attr_reader :block
       # @return [:chat_input, :user, :message] The type of the command.
       attr_reader :type
       # @return [Integer] The raw type of the command.
       attr_reader :type_raw
+      # @return [Discorb::Dictionary{Discorb::Snowflake, :global => Discorb::Snowflake}] The ID mapping.
+      attr_reader :id_map
 
       @types = {
         1 => :chat_input,
@@ -138,14 +135,14 @@ module Discorb
       }.freeze
 
       # @!visibility private
-      def initialize(name, guild_ids, enabled, block, type)
+      def initialize(name, guild_ids, block, type)
         @name = name
         @guild_ids = guild_ids.map(&:to_s)
-        @enabled = enabled
         @block = block
         @raw_type = type
         @type = Discorb::Command::Command.types[type]
         @type_raw = type
+        @id_map = Discorb::Dictionary.new
       end
 
       # @!visibility private
@@ -167,16 +164,16 @@ module Discorb
         attr_reader :options
 
         # @!visibility private
-        def initialize(name, description, options, guild_ids, enabled, block, type, parent)
+        def initialize(name, description, options, guild_ids, block, type, parent)
           @description = description
           @name = name
           @guild_ids = guild_ids.map(&:to_s)
-          @enabled = enabled
           @block = block
           @type = Discorb::Command::Command.types[type]
           @options = options
           @id = nil
           @parent = parent
+          @id_map = Discorb::Dictionary.new
         end
 
         #
@@ -223,7 +220,7 @@ module Discorb
           end
           {
             name: @name,
-            default_permission: @enabled,
+            default_permission: true,
             description: @description,
             options: options_payload,
           }
@@ -240,10 +237,11 @@ module Discorb
         attr_reader :description
 
         # @!visibility private
-        def initialize(name, description, guild_ids, enabled, type)
-          super(name, guild_ids, enabled, block, type)
+        def initialize(name, description, guild_ids, type)
+          super(name, guild_ids, block, type)
           @description = description
           @commands = []
+          @id_map = Discorb::Dictionary.new
         end
 
         #
@@ -252,8 +250,8 @@ module Discorb
         # @param (see Discorb::Command::Handler#slash)
         # @return [Discorb::Command::Command::SlashCommand] The added subcommand.
         #
-        def slash(command_name, description, options = {}, enabled: true, &block)
-          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], enabled, block, 1, @name)
+        def slash(command_name, description, options = {}, &block)
+          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], block, 1, @name)
           options_payload = options.map do |name, value|
             ret = {
               type: case (value[:type].is_a?(Array) ? value[:type].first : value[:type])
@@ -286,7 +284,7 @@ module Discorb
           end
           {
             name: @name,
-            default_permission: @enabled,
+            default_permission: true,
             description: @description,
             options: options_payload,
           }
@@ -299,14 +297,13 @@ module Discorb
         #
         # @param [String] command_name Group name.
         # @param [String] description Group description.
-        # @param [Boolean] enabled Boolean value to enable/disable the command.
         #
         # @return [Discorb::Command::Command::SubcommandGroup] Command object.
         #
         # @see file:docs/slash_command.md
         #
-        def group(command_name, description, enabled: true)
-          command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, enabled, @name)
+        def group(command_name, description)
+          command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, @name)
           @commands << command
           command
         end
