@@ -21,6 +21,8 @@ module Discorb
     # @return [Boolean] Whether the user is a bot.
     attr_reader :bot
     alias bot? bot
+    # @return [Time] The time the user was created.
+    attr_reader :created_at
 
     include Discorb::Messageable
 
@@ -127,6 +129,7 @@ module Discorb
       @bot = data[:bot]
       @raw_data = data
       @client.users[@id] = self if !data[:no_cache] && data.is_a?(User)
+      @created_at = @id.timestamp
       @data.update(data)
     end
   end
