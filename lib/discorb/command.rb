@@ -19,9 +19,10 @@ module Discorb
       #
       #   | Key | Type | Description |
       #   | --- | --- | --- |
-      #   | `:description` | String | Description of the option. |
-      #   | `:optional` | Boolean | Whether the option is optional or not. |
-      #   | `:type` | Object | Type of the option. |
+      #   | `:description` | `String` | Description of the option. |
+      #   | `:optional` | `Boolean` | Whether the option is optional or not. |
+      #   | `:type` | `Object` | Type of the option. |
+      #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
       # @param [Boolean] enabled Boolean value to enable/disable the command.
@@ -29,7 +30,7 @@ module Discorb
       #
       # @return [Discorb::Command::Command::SlashCommand]
       #
-      # @see file:docs/slash_command.md
+      # @see file:docs/application_command.md#register-slash-command
       #
       def slash(command_name, description, options = {}, guild_ids: [], enabled: true, &block)
         command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, enabled, block, 1, "")
@@ -191,7 +192,7 @@ module Discorb
         def to_hash
           options_payload = options.map do |name, value|
             ret = {
-              type: case (value[:type].is_a?(Array) ? value[:type].first : value[:type])
+              type: case value[:type]
               when String, :string
                 3
               when Integer, :integer
@@ -215,10 +216,9 @@ module Discorb
               description: value[:description],
               required: !value[:optional],
             }
-            if value[:type].is_a?(Array)
-              ret[:choices] = value[:type]
+            if value[:choices]
+              ret[:choices] = value[:choices].map { |t| { name: t[0], value: t[1] } }
             end
-
             ret
           end
           {
@@ -249,23 +249,8 @@ module Discorb
         #
         # Add new subcommand.
         #
-        # @param [String] command_name Command name.
-        # @param [String] description Command description.
-        # @param [Hash{String => Hash{:description => String, :optional => Boolean, :type => Object}}] options Command options.
-        #   The key is the option name, the value is a hash with the following keys:
-        #
-        #   | Key | Type | Description |
-        #   | --- | --- | --- |
-        #   | `:description` | String | Description of the option. |
-        #   | `:optional` | Boolean | Whether the option is optional or not. |
-        #   | `:type` | Object | Type of the option. |
-        #
-        # @param [Boolean] enabled Boolean value to enable/disable the command.
-        # @param [Proc] block Command block.
-        #
-        # @return [Discorb::Command::Command::SlashCommand] Command object.
-        #
-        # @see file:docs/slash_command.md
+        # @param (see Discorb::Command::Handler#slash)
+        # @return [Discorb::Command::Command::SlashCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, enabled: true, &block)
           command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], enabled, block, 1, @name)
@@ -387,24 +372,8 @@ module Discorb
 
         #
         # Add new subcommand.
-        #
-        # @param [String] command_name Command name.
-        # @param [String] description Command description.
-        # @param [Hash{String => Hash{:description => String, :optional => Boolean, :type => Object}}] options Command options.
-        #   The key is the option name, the value is a hash with the following keys:
-        #
-        #   | Key | Type | Description |
-        #   | --- | --- | --- |
-        #   | `:description` | String | Description of the option. |
-        #   | `:optional` | Boolean | Whether the option is optional or not. |
-        #   | `:type` | Object | Type of the option. |
-        #
-        # @param [Boolean] enabled Boolean value to enable/disable the command.
-        # @param [Proc] block Command block.
-        #
-        # @return [Discorb::Command::Command::SlashCommand] Command object.
-        #
-        # @see file:docs/slash_command.md
+        # @param (see Discorb::Command::Handler#slash)
+        # @return [Discorb::Command::Command::SlashCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, enabled: true, &block)
           command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], enabled, block, 1, @parent + " " + @name)
