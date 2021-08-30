@@ -124,7 +124,7 @@ module Discorb
       # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
       # @param [Boolean] hide Whether to hide the response (ephemeral).
       #
-      def post(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, hide: false)
+      def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, hide: false)
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
@@ -305,7 +305,37 @@ module Discorb
         end
       end
     end
-    @interaction_name = :slash_command
+
+    #
+    # Represents a user context menu interaction.
+    #
+    class UserMenuCommand < CommandInteraction
+      @command_type = 2
+
+      # @return [Discorb::Member, Discorb::User] The target user.
+      attr_reader :target
+
+      def _set_data(data)
+        @target = guild.members[data[:target_id]] || Discorb::Member.new(@client, @guild_id, data[:resolved][:users][data[:target_id].to_sym], data[:resolved][:members][data[:target_id].to_sym])
+        @client.commands.find { |c| c.name == data[:name] && c.type_raw == 2 }.block.call(self, @target)
+      end
+    end
+
+    #
+    # Represents a message context menu interaction.
+    #
+    class MessageMenuCommand < CommandInteraction
+      @command_type = 3
+
+      # @return [Discorb::Message] The target message.
+      attr_reader :target
+
+      def _set_data(data)
+        @target = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym])
+        @client.commands.find { |c| c.name == data[:name] && c.type_raw == 3 }.block.call(self, @target)
+      end
+    end
+
     private
 
     def _set_data(data)
