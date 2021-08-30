@@ -93,10 +93,10 @@ module Discorb
       #
       # Setup commands.
       # @note This method is called automatically if overwrite_application_commands is set to true.
-      #   @see Client#initialize
+      # @see Client#initialize
       #
       # @param [String] token Bot token.
-      #   @note This only required if you don't run client.
+      # @note `token` parameter only required if you don't run client.
       #
       def setup_commands(token = nil)
         Async do
