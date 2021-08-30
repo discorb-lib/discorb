@@ -11,6 +11,9 @@ module Discorb
     def enumerate_errors(hash)
       res = {}
       _recr_items([], hash, res)
+      if res == { "" => nil }
+        res = {}
+      end
       res
     end
 
@@ -56,7 +59,7 @@ module Discorb
       @code = data[:code]
       @response = resp
       DiscorbError.instance_method(:initialize).bind(self).call(
-        [data[:message], "\n", enumerate_errors(data[:errors]).map do |ek, ev|
+        [data[:message], enumerate_errors(data[:errors]).map do |ek, ev|
           "#{ek}=>#{ev}"
         end.join("\n")].join("\n")
       )
