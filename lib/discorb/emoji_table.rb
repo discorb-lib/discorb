@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ModuleLength
 module Discorb
   #
   # A table of emoji names and their unicode values.
@@ -3794,6 +3793,14 @@ module Discorb
       "\xF0\x9F\x95\x9B" => %w[clock12],
       "\xF0\x9F\x95\xA7" => %w[clock1230],
     }.freeze
-    # rubocop:enable Metrics/ModuleLength
+
+    SKIN_TONES = [
+      :dummy,
+      "\xf0\x9f\x8f\xbb",
+      "\xf0\x9f\x8f\xbc",
+      "\xf0\x9f\x8f\xbd",
+      "\xf0\x9f\x8f\xbe",
+      "\xf0\x9f\x8f\xbf",
+    ].freeze
   end
 end
