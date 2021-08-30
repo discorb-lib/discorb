@@ -60,10 +60,13 @@ module Discorb
       # @param [String] command_name Command name.
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
       # @param [Proc] block Command block.
+      # @yield [interaction, message] Block to execute.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] Interaction object.
+      # @yieldparam [Discorb::Message] user Message object.
       #
       # @return [Discorb::Command::Command] Command object.
       #
-      def message_menu(command_name, guild_ids: [], &block)
+      def message_command(command_name, guild_ids: [], &block)
         command = Discorb::Command::Command.new(command_name, guild_ids, block, 3)
         @commands << command
         command
@@ -75,10 +78,13 @@ module Discorb
       # @param [String] command_name Command name.
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
       # @param [Proc] block Command block.
+      # @yield [interaction, user] Block to execute.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] Interaction object.
+      # @yieldparam [Discorb::User] user User object.
       #
       # @return [Discorb::Command::Command] Command object.
       #
-      def user_menu(command_name, guild_ids: [], &block)
+      def user_command(command_name, guild_ids: [], &block)
         command = Discorb::Command::Command.new(command_name, guild_ids, block, 2)
         @commands << command
         command
