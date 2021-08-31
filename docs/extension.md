@@ -37,3 +37,17 @@ end
 ## Load extension
 
 Use {Client#extend} to load extension.
+
+## Access Client from extension
+
+You can access {Client} from extension with `@client`.
+
+```ruby
+module MyExtension
+  extend Discorb::Extension
+
+  event :ready do |message|
+    puts "Logged in as #{client.user}"
+  end
+end
+```
