@@ -8,7 +8,6 @@ gemspec
 gem "rake", "~> 13.0"
 
 gem "async"
-gem "async-http"
 gem "async-websocket"
 
 gem "mime-types", "~> 3.3"
