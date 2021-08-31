@@ -28,11 +28,11 @@ Fires when a event is received.
 |`event_name`| Symbol | The name of the event. |
 |`data`      | Hash   | The data of the event. |
 
-#### `ready(task)`
+#### `ready()`
 
 Fires when the client is ready.
 
-#### `resumed(task)`
+#### `resumed()`
 
 Fires when the client is resumed connection.
 
