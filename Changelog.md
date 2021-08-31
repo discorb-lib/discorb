@@ -37,4 +37,12 @@
 
 - Delete: Delete task parameter
 
-## 0.0.9
+## 0.1.0
+
+- Add: Add `User#created_at`
+- Add: Add `Member#to_s_user`
+- Add: Add `DefaultAvatar`
+- Add: Suppot application commands
+- Add: Add `Client#ping`
+- Add: Allow `String` for `Embed#initialize`
+- Change: Change log format
