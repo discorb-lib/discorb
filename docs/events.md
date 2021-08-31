@@ -239,7 +239,7 @@ Fires when a message is updated.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::GatewayHandler::MessageUpdateEvent}| The message after the update. |
+|`event`     | {Discorb::Gateway::MessageUpdateEvent}| The message after the update. |
 
 #### `message_delete(message, channel, guild)`
 
@@ -272,7 +272,7 @@ Fires when a bulk of messages are deleted.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`messages`  | Array<{Discorb::Message}, {Discorb::GatewayHandler::UnknownDeleteBulkMessage}> | The deleted messages. |
+|`messages`  | Array<{Discorb::Message}, {Discorb::Gateway::UnknownDeleteBulkMessage}> | The deleted messages. |
 
 #### `message_pin_update(event)`
 
@@ -280,7 +280,7 @@ Fires when a message is pinned or unpinned.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::GatewayHandler::MessagePinUpdateEvent}| The event object. |
+|`event`     | {Discorb::Gateway::MessagePinUpdateEvent}| The event object. |
 
 #### `typing_start(event)`
 
@@ -288,7 +288,7 @@ Fires when a user starts typing.
 
 | Parameter | Type  | Description |
 | --------- | ----- | ----------- |
-|`event`    | {Discorb::GatewayHandler::TypingStartEvent}| The event object. |
+|`event`    | {Discorb::Gateway::TypingStartEvent}| The event object. |
 
 ### Reaction events
 
@@ -298,7 +298,7 @@ Fires when a reaction is added to a message.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::GatewayHandler::ReactionEvent}| The event object. |
+|`event`     | {Discorb::Gateway::ReactionEvent}| The event object. |
 
 #### `reaction_remove(event)`
 
@@ -306,7 +306,7 @@ Fires when someone removes a reaction from a message.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::GatewayHandler::ReactionEvent}| The event object. |
+|`event`     | {Discorb::Gateway::ReactionEvent}| The event object. |
 
 #### `reaction_remove_all(event)`
 
@@ -314,7 +314,7 @@ Fires when all reactions are removed from a message.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::GatewayHandler::ReactionRemoveAllEvent}| The event object. |
+|`event`     | {Discorb::Gateway::ReactionRemoveAllEvent}| The event object. |
 
 #### `reaction_remove_emoji(event)`
 
@@ -322,7 +322,7 @@ Fires when a reaction is removed from a message.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::GatewayHandler::ReactionRemoveEmojiEvent}| The event object. |
+|`event`     | {Discorb::Gateway::ReactionRemoveEmojiEvent}| The event object. |
 
 ### Role events
 
