@@ -57,3 +57,7 @@
 
 - Fix: Fix NoMethodError in reaction event
 - Add: Add Changelog.md to document
+
+## 0.2.2
+
+- Add: Add `Snowflake#to_str`
