@@ -74,13 +74,13 @@ module Discorb
     alias app_owner? bot_owner?
 
     # @!visibility private
-    def base_url
+    def channel_id
       Async do
         next @dm_channel_id if @dm_channel_id
 
         dm_channel = @client.http.post("/users/#{@id}/channels", { recipient_id: @client.user.id }).wait
         @dm_channel_id = dm_channel[:id]
-        "/channels/#{@dm_channel_id}"
+        @dm_channel_id
       end
     end
 
