@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "async/http"
+
 module Discorb
   #
   # A module for Discord Gateway.
