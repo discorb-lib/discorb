@@ -42,7 +42,18 @@
 - Add: Add `User#created_at`
 - Add: Add `Member#to_s_user`
 - Add: Add `DefaultAvatar`
-- Add: Suppot application commands
+- Add: Support application commands
 - Add: Add `Client#ping`
 - Add: Allow `String` for `Embed#initialize`
 - Change: Change log format
+
+## 0.2.0
+
+- Fix: Fix unused dependency
+- Add: Add `Client#close!`
+- Add: Add discord-irb
+
+## 0.2.1
+
+- Fix: Fix NoMethodError in reaction event
+- Add: Add Changelog.md to document
