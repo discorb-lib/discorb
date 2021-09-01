@@ -47,6 +47,8 @@ module Discorb
     #   @note This will be calculated from heartbeat and heartbeat_ack.
     # @return [nil] If not connected to the gateway.
     attr_reader :ping
+    # @return [:initialized, :running, :closed] The status of the client.
+    attr_reader :status
 
     #
     # Initializes a new client.
@@ -85,6 +87,7 @@ module Discorb
       @conditions = {}
       @commands = []
       @overwrite_application_commands = overwrite_application_commands
+      @status = :initialized
     end
 
     #
@@ -175,16 +178,6 @@ module Discorb
           }.call(args)
         end
       end
-    end
-
-    #
-    # Starts the client.
-    #
-    # @param [String] token The token to use.
-    #
-    def run(token)
-      @token = token.to_s
-      connect_gateway(true)
     end
 
     #
@@ -376,5 +369,33 @@ module Discorb
 
     include Discorb::Gateway::Handler
     include Discorb::Command::Handler
+
+    #
+    # Starts the client.
+    #
+    # @param [String] token The token to use.
+    #
+    def run(token)
+      Async do |task|
+        @status = :running
+        @token = token.to_s
+        main_task = Async do
+          connect_gateway(true)
+        end
+        @close_condition = Async::Condition.new
+        @close_condition.wait
+        main_task.stop
+      end
+    end
+
+    #
+    # Stops the client.
+    #
+    def close!
+      @connection.send_close
+      @tasks.each(&:stop)
+      @status = :closed
+      @close_condition.signal
+    end
   end
 end
