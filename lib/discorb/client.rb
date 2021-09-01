@@ -377,12 +377,16 @@ module Discorb
     #
     def run(token)
       Async do |task|
-        @status = :running
         @token = token.to_s
-        main_task = Async do
-          connect_gateway(true)
-        end
         @close_condition = Async::Condition.new
+        main_task = Async do
+          @status = :running
+          connect_gateway(true).wait
+        rescue
+          @status = :stopped
+          @close_condition.signal
+          raise
+        end
         @close_condition.wait
         main_task.stop
       end
