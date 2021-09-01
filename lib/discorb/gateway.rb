@@ -926,7 +926,7 @@ module Discorb
             if (target_reaction = target_message.reactions.find do |r|
               r.emoji.is_a?(UnicodeEmoji) ? r.emoji.value == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
             end)
-              target_reaction.set_instance_variable(:@count, target_reaction.count + 1)
+              target_reaction.instance_variable_set(:@count, target_reaction.count + 1)
             else
               target_message.reactions << Reaction.new(
                 self,
@@ -944,7 +944,7 @@ module Discorb
             (target_reaction = target_message.reactions.find do |r|
               data[:emoji][:id].nil? ? r.emoji.name == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
             end)
-            target_reaction.set_instance_variable(:@count, target_reaction.count - 1)
+            target_reaction.instance_variable_set(:@count, target_reaction.count - 1)
             target_message.reactions.delete(target_reaction) if target_reaction.count.zero?
           end
           dispatch(:reaction_remove, ReactionEvent.new(self, data))
