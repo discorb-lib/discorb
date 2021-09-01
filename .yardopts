@@ -4,3 +4,4 @@
 --tag flags:"Flags"
 -
 docs/*.md
+Changelog.md
