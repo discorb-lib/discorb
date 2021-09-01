@@ -68,9 +68,9 @@ module Discorb
     end
 
     # @!visibility private
-    def base_url
+    def channel_id
       Async do
-        "/channels/#{@id}"
+        @id
       end
     end
 
@@ -1090,9 +1090,9 @@ module Discorb
     include Messageable
 
     # @!visibility private
-    def base_url
+    def channel_id
       Async do
-        "/channels/#{@id}"
+        @id
       end
     end
 

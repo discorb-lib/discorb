@@ -214,6 +214,33 @@ module Discorb
     end
 
     #
+    # Edit the message.
+    #
+    # @param [String] content The message content.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discord::Embed>] embeds The embeds to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+    # @param [Boolean] supress Whether to supress embeds.
+    #
+    def edit(...)
+      Async do
+        channel.edit_message(@id, ...).wait
+      end
+    end
+
+    #
+    # Delete the message.
+    #
+    # @param [String] reason The reason for deleting the message.
+    #
+    def delete!(reason: nil)
+      Async do
+        channel.delete_message!(@id, reason: reason).wait
+      end
+    end
+
+    #
     # Convert the message to reference object.
     #
     # @param [Boolean] fail_if_not_exists Whether to raise an error if the message does not exist.

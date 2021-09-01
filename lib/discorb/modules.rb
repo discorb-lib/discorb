@@ -61,10 +61,73 @@ module Discorb
         else
           headers = {}
         end
-        _resp, data = @client.http.post("#{base_url.wait}/messages", payload, headers: headers).wait
+        _resp, data = @client.http.post("/channels/#{channel_id.wait}/messages", payload, headers: headers).wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
+
+    #
+    # Edit a message.
+    #
+    # @param [#to_s] message_id The message id.
+    # @param [String] content The message content.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discord::Embed>] embeds The embeds to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+    # @param [Boolean] supress Whether to supress embeds.
+    #
+    def edit_message(message_id, content = nil, embed: nil, embeds: nil, allowed_mentions: nil,
+                                                components: nil, supress: nil)
+      Async do
+        payload = {}
+        payload[:content] = content if content
+        tmp_embed = if embed
+            [embed]
+          elsif embeds
+            embeds
+          end
+        payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
+        payload[:allowed_mentions] =
+          allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
+        if components
+          tmp_components = []
+          tmp_row = []
+          components.each do |c|
+            case c
+            when Array
+              tmp_components << tmp_row
+              tmp_row = []
+              tmp_components << c
+            when SelectMenu
+              tmp_components << tmp_row
+              tmp_row = []
+              tmp_components << [c]
+            else
+              tmp_row << c
+            end
+          end
+          tmp_components << tmp_row
+          payload[:flags] = (supress ? 1 << 2 : 0) unless flags.nil?
+          payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
+        end
+        @client.http.patch("/channels/#{channel_id.wait}/messages/#{message_id}", payload).wait
+      end
+    end
+
+    #
+    # Delete a message.
+    #
+    # @param [#to_s] message_id The message id.
+    # @param [String] reason The reason for deleting the message.
+    #
+    def delete_message!(message_id, reason: nil)
+      Async do
+        @client.http.delete("/channels/#{channel_id.wait}/messages/#{message_id}", reason: reason).wait
+      end
+    end
+
+    alias destroy_message! delete_message!
 
     #
     # Fetch a message from ID.
@@ -76,7 +139,7 @@ module Discorb
     #
     def fetch_message(id)
       Async do
-        _resp, data = @client.http.get("#{base_url.wait}/messages/#{id}").wait
+        _resp, data = @client.http.get("/channels/#{channel_id.wait}/messages/#{id}").wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -99,7 +162,7 @@ module Discorb
           after: Discorb::Utils.try(around, :id),
           around: Discorb::Utils.try(before, :id),
         }.filter { |_k, v| !v.nil? }.to_h
-        _resp, messages = @client.http.get("#{base_url.wait}/messages?#{URI.encode_www_form(params)}").wait
+        _resp, messages = @client.http.get("/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}").wait
         messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
       end
     end
