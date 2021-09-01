@@ -73,6 +73,8 @@ module Discorb
       @value.to_s
     end
 
+    alias to_str to_s
+
     #
     # Integerize snowflake.
     #
