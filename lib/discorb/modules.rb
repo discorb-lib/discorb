@@ -7,6 +7,8 @@ module Discorb
   module Messageable
     #
     # Post a message to the channel.
+    # @macro async
+    # @macro http
     #
     # @param [String] content The message content.
     # @param [Boolean] tts Whether the message is tts.
@@ -68,6 +70,8 @@ module Discorb
 
     #
     # Edit a message.
+    # @macro async
+    # @macro http
     #
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -117,6 +121,8 @@ module Discorb
 
     #
     # Delete a message.
+    # @macro async
+    # @macro http
     #
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -131,6 +137,8 @@ module Discorb
 
     #
     # Fetch a message from ID.
+    # @macro async
+    # @macro http
     #
     # @param [Discorb::Snowflake] id The ID of the message.
     #
@@ -146,6 +154,8 @@ module Discorb
 
     #
     # Fetch a message history.
+    # @macro async
+    # @macro http
     #
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
