@@ -79,11 +79,11 @@ module Discorb
     end
 
     def image=(value)
-      @image = value.is_a? String ? Image.new(value) : value
+      @image = value.is_a?(String) ? Image.new(value) : value
     end
 
     def thumbnail=(value)
-      @thumbnail = value.is_a? String ? Thumbnail.new(value) : value
+      @thumbnail = value.is_a?(String) ? Thumbnail.new(value) : value
     end
 
     #
