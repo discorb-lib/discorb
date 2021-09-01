@@ -58,6 +58,10 @@
 - Fix: Fix NoMethodError in reaction event
 - Add: Add Changelog.md to document
 
-## 0.2.2
+## 0.2.2 (yanked)
 
 - Add: Add `Snowflake#to_str`
+
+## 0.2.3
+
+- Fix: Fix critical error
