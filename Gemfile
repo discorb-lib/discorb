@@ -7,11 +7,6 @@ gemspec
 
 gem "rake", "~> 13.0"
 
-gem "async"
-gem "async-websocket"
-
-gem "mime-types", "~> 3.3"
-
 group :debug, optional: true do
   gem "rufo", "~> 0.13.0"
 end
