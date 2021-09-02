@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: discorb\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 19:15+0900\n"
-"PO-Revision-Date: 2021-09-02 10:18\n"
+"PO-Revision-Date: 2021-09-02 13:43\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -19,80 +19,85 @@ msgstr ""
 
 #: ../Changelog.md:1
 msgid "# Changelog"
-msgstr ""
+msgstr "# 変更履歴"
 
 #: ../Changelog.md:3
 msgid "## v0.0.1"
-msgstr ""
+msgstr "## v0.0.1"
 
 #: ../Changelog.md:5
 msgid "- Initial release"
-msgstr ""
+msgstr "- 初期リリース"
 
 #: ../Changelog.md:7
 msgid "## v0.0.2"
-msgstr ""
+msgstr "## v0.0.2"
 
 #: ../Changelog.md:9
 msgid "- Fix: Fix rubygems description"
-msgstr ""
+msgstr "- Fix: rubygemsの説明を修正"
 
 #: ../Changelog.md:11
 msgid "## v0.0.3"
-msgstr ""
+msgstr "## v0.0.3"
 
 #: ../Changelog.md:13
 msgid "- Fix: Fix no dependencies"
-msgstr ""
+msgstr "- Fix: 依存性の記述漏れを修正"
 
 #: ../Changelog.md:15
 msgid "## v0.0.4"
-msgstr ""
+msgstr "## v0.0.4"
 
 #: ../Changelog.md:17
 msgid "- Fix: Fix NoMethodError by webhook message\n"
 "- Add: Add `#author` to webhook message\n"
 "- Fix: Add `#bot?` to webhook author"
-msgstr ""
+msgstr "- Fix: WebhookのメッセージでNoMethodErrorが出るバグを修正\n"
+"- Add: Webhookのメッセージに`#author`を追加\n"
+"- Fix: Webhook::Authorに`#bot?`を追加"
 
 #: ../Changelog.md:21
 msgid "## v0.0.5"
-msgstr ""
+msgstr "## v0.0.5"
 
 #: ../Changelog.md:23
 msgid "- Fix: Fix GitHub link\n"
 "- Change: Internet to HTTP"
-msgstr ""
+msgstr "- Fix: GitHubのリンクを修正\n"
+"- Change: InternetからHTTPにリネーム"
 
 #: ../Changelog.md:26
 msgid "## v0.0.6"
-msgstr ""
+msgstr "## v0.0.6"
 
 #: ../Changelog.md:28
 msgid "- Fix: Fix error in client without members intent\n"
 "- Add: Add ThreadChannel::News\n"
 "- Add: Add official discord link"
-msgstr ""
+msgstr "- Fix: members intentが無いときのバグを修正\n"
+"- Add: ThreadChannel::Newsを追加\n"
+"- Add: 公式Discordのリンクを追加"
 
 #: ../Changelog.md:32
 msgid "## v0.0.7"
-msgstr ""
+msgstr "## v0.0.7"
 
 #: ../Changelog.md:34
 msgid "- Fix: Fix `member_xxx` event"
-msgstr ""
+msgstr "- Fix: `members_xxx`イベントを修正"
 
 #: ../Changelog.md:36
 msgid "## 0.0.8"
-msgstr ""
+msgstr "## v0.0.8"
 
 #: ../Changelog.md:38
 msgid "- Delete: Delete task parameter"
-msgstr ""
+msgstr "- Delete: taskパラメータを削除"
 
 #: ../Changelog.md:40
 msgid "## 0.1.0"
-msgstr ""
+msgstr "## v0.1.0"
 
 #: ../Changelog.md:42
 msgid "- Add: Add `User#created_at`\n"
@@ -102,42 +107,51 @@ msgid "- Add: Add `User#created_at`\n"
 "- Add: Add `Client#ping`\n"
 "- Add: Allow `String` for `Embed#initialize`\n"
 "- Change: Change log format"
-msgstr ""
+msgstr "- Add: Application Commandsを実装\n"
+"- Add: `User#created_at` を追加\n"
+"- Add: `Member#to_s_user`を追加\n"
+"- Add: `DefaultAvatar`を追加\n"
+"- Add: `Client#ping`を追加\n"
+"- Add: `Embed#initialize`でStringを許容するように\n"
+"- Change: ログのフォーマットを変更"
 
 #: ../Changelog.md:50
 msgid "## 0.2.0"
-msgstr ""
+msgstr "## 0.2.0"
 
 #: ../Changelog.md:52
 msgid "- Fix: Fix unused dependency\n"
 "- Add: Add `Client#close!`\n"
 "- Add: Add discord-irb"
-msgstr ""
+msgstr "- Add: discord-irbを追加\n"
+"- Fix: 依存関係を修正\n"
+"- Add: `Client#close!`を追加"
 
 #: ../Changelog.md:56
 msgid "## 0.2.1"
-msgstr ""
+msgstr "## 0.2.1"
 
 #: ../Changelog.md:58
 msgid "- Fix: Fix NoMethodError in reaction event\n"
 "- Add: Add Changelog.md to document"
-msgstr ""
+msgstr "- Fix: リアクションのイベントのNoMethodErrorを修正\n"
+"- Add: Changelog.mdをドキュメントに追加"
 
 #: ../Changelog.md:61
 msgid "## 0.2.2 (yanked)"
-msgstr ""
+msgstr "## 0.2.2（取り消し）"
 
 #: ../Changelog.md:63
 msgid "- Add: Add `Snowflake#to_str`"
-msgstr ""
+msgstr "- Add: `Snowflake#to_str`を追加"
 
 #: ../Changelog.md:65
 msgid "## 0.2.3"
-msgstr ""
+msgstr "## 0.2.3"
 
 #: ../Changelog.md:67
 msgid "- Fix: Fix critical error"
-msgstr ""
+msgstr "- Fix: 重大なエラーを修正"
 
 #: ../README.md:1
 msgid "# discorb\n"
@@ -146,211 +160,231 @@ msgid "# discorb\n"
 "[![Gem](https://img.shields.io/gem/v/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)\n"
 "[![Discord](https://img.shields.io/discord/863581274916913193?logo=discord&logoColor=fff&color=5865f2&label=Discord)](https://discord.gg/hCP6zq8Vpj)\n"
 "[![Crowdin](https://badges.crowdin.net/discorb/localized.svg)](https://crowdin.com/project/discorb)"
-msgstr ""
+msgstr "# discorb\n"
+"[![rubydoc](https://img.shields.io/badge/Document-rubydoc.info-blue.svg)](https://rubydoc.info/gems/discorb)\n"
+"[![Gem](https://img.shields.io/gem/dt/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)\n"
+"[![Gem](https://img.shields.io/gem/v/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)\n"
+"[![Discord](https://img.shields.io/discord/863581274916913193?logo=discord&logoColor=fff&color=5865f2&label=Discord)](https://discord.gg/hCP6zq8Vpj)\n"
+"[![Crowdin](https://badges.crowdin.net/discorb/localized.svg)](https://crowdin.com/project/discorb)"
 
 #: ../README.md:8
 msgid "discorb is a Discord API wrapper for Ruby."
-msgstr ""
+msgstr "discorbはRuby製のDiscord APIのラッパーです。"
 
 #: ../README.md:10
 msgid "## Installation"
-msgstr ""
+msgstr "## インストール"
 
 #: ../README.md:12
 msgid "Add this line to your application's Gemfile:"
-msgstr ""
+msgstr "Gemfileに以下を追記し..."
 
 #: ../README.md:14
 msgid "```ruby\n"
 "gem 'discorb'\n"
 "```"
-msgstr ""
+msgstr "```ruby\n"
+"gem 'discorb'\n"
+"```"
 
 #: ../README.md:18
 msgid "And then execute:"
-msgstr ""
+msgstr "以下を実行してください。"
 
 #: ../README.md:20
 msgid "    $ bundle install"
-msgstr ""
+msgstr "    $ bundle install"
 
 #: ../README.md:22
 msgid "Or install it yourself as:"
-msgstr ""
+msgstr "または..."
 
 #: ../README.md:24
 msgid "    $ gem install discorb"
-msgstr ""
+msgstr "    $ gem install discorb"
 
 #: ../README.md:26
 #: ../docs/discord_irb.md:8
 msgid "## Usage"
-msgstr ""
+msgstr "## 使い方"
 
 #: ../README.md:28
 msgid "### Simple ping-pong"
-msgstr ""
+msgstr "### Pingと送信するとPongで返すBot"
 
 #: ../README.md:30
 #: ../docs/application_command.md:24
 msgid "```ruby\n"
 "require \"discorb\""
-msgstr ""
+msgstr "```ruby\n"
+"require \"discorb\""
 
 #: ../README.md:33
 #: ../docs/application_command.md:27
 msgid "client = Discorb::Client.new"
-msgstr ""
+msgstr "client = Discorb::Client.new"
 
 #: ../README.md:35
 msgid "client.once :ready do\n"
 "  puts \"Logged in as #{client.user}\"\n"
 "end"
-msgstr ""
+msgstr "client.once :ready do\n"
+"  puts \"#{client.user}として接続しました。\"\n"
+"end"
 
 #: ../README.md:39
 msgid "client.on :message do |message|\n"
 "  next if message.author.bot?\n"
 "  next unless message.content == \"ping\""
-msgstr ""
+msgstr "client.on :message do |message|\n"
+"  next if message.author.bot?\n"
+"  next unless message.content == \"ping\""
 
 #: ../README.md:43
 msgid "  message.channel.post(\"Pong!\")\n"
 "end"
-msgstr ""
+msgstr "  message.channel.post(\"Pong!\")\n"
+"end"
 
 #: ../README.md:46
 #: ../docs/application_command.md:33
 msgid "client.run(ENV[\"DISCORD_BOT_TOKEN\"])\n"
 "```"
-msgstr ""
+msgstr "client.run(ENV[\"DISCORD_BOT_TOKEN\"])\n"
+"```"
 
 #: ../README.md:49
 msgid "## Contributing"
-msgstr ""
+msgstr "## 貢献"
 
 #: ../README.md:51
 msgid "Bug reports and pull requests are welcome on GitHub at https://github.com/discorb-lib/discorb."
-msgstr ""
+msgstr "バグ報告、Pull Requestは https://github.com/discorb-lib/discorb で受け付けています。"
 
 #: ../README.md:53
 msgid "## License"
-msgstr ""
+msgstr "## ライセンス"
 
 #: ../README.md:55
 msgid "The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT)."
-msgstr ""
+msgstr "[MIT License](https://opensource.org/licenses/MIT) で公開されています。"
 
 # title
 #: ../docs/Examples.md:1
 msgid "Examples"
-msgstr ""
+msgstr "サンプル"
 
 #: ../docs/Examples.md:3
 msgid "# Examples"
-msgstr ""
+msgstr "# サンプル"
 
 #: ../docs/Examples.md:5
 msgid "## Simple ping pong"
-msgstr ""
+msgstr "## Pingと送信するとPongで返すBot"
 
 #: ../docs/Examples.md:7
 msgid "{include:file:examples/simple/ping_pong.rb}"
-msgstr ""
+msgstr "{include:file:examples/simple/ping_pong.rb}"
 
 #: ../docs/Examples.md:9
 msgid "## Wait for a message"
-msgstr ""
+msgstr "## メッセージを待つ"
 
 #: ../docs/Examples.md:11
 msgid "{include:file:examples/simple/wait_for_message.rb}"
-msgstr ""
+msgstr "{include:file:examples/simple/wait_for_message.rb}"
 
 #: ../docs/Examples.md:13
 msgid "## Use components"
-msgstr ""
+msgstr "## ボタンなどを使う"
 
 #: ../docs/Examples.md:15
 msgid "### Authorization button"
-msgstr ""
+msgstr "### 認証ボタン"
 
 #: ../docs/Examples.md:17
 msgid "{include:file:examples/components/authorization_button.rb}"
-msgstr ""
+msgstr "{include:file:examples/components/authorization_button.rb}"
 
 #: ../docs/Examples.md:19
 msgid "### Pagination with select menu"
-msgstr ""
+msgstr "### セレクトメニューを使ったページ移動"
 
 #: ../docs/Examples.md:21
 msgid "{include:file:examples/components/select_menu.rb}"
-msgstr ""
+msgstr "{include:file:examples/components/select_menu.rb}"
 
 #: ../docs/Examples.md:23
 #: ../docs/events.md:356
 msgid "#### Note"
-msgstr ""
+msgstr "#### 注意"
 
 #: ../docs/Examples.md:25
 msgid "This example is not shown correctly in the docs.\n"
 "[Read this example on GitHub](https://github.com/discorb-lib/discorb/blob/main/examples/components/select_menu.rb)."
-msgstr ""
+msgstr "ドキュメントでは正常に表示されていません。\n"
+"[GitHubを参照してください](https://github.com/discorb-lib/discorb/blob/main/examples/components/select_menu.rb)。"
 
 # title
 #: ../docs/application_command.md:1
 msgid "Application Commands"
-msgstr ""
+msgstr "Application Commands"
 
 #: ../docs/application_command.md:3
 msgid "# Application Commands"
-msgstr ""
+msgstr "# Application Commands"
 
 #: ../docs/application_command.md:5
 msgid "## What is an application command?"
-msgstr ""
+msgstr "## application commandとは？"
 
 #: ../docs/application_command.md:7
 msgid "> Application commands are commands that an application can register to Discord. They provide users a first-class way of interacting directly with your application that feels deeply integrated into Discord."
-msgstr ""
+msgstr "> Application commands はアプリケーションがDiscordに登録できるコマンドです。アプリとDiscordを密接に連携することができます。"
 
 #: ../docs/application_command.md:9
 msgid "From: [Discord API docs](https://discord.com/developers/docs/interactions/application-commands#application-commands)"
-msgstr ""
+msgstr "原文: [Discord API docs](https://discord.com/developers/docs/interactions/application-commands#application-commands)"
 
 #: ../docs/application_command.md:11
 msgid "## How do I register an application command?"
-msgstr ""
+msgstr "## 登録の仕方"
 
 #: ../docs/application_command.md:13
 msgid "Use {Discorb::Command::Handler#slash}, {Discorb::Command::Handler#group} for slash commands, {Discorb::Command::Handler#user_command} for user menu commands, and {Discorb::Command::Handler#message_command} for message menu commands."
-msgstr ""
+msgstr "スラッシュコマンドは{Discorb::Command::Handler#slash}、{Discorb::Command::Handler#group}を、\n"
+"ユーザーの右クリックメニューは{Discorb::Command::Handler#user_command} を、\n"
+"メッセージの右クリックメニューは{Discorb::Command::Handler#message_command} を使用してください。"
 
 #: ../docs/application_command.md:15
 msgid "### Note"
-msgstr ""
+msgstr "### 追記"
 
 #: ../docs/application_command.md:17
 msgid "To register a global command, it will take 1 hour to be registered.\n"
 "Guild commands will be registered immediately."
-msgstr ""
+msgstr "グローバルコマンドが反映されるには1時間待つ必要があります。\n"
+"サーバー毎のコマンドはすぐに反映されます。"
 
 #: ../docs/application_command.md:20
 msgid "### Register Slash Commands"
-msgstr ""
+msgstr "### スラコマを登録する"
 
 #: ../docs/application_command.md:22
 msgid "This example registers a slash command that says \"Hello, world!\" when the user types `/hello`."
-msgstr ""
+msgstr "この例は`/hello`で\"Hello, world!\"と発言するBotです。"
 
 #: ../docs/application_command.md:29
 msgid "client.slash(\"hello\", \"Greet for you\") do |interaction|\n"
 "  interaction.post(\"Hello World!\", ephemeral: true)\n"
 "end"
-msgstr ""
+msgstr "client.slash(\"hello\", \"Greet for you\") do |interaction|\n"
+"  interaction.post(\"Hello World!\", ephemeral: true)\n"
+"end"
 
 #: ../docs/application_command.md:36
 msgid "{Discorb::Command::Handler#slash} takes 5 arguments:"
-msgstr ""
+msgstr "{Discorb::Command::Handler#slash} は5つの引数を取ります。"
 
 #: ../docs/application_command.md:38
 msgid "| Argument | Description |\n"
@@ -360,11 +394,17 @@ msgid "| Argument | Description |\n"
 "| `options` | A hash of options. |\n"
 "| `guild_ids` | The ID of the guild to register the command in. |\n"
 "| `block` | A block that will be called when the command is invoked. |"
-msgstr ""
+msgstr "| 引数 | 説明 |\n"
+"|---------|-------------|\n"
+"| `command_name` | コマンドの名前。 |\n"
+"| `description` | コマンドの説明。 |\n"
+"| `options` | オプション用のハッシュ。 |\n"
+"| `guild_ids` | コマンドを登録するサーバー． |\n"
+"| `block` | コマンドを打たれたときに実行するブロック。 |"
 
 #: ../docs/application_command.md:46
 msgid "In `options`, hash should be like this:"
-msgstr ""
+msgstr "`options`のハッシュはこの様になる必要があります。"
 
 #: ../docs/application_command.md:48
 msgid "```ruby\n"
@@ -376,7 +416,15 @@ msgid "```ruby\n"
 "    }\n"
 "}\n"
 "```"
-msgstr ""
+msgstr "```ruby\n"
+"{\n"
+"    \"Name\" => {\n"
+"        type: :string,\n"
+"        required: true,\n"
+"        description: \"コマンドの説明\"\n"
+"    }\n"
+"}\n"
+"```"
 
 #: ../docs/application_command.md:58
 msgid "| Key | Description |\n"
@@ -385,12 +433,18 @@ msgid "| Key | Description |\n"
 "| `required` | Whether the argument is required. |\n"
 "| `description` | The description of the argument. |\n"
 "| `choices` | The choices of the argument. |"
-msgstr ""
+msgstr "| キー | 説明|\n"
+"| --- | --- |\n"
+"| `type` | 引数の形。 |\n"
+"| `required` | 引数が必須かどうか。 |\n"
+"| `description` | 引数の説明。 |\n"
+"| `choices` | 引数の選択肢。 |"
 
 #: ../docs/application_command.md:65
 msgid "`choices` should be unspecified if you don't want to use it.\n"
 "`choices` is hash like this:"
-msgstr ""
+msgstr "`choices`は選択肢を指定しない場合は省略してください。\n"
+"`choices`はこの様なハッシュです。"
 
 #: ../docs/application_command.md:68
 msgid "```ruby\n"
@@ -409,20 +463,37 @@ msgid "```ruby\n"
 "        }\n"
 "    }\n"
 "}"
-msgstr ""
+msgstr "```ruby\n"
+"{\n"
+"    \"vocaloid\" => {\n"
+"        required: true,\n"
+"        description: \"好きなボカロ\"\n"
+"        type: :string,\n"
+"        choices: {\n"
+"            \"初音ミク\" => \"miku\",\n"
+"            \"鏡音リン\" => \"rin\",\n"
+"            \"鏡音レン\" => \"len\",\n"
+"            \"巡音ルカ\" => \"luka\",\n"
+"            \"MEIKO\" => \"meiko\",\n"
+"            \"KAITO\" => \"kaito\",\n"
+"        }\n"
+"    }\n"
+"}"
 
 #: ../docs/application_command.md:85
 msgid "# Note: This aritcle is written in 8/31.\n"
 "```"
-msgstr ""
+msgstr "# 追記: このドキュメントは8/31に書かれました。\n"
+"# 訳注: 翻訳した日は9/2なので残す意味はありませんが、翻訳者の好みにより残っています．\n"
+"```"
 
 #: ../docs/application_command.md:88
 msgid "The key will be displayed in the user menu, and the value will be used as the argument."
-msgstr ""
+msgstr "キーはユーザー側に表示され、値が引数に渡されます。"
 
 #: ../docs/application_command.md:90
 msgid "In `type`, You must use one of the following:"
-msgstr ""
+msgstr "`type`では以下を選択する必要があります。"
 
 #: ../docs/application_command.md:92
 msgid "| Name | Description | Aliases|\n"
@@ -434,20 +505,29 @@ msgid "| Name | Description | Aliases|\n"
 "| `:user` | User argument. | `:member` |\n"
 "| `:channel` | Channel argument. | None |\n"
 "| `:role` | Role argument. | None |"
-msgstr ""
+msgstr "| 名前 | 説明 | エイリアス |\n"
+"| --- | --- | --- |\n"
+"| `:string` | 文字列形。 | `:str` |\n"
+"| `:integer` | 数値型。 | `:int` |\n"
+"| `:float` | 小数型。 | （なし） |\n"
+"| `:boolean` | 真偽型。 | `:bool` |\n"
+"| `:user` | ユーザー形。 | `:member` |\n"
+"| `:channel` | チャンネル型。 | None |\n"
+"| `:role` | ロール型。 | None |"
 
 #: ../docs/application_command.md:102
 msgid "### Group Slash Commands"
-msgstr ""
+msgstr "### スラコマをグループ分けする"
 
 #: ../docs/application_command.md:104
 msgid "To register a group of slash commands, use {Discorb::Command::Handler#slash_group}."
-msgstr ""
+msgstr "{Discorb::Command::Handler#slash_group} でグループとして登録できます。"
 
 #: ../docs/application_command.md:106
 msgid "```ruby\n"
 "group = client.slash_group(\"settings\", \"Set settings of bot.\")"
-msgstr ""
+msgstr "```ruby\n"
+"group = client.slash_group(\"settings\", \"Set settings of bot.\")"
 
 #: ../docs/application_command.md:109
 msgid "group.slash(\"message_expand\", \"Whether bot should expand message.\", {\n"
@@ -458,7 +538,14 @@ msgid "group.slash(\"message_expand\", \"Whether bot should expand message.\", {
 "}) do |interaction|\n"
 "  # ...\n"
 "end"
-msgstr ""
+msgstr "group.slash(\"message_expand\", \"Whether bot should expand message.\", {\n"
+"    \"enabled\" => {\n"
+"        type: :boolean,\n"
+"        description: \"Whether bot should expand message.\"\n"
+"    }\n"
+"}) do |interaction|\n"
+"  # ...\n"
+"end"
 
 #: ../docs/application_command.md:118
 msgid "group.slash(\"bump_alert\", \"Whether bot should notify DISBOARD bump.\", {\n"
@@ -470,21 +557,30 @@ msgid "group.slash(\"bump_alert\", \"Whether bot should notify DISBOARD bump.\",
 "  # ...\n"
 "end\n"
 "```"
-msgstr ""
+msgstr "group.slash(\"bump_alert\", \"Whether bot should notify DISBOARD bump.\", {\n"
+"    \"enabled\" => {\n"
+"        type: :boolean,\n"
+"        description: \"Whether bot should notify DISBOARD bump.\"\n"
+"    }\n"
+"}) do |interaction|\n"
+"  # ...\n"
+"end\n"
+"```"
 
 #: ../docs/application_command.md:128
 msgid "You can make subcommand group by using {Discorb::Command::GroupCommand#group}."
-msgstr ""
+msgstr "{Discorb::Command::GroupCommand#group} でサブコマンドグループを作ることができます。"
 
 #: ../docs/application_command.md:130
 msgid "```ruby\n"
 "group = client.slash_group(\"permission\", \"Set/Get command permissions.\")"
-msgstr ""
+msgstr "```ruby\n"
+"group = client.slash_group(\"permission\", \"Set/Get command permissions.\")"
 
 #: ../docs/application_command.md:133
 #: ../docs/application_command.md:157
 msgid "group_user = group.group(\"user\", \"Set/Get user's command permissions.\")"
-msgstr ""
+msgstr "group_user = group.group(\"user\", \"Set/Get user's command permissions.\")"
 
 #: ../docs/application_command.md:135
 #: ../docs/application_command.md:159
@@ -500,7 +596,18 @@ msgid "group_user.slash(\"set\", \"Set user's command permissions.\", {\n"
 "}) do |interaction, user|\n"
 "  # ...\n"
 "end"
-msgstr ""
+msgstr "group_user.slash(\"set\", \"Set user's command permissions.\", {\n"
+"    \"user_id\" => {\n"
+"        type: :user,\n"
+"        description: \"The user.\"\n"
+"    },\n"
+"    \"value\" => {\n"
+"        type: :boolean,\n"
+"        description: \"Whether the user can use the command.\"\n"
+"    }\n"
+"}) do |interaction, user|\n"
+"  # ...\n"
+"end"
 
 #: ../docs/application_command.md:148
 #: ../docs/application_command.md:172
@@ -512,11 +619,18 @@ msgid "group_user.slash(\"get\", \"Set user's command permissions.\", {\n"
 "}) do |interaction, user|\n"
 "  # ...\n"
 "end"
-msgstr ""
+msgstr "group_user.slash(\"get\", \"Set user's command permissions.\", {\n"
+"    \"user_id\" => {\n"
+"        type: :user,\n"
+"        description: \"The user.\"\n"
+"    },\n"
+"}) do |interaction, user|\n"
+"  # ...\n"
+"end"
 
 #: ../docs/application_command.md:181
 msgid "group_role = group.group(\"role\", \"Set/Get role's command permissions.\")"
-msgstr ""
+msgstr "group_role = group.group(\"role\", \"Set/Get role's command permissions.\")"
 
 #: ../docs/application_command.md:183
 msgid "group_role.slash(\"set\", \"Set role's command permissions.\", {\n"
@@ -531,7 +645,18 @@ msgid "group_role.slash(\"set\", \"Set role's command permissions.\", {\n"
 "}) do |interaction, role|\n"
 "  # ...\n"
 "end"
-msgstr ""
+msgstr "group_role.slash(\"set\", \"Set role's command permissions.\", {\n"
+"    \"role_id\" => {\n"
+"        type: :role,\n"
+"        description: \"The role.\"\n"
+"    },\n"
+"    \"value\" => {\n"
+"        type: :boolean,\n"
+"        description: \"Whether the role can use the command.\"\n"
+"    }\n"
+"}) do |interaction, role|\n"
+"  # ...\n"
+"end"
 
 #: ../docs/application_command.md:196
 msgid "group_role.slash(\"get\", \"Set role's command permissions.\", {\n"
@@ -542,15 +667,22 @@ msgid "group_role.slash(\"get\", \"Set role's command permissions.\", {\n"
 "}) do |interaction, role|\n"
 "  # ...\n"
 "end"
-msgstr ""
+msgstr "group_role.slash(\"get\", \"Set role's command permissions.\", {\n"
+"    \"role_id\" => {\n"
+"        type: :role,\n"
+"        description: \"The role.\"\n"
+"    },\n"
+"}) do |interaction, role|\n"
+"  # ...\n"
+"end"
 
 #: ../docs/application_command.md:205
 msgid "```"
-msgstr ""
+msgstr "```"
 
 #: ../docs/application_command.md:207
 msgid "### Register User Context Menu Command"
-msgstr ""
+msgstr "### ユーザーの右クリックメニューのコマンドを登録する"
 
 #: ../docs/application_command.md:209
 msgid "```ruby\n"
@@ -559,7 +691,12 @@ msgid "```ruby\n"
 "end\n"
 "```\n"
 "{Discorb::Command::Handler#user_command} takes 3 arguments:"
-msgstr ""
+msgstr "```ruby\n"
+"client.user_command(\"hello\") do |interaction, user|\n"
+"  interaction.post(\"Hello, #{user.name}!\")\n"
+"end\n"
+"```\n"
+"{Discorb::Command::Handler#user_command} は3つの引数があります："
 
 #: ../docs/application_command.md:216
 #: ../docs/application_command.md:240
