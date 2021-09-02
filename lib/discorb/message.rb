@@ -223,9 +223,11 @@ module Discorb
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
     #
-    def edit(...)
+    def edit(message_id, content = nil, embed: nil, embeds: nil, allowed_mentions: nil,
+                                        components: nil, supress: nil)
       Async do
-        channel.edit_message(@id, ...).wait
+        channel.edit_message(@id, message_id, content, embed: embed, embeds: embeds, allowed_mentions: allowed_mentions,
+                                                       components: components, supress: supress).wait
       end
     end
 
