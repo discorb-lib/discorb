@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: discorb\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 19:15+0900\n"
-"PO-Revision-Date: 2021-09-02 20:33\n"
+"PO-Revision-Date: 2021-09-02 21:40\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -794,7 +794,7 @@ msgid "discord-irb will load a token from...\n"
 msgstr "discord-irbは...\n"
 "1. 環境変数 `DISCORD_BOT_TOKEN`\n"
 "2. 環境変数 `DISCORD_TOKEN`\n"
-"3. `token`ファイル（`-f`で変更可能）\n"
+"3. `token`ファイル（`-t`で変更可能）\n"
 "4. 入力\n"
 "からトークンを読み込みます。"
 
@@ -809,36 +809,37 @@ msgstr "#### `-i`, `--intents`"
 #: ../docs/discord_irb.md:28
 msgid "Intents to use.\n"
 "Specify intents with integers."
-msgstr ""
+msgstr "使うIntents。\n"
+"数値で指定してください。"
 
 #: ../docs/discord_irb.md:31
 msgid "#### `-t`, `--token-file`"
-msgstr ""
+msgstr "#### `-t`, `--token-file`"
 
 #: ../docs/discord_irb.md:33
 msgid "Token file to load."
-msgstr ""
+msgstr "トークンが入ったロードするファイル"
 
 #: ../docs/discord_irb.md:35
 msgid "### Variables"
-msgstr ""
+msgstr "### 変数"
 
 #: ../docs/discord_irb.md:37
 msgid "#### `message`"
-msgstr ""
+msgstr "#### `message`"
 
 #: ../docs/discord_irb.md:39
 msgid "Last message received."
-msgstr ""
+msgstr "最新の受け取ったメッセージ。"
 
 # title
 #: ../docs/events.md:1
 msgid "Events"
-msgstr ""
+msgstr "イベント"
 
 #: ../docs/events.md:3
 msgid "# Events"
-msgstr ""
+msgstr "# イベント"
 
 #: ../docs/events.md:5
 msgid "## How to use events"
