@@ -18,7 +18,7 @@ client.user_command("Info", guild_ids: [857373681096327180]) do |interaction|
                      ],
                      thumbnail: interaction.target.avatar&.url,
 
-                   ), hide: true)
+                   ), ephemeral: true)
 end
 
 client.run(ENV["DISCORD_BOT_TOKEN"])
