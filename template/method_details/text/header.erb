@@ -3,7 +3,7 @@
 <%= align_right "(Defined in: #{object.file})" %>
 <% if object.aliases.size > 0 %>
 
-<%= align_right "(Also known as: #{object.aliases.map {|o| o.name(true).to_s }.join(',')})" %>
+<%= align_right "(Also known as: #{object.aliases.map { |o| o.name(true).to_s }.join(",")})" %>
 <% end %>
 
 <%= yieldall %>

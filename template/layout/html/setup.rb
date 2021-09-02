@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 def init
   @breadcrumb = []
-  @page_title = ''
-  @breadcrumb_title = ''
+  @page_title = ""
+  @breadcrumb_title = ""
   if @onefile
     sections :layout
   elsif defined?(@file) && @file
@@ -16,7 +16,7 @@ def init
     sections :layout, [:contents]
   else
     case object
-    when '_index.html'
+    when "_index.html"
       @page_title = options.title
       sections :layout, [:index, [:listing, [:files, :objects]]]
     when CodeObjects::Base
@@ -39,17 +39,16 @@ attr_reader :contents
 
 def index
   @objects_by_letter = {}
-  objects = Registry.all(:class, :module).sort_by {|o| o.name.to_s }
+  objects = Registry.all(:class, :module).sort_by { |o| o.name.to_s }
   objects = run_verifier(objects)
-  objects.each {|o| (@objects_by_letter[o.name.to_s[0, 1].upcase] ||= []) << o }
+  objects.each { |o| (@objects_by_letter[o.name.to_s[0, 1].upcase] ||= []) << o }
   erb(:index)
 end
 
 def layout
-  @nav_url = url_for_list(!(defined?(@file) && @file) || options.index ? 'class' : 'file')
+  @nav_url = url_for_list(!(defined?(@file) && @file) || options.index ? "class" : "file")
 
-  @path =
-    if !object || object.is_a?(String)
+  @path = if !object || object.is_a?(String)
       nil
     elsif defined?(@file) && @file
       @file.path
@@ -63,7 +62,7 @@ def layout
 end
 
 def diskfile
-  @file.attributes[:markup] ||= markup_for_file('', @file.filename)
+  @file.attributes[:markup] ||= markup_for_file("", @file.filename)
   data = htmlify(@file.contents, @file.attributes[:markup])
   "<div id='filecontents'>" + data + "</div>"
 end
@@ -83,7 +82,7 @@ end
 # @return [Array<Hash{Symbol=>String}>] the list of search links and drop-down menus
 # @since 0.7.0
 def menu_lists
-  [{:type => 'class', :title => 'Classes', :search_title => 'Class List'},
-    {:type => 'method', :title => 'Methods', :search_title => 'Method List'},
-    {:type => 'file', :title => 'Files', :search_title => 'File List'}]
+  [{ :type => "class", :title => "Classes", :search_title => "Class List" },
+   { :type => "method", :title => "Methods", :search_title => "Method List" },
+   { :type => "file", :title => "Files", :search_title => "File List" }]
 end

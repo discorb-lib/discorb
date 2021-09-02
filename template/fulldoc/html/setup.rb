@@ -6,7 +6,7 @@ def init
 
   return serialize_onefile if options.onefile
   generate_assets
-  serialize('_index.html')
+  serialize("_index.html")
   options.files.each_with_index do |file, _i|
     serialize_file(file, file.title)
   end
@@ -30,9 +30,9 @@ end
 # @param [CodeObject] object to be saved to HTML
 def serialize(object)
   options.object = object
-  serialize_index(options) if object == '_index.html' && options.readme.nil?
+  serialize_index(options) if object == "_index.html" && options.readme.nil?
   Templates::Engine.with_serializer(object, options.serializer) do
-    T('layout').run(options)
+    T("layout").run(options)
   end
 end
 
@@ -40,16 +40,16 @@ end
 # contents of all the javascript and css and output the entire contents without
 # depending on any additional files
 def serialize_onefile
-  Templates::Engine.with_serializer('index.html', options.serializer) do
-    T('onefile').run(options)
+  Templates::Engine.with_serializer("index.html", options.serializer) do
+    T("onefile").run(options)
   end
 end
 
 # Generate the index document for the output
 # @params [Hash] options contains data and flags that influence the output
 def serialize_index(options)
-  Templates::Engine.with_serializer('index.html', options.serializer) do
-    T('layout').run(options.merge(:index => true))
+  Templates::Engine.with_serializer("index.html", options.serializer) do
+    T("layout").run(options.merge(:index => true))
   end
 end
 
@@ -63,11 +63,11 @@ end
 def serialize_file(file, title = nil) # rubocop:disable Lint/UnusedMethodArgument
   options.object = Registry.root
   options.file = file
-  outfile = 'file.' + file.name + '.html'
+  outfile = "file." + file.name + ".html"
 
   serialize_index(options) if file == options.readme
   Templates::Engine.with_serializer(outfile, options.serializer) do
-    T('layout').run(options)
+    T("layout").run(options)
   end
   options.delete(:file)
 end
@@ -105,7 +105,7 @@ def javascripts_full_list
 end
 
 def menu_lists
-  Object.new.extend(T('layout')).menu_lists
+  Object.new.extend(T("layout")).menu_lists
 end
 
 # Generates all the javascript files, stylesheet files, menu lists
@@ -115,9 +115,9 @@ end
 def generate_assets
   @object = Registry.root
 
-  layout = Object.new.extend(T('layout'))
+  layout = Object.new.extend(T("layout"))
   (layout.javascripts + javascripts_full_list +
-      layout.stylesheets + stylesheets_full_list).uniq.each do |file|
+   layout.stylesheets + stylesheets_full_list).uniq.each do |file|
     asset(file, file(file, true))
   end
   layout.menu_lists.each do |list|
@@ -137,8 +137,8 @@ end
 # @see ModuleHelper#prune_method_listing
 def generate_method_list
   @items = prune_method_listing(Registry.all(:method), false)
-  @items = @items.reject {|m| m.name.to_s =~ /=$/ && m.is_attribute? }
-  @items = @items.sort_by {|m| m.name.to_s }
+  @items = @items.reject { |m| m.name.to_s =~ /=$/ && m.is_attribute? }
+  @items = @items.sort_by { |m| m.name.to_s }
   @list_title = "Method List"
   @list_type = "method"
   generate_list_contents
@@ -193,7 +193,7 @@ class TreeContext
 
   def classes
     classes = []
-    classes << 'collapsed' if @depth > 0
+    classes << "collapsed" if @depth > 0
     classes << @even_odd.next if @depth < 2
     classes
   end
@@ -217,13 +217,13 @@ def class_list(root = Registry.root, tree = TreeContext.new)
   out = String.new("")
   children = run_verifier(root.children)
   if root == Registry.root
-    children += @items.select {|o| o.namespace.is_a?(CodeObjects::Proxy) }
+    children += @items.select { |o| o.namespace.is_a?(CodeObjects::Proxy) }
   end
   children.compact.sort_by(&:path).each do |child|
     next unless child.is_a?(CodeObjects::NamespaceObject)
     name = child.namespace.is_a?(CodeObjects::Proxy) ? child.path : child.name
-    has_children = run_verifier(child.children).any? {|o| o.is_a?(CodeObjects::NamespaceObject) }
-    out << "<li id='object_#{child.path}' class='#{tree.classes.join(' ')}'>"
+    has_children = run_verifier(child.children).any? { |o| o.is_a?(CodeObjects::NamespaceObject) }
+    out << "<li id='object_#{child.path}' class='#{tree.classes.join(" ")}'>"
     out << "<div class='item' style='padding-left:#{tree.indent}'>"
     out << "<a class='toggle'></a> " if has_children
     out << linkify(child, name)

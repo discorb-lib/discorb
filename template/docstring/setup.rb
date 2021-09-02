@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 def init
   return if object.docstring.blank? && !object.has_tag?(:api)
-  sections :index, [:private, :deprecated, :abstract, :todo, :note, :returns_void, :text], T('tags')
+  sections :index, [:private, :deprecated, :abstract, :todo, :note, :returns_void, :text], T("tags")
 end
 
 def private
-  return unless object.has_tag?(:api) && object.tag(:api).text == 'private'
+  return unless object.has_tag?(:api) && object.tag(:api).text == "private"
   erb(:private)
 end
 
@@ -32,7 +32,7 @@ end
 def returns_void
   return unless object.type == :method
   return if object.name == :initialize && object.scope == :instance
-  return unless object.tags(:return).size == 1 && object.tag(:return).types == ['void']
+  return unless object.tags(:return).size == 1 && object.tag(:return).types == ["void"]
   erb(:returns_void)
 end
 
@@ -44,7 +44,7 @@ def docstring_text
 
   if text.strip.empty? && object.tags(:return).size == 1 && object.tag(:return).text
     text = object.tag(:return).text.gsub(/\A([a-z])/, &:downcase)
-    text = "Returns #{text.sub(/\.\Z/, '')}." unless text.empty? || text =~ /^\s*return/i
+    text = "Returns #{text.sub(/\.\Z/, "")}." unless text.empty? || text =~ /^\s*return/i
     text = text.gsub(/\A([a-z])/, &:upcase)
   end
 

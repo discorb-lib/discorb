@@ -1,2 +1,2 @@
 # frozen_string_literal: true
-include T('default/module/html')
+include T("templates/module/html")

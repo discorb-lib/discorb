@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-include T('default/module')
+include T("templates/module")
 
 def init
   super
   sections.place(:subclasses).before(:children)
-  sections.place(:constructor_details, [T('method_details')]).before(:methodmissing)
+  sections.place(:constructor_details, [T("method_details")]).before(:methodmissing)
 end
 
 def constructor_details
