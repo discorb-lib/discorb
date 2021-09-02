@@ -18,7 +18,7 @@ To start.
 discord-irb will load a token from...
 1. the `DISCORD_BOT_TOKEN` environment variable
 2. the `DISCORD_TOKEN` environment variable
-3. `token` file in the current directory(customizable with `-f` option)
+3. `token` file in the current directory(customizable with `-t` option)
 4. your input
 
 ### Arguments
