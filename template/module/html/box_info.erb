@@ -21,7 +21,7 @@
   <% if (mix = run_verifier(object.mixins(scope))).size > 0 %>
   <dl>
       <dt><%= name %>:</dt>
-      <dd><%= mix.sort_by {|o| o.path }.map {|o| linkify(o) }.join(", ") %></dd>
+      <dd><%= mix.sort_by { |o| o.path }.map { |o| linkify(o) }.join(", ") %></dd>
   </dl>
   <% end %>
   <% end %>
@@ -29,7 +29,7 @@
   <% if (mixed_into = mixed_into(object)).size > 0 %>
   <dl>
     <dt>Included in:</dt>
-    <dd><%= mixed_into.sort_by {|o| o.path }.map {|o| linkify(o) }.join(", ") %></dd>
+    <dd><%= mixed_into.sort_by { |o| o.path }.map { |o| linkify(o) }.join(", ") %></dd>
   </dl>
   <% end %>
 

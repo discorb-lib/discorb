@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-include T('default/module/text')
+include T("templates/module/text")
 
 def init
   super

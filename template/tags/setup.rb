@@ -2,14 +2,14 @@
 def init
   tags = Tags::Library.visible_tags - [:abstract, :deprecated, :note, :todo]
   create_tag_methods(tags - [:example, :option, :overload, :see])
-  sections :index, tags.map {|t| t.to_s.tr('.', '_').to_sym }
-  sections.any(:overload).push(T('docstring'))
+  sections :index, tags.map { |t| t.to_s.tr(".", "_").to_sym }
+  sections.any(:overload).push(T("docstring"))
 end
 
 def return
   if object.type == :method
     return if object.constructor?
-    return if object.tags(:return).size == 1 && object.tag(:return).types == ['void']
+    return if object.tags(:return).size == 1 && object.tag(:return).types == ["void"]
   end
   tag(:return)
 end
@@ -26,7 +26,7 @@ def tag(name, opts = nil)
   @no_names = opts[:no_names] ? true : false
   @no_types = opts[:no_types] ? true : false
   @name = name
-  out = erb('tag')
+  out = erb("tag")
   @no_names = nil
   @no_types = nil
   out
@@ -34,7 +34,7 @@ end
 
 def create_tag_methods(tags)
   tags.each do |tag|
-    tag_meth = tag.to_s.tr('.', '_')
+    tag_meth = tag.to_s.tr(".", "_")
     next if respond_to?(tag_meth)
     instance_eval(<<-eof, __FILE__, __LINE__ + 1)
       def #{tag_meth}; tag(#{tag.inspect}) end
@@ -43,7 +43,7 @@ def create_tag_methods(tags)
 end
 
 def options_for_tag(tag)
-  opts = {:no_types => true, :no_names => true}
+  opts = { :no_types => true, :no_names => true }
   case Tags::Library.factory_method_for(tag)
   when :with_types
     opts[:no_types] = false
