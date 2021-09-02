@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: discorb\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 19:15+0900\n"
-"PO-Revision-Date: 2021-09-02 13:43\n"
+"PO-Revision-Date: 2021-09-02 20:33\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -705,23 +705,30 @@ msgid "| Parameter | Description |\n"
 "| `command_name` | The name of the command. |\n"
 "| `guild_ids` | The ID of the guild to register the command in. |\n"
 "| `block` | A block that will be called when the command is invoked. |"
-msgstr ""
+msgstr "| 引数 | 説明 |\n"
+"|---------|-------------|\n"
+"| `command_name` | コマンドの名前。 |\n"
+"| `guild_ids` | コマンドを登録するサーバーのID。 |\n"
+"| `block` | コマンドを打たれたときに実行するブロック。 |"
 
 #: ../docs/application_command.md:222
 #: ../docs/application_command.md:246
 msgid "`block` will be called with two arguments:"
-msgstr ""
+msgstr "`block`は2つの引数で呼ばれます。"
 
 #: ../docs/application_command.md:224
 msgid "| Parameter | Description |\n"
 "| --- | --- |\n"
 "| `interaction` | The interaction object. |\n"
 "| `user` | The user object. |"
-msgstr ""
+msgstr "| 引数 | 説明 |\n"
+"| --- | --- |\n"
+"| `interaction` | インタラクションのオブジェクト。 |\n"
+"| `user` | ユーザーのオブジェクト。 |"
 
 #: ../docs/application_command.md:230
 msgid "### Register Message Context Menu Command"
-msgstr ""
+msgstr "### メッセージの右クリックメニューのコマンドを登録する"
 
 #: ../docs/application_command.md:232
 msgid "```ruby\n"
@@ -729,45 +736,54 @@ msgid "```ruby\n"
 "  # ...\n"
 "end\n"
 "```"
-msgstr ""
+msgstr "```ruby\n"
+"client.message_command(\"Bookmark\") do |interaction, message|\n"
+"  # ...\n"
+"end\n"
+"```"
 
 #: ../docs/application_command.md:238
 msgid "{Discorb::Command::Handler#message_command} takes 3 arguments:"
-msgstr ""
+msgstr "{Discorb::Command::Handler#message_command} は3つの引数を取ります。"
 
 #: ../docs/application_command.md:248
 msgid "| Parameter | Description |\n"
 "| --- | --- |\n"
 "| `interaction` | The interaction object. |\n"
 "| `message` | The message object. |"
-msgstr ""
+msgstr "| 引数 | 説明 |\n"
+"| --- | --- |\n"
+"| `interaction` | インタラクションのオブジェクト。 |\n"
+"| `message` | メッセージのオブジェクト。 |"
 
 # title
 #: ../docs/discord_irb.md:1
 msgid "discord-irb"
-msgstr ""
+msgstr "discord-irb"
 
 #: ../docs/discord_irb.md:3
 msgid "# discord-irb"
-msgstr ""
+msgstr "# discord-irb"
 
 #: ../docs/discord_irb.md:5
 msgid "discord-irb is a command line tool for interacting with the Discord API."
-msgstr ""
+msgstr "discord-irb はDiscord APIと通信するためのコマンドラインツールです。"
 
 #: ../docs/discord_irb.md:10
 msgid "```\n"
 "$ bundle exec discord-irb\n"
 "```"
-msgstr ""
+msgstr "```\n"
+"$ bundle exec discord-irb\n"
+"```"
 
 #: ../docs/discord_irb.md:14
 msgid "To start."
-msgstr ""
+msgstr "で開始できます。"
 
 #: ../docs/discord_irb.md:16
 msgid "### Load a token"
-msgstr ""
+msgstr "### トークンを読み込む"
 
 #: ../docs/discord_irb.md:18
 msgid "discord-irb will load a token from...\n"
@@ -775,15 +791,20 @@ msgid "discord-irb will load a token from...\n"
 "2. the `DISCORD_TOKEN` environment variable\n"
 "3. `token` file in the current directory(customizable with `-f` option)\n"
 "4. your input"
-msgstr ""
+msgstr "discord-irbは...\n"
+"1. 環境変数 `DISCORD_BOT_TOKEN`\n"
+"2. 環境変数 `DISCORD_TOKEN`\n"
+"3. `token`ファイル（`-f`で変更可能）\n"
+"4. 入力\n"
+"からトークンを読み込みます。"
 
 #: ../docs/discord_irb.md:24
 msgid "### Arguments"
-msgstr ""
+msgstr "### 引数"
 
 #: ../docs/discord_irb.md:26
 msgid "#### `-i`, `--intents`"
-msgstr ""
+msgstr "#### `-i`, `--intents`"
 
 #: ../docs/discord_irb.md:28
 msgid "Intents to use.\n"
