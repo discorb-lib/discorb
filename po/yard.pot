@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-02 19:01+0900\n"
+"POT-Creation-Date: 2021-09-02 19:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,19 +19,19 @@ msgstr ""
 
 #: ../Changelog.md:1
 msgid "# Changelog"
-msgstr "# 変更履歴"
+msgstr ""
 
 #: ../Changelog.md:3
 msgid "## v0.0.1"
-msgstr "## v0.0.1"
+msgstr ""
 
 #: ../Changelog.md:5
 msgid "- Initial release"
-msgstr "- 初期リリース"
+msgstr ""
 
 #: ../Changelog.md:7
 msgid "## v0.0.2"
-msgstr "## v0.0.2"
+msgstr ""
 
 #: ../Changelog.md:9
 msgid "- Fix: Fix rubygems description"
@@ -144,99 +144,100 @@ msgid "# discorb\n"
 "[![rubydoc](https://img.shields.io/badge/Document-rubydoc.info-blue.svg)](https://rubydoc.info/gems/discorb)\n"
 "[![Gem](https://img.shields.io/gem/dt/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)\n"
 "[![Gem](https://img.shields.io/gem/v/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)\n"
-"[![Discord](https://img.shields.io/discord/863581274916913193?logo=discord&logoColor=fff&color=5865f2&label=Discord)](https://discord.gg/hCP6zq8Vpj)"
+"[![Discord](https://img.shields.io/discord/863581274916913193?logo=discord&logoColor=fff&color=5865f2&label=Discord)](https://discord.gg/hCP6zq8Vpj)\n"
+"[![Crowdin](https://badges.crowdin.net/discorb/localized.svg)](https://crowdin.com/project/discorb)"
 msgstr ""
 
-#: ../README.md:7
+#: ../README.md:8
 msgid "discorb is a Discord API wrapper for Ruby."
 msgstr ""
 
-#: ../README.md:9
+#: ../README.md:10
 msgid "## Installation"
 msgstr ""
 
-#: ../README.md:11
+#: ../README.md:12
 msgid "Add this line to your application's Gemfile:"
 msgstr ""
 
-#: ../README.md:13
+#: ../README.md:14
 msgid "```ruby\n"
 "gem 'discorb'\n"
 "```"
 msgstr ""
 
-#: ../README.md:17
+#: ../README.md:18
 msgid "And then execute:"
 msgstr ""
 
-#: ../README.md:19
+#: ../README.md:20
 msgid "    $ bundle install"
 msgstr ""
 
-#: ../README.md:21
+#: ../README.md:22
 msgid "Or install it yourself as:"
 msgstr ""
 
-#: ../README.md:23
+#: ../README.md:24
 msgid "    $ gem install discorb"
 msgstr ""
 
-#: ../README.md:25
+#: ../README.md:26
 #: ../docs/discord_irb.md:8
 msgid "## Usage"
 msgstr ""
 
-#: ../README.md:27
+#: ../README.md:28
 msgid "### Simple ping-pong"
 msgstr ""
 
-#: ../README.md:29
+#: ../README.md:30
 #: ../docs/application_command.md:24
 msgid "```ruby\n"
 "require \"discorb\""
 msgstr ""
 
-#: ../README.md:32
+#: ../README.md:33
 #: ../docs/application_command.md:27
 msgid "client = Discorb::Client.new"
 msgstr ""
 
-#: ../README.md:34
+#: ../README.md:35
 msgid "client.once :ready do\n"
 "  puts \"Logged in as #{client.user}\"\n"
 "end"
 msgstr ""
 
-#: ../README.md:38
+#: ../README.md:39
 msgid "client.on :message do |message|\n"
 "  next if message.author.bot?\n"
 "  next unless message.content == \"ping\""
 msgstr ""
 
-#: ../README.md:42
+#: ../README.md:43
 msgid "  message.channel.post(\"Pong!\")\n"
 "end"
 msgstr ""
 
-#: ../README.md:45
+#: ../README.md:46
 #: ../docs/application_command.md:33
 msgid "client.run(ENV[\"DISCORD_BOT_TOKEN\"])\n"
 "```"
 msgstr ""
 
-#: ../README.md:48
+#: ../README.md:49
 msgid "## Contributing"
 msgstr ""
 
-#: ../README.md:50
+#: ../README.md:51
 msgid "Bug reports and pull requests are welcome on GitHub at https://github.com/discorb-lib/discorb."
 msgstr ""
 
-#: ../README.md:52
+#: ../README.md:53
 msgid "## License"
 msgstr ""
 
-#: ../README.md:54
+#: ../README.md:55
 msgid "The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT)."
 msgstr ""
 
@@ -2209,17 +2210,17 @@ msgstr ""
 #: ../lib/discorb/member.rb:164
 #: ../lib/discorb/member.rb:183
 #: ../lib/discorb/member.rb:195
-#: ../lib/discorb/message.rb:268
-#: ../lib/discorb/message.rb:279
-#: ../lib/discorb/message.rb:292
-#: ../lib/discorb/message.rb:298
-#: ../lib/discorb/message.rb:307
-#: ../lib/discorb/message.rb:313
-#: ../lib/discorb/message.rb:323
-#: ../lib/discorb/message.rb:329
-#: ../lib/discorb/message.rb:342
-#: ../lib/discorb/message.rb:372
-#: ../lib/discorb/message.rb:383
+#: ../lib/discorb/message.rb:270
+#: ../lib/discorb/message.rb:281
+#: ../lib/discorb/message.rb:294
+#: ../lib/discorb/message.rb:300
+#: ../lib/discorb/message.rb:309
+#: ../lib/discorb/message.rb:315
+#: ../lib/discorb/message.rb:325
+#: ../lib/discorb/message.rb:331
+#: ../lib/discorb/message.rb:344
+#: ../lib/discorb/message.rb:374
+#: ../lib/discorb/message.rb:385
 #: ../lib/discorb/modules.rb:25
 #: ../lib/discorb/modules.rb:84
 #: ../lib/discorb/modules.rb:130
@@ -2388,17 +2389,17 @@ msgstr ""
 #: ../lib/discorb/member.rb:164
 #: ../lib/discorb/member.rb:183
 #: ../lib/discorb/member.rb:195
-#: ../lib/discorb/message.rb:268
-#: ../lib/discorb/message.rb:279
-#: ../lib/discorb/message.rb:292
-#: ../lib/discorb/message.rb:298
-#: ../lib/discorb/message.rb:307
-#: ../lib/discorb/message.rb:313
-#: ../lib/discorb/message.rb:323
-#: ../lib/discorb/message.rb:329
-#: ../lib/discorb/message.rb:342
-#: ../lib/discorb/message.rb:372
-#: ../lib/discorb/message.rb:383
+#: ../lib/discorb/message.rb:270
+#: ../lib/discorb/message.rb:281
+#: ../lib/discorb/message.rb:294
+#: ../lib/discorb/message.rb:300
+#: ../lib/discorb/message.rb:309
+#: ../lib/discorb/message.rb:315
+#: ../lib/discorb/message.rb:325
+#: ../lib/discorb/message.rb:331
+#: ../lib/discorb/message.rb:344
+#: ../lib/discorb/message.rb:374
+#: ../lib/discorb/message.rb:385
 #: ../lib/discorb/modules.rb:25
 #: ../lib/discorb/modules.rb:84
 #: ../lib/discorb/modules.rb:130
@@ -2540,17 +2541,17 @@ msgstr ""
 #: ../lib/discorb/member.rb:164
 #: ../lib/discorb/member.rb:183
 #: ../lib/discorb/member.rb:195
-#: ../lib/discorb/message.rb:268
-#: ../lib/discorb/message.rb:279
-#: ../lib/discorb/message.rb:292
-#: ../lib/discorb/message.rb:298
-#: ../lib/discorb/message.rb:307
-#: ../lib/discorb/message.rb:313
-#: ../lib/discorb/message.rb:323
-#: ../lib/discorb/message.rb:329
-#: ../lib/discorb/message.rb:342
-#: ../lib/discorb/message.rb:372
-#: ../lib/discorb/message.rb:383
+#: ../lib/discorb/message.rb:270
+#: ../lib/discorb/message.rb:281
+#: ../lib/discorb/message.rb:294
+#: ../lib/discorb/message.rb:300
+#: ../lib/discorb/message.rb:309
+#: ../lib/discorb/message.rb:315
+#: ../lib/discorb/message.rb:325
+#: ../lib/discorb/message.rb:331
+#: ../lib/discorb/message.rb:344
+#: ../lib/discorb/message.rb:374
+#: ../lib/discorb/message.rb:385
 #: ../lib/discorb/modules.rb:25
 #: ../lib/discorb/modules.rb:84
 #: ../lib/discorb/modules.rb:130
@@ -2697,7 +2698,7 @@ msgstr ""
 #: ../lib/discorb/application.rb:98
 #: ../lib/discorb/client.rb:194
 #: ../lib/discorb/guild.rb:1017
-#: ../lib/discorb/message.rb:566
+#: ../lib/discorb/message.rb:568
 msgid "The user."
 msgstr ""
 
@@ -3335,8 +3336,8 @@ msgstr ""
 #: ../lib/discorb/member.rb:195
 #: ../lib/discorb/member.rb:202
 #: ../lib/discorb/member.rb:216
-#: ../lib/discorb/message.rb:237
-#: ../lib/discorb/message.rb:372
+#: ../lib/discorb/message.rb:239
+#: ../lib/discorb/message.rb:374
 #: ../lib/discorb/modules.rb:130
 #: ../lib/discorb/modules.rb:136
 #: ../lib/discorb/role.rb:89
@@ -4063,7 +4064,7 @@ msgstr ""
 #: ../lib/discorb/channel.rb:596
 #: ../lib/discorb/dictionary.rb:15
 #: ../lib/discorb/guild.rb:532
-#: ../lib/discorb/message.rb:342
+#: ../lib/discorb/message.rb:344
 #: ../lib/discorb/modules.rb:167
 msgid "tag|param|limit"
 msgstr ""
@@ -4091,8 +4092,8 @@ msgstr ""
 #: ../lib/discorb/channel.rb:596
 #: ../lib/discorb/client.rb:194
 #: ../lib/discorb/client.rb:230
-#: ../lib/discorb/message.rb:396
-#: ../lib/discorb/message.rb:402
+#: ../lib/discorb/message.rb:398
+#: ../lib/discorb/message.rb:404
 msgid "<description>"
 msgstr ""
 
@@ -5759,7 +5760,7 @@ msgstr ""
 # @param [Hash]
 #: ../lib/discorb/components.rb:18
 #: ../lib/discorb/components.rb:265
-#: ../lib/discorb/message.rb:491
+#: ../lib/discorb/message.rb:493
 msgid "tag|param|data"
 msgstr ""
 
@@ -5823,13 +5824,13 @@ msgstr ""
 #: ../lib/discorb/components.rb:80
 #: ../lib/discorb/components.rb:215
 #: ../lib/discorb/guild.rb:1174
-#: ../lib/discorb/message.rb:292
-#: ../lib/discorb/message.rb:298
-#: ../lib/discorb/message.rb:307
-#: ../lib/discorb/message.rb:313
-#: ../lib/discorb/message.rb:323
-#: ../lib/discorb/message.rb:329
-#: ../lib/discorb/message.rb:342
+#: ../lib/discorb/message.rb:294
+#: ../lib/discorb/message.rb:300
+#: ../lib/discorb/message.rb:309
+#: ../lib/discorb/message.rb:315
+#: ../lib/discorb/message.rb:325
+#: ../lib/discorb/message.rb:331
+#: ../lib/discorb/message.rb:344
 msgid "tag|param|emoji"
 msgstr ""
 
@@ -7494,7 +7495,7 @@ msgstr ""
 #: ../lib/discorb/gateway.rb:140
 #: ../lib/discorb/gateway.rb:192
 #: ../lib/discorb/gateway.rb:266
-#: ../lib/discorb/message.rb:268
+#: ../lib/discorb/message.rb:270
 #: ../lib/discorb/modules.rb:148
 msgid "The message."
 msgstr ""
@@ -7721,13 +7722,13 @@ msgstr ""
 # @param [:playing, :streaming, :listening, :watching, :competing] type
 # @return [Symbol]
 #: ../lib/discorb/gateway_requests.rb:23
-#: ../lib/discorb/message.rb:584
+#: ../lib/discorb/message.rb:586
 msgid "The type of activity."
 msgstr ""
 
 # @return [Activity]
 #: ../lib/discorb/gateway_requests.rb:23
-#: ../lib/discorb/message.rb:594
+#: ../lib/discorb/message.rb:596
 #: ../lib/discorb/presence.rb:93
 msgid "a new instance of Activity"
 msgstr ""
@@ -8329,8 +8330,8 @@ msgstr ""
 # @param [Discorb::Member]
 #: ../lib/discorb/guild.rb:577
 #: ../lib/discorb/guild.rb:643
-#: ../lib/discorb/message.rb:323
-#: ../lib/discorb/message.rb:329
+#: ../lib/discorb/message.rb:325
+#: ../lib/discorb/message.rb:331
 msgid "tag|param|member"
 msgstr ""
 
@@ -8715,16 +8716,16 @@ msgstr ""
 # @param [Discorb::Snowflake] guild_id
 # @return [Discorb::Snowflake]
 #: ../lib/discorb/guild.rb:941
-#: ../lib/discorb/message.rb:442
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:444
+#: ../lib/discorb/message.rb:462
 msgid "The guild ID."
 msgstr ""
 
 # @param [Discorb::Snowflake] channel_id
 # @return [Discorb::Snowflake]
 #: ../lib/discorb/guild.rb:943
-#: ../lib/discorb/message.rb:444
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:446
+#: ../lib/discorb/message.rb:462
 msgid "The channel ID."
 msgstr ""
 
@@ -8870,7 +8871,7 @@ msgstr ""
 # @param [#to_s]
 # @param [Discorb::Snowflake]
 #: ../lib/discorb/guild.rb:1042
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:462
 msgid "tag|param|guild_id"
 msgstr ""
 
@@ -8978,9 +8979,9 @@ msgstr ""
 # @param [Hash] data
 # @return [Hash]
 #: ../lib/discorb/guild.rb:1201
-#: ../lib/discorb/message.rb:472
-#: ../lib/discorb/message.rb:481
-#: ../lib/discorb/message.rb:491
+#: ../lib/discorb/message.rb:474
+#: ../lib/discorb/message.rb:483
+#: ../lib/discorb/message.rb:493
 msgid "The hash."
 msgstr ""
 
@@ -9675,7 +9676,7 @@ msgstr ""
 # @return [Symbol]
 #: ../lib/discorb/interaction.rb:13
 #: ../lib/discorb/interaction.rb:20
-#: ../lib/discorb/message.rb:564
+#: ../lib/discorb/message.rb:566
 msgid "The type of interaction."
 msgstr ""
 
@@ -9701,7 +9702,7 @@ msgstr ""
 
 # @return [Interaction]
 #: ../lib/discorb/interaction.rb:37
-#: ../lib/discorb/message.rb:569
+#: ../lib/discorb/message.rb:571
 msgid "a new instance of Interaction"
 msgstr ""
 
@@ -10516,13 +10517,13 @@ msgstr ""
 
 # @return [Discorb::Embed]
 #: ../lib/discorb/message.rb:170
-#: ../lib/discorb/message.rb:259
+#: ../lib/discorb/message.rb:261
 msgid "The embed of the message."
 msgstr ""
 
 # @return [nil]
 #: ../lib/discorb/message.rb:170
-#: ../lib/discorb/message.rb:259
+#: ../lib/discorb/message.rb:261
 msgid "If the message has no embed."
 msgstr ""
 
@@ -10586,150 +10587,150 @@ msgid "tag|param|supress"
 msgstr ""
 
 # Discorb::Message#delete!
-#: ../lib/discorb/message.rb:233
+#: ../lib/discorb/message.rb:235
 msgid "Delete the message."
 msgstr ""
 
 # @param [String] reason
-#: ../lib/discorb/message.rb:237
+#: ../lib/discorb/message.rb:239
 #: ../lib/discorb/modules.rb:130
 #: ../lib/discorb/modules.rb:136
 msgid "The reason for deleting the message."
 msgstr ""
 
 # Discorb::Message#to_reference
-#: ../lib/discorb/message.rb:244
+#: ../lib/discorb/message.rb:246
 msgid "Convert the message to reference object."
 msgstr ""
 
 # @param [Boolean]
-#: ../lib/discorb/message.rb:250
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:252
+#: ../lib/discorb/message.rb:462
 msgid "tag|param|fail_if_not_exists"
 msgstr ""
 
 # @param [Boolean] fail_if_not_exists
-#: ../lib/discorb/message.rb:250
+#: ../lib/discorb/message.rb:252
 msgid "Whether to raise an error if the message does not exist."
 msgstr ""
 
 # @return [Hash]
-#: ../lib/discorb/message.rb:250
+#: ../lib/discorb/message.rb:252
 msgid "The reference object."
 msgstr ""
 
 # Discorb::Message#reply
-#: ../lib/discorb/message.rb:264
+#: ../lib/discorb/message.rb:266
 msgid "Reply to the message."
 msgstr ""
 
 # Discorb::Message#publish
-#: ../lib/discorb/message.rb:275
+#: ../lib/discorb/message.rb:277
 msgid "Publish the message."
 msgstr ""
 
 # Discorb::Message#add_reaction
 # Discorb::Message#react_with
-#: ../lib/discorb/message.rb:286
-#: ../lib/discorb/message.rb:299
+#: ../lib/discorb/message.rb:288
+#: ../lib/discorb/message.rb:301
 msgid "Add a reaction to the message."
 msgstr ""
 
 # @param [Discorb::Emoji] emoji
-#: ../lib/discorb/message.rb:292
-#: ../lib/discorb/message.rb:298
+#: ../lib/discorb/message.rb:294
+#: ../lib/discorb/message.rb:300
 msgid "The emoji to react with."
 msgstr ""
 
 # Discorb::Message#delete_reaction
 # Discorb::Message#remove_reaction
-#: ../lib/discorb/message.rb:301
-#: ../lib/discorb/message.rb:314
+#: ../lib/discorb/message.rb:303
+#: ../lib/discorb/message.rb:316
 msgid "Remove a reaction from the message."
 msgstr ""
 
 # @param [Discorb::Emoji] emoji
-#: ../lib/discorb/message.rb:307
-#: ../lib/discorb/message.rb:313
-#: ../lib/discorb/message.rb:323
-#: ../lib/discorb/message.rb:329
+#: ../lib/discorb/message.rb:309
+#: ../lib/discorb/message.rb:315
+#: ../lib/discorb/message.rb:325
+#: ../lib/discorb/message.rb:331
 msgid "The emoji to remove."
 msgstr ""
 
 # Discorb::Message#delete_reaction_of
 # Discorb::Message#remove_reaction_of
-#: ../lib/discorb/message.rb:316
-#: ../lib/discorb/message.rb:330
+#: ../lib/discorb/message.rb:318
+#: ../lib/discorb/message.rb:332
 msgid "Remove other member's reaction from the message."
 msgstr ""
 
 # @param [Discorb::Member] member
-#: ../lib/discorb/message.rb:323
-#: ../lib/discorb/message.rb:329
+#: ../lib/discorb/message.rb:325
+#: ../lib/discorb/message.rb:331
 msgid "The member to remove the reaction from."
 msgstr ""
 
 # Discorb::Message#fetch_reacted_users
-#: ../lib/discorb/message.rb:332
+#: ../lib/discorb/message.rb:334
 msgid "Fetch reacted users of reaction."
 msgstr ""
 
 # @param [Integer, nil] limit
-#: ../lib/discorb/message.rb:342
+#: ../lib/discorb/message.rb:344
 msgid "The maximum number of users to fetch. `nil` for no limit."
 msgstr ""
 
 # @param [Discorb::Snowflake, nil] after
-#: ../lib/discorb/message.rb:342
+#: ../lib/discorb/message.rb:344
 msgid "The ID of the user to start fetching from."
 msgstr ""
 
 # @return [Array<Discorb::User>]
-#: ../lib/discorb/message.rb:342
+#: ../lib/discorb/message.rb:344
 msgid "The users."
 msgstr ""
 
 # @param [Discorb::Emoji] emoji
-#: ../lib/discorb/message.rb:342
+#: ../lib/discorb/message.rb:344
 msgid "The emoji to fetch."
 msgstr ""
 
 # @param [Discorb::Snowflake, nil]
 # @param [Discorb::Snowflake]
-#: ../lib/discorb/message.rb:342
+#: ../lib/discorb/message.rb:344
 #: ../lib/discorb/modules.rb:167
 msgid "tag|param|after"
 msgstr ""
 
 # Discorb::Message#pin
-#: ../lib/discorb/message.rb:366
+#: ../lib/discorb/message.rb:368
 msgid "Pin the message."
 msgstr ""
 
 # @param [String] reason
-#: ../lib/discorb/message.rb:372
+#: ../lib/discorb/message.rb:374
 msgid "The reason for pinning the message."
 msgstr ""
 
 # Discorb::Message#unpin
-#: ../lib/discorb/message.rb:379
+#: ../lib/discorb/message.rb:381
 msgid "Unpin the message."
 msgstr ""
 
 # Discorb::Message#create_thread
 # Discorb::Message#start_thread
-#: ../lib/discorb/message.rb:390
-#: ../lib/discorb/message.rb:403
+#: ../lib/discorb/message.rb:392
+#: ../lib/discorb/message.rb:405
 msgid "Start thread from the message."
 msgstr ""
 
 # Discorb::Message#inspect
-#: ../lib/discorb/message.rb:405
+#: ../lib/discorb/message.rb:407
 msgid "Meta"
 msgstr ""
 
 # Discorb::Message::Flag
-#: ../lib/discorb/message.rb:411
+#: ../lib/discorb/message.rb:413
 msgid "Represents message flag.\n"
 "## Flag fields\n"
 "|Field|Value|\n"
@@ -10745,33 +10746,33 @@ msgid "Represents message flag.\n"
 msgstr ""
 
 # Discorb::Message::Reference
-#: ../lib/discorb/message.rb:438
+#: ../lib/discorb/message.rb:440
 msgid "Represents reference of message."
 msgstr ""
 
 # @param [Discorb::Snowflake] message_id
 # @return [Discorb::Snowflake]
-#: ../lib/discorb/message.rb:446
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:448
+#: ../lib/discorb/message.rb:462
 msgid "The message ID."
 msgstr ""
 
 # @param [Boolean] fail_if_not_exists
 # @return [Boolean]
-#: ../lib/discorb/message.rb:448
 #: ../lib/discorb/message.rb:450
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:452
+#: ../lib/discorb/message.rb:462
 msgid "Whether fail the request if the message is not found."
 msgstr ""
 
 # Discorb::Message::Reference#initialize
-#: ../lib/discorb/message.rb:453
+#: ../lib/discorb/message.rb:455
 msgid "Initialize a new reference."
 msgstr ""
 
 # @param [#to_s]
 # @param [Discorb::Snowflake]
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:462
 #: ../lib/discorb/modules.rb:84
 #: ../lib/discorb/modules.rb:130
 #: ../lib/discorb/modules.rb:136
@@ -10779,95 +10780,95 @@ msgid "tag|param|message_id"
 msgstr ""
 
 # @return [Reference]
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:462
 msgid "a new instance of Reference"
 msgstr ""
 
 # @param [Discorb::Snowflake]
-#: ../lib/discorb/message.rb:460
+#: ../lib/discorb/message.rb:462
 msgid "tag|param|channel_id"
 msgstr ""
 
 # Discorb::Message::Reference#to_hash
 # Discorb::Message::Reference#to_reference
-#: ../lib/discorb/message.rb:468
-#: ../lib/discorb/message.rb:482
+#: ../lib/discorb/message.rb:470
+#: ../lib/discorb/message.rb:484
 msgid "Convert the reference to a hash."
 msgstr ""
 
 # Discorb::Message::Reference.from_hash
-#: ../lib/discorb/message.rb:484
+#: ../lib/discorb/message.rb:486
 msgid "Initialize a new reference from a hash."
 msgstr ""
 
 # @see
-#: ../lib/discorb/message.rb:491
+#: ../lib/discorb/message.rb:493
 msgid "tag|see|https://discord.com/developers/docs/resources/channel#message-reference-object"
 msgstr ""
 
 # @return [Discorb::Message::Reference]
-#: ../lib/discorb/message.rb:491
+#: ../lib/discorb/message.rb:493
 msgid "The reference."
 msgstr ""
 
 # Discorb::Message::Sticker#format
-#: ../lib/discorb/message.rb:498
+#: ../lib/discorb/message.rb:500
 msgid "Returns the value of attribute format."
 msgstr ""
 
 # Discorb::Message::Sticker#id
-#: ../lib/discorb/message.rb:498
+#: ../lib/discorb/message.rb:500
 msgid "Returns the value of attribute id."
 msgstr ""
 
 # Discorb::Message::Sticker#name
-#: ../lib/discorb/message.rb:498
+#: ../lib/discorb/message.rb:500
 msgid "Returns the value of attribute name."
 msgstr ""
 
 # @return [Sticker]
-#: ../lib/discorb/message.rb:499
+#: ../lib/discorb/message.rb:501
 #: ../lib/discorb/sticker.rb:42
 msgid "a new instance of Sticker"
 msgstr ""
 
 # Discorb::Message::Interaction
-#: ../lib/discorb/message.rb:555
+#: ../lib/discorb/message.rb:557
 msgid "Represents a interaction of message."
 msgstr ""
 
 # @return [Discorb::Snowflake]
-#: ../lib/discorb/message.rb:559
+#: ../lib/discorb/message.rb:561
 msgid "The user ID."
 msgstr ""
 
 # @return [String]
-#: ../lib/discorb/message.rb:562
+#: ../lib/discorb/message.rb:564
 msgid "The name of command."
 msgstr ""
 
 # @return [nil]
-#: ../lib/discorb/message.rb:562
+#: ../lib/discorb/message.rb:564
 msgid "If the message is not a command."
 msgstr ""
 
 # Discorb::Message::Activity
-#: ../lib/discorb/message.rb:578
+#: ../lib/discorb/message.rb:580
 msgid "Represents a activity of message."
 msgstr ""
 
 # @return [String]
-#: ../lib/discorb/message.rb:582
+#: ../lib/discorb/message.rb:584
 msgid "The name of activity."
 msgstr ""
 
 # Discorb::Message::Activity.type
-#: ../lib/discorb/message.rb:602
+#: ../lib/discorb/message.rb:604
 msgid "Returns the value of attribute type."
 msgstr ""
 
 # Discorb::Message.message_type
-#: ../lib/discorb/message.rb:608
+#: ../lib/discorb/message.rb:610
 msgid "Returns the value of attribute message_type."
 msgstr ""
 
