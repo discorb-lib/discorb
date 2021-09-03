@@ -46,5 +46,11 @@ task :format do
 end
 
 task :document do
-  sh "yardoc"
+  require_relative "lib/discorb/common"
+  latest_commit = `git log --oneline`.split("\n")[0]
+  version = Discorb::VERSION
+  unless latest_commit.downcase.include?("update version")
+    version += "-dev"
+  end
+  sh "yardoc -o doc/#{version}"
 end
