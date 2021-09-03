@@ -166,6 +166,32 @@ li.even {
 a.toggle {
   background-color: #f2f3f5;
 }
+
 #full_list_nav span::after {
   color: #fff8;
+}
+
+p.signature,
+h3.signature {
+  border: 1px solid rgba(88, 101, 242, .5);
+  background: rgba(88, 101, 242, .1);
+
+}
+
+p.signature strong,
+h3.signature strong {
+  font-weight: 500;
+}
+
+.summary_signature a:hover {
+  text-decoration: none !important;
+}
+
+.note.title.readonly {
+  border: 1px solid #3498db;
+  background: #3498db;
+}
+
+#toc {
+  box-shadow: none;
 }
