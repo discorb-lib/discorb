@@ -1,10 +1,13 @@
-.summary_desc, body{
+.summary_desc,
+body,
+p.signature .extras,
+h3.signature .extras {
   font-family: Whitney, Hiragino Sans, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, Osaka, "MS PGothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
   color: #2e3338;
-  
+
   font-weight: 100;
   font-size: 14px;
   background-color: #f2f3f5;
@@ -157,6 +160,6 @@ li.even {
   background: #e8eaed;
 }
 
-a.toggle{
+a.toggle {
   visibility: hidden;
 }
