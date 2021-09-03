@@ -243,7 +243,6 @@ module Discorb
 
   #
   # Represents a command interaction.
-  # @todo Implement this.
   #
   class CommandInteraction < Interaction
     @interaction_type = 2
