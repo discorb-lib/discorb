@@ -107,42 +107,157 @@
 
 <h2 id="flag-fields">Flag fields</h2>
 
-<p>|<code>1 &lt;&lt; 0</code>|<code>:create_instant_invite</code>|
-|<code>1 &lt;&lt; 1</code>|<code>:kick_members</code>|
-|<code>1 &lt;&lt; 2</code>|<code>:ban_members</code>|
-|<code>1 &lt;&lt; 3</code>|<code>:administrator</code>|
-|<code>1 &lt;&lt; 4</code>|<code>:manage_channels</code>|
-|<code>1 &lt;&lt; 5</code>|<code>:manage_guild</code>|
-|<code>1 &lt;&lt; 6</code>|<code>:add_reactions</code>|
-|<code>1 &lt;&lt; 7</code>|<code>:view_audit_log</code>|
-|<code>1 &lt;&lt; 8</code>|<code>:priority_speaker</code>|
-|<code>1 &lt;&lt; 9</code>|<code>:stream</code>|
-|<code>1 &lt;&lt; 10</code>|<code>:view_channel</code>|
-|<code>1 &lt;&lt; 11</code>|<code>:send_messages</code>|
-|<code>1 &lt;&lt; 12</code>|<code>:send_tts_messages</code>|
-|<code>1 &lt;&lt; 13</code>|<code>:manage_messages</code>|
-|<code>1 &lt;&lt; 14</code>|<code>:embed_links</code>|
-|<code>1 &lt;&lt; 15</code>|<code>:attach_files</code>|
-|<code>1 &lt;&lt; 16</code>|<code>:read_message_history</code>|
-|<code>1 &lt;&lt; 17</code>|<code>:mention_everyone</code>|
-|<code>1 &lt;&lt; 18</code>|<code>:use_external_emojis</code>|
-|<code>1 &lt;&lt; 19</code>|<code>:view_guild_insights</code>|
-|<code>1 &lt;&lt; 20</code>|<code>:connect</code>|
-|<code>1 &lt;&lt; 21</code>|<code>:speak</code>|
-|<code>1 &lt;&lt; 22</code>|<code>:mute_members</code>|
-|<code>1 &lt;&lt; 23</code>|<code>:deafen_members</code>|
-|<code>1 &lt;&lt; 24</code>|<code>:move_members</code>|
-|<code>1 &lt;&lt; 25</code>|<code>:use_vad</code>|
-|<code>1 &lt;&lt; 26</code>|<code>:change_nickname</code>|
-|<code>1 &lt;&lt; 27</code>|<code>:manage_nicknames</code>|
-|<code>1 &lt;&lt; 28</code>|<code>:manage_roles</code>|
-|<code>1 &lt;&lt; 29</code>|<code>:manage_webhooks</code>|
-|<code>1 &lt;&lt; 30</code>|<code>:manage_emojis</code>|
-|<code>1 &lt;&lt; 31</code>|<code>:use_slash_commands</code>|
-|<code>1 &lt;&lt; 32</code>|<code>:request_to_speak</code>|
-|<code>1 &lt;&lt; 34</code>|<code>:manage_threads</code>|
-|<code>1 &lt;&lt; 35</code>|<code>:use_public_threads</code>|
-|<code>1 &lt;&lt; 36</code>|<code>:use_private_threads</code>|</p>
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>1 &lt;&lt; 0</code></td>
+<td><code>:create_instant_invite</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 1</code></td>
+<td><code>:kick_members</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 2</code></td>
+<td><code>:ban_members</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 3</code></td>
+<td><code>:administrator</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 4</code></td>
+<td><code>:manage_channels</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 5</code></td>
+<td><code>:manage_guild</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 6</code></td>
+<td><code>:add_reactions</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 7</code></td>
+<td><code>:view_audit_log</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 8</code></td>
+<td><code>:priority_speaker</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 9</code></td>
+<td><code>:stream</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 10</code></td>
+<td><code>:view_channel</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 11</code></td>
+<td><code>:send_messages</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 12</code></td>
+<td><code>:send_tts_messages</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 13</code></td>
+<td><code>:manage_messages</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 14</code></td>
+<td><code>:embed_links</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 15</code></td>
+<td><code>:attach_files</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 16</code></td>
+<td><code>:read_message_history</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 17</code></td>
+<td><code>:mention_everyone</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 18</code></td>
+<td><code>:use_external_emojis</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 19</code></td>
+<td><code>:view_guild_insights</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 20</code></td>
+<td><code>:connect</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 21</code></td>
+<td><code>:speak</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 22</code></td>
+<td><code>:mute_members</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 23</code></td>
+<td><code>:deafen_members</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 24</code></td>
+<td><code>:move_members</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 25</code></td>
+<td><code>:use_vad</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 26</code></td>
+<td><code>:change_nickname</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 27</code></td>
+<td><code>:manage_nicknames</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 28</code></td>
+<td><code>:manage_roles</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 29</code></td>
+<td><code>:manage_webhooks</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 30</code></td>
+<td><code>:manage_emojis</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 31</code></td>
+<td><code>:use_slash_commands</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 32</code></td>
+<td><code>:request_to_speak</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 34</code></td>
+<td><code>:manage_threads</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 35</code></td>
+<td><code>:use_public_threads</code></td>
+</tr>
+<tr>
+<td><code>1 &lt;&lt; 36</code></td>
+<td><code>:use_private_threads</code></td>
+</tr>
+</tbody></table>
 
 
   </div>
@@ -194,7 +309,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep  3 18:19:23 2021 by
+  Generated on Sat Sep  4 07:03:32 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.2).
 </div>
