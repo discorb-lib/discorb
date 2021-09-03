@@ -18,11 +18,14 @@ body {
 }
 
 a,
-a:visited {
+a:visited,
+#main #content a,
+#main #content a:visited {
   color: #0067e0;
 }
 
-a:hover {
+a:hover,
+#main #content a:hover {
   text-decoration: underline;
   background: transparent;
 }
