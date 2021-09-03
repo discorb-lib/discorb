@@ -5,7 +5,7 @@ task default: %i[]
 
 def get_version
   require_relative "lib/discorb/common"
-  latest_commit = `git log --oneline`.split("\n")[0]
+  latest_commit = `git log --oneline`.force_encoding("utf-8").split("\n")[0]
   version = Discorb::VERSION
   unless latest_commit.downcase.include?("update version")
     version += "-dev"
@@ -34,7 +34,7 @@ task :emoji_table do
   File.open("lib/discorb/emoji_table.rb", "w") do |f|
     f.print(table_script)
   end
-  `rubocop -A lib/discorb/emoji_table.rb`
+  `rufo lib/discorb/emoji_table.rb`
   puts "Successfully made emoji_table.rb"
 end
 
