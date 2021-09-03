@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
-require "fileutils"
 task default: %i[]
+
+def get_version
+  require_relative "lib/discorb/common"
+  latest_commit = `git log --oneline`.split("\n")[0]
+  version = Discorb::VERSION
+  unless latest_commit.downcase.include?("update version")
+    version += "-dev"
+  end
+  version
+end
 
 task :emoji_table do
   require_relative "lib/discorb"
@@ -45,17 +54,53 @@ task :format do
     end
   end
 end
+namespace :document do
+  version = get_version
+  task :yard do
+    sh "yardoc -o doc/#{version}"
+  end
+  namespace :override do
+    require "fileutils"
+    task :css do
+      Dir.glob("template-overrides/files/**/*.*")
+        .map { |f| f.delete_prefix("template-overrides/files") }.each do |file|
+        FileUtils.cp("template-overrides/files" + file, "doc/#{version}/#{file}")
+      end
+    end
+    task :html do
+      require_relative "template-overrides/scripts/sidebar.rb"
+      require_relative "template-overrides/scripts/version.rb"
+      Dir.glob("doc/#{version}/**/*.html") do |f|
+        content = File.read(f)
+        content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
+        File.write(f, content)
+      end
+      %w[file_list class_list method_list].each do |f|
+        replace_sidebar("doc/#{version}/#{f}.html")
+      end
 
-task :document do
-  require_relative "lib/discorb/common"
-  latest_commit = `git log --oneline`.split("\n")[0]
-  version = Discorb::VERSION
-  unless latest_commit.downcase.include?("update version")
-    version += "-dev"
+      build_version_sidebar("doc/#{version}")
+    end
   end
-  sh "yardoc -o doc/#{version}"
-  Dir.glob("template-overrides/**/*.*")
-    .map { |f| f.delete_prefix("template-overrides") }.each do |file|
-    FileUtils.cp("template-overrides/" + file, "doc/#{version}/#{file}")
+  task :build_all do
+    gitignore = File.read(".gitignore")
+    File.write(".gitignore", gitignore + "\ntemplate-overrides")
+    sh "git commit -am tmp"
+    tags = `git tag`
+    tags.split("\n").each do |tag|
+      sh "git checkout #{tag}"
+      version = tag.delete_prefix("v")
+      Rake::Task["document:yard"].execute
+      Rake::Task["document:override:css"].execute
+      Rake::Task["document:override:html"].execute
+    end
+    version = "."
+    Rake::Task["document:yard"].execute
+    Rake::Task["document:override:css"].execute
+    Rake::Task["document:override:html"].execute
+    sh "git switch main"
   end
+  task :override => %i[override:css override:html]
 end
+
+task :document => %i[document:yard document:override]
