@@ -10,7 +10,7 @@ From: [Discord API docs](https://discord.com/developers/docs/interactions/applic
 
 ## How do I register an application command?
 
-Use {Discorb::Command::Handler#slash}, {Discorb::Command::Handler#group} for slash commands, {Discorb::Command::Handler#user_command} for user menu commands, and {Discorb::Command::Handler#message_command} for message menu commands.
+Use {Discorb::Command::Handler.slash}, {Discorb::Command::Handler.slash_group} for slash commands, {Discorb::Command::Handler.user_command} for user menu commands, and {Discorb::Command::Handler.message_command} for message menu commands.
 
 ### Note
 
@@ -125,7 +125,7 @@ group.slash("bump_alert", "Whether bot should notify DISBOARD bump.", {
 end
 ```
 
-You can make subcommand group by using {Discorb::Command::GroupCommand#group}.
+You can make subcommand group by using {Discorb::Command::Command::GroupCommand#group}.
 
 ```ruby
 group = client.slash_group("permission", "Set/Get command permissions.")
@@ -211,7 +211,7 @@ client.user_command("hello") do |interaction, user|
   interaction.post("Hello, #{user.name}!")
 end
 ```
-{Discorb::Command::Handler#user_command} takes 3 arguments:
+{Discorb::Command::Handler.user_command} takes 3 arguments:
 
 | Parameter | Description |
 | --- | --- |
@@ -235,7 +235,7 @@ client.message_command("Bookmark") do |interaction, message|
 end
 ```
 
-{Discorb::Command::Handler#message_command} takes 3 arguments:
+{Discorb::Command::Handler.message_command} takes 3 arguments:
 
 | Parameter | Description |
 | --- | --- |

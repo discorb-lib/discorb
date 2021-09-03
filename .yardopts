@@ -2,8 +2,6 @@
 --no-private
 --markup markdown
 --tag flags:"Flags"
--t template
--p .
 --verbose
 -
 docs/*.md

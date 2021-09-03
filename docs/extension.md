@@ -18,7 +18,7 @@ end
 
 ## Register Event
 
-Use {Extension#event} to register event, or {Extension#once_event} to register event only once.
+Use {Discorb::Extension.event} to register event, or {Discorb::Extension.once_event} to register event only once.
 
 ```ruby
 module MyExtension
@@ -36,11 +36,11 @@ end
 
 ## Load extension
 
-Use {Client#extend} to load extension.
+Use {Discorb::Client#extend} to load extension.
 
 ## Access Client from extension
 
-You can access {Client} from extension with `@client`.
+You can access {Discorb::Client} from extension with `@client`.
 
 ```ruby
 module MyExtension

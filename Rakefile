@@ -44,3 +44,7 @@ task :format do
     end
   end
 end
+
+task :document do
+  sh "yardoc"
+end

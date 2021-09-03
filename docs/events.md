@@ -5,8 +5,8 @@
 ## How to use events
 
 discorb uses event driven programming.
-You can register event handlers with {Client#on}.
-Alternatively, you can use {Client#once} to register a one-time event handler.
+You can register event handlers with {Discorb::Client#on}.
+Alternatively, you can use {Discorb::Client#once} to register a one-time event handler.
 
 ```ruby
 client.on :message do |event|
@@ -139,7 +139,7 @@ Fires when a webhook is updated.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::WebhooksUpdateEvent} | The webhook update event. |
+|`event`     | {Discorb::Gateway::WebhooksUpdateEvent} | The webhook update event. |
 
 #### `thread_new(thread)`
 
@@ -182,8 +182,8 @@ Fires when a thread's members are updated.
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
 |`thread`    | {Discorb::ThreadChannel} | The thread that the members were updated for. |
-|`added`     | Array<{ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were added to the thread. |
-|`removed`   | Array<{ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were removed from the thread. |
+|`added`     | Array<{Discorb::ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were added to the thread. |
+|`removed`   | Array<{Discorb::ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were removed from the thread. |
 
 #### `thread_member_update(before, after)`
 
@@ -258,7 +258,7 @@ This will fire when cached messages are deleted.
 #### `message_delete_id(message_id, channel, guild)`
 
 Fires when a message is deleted.
-Not like {#message_delete} this will fire even message is not cached.
+Not like {file:#message_delete} this will fire even message is not cached.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
@@ -280,7 +280,7 @@ Fires when a message is pinned or unpinned.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::MessagePinUpdateEvent}| The event object. |
+|`event`     | {Discorb::Gateway::MessagePinEvent}| The event object. |
 
 #### `typing_start(event)`
 

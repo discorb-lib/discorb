@@ -11,11 +11,8 @@ module Discorb
     #
     # Initializes a new Image.
     #
-    # @param [#read] source The source of the image.
+    # @param [#read, String] source The IO source or path of the image.
     # @param [String] type The MIME type of the image.
-    # @overload
-    #   @param [String] source The file path of the source.
-    #   @param [String] type The MIME type of the image.
     #
     def initialize(source, type = nil)
       if source.respond_to?(:read)
