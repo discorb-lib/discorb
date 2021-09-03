@@ -82,6 +82,24 @@ namespace :document do
       build_version_sidebar("doc/#{version}")
     end
   end
+  task :build_all do
+    gitignore = File.read(".gitignore")
+    File.write(".gitignore", gitignore + "\ntemplate-overrides")
+    sh "git commit -am tmp"
+    tags = `git tag`
+    tags.split("\n").each do |tag|
+      sh "git checkout #{tag}"
+      version = tag.delete_prefix("v")
+      Rake::Task["document:yard"].execute
+      Rake::Task["document:override:css"].execute
+      Rake::Task["document:override:html"].execute
+    end
+    version = "."
+    Rake::Task["document:yard"].execute
+    Rake::Task["document:override:css"].execute
+    Rake::Task["document:override:html"].execute
+    sh "git switch main"
+  end
   task :override => %i[override:css override:html]
 end
 
