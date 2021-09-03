@@ -4,6 +4,16 @@ require "bundler/gem_tasks"
 require "fileutils"
 task default: %i[]
 
+def get_version
+  require_relative "lib/discorb/common"
+  latest_commit = `git log --oneline`.split("\n")[0]
+  version = Discorb::VERSION
+  unless latest_commit.downcase.include?("update version")
+    version += "-dev"
+  end
+  version
+end
+
 task :emoji_table do
   require_relative "lib/discorb"
 
@@ -45,17 +55,18 @@ task :format do
     end
   end
 end
-
-task :document do
-  require_relative "lib/discorb/common"
-  latest_commit = `git log --oneline`.split("\n")[0]
-  version = Discorb::VERSION
-  unless latest_commit.downcase.include?("update version")
-    version += "-dev"
+namespace :document do
+  task :yard do
+    version = get_version
+    sh "yardoc -o doc/#{version}"
   end
-  sh "yardoc -o doc/#{version}"
-  Dir.glob("template-overrides/**/*.*")
-    .map { |f| f.delete_prefix("template-overrides") }.each do |file|
-    FileUtils.cp("template-overrides/" + file, "doc/#{version}/#{file}")
+  task :override do
+    version = get_version
+    Dir.glob("template-overrides/**/*.*")
+      .map { |f| f.delete_prefix("template-overrides") }.each do |file|
+      FileUtils.cp("template-overrides/" + file, "doc/#{version}/#{file}")
+    end
   end
 end
+
+task :document => %i[document:yard document:override]
