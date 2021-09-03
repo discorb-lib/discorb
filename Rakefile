@@ -98,7 +98,7 @@ namespace :document do
     Rake::Task["document:yard"].execute
     Rake::Task["document:override:css"].execute
     Rake::Task["document:override:html"].execute
-    sh "git switch main"
+    sh "git switch main -f"
   end
   task :override => %i[override:css override:html]
 end
