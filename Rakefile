@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
-require "fileutils"
 task default: %i[]
 
 def get_version
@@ -56,17 +55,34 @@ task :format do
   end
 end
 namespace :document do
+  version = get_version
   task :yard do
-    version = get_version
     sh "yardoc -o doc/#{version}"
   end
-  task :override do
-    version = get_version
-    Dir.glob("template-overrides/**/*.*")
-      .map { |f| f.delete_prefix("template-overrides") }.each do |file|
-      FileUtils.cp("template-overrides/" + file, "doc/#{version}/#{file}")
+  namespace :override do
+    require "fileutils"
+    task :css do
+      Dir.glob("template-overrides/files/**/*.*")
+        .map { |f| f.delete_prefix("template-overrides/files") }.each do |file|
+        FileUtils.cp("template-overrides/files" + file, "doc/#{version}/#{file}")
+      end
+    end
+    task :html do
+      require_relative "template-overrides/scripts/sidebar.rb"
+      require_relative "template-overrides/scripts/version.rb"
+      Dir.glob("doc/#{version}/**/*.html") do |f|
+        content = File.read(f)
+        content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
+        File.write(f, content)
+      end
+      %w[file_list class_list method_list].each do |f|
+        replace_sidebar("doc/#{version}/#{f}.html")
+      end
+
+      build_version_sidebar("doc/#{version}")
     end
   end
+  task :override => %i[override:css override:html]
 end
 
 task :document => %i[document:yard document:override]

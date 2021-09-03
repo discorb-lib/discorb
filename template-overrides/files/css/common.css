@@ -139,16 +139,16 @@ pre.code .regexp,
 }
 
 li.clicked>.item {
-  color: #747f8d;
+  color: #fff8;
 }
 
 li.clicked>.item a,
 li.clicked>.item a:visited {
-  color: #0067e0;
+  color: #fff;
 }
 
 li.clicked>.item {
-  background: #e3e5e8;
+  background: #5865f2;
 }
 
 li.odd,
@@ -161,5 +161,8 @@ li.even {
 }
 
 a.toggle {
-  visibility: hidden;
+  background-color: #f2f3f5;
+}
+#full_list_nav span::after {
+  color: #fff8;
 }
