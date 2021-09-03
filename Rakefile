@@ -83,12 +83,12 @@ namespace :document do
     end
   end
   task :build_all do
-    gitignore = File.read(".gitignore")
-    File.write(".gitignore", gitignore + "\ntemplate-overrides")
-    sh "git commit -am tmp"
+    require "fileutils"
+    FileUtils.cp_r("template-overrides", "tmp-template-overrides")
     tags = `git tag`
     tags.split("\n").each do |tag|
-      sh "git checkout #{tag}"
+      sh "git checkout #{tag} -f"
+      FileUtils.cp_r("tmp-template-overrides", "template-overrides")
       version = tag.delete_prefix("v")
       Rake::Task["document:yard"].execute
       Rake::Task["document:override:css"].execute
