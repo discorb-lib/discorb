@@ -4,6 +4,8 @@ def build_version_sidebar(dir)
   raw.gsub!(template, "")
   res = +""
   Dir.glob("doc/*").each.with_index do |dir, i|
+    next unless dir.match?(/^[0-9]+\.[0-9]+\.[0-9]+$/)
+
     version = dir.delete_prefix("doc/")
     res += template.gsub("!version!", version).gsub("!eo!", i % 2 == 0 ? "even" : "odd")
   end
