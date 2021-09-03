@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
+require "fileutils"
 task default: %i[]
 
 task :emoji_table do
@@ -53,4 +54,8 @@ task :document do
     version += "-dev"
   end
   sh "yardoc -o doc/#{version}"
+  Dir.glob("template-overrides/**/*.*")
+    .map { |f| f.delete_prefix("template-overrides") }.each do |file|
+    FileUtils.cp("template-overrides/" + file, "doc/#{version}/#{file}")
+  end
 end
