@@ -4,6 +4,9 @@ module Discorb
   #
   # Represents a permission per guild.
   # ## Flag fields
+  #
+  # | Field | Value |
+  # |-------|-------|
   # |`1 << 0`|`:create_instant_invite`|
   # |`1 << 1`|`:kick_members`|
   # |`1 << 2`|`:ban_members`|
