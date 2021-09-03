@@ -69,7 +69,7 @@ In `options`, hash should be like this:
 {
     "vocaloid" => {
         required: true,
-        description: "The vocaloid which you like."
+        description: "The vocaloid which you like.",
         type: :string,
         choices: {
             "Hatsune Miku" => "miku",
