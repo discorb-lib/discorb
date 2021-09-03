@@ -1,20 +1,39 @@
-/* Override this file with custom rules */
-/* Override this file with custom rules */
+.summary_desc, body{
+  font-family: Whitney, Hiragino Sans, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, Osaka, "MS PGothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  color: #2e3338;
+  
+  font-weight: 100;
+  font-size: 14px;
+  background-color: #f2f3f5;
+}
 
 .fixed_header {
   background: #cc342d;
 }
 
+a,
+a:visited {
+  color: #0067e0;
+}
+
+a:hover {
+  text-decoration: underline;
+  background: transparent;
+}
+
 #full_list_header {
-  color: #fff;
+  color: #fff !important;
 }
 
 #full_list_nav a {
-  color: #eee
+  color: #eee !important;
 }
 
 #full_list_nav a:hover {
-  color: #fff
+  color: #fff !important
 }
 
 #search {
@@ -36,8 +55,108 @@ tt {
   font-family: Consolas, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Monaco, Courier New, Courier, monospace;
 }
 
-body {
-  font-family: Whitney, Hiragino Sans, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, Osaka, "MS PGothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 100;
-  font-size: 14px;
+
+pre.code {
+  color: #4f5660;
+  tab-size: 2;
+}
+
+pre.code .info.file {
+  color: #4f5660;
+}
+
+pre.code .val {
+  color: #036A07;
+}
+
+pre.code .tstring_content,
+pre.code .heredoc_beg,
+pre.code .heredoc_end,
+pre.code .qwords_beg,
+pre.code .qwords_end,
+pre.code .qwords_sep,
+pre.code .words_beg,
+pre.code .words_end,
+pre.code .words_sep,
+pre.code .qsymbols_beg,
+pre.code .qsymbols_end,
+pre.code .qsymbols_sep,
+pre.code .symbols_beg,
+pre.code .symbols_end,
+pre.code .symbols_sep,
+pre.code .tstring,
+pre.code .dstring {
+  color: #2aa198;
+}
+
+pre.code .fid,
+pre.code .rubyid_new,
+pre.code .rubyid_to_s,
+pre.code .rubyid_to_sym,
+pre.code .rubyid_to_f,
+pre.code .dot+pre.code .id,
+pre.code .rubyid_to_i pre.code .rubyid_each {
+  color: #0085FF;
+}
+
+pre.code .comment {
+  color: #c7ccd1;
+}
+
+pre.code .const,
+pre.code .constant {
+  color: #b58900;
+}
+
+pre.code .label,
+pre.code .symbol {
+  color: #cb4b16;
+}
+
+pre.code .kw,
+pre.code .rubyid_require,
+pre.code .rubyid_extend,
+pre.code .rubyid_include {
+  color: #859900;
+}
+
+pre.code .ivar {
+  color: #3498db;
+}
+
+pre.code .gvar,
+pre.code .rubyid_backref,
+pre.code .rubyid_nth_ref {
+  color: #1abc91;
+}
+
+pre.code .regexp,
+.dregexp {
+  color: #2aa198;
+}
+
+li.clicked>.item {
+  color: #747f8d;
+}
+
+li.clicked>.item a,
+li.clicked>.item a:visited {
+  color: #0067e0;
+}
+
+li.clicked>.item {
+  background: #e3e5e8;
+}
+
+li.odd,
+li.even {
+  background: #f2f3f5;
+}
+
+.item:hover {
+  background: #e8eaed;
+}
+
+a.toggle{
+  visibility: hidden;
 }
