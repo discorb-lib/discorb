@@ -85,8 +85,8 @@ namespace :document do
   task :build_all do
     require "fileutils"
     FileUtils.cp_r("./template-overrides", "./tmp-template-overrides")
-    tags = `git tag`
-    tags.split("\n").each do |tag|
+    tags = `git tag`.force_encoding("utf-8").split("\n")
+    tags.each do |tag|
       sh "git checkout #{tag} -f"
       FileUtils.cp_r("./tmp-template-overrides/.", "./template-overrides")
       version = tag.delete_prefix("v")
