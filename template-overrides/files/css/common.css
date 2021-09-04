@@ -356,10 +356,22 @@ h3.signature strong {
 }
 
 .note.title {
-  border: 1px solid var(--lighter) !important;
   background: var(--background-primary) !important;
-  color: var(--darker) !important;
   padding: 4px;
+}
+
+@media(prefers-color-scheme:dark) {
+  .note.title {
+    color: var(--lighter) !important;
+    border: 1px solid var(--darker) !important;
+  }
+}
+
+@media(prefers-color-scheme:light) {
+  .note.title {
+    color: var(--darker) !important;
+    border: 1px solid var(--lighter) !important;
+  }
 }
 
 #toc {
@@ -410,7 +422,8 @@ code[class=""] {
 .docstring .note {
   border-color: var(--dstr-fore) !important;
   background: var(--dstr-back) !important;
-  color: var(--text-normal)
+  color: var(--text-normal);
+  border-left-width: 1px;
 }
 
 thead th {
@@ -464,4 +477,17 @@ h2 small a,
 #toc {
   background: var(--background-secondary-alt) !important;
   border-color: var(--background-tertiary) !important;
+}
+
+span.summary_signature {
+  line-height: 2;
+}
+
+
+#listing table td {
+  background: var(--background-primary) !important;
+}
+
+li.r1, li.r2{
+  background: var(--background-secondary) !important;
 }

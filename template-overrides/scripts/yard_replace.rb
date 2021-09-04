@@ -1,6 +1,9 @@
 require "yard"
 
 def yard_replace(dir, version)
+  sha = `git rev-parse HEAD`.strip
+  tag = `git describe --exact-match #{sha}`
+  tag = tag.empty? ? "(main)" : tag.strip
   Dir.glob("#{dir}/**/*.html") do |file|
     next if (m = file.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
     contents = File.read(file)
@@ -12,7 +15,7 @@ def yard_replace(dir, version)
 </div>
     HTML1
     <div id="footer">
-    Generated from <code>#{`git rev-parse HEAD`.strip}</code>, with YARD #{YARD::VERSION}.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/#{sha}"><code>#{sha}</code></a>, version #{tag}, with YARD #{YARD::VERSION}.
     </div>
     HTML2
     contents.gsub!(<<-'HTML3', <<-HTML4)
