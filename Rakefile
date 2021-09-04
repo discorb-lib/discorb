@@ -107,6 +107,8 @@ namespace :document do
     task :eol do
       gputs "Replacing CRLF with LF"
       Dir.glob("doc/**/*.*") do |file|
+        next unless File.file?(file)
+
         content = ""
         File.open(file, "rb") do |f|
           content = f.read
