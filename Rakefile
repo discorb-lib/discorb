@@ -102,7 +102,7 @@ namespace :document do
       replace_index("doc/#{version}", version)
       gputs "Replacing YARD credits"
       yard_replace("doc/#{version}", version)
-      cputs "Successfully replaced htmls"
+      gputs "Successfully replaced htmls"
     end
     task :eol do
       gputs "Replacing CRLF with LF"
