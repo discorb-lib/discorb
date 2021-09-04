@@ -159,24 +159,24 @@ Guild commands will be registered immediately.</p>
 <p><code>choices</code> should be unspecified if you don&#39;t want to use it.
 <code>choices</code> is hash like this:</p>
 
-<pre class="code ruby"><code class="ruby">{
-    &quot;vocaloid&quot; =&gt; {
-        required: true,
-        description: &quot;The vocaloid which you like.&quot;
-        type: :string,
-        choices: {
-            &quot;Hatsune Miku&quot; =&gt; &quot;miku&quot;,
-            &quot;Kagamine Rin&quot; =&gt; &quot;rin&quot;,
-            &quot;Kagamine Len&quot; =&gt; &quot;len&quot;,
-            &quot;Megurine Luka&quot; =&gt; &quot;luka&quot;,
-            &quot;MEIKO&quot; =&gt; &quot;meiko&quot;,
-            &quot;KAITO&quot; =&gt; &quot;kaito&quot;,
-        }
-    }
-}
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vocaloid</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+        <span class='label'>required:</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The vocaloid which you like.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>type:</span> <span class='symbol'>:string</span><span class='comma'>,</span>
+        <span class='label'>choices:</span> <span class='lbrace'>{</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hatsune Miku</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>miku</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kagamine Rin</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rin</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kagamine Len</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>len</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Megurine Luka</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>luka</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>MEIKO</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>meiko</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KAITO</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kaito</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+<span class='rbrace'>}</span>
 
-# Note: This aritcle is written in 8/31.
-</code></pre>
+<span class='comment'># Note: This aritcle is written in 8/31.
+</span></code></pre>
 
 <p>The key will be displayed in the user menu, and the value will be used as the argument.</p>
 
@@ -425,7 +425,7 @@ Guild commands will be registered immediately.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sat Sep  4 07:03:23 2021 by
+  Generated on Sat Sep  4 08:50:30 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.2).
 </div>

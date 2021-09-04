@@ -280,12 +280,12 @@
       <pre class="lines">
 
 
+315
 316
-317
-318</pre>
+317</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/interaction.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/interaction.rb', line 315</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@target</span>
@@ -317,13 +317,13 @@
       <pre class="lines">
 
 
+317
 318
 319
-320
-321</pre>
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/interaction.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/interaction.rb', line 317</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid__set_data'>_set_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_guild'>guild</span><span class='period'>.</span><span class='id identifier rubyid_members'>members</span><span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:target_id</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../Discorb.html" title="Discorb (module)">Discorb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Member.html" title="Discorb::Member (class)">Member</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@client</span><span class='comma'>,</span> <span class='ivar'>@guild_id</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:resolved</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:users</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:target_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:resolved</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:members</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:target_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -339,7 +339,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Sep  4 07:03:32 2021 by
+  Generated on Sat Sep  4 08:50:39 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.2).
 </div>
