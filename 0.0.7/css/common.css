@@ -380,7 +380,9 @@ h3.signature strong {
 .box_info dl>*,
 .summary_signature,
 pre.code,
-code {
+code,
+.summary_desc .object_link a,
+.docstring .object_link a {
   background: var(--background-secondary) !important;
   border-color: var(--background-tertiary) !important;
 
