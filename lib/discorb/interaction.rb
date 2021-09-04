@@ -255,6 +255,8 @@ module Discorb
     class SlashCommand < CommandInteraction
       @command_type = 1
 
+      private
+
       def _set_data(data)
         super
         Sync do
@@ -314,6 +316,8 @@ module Discorb
       # @return [Discorb::Member, Discorb::User] The target user.
       attr_reader :target
 
+      private
+
       def _set_data(data)
         @target = guild.members[data[:target_id]] || Discorb::Member.new(@client, @guild_id, data[:resolved][:users][data[:target_id].to_sym], data[:resolved][:members][data[:target_id].to_sym])
         @client.commands.find { |c| c.name == data[:name] && c.type_raw == 2 }.block.call(self, @target)
@@ -328,6 +332,8 @@ module Discorb
 
       # @return [Discorb::Message] The target message.
       attr_reader :target
+
+      private
 
       def _set_data(data)
         @target = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge({ guild_id: @guild_id.to_s }))
