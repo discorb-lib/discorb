@@ -188,14 +188,36 @@ h3.signature strong {
 }
 
 .note.title.readonly {
-  border: 1px solid #3498db;
-  background: #3498db;
+  --lighter: #f1c40f;
+  --darker: #c27c0e;
+}
+
+.note.title.writeonly {
+  --lighter: #9b59b6;
+  --darker: #71368a;
+}
+
+.note.title.constructor {
+  --lighter: #3498db;
+  --darker: #206694;
+}
+
+.note.title.abstract {
+  --lighter: #979c9f;
+  --darker: #546e7a;
+}
+
+.note.title {
+  border: 1px solid var(--lighter) !important;
+  background: transparent !important;
+  color: var(--darker) !important;
 }
 
 #toc {
   box-shadow: none;
 }
 
-#content.insearch #search, #content.insearch #noresults{
+#content.insearch #search,
+#content.insearch #noresults {
   background: transparent;
 }
