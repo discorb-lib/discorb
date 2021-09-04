@@ -119,6 +119,7 @@ namespace :document do
       sputs "Successfully replaced CRLF with LF"
     end
   end
+  task :replace => %i[replace:css replace:html replace:eol]
   task :build_all do
     require "fileutils"
     gputs "Building all versions"
@@ -130,11 +131,15 @@ namespace :document do
       FileUtils.cp_r("./tmp-template-replace/.", "./template-replace")
       version = tag.delete_prefix("v")
       Rake::Task["document:yard"].execute
-      Rake::Task["document:replace"].execute
+      Rake::Task["document:replace:html"].execute
+      Rake::Task["document:replace:css"].execute
+      Rake::Task["document:replace:eol"].execute
     end
     version = "."
     Rake::Task["document:yard"].execute
-    Rake::Task["document:replace"].execute
+    Rake::Task["document:replace:html"].execute
+    Rake::Task["document:replace:css"].execute
+    Rake::Task["document:replace:eol"].execute
     sh "git switch main -f"
     sputs "Successfully built all versions"
   end
@@ -147,7 +152,6 @@ namespace :document do
     end
     sputs "Successfully pushed documents"
   end
-  task :replace => %i[replace:css replace:html]
 end
 
 task :document => %i[document:yard document:override]
