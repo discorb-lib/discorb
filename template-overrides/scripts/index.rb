@@ -5,7 +5,7 @@ def replace_index(dir, version)
     next if (m = file.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
 
     content = File.read(file)
-    content.gsub!(/(?<=")_index.html/, "a_index.html")
+    content.gsub!(/(?<=["\/])_index.html/, "a_index.html")
     File.write(file, content)
   end
 
