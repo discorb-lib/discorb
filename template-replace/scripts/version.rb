@@ -1,5 +1,5 @@
 def build_version_sidebar(dir)
-  raw = File.read("template-overrides/resources/version_list.html")
+  raw = File.read("template-replace/resources/version_list.html")
   template = raw.match(/<!--template-->(.*)<!--endtemplate-->/m)[1]
   raw.gsub!(template, "")
   res = +""
