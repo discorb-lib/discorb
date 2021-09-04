@@ -221,3 +221,9 @@ h3.signature strong {
 #content.insearch #noresults {
   background: transparent;
 }
+
+.git_sha {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

@@ -70,8 +70,9 @@ namespace :document do
     task :html do
       require_relative "template-overrides/scripts/sidebar.rb"
       require_relative "template-overrides/scripts/version.rb"
+      require_relative "template-overrides/scripts/index.rb"
       Dir.glob("doc/#{version}/**/*.html") do |f|
-        next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+/)) && m[0] != version
+        next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
 
         content = File.read(f)
         content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
@@ -82,6 +83,7 @@ namespace :document do
       end
 
       build_version_sidebar("doc/#{version}")
+      replace_index("doc/#{version}", version)
     end
   end
   task :build_all do
