@@ -100,6 +100,15 @@ namespace :document do
     Rake::Task["document:override:html"].execute
     sh "git switch main -f"
   end
+  task :push_document do
+    <<~`COMMAND`
+      cd doc
+      git add .
+      git commit -m "Update: Update document"
+      git push -f
+      cd ..
+    COMMAND
+  end
   task :override => %i[override:css override:html]
 end
 
