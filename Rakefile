@@ -71,6 +71,8 @@ namespace :document do
       require_relative "template-overrides/scripts/sidebar.rb"
       require_relative "template-overrides/scripts/version.rb"
       require_relative "template-overrides/scripts/index.rb"
+      require_relative "template-overrides/scripts/yard_replace.rb"
+      puts "Resetting changes"
       Dir.glob("doc/#{version}/**/*.html") do |f|
         next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
 
@@ -78,12 +80,17 @@ namespace :document do
         content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
         File.write(f, content)
       end
+      puts "Adding version tab"
       %w[file_list class_list method_list].each do |f|
         replace_sidebar("doc/#{version}/#{f}.html")
       end
 
+      puts "Building version tab"
       build_version_sidebar("doc/#{version}")
+      puts "Replacing _index.html"
       replace_index("doc/#{version}", version)
+      puts "Replacing YARD credits"
+      yard_replace("doc/#{version}", version)
     end
   end
   task :build_all do
