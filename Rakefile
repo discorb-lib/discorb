@@ -101,11 +101,11 @@ namespace :document do
     sh "git switch main -f"
   end
   task :push do
-    sh "cd doc"
-    sh "git add ."
-    sh "git commit -m \"Update: Update document\""
-    sh "git push -f"
-    sh "cd .."
+    Dir.chdir("doc") do
+      sh "git add ."
+      sh "git commit -m \"Update: Update document\""
+      sh "git push -f"
+    end
   end
   task :override => %i[override:css override:html]
 end
