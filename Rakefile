@@ -71,6 +71,8 @@ namespace :document do
       require_relative "template-overrides/scripts/sidebar.rb"
       require_relative "template-overrides/scripts/version.rb"
       Dir.glob("doc/#{version}/**/*.html") do |f|
+        next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+/)) && m[0] != version
+
         content = File.read(f)
         content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
         File.write(f, content)
