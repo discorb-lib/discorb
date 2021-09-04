@@ -13,9 +13,18 @@ def get_version
   version
 end
 
+def gputs(text)
+  puts "\e[90m#{text}\e[m"
+end
+
+def sputs(text)
+  puts "\e[92m#{text}\e[m"
+end
+
 task :emoji_table do
   require_relative "lib/discorb"
 
+  gputs "Building emoji_table.rb"
   res = {}
   Discorb::EmojiTable::DISCORD_TO_UNICODE.each do |discord, unicode|
     res[unicode] ||= []
@@ -35,14 +44,14 @@ task :emoji_table do
     f.print(table_script)
   end
   `rufo lib/discorb/emoji_table.rb`
-  puts "Successfully made emoji_table.rb"
+  sputs "Successfully made emoji_table.rb"
 end
 
 task :format do
   Dir.glob("**/*.rb").each do |file|
     next if file.start_with?("vendor")
 
-    puts "Formatting #{file}"
+    gputs "Formatting #{file}"
     `rufo ./#{file}`
     content = ""
     File.open(file, "rb") do |f|
@@ -59,20 +68,22 @@ namespace :document do
   task :yard do
     sh "yardoc -o doc/#{version}"
   end
-  namespace :override do
+  namespace :replace do
     require "fileutils"
     task :css do
-      Dir.glob("template-overrides/files/**/*.*")
-        .map { |f| f.delete_prefix("template-overrides/files") }.each do |file|
-        FileUtils.cp("template-overrides/files" + file, "doc/#{version}/#{file}")
+      gputs "Replacing css"
+      Dir.glob("template-replace/files/**/*.*")
+        .map { |f| f.delete_prefix("template-replace/files") }.each do |file|
+        FileUtils.cp("template-replace/files" + file, "doc/#{version}/#{file}")
       end
+      sputs "Successfully replaced css"
     end
     task :html do
-      require_relative "template-overrides/scripts/sidebar.rb"
-      require_relative "template-overrides/scripts/version.rb"
-      require_relative "template-overrides/scripts/index.rb"
-      require_relative "template-overrides/scripts/yard_replace.rb"
-      puts "Resetting changes"
+      require_relative "template-replace/scripts/sidebar.rb"
+      require_relative "template-replace/scripts/version.rb"
+      require_relative "template-replace/scripts/index.rb"
+      require_relative "template-replace/scripts/yard_replace.rb"
+      gputs "Resetting changes"
       Dir.glob("doc/#{version}/**/*.html") do |f|
         next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
 
@@ -80,45 +91,63 @@ namespace :document do
         content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
         File.write(f, content)
       end
-      puts "Adding version tab"
+      gputs "Adding version tab"
       %w[file_list class_list method_list].each do |f|
         replace_sidebar("doc/#{version}/#{f}.html")
       end
 
-      puts "Building version tab"
+      gputs "Building version tab"
       build_version_sidebar("doc/#{version}")
-      puts "Replacing _index.html"
+      gputs "Replacing _index.html"
       replace_index("doc/#{version}", version)
-      puts "Replacing YARD credits"
+      gputs "Replacing YARD credits"
       yard_replace("doc/#{version}", version)
+      cputs "Successfully replaced htmls"
+    end
+    task :eol do
+      gputs "Replacing CRLF with LF"
+      Dir.glob("doc/**/*.*") do |file|
+        content = ""
+        File.open(file, "rb") do |f|
+          content = f.read
+        end
+        content.gsub!("\r\n", "\n")
+        File.open(file, "wb") do |f|
+          f.print(content)
+        end
+      end
+      sputs "Successfully replaced CRLF with LF"
     end
   end
   task :build_all do
     require "fileutils"
-    FileUtils.cp_r("./template-overrides/.", "./tmp-template-overrides")
+    gputs "Building all versions"
+    FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
     tags = `git tag`.force_encoding("utf-8").split("\n")
     tags.each do |tag|
       sh "git checkout #{tag} -f"
-      FileUtils.cp_r("./tmp-template-overrides/.", "./template-overrides")
+      gputs "Building #{tag}"
+      FileUtils.cp_r("./tmp-template-replace/.", "./template-replace")
       version = tag.delete_prefix("v")
       Rake::Task["document:yard"].execute
-      Rake::Task["document:override:css"].execute
-      Rake::Task["document:override:html"].execute
+      Rake::Task["document:replace"].execute
     end
     version = "."
     Rake::Task["document:yard"].execute
-    Rake::Task["document:override:css"].execute
-    Rake::Task["document:override:html"].execute
+    Rake::Task["document:replace"].execute
     sh "git switch main -f"
+    sputs "Successfully built all versions"
   end
   task :push do
+    gputs "Pushing documents"
     Dir.chdir("doc") do
       sh "git add ."
       sh "git commit -m \"Update: Update document\""
       sh "git push -f"
     end
+    sputs "Successfully pushed documents"
   end
-  task :override => %i[override:css override:html]
+  task :replace => %i[replace:css replace:html]
 end
 
 task :document => %i[document:yard document:override]
