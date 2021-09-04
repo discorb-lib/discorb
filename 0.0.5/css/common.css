@@ -195,3 +195,7 @@ h3.signature strong {
 #toc {
   box-shadow: none;
 }
+
+#content.insearch #search, #content.insearch #noresults{
+  background: transparent;
+}
