@@ -5,6 +5,7 @@ require_relative "../utils/colored_puts"
 
 $path = Dir.pwd
 
+# @!visibility private
 FILES = {
   "main.rb" => <<~'RUBY',
     require "discorb"
@@ -84,21 +85,7 @@ FILES = {
     # This gitignore is from github/gitignore.
     # https://github.com/github/gitignore/blob/master/Ruby.gitignore
   GITIGNORE
-}
-
-# @!visibility private
-def make_files
-  iputs "Making files..."
-  FILES.each do |file, content|
-    File.write($path + "/#{file}", format(content, token: $values[:token]), mode: "wb")
-  end
-  sputs "Made files.\n"
-end
-
-# @!visibility private
-def bundle_init
-  iputs "Initializing bundle..."
-  File.write($path + "/Gemfile", <<~'RUBY', mode: "wb")
+  "Gemfile" => <<~RUBY,
     # frozen_string_literal: true
 
     source "https://rubygems.org"
@@ -108,6 +95,25 @@ def bundle_init
     gem "discorb", "~> 0.2.5"
     gem "dotenv", "~> 2.7"
   RUBY
+}
+
+# @!visibility private
+def create_file(name)
+  File.write($path + "/#{name}", format(FILES[name], token: $values[:token]), mode: "wb")
+end
+
+# @!visibility private
+def make_files
+  iputs "Making files..."
+  create_file("main.rb")
+  create_file(".env")
+  sputs "Made files.\n"
+end
+
+# @!visibility private
+def bundle_init
+  iputs "Initializing bundle..."
+  create_file("Gemfile")
   iputs "Installing gems..."
   system "bundle install"
   sputs "Installed gems.\n"
@@ -115,6 +121,7 @@ end
 
 # @!visibility private
 def git_init
+  create_file(".gitignore")
   iputs "Initializing git repository..."
   system "git init"
   system "git add ."
