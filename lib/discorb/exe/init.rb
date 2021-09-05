@@ -18,10 +18,10 @@ FILES = {
       puts "Logged in as #{client.user}"
     end
 
-    client.run ENV["%<token>"]
+    client.run ENV["%<token>s"]
   RUBY
   ".env" => <<~BASH,
-    %<token>=Y0urB0tT0k3nHer3.Th1sT0ken.W0ntWorkB3c4useItH4sM34n1ng
+    %<token>s=Y0urB0tT0k3nHer3.Th1sT0ken.W0ntWorkB3c4useItH4sM34n1ng
   BASH
   ".gitignore" => <<~GITIGNORE,
     *.gem
@@ -87,13 +87,16 @@ FILES = {
 }
 
 def make_files
+  iputs "Making files..."
   FILES.each do |file, content|
-    File.write($pwd + "/#{file}", format(content, token: $values[:token]))
+    File.write($pwd + "/#{file}", format(content, token: $values[:token]), mode: "wb")
   end
+  sputs "Made files.\n"
 end
 
 def bundle_init
-  File.write($pwd + "/Gemfile", <<~RUBY)
+  iputs "Initializing bundle..."
+  File.write($pwd + "/Gemfile", <<~'RUBY', mode: "wb")
     # frozen_string_literal: true
 
     source "https://rubygems.org"
@@ -103,12 +106,20 @@ def bundle_init
     gem "discorb", "~> 0.2.5"
     gem "dotenv", "~> 2.7"
   RUBY
-  `bundle update`
-  `bundle install`
+  iputs "Installing gems..."
+  system "bundle update"
+  system "bundle install"
+  sputs "Installed gems.\n"
 end
 
 def git_init
-  `git init`
+  iputs "Initializing git repository..."
+  system "git init"
+  system "git add ."
+  system "git commit -m \"Initial commit\""
+  sputs "Initialized repository, use " +
+          "\e[32mgit commit --amend -m '...'\e[92m" +
+          " to change commit message of initial commit.\n"
 end
 
 opt = OptionParser.new "A tools to make a new client."
@@ -133,9 +144,10 @@ end
 
 opt.parse!(ARGV[1..])
 
-git_init if $values[:git]
 bundle_init if $values[:bundle]
 
 make_files
 
-puts "Successfully made a simple client at #{$pwd}."
+git_init if $values[:git]
+
+sputs "\nSuccessfully made a simple client at \e[32m#{$pwd}\e[92m."

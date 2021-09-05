@@ -7,9 +7,5 @@ def eputs(text)
 end
 
 def iputs(text)
-  puts "\e[94m#{text}\e[m"
-end
-
-def gputs(text)
   puts "\e[90m#{text}\e[m"
 end
