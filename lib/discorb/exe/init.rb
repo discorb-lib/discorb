@@ -107,7 +107,6 @@ def bundle_init
     gem "dotenv", "~> 2.7"
   RUBY
   iputs "Installing gems..."
-  system "bundle update"
   system "bundle install"
   sputs "Installed gems.\n"
 end
