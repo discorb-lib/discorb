@@ -5,7 +5,7 @@ require "optparse"
 pwd = Dir.pwd
 
 FILES = {
-  "main.rb" => <<~RUBY,
+  "main.rb" => <<~'RUBY',
     require "discorb"
     require "dotenv"
 
@@ -107,8 +107,7 @@ def bundle_init
 end
 
 def git_init
-  exec "bundle update"
-  exec "bundle install"
+  exec "git init"
 end
 
 opt = OptionParser.new "A tools to make a new client."
