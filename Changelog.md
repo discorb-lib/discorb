@@ -65,3 +65,11 @@
 ## 0.2.3
 
 - Fix: Fix critical error
+
+## 0.2.4
+
+- Fix: Fix error in `Embed#image=`, `Embed#thumbnail=`
+
+## 0.2.5
+
+- Add: Add way to add event listener
