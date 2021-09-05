@@ -1,0 +1,28 @@
+#! /usr/bin/env ruby
+
+script = ARGV[0]
+
+if script.nil?
+  puts "\e[94mThis is a tool for discorb. Currently these tools are available:\e[m"
+
+  discorb_path = $:.find { |path| File.directory?(path + "/discorb") }
+  scripts = {}
+  Dir.glob(discorb_path + "/discorb/exe/*.rb") do |script|
+    name = File.basename(script, ".rb")
+    description = File.read(script).match(/# description: (.+)/)&.[](1) || "No description"
+    scripts[name] = description
+  end
+  max_length = scripts.keys.map { |key| key.length }.max
+  scripts.sort.each do |name, description|
+    puts "\e[90m#{name.rjust(max_length)}\e[m - #{description}"
+  end
+
+  exit 1
+end
+
+begin
+  require "discorb/exe/#{script}"
+rescue LoadError
+  puts "\e[91mThis tool is not available: \e[90m#{script}\e[m"
+  exit 1
+end

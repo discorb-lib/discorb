@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# description: Connect to discord and start IRB.
+
 require "io/console"
 require "discorb"
 require "optparse"
