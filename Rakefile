@@ -19,7 +19,7 @@ desc "Build emoji_table.rb"
 task :emoji_table do
   require_relative "lib/discorb"
 
-  gputs "Building emoji_table.rb"
+  iputs "Building emoji_table.rb"
   res = {}
   Discorb::EmojiTable::DISCORD_TO_UNICODE.each do |discord, unicode|
     res[unicode] ||= []
@@ -47,7 +47,7 @@ task :format do
   Dir.glob("**/*.rb").each do |file|
     next if file.start_with?("vendor")
 
-    gputs "Formatting #{file}"
+    iputs "Formatting #{file}"
     `rufo ./#{file}`
     content = ""
     File.open(file, "rb") do |f|
@@ -75,7 +75,7 @@ namespace :document do
 
     desc "Replace CSS"
     task :css do
-      gputs "Replacing css"
+      iputs "Replacing css"
       Dir.glob("template-replace/files/**/*.*")
         .map { |f| f.delete_prefix("template-replace/files") }.each do |file|
         FileUtils.cp("template-replace/files" + file, "doc/#{version}/#{file}")
@@ -89,7 +89,7 @@ namespace :document do
       require_relative "template-replace/scripts/version.rb"
       require_relative "template-replace/scripts/index.rb"
       require_relative "template-replace/scripts/yard_replace.rb"
-      gputs "Resetting changes"
+      iputs "Resetting changes"
       Dir.glob("doc/#{version}/**/*.html") do |f|
         next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
 
@@ -97,23 +97,23 @@ namespace :document do
         content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
         File.write(f, content)
       end
-      gputs "Adding version tab"
+      iputs "Adding version tab"
       %w[file_list class_list method_list].each do |f|
         replace_sidebar("doc/#{version}/#{f}.html")
       end
 
-      gputs "Building version tab"
+      iputs "Building version tab"
       build_version_sidebar("doc/#{version}")
-      gputs "Replacing _index.html"
+      iputs "Replacing _index.html"
       replace_index("doc/#{version}", version)
-      gputs "Replacing YARD credits"
+      iputs "Replacing YARD credits"
       yard_replace("doc/#{version}", version)
-      gputs "Successfully replaced htmls"
+      iputs "Successfully replaced htmls"
     end
 
     desc "Replace EOL"
     task :eol do
-      gputs "Replacing CRLF with LF"
+      iputs "Replacing CRLF with LF"
       Dir.glob("doc/**/*.*") do |file|
         next unless File.file?(file)
 
@@ -134,12 +134,12 @@ namespace :document do
   desc "Build all versions"
   task :build_all do
     require "fileutils"
-    gputs "Building all versions"
+    iputs "Building all versions"
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
     tags = `git tag`.force_encoding("utf-8").split("\n")
     tags.each do |tag|
       sh "git checkout #{tag} -f"
-      gputs "Building #{tag}"
+      iputs "Building #{tag}"
       FileUtils.cp_r("./tmp-template-replace/.", "./template-replace")
       version = tag.delete_prefix("v")
       Rake::Task["document:yard"].execute
@@ -158,7 +158,7 @@ namespace :document do
 
   desc "Push to discorb-lib/discorb-lib.github.io"
   task :push do
-    gputs "Pushing documents"
+    iputs "Pushing documents"
     Dir.chdir("doc") do
       sh "git add ."
       sh "git commit -m \"Update: Update document\""
