@@ -1,0 +1,15 @@
+def sputs(text)
+  puts "\e[92m#{text}\e[m"
+end
+
+def eputs(text)
+  puts "\e[91m#{text}\e[m"
+end
+
+def iputs(text)
+  puts "\e[94m#{text}\e[m"
+end
+
+def gputs(text)
+  puts "\e[90m#{text}\e[m"
+end

@@ -1,8 +1,9 @@
 # description: Make files for the project.
 
 require "optparse"
+require_relative "../utils/colored_puts"
 
-pwd = Dir.pwd
+$pwd = Dir.pwd
 
 FILES = {
   "main.rb" => <<~'RUBY',
@@ -87,12 +88,12 @@ FILES = {
 
 def make_files
   FILES.each do |file, content|
-    File.write(pwd + "/#{file}", format(content, token: $values[:token]))
+    File.write($pwd + "/#{file}", format(content, token: $values[:token]))
   end
 end
 
 def bundle_init
-  File.write(pwd + "/Gemfile", <<~RUBY)
+  File.write($pwd + "/Gemfile", <<~RUBY)
     # frozen_string_literal: true
 
     source "https://rubygems.org"
@@ -102,12 +103,12 @@ def bundle_init
     gem "discorb", "~> 0.2.5"
     gem "dotenv", "~> 2.7"
   RUBY
-  exec "bundle update"
-  exec "bundle install"
+  `bundle update`
+  `bundle install`
 end
 
 def git_init
-  exec "git init"
+  `git init`
 end
 
 opt = OptionParser.new "A tools to make a new client."
@@ -137,4 +138,4 @@ bundle_init if $values[:bundle]
 
 make_files
 
-puts "Successfully made a simple client at #{pwd}."
+puts "Successfully made a simple client at #{$pwd}."
