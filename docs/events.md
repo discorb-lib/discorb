@@ -28,6 +28,8 @@ class << client
 end
 ```
 
+If you want to seperate event handlers from the client, consider using {Discorb::Extension}. {file:docs/extensions.md Learn more about extensions}.
+
 ## Event reference
 
 ### Client events
