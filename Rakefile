@@ -156,4 +156,4 @@ namespace :document do
   end
 end
 
-task :document => %i[document:yard document:override]
+task :document => %i[document:yard document:replace]
