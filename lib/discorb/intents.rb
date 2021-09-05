@@ -75,6 +75,9 @@ module Discorb
       }
     end
 
+    #
+    # (see Flag#method_missing)
+    #
     def method_missing(name, args = nil)
       if @raw_value.key?(name)
         @raw_value[name]

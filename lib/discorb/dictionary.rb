@@ -93,6 +93,9 @@ module Discorb
       !self[id].nil?
     end
 
+    #
+    # Send a message to the array of values.
+    #
     def method_missing(name, ...)
       if values.respond_to?(name)
         values.send(name, ...)

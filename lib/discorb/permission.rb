@@ -229,6 +229,9 @@ module Discorb
       end
     end
 
+    #
+    # (see Flag#method_missing)
+    #
     def method_missing(method, bool = nil)
       if self.class.bits.key?(method)
         self[method]

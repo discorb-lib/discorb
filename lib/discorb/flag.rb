@@ -25,6 +25,9 @@ module Discorb
       end
     end
 
+    #
+    # Returns the value of the flag.
+    #
     def method_missing(name, args = nil)
       if @values.key?(name.to_s.delete_suffix("?").to_sym)
         @values[name.to_s.delete_suffix("?").to_sym]

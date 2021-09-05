@@ -279,6 +279,9 @@ module Discorb
           @new_value = data[:new_value].then(&method)
         end
 
+        #
+        # Send a message to the new value.
+        #
         def method_missing(method, ...)
           @new_value.__send__(method, ...)
         end
