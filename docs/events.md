@@ -16,6 +16,18 @@ end
 
 This example will print the content of every message received.
 
+Since v0.2.5, you can also register event handlers by adding a method to the client, with the prefix `on_` and the event name as the method name.
+
+```ruby
+client = Discorb::Client.new
+
+class << client
+  def on_ready
+    puts "Ready!"
+  end
+end
+```
+
 ## Event reference
 
 ### Client events

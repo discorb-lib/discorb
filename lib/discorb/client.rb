@@ -155,15 +155,27 @@ module Discorb
             end
           end
         end
-        if @events[event_name].nil?
+        events = @events[event_name].dup || []
+        if respond_to?("on_" + event_name.to_s)
+          event_method = method("on_" + event_name.to_s)
+          class << event_method
+            def id
+              "method"
+            end
+          end
+          events << event_method
+        end
+        if events.nil?
           @log.debug "Event #{event_name} doesn't have any proc, skipping"
           next
         end
         @log.debug "Dispatching event #{event_name}"
-        @events[event_name].each do |block|
+        events.each do |block|
           lambda { |event_args|
             Async(annotation: "Discorb event: #{event_name}") do |task|
-              @events[event_name].delete(block) if block.discriminator[:once]
+              if block.is_a?(Discorb::Event)
+                @events[event_name].delete(block) if block.discriminator[:once]
+              end
               block.call(*event_args)
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
