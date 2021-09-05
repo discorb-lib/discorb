@@ -38,6 +38,18 @@ end
 
 Use {Discorb::Client#extend} to load extension.
 
+```ruby
+module MyExtension
+  extend Discorb::Extension
+
+  event :message do |message|
+    # ...
+  end
+end
+
+client.extend MyExtension
+```
+
 ## Access Client from extension
 
 You can access {Discorb::Client} from extension with `@client`.
