@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: Events
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "events";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="a_index.html">Index</a> &raquo; 
+    <span class="title">File: Events</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="events">Events</h1>
+
+<h2 id="how-to-use-events">How to use events</h2>
+
+<p>discorb uses event driven programming.
+You can register event handlers with <span class='object_link'><a href="Discorb/Client.html#on-instance_method" title="Discorb::Client#on (method)">Discorb::Client#on</a></span>.
+Alternatively, you can use <span class='object_link'><a href="Discorb/Client.html#once-instance_method" title="Discorb::Client#once (method)">Discorb::Client#once</a></span> to register a one-time event handler.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span> <span class='symbol'>:message</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>This example will print the content of every message received.</p>
+
+<p>Since v0.2.5, you can also register event handlers by adding a method to the client, with the prefix <code>on_</code> and the event name as the method name.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Discorb.html" title="Discorb (module)">Discorb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Discorb/Client.html" title="Discorb::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Discorb/Client.html#initialize-instance_method" title="Discorb::Client#initialize (method)">new</a></span></span>
+
+<span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_client'>client</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_on_ready'>on_ready</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ready!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>If you want to seperate event handlers from the client, consider using <span class='object_link'><a href="Discorb/Extension.html" title="Discorb::Extension (module)">Discorb::Extension</a></span>. <a href="file.extension.html" title="Learn more about extensions">Learn more about extensions</a>.</p>
+
+<h2 id="event-reference">Event reference</h2>
+
+<h3 id="client-events">Client events</h3>
+
+<h4 id="event_receive-event_name-data"><code>event_receive(event_name, data)</code></h4>
+
+<p>Fires when a event is received.  </p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event_name</code></td>
+<td>Symbol</td>
+<td>The name of the event.</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Hash</td>
+<td>The data of the event.</td>
+</tr>
+</tbody></table>
+
+<h4 id="ready"><code>ready()</code></h4>
+
+<p>Fires when the client is ready.</p>
+
+<h4 id="resumed"><code>resumed()</code></h4>
+
+<p>Fires when the client is resumed connection.</p>
+
+<h3 id="guild-events">Guild events</h3>
+
+<h4 id="guild_join-guild"><code>guild_join(guild)</code></h4>
+
+<p>Fires when client joins a guild.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild that was joined.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_available-guild"><code>guild_available(guild)</code></h4>
+
+<p>Fires when a guild becomes available.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild that became available.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_update-before-after"><code>guild_update(before, after)</code></h4>
+
+<p>Fires when client updates a guild.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_leave-guild"><code>guild_leave(guild)</code></h4>
+
+<p>Fires when client leaves a guild.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild that was left.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_destroy-guild"><code>guild_destroy(guild)</code></h4>
+
+<p>Fires when guild is destroyed.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild that was destroyed.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_integrations_update-guild"><code>guild_integrations_update(guild)</code></h4>
+
+<p>Fires when guild integrations are updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild that integrations were updated for.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_ban_add-guild-user"><code>guild_ban_add(guild, user)</code></h4>
+
+<p>Fires when a user is banned from a guild.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild that the user was banned from.</td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td><span class='object_link'><a href="Discorb/User.html" title="Discorb::User (class)">Discorb::User</a></span></td>
+<td>The user that was banned.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_ban_remove-guild-user"><code>guild_ban_remove(guild, user)</code></h4>
+
+<p>Fires when a user is unbanned from a guild.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild that the user was unbanned from.</td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td><span class='object_link'><a href="Discorb/User.html" title="Discorb::User (class)">Discorb::User</a></span></td>
+<td>The user that was unbanned.</td>
+</tr>
+</tbody></table>
+
+<h3 id="channel-events">Channel events</h3>
+
+<h4 id="channel_create-channel"><code>channel_create(channel)</code></h4>
+
+<p>Fires when a channel is created.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>channel</code></td>
+<td><span class='object_link'><a href="Discorb/Channel.html" title="Discorb::Channel (class)">Discorb::Channel</a></span></td>
+<td>The channel that was created.</td>
+</tr>
+</tbody></table>
+
+<h4 id="channel_update-before-after"><code>channel_update(before, after)</code></h4>
+
+<p>Fires when a channel is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/Channel.html" title="Discorb::Channel (class)">Discorb::Channel</a></span></td>
+<td>The channel before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/Channel.html" title="Discorb::Channel (class)">Discorb::Channel</a></span></td>
+<td>The channel after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="channel_delete-channel"><code>channel_delete(channel)</code></h4>
+
+<p>Fires when a channel is deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>channel</code></td>
+<td><span class='object_link'><a href="Discorb/Channel.html" title="Discorb::Channel (class)">Discorb::Channel</a></span></td>
+<td>The channel that was deleted.</td>
+</tr>
+</tbody></table>
+
+<h4 id="webhooks_update-event"><code>webhooks_update(event)</code></h4>
+
+<p>Fires when a webhook is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/WebhooksUpdateEvent.html" title="Discorb::Gateway::WebhooksUpdateEvent (class)">Discorb::Gateway::WebhooksUpdateEvent</a></span></td>
+<td>The webhook update event.</td>
+</tr>
+</tbody></table>
+
+<h4 id="thread_new-thread"><code>thread_new(thread)</code></h4>
+
+<p>Fires when a thread is created.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>thread</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread that was created.</td>
+</tr>
+</tbody></table>
+
+<h4 id="thread_join-thread"><code>thread_join(thread)</code></h4>
+
+<p>Fires when client joins a thread.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>thread</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread that was joined.</td>
+</tr>
+</tbody></table>
+
+<h4 id="thread_delete-thread"><code>thread_delete(thread)</code></h4>
+
+<p>Fires when a thread is deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>thread</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread that was deleted.</td>
+</tr>
+</tbody></table>
+
+<h4 id="thread_update-before-after"><code>thread_update(before, after)</code></h4>
+
+<p>Fires when a thread is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="thread_members_update-thread-added-removed"><code>thread_members_update(thread, added, removed)</code></h4>
+
+<p>Fires when a thread&#39;s members are updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>thread</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread that the members were updated for.</td>
+</tr>
+<tr>
+<td><code>added</code></td>
+<td>Array&lt;<span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span>&gt;</td>
+<td>An array of <span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span> objects that were added to the thread.</td>
+</tr>
+<tr>
+<td><code>removed</code></td>
+<td>Array&lt;<span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span>&gt;</td>
+<td>An array of <span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span> objects that were removed from the thread.</td>
+</tr>
+</tbody></table>
+
+<h4 id="thread_member_update-before-after"><code>thread_member_update(before, after)</code></h4>
+
+<p>Fires when a thread member is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>thread</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread that the member was updated for.</td>
+</tr>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span></td>
+<td>The thread member before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span></td>
+<td>The thread member after the update.</td>
+</tr>
+</tbody></table>
+
+<h3 id="integration-events">Integration events</h3>
+
+<h4 id="integration_create-integration"><code>integration_create(integration)</code></h4>
+
+<p>Fires when a guild integration is created.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>integration</code></td>
+<td><span class='object_link'><a href="Discorb/Integration.html" title="Discorb::Integration (class)">Discorb::Integration</a></span></td>
+<td>The created integration.</td>
+</tr>
+</tbody></table>
+
+<h4 id="integration_update-before-after"><code>integration_update(before, after)</code></h4>
+
+<p>Fires when a guild integration is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/Integration.html" title="Discorb::Integration (class)">Discorb::Integration</a></span></td>
+<td>The integration before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/Integration.html" title="Discorb::Integration (class)">Discorb::Integration</a></span></td>
+<td>The integration after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="integration_delete-integration"><code>integration_delete(integration)</code></h4>
+
+<p>Fires when a guild integration is deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>integration</code></td>
+<td><span class='object_link'><a href="Discorb/Integration.html" title="Discorb::Integration (class)">Discorb::Integration</a></span></td>
+<td>The deleted integration.</td>
+</tr>
+</tbody></table>
+
+<h3 id="message-events">Message events</h3>
+
+<h4 id="message-message"><code>message(message)</code></h4>
+
+<p>Fires when a message is created.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>message</code></td>
+<td><span class='object_link'><a href="Discorb/Message.html" title="Discorb::Message (class)">Discorb::Message</a></span></td>
+<td>The created message.</td>
+</tr>
+</tbody></table>
+
+<h4 id="message_update-event"><code>message_update(event)</code></h4>
+
+<p>Fires when a message is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/MessageUpdateEvent.html" title="Discorb::Gateway::MessageUpdateEvent (class)">Discorb::Gateway::MessageUpdateEvent</a></span></td>
+<td>The message after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="message_delete-message-channel-guild"><code>message_delete(message, channel, guild)</code></h4>
+
+<p>Fires when a message is deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>message</code></td>
+<td><span class='object_link'><a href="Discorb/Message.html" title="Discorb::Message (class)">Discorb::Message</a></span></td>
+<td>The deleted message.</td>
+</tr>
+<tr>
+<td><code>channel</code></td>
+<td><span class='object_link'><a href="Discorb/Channel.html" title="Discorb::Channel (class)">Discorb::Channel</a></span></td>
+<td>The channel the message was deleted from.</td>
+</tr>
+<tr>
+<td><code>guild</code></td>
+<td>?<span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild the message was deleted from.</td>
+</tr>
+</tbody></table>
+
+<h5 id="note">Note</h5>
+
+<p>This will fire when cached messages are deleted.</p>
+
+<h4 id="message_delete_id-message_id-channel-guild"><code>message_delete_id(message_id, channel, guild)</code></h4>
+
+<p>Fires when a message is deleted.
+Not like <a href="file._23message_delete.html" title="#message_delete">#message_delete</a> this will fire even message is not cached.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>message_id</code></td>
+<td><span class='object_link'><a href="Discorb/Snowflake.html" title="Discorb::Snowflake (class)">Discorb::Snowflake</a></span></td>
+<td>The deleted message ID.</td>
+</tr>
+<tr>
+<td><code>channel</code></td>
+<td><span class='object_link'><a href="Discorb/Channel.html" title="Discorb::Channel (class)">Discorb::Channel</a></span></td>
+<td>The channel the message was deleted from.</td>
+</tr>
+<tr>
+<td><code>guild</code></td>
+<td>?<span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild the message was deleted from.</td>
+</tr>
+</tbody></table>
+
+<h4 id="message_delete_bulk-messages"><code>message_delete_bulk(messages)</code></h4>
+
+<p>Fires when a bulk of messages are deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>messages</code></td>
+<td>Array&lt;<span class='object_link'><a href="Discorb/Message.html" title="Discorb::Message (class)">Discorb::Message</a></span>, <span class='object_link'><a href="Discorb/Gateway/UnknownDeleteBulkMessage.html" title="Discorb::Gateway::UnknownDeleteBulkMessage (class)">Discorb::Gateway::UnknownDeleteBulkMessage</a></span>&gt;</td>
+<td>The deleted messages.</td>
+</tr>
+</tbody></table>
+
+<h4 id="message_pin_update-event"><code>message_pin_update(event)</code></h4>
+
+<p>Fires when a message is pinned or unpinned.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/MessagePinEvent.html" title="Discorb::Gateway::MessagePinEvent (class)">Discorb::Gateway::MessagePinEvent</a></span></td>
+<td>The event object.</td>
+</tr>
+</tbody></table>
+
+<h4 id="typing_start-event"><code>typing_start(event)</code></h4>
+
+<p>Fires when a user starts typing.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/TypingStartEvent.html" title="Discorb::Gateway::TypingStartEvent (class)">Discorb::Gateway::TypingStartEvent</a></span></td>
+<td>The event object.</td>
+</tr>
+</tbody></table>
+
+<h3 id="reaction-events">Reaction events</h3>
+
+<h4 id="reaction_add-event"><code>reaction_add(event)</code></h4>
+
+<p>Fires when a reaction is added to a message.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/ReactionEvent.html" title="Discorb::Gateway::ReactionEvent (class)">Discorb::Gateway::ReactionEvent</a></span></td>
+<td>The event object.</td>
+</tr>
+</tbody></table>
+
+<h4 id="reaction_remove-event"><code>reaction_remove(event)</code></h4>
+
+<p>Fires when someone removes a reaction from a message.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/ReactionEvent.html" title="Discorb::Gateway::ReactionEvent (class)">Discorb::Gateway::ReactionEvent</a></span></td>
+<td>The event object.</td>
+</tr>
+</tbody></table>
+
+<h4 id="reaction_remove_all-event"><code>reaction_remove_all(event)</code></h4>
+
+<p>Fires when all reactions are removed from a message.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/ReactionRemoveAllEvent.html" title="Discorb::Gateway::ReactionRemoveAllEvent (class)">Discorb::Gateway::ReactionRemoveAllEvent</a></span></td>
+<td>The event object.</td>
+</tr>
+</tbody></table>
+
+<h4 id="reaction_remove_emoji-event"><code>reaction_remove_emoji(event)</code></h4>
+
+<p>Fires when a reaction is removed from a message.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>event</code></td>
+<td><span class='object_link'><a href="Discorb/Gateway/ReactionRemoveEmojiEvent.html" title="Discorb::Gateway::ReactionRemoveEmojiEvent (class)">Discorb::Gateway::ReactionRemoveEmojiEvent</a></span></td>
+<td>The event object.</td>
+</tr>
+</tbody></table>
+
+<h3 id="role-events">Role events</h3>
+
+<h4 id="role_create-role"><code>role_create(role)</code></h4>
+
+<p>Fires when a role is created.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>role</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The created role.</td>
+</tr>
+</tbody></table>
+
+<h4 id="role_update-before-after"><code>role_update(before, after)</code></h4>
+
+<p>Fires when a role is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The role before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The role after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="role_remove-role"><code>role_remove(role)</code></h4>
+
+<p>Fires when a role is deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>role</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The deleted role.</td>
+</tr>
+</tbody></table>
+
+<h3 id="member-events">Member events</h3>
+
+<h4 id="note">Note</h4>
+
+<p>These events requires the <code>guild_members</code> intent.</p>
+
+<h4 id="member_add-member"><code>member_add(member)</code></h4>
+
+<p>Fires when a member joins a guild.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>member</code></td>
+<td><span class='object_link'><a href="Discorb/Member.html" title="Discorb::Member (class)">Discorb::Member</a></span></td>
+<td>The member that joined.</td>
+</tr>
+</tbody></table>
+
+<h4 id="member_update-before-after"><code>member_update(before, after)</code></h4>
+
+<p>Fires when a member is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/Member.html" title="Discorb::Member (class)">Discorb::Member</a></span></td>
+<td>The member before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/Member.html" title="Discorb::Member (class)">Discorb::Member</a></span></td>
+<td>The member after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="member_remove-member"><code>member_remove(member)</code></h4>
+
+<p>Fires when a member is removed from a guild.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>member</code></td>
+<td><span class='object_link'><a href="Discorb/Member.html" title="Discorb::Member (class)">Discorb::Member</a></span></td>
+<td>The member that left.</td>
+</tr>
+</tbody></table>
+
+<h3 id="role-events">Role events</h3>
+
+<h4 id="role_create-role"><code>role_create(role)</code></h4>
+
+<p>Fires when a role is created.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>role</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The created role.</td>
+</tr>
+</tbody></table>
+
+<h4 id="role_update-before-after"><code>role_update(before, after)</code></h4>
+
+<p>Fires when a role is updated.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>before</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The role before the update.</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The role after the update.</td>
+</tr>
+</tbody></table>
+
+<h4 id="role_remove-role"><code>role_remove(role)</code></h4>
+
+<p>Fires when a role is deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>role</code></td>
+<td><span class='object_link'><a href="Discorb/Role.html" title="Discorb::Role (class)">Discorb::Role</a></span></td>
+<td>The deleted role.</td>
+</tr>
+</tbody></table>
+
+<h3 id="invite-events">Invite events</h3>
+
+<h4 id="invite_create-invite"><code>invite_create(invite)</code></h4>
+
+<p>Fires when a invite is created.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>invite</code></td>
+<td><span class='object_link'><a href="Discorb/Invite.html" title="Discorb::Invite (class)">Discorb::Invite</a></span></td>
+<td>The created invite.</td>
+</tr>
+</tbody></table>
+
+<h4 id="invite_delete-invite"><code>invite_delete(invite)</code></h4>
+
+<p>Fires when a invite is deleted.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>invite</code></td>
+<td><span class='object_link'><a href="Discorb/Invite.html" title="Discorb::Invite (class)">Discorb::Invite</a></span></td>
+<td>The deleted invite.</td>
+</tr>
+</tbody></table>
+
+<h3 id="interaction-events">Interaction events</h3>
+
+<h4 id="button_click-interaction"><code>button_click(interaction)</code></h4>
+
+<p>Fires when a button is clicked.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>interaction</code></td>
+<td><span class='object_link'><a href="Discorb/MessageComponentInteraction/Button.html" title="Discorb::MessageComponentInteraction::Button (class)">Discorb::MessageComponentInteraction::Button</a></span></td>
+<td>The interaction object.</td>
+</tr>
+</tbody></table>
+
+<h4 id="select_menu_select-interaction"><code>select_menu_select(interaction)</code></h4>
+
+<p>Fires when a select menu is selected.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>interaction</code></td>
+<td><span class='object_link'><a href="Discorb/MessageComponentInteraction/SelectMenu.html" title="Discorb::MessageComponentInteraction::SelectMenu (class)">Discorb::MessageComponentInteraction::SelectMenu</a></span></td>
+<td>The interaction object.</td>
+</tr>
+</tbody></table>
+
+<h3 id="voice-events">Voice events</h3>
+
+<p>It&#39;s too big, so they&#39;re documented in <a href="file.voice_events.html" title="Voice Events">Voice Events</a></p>
+
+<h3 id="low-level-events">Low-level events</h3>
+
+<h4 id="guild_create-guild"><code>guild_create(guild)</code></h4>
+
+<p>Fires when <code>GUILD_CREATE</code> is received.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild of the event.</td>
+</tr>
+</tbody></table>
+
+<h4 id="guild_delete-guild"><code>guild_delete(guild)</code></h4>
+
+<p>Fires when <code>GUILD_DELETE</code> is received.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>guild</code></td>
+<td><span class='object_link'><a href="Discorb/Guild.html" title="Discorb::Guild (class)">Discorb::Guild</a></span></td>
+<td>The guild of the event.</td>
+</tr>
+</tbody></table>
+
+<h4 id="thread_create-thread"><code>thread_create(thread)</code></h4>
+
+<p>Fires when <code>THREAD_CREATE</code> is received.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>thread</code></td>
+<td><span class='object_link'><a href="Discorb/ThreadChannel.html" title="Discorb::ThreadChannel (class)">Discorb::ThreadChannel</a></span></td>
+<td>The thread of the event.</td>
+</tr>
+</tbody></table>
+</div></div>
+
+    <div id="footer">
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/62658037f91f63365e945695f20180475fa7945c"><code>62658037f91f63365e945695f20180475fa7945c</code></a>, version v0.2.5, with YARD 0.9.26.
+    </div>
+
+    </div>
+  </body>
+</html>

@@ -74,7 +74,7 @@
 
 <h2 id="register-event">Register Event</h2>
 
-<p>Use Extension#event to register event, or Extension#once_event to register event only once.</p>
+<p>Use <span class='object_link'><a href="Discorb/Extension.html#event-instance_method" title="Discorb::Extension#event (method)">Discorb::Extension#event</a></span> to register event, or <span class='object_link'><a href="Discorb/Extension.html#once_event-instance_method" title="Discorb::Extension#once_event (method)">Discorb::Extension#once_event</a></span> to register event only once.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>MyExtension</span>
   <span class='id identifier rubyid_extend'>extend</span> <span class='const'><span class='object_link'><a href="Discorb.html" title="Discorb (module)">Discorb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Discorb/Extension.html" title="Discorb::Extension (module)">Extension</a></span></span>
@@ -91,11 +91,22 @@
 
 <h2 id="load-extension">Load extension</h2>
 
-<p>Use Client#extend to load extension.</p>
+<p>Use <span class='object_link'><a href="Discorb/Client.html#extend-instance_method" title="Discorb::Client#extend (method)">Discorb::Client#extend</a></span> to load extension.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>MyExtension</span>
+  <span class='id identifier rubyid_extend'>extend</span> <span class='const'><span class='object_link'><a href="Discorb.html" title="Discorb (module)">Discorb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Discorb/Extension.html" title="Discorb::Extension (module)">Extension</a></span></span>
+
+  <span class='id identifier rubyid_event'>event</span> <span class='symbol'>:message</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_message'>message</span><span class='op'>|</span>
+    <span class='comment'># ...
+</span>  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span> <span class='const'>MyExtension</span>
+</code></pre>
 
 <h2 id="access-client-from-extension">Access Client from extension</h2>
 
-<p>You can access Client from extension with <code>@client</code>.</p>
+<p>You can access <span class='object_link'><a href="Discorb/Client.html" title="Discorb::Client (class)">Discorb::Client</a></span> from extension with <code>@client</code>.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>MyExtension</span>
   <span class='id identifier rubyid_extend'>extend</span> <span class='const'><span class='object_link'><a href="Discorb.html" title="Discorb (module)">Discorb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Discorb/Extension.html" title="Discorb::Extension (module)">Extension</a></span></span>
@@ -108,7 +119,7 @@
 </div></div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/3605b70c9cf38156d0d1c4490f738476c33022d3"><code>3605b70c9cf38156d0d1c4490f738476c33022d3</code></a>, version v0.2.4, with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/c7cef1a0c3f97be50569284ed7f8845e85fcd81b"><code>c7cef1a0c3f97be50569284ed7f8845e85fcd81b</code></a>, version v0.3.0, with YARD 0.9.26.
     </div>
 
     </div>

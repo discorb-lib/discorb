@@ -334,7 +334,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of the flag.</p>
+</div></span>
   
 </li>
 
@@ -403,25 +404,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of the flag.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-229
-230
-231
-232
-233
-234
 235
 236
 237
-238</pre>
+238
+239
+240
+241
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_bool'>bool</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
@@ -506,22 +517,22 @@
       <pre class="lines">
 
 
-255
-256
-257
-258
-259
-260
 261
 262
 263
 264
 265
 266
-267</pre>
+267
+268
+269
+270
+271
+272
+273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_hash'>from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_allow'>allow</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -608,16 +619,16 @@
       <pre class="lines">
 
 
-186
-187
-188
 189
 190
 191
-192</pre>
+192
+193
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 189</span>
 
 <span class='kw'>def</span> <span class='op'>+</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
@@ -692,16 +703,16 @@
       <pre class="lines">
 
 
-201
-202
-203
 204
 205
 206
-207</pre>
+207
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='ivar'>@allow</span> <span class='op'>&amp;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>0</span>
@@ -774,9 +785,6 @@
       <pre class="lines">
 
 
-215
-216
-217
 218
 219
 220
@@ -786,10 +794,13 @@
 224
 225
 226
-227</pre>
+227
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='op'>[]=</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_bool'>bool</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_bool'>bool</span>
@@ -828,12 +839,12 @@
       <pre class="lines">
 
 
-144
-145
-146</pre>
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_allow'>allow</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_filter'>filter</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='ivar'>@allow</span> <span class='op'>&amp;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>0</span> <span class='rbrace'>}</span>
@@ -858,12 +869,12 @@
       <pre class="lines">
 
 
-156
-157
-158</pre>
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_allow_value'>allow_value</span>
   <span class='ivar'>@allow</span>
@@ -892,12 +903,12 @@
       <pre class="lines">
 
 
-150
-151
-152</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deny'>deny</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_filter'>filter</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='ivar'>@deny</span> <span class='op'>&amp;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>0</span> <span class='rbrace'>}</span>
@@ -922,12 +933,12 @@
       <pre class="lines">
 
 
-160
-161
-162</pre>
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deny_value'>deny_value</span>
   <span class='ivar'>@deny</span>
@@ -974,12 +985,12 @@
       <pre class="lines">
 
 
-240
-241
-242</pre>
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond_to_missing?'>respond_to_missing?</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid__arg'>_arg</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_delete_suffix'>delete_suffix</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='kw'>super</span>
@@ -1031,18 +1042,18 @@
       <pre class="lines">
 
 
-169
-170
-171
 172
 173
 174
 175
 176
-177</pre>
+177
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/permission.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_bits'>bits</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -1063,7 +1074,7 @@
 </div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/3605b70c9cf38156d0d1c4490f738476c33022d3"><code>3605b70c9cf38156d0d1c4490f738476c33022d3</code></a>, version v0.2.4, with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/c7cef1a0c3f97be50569284ed7f8845e85fcd81b"><code>c7cef1a0c3f97be50569284ed7f8845e85fcd81b</code></a>, version v0.3.0, with YARD 0.9.26.
     </div>
 
     </div>

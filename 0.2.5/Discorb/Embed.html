@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Discorb::Embed
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Discorb::Embed";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../a_index.html">Index (E)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Discorb.html" title="Discorb (module)">Discorb</a></span></span>
+     &raquo; 
+    <span class="title">Embed</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Discorb::Embed
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Discorb::Embed</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/discorb/embed.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Represents an embed of discord.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Embed/Author.html" title="Discorb::Embed::Author (class)">Author</a></span>, <span class='object_link'><a href="Embed/Field.html" title="Discorb::Embed::Field (class)">Field</a></span>, <span class='object_link'><a href="Embed/Footer.html" title="Discorb::Embed::Footer (class)">Footer</a></span>, <span class='object_link'><a href="Embed/Image.html" title="Discorb::Embed::Image (class)">Image</a></span>, <span class='object_link'><a href="Embed/Provider.html" title="Discorb::Embed::Provider (class)">Provider</a></span>, <span class='object_link'><a href="Embed/Thumbnail.html" title="Discorb::Embed::Thumbnail (class)">Thumbnail</a></span>, <span class='object_link'><a href="Embed/Video.html" title="Discorb::Embed::Video (class)">Video</a></span>
+    
+  
+</p>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#author-instance_method" title="#author (instance method)">#<strong>author</strong>  &#x21d2; Discorb::Embed::Author<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The author of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#color-instance_method" title="#color (instance method)">#<strong>color</strong>  &#x21d2; Discorb::Color<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The color of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#description-instance_method" title="#description (instance method)">#<strong>description</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The description of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fields-instance_method" title="#fields (instance method)">#<strong>fields</strong>  &#x21d2; Array&lt;Discorb::Embed::Field&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The fields of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#footer-instance_method" title="#footer (instance method)">#<strong>footer</strong>  &#x21d2; Discorb::Embed::Footer<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The footer of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#image-instance_method" title="#image (instance method)">#<strong>image</strong>  &#x21d2; Discorb::Embed::Image </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The image of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#thumbnail-instance_method" title="#thumbnail (instance method)">#<strong>thumbnail</strong>  &#x21d2; Discorb::Embed::Thumbnail </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The thumbnail of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#timestamp-instance_method" title="#timestamp (instance method)">#<strong>timestamp</strong>  &#x21d2; Time<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The timestamp of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#title-instance_method" title="#title (instance method)">#<strong>title</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The title of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#type-instance_method" title="#type (instance method)">#<strong>type</strong>  &#x21d2; Symbol </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The type of embed.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url-instance_method" title="#url (instance method)">#<strong>url</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The url of embed.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil, fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)  &#x21d2; Embed </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initialize a new Embed object.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_hash-instance_method" title="#to_hash (instance method)">#<strong>to_hash</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Convert embed to hash.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil, fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Discorb::Embed (class)">Embed</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Initialize a new Embed object.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>title</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The title of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>description</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The description of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>color</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Color.html" title="Discorb::Color (class)">Discorb::Color</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The color of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The url of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The timestamp of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>author</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Author.html" title="Discorb::Embed::Author (class)">Discorb::Embed::Author</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The author field of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>fields</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Embed/Field.html" title="Discorb::Embed::Field (class)">Discorb::Embed::Field</a></span>&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The fields of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>footer</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Footer.html" title="Discorb::Embed::Footer (class)">Discorb::Embed::Footer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The footer of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>image</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Image.html" title="Discorb::Embed::Image (class)">Discorb::Embed::Image</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The image of embed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>thumbnail</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Thumbnail.html" title="Discorb::Embed::Thumbnail (class)">Discorb::Embed::Thumbnail</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The thumbnail of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_description'>description</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>timestamp:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>author:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+                                               <span class='label'>fields:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>footer:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>image:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>thumbnail:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>data:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='ivar'>@title</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span>
+    <span class='ivar'>@description</span> <span class='op'>=</span> <span class='id identifier rubyid_description'>description</span>
+    <span class='ivar'>@url</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span>
+    <span class='ivar'>@timestamp</span> <span class='op'>=</span> <span class='id identifier rubyid_timestamp'>timestamp</span>
+    <span class='ivar'>@color</span> <span class='op'>=</span> <span class='id identifier rubyid_color'>color</span>
+    <span class='ivar'>@author</span> <span class='op'>=</span> <span class='id identifier rubyid_author'>author</span>
+    <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='id identifier rubyid_fields'>fields</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='ivar'>@footer</span> <span class='op'>=</span> <span class='id identifier rubyid_footer'>footer</span>
+    <span class='ivar'>@image</span> <span class='op'>=</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="Embed/Image.html" title="Discorb::Embed::Image (class)">Image</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Embed/Image.html#initialize-instance_method" title="Discorb::Embed::Image#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span>
+    <span class='ivar'>@thumbnail</span> <span class='op'>=</span> <span class='id identifier rubyid_thumbnail'>thumbnail</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_thumbnail'>thumbnail</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="Embed/Thumbnail.html" title="Discorb::Embed::Thumbnail (class)">Thumbnail</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Embed/Thumbnail.html#initialize-instance_method" title="Discorb::Embed::Thumbnail#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_thumbnail'>thumbnail</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_thumbnail'>thumbnail</span><span class='rparen'>)</span>
+    <span class='ivar'>@type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rich</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@title</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
+    <span class='ivar'>@description</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:description</span><span class='rbracket'>]</span>
+    <span class='ivar'>@url</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:url</span><span class='rbracket'>]</span>
+    <span class='ivar'>@timestamp</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:timestamp</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_iso8601'>iso8601</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:timestamp</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@type</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span>
+    <span class='ivar'>@color</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:color</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Color.html" title="Discorb::Color (class)">Color</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Color.html#initialize-instance_method" title="Discorb::Color#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:color</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@footer</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:footer</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Embed/Footer.html" title="Discorb::Embed::Footer (class)">Footer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Embed/Footer.html#initialize-instance_method" title="Discorb::Embed::Footer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:footer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>icon:</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:footer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:icon</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@author</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:author</span><span class='rbracket'>]</span>
+        <span class='const'><span class='object_link'><a href="Embed/Author.html" title="Discorb::Embed::Author (class)">Author</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Embed/Author.html#initialize-instance_method" title="Discorb::Embed::Author#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:author</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>icon:</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:author</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:icon</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                         <span class='label'>url:</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:author</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:url</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='ivar'>@thumbnail</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:thumbnail</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Embed/Thumbnail.html" title="Discorb::Embed::Thumbnail (class)">Thumbnail</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Embed/Thumbnail.html#initialize-instance_method" title="Discorb::Embed::Thumbnail#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:thumbnail</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@image</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:image</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Embed/Image.html" title="Discorb::Embed::Image (class)">Image</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Embed/Image.html#initialize-instance_method" title="Discorb::Embed::Image#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:image</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@video</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:video</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Embed/Video.html" title="Discorb::Embed::Video (class)">Video</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:video</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@provider</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:provider</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Embed/Provider.html" title="Discorb::Embed::Provider (class)">Provider</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:provider</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:fields</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Embed/Field.html" title="Discorb::Embed::Field (class)">Field</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Embed/Field.html#initialize-instance_method" title="Discorb::Embed::Field#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>inline:</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:inline</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="author=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="author-instance_method">
+  
+    #<strong>author</strong>  &#x21d2; <tt><span class='object_link'><a href="Embed/Author.html" title="Discorb::Embed::Author (class)">Discorb::Embed::Author</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The author of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Author.html" title="Discorb::Embed::Author (class)">Discorb::Embed::Author</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The author of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_author'>author</span>
+  <span class='ivar'>@author</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="color=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="color-instance_method">
+  
+    #<strong>color</strong>  &#x21d2; <tt><span class='object_link'><a href="Color.html" title="Discorb::Color (class)">Discorb::Color</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The color of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Color.html" title="Discorb::Color (class)">Discorb::Color</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The color of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_color'>color</span>
+  <span class='ivar'>@color</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="description=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="description-instance_method">
+  
+    #<strong>description</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The description of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The description of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_description'>description</span>
+  <span class='ivar'>@description</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="fields=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="fields-instance_method">
+  
+    #<strong>fields</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="Embed/Field.html" title="Discorb::Embed::Field (class)">Discorb::Embed::Field</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The fields of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Embed/Field.html" title="Discorb::Embed::Field (class)">Discorb::Embed::Field</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The fields of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
+  <span class='ivar'>@fields</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="footer=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="footer-instance_method">
+  
+    #<strong>footer</strong>  &#x21d2; <tt><span class='object_link'><a href="Embed/Footer.html" title="Discorb::Embed::Footer (class)">Discorb::Embed::Footer</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The footer of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Footer.html" title="Discorb::Embed::Footer (class)">Discorb::Embed::Footer</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The footer of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 23</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_footer'>footer</span>
+  <span class='ivar'>@footer</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="image=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="image-instance_method">
+  
+    #<strong>image</strong>  &#x21d2; <tt><span class='object_link'><a href="Embed/Image.html" title="Discorb::Embed::Image (class)">Discorb::Embed::Image</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The image of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Image.html" title="Discorb::Embed::Image (class)">Discorb::Embed::Image</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The image of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_image'>image</span>
+  <span class='ivar'>@image</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="thumbnail=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="thumbnail-instance_method">
+  
+    #<strong>thumbnail</strong>  &#x21d2; <tt><span class='object_link'><a href="Embed/Thumbnail.html" title="Discorb::Embed::Thumbnail (class)">Discorb::Embed::Thumbnail</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The thumbnail of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Embed/Thumbnail.html" title="Discorb::Embed::Thumbnail (class)">Discorb::Embed::Thumbnail</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The thumbnail of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_thumbnail'>thumbnail</span>
+  <span class='ivar'>@thumbnail</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="timestamp=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="timestamp-instance_method">
+  
+    #<strong>timestamp</strong>  &#x21d2; <tt><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The timestamp of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The timestamp of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_timestamp'>timestamp</span>
+  <span class='ivar'>@timestamp</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="title=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="title-instance_method">
+  
+    #<strong>title</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The title of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The title of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9
+10
+11</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 9</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_title'>title</span>
+  <span class='ivar'>@title</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="type-instance_method">
+  
+    #<strong>type</strong>  &#x21d2; <tt>Symbol</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The type of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The type of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
+  <span class='ivar'>@type</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="url=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="url-instance_method">
+  
+    #<strong>url</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The url of embed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The url of embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span>
+  <span class='ivar'>@url</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="to_hash-instance_method">
+  
+    #<strong>to_hash</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Convert embed to hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Converted embed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://discord.com/developers/docs/resources/channel#embed-object-embed-structure" target="_parent" title="Offical Discord API Docs">Offical Discord API Docs</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/discorb/embed.rb', line 95</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
+  <span class='lbrace'>{</span>
+    <span class='label'>title:</span> <span class='ivar'>@title</span><span class='comma'>,</span>
+    <span class='label'>description:</span> <span class='ivar'>@description</span><span class='comma'>,</span>
+    <span class='label'>url:</span> <span class='ivar'>@url</span><span class='comma'>,</span>
+    <span class='label'>timestamp:</span> <span class='ivar'>@timestamp</span><span class='op'>&amp;.</span><span class='id identifier rubyid_iso8601'>iso8601</span><span class='comma'>,</span>
+    <span class='label'>color:</span> <span class='ivar'>@color</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span>
+    <span class='label'>footer:</span> <span class='ivar'>@footer</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_hash'>to_hash</span><span class='comma'>,</span>
+    <span class='label'>image:</span> <span class='ivar'>@image</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_hash'>to_hash</span><span class='comma'>,</span>
+    <span class='label'>thumbnail:</span> <span class='ivar'>@thumbnail</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_hash'>to_hash</span><span class='comma'>,</span>
+    <span class='label'>author:</span> <span class='ivar'>@author</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_hash'>to_hash</span><span class='comma'>,</span>
+    <span class='label'>fields:</span> <span class='ivar'>@fields</span><span class='op'>&amp;.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_to_hash'>to_hash</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/62658037f91f63365e945695f20180475fa7945c"><code>62658037f91f63365e945695f20180475fa7945c</code></a>, version v0.2.5, with YARD 0.9.26.
+    </div>
+
+    </div>
+  </body>
+</html>

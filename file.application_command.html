@@ -69,7 +69,7 @@
 
 <h2 id="how-do-i-register-an-application-command">How do I register an application command?</h2>
 
-<p>Use <span class='object_link'><a href="Discorb/Command/Handler.html#slash-instance_method" title="Discorb::Command::Handler#slash (method)">Discorb::Command::Handler#slash</a></span>, Discorb::Command::Handler#group for slash commands, <span class='object_link'><a href="Discorb/Command/Handler.html#user_command-instance_method" title="Discorb::Command::Handler#user_command (method)">Discorb::Command::Handler#user_command</a></span> for user menu commands, and <span class='object_link'><a href="Discorb/Command/Handler.html#message_command-instance_method" title="Discorb::Command::Handler#message_command (method)">Discorb::Command::Handler#message_command</a></span> for message menu commands.</p>
+<p>Use <span class='object_link'><a href="Discorb/Command/Handler.html#slash-instance_method" title="Discorb::Command::Handler#slash (method)">Discorb::Command::Handler#slash</a></span>, <span class='object_link'><a href="Discorb/Command/Handler.html#slash_group-instance_method" title="Discorb::Command::Handler#slash_group (method)">Discorb::Command::Handler#slash_group</a></span> for slash commands, <span class='object_link'><a href="Discorb/Command/Handler.html#user_command-instance_method" title="Discorb::Command::Handler#user_command (method)">Discorb::Command::Handler#user_command</a></span> for user menu commands, and <span class='object_link'><a href="Discorb/Command/Handler.html#message_command-instance_method" title="Discorb::Command::Handler#message_command (method)">Discorb::Command::Handler#message_command</a></span> for message menu commands.</p>
 
 <h3 id="note">Note</h3>
 
@@ -159,24 +159,24 @@ Guild commands will be registered immediately.</p>
 <p><code>choices</code> should be unspecified if you don&#39;t want to use it.
 <code>choices</code> is hash like this:</p>
 
-<pre class="code ruby"><code class="ruby">{
-    &quot;vocaloid&quot; =&gt; {
-        required: true,
-        description: &quot;The vocaloid which you like.&quot;
-        type: :string,
-        choices: {
-            &quot;Hatsune Miku&quot; =&gt; &quot;miku&quot;,
-            &quot;Kagamine Rin&quot; =&gt; &quot;rin&quot;,
-            &quot;Kagamine Len&quot; =&gt; &quot;len&quot;,
-            &quot;Megurine Luka&quot; =&gt; &quot;luka&quot;,
-            &quot;MEIKO&quot; =&gt; &quot;meiko&quot;,
-            &quot;KAITO&quot; =&gt; &quot;kaito&quot;,
-        }
-    }
-}
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vocaloid</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+        <span class='label'>required:</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The vocaloid which you like.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>type:</span> <span class='symbol'>:string</span><span class='comma'>,</span>
+        <span class='label'>choices:</span> <span class='lbrace'>{</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hatsune Miku</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>miku</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kagamine Rin</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rin</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kagamine Len</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>len</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Megurine Luka</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>luka</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>MEIKO</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>meiko</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KAITO</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kaito</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+<span class='rbrace'>}</span>
 
-# Note: This aritcle is written in 8/31.
-</code></pre>
+<span class='comment'># Note: This aritcle is written in 8/31.
+</span></code></pre>
 
 <p>The key will be displayed in the user menu, and the value will be used as the argument.</p>
 
@@ -251,7 +251,7 @@ Guild commands will be registered immediately.</p>
 </span><span class='kw'>end</span>
 </code></pre>
 
-<p>You can make subcommand group by using Discorb::Command::GroupCommand#group.</p>
+<p>You can make subcommand group by using <span class='object_link'><a href="Discorb/Command/Command/GroupCommand.html#group-instance_method" title="Discorb::Command::Command::GroupCommand#group (method)">Discorb::Command::Command::GroupCommand#group</a></span>.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_group'>group</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_slash_group'>slash_group</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>permission</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Set/Get command permissions.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
@@ -425,7 +425,7 @@ Guild commands will be registered immediately.</p>
 </div></div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/3605b70c9cf38156d0d1c4490f738476c33022d3"><code>3605b70c9cf38156d0d1c4490f738476c33022d3</code></a>, version v0.2.4, with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/c7cef1a0c3f97be50569284ed7f8845e85fcd81b"><code>c7cef1a0c3f97be50569284ed7f8845e85fcd81b</code></a>, version v0.3.0, with YARD 0.9.26.
     </div>
 
     </div>

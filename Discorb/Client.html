@@ -2329,15 +2329,15 @@
       <pre class="lines">
 
 
-398
-399
-400
-401
-402
-403</pre>
+410
+411
+412
+413
+414
+415</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 398</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 410</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close!'>close!</span>
   <span class='ivar'>@connection</span><span class='period'>.</span><span class='id identifier rubyid_send_close'>send_close</span>
@@ -2448,7 +2448,19 @@
 178
 179
 180
-181</pre>
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 142</span>
@@ -2469,15 +2481,27 @@
         <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='kw'>if</span> <span class='ivar'>@events</span><span class='lbracket'>[</span><span class='id identifier rubyid_event_name'>event_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_events'>events</span> <span class='op'>=</span> <span class='ivar'>@events</span><span class='lbracket'>[</span><span class='id identifier rubyid_event_name'>event_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>on_</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_event_name'>event_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_event_method'>event_method</span> <span class='op'>=</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>on_</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_event_name'>event_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+      <span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_event_method'>event_method</span>
+        <span class='kw'>def</span> <span class='id identifier rubyid_id'>id</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>method</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_events'>events</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_event_method'>event_method</span>
+    <span class='kw'>end</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
       <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Event </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_event_name'>event_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> doesn&#39;t have any proc, skipping</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>next</span>
     <span class='kw'>end</span>
     <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dispatching event </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_event_name'>event_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='ivar'>@events</span><span class='lbracket'>[</span><span class='id identifier rubyid_event_name'>event_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
+    <span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
       <span class='id identifier rubyid_lambda'>lambda</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_event_args'>event_args</span><span class='op'>|</span>
         <span class='const'>Async</span><span class='lparen'>(</span><span class='label'>annotation:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Discorb event: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_event_name'>event_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_task'>task</span><span class='op'>|</span>
-          <span class='ivar'>@events</span><span class='lbracket'>[</span><span class='id identifier rubyid_event_name'>event_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_discriminator'>discriminator</span><span class='lbracket'>[</span><span class='symbol'>:once</span><span class='rbracket'>]</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Discorb.html" title="Discorb (module)">Discorb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Event.html" title="Discorb::Event (class)">Event</a></span></span><span class='rparen'>)</span>
+            <span class='ivar'>@events</span><span class='lbracket'>[</span><span class='id identifier rubyid_event_name'>event_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_discriminator'>discriminator</span><span class='lbracket'>[</span><span class='symbol'>:once</span><span class='rbracket'>]</span>
+          <span class='kw'>end</span>
           <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_event_args'>event_args</span><span class='rparen'>)</span>
           <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dispatched proc with ID </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>rescue</span> <span class='const'>StandardError</span><span class='comma'>,</span> <span class='const'>ScriptError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
@@ -2612,28 +2636,28 @@
       <pre class="lines">
 
 
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
 335
 336
 337
 338
 339
 340
-341</pre>
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 323</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 335</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_event_lock'>event_lock</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='comma'>,</span> <span class='id identifier rubyid_timeout'>timeout</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_check'>check</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_task'>task</span><span class='op'>|</span>
@@ -2703,24 +2727,24 @@
       <pre class="lines">
 
 
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
 366
 367
-368</pre>
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 366</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:events</span><span class='rparen'>)</span>
@@ -2836,18 +2860,18 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-265
-266
-267
-268
-269
-270
-271
-272
-273</pre>
+277
+278
+279
+280
+281
+282
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_application'>fetch_application</span><span class='lparen'>(</span><span class='label'>force:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -2967,15 +2991,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-212
-213
-214
-215
-216
-217</pre>
+224
+225
+226
+227
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_channel'>fetch_channel</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3092,15 +3116,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-230
-231
-232
-233
-234
-235</pre>
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_guild'>fetch_guild</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3238,15 +3262,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-248
-249
-250
-251
-252
-253</pre>
+260
+261
+262
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_invite'>fetch_invite</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>with_count:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>with_expiration:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3331,15 +3355,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-282
-283
-284
-285
-286
-287</pre>
+294
+295
+296
+297
+298
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 294</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_nitro_sticker_packs'>fetch_nitro_sticker_packs</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3456,15 +3480,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-194
-195
-196
-197
-198
-199</pre>
+206
+207
+208
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_user'>fetch_user</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3492,12 +3516,12 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-345
-346
-347</pre>
+357
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> user=\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -3892,25 +3916,25 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
 390
 391
 392
-393</pre>
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 390</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_task'>task</span><span class='op'>|</span>
@@ -4000,23 +4024,23 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
 307
-308</pre>
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 307</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_presence'>update_presence</span><span class='lparen'>(</span><span class='id identifier rubyid_activity'>activity</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_payload'>payload</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4042,7 +4066,7 @@ If application was cached, it will be used.</p>
 </div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/3605b70c9cf38156d0d1c4490f738476c33022d3"><code>3605b70c9cf38156d0d1c4490f738476c33022d3</code></a>, version v0.2.4, with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/c7cef1a0c3f97be50569284ed7f8845e85fcd81b"><code>c7cef1a0c3f97be50569284ed7f8845e85fcd81b</code></a>, version v0.3.0, with YARD 0.9.26.
     </div>
 
     </div>

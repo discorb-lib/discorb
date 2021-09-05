@@ -62,8 +62,8 @@
 <h2 id="how-to-use-events">How to use events</h2>
 
 <p>discorb uses event driven programming.
-You can register event handlers with Client#on.
-Alternatively, you can use Client#once to register a one-time event handler.</p>
+You can register event handlers with <span class='object_link'><a href="Discorb/Client.html#on-instance_method" title="Discorb::Client#on (method)">Discorb::Client#on</a></span>.
+Alternatively, you can use <span class='object_link'><a href="Discorb/Client.html#once-instance_method" title="Discorb::Client#once (method)">Discorb::Client#once</a></span> to register a one-time event handler.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span> <span class='symbol'>:message</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span>
@@ -71,6 +71,19 @@ Alternatively, you can use Client#once to register a one-time event handler.</p>
 </code></pre>
 
 <p>This example will print the content of every message received.</p>
+
+<p>Since v0.2.5, you can also register event handlers by adding a method to the client, with the prefix <code>on_</code> and the event name as the method name.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Discorb.html" title="Discorb (module)">Discorb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Discorb/Client.html" title="Discorb::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Discorb/Client.html#initialize-instance_method" title="Discorb::Client#initialize (method)">new</a></span></span>
+
+<span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_client'>client</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_on_ready'>on_ready</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ready!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>If you want to seperate event handlers from the client, consider using <span class='object_link'><a href="Discorb/Extension.html" title="Discorb::Extension (module)">Discorb::Extension</a></span>. <a href="file.extension.html" title="Learn more about extensions">Learn more about extensions</a>.</p>
 
 <h2 id="event-reference">Event reference</h2>
 
@@ -342,7 +355,7 @@ Alternatively, you can use Client#once to register a one-time event handler.</p>
 </thead><tbody>
 <tr>
 <td><code>event</code></td>
-<td>Discorb::WebhooksUpdateEvent</td>
+<td><span class='object_link'><a href="Discorb/Gateway/WebhooksUpdateEvent.html" title="Discorb::Gateway::WebhooksUpdateEvent (class)">Discorb::Gateway::WebhooksUpdateEvent</a></span></td>
 <td>The webhook update event.</td>
 </tr>
 </tbody></table>
@@ -442,12 +455,12 @@ Alternatively, you can use Client#once to register a one-time event handler.</p>
 </tr>
 <tr>
 <td><code>added</code></td>
-<td>Array&lt;ThreadChannel::Member&gt;</td>
+<td>Array&lt;<span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span>&gt;</td>
 <td>An array of <span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span> objects that were added to the thread.</td>
 </tr>
 <tr>
 <td><code>removed</code></td>
-<td>Array&lt;ThreadChannel::Member&gt;</td>
+<td>Array&lt;<span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span>&gt;</td>
 <td>An array of <span class='object_link'><a href="Discorb/ThreadChannel/Member.html" title="Discorb::ThreadChannel::Member (class)">Discorb::ThreadChannel::Member</a></span> objects that were removed from the thread.</td>
 </tr>
 </tbody></table>
@@ -614,7 +627,7 @@ Alternatively, you can use Client#once to register a one-time event handler.</p>
 <h4 id="message_delete_id-message_id-channel-guild"><code>message_delete_id(message_id, channel, guild)</code></h4>
 
 <p>Fires when a message is deleted.
-Not like #message_delete this will fire even message is not cached.</p>
+Not like <a href="file._23message_delete.html" title="#message_delete">#message_delete</a> this will fire even message is not cached.</p>
 
 <table><thead>
 <tr>
@@ -671,7 +684,7 @@ Not like #message_delete this will fire even message is not cached.</p>
 </thead><tbody>
 <tr>
 <td><code>event</code></td>
-<td>Discorb::Gateway::MessagePinUpdateEvent</td>
+<td><span class='object_link'><a href="Discorb/Gateway/MessagePinEvent.html" title="Discorb::Gateway::MessagePinEvent (class)">Discorb::Gateway::MessagePinEvent</a></span></td>
 <td>The event object.</td>
 </tr>
 </tbody></table>
@@ -1093,7 +1106,7 @@ Not like #message_delete this will fire even message is not cached.</p>
 </div></div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/3605b70c9cf38156d0d1c4490f738476c33022d3"><code>3605b70c9cf38156d0d1c4490f738476c33022d3</code></a>, version v0.2.4, with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/c7cef1a0c3f97be50569284ed7f8845e85fcd81b"><code>c7cef1a0c3f97be50569284ed7f8845e85fcd81b</code></a>, version v0.3.0, with YARD 0.9.26.
     </div>
 
     </div>

@@ -990,7 +990,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#edit-instance_method" title="#edit (instance method)">#<strong>edit</strong>  &#x21d2; Object </a>
+      <a href="#edit-instance_method" title="#edit (instance method)">#<strong>edit</strong>(message_id, content = nil, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, supress: nil)  &#x21d2; Object </a>
     
 
     
@@ -3112,14 +3112,14 @@
       <pre class="lines">
 
 
-292
-293
 294
 295
-296</pre>
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 292</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 294</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_reaction'>add_reaction</span><span class='lparen'>(</span><span class='id identifier rubyid_emoji'>emoji</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3177,14 +3177,14 @@
       <pre class="lines">
 
 
-237
-238
 239
 240
-241</pre>
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete!'>delete!</span><span class='lparen'>(</span><span class='label'>reason:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3199,7 +3199,7 @@
       <div class="method_details ">
   <h3 class="signature " id="edit-instance_method">
   
-    #<strong>edit</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>edit</strong>(message_id, content = nil, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, supress: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -3224,6 +3224,8 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
       
         &mdash;
         <div class='inline'><p>The message content.</p>
@@ -3238,6 +3240,8 @@
       
         <span class='type'>(<tt><span class='object_link'><a href="Embed.html" title="Discorb::Embed (class)">Discorb::Embed</a></span></tt>)</span>
       
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -3254,6 +3258,8 @@
         <span class='type'>(<tt>Array&lt;Discord::Embed&gt;</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
       
         &mdash;
         <div class='inline'><p>The embeds to send.</p>
@@ -3268,6 +3274,8 @@
       
         <span class='type'>(<tt><span class='object_link'><a href="AllowedMentions.html" title="Discorb::AllowedMentions (class)">Discorb::AllowedMentions</a></span></tt>)</span>
       
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -3284,6 +3292,8 @@
         <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Component.html" title="Discorb::Component (class)">Discorb::Component</a></span>&gt;</tt>, <tt>Array&lt;Array&lt;<span class='object_link'><a href="Component.html" title="Discorb::Component (class)">Discorb::Component</a></span>&gt;&gt;</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
       
         &mdash;
         <div class='inline'><p>The components to send.</p>
@@ -3298,6 +3308,8 @@
       
         <span class='type'>(<tt>Boolean</tt>)</span>
       
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -3319,14 +3331,18 @@
 227
 228
 229
-230</pre>
+230
+231
+232</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 226</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span><span class='lparen'>(</span><span class='id identifier rubyid_message_id'>message_id</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>embed:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>embeds:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>allowed_mentions:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+                                    <span class='label'>components:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>supress:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_channel'>channel</span><span class='period'>.</span><span class='id identifier rubyid_edit_message'>edit_message</span><span class='lparen'>(</span><span class='ivar'>@id</span><span class='comma'>,</span> <span class='op'>...</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
+    <span class='id identifier rubyid_channel'>channel</span><span class='period'>.</span><span class='id identifier rubyid_edit_message'>edit_message</span><span class='lparen'>(</span><span class='ivar'>@id</span><span class='comma'>,</span> <span class='id identifier rubyid_message_id'>message_id</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='label'>embed:</span> <span class='id identifier rubyid_embed'>embed</span><span class='comma'>,</span> <span class='label'>embeds:</span> <span class='id identifier rubyid_embeds'>embeds</span><span class='comma'>,</span> <span class='label'>allowed_mentions:</span> <span class='id identifier rubyid_allowed_mentions'>allowed_mentions</span><span class='comma'>,</span>
+                                                   <span class='label'>components:</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='label'>supress:</span> <span class='id identifier rubyid_supress'>supress</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3459,8 +3475,6 @@
       <pre class="lines">
 
 
-342
-343
 344
 345
 346
@@ -3480,10 +3494,12 @@
 360
 361
 362
-363</pre>
+363
+364
+365</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 344</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_reacted_users'>fetch_reacted_users</span><span class='lparen'>(</span><span class='id identifier rubyid_emoji'>emoji</span><span class='comma'>,</span> <span class='label'>limit:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>after:</span> <span class='int'>0</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3537,12 +3553,12 @@
       <pre class="lines">
 
 
-406
-407
-408</pre>
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 406</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 408</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='ivar'>@content</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> id=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@id</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -3628,14 +3644,14 @@
       <pre class="lines">
 
 
-372
-373
 374
 375
-376</pre>
+376
+377
+378</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 372</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 374</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pin'>pin</span><span class='lparen'>(</span><span class='label'>reason:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3702,14 +3718,14 @@
       <pre class="lines">
 
 
-279
-280
 281
 282
-283</pre>
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 279</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 281</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_publish'>publish</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3799,14 +3815,14 @@
       <pre class="lines">
 
 
-307
-308
 309
 310
-311</pre>
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 309</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_reaction'>remove_reaction</span><span class='lparen'>(</span><span class='id identifier rubyid_emoji'>emoji</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3911,14 +3927,14 @@
       <pre class="lines">
 
 
-323
-324
 325
 326
-327</pre>
+327
+328
+329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 323</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 325</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_reaction_of'>remove_reaction_of</span><span class='lparen'>(</span><span class='id identifier rubyid_emoji'>emoji</span><span class='comma'>,</span> <span class='id identifier rubyid_member'>member</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -4002,14 +4018,14 @@
       <pre class="lines">
 
 
-268
-269
 270
 271
-272</pre>
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 270</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reply'>reply</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_kwargs'>kwargs</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -4067,14 +4083,14 @@
       <pre class="lines">
 
 
-396
-397
 398
 399
-400</pre>
+400
+401
+402</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 398</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start_thread'>start_thread</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_kwargs'>kwargs</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -4149,17 +4165,17 @@
       <pre class="lines">
 
 
-250
-251
 252
 253
 254
 255
 256
-257</pre>
+257
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 250</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_reference'>to_reference</span><span class='lparen'>(</span><span class='label'>fail_if_not_exists:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='lbrace'>{</span>
@@ -4229,14 +4245,14 @@
       <pre class="lines">
 
 
-383
-384
 385
 386
-387</pre>
+387
+388
+389</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/message.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unpin'>unpin</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -4253,7 +4269,7 @@
 </div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/3605b70c9cf38156d0d1c4490f738476c33022d3"><code>3605b70c9cf38156d0d1c4490f738476c33022d3</code></a>, version v0.2.4, with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/c7cef1a0c3f97be50569284ed7f8845e85fcd81b"><code>c7cef1a0c3f97be50569284ed7f8845e85fcd81b</code></a>, version v0.3.0, with YARD 0.9.26.
     </div>
 
     </div>
