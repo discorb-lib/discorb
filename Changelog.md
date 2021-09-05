@@ -73,3 +73,4 @@
 ## 0.2.5
 
 - Add: Add way to add event listener
+- Change: Move document to https://discorb-lib.github.io/
