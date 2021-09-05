@@ -86,6 +86,7 @@ FILES = {
   GITIGNORE
 }
 
+# @!visibility private
 def make_files
   iputs "Making files..."
   FILES.each do |file, content|
@@ -94,6 +95,7 @@ def make_files
   sputs "Made files.\n"
 end
 
+# @!visibility private
 def bundle_init
   iputs "Initializing bundle..."
   File.write($path + "/Gemfile", <<~'RUBY', mode: "wb")
@@ -111,6 +113,7 @@ def bundle_init
   sputs "Installed gems.\n"
 end
 
+# @!visibility private
 def git_init
   iputs "Initializing git repository..."
   system "git init"
