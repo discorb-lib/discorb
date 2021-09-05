@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
+require_relative "lib/discorb/utils/colored_puts"
 task default: %i[]
 
+# @!visibility private
 def get_version
   require_relative "lib/discorb/common"
   latest_commit = `git log --oneline`.force_encoding("utf-8").split("\n")[0]
@@ -13,14 +15,7 @@ def get_version
   version
 end
 
-def gputs(text)
-  puts "\e[90m#{text}\e[m"
-end
-
-def sputs(text)
-  puts "\e[92m#{text}\e[m"
-end
-
+desc "Build emoji_table.rb"
 task :emoji_table do
   require_relative "lib/discorb"
 
@@ -47,6 +42,7 @@ task :emoji_table do
   sputs "Successfully made emoji_table.rb"
 end
 
+desc "Format files"
 task :format do
   Dir.glob("**/*.rb").each do |file|
     next if file.start_with?("vendor")
@@ -63,13 +59,21 @@ task :format do
     end
   end
 end
+
+desc "Generate document and replace"
 namespace :document do
   version = get_version
+
+  desc "Just generate document"
   task :yard do
     sh "yardoc -o doc/#{version}"
   end
+
+  desc "Replace files"
   namespace :replace do
     require "fileutils"
+
+    desc "Replace CSS"
     task :css do
       gputs "Replacing css"
       Dir.glob("template-replace/files/**/*.*")
@@ -78,6 +82,8 @@ namespace :document do
       end
       sputs "Successfully replaced css"
     end
+
+    desc "Replace HTML"
     task :html do
       require_relative "template-replace/scripts/sidebar.rb"
       require_relative "template-replace/scripts/version.rb"
@@ -104,6 +110,8 @@ namespace :document do
       yard_replace("doc/#{version}", version)
       gputs "Successfully replaced htmls"
     end
+
+    desc "Replace EOL"
     task :eol do
       gputs "Replacing CRLF with LF"
       Dir.glob("doc/**/*.*") do |file|
@@ -122,6 +130,8 @@ namespace :document do
     end
   end
   task :replace => %i[replace:css replace:html replace:eol]
+
+  desc "Build all versions"
   task :build_all do
     require "fileutils"
     gputs "Building all versions"
@@ -145,6 +155,8 @@ namespace :document do
     sh "git switch main -f"
     sputs "Successfully built all versions"
   end
+
+  desc "Push to discorb-lib/discorb-lib.github.io"
   task :push do
     gputs "Pushing documents"
     Dir.chdir("doc") do
