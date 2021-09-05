@@ -496,7 +496,7 @@ li.r2 {
 #nav {
   box-shadow: none;
   border-color: var(--background-primary);
-  right: 11px;
+  /* right: 11px; */
 }
 
 #search a {
