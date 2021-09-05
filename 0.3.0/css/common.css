@@ -1,0 +1,519 @@
+@media(prefers-color-scheme:light) {
+  * {
+    --header-primary: #060607;
+    --header-secondary: #4f5660;
+    --text-normal: #2e3338;
+    --text-muted: #747f8d;
+    --text-link: #0067e0;
+    --text-positive: #3ba55c;
+    --interactive-normal: #4f5660;
+    --interactive-hover: #2e3338;
+    --interactive-active: #060607;
+    --interactive-muted: #c7ccd1;
+    --background-primary: #fff;
+    --background-secondary: #f2f3f5;
+    --background-secondary-alt: #ebedef;
+    --background-tertiary: #e3e5e8;
+    --background-accent: #747f8d;
+    --background-floating: #fff;
+    --background-mobile-primary: #f8f9f9;
+    --background-mobile-secondary: #fff;
+    --background-modifier-hover: rgba(116, 127, 141, 0.08);
+    --background-modifier-active: rgba(116, 127, 141, 0.16);
+    --background-modifier-selected: rgba(116, 127, 141, 0.24);
+    --background-modifier-accent: rgba(6, 6, 7, 0.08);
+    --info-positive-text: #000;
+    --info-warning-text: #000;
+    --info-danger-text: #000;
+    --info-help-background: rgba(0, 103, 224, 0.1);
+    --info-help-foreground: #0067e0;
+    --info-help-text: #000;
+    --status-warning-text: #fff;
+    --scrollbar-thin-thumb: rgba(79, 84, 92, 0.3);
+    --scrollbar-thin-track: transparent;
+    --scrollbar-auto-thumb: #ccc;
+    --scrollbar-auto-track: #f2f2f2;
+    --scrollbar-auto-scrollbar-color-thumb: #e3e5e8;
+    --scrollbar-auto-scrollbar-color-track: #f2f3f5;
+    --elevation-stroke: 0 0 0 1px rgba(6, 6, 7, 0.08);
+    --elevation-low: 0 1px 0 rgba(6, 6, 7, 0.1), 0 1.5px 0 rgba(6, 6, 7, 0.025), 0 2px 0 rgba(6, 6, 7, 0.025);
+    --elevation-medium: 0 4px 4px rgba(0, 0, 0, 0.08);
+    --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.16);
+    --logo-primary: #5865f2;
+    --control-brand-foreground: #5865f2;
+    --background-mentioned: rgba(250, 166, 26, 0.1);
+    --background-mentioned-hover: rgba(250, 166, 26, 0.2);
+    --background-message-hover: rgba(6, 6, 7, 0.02);
+    --channels-default: #6a7480;
+    --guild-header-text-shadow: 0 1px 1px hsla(0, 0%, 100%, 0.4);
+    --channeltextarea-background: #ebedef;
+    --activity-card-background: #fff;
+    --textbox-markdown-syntax: #6a7480;
+    --deprecated-card-bg: #f8f9f9;
+    --deprecated-card-editable-bg: rgba(246, 246, 247, 0.6);
+    --deprecated-store-bg: #f8f9f9;
+    --deprecated-quickswitcher-input-background: #fff;
+    --deprecated-quickswitcher-input-placeholder: rgba(79, 84, 92, 0.3);
+    --deprecated-text-input-bg: rgba(79, 84, 92, 0.02);
+    --deprecated-text-input-border: rgba(79, 84, 92, 0.3);
+    --deprecated-text-input-border-hover: #b9bbbe;
+    --deprecated-text-input-border-disabled: #dcddde;
+    --deprecated-text-input-prefix: #b9bbbe;
+  }
+}
+
+@media(prefers-color-scheme:dark) {
+  * {
+    --header-primary: #fff;
+    --header-secondary: #b9bbbe;
+    --text-normal: #dcddde;
+    --text-muted: #72767d;
+    --text-link: #00b0f4;
+    --text-positive: #4fdc7b;
+    --interactive-normal: #b9bbbe;
+    --interactive-hover: #dcddde;
+    --interactive-active: #fff;
+    --interactive-muted: #4f545c;
+    --background-primary: #36393f;
+    --background-secondary: #2f3136;
+    --background-secondary-alt: #292b2f;
+    --background-tertiary: #202225;
+    --background-accent: #4f545c;
+    --background-floating: #18191c;
+    --background-mobile-primary: #36393f;
+    --background-mobile-secondary: #2f3136;
+    --background-modifier-hover: rgba(79, 84, 92, 0.16);
+    --background-modifier-active: rgba(79, 84, 92, 0.24);
+    --background-modifier-selected: rgba(79, 84, 92, 0.32);
+    --background-modifier-accent: hsla(0, 0%, 100%, 0.06);
+    --info-positive-text: #fff;
+    --info-warning-text: #fff;
+    --info-danger-text: #fff;
+    --info-help-background: rgba(0, 176, 244, 0.1);
+    --info-help-foreground: #00b0f4;
+    --info-help-text: #fff;
+    --status-warning-text: #000;
+    --scrollbar-thin-thumb: #202225;
+    --scrollbar-thin-track: transparent;
+    --scrollbar-auto-thumb: #202225;
+    --scrollbar-auto-track: #2e3338;
+    --scrollbar-auto-scrollbar-color-thumb: #202225;
+    --scrollbar-auto-scrollbar-color-track: #2f3136;
+    --elevation-stroke: 0 0 0 1px rgba(4, 4, 5, 0.15);
+    --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
+    --elevation-medium: 0 4px 4px rgba(0, 0, 0, 0.16);
+    --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
+    --logo-primary: #fff;
+    --control-brand-foreground: #a5b3e7;
+    --background-mentioned: rgba(250, 166, 26, 0.1);
+    --background-mentioned-hover: rgba(250, 166, 26, 0.08);
+    --background-message-hover: rgba(4, 4, 5, 0.07);
+    --channels-default: #8e9297;
+    --guild-header-text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    --channeltextarea-background: #40444b;
+    --activity-card-background: #202225;
+    --textbox-markdown-syntax: #8e9297;
+    --deprecated-card-bg: rgba(32, 34, 37, 0.6);
+    --deprecated-card-editable-bg: rgba(32, 34, 37, 0.3);
+    --deprecated-store-bg: #36393f;
+    --deprecated-quickswitcher-input-background: #72767d;
+    --deprecated-quickswitcher-input-placeholder: hsla(0, 0%, 100%, 0.3);
+    --deprecated-text-input-bg: rgba(0, 0, 0, 0.1);
+    --deprecated-text-input-border: rgba(0, 0, 0, 0.3);
+    --deprecated-text-input-border-hover: #040405;
+    --deprecated-text-input-border-disabled: #202225;
+    --deprecated-text-input-prefix: #dcddde;
+  }
+}
+
+* {
+  --text-warning: #faa61a;
+  --text-danger: #ed4245;
+  --info-positive-background: rgba(59, 165, 92, 0.1);
+  --info-positive-foreground: #3ba55c;
+  --info-warning-background: rgba(250, 166, 26, 0.1);
+  --info-warning-foreground: #faa61a;
+  --info-danger-background: rgba(237, 66, 69, 0.1);
+  --info-danger-foreground: #ed4245;
+  --status-positive-background: #3ba55c;
+  --status-positive-text: #fff;
+  --status-warning-background: #faa61a;
+  --status-danger-background: #ed4245;
+  --status-danger-text: #fff;
+  --focus-primary: #00b0f4;
+  --discord-theme: #5865f2;
+  --discord-theme-dark: #4752c4;
+  --monospace-font: Consolas, Andale Mono WT, Andale Mono, Lucida Console, Menlo, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Monaco, Courier New, Courier, monospace;
+  --general-font: Whitney, Hiragino Sans, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, Osaka, "MS PGothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+.summary_desc,
+body,
+p.signature .extras,
+h3.signature .extras {
+  font-family: var(--general-font);
+}
+
+body {
+  color: var(--text-normal);
+  font-weight: 100;
+  font-size: 14px;
+  background-color: var(--background-secondary);
+}
+
+#main {
+  background-color: var(--background-primary);
+}
+
+.fixed_header {
+  background: #cc342d;
+}
+
+a,
+a:visited,
+#main #content a,
+#main #content a:visited {
+  color: var(--text-link);
+}
+
+a:hover,
+#main #content a:hover {
+  text-decoration: underline;
+  background: transparent;
+}
+
+#full_list_header {
+  color: #fff !important;
+}
+
+#full_list_nav a {
+  color: #fff !important;
+}
+
+#full_list_nav a:hover {
+  color: #eee !important
+}
+
+#search {
+  color: #fff8;
+}
+
+ul.summary,
+.summary_desc .object_link a,
+.docstring .object_link a,
+#filecontents pre.code,
+.docstring pre.code,
+.source_code pre,
+pre.code code,
+pre.code span,
+p.inherited a,
+.tags ul .name,
+code,
+p.signature .aliases .names,
+h3.signature .aliases .names,
+tt {
+  font-family: var(--monospace-font);
+}
+
+pre.code {
+  color: var(--header-secondary);
+  tab-size: 2;
+}
+
+pre.code .info.file {
+  color: var(--header-secondary);
+}
+
+pre.code .val,
+pre.code .tstring_content,
+pre.code .heredoc_beg,
+pre.code .heredoc_end,
+pre.code .qwords_beg,
+pre.code .qwords_end,
+pre.code .qwords_sep,
+pre.code .words_beg,
+pre.code .words_end,
+pre.code .words_sep,
+pre.code .qsymbols_beg,
+pre.code .qsymbols_end,
+pre.code .qsymbols_sep,
+pre.code .symbols_beg,
+pre.code .symbols_end,
+pre.code .symbols_sep,
+pre.code .tstring,
+pre.code .dstring {
+  color: #2aa198;
+}
+
+pre.code .fid,
+pre.code .rubyid_new,
+pre.code .rubyid_to_s,
+pre.code .rubyid_to_sym,
+pre.code .rubyid_to_f,
+pre.code .dot+pre.code .id,
+pre.code .rubyid_to_i pre.code .rubyid_each {
+  color: #0085FF;
+}
+
+pre.code .comment {
+  color: var(--interactive-muted);
+}
+
+pre.code .const,
+pre.code .constant {
+  color: #b58900;
+}
+
+pre.code .label,
+pre.code .symbol {
+  color: #cb4b16;
+}
+
+pre.code .kw,
+pre.code .rubyid_require,
+pre.code .rubyid_extend,
+pre.code .rubyid_include {
+  color: #859900;
+}
+
+pre.code .ivar {
+  color: #3498db;
+}
+
+pre.code .gvar,
+pre.code .rubyid_backref,
+pre.code .rubyid_nth_ref {
+  color: #1abc91;
+}
+
+pre.code .regexp,
+.dregexp {
+  color: #2aa198;
+}
+
+li.clicked>.item {
+  color: #eee;
+}
+
+li.clicked>.item a,
+li.clicked>.item a:visited {
+  color: #fff;
+}
+
+li.clicked>.item {
+  background: #5865f2;
+}
+
+li.odd,
+li.even {
+  background: var(--background-secondary);
+}
+
+.item:hover {
+  background: var(--background-secondary-alt);
+}
+
+
+#full_list_nav span::after {
+  color: #fff8;
+}
+
+p.signature,
+h3.signature {
+  border: 1px solid rgba(88, 101, 242, .5);
+  background: rgba(88, 101, 242, .1);
+
+}
+
+p.signature strong,
+h3.signature strong {
+  font-weight: 500;
+}
+
+.summary_signature a:hover {
+  text-decoration: none !important;
+}
+
+.note.title.readonly {
+  --lighter: #f1c40f;
+  --darker: #c27c0e;
+}
+
+.note.title.writeonly {
+  --lighter: #9b59b6;
+  --darker: #71368a;
+}
+
+.note.title.constructor {
+  --lighter: #3498db;
+  --darker: #206694;
+}
+
+.note.title.abstract {
+  --lighter: #979c9f;
+  --darker: #546e7a;
+}
+
+.note.title {
+  background: var(--background-primary) !important;
+  padding: 4px;
+}
+
+@media(prefers-color-scheme:dark) {
+  .note.title {
+    color: var(--lighter) !important;
+    border: 1px solid var(--darker) !important;
+  }
+}
+
+@media(prefers-color-scheme:light) {
+  .note.title {
+    color: var(--darker) !important;
+    border: 1px solid var(--lighter) !important;
+  }
+}
+
+#toc {
+  box-shadow: none;
+}
+
+#content.insearch #search,
+#content.insearch #noresults {
+  background: transparent;
+}
+
+.git_sha {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.box_info dl>*,
+.summary_signature,
+pre.code,
+code,
+.summary_desc .object_link a,
+.docstring .object_link a {
+  background: var(--background-secondary) !important;
+  border-color: var(--background-tertiary) !important;
+
+}
+
+code[class=""] {
+  line-height: 2;
+}
+
+.docstring .notetag {
+  --dstr-back: var(--info-positive-background);
+  --dstr-fore: var(--info-positive-foreground);
+}
+
+.docstring .todo {
+  --dstr-back: var(--info-warning-background);
+  --dstr-fore: var(--info-warning-foreground);
+}
+
+.docstring .abstract {
+  --dstr-back: var(--background-modifier-hover);
+  --dstr-fore: var(--interactive-hover);
+}
+
+.docstring .note {
+  border-color: var(--dstr-fore) !important;
+  background: var(--dstr-back) !important;
+  color: var(--text-normal);
+  border-left-width: 1px;
+}
+
+thead th {
+  background: var(--background-secondary-alt) !important;
+  border-color: var(--background-tertiary) !important;
+}
+
+tbody td {
+  background: var(--background-secondary) !important;
+  border-color: var(--background-tertiary) !important;
+}
+
+.inheritanceTree,
+.toggleDefines {
+  background: var(--background-secondary-alt) !important;
+  border-left-color: var(--background-tertiary) !important;
+}
+
+p.signature .extras,
+h3.signature .extras {
+  color: var(--interactive-normal);
+}
+
+p.signature .not_defined_here,
+h3.signature .not_defined_here,
+p.signature .aliases,
+h3.signature .aliases {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+p.signature .aliases .names,
+h3.signature .aliases .names {
+  color: var(--text-normal);
+}
+
+#menu .title {
+  color: var(--text-normal);
+}
+
+#menu a,
+#menu a:visited {
+  color: var(--text-muted);
+}
+
+code {
+  color: var(--text-normal) !important;
+}
+
+h2 small a,
+#toc {
+  background: var(--background-secondary-alt) !important;
+  border-color: var(--background-tertiary) !important;
+}
+
+span.summary_signature {
+  line-height: 2;
+}
+
+
+#listing table td {
+  background: var(--background-primary) !important;
+}
+
+li.r1,
+li.r2 {
+  background: var(--background-secondary) !important;
+}
+
+#nav {
+  box-shadow: none;
+  border-color: var(--background-primary);
+  /* right: 11px; */
+}
+
+#search a {
+  box-shadow: none;
+
+}
+
+#search a {
+  background: var(--background-secondary);
+  border-color: var(--background-tertiary);
+  color: var(--interactive-normal);
+  fill: var(--interactive-normal);
+}
+
+#search a.active {
+  background: var(--background-accent);
+  border-color: var(--background-tertiary);
+  color: var(--interactive-active);
+  fill: var(--interactive-active);
+}
