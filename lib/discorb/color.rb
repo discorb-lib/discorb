@@ -169,5 +169,6 @@ module Discorb
     end
   end
 
+  # @return [Class] The alias of `Discorb::Color`.
   Colour = Color
 end
