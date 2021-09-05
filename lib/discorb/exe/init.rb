@@ -1,9 +1,9 @@
-# description: Make files for the project.
+# description: Make files for the discorb project.
 
 require "optparse"
 require_relative "../utils/colored_puts"
 
-$pwd = Dir.pwd
+$path = Dir.pwd
 
 FILES = {
   "main.rb" => <<~'RUBY',
@@ -89,14 +89,14 @@ FILES = {
 def make_files
   iputs "Making files..."
   FILES.each do |file, content|
-    File.write($pwd + "/#{file}", format(content, token: $values[:token]), mode: "wb")
+    File.write($path + "/#{file}", format(content, token: $values[:token]), mode: "wb")
   end
   sputs "Made files.\n"
 end
 
 def bundle_init
   iputs "Initializing bundle..."
-  File.write($pwd + "/Gemfile", <<~'RUBY', mode: "wb")
+  File.write($path + "/Gemfile", <<~'RUBY', mode: "wb")
     # frozen_string_literal: true
 
     source "https://rubygems.org"
@@ -122,27 +122,60 @@ def git_init
           " to change commit message of initial commit.\n"
 end
 
-opt = OptionParser.new "A tools to make a new client."
+opt = OptionParser.new <<~BANNER
+                         A tool to make a new project.
+
+                         Usage: discorb init [options] [dir]
+
+                                   dir                        The directory to make the files in.
+                       BANNER
 
 $values = {
   bundle: true,
   git: true,
+  force: false,
   token: "TOKEN",
 }
 
-opt.on("-b", "--[no-]bundle", "Whether to use bundle. Default to true.") do |v|
+opt.on("--[no-]bundle", "Whether to use bundle. Default to true.") do |v|
   $values[:bundle] = v
 end
 
-opt.on("-g", "--[no-]git", "Whether to initialize git. Default to true") do |v|
+opt.on("--[no-]git", "Whether to initialize git. Default to true.") do |v|
   $values[:git] = v
 end
 
-opt.on("-t", "--token", "The name of token environment variable. Default to TOKEN.") do |v|
+opt.on("-t NAME", "--token NAME", "The name of token environment variable. Default to TOKEN.") do |v|
   $values[:token] = v
 end
 
-opt.parse!(ARGV[1..])
+opt.on("-f", "--force", "Whether to force use directory. Default to false.") do |v|
+  $values[:force] = v
+end
+
+ARGV.delete_at(0)
+
+opt.parse!(ARGV)
+
+if (dir = ARGV[0])
+  $path += "/#{dir}"
+  if Dir.exist?($path)
+    if Dir.empty?($path)
+      gputs "Found \e[30m#{dir}\e[90m and empty, using this directory."
+    else
+      if $values[:force]
+        gputs "Found \e[30m#{dir}\e[90m and not empty, but force is on, using this directory."
+      else
+        eputs "Directory \e[31m#{dir}\e[91m already exists and not empty. Use \e[31m-f\e[91m to force."
+        exit
+      end
+    end
+  else
+    Dir.mkdir($path)
+    gputs "Couldn't find \e[30m#{dir}\e[90m, created directory."
+  end
+  Dir.chdir($path)
+end
 
 bundle_init if $values[:bundle]
 
@@ -150,4 +183,4 @@ make_files
 
 git_init if $values[:git]
 
-sputs "\nSuccessfully made a simple client at \e[32m#{$pwd}\e[92m."
+sputs "\nSuccessfully made a new project at \e[32m#{$path}\e[92m."
