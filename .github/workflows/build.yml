@@ -20,7 +20,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
-      uses:
+      uses: ruby/setup-ruby@v1.68.0
+      with:
         ruby-version: 3.0
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Clone repository 
