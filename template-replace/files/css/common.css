@@ -310,6 +310,11 @@ li.even {
   background: var(--background-secondary);
 }
 
+li.current {
+  background: var(--background-tertiary);
+}
+
+
 .item:hover {
   background: var(--background-secondary-alt);
 }

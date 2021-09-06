@@ -7,10 +7,11 @@ task default: %i[]
 # @!visibility private
 def get_version
   require_relative "lib/discorb/common"
-  latest_commit = `git log --oneline`.force_encoding("utf-8").split("\n")[0]
-  version = Discorb::VERSION
-  unless latest_commit.downcase.include?("update version")
-    version += "-dev"
+  tag = `git tag --points-at HEAD`.force_encoding("utf-8").strip
+  if tag.empty?
+    version = "main"
+  else
+    version = Discorb::VERSION
   end
   version
 end
@@ -103,7 +104,7 @@ namespace :document do
       end
 
       iputs "Building version tab"
-      build_version_sidebar("doc/#{version}")
+      build_version_sidebar("doc/#{version}", version)
       iputs "Replacing _index.html"
       replace_index("doc/#{version}", version)
       iputs "Replacing YARD credits"
@@ -136,6 +137,10 @@ namespace :document do
     require "fileutils"
     iputs "Building all versions"
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
+    Rake::Task["document:yard"].execute
+    Rake::Task["document:replace:html"].execute
+    Rake::Task["document:replace:css"].execute
+    Rake::Task["document:replace:eol"].execute
     tags = `git tag`.force_encoding("utf-8").split("\n")
     tags.each do |tag|
       sh "git checkout #{tag} -f"
