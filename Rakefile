@@ -159,11 +159,9 @@ namespace :document do
   desc "Push to discorb-lib/discorb-lib.github.io"
   task :push do
     iputs "Pushing documents"
-    Dir.chdir("doc") do
-      sh "git add ."
-      sh "git commit -m \"Update: Update document\""
-      sh "git push -f"
-    end
+    sh "git add doc"
+    sh "git commit -m \"Update: Update document\""
+    sh "git subtree push --prefix doc doc main"
     sputs "Successfully pushed documents"
   end
 end
