@@ -67,7 +67,7 @@ namespace :document do
 
   desc "Just generate document"
   task :yard do
-    sh "yardoc -o doc/#{version}"
+    sh "bundle exec yardoc -o doc/#{version}"
   end
 
   desc "Replace files"
