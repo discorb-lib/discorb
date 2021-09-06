@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: CLI: discorb init
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "init";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="a_index.html">Index</a> &raquo; 
+    <span class="title">File: CLI: discorb init</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="discorb-init">discorb init</h1>
+
+<p>This command will create a new project in the directory.</p>
+
+<h2 id="usage">Usage</h2>
+
+<pre class="code bash"><code class="bash">discorb init [options] [dir]
+</code></pre>
+
+<h2 id="options">Options</h2>
+
+<h3 id="dir"><code>dir</code></h3>
+
+<p>The directory to create the project in.
+Defaults to the current directory.
+If the directory exists and is not empty, an error is returned.
+You can use <code>--force</code> to overwrite an existing directory.</p>
+
+<h3 id="no-bundle"><code>--[no-]bundle</code></h3>
+
+<p>Whether to use bundle.
+If true, the command will create Gemfile and execute <code>bundle install</code>.
+Default to true.</p>
+
+<h3 id="no-git"><code>--[no-]git</code></h3>
+
+<p>Whether to initialize git.
+If true, the command will initialize git and commit the initial files with commit message <code>Initial commit</code>.
+Use <code>git commit --amend -m &quot;...&quot;</code> to change the commit message.
+Default to true.</p>
+
+<h3 id="t-token"><code>-t</code>, <code>--token</code></h3>
+
+<p>The name of token environment variable.
+Default to TOKEN.</p>
+
+<h3 id="f-force"><code>-f</code>, <code>--force</code></h3>
+
+<p>Whether to overwrite an existing directory.
+Default to false.</p>
+
+<h2 id="file-structure">File structure</h2>
+
+<p>The following files will be created:</p>
+
+<table><thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>.env</code></td>
+<td>Environment variables.</td>
+</tr>
+<tr>
+<td><code>.gitignore</code></td>
+<td>Git ignore file. Won&#39;t be created if <code>--git</code> is false.</td>
+</tr>
+<tr>
+<td><code>Gemfile</code></td>
+<td>Gemfile. Won&#39;t be created if <code>--bundle</code> is false.</td>
+</tr>
+<tr>
+<td><code>Gemfile.lock</code></td>
+<td>Gemfile lock file. Won&#39;t be created if <code>--bundle</code> is false.</td>
+</tr>
+<tr>
+<td><code>main.rb</code></td>
+<td>Main script.</td>
+</tr>
+</tbody></table>
+</div></div>
+
+    <div id="footer">
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/0054d6e15c090b22eb5fbafa7116e9f19ad0e9d2"><code>0054d6e15c090b22eb5fbafa7116e9f19ad0e9d2</code></a>, version (main), with YARD 0.9.26.
+    </div>
+
+    </div>
+  </body>
+</html>
