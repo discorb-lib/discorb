@@ -1,8 +1,8 @@
 name: Build YARD with main
 
 on:
-  push:
-    branches: [ main ]
+  schedule:
+    cron: "*/5 * * * *"
 
 jobs:
   main:
@@ -16,6 +16,20 @@ jobs:
         with:
           ruby-version: 3.0.2
           bundler-cache: true
+      - name: Check date
+        run: |
+          ruby <<RUBY
+            require 'net/https'
+            time = Time.now - Time.at(`git log --format=%cd -1 --date=raw`.force_encoding("utf-8").strip.split[0].to_i)
+            if time > 300
+              puts "The last commit was more than 5 minutes ago. Canceling workflow..."
+              http = Net::HTTP.new('api.github.com', 443)
+              http.use_ssl = true
+              http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+              http.post('/repos/' + ENV['GITHUB_REPOSITORY'] + '/actions/workflows/' + ENV['GITHUB_RUN_ID'] + '/cancel', '{"reason": "The last commit was more than 5 minutes ago."}')
+            end
+
+          RUBY
       - name: Set up git settings
         run: |
           git config --global user.email "action@github.com"
