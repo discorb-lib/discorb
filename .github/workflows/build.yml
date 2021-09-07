@@ -20,7 +20,7 @@ jobs:
         run: |
           ruby <<RUBY
             require 'net/https'
-            time = Time.now - Time.at(`git log --format=%cd -1 --date=raw`.force_encoding("utf-8").strip.split[0].to_i)
+            time = Time.now - Time.at("`git log --format=%cd -1 --date=raw`".force_encoding("utf-8").strip.split[0].to_i)
             if time > 300
               puts "The last commit was more than 5 minutes ago. Canceling workflow..."
               http = Net::HTTP.new('api.github.com', 443)
