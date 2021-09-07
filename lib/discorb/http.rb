@@ -32,12 +32,7 @@ module Discorb
     def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.get(get_path(path), get_headers(headers, "", audit_log_reason), **kwargs)
-        rd = resp.body
-        data = if rd.nil? || rd.empty?
-            nil
-          else
-            JSON.parse(rd, symbolize_names: true)
-          end
+        data = get_response_data(resp)
         test_error(if resp.code == "429"
           @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
           task.sleep(data[:retry_after])
@@ -66,12 +61,7 @@ module Discorb
     def post(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        rd = resp.body
-        data = if rd.nil? || rd.empty?
-            nil
-          else
-            JSON.parse(rd, symbolize_names: true)
-          end
+        data = get_response_data(resp)
         test_error(if resp.code == "429"
           task.sleep(data[:retry_after])
           post(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -132,12 +122,7 @@ module Discorb
     def put(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        rd = resp.body
-        data = if rd.nil? || rd.empty?
-            nil
-          else
-            JSON.parse(rd, symbolize_names: true)
-          end
+        data = get_response_data(resp)
         test_error(if resp.code == "429"
           task.sleep(data[:retry_after])
           put(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -164,12 +149,7 @@ module Discorb
     def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         resp = http.delete(get_path(path), get_headers(headers, "", audit_log_reason))
-        rd = resp.body
-        data = if rd.nil? || rd.empty?
-            nil
-          else
-            JSON.parse(rd, symbolize_names: true)
-          end
+        data = get_response_data(resp)
         test_error(if resp.code == "429"
           task.sleep(data[:retry_after])
           delete(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -255,6 +235,18 @@ module Discorb
           API_BASE_URL + path
         end
       URI(full_path).path
+    end
+
+    def get_response_data(resp)
+      if resp["Via"].nil?
+        raise CloudFlareBanError.new(@client, resp)
+      end
+      rd = resp.body
+      if rd.nil? || rd.empty?
+        nil
+      else
+        JSON.parse(rd, symbolize_names: true)
+      end
     end
 
     def http

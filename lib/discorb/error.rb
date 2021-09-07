@@ -35,6 +35,7 @@ module Discorb
 
   #
   # Represents a HTTP error.
+  # @abstract
   #
   class HTTPError < DiscorbError
     # @return [String] the HTTP response code.
@@ -76,6 +77,20 @@ module Discorb
   # Represents a 404 error.
   #
   class NotFoundError < HTTPError
+  end
+
+  #
+  # Represents a error because of a cloudflare ban.
+  #
+  class CloudFlareBanError < HTTPError
+    def initialize(resp, client)
+      @client = client
+      @client.close!
+      DiscorbError.instance_method(:initialize).bind(self).call(<<~MESSAGE)
+        The client is banned from CloudFlare.
+        Hint: Try to increase the number of requests per second, e.g. Use sleep in between requests.
+      MESSAGE
+    end
   end
 
   #
