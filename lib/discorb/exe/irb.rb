@@ -9,10 +9,16 @@ require "optparse"
 intents_value = Discorb::Intents.all.value
 token_file = "token"
 
-opt = OptionParser.new
+ARGV.delete_at 0
+
+opt = OptionParser.new <<~BANNER
+                         This command will start an interactive Ruby shell with connected client.
+
+                         Usage: discorb irb [options]
+                       BANNER
 opt.on("-i", "--intents", "intents to use, default to all") { |v| intents_value = v }
 opt.on("-t", "--token-file", "token file to load, default to \"token\"") { |v| token_file = v }
-opt.parse(ARGV)
+opt.parse!(ARGV)
 
 client = Discorb::Client.new(intents: Discorb::Intents.from_value(intents_value))
 $messages = []

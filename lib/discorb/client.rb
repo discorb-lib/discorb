@@ -382,11 +382,68 @@ module Discorb
 
     #
     # Starts the client.
+    # @note This method behavior will change by CLI.
+    # @see file:docs/cli.md
     #
     # @param [String] token The token to use.
     #
     def run(token)
+      case ENV["DISCORB_CLI_FLAG"]
+      when nil
+        start_client(token)
+      when "run"
+        require "json"
+        options = JSON.parse(ENV["DISCORB_CLI_OPTIONS"], symbolize_names: true)
+        Process.daemon if options[:daemon]
+        if options[:log_level]
+          if options[:log_level] == "none"
+            @log.out = nil
+          else
+            @log.out = case options[:log_file]
+              when nil, "stderr"
+                $stderr
+              when "stdout"
+                $stdout
+              else
+                File.open(options[:log_file], "a")
+              end
+            @log.level = options[:log_level].to_sym
+            @log.colorize_log = case options[:log_color]
+              when nil
+                if @log.out == $stdout || @log.out == $stderr
+                  true
+                else
+                  false
+                end
+              when true, false
+                options[:log_color]
+              end
+          end
+        end
+        start_client(token)
+      when "setup_command"
+        setup_commands(token)
+      end
+    end
+
+    #
+    # Stops the client.
+    #
+    def close!
+      @connection.send_close
+      @tasks.each(&:stop)
+      @status = :closed
+      @close_condition.signal
+    end
+
+    private
+
+    def start_client(token)
       Async do |task|
+        trap(:SIGINT) {
+          @log.info "SIGINT received, closing..."
+          close!
+        }
         @token = token.to_s
         @close_condition = Async::Condition.new
         main_task = Async do
@@ -400,16 +457,6 @@ module Discorb
         @close_condition.wait
         main_task.stop
       end
-    end
-
-    #
-    # Stops the client.
-    #
-    def close!
-      @connection.send_close
-      @tasks.each(&:stop)
-      @status = :closed
-      @close_condition.signal
     end
   end
 end
