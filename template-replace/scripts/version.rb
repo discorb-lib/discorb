@@ -19,7 +19,6 @@ def build_version_sidebar(dir, version)
   if version == "main"
     cls += " current"
   end
-  sha = `git rev-parse HEAD`.force_encoding("utf-8").strip
-  res += template.gsub("!version!", "main").gsub("!path!", "../main").gsub("!class!", cls).gsub("!sha!", sha)
+  res += template.gsub("!version!", "main").gsub("!path!", "../main").gsub("!class!", cls).gsub("!sha!", "(Latest on GitHub)")
   File.write(dir + "/version_list.html", raw.gsub("<!--replace-->", res))
 end
