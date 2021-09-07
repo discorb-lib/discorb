@@ -2310,15 +2310,15 @@
       <pre class="lines">
 
 
-408
-409
-410
-411
-412
-413</pre>
+432
+433
+434
+435
+436
+437</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 408</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 432</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close!'>close!</span>
   <span class='ivar'>@connection</span><span class='period'>.</span><span class='id identifier rubyid_send_close'>send_close</span>
@@ -3864,7 +3864,14 @@ If application was cached, it will be used.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Starts the client.</p>
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>This method behavior will change by CLI.</p>
+</div>
+  </div>
+
+<p>Starts the client.</p>
 
 
   </div>
@@ -3891,14 +3898,19 @@ If application was cached, it will be used.</p>
 </ul>
 
 
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="../file.cli.html" title="CLI tools">CLI tools</a></li>
+    
+  </ul>
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-388
-389
 390
 391
 392
@@ -3912,25 +3924,71 @@ If application was cached, it will be used.</p>
 400
 401
 402
-403</pre>
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 388</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 390</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
-  <span class='const'>Async</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_task'>task</span><span class='op'>|</span>
-    <span class='ivar'>@token</span> <span class='op'>=</span> <span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-    <span class='ivar'>@close_condition</span> <span class='op'>=</span> <span class='const'>Async</span><span class='op'>::</span><span class='const'>Condition</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-    <span class='id identifier rubyid_main_task'>main_task</span> <span class='op'>=</span> <span class='const'>Async</span> <span class='kw'>do</span>
-      <span class='ivar'>@status</span> <span class='op'>=</span> <span class='symbol'>:running</span>
-      <span class='id identifier rubyid_connect_gateway'>connect_gateway</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
-    <span class='kw'>rescue</span>
-      <span class='ivar'>@status</span> <span class='op'>=</span> <span class='symbol'>:stopped</span>
-      <span class='ivar'>@close_condition</span><span class='period'>.</span><span class='id identifier rubyid_signal'>signal</span>
-      <span class='id identifier rubyid_raise'>raise</span>
+  <span class='kw'>case</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DISCORB_CLI_FLAG</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>when</span> <span class='kw'>nil</span>
+    <span class='id identifier rubyid_start_client'>start_client</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>run</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>json</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DISCORB_CLI_OPTIONS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_daemon'>daemon</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:daemon</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:log_level</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:log_level</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span>
+        <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='kw'>nil</span>
+      <span class='kw'>else</span>
+        <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:log_file</span><span class='rbracket'>]</span>
+          <span class='kw'>when</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stderr</span><span class='tstring_end'>&quot;</span></span>
+            <span class='gvar'>$stderr</span>
+          <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stdout</span><span class='tstring_end'>&quot;</span></span>
+            <span class='gvar'>$stdout</span>
+          <span class='kw'>else</span>
+            <span class='const'><span class='object_link'><a href="File.html" title="Discorb::File (class)">File</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:log_file</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+          <span class='kw'>end</span>
+        <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:log_level</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+        <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_colorize_log'>colorize_log</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:log_color</span><span class='rbracket'>]</span>
+          <span class='kw'>when</span> <span class='kw'>nil</span>
+            <span class='kw'>if</span> <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_out'>out</span> <span class='op'>==</span> <span class='gvar'>$stdout</span> <span class='op'>||</span> <span class='ivar'>@log</span><span class='period'>.</span><span class='id identifier rubyid_out'>out</span> <span class='op'>==</span> <span class='gvar'>$stderr</span>
+              <span class='kw'>true</span>
+            <span class='kw'>else</span>
+              <span class='kw'>false</span>
+            <span class='kw'>end</span>
+          <span class='kw'>when</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>false</span>
+            <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:log_color</span><span class='rbracket'>]</span>
+          <span class='kw'>end</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='ivar'>@close_condition</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
-    <span class='id identifier rubyid_main_task'>main_task</span><span class='period'>.</span><span class='id identifier rubyid_stop'>stop</span>
+    <span class='id identifier rubyid_start_client'>start_client</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setup_command</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_setup_commands'>setup_commands</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -4047,7 +4105,7 @@ If application was cached, it will be used.</p>
 </div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/611cb0df50c24b1e48807ad5135fb4a82beddb78"><code>611cb0df50c24b1e48807ad5135fb4a82beddb78</code></a>, version (main), with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/08765ced501b73a316d051b771994103aee9dbda"><code>08765ced501b73a316d051b771994103aee9dbda</code></a>, version (main), with YARD 0.9.26.
     </div>
 
     </div>
