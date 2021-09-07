@@ -840,7 +840,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(allowed_mentions: nil, intents: nil, message_caches: 1000, log: nil, colorize_log: false, log_level: :info, wait_until_ready: true, overwrite_application_commands: true)  &#x21d2; Client </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(allowed_mentions: nil, intents: nil, message_caches: 1000, log: nil, colorize_log: false, log_level: :info, wait_until_ready: true)  &#x21d2; Client </a>
     
 
     
@@ -1027,7 +1027,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(allowed_mentions: nil, intents: nil, message_caches: 1000, log: nil, colorize_log: false, log_level: :info, wait_until_ready: true, overwrite_application_commands: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Discorb::Client (class)">Client</a></span></tt> 
+    #<strong>initialize</strong>(allowed_mentions: nil, intents: nil, message_caches: 1000, log: nil, colorize_log: false, log_level: :info, wait_until_ready: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Discorb::Client (class)">Client</a></span></tt> 
   
 
   
@@ -1163,23 +1163,6 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>overwrite_application_commands</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>true</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Whether to overwrite application commands on ready.</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 
@@ -1189,6 +1172,7 @@
       <pre class="lines">
 
 
+64
 65
 66
 67
@@ -1213,17 +1197,15 @@
 86
 87
 88
-89
-90
-91</pre>
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span>
   <span class='label'>allowed_mentions:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>intents:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message_caches:</span> <span class='int'>1000</span><span class='comma'>,</span>
   <span class='label'>log:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>colorize_log:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>log_level:</span> <span class='symbol'>:info</span><span class='comma'>,</span>
-  <span class='label'>wait_until_ready:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>overwrite_application_commands:</span> <span class='kw'>true</span>
+  <span class='label'>wait_until_ready:</span> <span class='kw'>true</span>
 <span class='rparen'>)</span>
   <span class='ivar'>@allowed_mentions</span> <span class='op'>=</span> <span class='id identifier rubyid_allowed_mentions'>allowed_mentions</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="AllowedMentions.html" title="Discorb::AllowedMentions (class)">AllowedMentions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="AllowedMentions.html#initialize-instance_method" title="Discorb::AllowedMentions#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>everyone:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>roles:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>users:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@intents</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_intents'>intents</span> <span class='kw'>or</span> <span class='const'><span class='object_link'><a href="Intents.html" title="Discorb::Intents (class)">Intents</a></span></span><span class='period'>.</span><span class='id identifier rubyid_default'><span class='object_link'><a href="Intents.html#default-class_method" title="Discorb::Intents.default (method)">default</a></span></span><span class='rparen'>)</span>
@@ -1244,7 +1226,6 @@
   <span class='ivar'>@tasks</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@commands</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='ivar'>@overwrite_application_commands</span> <span class='op'>=</span> <span class='id identifier rubyid_overwrite_application_commands'>overwrite_application_commands</span>
   <span class='ivar'>@status</span> <span class='op'>=</span> <span class='symbol'>:initialized</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2329,15 +2310,15 @@
       <pre class="lines">
 
 
+408
+409
 410
 411
 412
-413
-414
-415</pre>
+413</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 410</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 408</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close!'>close!</span>
   <span class='ivar'>@connection</span><span class='period'>.</span><span class='id identifier rubyid_send_close'>send_close</span>
@@ -2409,6 +2390,8 @@
       <pre class="lines">
 
 
+140
+141
 142
 143
 144
@@ -2458,12 +2441,10 @@
 188
 189
 190
-191
-192
-193</pre>
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dispatch'>dispatch</span><span class='lparen'>(</span><span class='id identifier rubyid_event_name'>event_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -2636,6 +2617,8 @@
       <pre class="lines">
 
 
+333
+334
 335
 336
 337
@@ -2652,12 +2635,10 @@
 348
 349
 350
-351
-352
-353</pre>
+351</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 335</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 333</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_event_lock'>event_lock</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='comma'>,</span> <span class='id identifier rubyid_timeout'>timeout</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_check'>check</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_task'>task</span><span class='op'>|</span>
@@ -2727,6 +2708,8 @@
       <pre class="lines">
 
 
+364
+365
 366
 367
 368
@@ -2739,12 +2722,10 @@
 375
 376
 377
-378
-379
-380</pre>
+378</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 366</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 364</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:events</span><span class='rparen'>)</span>
@@ -2860,18 +2841,18 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+275
+276
 277
 278
 279
 280
 281
 282
-283
-284
-285</pre>
+283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 277</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 275</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_application'>fetch_application</span><span class='lparen'>(</span><span class='label'>force:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -2991,15 +2972,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+222
+223
 224
 225
 226
-227
-228
-229</pre>
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_channel'>fetch_channel</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3116,15 +3097,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+240
+241
 242
 243
 244
-245
-246
-247</pre>
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_guild'>fetch_guild</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3262,15 +3243,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+258
+259
 260
 261
 262
-263
-264
-265</pre>
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_invite'>fetch_invite</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>with_count:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>with_expiration:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3355,15 +3336,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+292
+293
 294
 295
 296
-297
-298
-299</pre>
+297</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 294</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_nitro_sticker_packs'>fetch_nitro_sticker_packs</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3480,15 +3461,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+204
+205
 206
 207
 208
-209
-210
-211</pre>
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_user'>fetch_user</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span>
@@ -3516,12 +3497,12 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-357
-358
-359</pre>
+355
+356
+357</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 355</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> user=\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -3646,15 +3627,15 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+102
+103
 104
 105
 106
-107
-108
-109</pre>
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='id identifier rubyid_event_name'>event_name</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_discriminator'>discriminator</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ne'>ne</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Event.html" title="Discorb::Event (class)">Event</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Event.html#initialize-instance_method" title="Discorb::Event#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='comma'>,</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_discriminator'>discriminator</span><span class='rparen'>)</span>
@@ -3775,16 +3756,16 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+116
+117
 118
 119
 120
 121
-122
-123
-124</pre>
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_once'>once</span><span class='lparen'>(</span><span class='id identifier rubyid_event_name'>event_name</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_discriminator'>discriminator</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_discriminator'>discriminator</span><span class='lbracket'>[</span><span class='symbol'>:once</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -3857,12 +3838,12 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
-132
-133
-134</pre>
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_event'>remove_event</span><span class='lparen'>(</span><span class='id identifier rubyid_event_name'>event_name</span><span class='comma'>,</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='ivar'>@events</span><span class='lbracket'>[</span><span class='id identifier rubyid_event_name'>event_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>==</span> <span class='id identifier rubyid_id'>id</span> <span class='rbrace'>}</span>
@@ -3916,6 +3897,8 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+388
+389
 390
 391
 392
@@ -3929,12 +3912,10 @@ If application was cached, it will be used.</p>
 400
 401
 402
-403
-404
-405</pre>
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 388</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
   <span class='const'>Async</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_task'>task</span><span class='op'>|</span>
@@ -4024,6 +4005,8 @@ If application was cached, it will be used.</p>
       <pre class="lines">
 
 
+305
+306
 307
 308
 309
@@ -4035,12 +4018,10 @@ If application was cached, it will be used.</p>
 315
 316
 317
-318
-319
-320</pre>
+318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/client.rb', line 305</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_presence'>update_presence</span><span class='lparen'>(</span><span class='id identifier rubyid_activity'>activity</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_payload'>payload</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4066,7 +4047,7 @@ If application was cached, it will be used.</p>
 </div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/1d2eedb2b96a9d69e18353dc8be92ac1cb9dd808"><code>1d2eedb2b96a9d69e18353dc8be92ac1cb9dd808</code></a>, version (main), with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/611cb0df50c24b1e48807ad5135fb4a82beddb78"><code>611cb0df50c24b1e48807ad5135fb4a82beddb78</code></a>, version (main), with YARD 0.9.26.
     </div>
 
     </div>
