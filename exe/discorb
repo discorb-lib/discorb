@@ -17,6 +17,9 @@ if script.nil?
     puts "\e[90m#{name.rjust(max_length)}\e[m - #{description}"
   end
 
+  puts "\e[94m\nTo run a tool, type:\e[m\n" +
+         "\e[34m  discorb [script]\e[m"
+
   exit 1
 end
 
