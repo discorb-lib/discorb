@@ -2,7 +2,7 @@
 
 # discorb irb
 
-discorb irb is a command line tool for interacting with the Discord API.
+This command will start an interactive Ruby shell with connected client.
 
 
 ## Usage
