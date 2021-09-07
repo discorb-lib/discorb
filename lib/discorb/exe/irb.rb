@@ -30,7 +30,7 @@ client.on :ready do
            This is a debug client for Discord.
            \e[90mmessage\e[m to get latest message.
 
-           \e[36mhttps://rubydoc.info/gems/discorb/file/docs/discord_irb.md\e[m for more information.
+           \e[36mhttps://discorb-lib.github.io/#{Discorb::VERSION}/file.irb.html\e[m for more information.
          EOS
   end
 
