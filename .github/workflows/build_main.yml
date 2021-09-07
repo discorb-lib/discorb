@@ -30,7 +30,8 @@ jobs:
               http = Net::HTTP.new('api.github.com', 443)
               http.use_ssl = true
               http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-              http.post('/repos/' + ENV['GITHUB_REPOSITORY'] + '/actions/workflows/' + ENV['GITHUB_RUN_ID'] + '/cancel', '{"reason": "The last commit was more than 5 minutes ago."}').body
+              puts ENV['GITHUB_REPOSITORY'], ENV['GITHUB_RUN_ID']
+              puts http.post('/repos/' + ENV['GITHUB_REPOSITORY'] + '/actions/workflows/' + ENV['GITHUB_RUN_ID'] + '/cancel', '{"reason": "The last commit was more than 5 minutes ago."}').body
             end
 
           RUBY
