@@ -3,7 +3,7 @@
 module Discorb
   # @!visibility private
   class Logger
-    attr_reader :out, :colorize_log
+    attr_accessor :out, :colorize_log
 
     @levels = %i[debug info warn error fatal].freeze
 
@@ -14,11 +14,12 @@ module Discorb
     end
 
     def level
-      @levels[@level]
+      self.class.levels[@level]
     end
 
     def level=(level)
-      @level = @levels.index(level)
+      @level = self.class.levels.index(level)
+      raise ArgumentError, "Invalid log level: #{level}" unless @level
     end
 
     def debug(message)
