@@ -10,7 +10,13 @@ From: [Discord API docs](https://discord.com/developers/docs/interactions/applic
 
 ## How do I register an application command?
 
-Use {Discorb::Command::Handler.slash}, {Discorb::Command::Handler.slash_group} for slash commands, {Discorb::Command::Handler.user_command} for user menu commands, and {Discorb::Command::Handler.message_command} for message menu commands.
+Write to a your script:
+- {Discorb::Command::Handler.slash}, {Discorb::Command::Handler.slash_group} for slash commands,
+- {Discorb::Command::Handler.user_command} for user menu commands,
+- {Discorb::Command::Handler.message_command} for message menu commands.
+
+And then run `discorb setup` to register your application commands.
+{file:docs/cli/setup.md Learn more about `discorb setup`}. 
 
 ### Note
 
