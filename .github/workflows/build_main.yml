@@ -1,0 +1,67 @@
+name: Build YARD with main
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  main:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+          bundler-cache: true
+      - name: Check date
+        env:
+          GITHUB_REPOSITORY: "{{ github.repository }}"
+          GITHUB_RUN_ID: "{{ github.run_id }}"
+        run: |
+          ruby <<RUBY
+            require 'net/https'
+            time = Time.now - Time.at("`git log --format=%cd -1 --date=raw`".force_encoding("utf-8").strip.split[0].to_i)
+            if time > 300
+              puts "The last commit was more than 5 minutes ago. Canceling workflow..."
+              http = Net::HTTP.new('api.github.com', 443)
+              http.use_ssl = true
+              http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+              http.post('/repos/' + ENV['GITHUB_REPOSITORY'] + '/actions/workflows/' + ENV['GITHUB_RUN_ID'] + '/cancel', '{"reason": "The last commit was more than 5 minutes ago."}').body
+            end
+
+          RUBY
+      - name: Set up git settings
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+      - name: Clone pages
+        env:
+          SSH_SECRET: ${{ secrets.SSH }}
+          GIT_SSH_COMMAND: ssh -i ~/ssh_secret
+        run: |
+          echo "$SSH_SECRET" > ~/ssh_secret
+          chmod 600 ~/ssh_secret
+          git clone git@github.com:discorb-lib/discorb-lib.github.io /tmp/pages
+      - name: Install dependencies
+        run: |
+          bundle config --local with 'docs'
+          bundle install
+      - name: Generate document
+        run: bundle exec rake document
+      - name: Push document
+        env:
+          SSH_SECRET: ${{ secrets.SSH }}
+          GIT_SSH_COMMAND: ssh -i ~/ssh_secret
+        run: |
+          echo "$SSH_SECRET" > ~/ssh_secret
+          chmod 600 ~/ssh_secret
+          cp -r ./doc/. /tmp/pages
+          cd /tmp/pages
+          git add -A
+          git commit -m "Update: Update document for ${{ github.sha }} by cron"
+          git update-ref -d refs/remotes/origin/user
+          git push origin main -f
