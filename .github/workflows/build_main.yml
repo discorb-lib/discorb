@@ -2,8 +2,9 @@ name: Build YARD with main
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/10 * * * *"
+  push:
+    branches:
+      - main
 
 jobs:
   main:
@@ -17,24 +18,6 @@ jobs:
         with:
           ruby-version: 3.0.2
           bundler-cache: true
-      - name: Check date
-        env:
-          GITHUB_REPOSITORY: "{{ github.repository }}"
-          GITHUB_RUN_ID: "{{ github.run_id }}"
-        run: |
-          ruby <<RUBY
-            require 'net/https'
-            time = Time.now - Time.at("`git log --format=%cd -1 --date=raw`".force_encoding("utf-8").strip.split[0].to_i)
-            if time > 300
-              puts "The last commit was more than 5 minutes ago. Canceling workflow..."
-              http = Net::HTTP.new('api.github.com', 443)
-              http.use_ssl = true
-              http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-              puts ENV['GITHUB_REPOSITORY'], ENV['GITHUB_RUN_ID']
-              puts http.post('/repos/' + ENV['GITHUB_REPOSITORY'] + '/actions/workflows/' + ENV['GITHUB_RUN_ID'] + '/cancel', '{"reason": "The last commit was more than 5 minutes ago."}').body
-            end
-
-          RUBY
       - name: Set up git settings
         run: |
           git config --global user.email "action@github.com"
@@ -66,3 +49,4 @@ jobs:
           git commit -m "Update: Update document for ${{ github.sha }} by cron"
           git update-ref -d refs/remotes/origin/user
           git push origin main -f
+        continue-on-error: true
