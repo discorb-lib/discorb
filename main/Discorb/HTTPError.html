@@ -60,7 +60,7 @@
       </div>
 
       <div id="content"><h1>Exception: Discorb::HTTPError
-  
+  <span class="abstract note title">Abstract</span>
   
   
 </h1>
@@ -105,7 +105,11 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Represents a HTTP error.</p>
+    <div class="note abstract">
+  <strong>This class is abstract.</strong>
+  <div class='inline'></div>
+</div>
+<p>Represents a HTTP error.</p>
 
 
   </div>
@@ -115,7 +119,7 @@
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="BadRequestError.html" title="Discorb::BadRequestError (class)">BadRequestError</a></span>, <span class='object_link'><a href="ForbiddenError.html" title="Discorb::ForbiddenError (class)">ForbiddenError</a></span>, <span class='object_link'><a href="NotFoundError.html" title="Discorb::NotFoundError (class)">NotFoundError</a></span></p>
+  <p class="children"><span class='object_link'><a href="BadRequestError.html" title="Discorb::BadRequestError (class)">BadRequestError</a></span>, <span class='object_link'><a href="CloudFlareBanError.html" title="Discorb::CloudFlareBanError (class)">CloudFlareBanError</a></span>, <span class='object_link'><a href="ForbiddenError.html" title="Discorb::ForbiddenError (class)">ForbiddenError</a></span>, <span class='object_link'><a href="NotFoundError.html" title="Discorb::NotFoundError (class)">NotFoundError</a></span></p>
 </div>
 
 
@@ -240,12 +244,12 @@
       <pre class="lines">
 
 
-41
 42
-43</pre>
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/error.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/error.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_code'>code</span>
   <span class='ivar'>@code</span>
@@ -299,12 +303,12 @@
       <pre class="lines">
 
 
-43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/discorb/error.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/discorb/error.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_response'>response</span>
   <span class='ivar'>@response</span>
@@ -320,7 +324,7 @@
 </div>
 
     <div id="footer">
-    Generated from <a href="https://github.com/discorb-lib/discorb/tree/521de1e8d19e88fb368d2c39a3f4bfff348aac3f"><code>521de1e8d19e88fb368d2c39a3f4bfff348aac3f</code></a>, version (main), with YARD 0.9.26.
+    Generated from <a href="https://github.com/discorb-lib/discorb/tree/70169a27e07505ca5c9f74960709158c75b3e262"><code>70169a27e07505ca5c9f74960709158c75b3e262</code></a>, version (main), with YARD 0.9.26.
     </div>
 
     </div>
