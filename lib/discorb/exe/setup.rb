@@ -14,6 +14,7 @@ opt = OptionParser.new <<~BANNER
 opt.parse!(ARGV)
 
 script = ARGV[0]
+script ||= "main.rb"
 ENV["DISCORB_CLI_FLAG"] = "setup"
 
 begin

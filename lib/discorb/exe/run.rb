@@ -11,7 +11,7 @@ opt = OptionParser.new <<~BANNER
 
                          Usage: discorb run [options] [script]
 
-                                   script                     The script to run.
+                                   script                     The script to run. Defaults to 'main.rb'.
                        BANNER
 options = {
   deamon: false,
@@ -33,6 +33,9 @@ opt.on("-c", "--[no-]log-color", "Whether to colorize log output.") { |v| option
 opt.parse!(ARGV)
 
 script = ARGV[0]
+
+script ||= "main.rb"
+
 ENV["DISCORB_CLI_FLAG"] = "run"
 ENV["DISCORB_CLI_OPTIONS"] = JSON.generate(options)
 

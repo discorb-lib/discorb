@@ -18,4 +18,8 @@ Currently, discorb has the following commands:
 |---------|-------------|
 | {file:docs/cli/init.md `init`} | Create a new project. |
 | {file:docs/cli/irb.md `irb`} | Start an interactive Ruby shell with connected client. |
-| `show` | Show your environment. |
+| {file:docs/cli/run.md `run`} | Run a client. |
+| {file:docs/cli/setup.md `setup`} | Setup application commands. |
+| `show` | Show your environment. (No document) |
+
+Click the command name to see the document.
