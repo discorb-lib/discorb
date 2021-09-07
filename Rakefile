@@ -135,6 +135,13 @@ namespace :document do
   desc "Build all versions"
   task :build_all do
     require "fileutils"
+
+    class Bundler::Definition
+      def validate_platforms!
+        # noop
+      end
+    end
+
     iputs "Building all versions"
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
     Rake::Task["document:yard"].execute
