@@ -74,3 +74,20 @@
 
 - Add: Add way to add event listener
 - Change: Move document to https://discorb-lib.github.io/
+
+## 0.3.0
+
+- Add: Improve CLI tools
+- Add: Add `discorb init`
+- Change: Change `discord-irb` to `discorb irb`
+  
+## 0.3.1
+
+- Add: Add `discorb show`
+- Fix: Fix documenting
+
+## 0.4.0
+
+- Add: Add `discorb setup`
+- Add: Add `discorb run`
+- Add: Add realtime documentation
