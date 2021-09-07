@@ -1,4 +1,4 @@
-name: Build YARD with main
+name: Build YARD by version push
 
 on:
   workflow_dispatch:
