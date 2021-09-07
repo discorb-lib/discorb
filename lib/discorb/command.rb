@@ -92,7 +92,6 @@ module Discorb
 
       #
       # Setup commands.
-      # @note This method is called automatically if overwrite_application_commands is set to true.
       # @see Client#initialize
       #
       # @param [String] token Bot token.
