@@ -144,7 +144,6 @@ namespace :document do
     tags = `git tag`.force_encoding("utf-8").split("\n")
     tags.each do |tag|
       sh "git checkout #{tag} -f"
-      `bundle lock --add-platform x86_64-linux`
       iputs "Building #{tag}"
       FileUtils.cp_r("./tmp-template-replace/.", "./template-replace")
       version = tag.delete_prefix("v")
