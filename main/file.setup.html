@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  File: CLI tools
+  File: CLI: discorb run
   
     &mdash; Documentation by YARD 0.9.26
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "cli";
+  pathId = "setup";
   relpath = '';
 </script>
 
@@ -37,7 +37,7 @@
         <div id="menu">
   
     <a href="a_index.html">Index</a> &raquo; 
-    <span class="title">File: CLI tools</span>
+    <span class="title">File: CLI: discorb run</span>
   
 </div>
 
@@ -57,48 +57,20 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'><h1 id="cli-tools">CLI tools</h1>
+      <div id="content"><div id='filecontents'><h1 id="discorb-run">discorb run</h1>
 
-<p>discorb has a CLI tool for developing.</p>
+<p>This command will setup application commands.</p>
 
 <h2 id="usage">Usage</h2>
 
-<pre class="code bash"><code class="bash">bundle exec discorb &lt;command&gt; ...
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_discorb'>discorb</span> <span class='id identifier rubyid_run'>run</span> <span class='lbracket'>[</span><span class='id identifier rubyid_script'>script</span><span class='rbracket'>]</span>
 </code></pre>
 
-<h2 id="commands">Commands</h2>
+<h3 id="arguments">Arguments</h3>
 
-<p>Currently, discorb has the following commands:</p>
+<h4 id="script"><code>script</code></h4>
 
-<table><thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><a href="file.init.html" title="&lt;code&gt;init&lt;/code&gt;"><code>init</code></a></td>
-<td>Create a new project.</td>
-</tr>
-<tr>
-<td><a href="file.irb.html" title="&lt;code&gt;irb&lt;/code&gt;"><code>irb</code></a></td>
-<td>Start an interactive Ruby shell with connected client.</td>
-</tr>
-<tr>
-<td><a href="file.run.html" title="&lt;code&gt;run&lt;/code&gt;"><code>run</code></a></td>
-<td>Run a client.</td>
-</tr>
-<tr>
-<td><a href="file.setup.html" title="&lt;code&gt;setup&lt;/code&gt;"><code>setup</code></a></td>
-<td>Setup application commands.</td>
-</tr>
-<tr>
-<td><code>show</code></td>
-<td>Show your environment. (No document)</td>
-</tr>
-</tbody></table>
-
-<p>Click the command name to see the document.</p>
+<p>The script to setup. Defaults to <code>main.rb</code>.</p>
 </div></div>
 
     <div id="footer">
