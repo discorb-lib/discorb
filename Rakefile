@@ -144,6 +144,7 @@ namespace :document do
 
     iputs "Building all versions"
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
+    FileUtils.cp_r("./doc/.", "./tmp-doc")
     Rake::Task["document:yard"].execute
     Rake::Task["document:replace:html"].execute
     Rake::Task["document:replace:css"].execute
@@ -158,6 +159,7 @@ namespace :document do
       Rake::Task["document:replace:html"].execute
       Rake::Task["document:replace:css"].execute
       Rake::Task["document:replace:eol"].execute
+      FileUtils.cp_r("./doc/.", "./tmp-doc")
     end
     version = "."
     Rake::Task["document:yard"].execute
@@ -165,6 +167,7 @@ namespace :document do
     Rake::Task["document:replace:css"].execute
     Rake::Task["document:replace:eol"].execute
     sh "git switch main -f"
+    FileUtils.cp_r("./tmp-doc/.", "./doc")
     sputs "Successfully built all versions"
   end
 
