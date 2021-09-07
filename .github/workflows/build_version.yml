@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/${{ github.repository }} .
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
