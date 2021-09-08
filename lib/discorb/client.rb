@@ -395,6 +395,7 @@ module Discorb
         require "json"
         options = JSON.parse(ENV["DISCORB_CLI_OPTIONS"], symbolize_names: true)
         Process.daemon if options[:daemon]
+        setup_commands(token) if options[:setup]
         if options[:log_level]
           if options[:log_level] == "none"
             @log.out = nil
