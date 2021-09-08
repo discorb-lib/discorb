@@ -143,6 +143,7 @@ namespace :document do
     end
 
     iputs "Building all versions"
+    FileUtils.rm_rf("doc")
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
     FileUtils.cp_r("./doc/.", "./tmp-doc")
     Rake::Task["document:yard"].execute
