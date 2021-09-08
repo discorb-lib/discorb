@@ -160,6 +160,7 @@ namespace :document do
       Rake::Task["document:replace:css"].execute
       Rake::Task["document:replace:eol"].execute
       FileUtils.cp_r("./doc/.", "./tmp-doc")
+      FileUtils.rm_rf("doc")
     end
     version = "."
     Rake::Task["document:yard"].execute
