@@ -91,3 +91,7 @@
 - Add: Add `discorb setup`
 - Add: Add `discorb run`
 - Add: Add realtime documentation
+
+## 0.4.1
+
+- Add: Add `-s` option to `discorb run`
