@@ -406,7 +406,7 @@ module Discorb
               when "stdout"
                 $stdout
               else
-                File.open(options[:log_file], "a")
+                ::File.open(options[:log_file], "a")
               end
             @log.level = options[:log_level].to_sym
             @log.colorize_log = case options[:log_color]
