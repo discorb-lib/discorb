@@ -216,7 +216,7 @@ tt {
   font-family: var(--monospace-font);
 }
 
-pre.code {
+pre.code code {
   color: var(--header-secondary);
   tab-size: 2;
 }
