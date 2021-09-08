@@ -170,6 +170,9 @@ namespace :document do
     sh "git switch main -f"
     FileUtils.cp_r("./tmp-doc/.", "./doc")
     sputs "Successfully built all versions"
+  rescue => e
+    sh "git switch main -f"
+    raise e
   end
 
   desc "Push to discorb-lib/discorb-lib.github.io"
