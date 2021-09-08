@@ -522,3 +522,9 @@ li.r2 {
   color: var(--interactive-active);
   fill: var(--interactive-active);
 }
+
+dd pre.code {
+  padding: 9px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--background-tertiary);
+}
