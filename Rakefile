@@ -179,8 +179,10 @@ namespace :document do
   task :push do
     iputs "Pushing documents"
     Dir.chdir("doc") do
+      sh "git init"
+      sh "git remote add origin git@github.com:discorb-lib/discorb-lib.github.io"
       sh "git add ."
-      sh "git commit -m \"Update: Update document for #{`git rev-parse HEAD`}\""
+      sh "git commit -m \"Update: Update document\""
       sh "git push -f"
     end
     sputs "Successfully pushed documents"
