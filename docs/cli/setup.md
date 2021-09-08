@@ -1,13 +1,13 @@
-# @title CLI: discorb run
+# @title CLI: discorb setup
 
-# discorb run
+# discorb setup
 
 This command will setup application commands.
 
 ## Usage
 
 ```
-discorb run [script]
+discorb setup [script]
 ```
 
 ### Arguments
