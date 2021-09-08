@@ -21,5 +21,6 @@ Currently, discorb has the following commands:
 | {file:docs/cli/run.md `run`} | Run a client. |
 | {file:docs/cli/setup.md `setup`} | Setup application commands. |
 | `show` | Show your environment. (No document) |
+| `about` | Show discorb's information. (No document) |
 
 Click the command name to see the document.
