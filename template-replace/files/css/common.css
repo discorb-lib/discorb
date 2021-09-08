@@ -217,7 +217,7 @@ tt {
 }
 
 pre.code code {
-  color: var(--header-secondary);
+  color: var(--header-secondary) !important;
   tab-size: 2;
 }
 
