@@ -95,3 +95,7 @@
 ## 0.4.1
 
 - Add: Add `-s` option to `discorb run`
+  
+## 0.4.2
+
+- Fix: Fix error in `discorb run`
