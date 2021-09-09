@@ -99,3 +99,9 @@
 ## 0.4.2
 
 - Fix: Fix error in `discorb run`
+  
+## 0.4.3
+
+- Change: Use zlib stream instead
+- Add: Add tutorials
+- Add: Add ratelimit handler
