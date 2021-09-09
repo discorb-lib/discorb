@@ -65,7 +65,7 @@ Choose a server you want to invite your bot to, and follow the instructions.
 Open terminal and type:
 
 ```
-gem install bunder discorb
+gem install bundler discorb
 ```
 
 #### Setup files
