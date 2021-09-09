@@ -1,6 +1,7 @@
 # description: Make files for the discorb project.
 
 require "optparse"
+require "discorb"
 require_relative "../utils/colored_puts"
 
 $path = Dir.pwd
@@ -92,7 +93,7 @@ FILES = {
 
     git_source(:github) { |repo_name| "https://github.com/\#{repo_name}" }
 
-    gem "discorb", "~> 0.2.5"
+    gem "discorb", "~> #{Discorb::VERSION}"
     gem "dotenv", "~> 2.7"
   RUBY
 }
