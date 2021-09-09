@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require "async/http"
+require "async/websocket"
+require "json"
+require "zlib"
 
 module Discorb
   #
@@ -464,13 +467,20 @@ module Discorb
           @first = first
           _, gateway_response = @http.get("/gateway").wait
           gateway_url = gateway_response[:url]
-          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json",
+          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json&compress=zlib-stream",
                                                 alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
           begin
-            Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]]) do |connection|
+            Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection) do |connection|
               @connection = connection
+              @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
+              @buffer = +""
               while (message = @connection.read)
-                handle_gateway(message)
+                @buffer << message
+                if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
+                  message = JSON.parse(@zlib_stream.inflate(@buffer), symbolize_names: true)
+                  @buffer = +""
+                  handle_gateway(message)
+                end
               end
             end
           rescue Protocol::WebSocket::ClosedError => e
@@ -490,7 +500,7 @@ module Discorb
       end
 
       def send_gateway(opcode, **value)
-        @connection.write({ op: opcode, d: value })
+        @connection.write({ op: opcode, d: value }.to_json)
         @connection.flush
         @log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, "[Token]")}"
       end
@@ -972,6 +982,26 @@ module Discorb
           @log.warn "Unknown event: #{event_name}\n#{data.inspect}"
         end
       end
+    end
+    
+    #
+    # A class for connecting websocket with raw bytes data.
+    # @private
+    #
+    class RawConnection < Async::WebSocket::Connection		
+      def initialize(...)
+        super
+      end
+    
+			def parse(buffer)
+				# noop
+        buffer.to_s
+			end
+			
+			def dump(object)
+				# noop
+        object.to_s
+			end
     end
   end
 end
