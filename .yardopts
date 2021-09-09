@@ -3,6 +3,7 @@
 --markup markdown
 --tag flags:"Flags"
 --verbose
+--asset docs/assets:assets
 -
-docs/**/*
+docs/**/*.md
 Changelog.md
