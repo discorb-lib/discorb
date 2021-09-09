@@ -39,7 +39,7 @@ module Discorb
   end
 end
 
-require_order = %w[common flag dictionary error http intents emoji_table modules] +
+require_order = %w[common flag dictionary error rate_limit http intents emoji_table modules] +
                 %w[user member guild emoji channel embed message] +
                 %w[application audit_logs color components event extension] +
                 %w[file guild_template image integration interaction invite log permission] +

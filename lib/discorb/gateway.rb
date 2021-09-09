@@ -558,7 +558,7 @@ module Discorb
           task.sleep((interval / 1000.0 - 1) * rand)
           loop do
             @heartbeat_before = Time.now.to_f
-            @connection.write({ op: 1, d: @last_s })
+            @connection.write({ op: 1, d: @last_s }.to_json)
             @connection.flush
             @log.debug "Sent opcode 1."
             @log.debug "Waiting for heartbeat."

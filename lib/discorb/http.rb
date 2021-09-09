@@ -13,6 +13,7 @@ module Discorb
     # @!visibility private
     def initialize(client)
       @client = client
+      @ratelimit_handler = RatelimitHandler.new(client)
     end
 
     #
@@ -31,8 +32,10 @@ module Discorb
     #
     def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
+        @ratelimit_handler.wait("GET", path)
         resp = http.get(get_path(path), get_headers(headers, "", audit_log_reason), **kwargs)
         data = get_response_data(resp)
+        @ratelimit_handler.save("GET", path, resp)
         test_error(if resp.code == "429"
           @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
           task.sleep(data[:retry_after])
@@ -60,8 +63,10 @@ module Discorb
     #
     def post(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
+        @ratelimit_handler.wait("POST", path)
         resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         data = get_response_data(resp)
+        @ratelimit_handler.save("POST", path, resp)
         test_error(if resp.code == "429"
           task.sleep(data[:retry_after])
           post(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -88,13 +93,10 @@ module Discorb
     #
     def patch(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
+        @ratelimit_handler.wait("PATCH", path)
         resp = http.patch(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        rd = resp.body
-        data = if rd.nil? || rd.empty?
-            nil
-          else
-            JSON.parse(rd, symbolize_names: true)
-          end
+        data = get_response_data(resp)
+        @ratelimit_handler.save("PATCH", path, resp)
         test_error(if resp.code == "429"
           task.sleep(data[:retry_after])
           patch(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -121,8 +123,10 @@ module Discorb
     #
     def put(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
+        @ratelimit_handler.wait("PUT", path)
         resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         data = get_response_data(resp)
+        @ratelimit_handler.save("PUT", path, resp)
         test_error(if resp.code == "429"
           task.sleep(data[:retry_after])
           put(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -148,8 +152,10 @@ module Discorb
     #
     def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
+        @ratelimit_handler.wait("DELETE", path)
         resp = http.delete(get_path(path), get_headers(headers, "", audit_log_reason))
         data = get_response_data(resp)
+        @ratelimit_handler.save("DELETE", path, resp)
         test_error(if resp.code == "429"
           task.sleep(data[:retry_after])
           delete(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
