@@ -117,6 +117,7 @@ namespace :document do
       iputs "Replacing CRLF with LF"
       Dir.glob("doc/**/*.*") do |file|
         next unless File.file?(file)
+        next unless %w[html css js].include? file.split(".").last
 
         content = ""
         File.open(file, "rb") do |f|
