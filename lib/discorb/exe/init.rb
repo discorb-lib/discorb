@@ -141,7 +141,7 @@ opt = OptionParser.new <<~BANNER
 
 $values = {
   bundle: true,
-  git: true,
+  git: false,
   force: false,
   token: "TOKEN",
 }
@@ -150,7 +150,7 @@ opt.on("--[no-]bundle", "Whether to use bundle. Default to true.") do |v|
   $values[:bundle] = v
 end
 
-opt.on("--[no-]git", "Whether to initialize git. Default to true.") do |v|
+opt.on("--[no-]git", "Whether to initialize git. Default to false.") do |v|
   $values[:git] = v
 end
 

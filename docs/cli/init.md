@@ -30,7 +30,7 @@ Default to true.
 Whether to initialize git.
 If true, the command will initialize git and commit the initial files with commit message `Initial commit`.
 Use `git commit --amend -m "..."` to change the commit message.
-Default to true.
+Default to false.
 
 ### `-t`, `--token`
 
