@@ -7,7 +7,7 @@ Welcome to discorb! This lib allows you to create a discord bot with ease. So, l
 ## Requirements
 
 - Ruby 3.0.0+
-- Basic knowledge of ruby
+- Basic knowledge of ruby  
     These documents will help you:
     - [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
     - [Ruby from other languages](https://www.ruby-lang.org/en/documentation/ruby-from-other-languages/)
@@ -15,7 +15,7 @@ Welcome to discorb! This lib allows you to create a discord bot with ease. So, l
 
 ### Recommended
 
-- Good editor
+- Good editor  
     They are recommended:
     - [VSCode](https://code.visualstudio.com/)
     - [Atom](https://atom.io/)
@@ -93,7 +93,7 @@ You will get other files if you specify `--git`.
 
 Open `main.rb`, you will see the following code:
 
-```rb
+```ruby
 require "discorb"
 require "dotenv"
 
@@ -136,7 +136,7 @@ So let's add simple Ping command!
 
 You can do some action on message by typing like this:
 
-```rb
+```ruby
 client.on :message do |message|
   # ...
 end
@@ -146,7 +146,7 @@ end
 You can get the message content by {Discorb::Message#content}.
 Add `if` statement, and reply to the message with {Discorb::Message#reply}.
 
-```rb
+```ruby
 client.on :message do |message|
   if message.content == "!ping"
     message.reply "Pong!"
