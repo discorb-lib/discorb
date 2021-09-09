@@ -11,15 +11,15 @@ FILES = {
     require "discorb"
     require "dotenv"
 
-    Dotenv.load
+    Dotenv.load  # Loads .env file
 
-    client = Discorb::Client.new
+    client = Discorb::Client.new  # Create client for connecting to Discord
 
     client.once :ready do
-      puts "Logged in as #{client.user}"
+      puts "Logged in as #{client.user}"  # Prints username of logged in user
     end
 
-    client.run ENV["%<token>s"]
+    client.run ENV["%<token>s"]  # Starts client
   RUBY
   ".env" => <<~BASH,
     %<token>s=Y0urB0tT0k3nHer3.Th1sT0ken.W0ntWorkB3c4useItH4sM34n1ng
