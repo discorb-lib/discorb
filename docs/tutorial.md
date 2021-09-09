@@ -31,17 +31,17 @@ Once you have all of these, you can start coding!
 
 ### Create a Bot account
 
-You must have a bot account to use this lib. First, go to [Discord Developer Portal](https://discord.com/developers/applications) and click on `New Application`.
+You must have a bot account to use this lib. First, go to [Discord Developer Portal](https://discord.com/developers/applications) and click on `New Application`.  
 ![](./assets/01_new_app.png)
 
-And then type a name for your bot, and click `Create`.
+And then type a name for your bot, and click `Create`.  
 ![](./assets/02_bot_name.png)
 
 You will be redirected to the `General Information` page.
-Then, click `Bot` and then `Add Bot` and then `Yes, do it!`.
+Then, click `Bot` and then `Add Bot` and then `Yes, do it!`.  
 ![](./assets/03_add_bot.png)
 
-You will see bot information, and click `Copy` button in TOKEN section.
+You will see bot information, and click `Copy` button in TOKEN section.  
 ![](./assets/04_token_copy.png)
 
 **DO NOT SHARE THIS TOKEN, OR YOUR BOT BAN EVERYONE IN EVERY SERVER!**
@@ -53,7 +53,7 @@ You did it! Now, you have a bot account.
 
 #### Invite your bot to a server
 
-Go to `OAuth2` page and scroll down, and check `bot` and `applications.commands` permissions.
+Go to `OAuth2` page and scroll down, and check `bot` and `applications.commands` permissions.  
 ![](./assets/05_oauth.png)
 Then, click `Copy` button and paste it to your browser.
 Choose a server you want to invite your bot to, and follow the instructions.
@@ -125,14 +125,14 @@ bundle exec ruby main.rb
 bundle exec discorb run main.rb
 ```
 
-Yay! Your bot is online!
+Yay! Your bot is online!  
 ![](./assets/06_online.png)
 
 But your bot won't do anything.
-So let's add simple Ping command!
+So add your bot some greetings!
 `Ctrl + C` to stop your bot.
 
-#### Add a command
+#### Add a greeting
 
 You can do some action on message by typing like this:
 
@@ -148,21 +148,44 @@ Add `if` statement, and reply to the message with {Discorb::Message#reply}.
 
 ```ruby
 client.on :message do |message|
-  if message.content == "!ping"
-    message.reply "Pong!"
+  if message.content.downcase.include? "hello"
+    message.reply "Hello!"
   end
 end
 ```
 
 Save your bot and restart it.
 
-You can see your bot's response by typing `!ping` in your server...
+You can see your bot's response by typing `hello` in your server...  
 
-![](./assets/07_ping_pong.png)
+![](./assets/07_hello_infinite.png)
 
-You did it! You made a bot that can reply to `!ping`!
+Oh no! Your bot is responding to bot's messages, and it doesn't stop!
 
-## Next steps
+Terminate your bot by typing `Ctrl + C` in terminal.
+
+#### Ignore bot's messages
+
+You can access author information by {Discorb::Message#author}, and it has {Discorb::User#bot?}.
+So, you can ignore bot's messages by adding `if` statement:
+
+```ruby
+client.on :message do |message|
+  next if message.author.bot?
+
+  # ...
+end
+```
+
+Note you must use `next` to exit the block.
+
+Save your bot and start it.
+
+![](./assets/08_hello_once.png)
+
+You did it! Your bot won't respond to bot's messages anymore.
+
+## Finally
 
 This is the end of tutorial.
 
