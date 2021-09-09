@@ -4,5 +4,5 @@
 --tag flags:"Flags"
 --verbose
 -
-docs/**/*.md
+docs/**/*
 Changelog.md
