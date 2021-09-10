@@ -34,6 +34,33 @@ module MyExtension
 end
 ```
 
+## Register Command
+
+Since v0.5.2, {Discorb::Extension} includes {Discorb::Command::Handler} module, so you can register command with {Discorb::Command::Handler#slash} and {Discorb::Command::Handler#slash_group}.
+
+```ruby
+module MyExtension
+  extend Discorb::Extension
+
+  slash("command", "Command") do |interaction|
+    # ...
+  end
+
+  slash_group("group", "Group") do
+    slash("subcommand", "Subcommand") do |interaction|
+      # ...
+    end
+
+    group("subgroup", "Subcommand group") do
+      slash("group_subcommand", "Command in Subcommand group") do |interaction|
+        # ...
+      end
+    end
+  end
+end
+```
+
+
 ## Load extension
 
 Use {Discorb::Client#extend} to load extension.
