@@ -778,11 +778,9 @@ module Discorb
           dispatch(:integration_create, Integration.new(self, data, data[:guild_id]))
         when "INTEGRATION_UPDATE"
           return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless (integration = guild.integrations[data[:id]])
 
-          before = Integration.new(self, integration.instance_variable_get(:@data), data[:guild_id], no_cache: true)
-          integration.send(:_set_data, data)
-          dispatch(:integration_update, before, integration)
+          before = Integration.new(self, data, data[:guild_id])
+          dispatch(:integration_update, integration)
         when "INTEGRATION_DELETE"
           return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
           return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless (integration = guild.integrations.delete(data[:id]))

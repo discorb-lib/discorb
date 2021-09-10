@@ -219,14 +219,13 @@ Fires when a guild integration is created.
 | ---------- | ----- | ----------- |
 |`integration`| {Discorb::Integration}| The created integration. |
 
-#### `integration_update(before, after)`
+#### `integration_update(after)`
 
 Fires when a guild integration is updated.
 
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-|`before`    | {Discorb::Integration}| The integration before the update. |
 |`after`     | {Discorb::Integration}| The integration after the update. |
 
 #### `integration_delete(integration)`
