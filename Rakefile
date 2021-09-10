@@ -163,13 +163,9 @@ namespace :document do
       FileUtils.cp_r("./doc/.", "./tmp-doc")
       FileUtils.rm_rf("doc")
     end
-    version = "."
-    Rake::Task["document:yard"].execute
-    Rake::Task["document:replace:html"].execute
-    Rake::Task["document:replace:css"].execute
-    Rake::Task["document:replace:eol"].execute
     sh "git switch main -f"
     FileUtils.cp_r("./tmp-doc/.", "./doc")
+    FileUtils.cp_r("./doc/#{tags.last}/.", "./doc")
     sputs "Successfully built all versions"
   rescue => e
     sh "git switch main -f"
