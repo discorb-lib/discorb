@@ -100,8 +100,9 @@
 
 - Fix: Fix error in `discorb run`
   
-## 0.4.3
+## 0.5.0
 
 - Change: Use zlib stream instead
 - Add: Add tutorials
 - Add: Add ratelimit handler
+- Change: Make `--git` option in `discorb init` false
