@@ -208,4 +208,14 @@ module Discorb
       end
     end
   end
+
+  #
+  # Module for connecting to a voice channel.
+  # This will be discord-voice gem.
+  #
+  module Connectable
+    def connect
+      raise NotImplementedError, "This method is implemented by discord-voice gem."
+    end
+  end
 end

@@ -636,7 +636,6 @@ module Discorb
 
   #
   # Represents a voice channel.
-  # @todo Implement connecting to voice channel.
   #
   class VoiceChannel < GuildChannel
     # @return [Integer] The bitrate of the voice channel.
@@ -644,6 +643,8 @@ module Discorb
     # @return [Integer] The user limit of the voice channel.
     # @return [nil] If the user limit is not set.
     attr_reader :user_limit
+
+    include Connectable
 
     @channel_type = 2
     #
@@ -698,6 +699,8 @@ module Discorb
     attr_reader :user_limit
     # @!visibility private
     attr_reader :stage_instances
+
+    include Connectable
 
     # @!attribute [r] stage_instance
     #   @return [Discorb::StageInstance] The stage instance of the channel.
