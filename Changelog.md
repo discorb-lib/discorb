@@ -112,3 +112,8 @@
 - Add: Can use block for defining group commands
 - Fix: Fix bug in subcommands
 - Fix: Fix bug in receiving commands
+
+## 0.5.2
+
+- Fix: Fix bug of registering commands
+- Add: Add way to register commands in Extension
