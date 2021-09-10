@@ -165,7 +165,7 @@ namespace :document do
     end
     sh "git switch main -f"
     FileUtils.cp_r("./tmp-doc/.", "./doc")
-    FileUtils.cp_r("./doc/#{tags.last}/.", "./doc")
+    FileUtils.cp_r("./doc/#{tags.last.delete_prefix("v")}/.", "./doc")
     sputs "Successfully built all versions"
   rescue => e
     sh "git switch main -f"
