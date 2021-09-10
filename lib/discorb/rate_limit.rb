@@ -3,14 +3,22 @@
 module Discorb
   #
   # Class to handle rate limiting.
+  # @private
   #
   class RatelimitHandler
+    # @!visibility private
     def initialize(client)
       @client = client
       @ratelimit_hash = {}
       @path_ratelimit_hash = {}
     end
 
+    #
+    # Wait for the rate limit to reset.
+    #
+    # @param [String] method The HTTP method.
+    # @param [String] path The path.
+    #
     def wait(method, path)
       return if path.start_with?("https://")
 
@@ -28,6 +36,13 @@ module Discorb
       sleep(b[:reset_at] - Time.now.to_i)
     end
 
+    #
+    # Save the rate limit.
+    #
+    # @param [String] method The HTTP method.
+    # @param [String] path The path.
+    # @param [Net::HTTPResponse] resp The response.
+    #
     def save(method, path, resp)
       return unless resp["X-RateLimit-Remaining"]
 
