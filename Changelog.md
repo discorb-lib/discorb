@@ -106,3 +106,9 @@
 - Add: Add tutorials
 - Add: Add ratelimit handler
 - Change: Make `--git` option in `discorb init` false
+  
+## 0.5.1
+
+- Add: Can use block for defining group commands
+- Fix: Fix bug in subcommands
+- Fix: Fix bug in receiving commands
