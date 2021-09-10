@@ -422,7 +422,7 @@ module Discorb
           end
         end
         start_client(token)
-      when "setup_command"
+      when "setup"
         setup_commands(token)
       end
     end
