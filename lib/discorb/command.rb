@@ -44,13 +44,17 @@ module Discorb
       # @param [String] description Command description.
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
       #
+      # @yield Block to execute as the command. It can be used to define sub-commands.
+      # @yieldself [Discorb::Command::Command::GroupCommand] Group command.
+      #
       # @return [Discorb::Command::Command::GroupCommand] Command object.
       #
       # @see file:docs/slash_command.md
       #
-      def slash_group(command_name, description, guild_ids: [])
+      def slash_group(command_name, description, guild_ids: [], &block)
         command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil)
         @commands << command
+        command.instance_eval(&block) if block_given?
         command
       end
 
@@ -302,13 +306,17 @@ module Discorb
         # @param [String] command_name Group name.
         # @param [String] description Group description.
         #
+        # @yield Block to execute as the command. It can be used to define sub-commands.
+        # @yieldself [Discorb::Command::Command::GroupCommand] Group command.
+        #
         # @return [Discorb::Command::Command::SubcommandGroup] Command object.
         #
         # @see file:docs/slash_command.md
         #
-        def group(command_name, description)
+        def group(command_name, description, &block)
           command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, @name)
           @commands << command
+          command.instance_eval(&block) if block_given?
           command
         end
 
@@ -328,7 +336,7 @@ module Discorb
               {
                 name: command.name,
                 description: command.description,
-                default_permission: command.enabled,
+                default_permission: true,
                 type: 1,
                 options: command.to_hash[:options],
               }
@@ -336,7 +344,7 @@ module Discorb
               {
                 name: command.name,
                 description: command.description,
-                default_permission: command.enabled,
+                default_permission: true,
                 type: 2,
                 options: command.commands.map { |c| c.to_hash.merge(type: 1) },
               }
@@ -360,8 +368,8 @@ module Discorb
         attr_reader :commands
 
         # @!visibility private
-        def initialize(name, description, enabled, parent)
-          super(name, description, [], enabled, 1)
+        def initialize(name, description, parent)
+          super(name, description, [], 1)
 
           @commands = []
           @parent = parent
@@ -376,8 +384,8 @@ module Discorb
         # @param (see Discorb::Command::Handler#slash)
         # @return [Discorb::Command::Command::SlashCommand] The added subcommand.
         #
-        def slash(command_name, description, options = {}, enabled: true, &block)
-          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], enabled, block, 1, @parent + " " + @name)
+        def slash(command_name, description, options = {}, &block)
+          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], block, 1, @parent + " " + @name)
           @commands << command
           command
         end
