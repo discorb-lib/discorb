@@ -977,7 +977,11 @@ module Discorb
           @log.info("Successfully resumed connection")
           dispatch(:resumed)
         else
-          @log.warn "Unknown event: #{event_name}\n#{data.inspect}"
+          if respond_to?("event_" + event_name.downcase)
+            __send__("event_" + event_name.downcase, data)
+          else
+            @log.debug "Received unknown event: #{event_name}\n#{data.inspect}"
+          end
         end
       end
     end
