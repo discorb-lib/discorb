@@ -421,7 +421,7 @@ code[class=""] {
 
 .docstring .abstract {
   --dstr-back: var(--background-modifier-hover);
-  --dstr-fore: var(--interactive-hover);
+  --dstr-fore: var(--interactive-muted);
 }
 
 .docstring .note {
