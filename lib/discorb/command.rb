@@ -52,8 +52,7 @@ module Discorb
       # @see file:docs/slash_command.md
       #
       def slash_group(command_name, description, guild_ids: [], &block)
-        command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil)
-        @commands << command
+        command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
         command.instance_eval(&block) if block_given?
         command
       end
@@ -178,6 +177,7 @@ module Discorb
           @guild_ids = guild_ids.map(&:to_s)
           @block = block
           @type = Discorb::Command::Command.types[type]
+          @type_raw = 1
           @options = options
           @id = nil
           @parent = parent
@@ -245,10 +245,11 @@ module Discorb
         attr_reader :description
 
         # @!visibility private
-        def initialize(name, description, guild_ids, type)
+        def initialize(name, description, guild_ids, type, client)
           super(name, guild_ids, block, type)
           @description = description
-          @commands = []
+          @commands = client.commands
+          @client = client
           @id_map = Discorb::Dictionary.new
         end
 
@@ -307,15 +308,14 @@ module Discorb
         # @param [String] description Group description.
         #
         # @yield Block to execute as the command. It can be used to define sub-commands.
-        # @yieldself [Discorb::Command::Command::GroupCommand] Group command.
+        # @yieldself [Discorb::Command::Command::SubcommandGroup] Group command.
         #
         # @return [Discorb::Command::Command::SubcommandGroup] Command object.
         #
         # @see file:docs/slash_command.md
         #
         def group(command_name, description, &block)
-          command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, @name)
-          @commands << command
+          command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, @name, @client)
           command.instance_eval(&block) if block_given?
           command
         end
@@ -368,10 +368,10 @@ module Discorb
         attr_reader :commands
 
         # @!visibility private
-        def initialize(name, description, parent)
-          super(name, description, [], 1)
+        def initialize(name, description, parent, client)
+          super(name, description, [], 1, client)
 
-          @commands = []
+          @commands = client.commands
           @parent = parent
         end
 

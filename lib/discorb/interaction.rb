@@ -297,7 +297,7 @@ module Discorb
             end
           end
 
-          unless (command = @client.commands.find { |c| c.to_s == name })
+          unless (command = @client.commands.find { |c| c.to_s == name && c.type_raw == 1 })
             @client.log.warn "Unknown command name #{name}, ignoreing"
             next
           end
