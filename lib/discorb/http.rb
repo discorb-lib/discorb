@@ -5,7 +5,7 @@ require "net/https"
 module Discorb
   #
   # A class to handle http requests.
-  # This class is internal use only.
+  # @private
   #
   class HTTP
     @nil_body = nil
