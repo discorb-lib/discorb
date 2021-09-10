@@ -53,11 +53,11 @@ In `options`, hash should be like this:
 
 ```ruby
 {
-    "Name" => {
-        type: :string,
-        required: true,
-        description: "The description of the command."
-    }
+  "Name" => {
+    type: :string,
+    required: true,
+    description: "The description of the command."
+  }
 }
 ```
 
@@ -73,19 +73,19 @@ In `options`, hash should be like this:
 
 ```ruby
 {
-    "vocaloid" => {
-        required: true,
-        description: "The vocaloid which you like.",
-        type: :string,
-        choices: {
-            "Hatsune Miku" => "miku",
-            "Kagamine Rin" => "rin",
-            "Kagamine Len" => "len",
-            "Megurine Luka" => "luka",
-            "MEIKO" => "meiko",
-            "KAITO" => "kaito",
-        }
+  "vocaloid" => {
+    required: true,
+    description: "The vocaloid which you like.",
+    type: :string,
+    choices: {
+      "Hatsune Miku" => "miku",
+      "Kagamine Rin" => "rin",
+      "Kagamine Len" => "len",
+      "Megurine Luka" => "luka",
+      "MEIKO" => "meiko",
+      "KAITO" => "kaito",
     }
+  }
 }
 
 # Note: This aritcle is written in 8/31.
@@ -113,21 +113,46 @@ To register a group of slash commands, use {Discorb::Command::Handler#slash_grou
 group = client.slash_group("settings", "Set settings of bot.")
 
 group.slash("message_expand", "Whether bot should expand message.", {
-    "enabled" => {
-        type: :boolean,
-        description: "Whether bot should expand message."
-    }
+  "enabled" => {
+    type: :boolean,
+    description: "Whether bot should expand message."
+  }
 }) do |interaction|
   # ...
 end
 
 group.slash("bump_alert", "Whether bot should notify DISBOARD bump.", {
-    "enabled" => {
-        type: :boolean,
-        description: "Whether bot should notify DISBOARD bump."
-    }
+  "enabled" => {
+    type: :boolean,
+    description: "Whether bot should notify DISBOARD bump."
+  }
 }) do |interaction|
   # ...
+end
+
+```
+
+Since v0.5.1, You can use block for register commands.
+
+```ruby
+
+client.slash_group("settings", "Set settings of bot.") do
+  slash("message_expand", "Whether bot should expand message.", {
+    "enabled" => {
+      type: :boolean,
+      description: "Whether bot should expand message."
+    }
+  }) do |interaction|
+    # ...
+  end
+  slash("bump_alert", "Whether bot should notify DISBOARD bump.", {
+    "enabled" => {
+      type: :boolean,
+      description: "Whether bot should notify DISBOARD bump."
+    }
+  }) do |interaction|
+    # ...
+  end
 end
 ```
 
@@ -209,6 +234,8 @@ group_role.slash("get", "Set role's command permissions.", {
 end
 
 ```
+
+Same as above, you can use block for register commands since v0.5.1.
 
 ### Register User Context Menu Command
 
