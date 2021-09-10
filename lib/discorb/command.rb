@@ -34,6 +34,7 @@ module Discorb
       def slash(command_name, description, options = {}, guild_ids: [], &block)
         command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
         @commands << command
+        @bottom_commands << command
         command
       end
 
@@ -54,6 +55,7 @@ module Discorb
       def slash_group(command_name, description, guild_ids: [], &block)
         command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
         command.instance_eval(&block) if block_given?
+        @commands << command
         command
       end
 
@@ -248,7 +250,7 @@ module Discorb
         def initialize(name, description, guild_ids, type, client)
           super(name, guild_ids, block, type)
           @description = description
-          @commands = client.commands
+          @commands = []
           @client = client
           @id_map = Discorb::Dictionary.new
         end
@@ -261,42 +263,7 @@ module Discorb
         #
         def slash(command_name, description, options = {}, &block)
           command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], block, 1, @name)
-          options_payload = options.map do |name, value|
-            ret = {
-              type: case (value[:type].is_a?(Array) ? value[:type].first : value[:type])
-              when String, :string
-                3
-              when Integer
-                4
-              when TrueClass, FalseClass, :boolean
-                5
-              when Discorb::User, Discorb::Member, :user, :member
-                6
-              when Discorb::Channel, :channel
-                7
-              when Discorb::Role, :role
-                8
-              when :mentionable
-                9
-              when Float
-                10
-              end,
-              name: name,
-              description: value[:description],
-              required: !value[:optional],
-            }
-            if value[:type].is_a?(Array)
-              ret[:choices] = value[:type]
-            end
-
-            ret
-          end
-          {
-            name: @name,
-            default_permission: true,
-            description: @description,
-            options: options_payload,
-          }
+          @client.bottom_commands << command
           @commands << command
           command
         end
@@ -317,6 +284,7 @@ module Discorb
         def group(command_name, description, &block)
           command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, @name, @client)
           command.instance_eval(&block) if block_given?
+          @commands << command
           command
         end
 
@@ -371,7 +339,7 @@ module Discorb
         def initialize(name, description, parent, client)
           super(name, description, [], 1, client)
 
-          @commands = client.commands
+          @commands = []
           @parent = parent
         end
 
@@ -387,6 +355,7 @@ module Discorb
         def slash(command_name, description, options = {}, &block)
           command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], block, 1, @parent + " " + @name)
           @commands << command
+          @client.bottom_commands << command
           command
         end
       end

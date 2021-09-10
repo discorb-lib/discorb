@@ -49,6 +49,8 @@ module Discorb
     attr_reader :ping
     # @return [:initialized, :running, :closed] The status of the client.
     attr_reader :status
+    # @private
+    attr_reader :bottom_commands
 
     #
     # Initializes a new client.
@@ -85,6 +87,7 @@ module Discorb
       @tasks = []
       @conditions = {}
       @commands = []
+      @bottom_commands = []
       @status = :initialized
     end
 
@@ -372,6 +375,14 @@ module Discorb
             @events[name] << event
           end
         end
+        @commands.delete_if do |cmd|
+          cmd.respond_to? :extension and cmd.extension == mod.name
+        end
+        mod.commands.each do |cmd|
+          cmd.define_singleton_method(:extension) { mod.name }
+          @commands << cmd
+        end
+        @bottom_commands += mod.bottom_commands
         mod.client = self
       end
       super(mod)

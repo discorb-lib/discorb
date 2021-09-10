@@ -8,6 +8,9 @@ module Discorb
   # @abstract
   #
   module Extension
+    include Discorb::Command::Handler
+    undef setup_commands
+
     @events = {}
     @client = nil
 
@@ -46,12 +49,18 @@ module Discorb
 
     # @return [Hash{Symbol => Array<Discorb::Event>}] The events of the extension.
     attr_reader :events
+    # @return [Array<Discorb::Command::Command] The commands of the extension.
+    attr_reader :commands
+    # @private
+    attr_reader :bottom_commands
 
     # @!visibility private
     attr_accessor :client
 
     def self.extended(obj)
       obj.instance_variable_set(:@events, {})
+      obj.instance_variable_set(:@commands, [])
+      obj.instance_variable_set(:@bottom_commands, [])
     end
   end
 end
