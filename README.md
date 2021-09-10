@@ -2,7 +2,8 @@
 [![Document](https://img.shields.io/badge/Document-discord--lib.github.io-blue.svg)](https://discorb-lib.github.io/)
 [![Gem](https://img.shields.io/gem/dt/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)
 [![Gem](https://img.shields.io/gem/v/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)
-[![Discord](https://img.shields.io/discord/863581274916913193?logo=discord&logoColor=fff&color=5865f2&label=Discord)](https://discord.gg/hCP6zq8Vpj)  
+[![Discord](https://img.shields.io/discord/863581274916913193?logo=discord&logoColor=fff&color=5865f2&label=Discord)](https://discord.gg/hCP6zq8Vpj)
+[![GitHub](https://img.shields.io/github/stars/discorb-lib/discorb?color=24292e&label=Stars&logo=GitHub&logoColor=fff)](https://github.com/discorb-lib/discorb)  
 
 discorb is a Discord API wrapper for Ruby.
 
