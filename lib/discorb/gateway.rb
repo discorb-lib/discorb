@@ -545,7 +545,7 @@ module Discorb
               connect_gateway(true)
             end
           when 11
-            @log.info "Received opcode 11"
+            @log.debug "Received opcode 11"
             @ping = Time.now.to_f - @heartbeat_before
           when 0
             handle_event(payload[:t], data)
