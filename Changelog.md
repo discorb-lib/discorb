@@ -117,3 +117,10 @@
 
 - Fix: Fix bug of registering commands
 - Add: Add way to register commands in Extension
+
+## 0.5.3
+
+- Add: Add way to handle raw events with `event_xxx`
+- Add: Add `Client#session_id`
+- Add: Add `Connectable`
+- Fix: Fix error by sending DM
