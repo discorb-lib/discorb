@@ -49,6 +49,8 @@ module Discorb
     attr_reader :ping
     # @return [:initialized, :running, :closed] The status of the client.
     attr_reader :status
+    # @return [Integer] The session ID of connection.
+    attr_reader :session_id
     # @private
     attr_reader :bottom_commands
 
