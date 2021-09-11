@@ -124,3 +124,7 @@
 - Add: Add `Client#session_id`
 - Add: Add `Connectable`
 - Fix: Fix error by sending DM
+
+## 0.5.4
+
+- Fix: Fix issue of receiving component events
