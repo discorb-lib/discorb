@@ -513,7 +513,6 @@ module Discorb
           case payload[:op]
           when 10
             @heartbeat_interval = data[:heartbeat_interval]
-            @tasks << handle_heartbeat(@heartbeat_interval)
             if @first
               payload = {
                 token: @token,
@@ -523,6 +522,13 @@ module Discorb
               }
               payload[:presence] = @identify_presence if @identify_presence
               send_gateway(2, **payload)
+              Async do
+                sleep 2
+                next unless @uncached_guilds.nil?
+
+                raise ClientError, "Failed to connect to gateway.\nHint: This usually means that your intents are invalid."
+                exit 1
+              end
             else
               payload = {
                 token: @token,
@@ -540,7 +546,7 @@ module Discorb
               connect_gateway(false)
             else
               @log.info "Connection is not resumable, reconnecting with opcode 2"
-              task.sleep(2)
+              sleep(2)
               @connection.close
               connect_gateway(true)
             end
@@ -555,7 +561,7 @@ module Discorb
 
       def handle_heartbeat(interval)
         Async do |task|
-          task.sleep((interval / 1000.0 - 1) * rand)
+          sleep((interval / 1000.0 - 1) * rand)
           loop do
             @heartbeat_before = Time.now.to_f
             @connection.write({ op: 1, d: @last_s }.to_json)
@@ -578,6 +584,7 @@ module Discorb
           @session_id = data[:session_id]
           @user = ClientUser.new(self, data[:user])
           @uncached_guilds = data[:guilds].map { |g| g[:id] }
+          @tasks << handle_heartbeat(@heartbeat_interval)
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
             Guild.new(self, data, true)

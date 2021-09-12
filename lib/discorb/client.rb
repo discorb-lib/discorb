@@ -460,7 +460,7 @@ module Discorb
         }
         @token = token.to_s
         @close_condition = Async::Condition.new
-        main_task = Async do
+        @main_task = Async do
           @status = :running
           connect_gateway(true).wait
         rescue
@@ -469,7 +469,7 @@ module Discorb
           raise
         end
         @close_condition.wait
-        main_task.stop
+        @main_task.stop
       end
     end
   end
