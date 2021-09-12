@@ -6,6 +6,9 @@ module Discorb
   # Represents a Discord emoji.
   # @abstract
   class Emoji
+    def eql?(other)
+      other.is_a?(self.class) && other.to_uri == to_uri
+    end
   end
 
   # Represents a custom emoji in discord.
