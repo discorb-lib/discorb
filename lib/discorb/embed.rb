@@ -65,9 +65,9 @@ module Discorb
         @timestamp = data[:timestamp] && Time.iso8601(data[:timestamp])
         @type = data[:type]
         @color = data[:color] && Color.new(data[:color])
-        @footer = data[:footer] && Footer.new(data[:footer][:text], icon: data[:footer][:icon])
+        @footer = data[:footer] && Footer.new(data[:footer][:text], icon: data[:footer][:icon_url])
         @author = if data[:author]
-            Author.new(data[:author][:name], icon: data[:author][:icon],
+            Author.new(data[:author][:name], icon: data[:author][:icon_url],
                                              url: data[:author][:url])
           end
         @thumbnail = data[:thumbnail] && Thumbnail.new(data[:thumbnail])
