@@ -132,3 +132,9 @@
 ## 0.5.5
 
 - Fix: Fix some bugs
+
+## 0.5.6
+
+- Add: Raise error when intents are invalid
+- Fix: Fix Emoji#==
+
