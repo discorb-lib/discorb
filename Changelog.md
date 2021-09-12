@@ -128,3 +128,7 @@
 ## 0.5.4
 
 - Fix: Fix issue of receiving component events
+
+## 0.5.5
+
+- Fix: Fix some bugs
