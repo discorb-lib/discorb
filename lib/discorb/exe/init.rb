@@ -171,10 +171,10 @@ if (dir = ARGV[0])
   $path += "/#{dir}"
   if Dir.exist?($path)
     if Dir.empty?($path)
-      gputs "Found \e[30m#{dir}\e[90m and empty, using this directory."
+      iputs "Found \e[30m#{dir}\e[90m and empty, using this directory."
     else
       if $values[:force]
-        gputs "Found \e[30m#{dir}\e[90m and not empty, but force is on, using this directory."
+        iputs "Found \e[30m#{dir}\e[90m and not empty, but force is on, using this directory."
       else
         eputs "Directory \e[31m#{dir}\e[91m already exists and not empty. Use \e[31m-f\e[91m to force."
         exit
@@ -182,7 +182,7 @@ if (dir = ARGV[0])
     end
   else
     Dir.mkdir($path)
-    gputs "Couldn't find \e[30m#{dir}\e[90m, created directory."
+    iputs "Couldn't find \e[30m#{dir}\e[90m, created directory."
   end
   Dir.chdir($path)
 end
