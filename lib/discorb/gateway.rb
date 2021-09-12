@@ -584,6 +584,11 @@ module Discorb
           @session_id = data[:session_id]
           @user = ClientUser.new(self, data[:user])
           @uncached_guilds = data[:guilds].map { |g| g[:id] }
+          if @uncached_guilds == []
+            @ready = true
+            dispatch(:ready)
+            @log.info("Guilds were cached")
+          end
           @tasks << handle_heartbeat(@heartbeat_interval)
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
