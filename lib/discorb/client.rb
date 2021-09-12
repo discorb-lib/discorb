@@ -258,7 +258,7 @@ module Discorb
     # @param [Boolean] with_count Whether to include the count of the invite.
     # @param [Boolean] with_expiration Whether to include the expiration of the invite.
     #
-    # @return [Discorb::Invite] The invite.
+    # @return [Async::Task<Discorb::Invite>] The invite.
     #
     def fetch_invite(code, with_count: false, with_expiration: false)
       Async do
@@ -275,7 +275,7 @@ module Discorb
     #
     # @param [Boolean] force Whether to force the fetch.
     #
-    # @return [Discorb::Application] The application.
+    # @return [Async::Task<Discorb::Application>] The application.
     #
     def fetch_application(force: false)
       Async do
@@ -292,7 +292,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Sticker::Pack>] The packs.
+    # @return [Async::Task<Array<Discorb::Sticker::Pack>>] The packs.
     #
     def fetch_nitro_sticker_packs
       Async do

@@ -66,8 +66,8 @@ module Discorb
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
       # @param [Proc] block Command block.
       # @yield [interaction, message] Block to execute.
-      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] Interaction object.
-      # @yieldparam [Discorb::Message] user Message object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] Interaction Interaction object.
+      # @yieldparam [Discorb::Message] message Message object.
       #
       # @return [Discorb::Command::Command] Command object.
       #
@@ -84,7 +84,7 @@ module Discorb
       # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
       # @param [Proc] block Command block.
       # @yield [interaction, user] Block to execute.
-      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] Interaction object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::User] user User object.
       #
       # @return [Discorb::Command::Command] Command object.

@@ -171,7 +171,7 @@ module Discorb
     #
     # @param [String] reason The reason of deleting the channel.
     #
-    # @return [self] The deleted channel.
+    # @return [Async::Task<self>] The deleted channel.
     #
     def delete!(reason: nil)
       Async do
@@ -194,7 +194,7 @@ module Discorb
     # @param [Discorb::CategoryChannel] parent The parent of channel.
     # @param [String] reason The reason of moving the channel.
     #
-    # @return [self] The moved channel.
+    # @return [Async::Task<self>] The moved channel.
     #
     def move(position, lock_permissions: false, parent: :unset, reason: nil)
       Async do
@@ -273,7 +273,7 @@ module Discorb
     # @param [Integer] archive_in Alias of `default_auto_archive_duration`.
     # @param [String] reason The reason of editing the channel.
     #
-    # @return [self] The edited channel.
+    # @return [Async::Task<self>] The edited channel.
     #
     def edit(name: :unset, position: :unset, category: :unset, parent: :unset,
              topic: :unset, nsfw: :unset, announce: :unset,
@@ -310,7 +310,7 @@ module Discorb
     # @param [String] name The name of the webhook.
     # @param [Discorb::Image] avatar The avatar of the webhook.
     #
-    # @return [Discorb::Webhook::IncomingWebhook] The created webhook.
+    # @return [Async::Task<Discorb::Webhook::IncomingWebhook>] The created webhook.
     #
     def create_webhook(name, avatar: nil)
       Async do
@@ -327,7 +327,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Webhook>] The webhooks in the channel.
+    # @return [Async::Task<Array<Discorb::Webhook>>] The webhooks in the channel.
     #
     def fetch_webhooks
       Async do
@@ -419,7 +419,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Invite>] The invites in the channel.
+    # @return [Async::Task<Array<Discorb::Invite>>] The invites in the channel.
     #
     def fetch_invites
       Async do
@@ -440,7 +440,7 @@ module Discorb
     #   @note if it's `false` it may return existing invite.
     # @param [String] reason The reason of creating the invite.
     #
-    # @return [Invite] The created invite.
+    # @return [Async::Task<Invite>] The created invite.
     #
     def create_invite(max_age: nil, max_uses: nil, temporary: false, unique: false, reason: nil)
       Async do
@@ -487,7 +487,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Message>] The pinned messages in the channel.
+    # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     #
     def fetch_pins
       Async do
@@ -535,7 +535,7 @@ module Discorb
     # @param [Boolean] public Whether the thread is public.
     # @param [String] reason The reason of starting the thread.
     #
-    # @return [Discorb::ThreadChannel] The started thread.
+    # @return [Async::Task<Discorb::ThreadChannel>] The started thread.
     #
     def start_thread(name, message: nil, auto_archive_duration: 1440, public: true, reason: nil)
       Async do
@@ -560,7 +560,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::ThreadChannel>] The archived threads in the channel.
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived threads in the channel.
     #
     def fetch_archived_public_threads
       Async do
@@ -574,7 +574,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::ThreadChannel>] The archived private threads in the channel.
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived private threads in the channel.
     #
     def fetch_archived_private_threads
       Async do
@@ -591,7 +591,7 @@ module Discorb
     # @param [Integer] limit The limit of threads to fetch.
     # @param [Time] before <description>
     #
-    # @return [Array<Discorb::ThreadChannel>] The joined archived private threads in the channel.
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The joined archived private threads in the channel.
     #
     def fetch_joined_archived_private_threads(limit: nil, before: nil)
       Async do
@@ -660,7 +660,7 @@ module Discorb
     # @param [Symbol] rtc_region The region of the voice channel.
     # @param [String] reason The reason of editing the voice channel.
     #
-    # @return [self] The edited voice channel.
+    # @return [Async::Task<self>] The edited voice channel.
     #
     def edit(name: :unset, position: :unset, bitrate: :unset, user_limit: :unset, rtc_region: :unset, reason: nil)
       Async do
@@ -728,7 +728,7 @@ module Discorb
     # @param [Symbol] rtc_region The region of the stage channel.
     # @param [String] reason The reason of editing the stage channel.
     #
-    # @return [self] The edited stage channel.
+    # @return [Async::Task<self>] The edited stage channel.
     #
     def edit(name: :unset, position: :unset, bitrate: :unset, rtc_region: :unset, reason: nil)
       Async do
@@ -753,7 +753,7 @@ module Discorb
     # @param [Boolean] public Whether the stage instance is public or not.
     # @param [String] reason The reason of starting the stage instance.
     #
-    # @return [Discorb::StageInstance] The started stage instance.
+    # @return [Async::Task<Discorb::StageInstance>] The started stage instance.
     #
     def start(topic, public: false, reason: nil)
       Async do
@@ -768,7 +768,7 @@ module Discorb
     # @macro http
     #
     # @return [StageInstance] The current stage instance.
-    # @return [nil] If there is no current stage instance.
+    # @return [Async::Task<nil>] If there is no current stage instance.
     #
     def fetch_stage_instance
       Async do

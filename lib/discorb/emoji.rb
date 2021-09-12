@@ -86,7 +86,7 @@ module Discorb
     # @param [Array<Discorb::Role>] roles The new roles that can use this emoji.
     # @param [String] reason The reason for editing the emoji.
     #
-    # @return [self] The edited emoji.
+    # @return [Async::Task<self>] The edited emoji.
     #
     def edit(name: :unset, roles: :unset, reason: nil)
       Async do
@@ -107,7 +107,7 @@ module Discorb
     #
     # @param [String] reason The reason for deleting the emoji.
     #
-    # @return [self] The deleted emoji.
+    # @return [Async::Task<self>] The deleted emoji.
     #
     def delete!(reason: nil)
       Async do

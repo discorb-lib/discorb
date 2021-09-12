@@ -128,7 +128,7 @@ module Discorb
     attr_reader :interaction
     # @return [Discorb::ThreadChannel] The thread channel of the message.
     attr_reader :thread
-    # @return [Array<Array<Discorb::Components>>] The components of the message.
+    # @return [Array<Array<Discorb::Component>>] The components of the message.
     attr_reader :components
     # @return [Boolean] Whether the message is deleted.
     attr_reader :deleted
@@ -218,7 +218,7 @@ module Discorb
     #
     # @param [String] content The message content.
     # @param [Discorb::Embed] embed The embed to send.
-    # @param [Array<Discord::Embed>] embeds The embeds to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
@@ -339,7 +339,7 @@ module Discorb
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #
-    # @return [Array<Discorb::User>] The users.
+    # @return [Async::Task<Array<Discorb::User>>] The users.
     #
     def fetch_reacted_users(emoji, limit: nil, after: 0)
       Async do
@@ -393,7 +393,7 @@ module Discorb
     #
     # @param (see Discorb::Channel#start_thread)
     #
-    # @return [<Type>] <description>
+    # @return [Async::Task<<Type>>] <description>
     #
     def start_thread(*args, **kwargs)
       Async do

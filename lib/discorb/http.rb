@@ -25,8 +25,8 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
-    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -56,8 +56,8 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
-    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -86,8 +86,8 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
-    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -116,8 +116,8 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
-    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -145,8 +145,8 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
-    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -175,7 +175,7 @@ module Discorb
     # @param [Hash] payload The payload to send.
     # @param [Array<Discorb::File>] files The files to send.
     #
-    # @return [Array[String, String]] The boundary and body.
+    # @return [Array(String, String)] The boundary and body.
     #
     def self.multipart(payload, files)
       boundary = "DiscorbBySevenC7CMultipartFormData#{Time.now.to_f}"

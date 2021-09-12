@@ -16,7 +16,7 @@ module Discorb
     # @param [Array<Discorb::Embed>] embeds The embeds to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Discorb::Message, Discorb::Message::Reference] reference The message to reply to.
-    # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Discorb::File] file The file to send.
     # @param [Array<Discorb::File>] files The files to send.
     #
@@ -76,7 +76,7 @@ module Discorb
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
     # @param [Discorb::Embed] embed The embed to send.
-    # @param [Array<Discord::Embed>] embeds The embeds to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
@@ -162,7 +162,7 @@ module Discorb
     # @param [Discorb::Snowflake] after The ID of the message to fetch after.
     # @param [Discorb::Snowflake] around The ID of the message to fetch around.
     #
-    # @return [Array<Discorb::Message>] The messages.
+    # @return [Async::Task<Array<Discorb::Message>>] The messages.
     #
     def fetch_messages(limit = 50, before: nil, after: nil, around: nil)
       Async do

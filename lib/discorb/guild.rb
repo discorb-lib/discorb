@@ -175,7 +175,7 @@ module Discorb
     # @macro http
     # @note This querys the API every time. We recommend using {#emojis} instead.
     #
-    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}] A dictionary of emoji in the guild.
+    # @return [Async::Task<Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}>] A dictionary of emoji in the guild.
     #
     def fetch_emoji_list
       Async do
@@ -236,7 +236,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Webhook>] A list of webhooks in the guild.
+    # @return [Async::Task<Array<Discorb::Webhook>>] A list of webhooks in the guild.
     #
     def fetch_webhooks
       Async do
@@ -250,7 +250,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Discorb::AuditLog] The audit log of the guild.
+    # @return [Async::Task<Discorb::AuditLog>] The audit log of the guild.
     #
     def fetch_audit_log
       Async do
@@ -264,7 +264,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Channel>] A list of channels in the guild.
+    # @return [Async::Task<Array<Discorb::Channel>>] A list of channels in the guild.
     #
     def fetch_channels
       Async do
@@ -373,7 +373,7 @@ module Discorb
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
     # @param [String] reason The reason for creating the channel.
     #
-    # @return [Discorb::CategoryChannel] The created category channel.
+    # @return [Async::Task<Discorb::CategoryChannel>] The created category channel.
     #
     def create_category_channel(name, position: nil, permission_overwrites: nil, parent: nil, reason: nil)
       Async do
@@ -412,7 +412,7 @@ module Discorb
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
     # @param [String] reason The reason for creating the channel.
     #
-    # @return [Discorb::StageChannel] The created stage channel.
+    # @return [Async::Task<Discorb::StageChannel>] The created stage channel.
     #
     def create_stage_channel(name, bitrate: 64, position: nil, permission_overwrites: nil, parent: nil, reason: nil)
       Async do
@@ -489,7 +489,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::ThreadChannel>] The list of threads.
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The list of threads.
     #
     def fetch_active_threads
       Async do
@@ -507,7 +507,7 @@ module Discorb
     # @param [#to_s] id The ID of the member to fetch.
     #
     # @return [Discorb::Member] The member.
-    # @return [nil] If the member is not found.
+    # @return [Async::Task<nil>] If the member is not found.
     #
     def fetch_member(id)
       Async do
@@ -527,7 +527,7 @@ module Discorb
     # @param [String] name The name of the member to search for.
     # @param [Integer] limit The maximum number of members to return.
     #
-    # @return [Array<Discorb::Member>] The list of members.
+    # @return [Async::Task<Array<Discorb::Member>>] The list of members.
     #
     def fetch_members_named(name, limit: 1)
       Async do
@@ -542,7 +542,7 @@ module Discorb
     # @macro http
     #
     # @return [Discorb::Member] The member.
-    # @return [nil] If the member is not found.
+    # @return [Async::Task<nil>] If the member is not found.
     #
     def fetch_member_named(...)
       Async do
@@ -585,7 +585,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Guild::Ban>] The list of bans.
+    # @return [Async::Task<Array<Discorb::Guild::Ban>>] The list of bans.
     #
     def fetch_bans
       Async do
@@ -602,7 +602,7 @@ module Discorb
     # @param [Discorb::User] user The user to fetch.
     #
     # @return [Discorb::Guild::Ban] The ban.
-    # @return [nil] If the ban is not found.
+    # @return [Async::Task<nil>] If the ban is not found.
     #
     def fetch_ban(user)
       Async do
@@ -621,7 +621,7 @@ module Discorb
     #
     # @param [Discorb::User] user The user to check.
     #
-    # @return [Boolean] Whether the user was banned.
+    # @return [Async::Task<Boolean>] Whether the user was banned.
     #
     def banned?(user)
       Async do
@@ -638,7 +638,7 @@ module Discorb
     # @param [Integer] delete_message_days The number of days to delete messages.
     # @param [String] reason The reason for banning the member.
     #
-    # @return [Discorb::Guild::Ban] The ban.
+    # @return [Async::Task<Discorb::Guild::Ban>] The ban.
     #
     def ban_member(member, delete_message_days: 0, reason: nil)
       Async do
@@ -668,7 +668,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Role>] The list of roles.
+    # @return [Async::Task<Array<Discorb::Role>>] The list of roles.
     #
     def fetch_roles
       Async do
@@ -688,7 +688,7 @@ module Discorb
     # @param [Boolean] mentionable Whether the role should be mentionable.
     # @param [String] reason The reason for creating the role.
     #
-    # @return [Discorb::Role] The role.
+    # @return [Async::Task<Discorb::Role>] The role.
     #
     def create_role(name = nil, color: nil, hoist: nil, mentionable: nil, reason: nil)
       Async do
@@ -712,7 +712,7 @@ module Discorb
     # @param [Integer] days The number of days to prune.
     # @param [Array<Discorb::Role>] roles The roles that include for pruning.
     #
-    # @return [Integer] The number of members that will be pruned.
+    # @return [Async::Task<Integer>] The number of members that will be pruned.
     #
     def fetch_prune(days = 7, roles: [])
       Async do
@@ -735,7 +735,7 @@ module Discorb
     # @param [Array<Discorb::Role>] roles The roles that include for pruning.
     # @param [String] reason The reason for pruning.
     #
-    # @return [Integer] The number of members that were pruned.
+    # @return [Async::Task<Integer>] The number of members that were pruned.
     #
     def prune(days = 7, roles: [], reason: nil)
       Async do
@@ -751,7 +751,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::VoiceRegion>] The available voice regions.
+    # @return [Async::Task<Array<Discorb::VoiceRegion>>] The available voice regions.
     #
     def fetch_voice_regions
       Async do
@@ -765,7 +765,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Invite>] The invites.
+    # @return [Async::Task<Array<Invite>>] The invites.
     #
     def fetch_invites
       Async do
@@ -779,7 +779,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Integration>] The integrations.
+    # @return [Async::Task<Array<Discorb::Integration>>] The integrations.
     #
     def fetch_integrations
       Async do
@@ -793,7 +793,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Discorb::Guild::Widget] The widget.
+    # @return [Async::Task<Discorb::Guild::Widget>] The widget.
     #
     def fetch_widget
       Async do
@@ -807,7 +807,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Discorb::Guild::VanityInvite] The vanity URL.
+    # @return [Async::Task<Discorb::Guild::VanityInvite>] The vanity URL.
     #
     def fetch_vanity_invite
       Async do
@@ -821,7 +821,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Discorb::Guild::WelcomeScreen] The welcome screen.
+    # @return [Async::Task<Discorb::Guild::WelcomeScreen>] The welcome screen.
     #
     def fetch_welcome_screen
       Async do
@@ -835,7 +835,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Array<Discorb::Sticker::GuildSticker>] The stickers.
+    # @return [Async::Task<Array<Discorb::Sticker::GuildSticker>>] The stickers.
     #
     def fetch_stickers
       Async do
@@ -852,7 +852,7 @@ module Discorb
     # @param [#to_s] id The ID of the sticker.
     #
     # @return [Discorb::Sticker::GuildSticker] The sticker.
-    # @return [nil] If the sticker does not exist.
+    # @return [Async::Task<nil>] If the sticker does not exist.
     #
     def fetch_sticker(id)
       Async do
@@ -869,7 +869,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Discorb::GuildTemplate] The templates.
+    # @return [Async::Task<Discorb::GuildTemplate>] The templates.
     #
     def fetch_templates
       Async do
@@ -882,7 +882,7 @@ module Discorb
     # Almost the same as {#fetch_templates}, but returns a single template.
     #
     # @return [Discorb::GuildTemplate] The template.
-    # @return [nil] If the template does not exist.
+    # @return [Async::Task<nil>] If the template does not exist.
     #
     def fetch_template
       Async do
@@ -897,7 +897,7 @@ module Discorb
     # @param [String] description The description of the template.
     # @param [String] reason The reason for creating the template.
     #
-    # @return [Discorb::GuildTemplate] The template.
+    # @return [Async::Task<Discorb::GuildTemplate>] The template.
     #
     def create_template(name, description = nil, reason: nil)
       Async do

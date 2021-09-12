@@ -56,7 +56,7 @@ module Discorb
     #
     # @param [Boolean] strict Whether don't allow if the user is a member of the team.
     #
-    # @return [Boolean] Whether the user is a owner of the client.
+    # @return [Async::Task<Boolean>] Whether the user is a owner of the client.
     #
     def bot_owner?(strict: false)
       Async do

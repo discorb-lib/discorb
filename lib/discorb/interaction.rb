@@ -121,7 +121,7 @@ module Discorb
       # @param [Discorb::Embed] embed The embed to send.
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
-      # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+      # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
@@ -195,7 +195,7 @@ module Discorb
       # @param [Discorb::Embed] embed The embed to send.
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
-      # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+      # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def edit(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
