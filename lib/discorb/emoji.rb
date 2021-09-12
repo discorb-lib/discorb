@@ -9,6 +9,10 @@ module Discorb
     def eql?(other)
       other.is_a?(self.class) && other.to_uri == to_uri
     end
+
+    def ==(other)
+      eql?(other)
+    end
   end
 
   # Represents a custom emoji in discord.
