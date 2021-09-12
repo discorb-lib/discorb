@@ -336,7 +336,7 @@ module Discorb
       private
 
       def _set_data(data)
-        @target = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge({ guild_id: @guild_id.to_s }))
+        @target = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym])
         @client.commands.find { |c| c.name == data[:name] && c.type_raw == 3 }.block.call(self, @target)
       end
     end
