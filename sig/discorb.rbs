@@ -1,7 +1,6 @@
 # A new wrapper for the Discorb API.
 # 
 # @author sevenc-nanashi
-
 module Discorb
   interface _SnowflakeLike
     def to_s: () -> String
@@ -16,46 +15,24 @@ module Discorb
 
   # @!visibility private
   class Logger
-    # sord omit - no YARD type given for "out", using untyped
-    # sord omit - no YARD type given for "colorize_log", using untyped
-    # sord omit - no YARD type given for "level", using untyped
     def initialize: (untyped _out, untyped colorize_log, untyped level) -> void
-
-    # sord omit - no YARD return type given, using untyped
+0sing untyped
     def level: () -> untyped
 
-    # sord omit - no YARD type given for "level", using untyped
-    # sord omit - no YARD return type given, using untyped
     def level=: (untyped level) -> untyped
 
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def debug: (untyped message) -> untyped
 
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def info: (untyped message) -> untyped
 
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def warn: (untyped message) -> untyped
 
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def error: (untyped message) -> untyped
 
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def fatal: (untyped message) -> untyped
 
-    # sord omit - no YARD type given for "name", using untyped
-    # sord omit - no YARD type given for "color", using untyped
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def write_output: (untyped name, untyped color, untyped message) -> untyped
 
-    # sord omit - no YARD type given for :levels, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # Returns the value of attribute out.
     attr_accessor out: untyped
 
@@ -66,10 +43,8 @@ module Discorb
   # 
   # Represents a attachment file.
   class Attachment < Discorb::DiscordModel
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped data) -> void
 
-    # sord duck - #read looks like a duck type, replacing with untyped
     # _@return_ — The file content.
     attr_reader io: untyped
 
@@ -108,13 +83,8 @@ module Discorb
   # 
   # Represents a file to send as an attachment.
   class File
-    # sord omit - no YARD type given for "io", using untyped
-    # sord omit - no YARD type given for "filename", using untyped
-    # sord omit - no YARD type given for "content_type:", using untyped
     def initialize: (untyped io, ?untyped filename, ?content_type: untyped) -> void
 
-    # sord duck - #read looks like a duck type, replacing with untyped
-    # sord duck - #read looks like a duck type, replacing with untyped
     # _@return_ — The IO of the file.
     attr_accessor io: untyped
 
@@ -136,14 +106,9 @@ module Discorb
     # _@note_ — This is usually called by the subclass.
     def initialize: (Integer value) -> void
 
-    # sord omit - no YARD type given for "name", using untyped
-    # sord omit - no YARD type given for "args", using untyped
-    # sord omit - no YARD return type given, using untyped
     # Returns the value of the flag.
     def method_missing: (untyped name, ?untyped args) -> untyped
 
-    # sord omit - no YARD type given for "sym", using untyped
-    # sord omit - no YARD type given for "include_private", using untyped
     def respond_to_missing?: (untyped sym, untyped include_private) -> bool
 
     # Union of two flags.
@@ -174,17 +139,16 @@ module Discorb
     # _@return_ — The XOR of the two flags.
     def ^: (Discorb::Flag other) -> Discorb::Flag
 
-    # # Negation of the flag.
-    # # 
-    # # _@return_ — The negation of the flag.
-    # def ~@: () -> Discorb::Flag
+    # Negation of the flag.
+    # 
+    # _@return_ — The negation of the flag.
+    def ~@: () -> Discorb::Flag
 
     # Max value of the flag.
     # 
     # _@return_ — the max value of the flag.
     def self.max_value: () -> Integer
 
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — the values of the flag.
     attr_reader values: ::Hash[Symbol, bool]
 
@@ -196,10 +160,8 @@ module Discorb
   # A class to handle http requests.
   # @private
   class HTTP
-    # sord omit - no YARD type given for "client", using untyped
     def initialize: (untyped client) -> void
 
-    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
     # Execute a GET request.
     # 
     # _@param_ `path` — The path to the resource.
@@ -222,7 +184,6 @@ module Discorb
                **::Hash[untyped, untyped] kwargs
              ) -> [Net::HTTPResponse, ::Hash[untyped, untyped]]
 
-    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
     # Execute a POST request.
     # 
     # _@param_ `path` — The path to the resource.
@@ -248,7 +209,6 @@ module Discorb
                 **::Hash[untyped, untyped] kwargs
               ) -> [Net::HTTPResponse, ::Hash[untyped, untyped]]
 
-    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
     # Execute a PATCH request.
     # 
     # _@param_ `path` — The path to the resource.
@@ -274,7 +234,6 @@ module Discorb
                  **::Hash[untyped, untyped] kwargs
                ) -> [Net::HTTPResponse, ::Hash[untyped, untyped]]
 
-    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
     # Execute a PUT request.
     # 
     # _@param_ `path` — The path to the resource.
@@ -300,7 +259,6 @@ module Discorb
                **::Hash[untyped, untyped] kwargs
              ) -> [Net::HTTPResponse, ::Hash[untyped, untyped]]
 
-    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
     # Execute a DELETE request.
     # 
     # _@param_ `path` — The path to the resource.
@@ -323,7 +281,6 @@ module Discorb
                   **::Hash[untyped, untyped] kwargs
                 ) -> [Net::HTTPResponse, ::Hash[untyped, untyped]]
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # A helper method to send multipart/form-data requests.
@@ -335,33 +292,18 @@ module Discorb
     # _@return_ — The boundary and body.
     def self.multipart: (::Hash[untyped, untyped] payload, ::Array[Discorb::File] files) -> [String, String]
 
-    # sord omit - no YARD type given for "ary", using untyped
-    # sord omit - no YARD return type given, using untyped
     def test_error: (untyped ary) -> untyped
 
-    # sord omit - no YARD type given for "headers", using untyped
-    # sord omit - no YARD type given for "body", using untyped
-    # sord omit - no YARD type given for "audit_log_reason", using untyped
-    # sord omit - no YARD return type given, using untyped
     def get_headers: (untyped headers, ?untyped body, ?untyped audit_log_reason) -> untyped
 
-    # sord omit - no YARD type given for "body", using untyped
-    # sord omit - no YARD return type given, using untyped
     def get_body: (untyped body) -> untyped
 
-    # sord omit - no YARD type given for "path", using untyped
-    # sord omit - no YARD return type given, using untyped
     def get_path: (untyped path) -> untyped
 
-    # sord omit - no YARD type given for "resp", using untyped
-    # sord omit - no YARD return type given, using untyped
     def get_response_data: (untyped resp) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def http: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def recr_utf8: (untyped data) -> untyped
   end
 
@@ -370,9 +312,6 @@ module Discorb
   class Role < Discorb::DiscordModel
     include Comparable
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "guild", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped guild, untyped data) -> void
 
     # Compares two roles by their position.
@@ -387,15 +326,12 @@ module Discorb
     # _@return_ — The formatted string.
     def to_s: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def mention: () -> untyped
 
     def color?: () -> bool
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Moves the role to a new position.
     # 
     # _@param_ `position` — The new position.
@@ -407,7 +343,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def move: (Integer position, ?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Edits the role.
     # 
     # _@param_ `name` — The new name of the role.
@@ -436,17 +371,13 @@ module Discorb
                 ?reason: String?
               ) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Deletes the role.
     # 
     # _@param_ `reason` — The reason for deleting the role.
     def delete!: (?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def tag: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # _@return_ — The ID of the role.
@@ -479,8 +410,7 @@ module Discorb
     # 
     # Represents a tag of a role.
     class Tag < Discorb::DiscordModel
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
       # _@return_ — The ID of the bot that owns the role.
       attr_reader bot_id: Discorb::Snowflake
@@ -504,8 +434,6 @@ module Discorb
   class User < Discorb::DiscordModel
     include Discorb::Messageable
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
     # Format the user as `Username#Discriminator` style.
@@ -513,7 +441,6 @@ module Discorb
     # _@return_ — The formatted username.
     def to_s: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # Whether the user is a owner of the client.
@@ -527,11 +454,8 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def bot_owner?: (?strict: bool) -> Async::Task[bool]
 
-    # sord omit - no YARD return type given, using untyped
     def channel_id: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # Post a message to the channel.
@@ -569,10 +493,8 @@ module Discorb
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?file: Discorb::File?,
                 ?files: ::Array[Discorb::File]?
-              ) -> Discorb::Message
+              ) -> Async::Task[Discorb::Message]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Edit a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -593,7 +515,7 @@ module Discorb
     # 
     # _@note_ — This method calls HTTP request.
     def edit_message: (
-                        IDLike message_id,
+                        _SnowflakeLike message_id,
                         ?String? content,
                         ?embed: Discorb::Embed?,
                         ?embeds: ::Array[Discorb::Embed]?,
@@ -602,8 +524,6 @@ module Discorb
                         ?supress: bool?
                       ) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Delete a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -624,7 +544,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_message: (Discorb::Snowflake id) -> Discorb::Message
+    def fetch_message: (Discorb::Snowflake id) -> Async::Task[Discorb::Message]
 
     # Fetch a message history.
     # 
@@ -648,7 +568,6 @@ module Discorb
                           ?around: Discorb::Snowflake?
                         ) -> Async::Task[::Array[Discorb::Message]]
 
-    # sord omit - no YARD return type given, using untyped
     # Trigger the typing indicator in the channel.
     # If block is given, trigger typing indicator during executing block.
     # 
@@ -712,7 +631,6 @@ module Discorb
   # 
   # Represents a client user.
   class ClientUser < Discorb::User
-    # sord omit - no YARD return type given, using untyped
     # Edit the client user.
     # 
     # _@param_ `name` — The new username.
@@ -730,9 +648,6 @@ module Discorb
   # 
   # Represents a single asset.
   class Asset < Discorb::DiscordModel
-    # sord omit - no YARD type given for "target", using untyped
-    # sord omit - no YARD type given for "hash", using untyped
-    # sord omit - no YARD type given for "path:", using untyped
     def initialize: (untyped target, untyped hash, ?path: untyped) -> void
 
     # URL of the asset.
@@ -744,10 +659,8 @@ module Discorb
     # _@return_ — URL of the asset.
     def url: (?image_format: String?, ?size: Integer) -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def endpoint: () -> untyped
 
     # _@return_ — The hash of asset.
@@ -760,7 +673,6 @@ module Discorb
   # 
   # Represents a default avatar.
   class DefaultAvatar < Discorb::DiscordModel
-    # sord omit - no YARD type given for "discriminator", using untyped
     def initialize: (untyped discriminator) -> void
 
     # Returns the URL of the avatar.
@@ -772,7 +684,6 @@ module Discorb
     # _@return_ — URL of the avatar.
     def url: (?image_format: String?, ?size: Integer) -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # _@return_ — For compatibility with {Asset}, always `false`.
@@ -802,18 +713,16 @@ module Discorb
     # _@return_ — A RGB array.
     def to_rgb: () -> [Integer, Integer, Integer]
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{:r, :g, :b => Integer}".
     # Convert a color to RGB hash.
     # 
     # _@return_ — A RGB hash.
-    def to_rgb_hash: () -> Hash[Symbol, Integer]
+    def to_rgb_hash: () -> Hash[:r | :g | :b, Integer]
 
     # Converts a color to a `#000000` string.
     # 
     # _@return_ — Converted string.
     def to_s: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # Create a color from a hexadecimal string.
@@ -878,7 +787,6 @@ module Discorb
   # 
   # Represents an embed of discord.
   class Embed
-    # sord omit - no YARD type given for "data:", using untyped
     # Initialize a new Embed object.
     # 
     # _@param_ `title` — The title of embed.
@@ -1107,8 +1015,7 @@ module Discorb
     # 
     # Represents a video of embed.
     class Video
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
       # _@return_ — The url of video.
       attr_reader url: String
@@ -1126,8 +1033,7 @@ module Discorb
     # 
     # Represents a provider of embed.
     class Provider
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
       # _@return_ — The name of provider.
       attr_reader name: String
@@ -1140,19 +1046,13 @@ module Discorb
   # Represents a Discord emoji.
   # @abstract
   class Emoji
-    # sord omit - no YARD type given for "other", using untyped
     def eql?: (untyped other) -> bool
 
-    # sord omit - no YARD type given for "other", using untyped
-    # sord omit - no YARD return type given, using untyped
     def ==: (untyped other) -> untyped
   end
 
   # Represents a custom emoji in discord.
   class CustomEmoji < Discorb::Emoji
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "guild", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped guild, untyped data) -> void
 
     # Format the emoji for sending.
@@ -1165,7 +1065,6 @@ module Discorb
     # _@return_ — the formatted emoji.
     def to_uri: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # Edit the emoji.
@@ -1196,8 +1095,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def delete!: (?reason: String?) -> Async::Task[self]
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # _@return_ — The ID of the emoji.
@@ -1231,7 +1128,6 @@ module Discorb
   # 
   # Represents a partial custom emoji in discord.
   class PartialEmoji < Discorb::DiscordModel
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped data) -> void
 
     # Format the emoji for URI.
@@ -1239,7 +1135,6 @@ module Discorb
     # _@return_ — the formatted emoji.
     def to_uri: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # Format the emoji for sending.
@@ -1260,8 +1155,6 @@ module Discorb
   # 
   # Represents a unicode emoji (default emoji) in discord.
   class UnicodeEmoji < Discorb::Emoji
-    # sord omit - no YARD type given for "name", using untyped
-    # sord omit - no YARD type given for "tone:", using untyped
     def initialize: (untyped name, ?tone: untyped) -> void
 
     # _@return_ — The unicode string of the emoji.
@@ -1272,7 +1165,6 @@ module Discorb
     # _@return_ — the formatted emoji.
     def to_uri: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # _@return_ — The name of the emoji. (e.g. :grinning:)
@@ -1289,14 +1181,8 @@ module Discorb
   # Error class for Discorb.
   # @abstract
   class DiscorbError < StandardError
-    # sord omit - no YARD type given for "hash", using untyped
-    # sord omit - no YARD return type given, using untyped
     def enumerate_errors: (untyped hash) -> untyped
 
-    # sord omit - no YARD type given for "key", using untyped
-    # sord omit - no YARD type given for "item", using untyped
-    # sord omit - no YARD type given for "res", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _recr_items: (untyped key, untyped item, untyped res) -> untyped
   end
 
@@ -1304,14 +1190,11 @@ module Discorb
   # Represents a HTTP error.
   # @abstract
   class HTTPError < Discorb::DiscorbError
-    # sord omit - no YARD type given for "resp", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped resp, untyped data) -> void
 
     # _@return_ — the HTTP response code.
     attr_reader code: String
 
-    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
     # _@return_ — the HTTP response.
     attr_reader response: Net::HTTPResponse
   end
@@ -1319,9 +1202,12 @@ module Discorb
   # 
   # Represents a 400 error.
   class BadRequestError < Discorb::HTTPError
-    # sord omit - no YARD type given for "resp", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped resp, untyped data) -> void
+  end
+
+  # 
+  # Represents a 401 error.
+  class UnauthorizedError < Discorb::HTTPError
   end
 
   # 
@@ -1337,8 +1223,6 @@ module Discorb
   # 
   # Represents a error because of a cloudflare ban.
   class CloudFlareBanError < Discorb::HTTPError
-    # sord omit - no YARD type given for "resp", using untyped
-    # sord omit - no YARD type given for "client", using untyped
     def initialize: (untyped resp, untyped client) -> void
   end
 
@@ -1355,7 +1239,6 @@ module Discorb
   # 
   # Represents a warning.
   class NotSupportedWarning < Discorb::DiscorbError
-    # sord omit - no YARD type given for "message", using untyped
     def initialize: (untyped message) -> void
   end
 
@@ -1364,12 +1247,8 @@ module Discorb
   # This class shouldn't be instantiated directly.
   # Use {Client#on} instead.
   class Event
-    # sord omit - no YARD type given for "block", using untyped
-    # sord omit - no YARD type given for "id", using untyped
-    # sord omit - no YARD type given for "discriminator", using untyped
     def initialize: (untyped block, untyped id, untyped discriminator) -> void
 
-    # sord omit - no YARD return type given, using untyped
     # Calls the block associated with the event.
     def call: () -> untyped
 
@@ -1389,33 +1268,22 @@ module Discorb
   # 
   # Represents a guild in the Discord.
   class Guild < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "is_create_event", using untyped
     def initialize: (untyped client, untyped data, untyped is_create_event) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def update!: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def afk_channel: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def system_channel: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def rules_channel: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def public_updates_channel: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def me: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Leave the guild.
     # 
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
@@ -1434,7 +1302,6 @@ module Discorb
     # _@note_ — This querys the API every time. We recommend using {#emojis} instead.
     def fetch_emoji_list: () -> Async::Task[Discorb::Dictionary[Discorb::Snowflake, Discorb::CustomEmoji]]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Fetch emoji id of the guild.
     # 
     # _@param_ `id` — The emoji id.
@@ -1446,9 +1313,8 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     # 
     # _@note_ — This querys the API every time. We recommend using {#emojis} instead.
-    def fetch_emoji: (untyped id) -> Discorb::CustomEmoji
+    def fetch_emoji: (untyped id) -> Async::Task[Discorb::CustomEmoji]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Create a custom emoji.
     # 
     # _@param_ `name` — The name of the emoji.
@@ -1462,7 +1328,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def create_emoji: (untyped name, Discorb::Image image, ?roles: ::Array[Discorb::Role]) -> Discorb::CustomEmoji
+    def create_emoji: (untyped name, Discorb::Image image, ?roles: ::Array[Discorb::Role]) -> Async::Task[Discorb::CustomEmoji]
 
     # Fetch webhooks of the guild.
     # 
@@ -1491,7 +1357,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_channels: () -> Async::Task[::Array[Discorb::Channel]]
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}".
     # Create a new text channel.
     # 
     # _@param_ `name` — The name of the channel.
@@ -1524,12 +1389,11 @@ module Discorb
                                ?slowmode: Integer?,
                                ?position: Integer?,
                                ?nsfw: bool?,
-                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite],
+                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                ?parent: Discorb::CategoryChannel?,
                                ?reason: String?
-                             ) -> Discorb::TextChannel
+                             ) -> Async::Task[Discorb::TextChannel]
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}".
     # Create a new voice channel.
     # 
     # _@param_ `name` — The name of the channel.
@@ -1556,12 +1420,11 @@ module Discorb
                                 ?bitrate: Integer,
                                 ?user_limit: Integer?,
                                 ?position: Integer?,
-                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite],
+                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                 ?parent: Discorb::CategoryChannel?,
                                 ?reason: String?
-                              ) -> Discorb::VoiceChannel
+                              ) -> Async::Task[Discorb::VoiceChannel]
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}".
     # Create a new category channel.
     # 
     # _@param_ `name` — The name of the channel.
@@ -1587,7 +1450,6 @@ module Discorb
                                    ?reason: String?
                                  ) -> Async::Task[Discorb::CategoryChannel]
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}".
     # Create a new stage channel.
     # 
     # _@param_ `name` — The name of the channel.
@@ -1616,7 +1478,6 @@ module Discorb
                                 ?reason: String?
                               ) -> Async::Task[Discorb::StageChannel]
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}".
     # Create a new news channel.
     # 
     # _@param_ `name` — The name of the channel.
@@ -1652,7 +1513,7 @@ module Discorb
                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                ?parent: Discorb::CategoryChannel?,
                                ?reason: String?
-                             ) -> Discorb::NewsChannel
+                             ) -> Async::Task[Discorb::NewsChannel]
 
     # Fetch a list of active threads in the guild.
     # 
@@ -1663,7 +1524,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_active_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Fetch a member in the guild.
     # 
     # _@param_ `id` — The ID of the member to fetch.
@@ -1677,7 +1537,7 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     # 
     # _@note_ — You must enable `GUILD_MEMBERS` intent to use this method.
-    def fetch_member: (untyped id) -> Discorb::Member
+    def fetch_member: (untyped id) -> Async::Task[Discorb::Member]
 
     # Search for members by name in the guild.
     # 
@@ -1701,9 +1561,8 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_member_named: () -> Discorb::Member
+    def fetch_member_named: () -> Async::Task[Discorb::Member]
 
-    # sord omit - no YARD return type given, using untyped
     # Change nickname of client member.
     # 
     # _@param_ `nickname` — The nickname to set.
@@ -1711,7 +1570,6 @@ module Discorb
     # _@param_ `reason` — The reason for changing the nickname.
     def edit_nickname: (String nickname, ?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Kick a member from the guild.
     # 
     # _@param_ `member` — The member to kick.
@@ -1743,7 +1601,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_ban: (Discorb::User user) -> Discorb::Guild::Ban
+    def fetch_ban: (Discorb::User user) -> Async::Task[Discorb::Guild::Ban]
 
     # Checks the user was banned from the guild.
     # 
@@ -1771,7 +1629,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def ban_member: (Discorb::Member member, ?delete_message_days: Integer, ?reason: String?) -> Async::Task[Discorb::Guild::Ban]
 
-    # sord omit - no YARD return type given, using untyped
     # Unban a user from the guild.
     # 
     # _@param_ `user` — The user to unban.
@@ -1890,7 +1747,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_vanity_invite: () -> Async::Task[Discorb::Guild::VanityInvite]
 
-    # sord warn - Discorb::Guild::WelcomeScreen wasn't able to be resolved to a constant in this project
     # Fetch the welcome screen of the guild.
     # 
     # _@return_ — The welcome screen.
@@ -1909,7 +1765,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_stickers: () -> Async::Task[::Array[Discorb::Sticker::GuildSticker]]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Fetch the sticker by ID.
     # 
     # _@param_ `id` — The ID of the sticker.
@@ -1921,7 +1776,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_sticker: (untyped id) -> Discorb::Sticker::GuildSticker
+    def fetch_sticker: (untyped id) -> Async::Task[Discorb::Sticker::GuildSticker]
 
     # Fetch templates in the guild.
     # 
@@ -1950,7 +1805,6 @@ module Discorb
     # _@return_ — The template.
     def create_template: (String name, ?String? description, ?reason: String?) -> Async::Task[Discorb::GuildTemplate]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Returns a banner url from the guild's ID.
     # 
     # _@param_ `guild_id` — The ID of the guild.
@@ -1960,21 +1814,8 @@ module Discorb
     # _@return_ — The url of the banner.
     def self.banner: (_SnowflakeLike guild_id, ?style: Symbol) -> String
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "is_create_event", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data, untyped is_create_event) -> untyped
 
-    # sord omit - no YARD type given for :nsfw_levels, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
-    # sord omit - no YARD type given for :mfa_levels, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
-    # sord omit - no YARD type given for :verification_levels, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
-    # sord omit - no YARD type given for :default_message_notifications, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
-    # sord omit - no YARD type given for :explicit_content_filter, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — ID of the guild.
     attr_reader id: Discorb::Snowflake
 
@@ -2010,7 +1851,6 @@ module Discorb
     # _@return_ — The MFA level of the guild.
     attr_reader mfa_level: Symbol
 
-    # sord warn - Discorb::Guild::SystemChannelFlag wasn't able to be resolved to a constant in this project
     # _@return_ — The flag for the system channel.
     attr_reader system_channel_flags: Discorb::Guild::SystemChannelFlag
 
@@ -2112,10 +1952,7 @@ module Discorb
     # 
     # Represents a vanity invite.
     class VanityInvite < Discorb::DiscordModel
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "guild", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped guild, untyped data) -> void
+            def initialize: (untyped client, untyped guild, untyped data) -> void
 
       # _@return_ — The vanity invite code.
       attr_reader code: String
@@ -2130,13 +1967,9 @@ module Discorb
     # 
     # Represents a guild widget.
     class Widget < Discorb::DiscordModel
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "guild_id", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, _SnowflakeLike guild_id, untyped data) -> void
+            def initialize: (untyped client, _SnowflakeLike guild_id, untyped data) -> void
 
-      # sord omit - no YARD return type given, using untyped
-      # Edit the widget.
+        # Edit the widget.
       # 
       # _@param_ `enabled` — Whether the widget is enabled.
       # 
@@ -2151,9 +1984,7 @@ module Discorb
       # _@note_ — The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`.
       def edit: (?enabled: bool?, ?channel: Discorb::GuildChannel?, ?reason: String?) -> untyped
 
-      # sord warn - "\"dark\"" does not appear to be a type
-      # sord warn - "\"light\"" does not appear to be a type
-      # Return iframe HTML of the widget.
+          # Return iframe HTML of the widget.
       # 
       # _@param_ `theme` — The theme of the widget.
       # 
@@ -2194,10 +2025,7 @@ module Discorb
     # 
     # Represents a ban.
     class Ban < Discorb::DiscordModel
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "guild", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped guild, untyped data) -> void
+            def initialize: (untyped client, untyped guild, untyped data) -> void
 
       # _@return_ — The user.
       attr_reader user: Discorb::User
@@ -2221,9 +2049,6 @@ module Discorb
   # 
   # Represents a welcome screen.
   class WelcomeScreen < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "guild", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped guild, untyped data) -> void
 
     # _@return_ — The description of the welcome screen.
@@ -2254,8 +2079,7 @@ module Discorb
       # _@see_ `https://discord.com/developers/docs/resources/guild#welcome-screen-object`
       def to_hash: () -> ::Hash[untyped, untyped]
 
-      # sord omit - no YARD return type given, using untyped
-      # Edits the welcome screen.
+        # Edits the welcome screen.
       # 
       # _@param_ `enabled` — Whether the welcome screen is enabled.
       # 
@@ -2295,7 +2119,6 @@ module Discorb
   # 
   # Represents an image.
   class Image
-    # sord duck - #read looks like a duck type, replacing with untyped
     # Initializes a new Image.
     # 
     # _@param_ `source` — The IO source or path of the image.
@@ -2311,14 +2134,8 @@ module Discorb
 
   # @!visibility private
   module Utils
-    # sord omit - no YARD type given for "object", using untyped
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def try: (untyped object, untyped message) -> untyped
 
-    # sord omit - no YARD type given for "object", using untyped
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD return type given, using untyped
     def self.try: (untyped object, untyped message) -> untyped
   end
 
@@ -2328,7 +2145,6 @@ module Discorb
     include Discorb::Gateway::Handler
     include Discorb::Command::Handler
 
-    # sord duck - #puts looks like a duck type, replacing with untyped
     # Initializes a new client.
     # 
     # _@param_ `allowed_mentions` — The allowed mentions that the client is using.
@@ -2374,7 +2190,6 @@ module Discorb
     # _@return_ — The event.
     def once: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] discriminator) -> Discorb::Event
 
-    # sord omit - no YARD return type given, using untyped
     # Remove event by ID.
     # 
     # _@param_ `event_name` — The name of the event.
@@ -2382,7 +2197,6 @@ module Discorb
     # _@param_ `id` — The ID of the event.
     def remove_event: (Symbol event_name, Symbol id) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Dispatch an event.
     # 
     # _@param_ `event_name` — The name of the event.
@@ -2390,7 +2204,6 @@ module Discorb
     # _@param_ `args` — The arguments to pass to the event.
     def dispatch: (Symbol event_name, *Object args) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Fetch user from ID.
     # 
     # _@param_ `id` — <description>
@@ -2400,9 +2213,8 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_user: (untyped id) -> Discorb::User
+    def fetch_user: (untyped id) -> Async::Task[Discorb::User]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Fetch channel from ID.
     # 
     # _@param_ `id` — The ID of the channel.
@@ -2412,9 +2224,8 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_channel: (untyped id) -> Discorb::Channel
+    def fetch_channel: (untyped id) -> Async::Task[Discorb::Channel]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Fetch guild from ID.
     # 
     # _@param_ `id` — <description>
@@ -2424,7 +2235,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_guild: (untyped id) -> Discorb::Guild
+    def fetch_guild: (untyped id) -> Async::Task[Discorb::Guild]
 
     # Fetch invite from code.
     # 
@@ -2462,7 +2273,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_nitro_sticker_packs: () -> Async::Task[::Array[Discorb::Sticker::Pack]]
 
-    # sord omit - no YARD return type given, using untyped
     # Update presence of the client.
     # 
     # _@param_ `activity` — The activity to update.
@@ -2481,35 +2291,29 @@ module Discorb
     # _@return_ — The result of the event.
     def event_lock: (Symbol event, ?Integer? timeout) -> Object
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Load the extension.
     # 
     # _@param_ `mod` — The extension to load.
     def extend: (Module mod) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Starts the client.
     # 
     # _@param_ `token` — The token to use.
     # 
     # _@note_ — This method behavior will change by CLI.
     # 
+    # _@note_ — If the token is nil, you should use `discorb run` with the `-t` or `--token` option.
+    # 
     # _@see_ `file:docs/cli.md`
-    def run: (String token) -> untyped
+    def run: (?String? token) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Stops the client.
     def close!: () -> untyped
 
-    # sord omit - no YARD type given for "token", using untyped
-    # sord omit - no YARD return type given, using untyped
     def start_client: (untyped token) -> untyped
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{:description => String, :optional => Boolean, :type => Object}".
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add new top-level command.
     # 
     # _@param_ `command_name` — Command name.
@@ -2518,86 +2322,76 @@ module Discorb
     # 
     # _@param_ `options` — Command options. The key is the option name, the value is a hash with the following keys:  | Key | Type | Description | | --- | --- | --- | | `:description` | `String` | Description of the option. | | `:optional` | `Boolean` | Whether the option is optional or not. | | `:type` | `Object` | Type of the option. | | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@param_ `block` — Command block.
     # 
     # _@see_ `file:docs/application_command.md#register-slash-command`
+    # 
+    # _@see_ `file:docs/cli/setup.md`
     def slash: (
                  String command_name,
                  String description,
-                 ?::Hash[String, Hash[Symbol, Object]] options,
-                 ?guild_ids: ::Array[untyped]
+                 ?::Hash[String, Hash[:description | :optional | :type, Object]] options,
+                 ?guild_ids: (::Array[untyped] | bool)?
                ) -> Discorb::Command::Command::SlashCommand
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add new command with group.
     # 
     # _@param_ `command_name` — Command name.
     # 
     # _@param_ `description` — Command description.
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@return_ — Command object.
     # 
     # _@see_ `file:docs/slash_command.md`
-    def slash_group: (String command_name, String description, ?guild_ids: ::Array[untyped]) -> Discorb::Command::Command::GroupCommand
+    # 
+    # _@see_ `file:docs/cli/setup.md`
+    def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::Command::Command::GroupCommand
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add message context menu command.
     # 
     # _@param_ `command_name` — Command name.
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def message_command: (String command_name, ?guild_ids: ::Array[untyped]) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message user) -> void } -> Discorb::Command::Command
+    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand Interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add user context menu command.
     # 
     # _@param_ `command_name` — Command name.
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def user_command: (String command_name, ?guild_ids: ::Array[untyped]) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
+    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
 
-    # sord omit - no YARD return type given, using untyped
     # Setup commands.
     # 
     # _@param_ `token` — Bot token.
     # 
+    # _@param_ `guild_ids` — Guild IDs to use as default. If `false` is given, it will be global command.
+    # 
     # _@note_ — `token` parameter only required if you don't run client.
     # 
     # _@see_ `Client#initialize`
-    def setup_commands: (?String? token) -> untyped
+    def setup_commands: (?String? token, ?guild_ids: (::Array[untyped] | bool)?) -> untyped
 
-    # sord omit - no YARD type given for "first", using untyped
-    # sord omit - no YARD return type given, using untyped
     def connect_gateway: (untyped first) -> untyped
 
-    # sord omit - no YARD type given for "opcode", using untyped
-    # sord omit - no YARD type given for "**value", using untyped
-    # sord omit - no YARD return type given, using untyped
     def send_gateway: (untyped opcode, **untyped value) -> untyped
 
-    # sord omit - no YARD type given for "payload", using untyped
-    # sord omit - no YARD return type given, using untyped
     def handle_gateway: (untyped payload) -> untyped
 
-    # sord omit - no YARD type given for "interval", using untyped
-    # sord omit - no YARD return type given, using untyped
     def handle_heartbeat: (untyped interval) -> untyped
 
-    # sord omit - no YARD type given for "event_name", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def handle_event: (untyped event_name, untyped data) -> untyped
 
     # _@return_ — The intents that the client is currently using.
@@ -2661,7 +2455,6 @@ module Discorb
     # _@return_ — The session ID of connection.
     attr_reader session_id: Integer
 
-    # sord omit - no YARD type given for :bottom_commands, using untyped
     attr_reader bottom_commands: untyped
   end
 
@@ -2669,17 +2462,12 @@ module Discorb
   # @abstract
   # Represents Discord model.
   class DiscordModel
-    # sord omit - no YARD type given for "other", using untyped
     def eql?: (untyped other) -> bool
 
-    # sord omit - no YARD type given for "other", using untyped
-    # sord omit - no YARD return type given, using untyped
     def ==: (untyped other) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def hash: () -> untyped
   end
 
@@ -2688,7 +2476,6 @@ module Discorb
   # 
   # @see https://discord.com/developers/docs/reference#snowflakes Official Discord API docs
   class Snowflake < Discorb::DiscordModel
-    # sord omit - no YARD type given for "value", using untyped
     def initialize: (untyped value) -> void
 
     # Stringify snowflake.
@@ -2701,7 +2488,6 @@ module Discorb
     # _@return_ — Integerized snowflake.
     def to_i: () -> Integer
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Compares snowflake with other object.
     # 
     # _@param_ `other` — Object to compare with.
@@ -2709,11 +2495,9 @@ module Discorb
     # _@return_ — True if snowflake is equal to other object.
     def ==: (untyped other) -> bool
 
-    # sord omit - no YARD type given for "other", using untyped
     # Alias of {#==}.
     def eql?: (untyped other) -> bool
 
-    # sord omit - no YARD return type given, using untyped
     # Return hash of snowflake.
     def hash: () -> untyped
 
@@ -2741,27 +2525,18 @@ module Discorb
   # 
   # Represents invite of discord.
   class Invite < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "gateway", using untyped
     def initialize: (untyped client, untyped data, untyped gateway) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def channel: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def guild: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def url: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def remain_uses: () -> untyped
 
     def temporary?: () -> bool
 
-    # sord omit - no YARD type given for "reason:", using untyped
-    # sord omit - no YARD return type given, using untyped
     # Delete the invite.
     # 
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
@@ -2769,13 +2544,8 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def delete!: (?reason: untyped) -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "gateway", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data, untyped gateway) -> untyped
 
-    # sord omit - no YARD type given for :target_types, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The code of invite.
     attr_reader code: String
 
@@ -2820,10 +2590,6 @@ module Discorb
   # 
   # Represents a member of a guild.
   class Member < Discorb::User
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "guild_id", using untyped
-    # sord omit - no YARD type given for "user_data", using untyped
-    # sord omit - no YARD type given for "member_data", using untyped
     def initialize: (
                       untyped client,
                       _SnowflakeLike guild_id,
@@ -2841,10 +2607,8 @@ module Discorb
     # _@return_ — The formatted member.
     def to_s_user: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Add a role to the member.
     # 
     # _@param_ `role` — The role to add.
@@ -2856,7 +2620,6 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     def add_role: (Discorb::Role role, ?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Remove a role to the member.
     # 
     # _@param_ `role` — The role to add.
@@ -2868,7 +2631,6 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     def remove_role: (Discorb::Role role, ?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Edit the member.
     # 
     # _@param_ `nick` — The nickname of the member.
@@ -2897,7 +2659,6 @@ module Discorb
                 ?reason: String?
               ) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Kick the member.
     # 
     # _@param_ `reason` — The reason for the action.
@@ -2912,9 +2673,6 @@ module Discorb
     # _@return_ — The ban.
     def ban: (?delete_message_days: Integer, ?reason: String?) -> Async::Task[Discorb::Guild::Ban]
 
-    # sord omit - no YARD type given for "user_data", using untyped
-    # sord omit - no YARD type given for "member_data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped user_data, untyped member_data) -> untyped
 
     # _@return_ — The time the member boosted the guild.
@@ -3016,9 +2774,6 @@ module Discorb
   # Represents a channel of Discord.
   # @abstract
   class Channel < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "no_cache:", using untyped
     def initialize: (untyped client, untyped data, ?no_cache: untyped) -> void
 
     # Checks if the channel is other channel.
@@ -3028,30 +2783,18 @@ module Discorb
     # _@return_ — True if the channel is other channel.
     def ==: (Discorb::Channel other) -> bool
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def self.descendants: () -> untyped
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "no_cache:", using untyped
-    # sord omit - no YARD return type given, using untyped
     def self.make_channel: (untyped client, untyped data, ?no_cache: untyped) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def type: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def channel_id: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD type given for :channel_type, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The ID of the channel.
     attr_reader id: Discorb::Snowflake
 
@@ -3084,16 +2827,12 @@ module Discorb
     # _@return_ — The name of the channel with `#`.
     def to_s: () -> String
 
-    # sord omit - no YARD return type given, using untyped
     def mention: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def parent: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def guild: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # Deletes the channel.
@@ -3129,16 +2868,13 @@ module Discorb
                 ?reason: String?
               ) -> Async::Task[self]
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # _@return_ — The position of the channel as integer.
     attr_reader position: Integer
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{Discorb::Role, Discorb::Member => PermissionOverwrite}".
     # _@return_ — The permission overwrites of the channel.
-    attr_reader permission_overwrites: Hash[Discorb::Role | Discorb::Member, PermissionOverwrite]
+    attr_reader permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]
   end
 
   # 
@@ -3146,9 +2882,6 @@ module Discorb
   class TextChannel < Discorb::GuildChannel
     include Discorb::Messageable
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "no_cache:", using untyped
     def initialize: (untyped client, untyped data, ?no_cache: untyped) -> void
 
     # Edits the channel.
@@ -3221,7 +2954,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_webhooks: () -> Async::Task[::Array[Discorb::Webhook]]
 
-    # sord omit - no YARD return type given, using untyped
     # Bulk delete messages in the channel.
     # 
     # _@param_ `messages` — The messages to delete.
@@ -3233,8 +2965,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def delete_messages!: (*Discorb::Message messages, ?force: bool) -> untyped
 
-    # sord warn - "Symbol => Boolean" does not appear to be a type
-    # sord omit - no YARD return type given, using untyped
     # Set the channel's permission overwrite.
     # 
     # _@param_ `target` — The target of the overwrite.
@@ -3246,9 +2976,8 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def set_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?, **Hash[Symbol, Boolean] perms) -> untyped
+    def set_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?, **bool perms) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Delete the channel's permission overwrite.
     # 
     # _@param_ `target` — The target of the overwrite.
@@ -3294,7 +3023,6 @@ module Discorb
                          ?reason: String?
                        ) -> Async::Task[Invite]
 
-    # sord omit - no YARD return type given, using untyped
     # Follow the existing announcement channel.
     # 
     # _@param_ `target` — The channel to follow.
@@ -3306,7 +3034,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def follow_from: (Discorb::NewsChannel target, ?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Follow the existing announcement channel from self.
     # 
     # _@param_ `target` — The channel to follow to.
@@ -3327,7 +3054,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_pins: () -> Async::Task[::Array[Discorb::Message]]
 
-    # sord omit - no YARD return type given, using untyped
     # Pin a message in the channel.
     # 
     # _@param_ `message` — The message to pin.
@@ -3339,7 +3065,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def pin_message: (Discorb::Message message, ?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Unpin a message in the channel.
     # 
     # _@param_ `message` — The message to unpin.
@@ -3407,8 +3132,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_joined_archived_private_threads: (?limit: Integer?, ?before: Time?) -> Async::Task[::Array[Discorb::ThreadChannel]]
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # Post a message to the channel.
@@ -3446,10 +3169,8 @@ module Discorb
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?file: Discorb::File?,
                 ?files: ::Array[Discorb::File]?
-              ) -> Discorb::Message
+              ) -> Async::Task[Discorb::Message]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Edit a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -3479,8 +3200,6 @@ module Discorb
                         ?supress: bool?
                       ) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Delete a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -3501,7 +3220,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_message: (Discorb::Snowflake id) -> Discorb::Message
+    def fetch_message: (Discorb::Snowflake id) -> Async::Task[Discorb::Message]
 
     # Fetch a message history.
     # 
@@ -3525,7 +3244,6 @@ module Discorb
                           ?around: Discorb::Snowflake?
                         ) -> Async::Task[::Array[Discorb::Message]]
 
-    # sord omit - no YARD return type given, using untyped
     # Trigger the typing indicator in the channel.
     # If block is given, trigger typing indicator during executing block.
     # 
@@ -3601,10 +3319,8 @@ module Discorb
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?file: Discorb::File?,
                 ?files: ::Array[Discorb::File]?
-              ) -> Discorb::Message
+              ) -> Async::Task[Discorb::Message]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Edit a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -3634,8 +3350,6 @@ module Discorb
                         ?supress: bool?
                       ) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Delete a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -3656,7 +3370,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_message: (Discorb::Snowflake id) -> Discorb::Message
+    def fetch_message: (Discorb::Snowflake id) -> Async::Task[Discorb::Message]
 
     # Fetch a message history.
     # 
@@ -3680,7 +3394,6 @@ module Discorb
                           ?around: Discorb::Snowflake?
                         ) -> Async::Task[::Array[Discorb::Message]]
 
-    # sord omit - no YARD return type given, using untyped
     # Trigger the typing indicator in the channel.
     # If block is given, trigger typing indicator during executing block.
     # 
@@ -3733,11 +3446,8 @@ module Discorb
                 ?reason: String?
               ) -> Async::Task[self]
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def connect: () -> untyped
 
     # _@return_ — The bitrate of the voice channel.
@@ -3756,7 +3466,6 @@ module Discorb
 
     def initialize: () -> void
 
-    # sord omit - no YARD return type given, using untyped
     def stage_instance: () -> untyped
 
     # Edit the stage channel.
@@ -3810,13 +3519,10 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_stage_instance: () -> StageInstance
+    def fetch_stage_instance: () -> Async::Task[StageInstance]
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def connect: () -> untyped
 
     # _@return_ — The bitrate of the voice channel.
@@ -3825,7 +3531,6 @@ module Discorb
     # _@return_ — The user limit of the voice channel.
     attr_reader user_limit: Integer
 
-    # sord omit - no YARD type given for :stage_instances, using untyped
     # Returns the value of attribute stage_instances.
     attr_reader stage_instances: untyped
   end
@@ -3836,9 +3541,6 @@ module Discorb
   class ThreadChannel < Discorb::Channel
     include Discorb::Messageable
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "no_cache:", using untyped
     def initialize: (untyped client, untyped data, ?no_cache: untyped) -> void
 
     # Edit the thread.
@@ -3877,7 +3579,7 @@ module Discorb
                 ?archive_in: Integer,
                 ?locked: bool,
                 ?reason: String?
-              ) -> self
+              ) -> Async::Task[self]
 
     # Helper method to archive the thread.
     # 
@@ -3909,36 +3611,24 @@ module Discorb
     # _@note_ — This method won't unarchive the thread. Use {#unarchive} instead.
     def unlock: (?reason: String?) -> self
 
-    # sord omit - no YARD return type given, using untyped
     def parent: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def me: () -> untyped
 
     def joined?: () -> bool
 
-    # sord omit - no YARD return type given, using untyped
     def guild: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def owner: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD type given for "member", using untyped
-    # sord omit - no YARD return type given, using untyped
     def add_member: (?untyped member) -> untyped
 
-    # sord omit - no YARD type given for "member", using untyped
-    # sord omit - no YARD return type given, using untyped
     def remove_member: (?untyped member) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def fetch_members: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # Post a message to the channel.
@@ -3976,10 +3666,8 @@ module Discorb
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?file: Discorb::File?,
                 ?files: ::Array[Discorb::File]?
-              ) -> Discorb::Message
+              ) -> Async::Task[Discorb::Message]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Edit a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -4009,8 +3697,6 @@ module Discorb
                         ?supress: bool?
                       ) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Delete a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -4031,7 +3717,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_message: (Discorb::Snowflake id) -> Discorb::Message
+    def fetch_message: (Discorb::Snowflake id) -> Async::Task[Discorb::Message]
 
     # Fetch a message history.
     # 
@@ -4055,7 +3741,6 @@ module Discorb
                           ?around: Discorb::Snowflake?
                         ) -> Async::Task[::Array[Discorb::Message]]
 
-    # sord omit - no YARD return type given, using untyped
     # Trigger the typing indicator in the channel.
     # If block is given, trigger typing indicator during executing block.
     # 
@@ -4072,8 +3757,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def typing: () -> untyped
 
-    # sord omit - no YARD type given for :channel_type, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The ID of the channel.
     # 
     # _@note_ — This ID is same as the starter message's ID
@@ -4119,69 +3802,42 @@ module Discorb
     end
 
     class Member < Discorb::DiscordModel
-      # sord omit - no YARD type given for "cilent", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped cilent, untyped data) -> void
+          def initialize: (untyped cilent, untyped data) -> void
 
-      # sord omit - no YARD return type given, using untyped
-      def thread: () -> untyped
+        def thread: () -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      def member: () -> untyped
+        def member: () -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      def id: () -> untyped
+        def id: () -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      def user: () -> untyped
+        def user: () -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      def inspect: () -> untyped
+        def inspect: () -> untyped
 
-      # sord omit - no YARD type given for :joined_at, using untyped
-      # Returns the value of attribute joined_at.
+        # Returns the value of attribute joined_at.
       attr_reader joined_at: untyped
     end
   end
 
   class CategoryChannel < Discorb::GuildChannel
-    # sord omit - no YARD return type given, using untyped
     def text_channels: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def voice_channels: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def news_channel: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def stage_channels: () -> untyped
 
-    # sord omit - no YARD type given for "*args", using untyped
-    # sord omit - no YARD type given for "**kwargs", using untyped
-    # sord omit - no YARD return type given, using untyped
     def create_text_channel: (*untyped args, **untyped kwargs) -> untyped
 
-    # sord omit - no YARD type given for "*args", using untyped
-    # sord omit - no YARD type given for "**kwargs", using untyped
-    # sord omit - no YARD return type given, using untyped
     def create_voice_channel: (*untyped args, **untyped kwargs) -> untyped
 
-    # sord omit - no YARD type given for "*args", using untyped
-    # sord omit - no YARD type given for "**kwargs", using untyped
-    # sord omit - no YARD return type given, using untyped
     def create_news_channel: (*untyped args, **untyped kwargs) -> untyped
 
-    # sord omit - no YARD type given for "*args", using untyped
-    # sord omit - no YARD type given for "**kwargs", using untyped
-    # sord omit - no YARD return type given, using untyped
     def create_stage_channel: (*untyped args, **untyped kwargs) -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD type given for :channels, using untyped
     # Returns the value of attribute channels.
     attr_reader channels: untyped
   end
@@ -4189,11 +3845,8 @@ module Discorb
   class DMChannel < Discorb::Channel
     include Discorb::Messageable
 
-    # sord omit - no YARD return type given, using untyped
     def channel_id: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # Post a message to the channel.
@@ -4231,10 +3884,8 @@ module Discorb
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?file: Discorb::File?,
                 ?files: ::Array[Discorb::File]?
-              ) -> Discorb::Message
+              ) -> Async::Task[Discorb::Message]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Edit a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -4264,8 +3915,6 @@ module Discorb
                         ?supress: bool?
                       ) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Delete a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -4286,7 +3935,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_message: (Discorb::Snowflake id) -> Discorb::Message
+    def fetch_message: (Discorb::Snowflake id) -> Async::Task[Discorb::Message]
 
     # Fetch a message history.
     # 
@@ -4310,7 +3959,6 @@ module Discorb
                           ?around: Discorb::Snowflake?
                         ) -> Async::Task[::Array[Discorb::Message]]
 
-    # sord omit - no YARD return type given, using untyped
     # Trigger the typing indicator in the channel.
     # If block is given, trigger typing indicator during executing block.
     # 
@@ -4334,9 +3982,7 @@ module Discorb
     # 
     # Module to handle commands.
     module Handler
-      # sord warn - Invalid hash, must have exactly two types: "Hash{:description => String, :optional => Boolean, :type => Object}".
-      # sord duck - #to_s looks like a duck type, replacing with untyped
-      # Add new top-level command.
+          # Add new top-level command.
       # 
       # _@param_ `command_name` — Command name.
       # 
@@ -4344,92 +3990,86 @@ module Discorb
       # 
       # _@param_ `options` — Command options. The key is the option name, the value is a hash with the following keys:  | Key | Type | Description | | --- | --- | --- | | `:description` | `String` | Description of the option. | | `:optional` | `Boolean` | Whether the option is optional or not. | | `:type` | `Object` | Type of the option. | | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       # 
-      # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+      # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # 
       # _@param_ `block` — Command block.
       # 
       # _@see_ `file:docs/application_command.md#register-slash-command`
+      # 
+      # _@see_ `file:docs/cli/setup.md`
       def slash: (
                    String command_name,
                    String description,
-                   ?::Hash[String, Hash[Symbol, Object]] options,
-                   ?guild_ids: ::Array[untyped]
+                   ?::Hash[String, Hash[:description | :optional | :type, Object]] options,
+                   ?guild_ids: (::Array[untyped] | bool)?
                  ) -> Discorb::Command::Command::SlashCommand
 
-      # sord duck - #to_s looks like a duck type, replacing with untyped
-      # Add new command with group.
+        # Add new command with group.
       # 
       # _@param_ `command_name` — Command name.
       # 
       # _@param_ `description` — Command description.
       # 
-      # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+      # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # 
       # _@return_ — Command object.
       # 
       # _@see_ `file:docs/slash_command.md`
-      def slash_group: (String command_name, String description, ?guild_ids: ::Array[untyped]) -> Discorb::Command::Command::GroupCommand
+      # 
+      # _@see_ `file:docs/cli/setup.md`
+      def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::Command::Command::GroupCommand
 
-      # sord duck - #to_s looks like a duck type, replacing with untyped
-      # Add message context menu command.
+        # Add message context menu command.
       # 
       # _@param_ `command_name` — Command name.
       # 
-      # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+      # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # 
       # _@param_ `block` — Command block.
       # 
       # _@return_ — Command object.
-      def message_command: (String command_name, ?guild_ids: ::Array[untyped]) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message user) -> void } -> Discorb::Command::Command
+      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand Interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
 
-      # sord duck - #to_s looks like a duck type, replacing with untyped
-      # Add user context menu command.
+        # Add user context menu command.
       # 
       # _@param_ `command_name` — Command name.
       # 
-      # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+      # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # 
       # _@param_ `block` — Command block.
       # 
       # _@return_ — Command object.
-      def user_command: (String command_name, ?guild_ids: ::Array[untyped]) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
+      def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
 
-      # sord omit - no YARD return type given, using untyped
-      # Setup commands.
+          # Setup commands.
       # 
       # _@param_ `token` — Bot token.
+      # 
+      # _@param_ `guild_ids` — Guild IDs to use as default. If `false` is given, it will be global command.
       # 
       # _@note_ — `token` parameter only required if you don't run client.
       # 
       # _@see_ `Client#initialize`
-      def setup_commands: (?String? token) -> untyped
+      def setup_commands: (?String? token, ?guild_ids: (::Array[untyped] | bool)?) -> untyped
     end
 
     # 
     # Represents a application command.
     # @abstract
     class Command < Discorb::DiscordModel
-      # sord omit - no YARD type given for "name", using untyped
-      # sord omit - no YARD type given for "guild_ids", using untyped
-      # sord omit - no YARD type given for "block", using untyped
-      # sord omit - no YARD type given for "type", using untyped
-      def initialize: (
+              def initialize: (
                         untyped name,
-                        Array[_SnowflakeLike] guild_ids,
+                        untyped guild_ids,
                         untyped block,
                         untyped _type
                       ) -> void
 
-      # sord omit - no YARD return type given, using untyped
-      def to_hash: () -> untyped
+        def to_hash: () -> untyped
 
-      # sord omit - no YARD type given for :types, using untyped
-      # sord warn - RBS doesn't support class attributes, dropping
-      # _@return_ — The name of the command.
+          # _@return_ — The name of the command.
       attr_reader name: String
 
-      # sord duck - #to_s looks like a duck type, replacing with untyped
-      # _@return_ — The guild ids that the command is enabled in.
+        # _@return_ — The guild ids that the command is enabled in.
       attr_reader guild_ids: ::Array[untyped]
 
       # _@return_ — The block of the command.
@@ -4447,18 +4087,11 @@ module Discorb
       # 
       # Represents the slash command.
       class SlashCommand < Discorb::Command::Command
-        # sord omit - no YARD type given for "name", using untyped
-        # sord omit - no YARD type given for "description", using untyped
-        # sord omit - no YARD type given for "options", using untyped
-        # sord omit - no YARD type given for "guild_ids", using untyped
-        # sord omit - no YARD type given for "block", using untyped
-        # sord omit - no YARD type given for "type", using untyped
-        # sord omit - no YARD type given for "parent", using untyped
-        def initialize: (
+                                    def initialize: (
                           untyped name,
                           untyped description,
                           untyped options,
-                          Array[_SnowflakeLike] guild_ids,
+                          untyped guild_ids,
                           untyped block,
                           untyped _type,
                           untyped parent
@@ -4469,8 +4102,7 @@ module Discorb
         # _@return_ — The name of the command.
         def to_s: () -> String
 
-        # sord omit - no YARD return type given, using untyped
-        def to_hash: () -> untyped
+            def to_hash: () -> untyped
 
         # _@return_ — The description of the command.
         attr_reader description: String
@@ -4482,24 +4114,18 @@ module Discorb
       # 
       # Represents the command with subcommands.
       class GroupCommand < Discorb::Command::Command
-        # sord omit - no YARD type given for "name", using untyped
-        # sord omit - no YARD type given for "description", using untyped
-        # sord omit - no YARD type given for "guild_ids", using untyped
-        # sord omit - no YARD type given for "type", using untyped
-        # sord omit - no YARD type given for "client", using untyped
-        def initialize: (
+                            def initialize: (
                           untyped name,
                           untyped description,
-                          Array[_SnowflakeLike] guild_ids,
+                          untyped guild_ids,
                           untyped _type,
                           untyped client
                         ) -> void
 
-        # sord warn - Invalid hash, must have exactly two types: "Hash{:description => String, :optional => Boolean, :type => Object}".
-        # Add new subcommand.
+            # Add new subcommand.
         # 
         # _@return_ — The added subcommand.
-        def slash: (String command_name, String description, ?::Hash[String, Hash[Symbol, Object]] options) -> Discorb::Command::Command::SlashCommand
+        def slash: (String command_name, String description, ?::Hash[String, Hash[:description | :optional | :type, Object]] options) -> Discorb::Command::Command::SlashCommand
 
         # Add new subcommand group.
         # 
@@ -4517,8 +4143,7 @@ module Discorb
         # _@return_ — The command name.
         def to_s: () -> String
 
-        # sord omit - no YARD return type given, using untyped
-        def to_hash: () -> untyped
+            def to_hash: () -> untyped
 
         # _@return_ — The subcommands of the command.
         attr_reader commands: ::Array[(Discorb::Command::Command::SlashCommand | Discorb::Command::Command::SubcommandGroup)]
@@ -4530,25 +4155,19 @@ module Discorb
       # 
       # Represents the subcommand group.
       class SubcommandGroup < Discorb::Command::Command::GroupCommand
-        # sord omit - no YARD type given for "name", using untyped
-        # sord omit - no YARD type given for "description", using untyped
-        # sord omit - no YARD type given for "parent", using untyped
-        # sord omit - no YARD type given for "client", using untyped
-        def initialize: (
+                        def initialize: (
                           untyped name,
                           untyped description,
                           untyped parent,
                           untyped client
                         ) -> void
 
-        # sord omit - no YARD return type given, using untyped
-        def to_s: () -> untyped
+            def to_s: () -> untyped
 
-        # sord warn - Invalid hash, must have exactly two types: "Hash{:description => String, :optional => Boolean, :type => Object}".
-        # Add new subcommand.
+            # Add new subcommand.
         # 
         # _@return_ — The added subcommand.
-        def slash: (String command_name, String description, ?::Hash[String, Hash[Symbol, Object]] options) -> Discorb::Command::Command::SlashCommand
+        def slash: (String command_name, String description, ?::Hash[String, Hash[:description | :optional | :type, Object]] options) -> Discorb::Command::Command::SlashCommand
 
         # _@return_ — The subcommands of the command.
         attr_reader commands: ::Array[Discorb::Command::Command::SlashCommand]
@@ -4563,16 +4182,13 @@ module Discorb
     # 
     # Represents an event.
     class GatewayEvent
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
     end
 
     # 
     # Represents a reaction event.
     class ReactionEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # Fetch the message.
       # If message is cached, it will be returned.
@@ -4584,7 +4200,7 @@ module Discorb
       # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
       # 
       # _@note_ — This method calls HTTP request.
-      def fetch_message: (?force: bool) -> Discorb::Message
+      def fetch_message: (?force: bool) -> Async::Task[Discorb::Message]
 
       # _@return_ — The raw data of the event.
       attr_reader data: ::Hash[untyped, untyped]
@@ -4643,9 +4259,7 @@ module Discorb
     # 
     # Represents a `MESSAGE_REACTION_REMOVE_ALL` event.
     class ReactionRemoveAllEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # Fetch the message.
       # If message is cached, it will be returned.
@@ -4657,7 +4271,7 @@ module Discorb
       # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
       # 
       # _@note_ — This method calls HTTP request.
-      def fetch_message: (?force: bool) -> Discorb::Message
+      def fetch_message: (?force: bool) -> Async::Task[Discorb::Message]
 
       # _@return_ — The ID of the channel the message was sent in.
       attr_reader channel_id: Discorb::Snowflake
@@ -4693,9 +4307,7 @@ module Discorb
     # 
     # Represents a `MESSAGE_REACTION_REMOVE_EMOJI` event.
     class ReactionRemoveEmojiEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # Fetch the message.
       # If message is cached, it will be returned.
@@ -4707,7 +4319,7 @@ module Discorb
       # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
       # 
       # _@note_ — This method calls HTTP request.
-      def fetch_message: (?force: bool) -> Discorb::Message
+      def fetch_message: (?force: bool) -> Async::Task[Discorb::Message]
 
       # _@return_ — The ID of the channel the message was sent in.
       attr_reader channel_id: Discorb::Snowflake
@@ -4746,11 +4358,7 @@ module Discorb
     # 
     # Represents a `MESSAGE_UPDATE` event.
     class MessageUpdateEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD type given for "before", using untyped
-      # sord omit - no YARD type given for "after", using untyped
-      def initialize: (
+              def initialize: (
                         untyped client,
                         untyped data,
                         untyped before,
@@ -4764,7 +4372,7 @@ module Discorb
       # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
       # 
       # _@note_ — This method calls HTTP request.
-      def fetch_message: () -> Discorb::Message
+      def fetch_message: () -> Async::Task[Discorb::Message]
 
       # _@return_ — The message before update.
       attr_reader before: Discorb::Message
@@ -4821,10 +4429,7 @@ module Discorb
     # 
     # Represents a message but it has only ID.
     class UnknownDeleteBulkMessage < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "id", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped id, untyped data) -> void
+            def initialize: (untyped client, untyped id, untyped data) -> void
 
       # _@return_ — The ID of the message.
       attr_reader id: Discorb::Snowflake
@@ -4847,9 +4452,7 @@ module Discorb
     # 
     # Represents a `INVITE_DELETE` event.
     class InviteDeleteEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # _@return_ — The invite code.
       attr_reader code: String
@@ -4870,20 +4473,15 @@ module Discorb
     end
 
     class GuildIntegrationsUpdateEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
-      # sord omit - no YARD return type given, using untyped
-      def guild: () -> untyped
+        def guild: () -> untyped
     end
 
     # 
     # Represents a `TYPING_START` event.
     class TypingStartEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # _@return_ — The ID of the channel the user is typing in.
       attr_reader user_id: Discorb::Snowflake
@@ -4913,10 +4511,7 @@ module Discorb
     # 
     # Represents a message pin event.
     class MessagePinEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD type given for "message", using untyped
-      def initialize: (untyped client, untyped data, untyped message) -> void
+            def initialize: (untyped client, untyped data, untyped message) -> void
 
       # _@return_ — The message that was pinned.
       attr_reader message: Discorb::Message
@@ -4934,9 +4529,7 @@ module Discorb
     # 
     # Represents a `WEBHOOKS_UPDATE` event.
     class WebhooksUpdateEvent < Discorb::Gateway::GatewayEvent
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # _@return_ — The object wasn't cached.
       # 
@@ -4956,27 +4549,15 @@ module Discorb
     # 
     # A module to handle gateway events.
     module Handler
-      # sord omit - no YARD type given for "first", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def connect_gateway: (untyped first) -> untyped
+          def connect_gateway: (untyped first) -> untyped
 
-      # sord omit - no YARD type given for "opcode", using untyped
-      # sord omit - no YARD type given for "**value", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def send_gateway: (untyped opcode, **untyped value) -> untyped
+            def send_gateway: (untyped opcode, **untyped value) -> untyped
 
-      # sord omit - no YARD type given for "payload", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def handle_gateway: (untyped payload) -> untyped
+          def handle_gateway: (untyped payload) -> untyped
 
-      # sord omit - no YARD type given for "interval", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def handle_heartbeat: (untyped interval) -> untyped
+          def handle_heartbeat: (untyped interval) -> untyped
 
-      # sord omit - no YARD type given for "event_name", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def handle_event: (untyped event_name, untyped data) -> untyped
+            def handle_event: (untyped event_name, untyped data) -> untyped
     end
 
     # 
@@ -4985,19 +4566,14 @@ module Discorb
     class RawConnection < Async::WebSocket::Connection
       def initialize: () -> void
 
-      # sord omit - no YARD type given for "buffer", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def parse: (untyped buffer) -> untyped
+          def parse: (untyped buffer) -> untyped
 
-      # sord omit - no YARD type given for "object", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def dump: (untyped object) -> untyped
+          def dump: (untyped object) -> untyped
     end
   end
 
   # Represents intents.
   class Intents
-    # sord omit - no YARD type given for "typing:", using untyped
     # Create new intents object with default (no members and presence) intents.
     # 
     # _@param_ `guilds` — Whether guild related events are enabled.
@@ -5045,14 +4621,9 @@ module Discorb
                       ?dm_typing: bool
                     ) -> void
 
-    # sord omit - no YARD type given for "name", using untyped
-    # sord omit - no YARD type given for "args", using untyped
-    # sord omit - no YARD return type given, using untyped
     # Returns the value of the flag.
     def method_missing: (untyped name, ?untyped args) -> untyped
 
-    # sord omit - no YARD type given for "sym", using untyped
-    # sord omit - no YARD type given for "include_private", using untyped
     def respond_to_missing?: (untyped sym, untyped include_private) -> bool
 
     # Returns value of the intent.
@@ -5060,24 +4631,19 @@ module Discorb
     # _@return_ — The value of the intent.
     def value: () -> Integer
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Create new intent object from raw value.
     # 
     # _@param_ `value` — The value of the intent.
     def self.from_value: (Integer value) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Create new intent object with default values.
     def self.default: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Create new intent object with all intents.
     def self.all: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Create new intent object with no intents.
     def self.none: () -> untyped
   end
@@ -5101,12 +4667,8 @@ module Discorb
                       ?replied_user: bool?
                     ) -> void
 
-    # sord omit - no YARD type given for "other", using untyped
-    # sord omit - no YARD return type given, using untyped
     def to_hash: (?untyped other) -> untyped
 
-    # sord omit - no YARD type given for "*args", using untyped
-    # sord omit - no YARD return type given, using untyped
     def nil_merge: (*untyped args) -> untyped
 
     # _@return_ — Whether to allow @everyone or @here.
@@ -5125,13 +4687,8 @@ module Discorb
   # 
   # Represents a message.
   class Message < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "no_cache:", using untyped
     def initialize: (untyped client, untyped data, ?no_cache: untyped) -> void
 
-    # sord omit - no YARD type given for "message_id", using untyped
-    # sord omit - no YARD return type given, using untyped
     # Edit the message.
     # 
     # _@param_ `content` — The message content.
@@ -5155,7 +4712,6 @@ module Discorb
                 ?supress: bool?
               ) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Delete the message.
     # 
     # _@param_ `reason` — The reason for deleting the message.
@@ -5168,8 +4724,6 @@ module Discorb
     # _@return_ — The reference object.
     def to_reference: (?fail_if_not_exists: bool) -> ::Hash[untyped, untyped]
 
-    # sord omit - no YARD type given for "*args", using untyped
-    # sord omit - no YARD type given for "**kwargs", using untyped
     # Reply to the message.
     # 
     # _@return_ — The message.
@@ -5177,9 +4731,8 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def reply: (*untyped args, **untyped kwargs) -> Discorb::Message
+    def reply: (*untyped args, **untyped kwargs) -> Async::Task[Discorb::Message]
 
-    # sord omit - no YARD return type given, using untyped
     # Publish the message.
     # 
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
@@ -5187,7 +4740,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def publish: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Add a reaction to the message.
     # 
     # _@param_ `emoji` — The emoji to react with.
@@ -5197,7 +4749,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def add_reaction: (Discorb::Emoji emoji) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Remove a reaction from the message.
     # 
     # _@param_ `emoji` — The emoji to remove.
@@ -5207,7 +4758,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def remove_reaction: (Discorb::Emoji emoji) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Remove other member's reaction from the message.
     # 
     # _@param_ `emoji` — The emoji to remove.
@@ -5234,7 +4784,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def fetch_reacted_users: (Discorb::Emoji emoji, ?limit: Integer?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
 
-    # sord omit - no YARD return type given, using untyped
     # Pin the message.
     # 
     # _@param_ `reason` — The reason for pinning the message.
@@ -5244,7 +4793,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def pin: (?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Unpin the message.
     # 
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
@@ -5252,24 +4800,16 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def unpin: () -> untyped
 
-    # sord omit - no YARD type given for "*args", using untyped
-    # sord omit - no YARD type given for "**kwargs", using untyped
-    # sord warn - Type wasn't able to be resolved to a constant in this project
     # Start thread from the message.
     # 
     # _@return_ — <description>
     def start_thread: (*untyped args, **untyped kwargs) -> Async::Task[::Array[Type]]
 
-    # sord omit - no YARD return type given, using untyped
     # Meta
     def inspect: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD type given for :message_type, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The ID of the message.
     attr_reader id: Discorb::Snowflake
 
@@ -5458,28 +4998,22 @@ module Discorb
     end
 
     class Sticker
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
-      # sord omit - no YARD type given for :id, using untyped
-      # Returns the value of attribute id.
+        # Returns the value of attribute id.
       attr_reader id: untyped
 
-      # sord omit - no YARD type given for :name, using untyped
-      # Returns the value of attribute name.
+        # Returns the value of attribute name.
       attr_reader name: untyped
 
-      # sord omit - no YARD type given for :format, using untyped
-      # Returns the value of attribute format.
+        # Returns the value of attribute format.
       attr_reader format: untyped
     end
 
     # 
     # Represents a interaction of message.
     class Interaction < Discorb::DiscordModel
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # _@return_ — The user ID.
       attr_reader id: Discorb::Snowflake
@@ -5499,12 +5033,9 @@ module Discorb
     # 
     # Represents a activity of message.
     class Activity < Discorb::DiscordModel
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
-      # sord omit - no YARD type given for :type, using untyped
-      # sord warn - RBS doesn't support class attributes, dropping
-      # _@return_ — The name of activity.
+          # _@return_ — The name of activity.
       attr_reader name: String
 
       # _@return_ — The type of activity.
@@ -5550,10 +5081,8 @@ module Discorb
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?file: Discorb::File?,
                 ?files: ::Array[Discorb::File]?
-              ) -> Discorb::Message
+              ) -> Async::Task[Discorb::Message]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Edit a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -5583,8 +5112,6 @@ module Discorb
                         ?supress: bool?
                       ) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Delete a message.
     # 
     # _@param_ `message_id` — The message id.
@@ -5605,7 +5132,7 @@ module Discorb
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
     # 
     # _@note_ — This method calls HTTP request.
-    def fetch_message: (Discorb::Snowflake id) -> Discorb::Message
+    def fetch_message: (Discorb::Snowflake id) -> Async::Task[Discorb::Message]
 
     # Fetch a message history.
     # 
@@ -5629,7 +5156,6 @@ module Discorb
                           ?around: Discorb::Snowflake?
                         ) -> Async::Task[::Array[Discorb::Message]]
 
-    # sord omit - no YARD return type given, using untyped
     # Trigger the typing indicator in the channel.
     # If block is given, trigger typing indicator during executing block.
     # 
@@ -5651,25 +5177,16 @@ module Discorb
   # Module for connecting to a voice channel.
   # This will be discord-voice gem.
   module Connectable
-    # sord omit - no YARD return type given, using untyped
     def connect: () -> untyped
   end
 
   # 
   # Represents a sticker.
   class Sticker < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD type given for :sticker_type, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
-    # sord omit - no YARD type given for :sticker_format, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The ID of the sticker.
     attr_reader id: Discorb::Snowflake
 
@@ -5706,8 +5223,7 @@ module Discorb
     # 
     # Represents a sticker of guilds.
     class GuildSticker < Discorb::Sticker
-      # sord omit - no YARD return type given, using untyped
-      # Edits the sticker.
+        # Edits the sticker.
       # 
       # _@param_ `name` — The new name of the sticker.
       # 
@@ -5729,8 +5245,7 @@ module Discorb
                   ?reason: String
                 ) -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      # Deletes the sticker.
+        # Deletes the sticker.
       # 
       # _@param_ `reason` — The reason for the deletion.
       # 
@@ -5739,16 +5254,13 @@ module Discorb
       # _@note_ — This method calls HTTP request.
       def delete!: (?reason: String?) -> untyped
 
-      # sord omit - no YARD type given for :guild, using untyped
-      attr_reader guild: untyped
+        attr_reader guild: untyped
     end
 
     # 
     # Represents a sticker pack.
     class Pack < Discorb::DiscordModel
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # _@return_ — The ID of the sticker pack.
       attr_reader id: Discorb::Snowflake
@@ -5765,8 +5277,7 @@ module Discorb
       # _@return_ — The description of the pack.
       attr_reader description: String
 
-      # sord warn - Discorb::Store::SKU wasn't able to be resolved to a constant in this project
-      # _@return_ — The banner asset ID of the pack.
+        # _@return_ — The banner asset ID of the pack.
       attr_reader banner_asset_id: Discorb::Store::SKU
 
       # _@return_ — The stickers in the pack.
@@ -5781,11 +5292,8 @@ module Discorb
   # Represents a webhook.
   # @abstract
   class Webhook
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # Posts a message to the webhook.
@@ -5830,7 +5338,6 @@ module Discorb
                 ?wait: bool
               ) -> Discorb::Webhook::Message
 
-    # sord omit - no YARD return type given, using untyped
     # Edits the webhook.
     # 
     # _@param_ `name` — The new name of the webhook.
@@ -5846,7 +5353,6 @@ module Discorb
     # _@note_ — The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`.
     def edit: (?name: String, ?avatar: Discorb::Image, ?channel: Discorb::GuildChannel) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Deletes the webhook.
     # 
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
@@ -5854,7 +5360,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def delete!: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Edits the webhook's message.
     # 
     # _@param_ `message` — The message to edit.
@@ -5889,7 +5394,6 @@ module Discorb
                         ?allowed_mentions: Discorb::AllowedMentions
                       ) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Deletes the webhook's message.
     # 
     # _@param_ `message` — The message to delete.
@@ -5902,8 +5406,6 @@ module Discorb
     # _@return_ — The URLWebhook.
     def self.new: (String url) -> Discorb::Webhook::URLWebhook
 
-    # sord omit - no YARD type given for "url", using untyped
-    # sord omit - no YARD return type given, using untyped
     def self.from_url: (untyped url) -> untyped
 
     # _@return_ — The name of the webhook.
@@ -5944,9 +5446,7 @@ module Discorb
     # 
     # Represents a bot created webhook.
     class IncomingWebhook < Discorb::Webhook
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # _@return_ — The URL of the webhook.
       attr_reader url: String
@@ -5955,9 +5455,7 @@ module Discorb
     # 
     # Represents a webhook of channel following.
     class FollowerWebhook < Discorb::Webhook
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # Represents a source guild of follower webhook.
       # 
@@ -5972,8 +5470,7 @@ module Discorb
       # 
       # Represents a guild of follower webhook.
       class Guild < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The ID of the guild.
         attr_reader id: Discorb::Snowflake
@@ -5988,8 +5485,7 @@ module Discorb
       # 
       # Represents a channel of follower webhook.
       class Channel < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The ID of the channel.
         attr_reader id: Discorb::Snowflake
@@ -6007,13 +5503,9 @@ module Discorb
     # 
     # Represents a webhook message.
     class Message < Discorb::Message
-      # sord omit - no YARD type given for "webhook", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD type given for "client", using untyped
-      def initialize: (untyped webhook, untyped data, ?untyped client) -> void
+            def initialize: (untyped webhook, untyped data, ?untyped client) -> void
 
-      # sord omit - no YARD return type given, using untyped
-      # Edits the message.
+        # Edits the message.
       # 
       # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
       # 
@@ -6022,17 +5514,14 @@ module Discorb
       # _@note_ — The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`.
       def edit: () -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      # Deletes the message.
+        # Deletes the message.
       # 
       # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
       # 
       # _@note_ — This method calls HTTP request.
       def delete!: () -> untyped
 
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def _set_data: (untyped data) -> untyped
+          def _set_data: (untyped data) -> untyped
 
       # _@return_ — The ID of the channel.
       attr_reader channel_id: Discorb::Snowflake
@@ -6043,8 +5532,7 @@ module Discorb
       # 
       # Represents an author of webhook message.
       class Author < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # Format author with `Name#Discriminator` style.
         # 
@@ -6074,15 +5562,10 @@ module Discorb
   # 
   # Represents a presence of user.
   class Presence < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # _@return_ — The status of the user.
@@ -6106,17 +5589,14 @@ module Discorb
     # 
     # Represents an activity of a user.
     class Activity < Discorb::DiscordModel
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
       # Convert the activity to a string.
       # 
       # _@return_ — The string representation of the activity.
       def to_s: () -> String
 
-      # sord omit - no YARD type given for :activity_types, using untyped
-      # sord warn - RBS doesn't support class attributes, dropping
-      # _@return_ — The name of the activity.
+          # _@return_ — The name of the activity.
       attr_reader name: String
 
       # _@return_ — The type of the activity.
@@ -6169,8 +5649,7 @@ module Discorb
       # 
       # Represents the timestamps of an activity.
       class Timestamps < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The start time of the activity.
         attr_reader start: Time
@@ -6180,8 +5659,7 @@ module Discorb
       end
 
       class Party < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The id of the party.
         attr_reader id: String
@@ -6196,8 +5674,7 @@ module Discorb
       # 
       # Represents the assets of an activity.
       class Asset < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The large image ID of the asset.
         attr_reader large_image: String
@@ -6227,8 +5704,7 @@ module Discorb
       # 
       # Represents a secrets of an activity.
       class Secrets < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The join secret of the activity.
         attr_reader join: String
@@ -6243,8 +5719,7 @@ module Discorb
       # 
       # Represents a button of an activity.
       class Button < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The text of the button.
         attr_reader label: String
@@ -6257,8 +5732,7 @@ module Discorb
     # 
     # Represents a user's client status.
     class ClientStatus < Discorb::DiscordModel
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
       # _@return_ — The desktop status of the user.
       attr_reader desktop: Symbol
@@ -6283,8 +5757,6 @@ module Discorb
   # 
   # Represents a reaction to a message.
   class Reaction < Discorb::DiscordModel
-    # sord omit - no YARD type given for "message", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped message, untyped data) -> void
 
     # Fetch the user that reacted with this emoji.
@@ -6292,8 +5764,6 @@ module Discorb
     # _@return_ — The users that reacted with this emoji.
     def fetch_users: () -> ::Array[Discorb::User]
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # _@return_ — The number of users that have reacted with this emoji.
@@ -6343,12 +5813,8 @@ module Discorb
     # _@return_ — The event.
     def once_event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] discriminator) -> Discorb::Event
 
-    # sord omit - no YARD type given for "obj", using untyped
-    # sord omit - no YARD return type given, using untyped
     def self.extended: (untyped obj) -> untyped
 
-    # sord warn - Invalid hash, must have exactly two types: "Hash{:description => String, :optional => Boolean, :type => Object}".
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add new top-level command.
     # 
     # _@param_ `command_name` — Command name.
@@ -6357,65 +5823,67 @@ module Discorb
     # 
     # _@param_ `options` — Command options. The key is the option name, the value is a hash with the following keys:  | Key | Type | Description | | --- | --- | --- | | `:description` | `String` | Description of the option. | | `:optional` | `Boolean` | Whether the option is optional or not. | | `:type` | `Object` | Type of the option. | | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@param_ `block` — Command block.
     # 
     # _@see_ `file:docs/application_command.md#register-slash-command`
+    # 
+    # _@see_ `file:docs/cli/setup.md`
     def slash: (
                  String command_name,
                  String description,
-                 ?::Hash[String, Hash[Symbol, Object]] options,
-                 ?guild_ids: ::Array[untyped]
+                 ?::Hash[String, Hash[:description | :optional | :type, Object]] options,
+                 ?guild_ids: (::Array[untyped] | bool)?
                ) -> Discorb::Command::Command::SlashCommand
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add new command with group.
     # 
     # _@param_ `command_name` — Command name.
     # 
     # _@param_ `description` — Command description.
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@return_ — Command object.
     # 
     # _@see_ `file:docs/slash_command.md`
-    def slash_group: (String command_name, String description, ?guild_ids: ::Array[untyped]) -> Discorb::Command::Command::GroupCommand
+    # 
+    # _@see_ `file:docs/cli/setup.md`
+    def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::Command::Command::GroupCommand
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add message context menu command.
     # 
     # _@param_ `command_name` — Command name.
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def message_command: (String command_name, ?guild_ids: ::Array[untyped]) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message user) -> void } -> Discorb::Command::Command
+    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand Interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Add user context menu command.
     # 
     # _@param_ `command_name` — Command name.
     # 
-    # _@param_ `guild_ids` — Guild IDs to restrict the command to.
+    # _@param_ `guild_ids` — Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # 
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def user_command: (String command_name, ?guild_ids: ::Array[untyped]) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
+    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
 
-    # sord omit - no YARD return type given, using untyped
     # Setup commands.
     # 
     # _@param_ `token` — Bot token.
     # 
+    # _@param_ `guild_ids` — Guild IDs to use as default. If `false` is given, it will be global command.
+    # 
     # _@note_ — `token` parameter only required if you don't run client.
     # 
     # _@see_ `Client#initialize`
-    def setup_commands: (?String? token) -> untyped
+    def setup_commands: (?String? token, ?guild_ids: (::Array[untyped] | bool)?) -> untyped
 
     # _@return_ — The events of the extension.
     attr_reader events: ::Hash[Symbol, ::Array[Discorb::Event]]
@@ -6423,7 +5891,6 @@ module Discorb
     # _@return_ — The commands of the extension.
     attr_reader commands: ::Array[Discorb::Command::Command]
 
-    # sord omit - no YARD type given for :bottom_commands, using untyped
     attr_reader bottom_commands: untyped
 
     # Returns the value of attribute client.
@@ -6433,9 +5900,6 @@ module Discorb
   # 
   # Represents a Discord audit log.
   class AuditLog < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "guild", using untyped
     def initialize: (untyped client, untyped data, untyped guild) -> void
 
     # Gets an entry from entries.
@@ -6462,10 +5926,7 @@ module Discorb
     # 
     # Represents an entry in an audit log.
     class Entry < Discorb::DiscordModel
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD type given for "guild_id", using untyped
-      def initialize: (untyped client, untyped data, _SnowflakeLike guild_id) -> void
+            def initialize: (untyped client, untyped data, _SnowflakeLike guild_id) -> void
 
       # Get a change with the given key.
       # 
@@ -6476,14 +5937,9 @@ module Discorb
       # _@return_ — The change with the given key does not exist.
       def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
 
-      # sord omit - no YARD return type given, using untyped
-      def inspect: () -> untyped
+        def inspect: () -> untyped
 
-      # sord omit - no YARD type given for :events, using untyped
-      # sord warn - RBS doesn't support class attributes, dropping
-      # sord omit - no YARD type given for :converts, using untyped
-      # sord warn - RBS doesn't support class attributes, dropping
-      # _@return_ — The ID of the entry.
+              # _@return_ — The ID of the entry.
       attr_reader id: Discorb::Snowflake
 
       # _@return_ — The ID of the user who performed the action.
@@ -6559,11 +6015,9 @@ module Discorb
       # 
       # Represents the changes in an audit log entry.
       class Changes < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
-        # sord omit - no YARD return type given, using untyped
-        def inspect: () -> untyped
+            def inspect: () -> untyped
 
         # Get keys of changes.
         # 
@@ -6579,8 +6033,7 @@ module Discorb
         # _@return_ — The change with the given key does not exist.
         def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
 
-        # sord omit - no YARD type given for :data, using untyped
-        # Returns the value of attribute data.
+            # Returns the value of attribute data.
         attr_reader data: untyped
       end
 
@@ -6588,20 +6041,14 @@ module Discorb
       # Represents a change in an audit log entry.
       # @note This instance will try to call a method of {#new_value} if the method wasn't defined.
       class Change < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
-        # sord omit - no YARD type given for "method", using untyped
-        # sord omit - no YARD return type given, using untyped
-        # Send a message to the new value.
+                # Send a message to the new value.
         def method_missing: (untyped method) -> untyped
 
-        # sord omit - no YARD return type given, using untyped
-        def inspect: () -> untyped
+            def inspect: () -> untyped
 
-        # sord omit - no YARD type given for "method", using untyped
-        # sord omit - no YARD type given for "include_private", using untyped
-        def respond_to_missing?: (untyped method, ?untyped include_private) -> bool
+                def respond_to_missing?: (untyped method, ?untyped include_private) -> bool
 
         # _@return_ — The key of the change.
         attr_reader key: Symbol
@@ -6617,11 +6064,9 @@ module Discorb
     # 
     # Represents an integration in an audit log entry.
     class Integration < Discorb::DiscordModel
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
-      # sord omit - no YARD return type given, using untyped
-      def inspect: () -> untyped
+        def inspect: () -> untyped
 
       # _@return_ — The ID of the integration.
       attr_reader id: Discorb::Snowflake
@@ -6683,12 +6128,8 @@ module Discorb
     # _@see_ `https://discord.com/developers/docs/interactions/message-components#button-object-button-structure` — Official Discord API docs
     def to_hash: () -> ::Hash[untyped, untyped]
 
-    # sord omit - no YARD type given for "emoji", using untyped
-    # sord omit - no YARD return type given, using untyped
     def hash_emoji: (untyped emoji) -> untyped
 
-    # sord omit - no YARD type given for :styles, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The label of the button.
     attr_accessor label: String
 
@@ -6739,8 +6180,6 @@ module Discorb
     # _@see_ `https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure` — Official Discord API docs
     def to_hash: () -> ::Hash[untyped, untyped]
 
-    # sord omit - no YARD type given for "emoji", using untyped
-    # sord omit - no YARD return type given, using untyped
     def hash_emoji: (untyped emoji) -> untyped
 
     # _@return_ — The custom ID of the select menu.
@@ -6787,9 +6226,7 @@ module Discorb
       # _@see_ `https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure` — Official Discord API docs
       def to_hash: () -> ::Hash[untyped, untyped]
 
-      # sord omit - no YARD type given for "emoji", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def hash_emoji: (untyped emoji) -> untyped
+          def hash_emoji: (untyped emoji) -> untyped
 
       # Creates a new option from a hash.
       # 
@@ -6825,7 +6262,6 @@ module Discorb
     # _@param_ `sort` — Whether to sort the items in the dictionary.
     def initialize: (?::Hash[untyped, untyped] hash, ?limit: Integer?, ?sort: (bool | Proc)) -> void
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Registers a new item in the dictionary.
     # 
     # _@param_ `id` — The ID of the item.
@@ -6835,20 +6271,16 @@ module Discorb
     # _@return_ — The dictionary.
     def register: (untyped id, Object body) -> self
 
-    # sord omit - no YARD return type given, using untyped
     # Merges another dictionary into this one.
     # 
     # _@param_ `other` — The dictionary to merge.
     def merge: (Discorb::Dictionary other) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
-    # sord omit - no YARD return type given, using untyped
     # Removes an item from the dictionary.
     # 
     # _@param_ `id` — The ID of the item to remove.
     def remove: (untyped id) -> untyped
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Get an item from the dictionary.
     # 
     # _@param_ `id` — The ID of the item.
@@ -6863,7 +6295,6 @@ module Discorb
     # _@return_ — The values of the dictionary.
     def values: () -> ::Array[untyped]
 
-    # sord duck - #to_s looks like a duck type, replacing with untyped
     # Checks if the dictionary has an ID.
     # 
     # _@param_ `id` — The ID to check.
@@ -6871,17 +6302,11 @@ module Discorb
     # _@return_ — `true` if the dictionary has the ID, `false` otherwise.
     def has?: (untyped id) -> bool
 
-    # sord omit - no YARD type given for "name", using untyped
-    # sord omit - no YARD return type given, using untyped
     # Send a message to the array of values.
     def method_missing: (untyped name) -> untyped
 
-    # sord omit - no YARD type given for "name", using untyped
-    # sord omit - no YARD type given for "args", using untyped
-    # sord omit - no YARD type given for "kwargs", using untyped
     def respond_to_missing?: (untyped name, untyped args, untyped kwargs) -> bool
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # _@return_ — The maximum number of items in the dictionary.
@@ -6936,20 +6361,14 @@ module Discorb
   # 
   # Represents a permission per channel.
   class PermissionOverwrite
-    # sord omit - no YARD type given for "allow", using untyped
-    # sord omit - no YARD type given for "deny", using untyped
     def initialize: (untyped allow, untyped deny) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def allow: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def deny: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def allow_value: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def deny_value: () -> untyped
 
     # Converts the permission overwrite to a hash.
@@ -6971,22 +6390,16 @@ module Discorb
     # _@return_ — Whether the field is allowed, denied or not set.
     def []: (Symbol field) -> bool?
 
-    # sord omit - no YARD return type given, using untyped
     # Sets the given field to the given value.
     # 
     # _@param_ `key` — The field to set.
     # 
     # _@param_ `bool` — The value to set.
-    def []=: (Symbol key, bool _bool) -> untyped
+    def []=: (Symbol key, bool bool) -> untyped
 
-    # sord omit - no YARD type given for "method", using untyped
-    # sord omit - no YARD type given for "bool", using untyped
-    # sord omit - no YARD return type given, using untyped
     # Returns the value of the flag.
-    def method_missing: (untyped method, ?untyped _bool) -> untyped
+    def method_missing: (untyped method, ?untyped bool) -> untyped
 
-    # sord omit - no YARD type given for "method", using untyped
-    # sord omit - no YARD type given for "_arg", using untyped
     def respond_to_missing?: (untyped method, untyped _arg) -> bool
 
     # Initializes a permission overwrite from a hash.
@@ -7001,10 +6414,8 @@ module Discorb
   # Class to handle rate limiting.
   # @private
   class RatelimitHandler
-    # sord omit - no YARD type given for "client", using untyped
     def initialize: (untyped client) -> void
 
-    # sord omit - no YARD return type given, using untyped
     # Wait for the rate limit to reset.
     # 
     # _@param_ `method` — The HTTP method.
@@ -7012,8 +6423,6 @@ module Discorb
     # _@param_ `path` — The path.
     def wait: (String method, String path) -> untyped
 
-    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
-    # sord omit - no YARD return type given, using untyped
     # Save the rate limit.
     # 
     # _@param_ `method` — The HTTP method.
@@ -7027,11 +6436,8 @@ module Discorb
   # 
   # Represents a Discord application.
   class Application < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
     # _@return_ — The application's ID.
@@ -7067,17 +6473,14 @@ module Discorb
     # 
     # Represents a team for an application.
     class Team < Discorb::DiscordModel
-      # sord omit - no YARD type given for "client", using untyped
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped client, untyped data) -> void
+          def initialize: (untyped client, untyped data) -> void
 
       # The team's owner.
       # 
       # _@return_ — The team's owner.
       def owner: () -> Discorb::Application::Team::Member
 
-      # sord omit - no YARD return type given, using untyped
-      def inspect: () -> untyped
+        def inspect: () -> untyped
 
       # _@return_ — The team's ID.
       attr_reader id: Discorb::Snowflake
@@ -7097,27 +6500,19 @@ module Discorb
       # 
       # Represents a member of team.
       class Member < Discorb::DiscordModel
-        # sord omit - no YARD type given for "client", using untyped
-        # sord omit - no YARD type given for "team", using untyped
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped client, untyped team, untyped data) -> void
+                    def initialize: (untyped client, untyped team, untyped data) -> void
 
         def pending?: () -> bool
 
         def accepted?: () -> bool
 
-        # sord omit - no YARD return type given, using untyped
-        def inspect: () -> untyped
+            def inspect: () -> untyped
 
         def owner?: () -> bool
 
-        # sord omit - no YARD type given for "other", using untyped
-        # sord omit - no YARD return type given, using untyped
-        def ==: (untyped other) -> untyped
+                def ==: (untyped other) -> untyped
 
-        # sord omit - no YARD type given for :membership_state, using untyped
-        # sord warn - RBS doesn't support class attributes, dropping
-        # _@return_ — The user.
+                # _@return_ — The user.
         attr_reader user: Discorb::User
 
         # _@return_ — The ID of member's team.
@@ -7126,8 +6521,7 @@ module Discorb
         # _@return_ — The member's membership state.
         attr_reader membership_state: Symbol
 
-        # sord warn - Permissions wasn't able to be resolved to a constant in this project
-        # _@return_ — The permissions of the member.
+            # _@return_ — The permissions of the member.
         # 
         # _@note_ — This always return `:*`.
         attr_reader permissions: ::Array[Permissions]
@@ -7146,10 +6540,6 @@ module Discorb
   # 
   # Represents a integration.
   class Integration < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "guild_id", using untyped
-    # sord omit - no YARD type given for "no_cache:", using untyped
     def initialize: (
                       untyped client,
                       untyped data,
@@ -7157,21 +6547,15 @@ module Discorb
                       ?no_cache: untyped
                     ) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def guild: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Delete the integration.
     # 
     # _@param_ `reason` — The reason for deleting the integration.
     def delete!: (?reason: String?) -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD type given for :expire_behavior, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The ID of the integration.
     attr_reader id: Discorb::Snowflake
 
@@ -7211,8 +6595,7 @@ module Discorb
     # 
     # Represents an account for an integration.
     class Account < Discorb::DiscordModel
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
       # _@return_ — The ID of the account.
       attr_reader id: String
@@ -7225,39 +6608,22 @@ module Discorb
   # 
   # Represents a user interaction with the bot.
   class Interaction < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def guild: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def channel: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def target: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def self.make_interaction: (untyped client, untyped data) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def self.descendants: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def _set_data: () -> untyped
 
-    # sord omit - no YARD type given for :interaction_type, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
-    # sord omit - no YARD type given for :interaction_name, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
-    # sord omit - no YARD type given for :event_name, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The ID of the interaction.
     attr_reader id: Discorb::Snowflake
 
@@ -7284,14 +6650,12 @@ module Discorb
     # 
     # A module for response with source.
     module SourceResponse
-      # sord omit - no YARD return type given, using untyped
-      # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
+        # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       # 
       # _@param_ `ephemeral` — Whether to make the response ephemeral.
       def defer_source: (?ephemeral: bool) -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
+        # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
       # 
       # _@param_ `content` — The content of the response.
       # 
@@ -7320,14 +6684,12 @@ module Discorb
     # 
     # A module for response with update.
     module UpdateResponse
-      # sord omit - no YARD return type given, using untyped
-      # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
+        # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
       # 
       # _@param_ `ephemeral` — Whether to make the response ephemeral.
       def defer_update: (?ephemeral: bool) -> untyped
 
-      # sord omit - no YARD return type given, using untyped
-      # Response with `UPDATE_MESSAGE`(`7`).
+        # Response with `UPDATE_MESSAGE`(`7`).
       # 
       # _@param_ `content` — The content of the response.
       # 
@@ -7359,25 +6721,17 @@ module Discorb
   class CommandInteraction < Discorb::Interaction
     include Discorb::Interaction::SourceResponse
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def self.make_interaction: (untyped client, untyped data) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def self.nested_classes: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
     # 
     # _@param_ `ephemeral` — Whether to make the response ephemeral.
     def defer_source: (?ephemeral: bool) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
     # 
     # _@param_ `content` — The content of the response.
@@ -7403,22 +6757,16 @@ module Discorb
                 ?ephemeral: bool
               ) -> untyped
 
-    # sord omit - no YARD type given for :command_type, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # 
     # Represents a slash command interaction.
     class SlashCommand < Discorb::CommandInteraction
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def _set_data: (untyped data) -> untyped
+          def _set_data: (untyped data) -> untyped
     end
 
     # 
     # Represents a user context menu interaction.
     class UserMenuCommand < Discorb::CommandInteraction
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def _set_data: (untyped data) -> untyped
+          def _set_data: (untyped data) -> untyped
 
       # _@return_ — The target user.
       attr_reader target: (Discorb::Member | Discorb::User)
@@ -7427,9 +6775,7 @@ module Discorb
     # 
     # Represents a message context menu interaction.
     class MessageMenuCommand < Discorb::CommandInteraction
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def _set_data: (untyped data) -> untyped
+          def _set_data: (untyped data) -> untyped
 
       # _@return_ — The target message.
       attr_reader target: Discorb::Message
@@ -7443,25 +6789,17 @@ module Discorb
     include Discorb::Interaction::SourceResponse
     include Discorb::Interaction::UpdateResponse
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def self.make_interaction: (untyped client, untyped data) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def self.nested_classes: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
     # 
     # _@param_ `ephemeral` — Whether to make the response ephemeral.
     def defer_update: (?ephemeral: bool) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Response with `UPDATE_MESSAGE`(`7`).
     # 
     # _@param_ `content` — The content of the response.
@@ -7487,13 +6825,11 @@ module Discorb
                 ?ephemeral: bool
               ) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
     # 
     # _@param_ `ephemeral` — Whether to make the response ephemeral.
     def defer_source: (?ephemeral: bool) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
     # 
     # _@param_ `content` — The content of the response.
@@ -7519,17 +6855,13 @@ module Discorb
                 ?ephemeral: bool
               ) -> untyped
 
-    # sord omit - no YARD type given for :component_type, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The content of the response.
     attr_reader custom_id: String
 
     # 
     # Represents a button interaction.
     class Button < Discorb::MessageComponentInteraction
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def _set_data: (untyped data) -> untyped
+          def _set_data: (untyped data) -> untyped
 
       # _@return_ — The custom id of the button.
       attr_reader custom_id: String
@@ -7538,9 +6870,7 @@ module Discorb
     # 
     # Represents a select menu interaction.
     class SelectMenu < Discorb::MessageComponentInteraction
-      # sord omit - no YARD type given for "data", using untyped
-      # sord omit - no YARD return type given, using untyped
-      def _set_data: (untyped data) -> untyped
+          def _set_data: (untyped data) -> untyped
 
       # _@return_ — The custom id of the select menu.
       attr_reader custom_id: String
@@ -7548,18 +6878,13 @@ module Discorb
       # _@return_ — The selected options.
       attr_reader values: ::Array[String]
 
-      # sord omit - no YARD type given for :value, using untyped
-      attr_reader value: untyped
+        attr_reader value: untyped
     end
   end
 
   class VoiceState < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # _@return_ — The member associated with this voice state.
@@ -7623,15 +6948,10 @@ module Discorb
   # 
   # Represents a stage instance of a voice state.
   class StageInstance < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD type given for "no_cache:", using untyped
     def initialize: (untyped client, untyped data, ?no_cache: untyped) -> void
 
-    # sord omit - no YARD return type given, using untyped
     def guild: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     def channel: () -> untyped
 
     def discoverable?: () -> bool
@@ -7640,10 +6960,8 @@ module Discorb
 
     def guild_only?: () -> bool
 
-    # sord omit - no YARD return type given, using untyped
     def inspect: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Edits the stage instance.
     # 
     # _@param_ `topic` — The new topic of the stage instance.
@@ -7659,18 +6977,13 @@ module Discorb
     # _@note_ — The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`.
     def edit: (?topic: String, ?privacy_level: Symbol, ?reason: String?) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Deletes the stage instance.
     # 
     # _@param_ `reason` — The reason for deleting the stage instance.
     def delete!: (?reason: String?) -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
-    # sord omit - no YARD type given for :privacy_level, using untyped
-    # sord warn - RBS doesn't support class attributes, dropping
     # _@return_ — The ID of the guild this voice state is for.
     attr_reader id: Discorb::Snowflake
 
@@ -7684,7 +6997,6 @@ module Discorb
   # 
   # Represents a voice region.
   class VoiceRegion < Discorb::DiscordModel
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped data) -> void
 
     # _@return_ — The ID of the voice region.
@@ -7709,11 +7021,8 @@ module Discorb
   # 
   # Represents a guild template.
   class GuildTemplate < Discorb::DiscordModel
-    # sord omit - no YARD type given for "client", using untyped
-    # sord omit - no YARD type given for "data", using untyped
     def initialize: (untyped client, untyped data) -> void
 
-    # sord omit - no YARD return type given, using untyped
     # Edit the template.
     # 
     # _@param_ `name` — The new name of the template.
@@ -7727,7 +7036,6 @@ module Discorb
     # _@note_ — The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`.
     def edit: (?String? name, ?String description) -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Update the template.
     # 
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
@@ -7735,7 +7043,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def update: () -> untyped
 
-    # sord omit - no YARD return type given, using untyped
     # Delete the template.
     # 
     # _@note_ — This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
@@ -7743,8 +7050,6 @@ module Discorb
     # _@note_ — This method calls HTTP request.
     def delete!: () -> untyped
 
-    # sord omit - no YARD type given for "data", using untyped
-    # sord omit - no YARD return type given, using untyped
     def _set_data: (untyped data) -> untyped
 
     # _@return_ — The code of the template.
@@ -7789,8 +7094,7 @@ module Discorb
     # 
     # Represents a guild in guild template.
     class TemplateGuild < Discorb::DiscordModel
-      # sord omit - no YARD type given for "data", using untyped
-      def initialize: (untyped data) -> void
+        def initialize: (untyped data) -> void
 
       # _@return_ — The name of the guild.
       attr_reader name: String
@@ -7801,8 +7105,7 @@ module Discorb
       # _@return_ — A dictionary of roles in the guild.
       attr_reader roles: Discorb::Dictionary[Discorb::Snowflake, Discorb::Role]
 
-      # sord warn - Discorb::Guild::SystemChannelFlag wasn't able to be resolved to a constant in this project
-      # _@return_ — The flag for the system channel.
+        # _@return_ — The flag for the system channel.
       attr_reader system_channel_flags: Discorb::Guild::SystemChannelFlag
 
       # _@return_ — A dictionary of channels in the guild.
@@ -7831,8 +7134,7 @@ module Discorb
       # 
       # Represents a role in guild template.
       class Role < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The name of the role.
         attr_reader name: String
@@ -7847,8 +7149,7 @@ module Discorb
       # 
       # Represents a channel in guild template.
       class Channel < Discorb::DiscordModel
-        # sord omit - no YARD type given for "data", using untyped
-        def initialize: (untyped data) -> void
+            def initialize: (untyped data) -> void
 
         # _@return_ — The name of the channel.
         attr_reader name: String
@@ -7910,4 +7211,8 @@ class Time
   # 
   # _@return_ — The formatted time.
   def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? _type) -> String
+end
+
+class Async::Task[R]
+  def wait: () -> R
 end
