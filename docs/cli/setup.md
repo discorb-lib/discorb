@@ -7,7 +7,7 @@ This command will setup application commands.
 ## Usage
 
 ```
-discorb setup [script]
+discorb setup [options] [script]
 ```
 
 ### Arguments
@@ -15,3 +15,9 @@ discorb setup [script]
 #### `script`
 
 The script to setup. Defaults to `main.rb`.
+
+### Options
+
+#### `-g`, `--guild`
+
+Guild IDs to use as default. Can be specified multiple IDs by using `,` as delimiter.

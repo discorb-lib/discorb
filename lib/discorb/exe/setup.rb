@@ -11,7 +11,7 @@ options = {
 opt = OptionParser.new <<~BANNER
                          This command will setup application commands.
 
-                         Usage: discorb setup [script]
+                         Usage: discorb setup [options] [script]
 
                                    script                     The script to setup.
                        BANNER
