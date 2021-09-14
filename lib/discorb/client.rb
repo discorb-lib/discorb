@@ -440,7 +440,14 @@ module Discorb
         end
         start_client(token)
       when "setup"
-        setup_commands(token)
+        guild_ids = "global"
+        if guilds = ENV["DISCORB_SETUP_GUILDS"]
+          guild_ids = guilds.split(",")
+        end
+        if guild_ids == ["global"]
+          guild_ids = false
+        end
+        setup_commands(token, guild_ids: guild_ids).wait
       end
     end
 

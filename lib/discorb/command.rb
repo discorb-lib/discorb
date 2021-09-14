@@ -31,7 +31,7 @@ module Discorb
       #
       # @see file:docs/application_command.md#register-slash-command
       #
-      def slash(command_name, description, options = {}, guild_ids: [], &block)
+      def slash(command_name, description, options = {}, guild_ids: nil, &block)
         command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
         @commands << command
         @bottom_commands << command
@@ -52,7 +52,7 @@ module Discorb
       #
       # @see file:docs/slash_command.md
       #
-      def slash_group(command_name, description, guild_ids: [], &block)
+      def slash_group(command_name, description, guild_ids: nil, &block)
         command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
         command.instance_eval(&block) if block_given?
         @commands << command
@@ -71,7 +71,7 @@ module Discorb
       #
       # @return [Discorb::Command::Command] Command object.
       #
-      def message_command(command_name, guild_ids: [], &block)
+      def message_command(command_name, guild_ids: nil, &block)
         command = Discorb::Command::Command.new(command_name, guild_ids, block, 3)
         @commands << command
         command
@@ -89,7 +89,7 @@ module Discorb
       #
       # @return [Discorb::Command::Command] Command object.
       #
-      def user_command(command_name, guild_ids: [], &block)
+      def user_command(command_name, guild_ids: nil, &block)
         command = Discorb::Command::Command.new(command_name, guild_ids, block, 2)
         @commands << command
         command
@@ -100,20 +100,32 @@ module Discorb
       # @see Client#initialize
       #
       # @param [String] token Bot token.
+      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to use as default. If `false` is given, it will be global command.
+      #
       # @note `token` parameter only required if you don't run client.
       #
-      def setup_commands(token = nil)
+      def setup_commands(token = nil, guild_ids: nil)
         Async do
           @token ||= token
           @http = HTTP.new(self)
-          global_commands = @commands.select { |c| c.guild_ids.empty? }
-          guild_ids = Set[*@commands.map(&:guild_ids).flatten]
+          global_commands = @commands.select { |c| c.guild_ids == false or c.guild_ids == [] }
+          local_commands = @commands.select { |c| c.guild_ids.is_a?(Array) and c.guild_ids.any? }
+          default_commands = @commands.select { |c| c.guild_ids.nil? }
+          if guild_ids.is_a?(Array)
+            default_commands.each do |command|
+              command.instance_variable_set(:@guild_ids, guild_ids)
+            end
+            local_commands += default_commands
+          else
+            global_commands += default_commands
+          end
+          final_guild_ids = local_commands.map(&:guild_ids).flatten.map(&:to_s).uniq
           app_info = fetch_application.wait
           http.put("/applications/#{app_info.id}/commands", global_commands.map(&:to_hash)).wait unless global_commands.empty?
-          guild_ids.each do |guild_id|
-            commands = @commands.select { |c| c.guild_ids.include?(guild_id) }
+          final_guild_ids.each do |guild_id|
+            commands = local_commands.select { |c| c.guild_ids.include?(guild_id) }
             http.put("/applications/#{app_info.id}/guilds/#{guild_id}/commands", commands.map(&:to_hash)).wait
-          end unless guild_ids.empty?
+          end unless final_guild_ids.empty?
           @log.info "Successfully setup commands"
         end
       end
@@ -146,7 +158,7 @@ module Discorb
       # @!visibility private
       def initialize(name, guild_ids, block, type)
         @name = name
-        @guild_ids = guild_ids.map(&:to_s)
+        @guild_ids = guild_ids&.map(&:to_s)
         @block = block
         @raw_type = type
         @type = Discorb::Command::Command.types[type]
@@ -174,12 +186,8 @@ module Discorb
 
         # @!visibility private
         def initialize(name, description, options, guild_ids, block, type, parent)
+          super(name, guild_ids, block, type)
           @description = description
-          @name = name
-          @guild_ids = guild_ids.map(&:to_s)
-          @block = block
-          @type = Discorb::Command::Command.types[type]
-          @type_raw = 1
           @options = options
           @id = nil
           @parent = parent
