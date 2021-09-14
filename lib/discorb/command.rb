@@ -24,12 +24,13 @@ module Discorb
       #   | `:type` | `Object` | Type of the option. |
       #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #
-      # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
+      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       #
       # @return [Discorb::Command::Command::SlashCommand]
       #
       # @see file:docs/application_command.md#register-slash-command
+      # @see file:docs/cli/setup.md
       #
       def slash(command_name, description, options = {}, guild_ids: nil, &block)
         command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
@@ -43,7 +44,7 @@ module Discorb
       #
       # @param [String] command_name Command name.
       # @param [String] description Command description.
-      # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
+      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       #
       # @yield Block to execute as the command. It can be used to define sub-commands.
       # @yieldself [Discorb::Command::Command::GroupCommand] Group command.
@@ -51,6 +52,7 @@ module Discorb
       # @return [Discorb::Command::Command::GroupCommand] Command object.
       #
       # @see file:docs/slash_command.md
+      # @see file:docs/cli/setup.md
       #
       def slash_group(command_name, description, guild_ids: nil, &block)
         command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
@@ -63,7 +65,7 @@ module Discorb
       # Add message context menu command.
       #
       # @param [String] command_name Command name.
-      # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
+      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, message] Block to execute.
       # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] Interaction Interaction object.
@@ -81,7 +83,7 @@ module Discorb
       # Add user context menu command.
       #
       # @param [String] command_name Command name.
-      # @param [Array<#to_s>] guild_ids Guild IDs to restrict the command to.
+      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, user] Block to execute.
       # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
