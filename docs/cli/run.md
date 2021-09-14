@@ -17,6 +17,8 @@ discorb run [options] [script]
 
 The script to run. Defaults to `main.rb`.
 
+### Options
+
 #### `-d`, `--deamon`
 
 Run the client in deamon mode.
@@ -44,3 +46,11 @@ Whether to colorize the log output.
 If not specified, the default will be:
 - `true` if the file to write logs to is `stdout` or `stderr`.
 - `false` otherwise.
+
+#### `-s`, `--setup`
+
+Whether to setup application commands.
+
+#### `-t`, `--token`
+
+The name of the environment variable to use for token, or just `-t` or `--token` for intractive prompt.
