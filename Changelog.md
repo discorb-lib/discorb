@@ -138,3 +138,10 @@
 - Add: Raise error when intents are invalid
 - Fix: Fix Emoji#==
 
+## 0.6.0
+
+- Fix: Fix issue with client with no guilds
+- Add: Add rbs (experimental)
+- Add: Add `-t`, `--token` option to `discorb run`
+- Add: Add `-g`, `--guild` option to `discorb setup`
+- Change: Use `Async::Task<R>` instead of `R` in return value
