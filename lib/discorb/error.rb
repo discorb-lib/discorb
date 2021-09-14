@@ -68,6 +68,12 @@ module Discorb
   end
 
   #
+  # Represents a 401 error.
+  #
+  class UnauthorizedError < HTTPError
+  end
+
+  #
   # Represents a 403 error.
   #
   class ForbiddenError < HTTPError

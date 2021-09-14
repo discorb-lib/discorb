@@ -203,6 +203,8 @@ module Discorb
       case resp.code
       when "400"
         raise BadRequestError.new(resp, data)
+      when "401"
+        raise UnauthorizedError.new(resp, data)
       when "403"
         raise ForbiddenError.new(resp, data)
       when "404"
