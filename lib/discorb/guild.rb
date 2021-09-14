@@ -201,7 +201,7 @@ module Discorb
     #
     # @param [#to_s] id The emoji id.
     #
-    # @return [Discorb::CustomEmoji] The emoji with the given id.
+    # @return [Async::Task<Discorb::CustomEmoji>] The emoji with the given id.
     #
     def fetch_emoji(id)
       _resp, data = @client.http.get("/guilds/#{@id}/emojis/#{id}").wait
@@ -217,7 +217,7 @@ module Discorb
     # @param [Discorb::Image] image The image of the emoji.
     # @param [Array<Discorb::Role>] roles A list of roles to give the emoji.
     #
-    # @return [Discorb::CustomEmoji] The created emoji.
+    # @return [Async::Task<Discorb::CustomEmoji>] The created emoji.
     #
     def create_emoji(name, image, roles: [])
       _resp, data = @client.http.post(
@@ -288,7 +288,7 @@ module Discorb
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
     # @param [String] reason The reason for creating the channel.
     #
-    # @return [Discorb::TextChannel] The created text channel.
+    # @return [Async::Task<Discorb::TextChannel>] The created text channel.
     #
     def create_text_channel(
       name, topic: nil, rate_limit_per_user: nil, slowmode: nil, position: nil, nsfw: nil, permission_overwrites: nil, parent: nil, reason: nil
@@ -333,7 +333,7 @@ module Discorb
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
     # @param [String] reason The reason for creating the channel.
     #
-    # @return [Discorb::VoiceChannel] The created voice channel.
+    # @return [Async::Task<Discorb::VoiceChannel>] The created voice channel.
     #
     def create_voice_channel(
       name, bitrate: 64, user_limit: nil, position: nil, permission_overwrites: nil, parent: nil, reason: nil
@@ -453,7 +453,7 @@ module Discorb
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
     # @param [String] reason The reason for creating the channel.
     #
-    # @return [Discorb::NewsChannel] The created news channel.
+    # @return [Async::Task<Discorb::NewsChannel>] The created news channel.
     #
     def create_news_channel(
       name, topic: nil, rate_limit_per_user: nil, slowmode: nil, position: nil, nsfw: nil, permission_overwrites: nil, parent: nil, reason: nil
@@ -506,7 +506,7 @@ module Discorb
     #
     # @param [#to_s] id The ID of the member to fetch.
     #
-    # @return [Discorb::Member] The member.
+    # @return [Async::Task<Discorb::Member>] The member.
     # @return [Async::Task<nil>] If the member is not found.
     #
     def fetch_member(id)
@@ -541,7 +541,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Discorb::Member] The member.
+    # @return [Async::Task<Discorb::Member>] The member.
     # @return [Async::Task<nil>] If the member is not found.
     #
     def fetch_member_named(...)
@@ -601,7 +601,7 @@ module Discorb
     #
     # @param [Discorb::User] user The user to fetch.
     #
-    # @return [Discorb::Guild::Ban] The ban.
+    # @return [Async::Task<Discorb::Guild::Ban>] The ban.
     # @return [Async::Task<nil>] If the ban is not found.
     #
     def fetch_ban(user)
@@ -851,7 +851,7 @@ module Discorb
     #
     # @param [#to_s] id The ID of the sticker.
     #
-    # @return [Discorb::Sticker::GuildSticker] The sticker.
+    # @return [Async::Task<Discorb::Sticker::GuildSticker>] The sticker.
     # @return [Async::Task<nil>] If the sticker does not exist.
     #
     def fetch_sticker(id)

@@ -266,7 +266,7 @@ module Discorb
     # @macro async
     # @macro http
     # @param (see #post)
-    # @return [Discorb::Message] The message.
+    # @return [Async::Task<Discorb::Message>] The message.
     def reply(*args, **kwargs)
       Async do
         channel.post(*args, reference: self, **kwargs).wait

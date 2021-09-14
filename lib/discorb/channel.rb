@@ -767,7 +767,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [StageInstance] The current stage instance.
+    # @return [Async::Task<StageInstance>] The current stage instance.
     # @return [Async::Task<nil>] If there is no current stage instance.
     #
     def fetch_stage_instance
@@ -853,7 +853,7 @@ module Discorb
     # @param [Boolean] locked Whether the thread is locked or not.
     # @param [String] reason The reason of editing the thread.
     #
-    # @return [self] The edited thread.
+    # @return [Async::Task<self>] The edited thread.
     #
     # @see #archive
     # @see #lock

@@ -20,7 +20,7 @@ module Discorb
     # @param [Discorb::File] file The file to send.
     # @param [Array<Discorb::File>] files The files to send.
     #
-    # @return [Discorb::Message] The message sent.
+    # @return [Async::Task<Discorb::Message>] The message sent.
     #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
                             reference: nil, components: nil, file: nil, files: nil)
@@ -142,7 +142,7 @@ module Discorb
     #
     # @param [Discorb::Snowflake] id The ID of the message.
     #
-    # @return [Discorb::Message] The message.
+    # @return [Async::Task<Discorb::Message>] The message.
     # @raise [Discorb::NotFoundError] If the message is not found.
     #
     def fetch_message(id)

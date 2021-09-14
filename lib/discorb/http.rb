@@ -26,7 +26,7 @@ module Discorb
     # @param [Hash] kwargs The keyword arguments.
     #
     # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
-    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -57,7 +57,7 @@ module Discorb
     # @param [Hash] kwargs The keyword arguments.
     #
     # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
-    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -87,7 +87,7 @@ module Discorb
     # @param [Hash] kwargs The keyword arguments.
     #
     # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
-    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -117,7 +117,7 @@ module Discorb
     # @param [Hash] kwargs The keyword arguments.
     #
     # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
-    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
@@ -146,7 +146,7 @@ module Discorb
     # @param [Hash] kwargs The keyword arguments.
     #
     # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
-    # @return [Array(Net::HTTPResponse, nil)] The response was 204.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #

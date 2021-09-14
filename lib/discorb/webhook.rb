@@ -58,7 +58,7 @@ module Discorb
     # @param [Boolean] wait Whether to wait for the message to be sent.
     #
     # @return [Discorb::Webhook::Message] The message that was sent.
-    # @return [nil] If `wait` is false.
+    # @return [Async::Task<nil>] If `wait` is false.
     #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
                             file: nil, files: nil, username: nil, avatar_url: :unset, wait: true)

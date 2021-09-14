@@ -202,7 +202,7 @@ module Discorb
     #
     # @param [#to_s] id <description>
     #
-    # @return [Discorb::User] The user.
+    # @return [Async::Task<Discorb::User>] The user.
     #
     # @raise [Discorb::NotFoundError] If the user doesn't exist.
     #
@@ -220,7 +220,7 @@ module Discorb
     #
     # @param [#to_s] id The ID of the channel.
     #
-    # @return [Discorb::Channel] The channel.
+    # @return [Async::Task<Discorb::Channel>] The channel.
     #
     # @raise [Discorb::NotFoundError] If the channel doesn't exist.
     #
@@ -238,7 +238,7 @@ module Discorb
     #
     # @param [#to_s] id <description>
     #
-    # @return [Discorb::Guild] The guild.
+    # @return [Async::Task<Discorb::Guild>] The guild.
     #
     # @raise [Discorb::NotFoundError] If the guild doesn't exist.
     #

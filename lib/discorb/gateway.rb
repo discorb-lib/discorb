@@ -90,7 +90,7 @@ module Discorb
       #
       # @param [Boolean] force Whether to force fetching the message.
       #
-      # @return [Discorb::Message] The message.
+      # @return [Async::Task<Discorb::Message>] The message.
       def fetch_message(force: false)
         Async do
           next @message if !force && @message
@@ -139,7 +139,7 @@ module Discorb
       #
       # @param [Boolean] force Whether to force fetching the message.
       #
-      # @return [Discorb::Message] The message.
+      # @return [Async::Task<Discorb::Message>] The message.
       def fetch_message(force: false)
         Async do
           next @message if !force && @message
@@ -191,7 +191,7 @@ module Discorb
       #
       # @param [Boolean] force Whether to force fetching the message.
       #
-      # @return [Discorb::Message] The message.
+      # @return [Async::Task<Discorb::Message>] The message.
       def fetch_message(force: false)
         Async do
           next @message if !force && @message
@@ -265,7 +265,7 @@ module Discorb
       # @macro async
       # @macro http
       #
-      # @return [Discorb::Message] The message.
+      # @return [Async::Task<Discorb::Message>] The message.
       def fetch_message
         Async do
           channel.fetch_message(@id).wait
