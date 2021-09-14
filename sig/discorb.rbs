@@ -16,7 +16,7 @@ module Discorb
   # @!visibility private
   class Logger
     def initialize: (untyped _out, untyped colorize_log, untyped level) -> void
-0sing untyped
+
     def level: () -> untyped
 
     def level=: (untyped level) -> untyped
@@ -139,10 +139,10 @@ module Discorb
     # _@return_ — The XOR of the two flags.
     def ^: (Discorb::Flag other) -> Discorb::Flag
 
-    # Negation of the flag.
-    # 
-    # _@return_ — The negation of the flag.
-    def ~@: () -> Discorb::Flag
+    # # Negation of the flag.
+    # # 
+    # # _@return_ — The negation of the flag.
+    # def ~@: () -> Discorb::Flag
 
     # Max value of the flag.
     # 
@@ -2360,7 +2360,7 @@ module Discorb
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand Interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
+    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
 
     # Add user context menu command.
     # 
@@ -4028,7 +4028,7 @@ module Discorb
       # _@param_ `block` — Command block.
       # 
       # _@return_ — Command object.
-      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand Interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
+      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
 
         # Add user context menu command.
       # 
@@ -5861,7 +5861,7 @@ module Discorb
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand Interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
+    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
 
     # Add user context menu command.
     # 
@@ -6395,10 +6395,10 @@ module Discorb
     # _@param_ `key` — The field to set.
     # 
     # _@param_ `bool` — The value to set.
-    def []=: (Symbol key, bool bool) -> untyped
+    def []=: (Symbol key, bool _bool) -> untyped
 
     # Returns the value of the flag.
-    def method_missing: (untyped method, ?untyped bool) -> untyped
+    def method_missing: (untyped method, ?untyped _bool) -> untyped
 
     def respond_to_missing?: (untyped method, untyped _arg) -> bool
 
