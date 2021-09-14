@@ -398,7 +398,7 @@ module Discorb
     # @note This method behavior will change by CLI.
     # @see file:docs/cli.md
     #
-    # @param [String] token The token to use.
+    # @param [String, nil] token The token to use.
     #
     # @note If the token is nil, you should use `discorb run` with the `-t` or `--token` option.
     #
