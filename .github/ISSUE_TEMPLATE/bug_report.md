@@ -1,6 +1,6 @@
 ---
 title: Bug Report
-about: A bug report for discorb.
+description: A bug report for discorb.
 labels:
 - bug
 ---
