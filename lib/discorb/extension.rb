@@ -8,7 +8,7 @@ module Discorb
   # @abstract
   #
   module Extension
-    include Discorb::Command::Handler
+    include Discorb::ApplicationCommand::Handler
     undef setup_commands
 
     @events = {}
@@ -49,7 +49,7 @@ module Discorb
 
     # @return [Hash{Symbol => Array<Discorb::Event>}] The events of the extension.
     attr_reader :events
-    # @return [Array<Discorb::Command::Command>] The commands of the extension.
+    # @return [Array<Discorb::ApplicationCommand::Command>] The commands of the extension.
     attr_reader :commands
     # @private
     attr_reader :bottom_commands

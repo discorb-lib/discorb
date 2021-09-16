@@ -11,9 +11,9 @@ From: [Discord API docs](https://discord.com/developers/docs/interactions/applic
 ## How do I register an application command?
 
 Write to a your script:
-- {Discorb::Command::Handler.slash}, {Discorb::Command::Handler.slash_group} for slash commands,
-- {Discorb::Command::Handler.user_command} for user menu commands,
-- {Discorb::Command::Handler.message_command} for message menu commands.
+- {Discorb::ApplicationCommand::Handler.slash}, {Discorb::ApplicationCommand::Handler.slash_group} for slash commands,
+- {Discorb::ApplicationCommand::Handler.user_command} for user menu commands,
+- {Discorb::ApplicationCommand::Handler.message_command} for message menu commands.
 
 And then run `discorb setup` to register your application commands.
 {file:docs/cli/setup.md Learn more about `discorb setup`}. 
@@ -39,7 +39,7 @@ end
 client.run(ENV["DISCORD_BOT_TOKEN"])
 ```
 
-{Discorb::Command::Handler#slash} takes 5 arguments:
+{Discorb::ApplicationCommand::Handler#slash} takes 5 arguments:
 
 | Argument | Description |
 |---------|-------------|
@@ -107,7 +107,7 @@ In `type`, You must use one of the following:
 
 ### Group Slash Commands
 
-To register a group of slash commands, use {Discorb::Command::Handler#slash_group}.
+To register a group of slash commands, use {Discorb::ApplicationCommand::Handler#slash_group}.
 
 ```ruby
 group = client.slash_group("settings", "Set settings of bot.")
@@ -156,7 +156,7 @@ client.slash_group("settings", "Set settings of bot.") do
 end
 ```
 
-You can make subcommand group by using {Discorb::Command::Command::GroupCommand#group}.
+You can make subcommand group by using {Discorb::ApplicationCommand::Command::GroupCommand#group}.
 
 ```ruby
 group = client.slash_group("permission", "Set/Get command permissions.")
@@ -244,7 +244,7 @@ client.user_command("hello") do |interaction, user|
   interaction.post("Hello, #{user.name}!")
 end
 ```
-{Discorb::Command::Handler.user_command} takes 3 arguments:
+{Discorb::ApplicationCommand::Handler.user_command} takes 3 arguments:
 
 | Parameter | Description |
 | --- | --- |
@@ -268,7 +268,7 @@ client.message_command("Bookmark") do |interaction, message|
 end
 ```
 
-{Discorb::Command::Handler.message_command} takes 3 arguments:
+{Discorb::ApplicationCommand::Handler.message_command} takes 3 arguments:
 
 | Parameter | Description |
 | --- | --- |

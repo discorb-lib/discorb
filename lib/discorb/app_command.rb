@@ -4,9 +4,9 @@ module Discorb
   #
   # Handles application commands.
   #
-  module Command
+  module ApplicationCommand
     #
-    # Module to handle commands.
+    # Module to handle application commands.
     #
     module Handler
       #
@@ -27,13 +27,13 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       #
-      # @return [Discorb::Command::Command::SlashCommand]
+      # @return [Discorb::ApplicationCommand::Command::SlashCommand]
       #
       # @see file:docs/application_command.md#register-slash-command
       # @see file:docs/cli/setup.md
       #
       def slash(command_name, description, options = {}, guild_ids: nil, &block)
-        command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
+        command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
         @commands << command
         @bottom_commands << command
         command
@@ -47,15 +47,15 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       #
       # @yield Block to execute as the command. It can be used to define sub-commands.
-      # @yieldself [Discorb::Command::Command::GroupCommand] Group command.
+      # @yieldself [Discorb::ApplicationCommand::Command::GroupCommand] Group command.
       #
-      # @return [Discorb::Command::Command::GroupCommand] Command object.
+      # @return [Discorb::ApplicationCommand::Command::GroupCommand] Command object.
       #
       # @see file:docs/slash_command.md
       # @see file:docs/cli/setup.md
       #
       def slash_group(command_name, description, guild_ids: nil, &block)
-        command = Discorb::Command::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
+        command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
         command.instance_eval(&block) if block_given?
         @commands << command
         command
@@ -68,13 +68,13 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, message] Block to execute.
-      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::Message] message Message object.
       #
-      # @return [Discorb::Command::Command] Command object.
+      # @return [Discorb::ApplicationCommand::Command] Command object.
       #
       def message_command(command_name, guild_ids: nil, &block)
-        command = Discorb::Command::Command.new(command_name, guild_ids, block, 3)
+        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 3)
         @commands << command
         command
       end
@@ -86,13 +86,13 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, user] Block to execute.
-      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::User] user User object.
       #
-      # @return [Discorb::Command::Command] Command object.
+      # @return [Discorb::ApplicationCommand::Command] Command object.
       #
       def user_command(command_name, guild_ids: nil, &block)
-        command = Discorb::Command::Command.new(command_name, guild_ids, block, 2)
+        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 2)
         @commands << command
         command
       end
@@ -163,7 +163,7 @@ module Discorb
         @guild_ids = guild_ids&.map(&:to_s)
         @block = block
         @raw_type = type
-        @type = Discorb::Command::Command.types[type]
+        @type = Discorb::ApplicationCommand::Command.types[type]
         @type_raw = type
         @id_map = Discorb::Dictionary.new
       end
@@ -251,7 +251,7 @@ module Discorb
       # Represents the command with subcommands.
       #
       class GroupCommand < Command
-        # @return [Array<Discorb::Command::Command::SlashCommand, Discorb::Command::Command::SubcommandGroup>] The subcommands of the command.
+        # @return [Array<Discorb::ApplicationCommand::Command::SlashCommand, Discorb::ApplicationCommand::Command::SubcommandGroup>] The subcommands of the command.
         attr_reader :commands
         # @return [String] The description of the command.
         attr_reader :description
@@ -268,11 +268,11 @@ module Discorb
         #
         # Add new subcommand.
         #
-        # @param (see Discorb::Command::Handler#slash)
-        # @return [Discorb::Command::Command::SlashCommand] The added subcommand.
+        # @param (see Discorb::ApplicationCommand::Handler#slash)
+        # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, &block)
-          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], block, 1, @name)
+          command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, [], block, 1, @name)
           @client.bottom_commands << command
           @commands << command
           command
@@ -285,14 +285,14 @@ module Discorb
         # @param [String] description Group description.
         #
         # @yield Block to execute as the command. It can be used to define sub-commands.
-        # @yieldself [Discorb::Command::Command::SubcommandGroup] Group command.
+        # @yieldself [Discorb::ApplicationCommand::Command::SubcommandGroup] Group command.
         #
-        # @return [Discorb::Command::Command::SubcommandGroup] Command object.
+        # @return [Discorb::ApplicationCommand::Command::SubcommandGroup] Command object.
         #
         # @see file:docs/slash_command.md
         #
         def group(command_name, description, &block)
-          command = Discorb::Command::Command::SubcommandGroup.new(command_name, description, @name, @client)
+          command = Discorb::ApplicationCommand::Command::SubcommandGroup.new(command_name, description, @name, @client)
           command.instance_eval(&block) if block_given?
           @commands << command
           command
@@ -342,7 +342,7 @@ module Discorb
       # Represents the subcommand group.
       #
       class SubcommandGroup < GroupCommand
-        # @return [Array<Discorb::Command::Command::SlashCommand>] The subcommands of the command.
+        # @return [Array<Discorb::ApplicationCommand::Command::SlashCommand>] The subcommands of the command.
         attr_reader :commands
 
         # @!visibility private
@@ -359,11 +359,11 @@ module Discorb
 
         #
         # Add new subcommand.
-        # @param (see Discorb::Command::Handler#slash)
-        # @return [Discorb::Command::Command::SlashCommand] The added subcommand.
+        # @param (see Discorb::ApplicationCommand::Handler#slash)
+        # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, &block)
-          command = Discorb::Command::Command::SlashCommand.new(command_name, description, options, [], block, 1, @parent + " " + @name)
+          command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, [], block, 1, @parent + " " + @name)
           @commands << command
           @client.bottom_commands << command
           command

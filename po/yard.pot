@@ -322,7 +322,7 @@ msgid "## How do I register an application command?"
 msgstr ""
 
 #: ../docs/application_command.md:13
-msgid "Use {Discorb::Command::Handler#slash}, {Discorb::Command::Handler#group} for slash commands, {Discorb::Command::Handler#user_command} for user menu commands, and {Discorb::Command::Handler#message_command} for message menu commands."
+msgid "Use {Discorb::ApplicationCommand::Handler#slash}, {Discorb::ApplicationCommand::Handler#group} for slash commands, {Discorb::ApplicationCommand::Handler#user_command} for user menu commands, and {Discorb::ApplicationCommand::Handler#message_command} for message menu commands."
 msgstr ""
 
 #: ../docs/application_command.md:15
@@ -349,7 +349,7 @@ msgid "client.slash(\"hello\", \"Greet for you\") do |interaction|\n"
 msgstr ""
 
 #: ../docs/application_command.md:36
-msgid "{Discorb::Command::Handler#slash} takes 5 arguments:"
+msgid "{Discorb::ApplicationCommand::Handler#slash} takes 5 arguments:"
 msgstr ""
 
 #: ../docs/application_command.md:38
@@ -441,7 +441,7 @@ msgid "### Group Slash Commands"
 msgstr ""
 
 #: ../docs/application_command.md:104
-msgid "To register a group of slash commands, use {Discorb::Command::Handler#slash_group}."
+msgid "To register a group of slash commands, use {Discorb::ApplicationCommand::Handler#slash_group}."
 msgstr ""
 
 #: ../docs/application_command.md:106
@@ -473,7 +473,7 @@ msgid "group.slash(\"bump_alert\", \"Whether bot should notify DISBOARD bump.\",
 msgstr ""
 
 #: ../docs/application_command.md:128
-msgid "You can make subcommand group by using {Discorb::Command::GroupCommand#group}."
+msgid "You can make subcommand group by using {Discorb::ApplicationCommand::GroupCommand#group}."
 msgstr ""
 
 #: ../docs/application_command.md:130
@@ -558,7 +558,7 @@ msgid "```ruby\n"
 "  interaction.post(\"Hello, #{user.name}!\")\n"
 "end\n"
 "```\n"
-"{Discorb::Command::Handler#user_command} takes 3 arguments:"
+"{Discorb::ApplicationCommand::Handler#user_command} takes 3 arguments:"
 msgstr ""
 
 #: ../docs/application_command.md:216
@@ -595,7 +595,7 @@ msgid "```ruby\n"
 msgstr ""
 
 #: ../docs/application_command.md:238
-msgid "{Discorb::Command::Handler#message_command} takes 3 arguments:"
+msgid "{Discorb::ApplicationCommand::Handler#message_command} takes 3 arguments:"
 msgstr ""
 
 #: ../docs/application_command.md:248
@@ -4592,7 +4592,7 @@ msgstr ""
 msgid "The logger."
 msgstr ""
 
-# @return [Array<Discorb::Command::Command>]
+# @return [Array<Discorb::ApplicationCommand::Command>]
 #: ../lib/discorb/client.rb:45
 msgid "The commands that the client is using."
 msgstr ""
@@ -5262,17 +5262,17 @@ msgstr ""
 msgid "A Discord color name."
 msgstr ""
 
-# Discorb::Command
+# Discorb::ApplicationCommand
 #: ../lib/discorb/command.rb:5
 msgid "Handles application commands."
 msgstr ""
 
-# Discorb::Command::Handler
+# Discorb::ApplicationCommand::Handler
 #: ../lib/discorb/command.rb:9
 msgid "Module to handle commands."
 msgstr ""
 
-# Discorb::Command::Handler#slash
+# Discorb::ApplicationCommand::Handler#slash
 #: ../lib/discorb/command.rb:13
 msgid "Add new top-level command."
 msgstr ""
@@ -5364,14 +5364,14 @@ msgstr ""
 msgid "tag|param|options"
 msgstr ""
 
-# Discorb::Command::Handler#slash_group
+# Discorb::ApplicationCommand::Handler#slash_group
 #: ../lib/discorb/command.rb:41
 msgid "Add new command with group."
 msgstr ""
 
-# @return [Discorb::Command::Command::GroupCommand]
-# @return [Discorb::Command::Command::SubcommandGroup]
-# @return [Discorb::Command::Command]
+# @return [Discorb::ApplicationCommand::Command::GroupCommand]
+# @return [Discorb::ApplicationCommand::Command::SubcommandGroup]
+# @return [Discorb::ApplicationCommand::Command]
 #: ../lib/discorb/command.rb:51
 #: ../lib/discorb/command.rb:69
 #: ../lib/discorb/command.rb:87
@@ -5385,7 +5385,7 @@ msgstr ""
 msgid "tag|see|file:docs/slash_command.md"
 msgstr ""
 
-# Discorb::Command::Handler#message_command
+# Discorb::ApplicationCommand::Handler#message_command
 #: ../lib/discorb/command.rb:58
 msgid "Add message context menu command."
 msgstr ""
@@ -5397,13 +5397,13 @@ msgstr ""
 msgid "Block to execute."
 msgstr ""
 
-# @yieldparam [Discorb::CommandInteraction::UserMenuCommand]
+# @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand]
 #: ../lib/discorb/command.rb:69
 #: ../lib/discorb/command.rb:87
 msgid "tag|yieldparam|Interaction"
 msgstr ""
 
-# @yieldparam [Discorb::CommandInteraction::UserMenuCommand] Interaction
+# @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] Interaction
 #: ../lib/discorb/command.rb:69
 #: ../lib/discorb/command.rb:87
 msgid "object."
@@ -5421,7 +5421,7 @@ msgstr ""
 msgid "Message object."
 msgstr ""
 
-# Discorb::Command::Handler#user_command
+# Discorb::ApplicationCommand::Handler#user_command
 #: ../lib/discorb/command.rb:76
 msgid "Add user context menu command."
 msgstr ""
@@ -5431,7 +5431,7 @@ msgstr ""
 msgid "User object."
 msgstr ""
 
-# Discorb::Command::Handler#setup_commands
+# Discorb::ApplicationCommand::Handler#setup_commands
 #: ../lib/discorb/command.rb:94
 msgid "Setup commands."
 msgstr ""
@@ -5456,7 +5456,7 @@ msgstr ""
 msgid "tag|see|Client#initialize"
 msgstr ""
 
-# Discorb::Command::Command
+# Discorb::ApplicationCommand::Command
 #: ../lib/discorb/command.rb:119
 msgid "Represents a application command."
 msgstr ""
@@ -5497,7 +5497,7 @@ msgstr ""
 msgid "a new instance of Command"
 msgstr ""
 
-# Discorb::Command::Command::SlashCommand
+# Discorb::ApplicationCommand::Command::SlashCommand
 #: ../lib/discorb/command.rb:163
 msgid "Represents the slash command."
 msgstr ""
@@ -5518,18 +5518,18 @@ msgstr ""
 msgid "a new instance of SlashCommand"
 msgstr ""
 
-# Discorb::Command::Command::SlashCommand#to_s
+# Discorb::ApplicationCommand::Command::SlashCommand#to_s
 #: ../lib/discorb/command.rb:185
 msgid "Returns the commands name."
 msgstr ""
 
-# Discorb::Command::Command::GroupCommand
+# Discorb::ApplicationCommand::Command::GroupCommand
 #: ../lib/discorb/command.rb:236
 msgid "Represents the command with subcommands."
 msgstr ""
 
-# @return [Array<Discorb::Command::Command::SlashCommand, Discorb::Command::Command::SubcommandGroup>]
-# @return [Array<Discorb::Command::Command::SlashCommand>]
+# @return [Array<Discorb::ApplicationCommand::Command::SlashCommand, Discorb::ApplicationCommand::Command::SubcommandGroup>]
+# @return [Array<Discorb::ApplicationCommand::Command::SlashCommand>]
 #: ../lib/discorb/command.rb:240
 #: ../lib/discorb/command.rb:361
 msgid "The subcommands of the command."
@@ -5540,20 +5540,20 @@ msgstr ""
 msgid "a new instance of GroupCommand"
 msgstr ""
 
-# Discorb::Command::Command::GroupCommand#slash
-# Discorb::Command::Command::SubcommandGroup#slash
+# Discorb::ApplicationCommand::Command::GroupCommand#slash
+# Discorb::ApplicationCommand::Command::SubcommandGroup#slash
 #: ../lib/discorb/command.rb:253
 #: ../lib/discorb/command.rb:376
 msgid "Add new subcommand."
 msgstr ""
 
-# @return [Discorb::Command::Command::SlashCommand]
+# @return [Discorb::ApplicationCommand::Command::SlashCommand]
 #: ../lib/discorb/command.rb:258
 #: ../lib/discorb/command.rb:380
 msgid "The added subcommand."
 msgstr ""
 
-# Discorb::Command::Command::GroupCommand#group
+# Discorb::ApplicationCommand::Command::GroupCommand#group
 #: ../lib/discorb/command.rb:301
 msgid "Add new subcommand group."
 msgstr ""
@@ -5568,7 +5568,7 @@ msgstr ""
 msgid "Group description."
 msgstr ""
 
-# Discorb::Command::Command::GroupCommand#to_s
+# Discorb::ApplicationCommand::Command::GroupCommand#to_s
 #: ../lib/discorb/command.rb:317
 msgid "Returns the command name."
 msgstr ""
@@ -5578,7 +5578,7 @@ msgstr ""
 msgid "The command name."
 msgstr ""
 
-# Discorb::Command::Command::SubcommandGroup
+# Discorb::ApplicationCommand::Command::SubcommandGroup
 #: ../lib/discorb/command.rb:357
 msgid "Represents the subcommand group."
 msgstr ""
@@ -5589,7 +5589,7 @@ msgid "a new instance of SubcommandGroup"
 msgstr ""
 
 # Discorb::Activity.types
-# Discorb::Command::Command.types
+# Discorb::ApplicationCommand::Command.types
 #: ../lib/discorb/command.rb:390
 #: ../lib/discorb/gateway_requests.rb:45
 msgid "Returns the value of attribute types."
@@ -9873,7 +9873,7 @@ msgstr ""
 msgid "Response with `UPDATE_MESSAGE`(`7`)."
 msgstr ""
 
-# Discorb::CommandInteraction
+# Discorb::ApplicationCommandInteraction
 #: ../lib/discorb/interaction.rb:245
 msgid "Represents a command interaction."
 msgstr ""
@@ -9883,12 +9883,12 @@ msgstr ""
 msgid "Implement this."
 msgstr ""
 
-# Discorb::CommandInteraction::SlashCommand
+# Discorb::ApplicationCommandInteraction::SlashCommand
 #: ../lib/discorb/interaction.rb:254
 msgid "Represents a slash command interaction."
 msgstr ""
 
-# Discorb::CommandInteraction::UserMenuCommand
+# Discorb::ApplicationCommandInteraction::UserMenuCommand
 #: ../lib/discorb/interaction.rb:310
 msgid "Represents a user context menu interaction."
 msgstr ""
@@ -9898,7 +9898,7 @@ msgstr ""
 msgid "The target user."
 msgstr ""
 
-# Discorb::CommandInteraction::MessageMenuCommand
+# Discorb::ApplicationCommandInteraction::MessageMenuCommand
 #: ../lib/discorb/interaction.rb:325
 msgid "Represents a message context menu interaction."
 msgstr ""
@@ -9908,7 +9908,7 @@ msgstr ""
 msgid "The target message."
 msgstr ""
 
-# Discorb::CommandInteraction.command_type
+# Discorb::ApplicationCommandInteraction.command_type
 #: ../lib/discorb/interaction.rb:348
 msgid "Returns the value of attribute command_type."
 msgstr ""

@@ -36,7 +36,7 @@ end
 
 ## Register Command
 
-Since v0.5.2, {Discorb::Extension} includes {Discorb::Command::Handler} module, so you can register command with {Discorb::Command::Handler#slash} and {Discorb::Command::Handler#slash_group}.
+Since v0.5.2, {Discorb::Extension} includes {Discorb::ApplicationCommand::Handler} module, so you can register command with {Discorb::ApplicationCommand::Handler#slash} and {Discorb::ApplicationCommand::Handler#slash_group}.
 
 ```ruby
 module MyExtension

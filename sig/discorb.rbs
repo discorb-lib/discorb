@@ -2143,7 +2143,7 @@ module Discorb
   # Class for connecting to the Discord server.
   class Client
     include Discorb::Gateway::Handler
-    include Discorb::Command::Handler
+    include Discorb::ApplicationCommand::Handler
 
     # Initializes a new client.
     # 
@@ -2334,7 +2334,7 @@ module Discorb
                  String description,
                  ?::Hash[String, Hash[:description | :optional | :type, Object]] options,
                  ?guild_ids: (::Array[untyped] | bool)?
-               ) -> Discorb::Command::Command::SlashCommand
+               ) -> Discorb::ApplicationCommand::Command::SlashCommand
 
     # Add new command with group.
     # 
@@ -2349,7 +2349,7 @@ module Discorb
     # _@see_ `file:docs/slash_command.md`
     # 
     # _@see_ `file:docs/cli/setup.md`
-    def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::Command::Command::GroupCommand
+    def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::ApplicationCommand::Command::GroupCommand
 
     # Add message context menu command.
     # 
@@ -2360,7 +2360,7 @@ module Discorb
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
+    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
 
     # Add user context menu command.
     # 
@@ -2371,7 +2371,7 @@ module Discorb
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
+    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
 
     # Setup commands.
     # 
@@ -2441,7 +2441,7 @@ module Discorb
     attr_reader log: Discorb::Logger
 
     # _@return_ — The commands that the client is using.
-    attr_reader commands: ::Array[Discorb::Command::Command]
+    attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]
 
     # _@return_ — The ping of the client.
     # @note This will be calculated from heartbeat and heartbeat_ack.
@@ -4002,7 +4002,7 @@ module Discorb
                    String description,
                    ?::Hash[String, Hash[:description | :optional | :type, Object]] options,
                    ?guild_ids: (::Array[untyped] | bool)?
-                 ) -> Discorb::Command::Command::SlashCommand
+                 ) -> Discorb::ApplicationCommand::Command::SlashCommand
 
         # Add new command with group.
       # 
@@ -4017,7 +4017,7 @@ module Discorb
       # _@see_ `file:docs/slash_command.md`
       # 
       # _@see_ `file:docs/cli/setup.md`
-      def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::Command::Command::GroupCommand
+      def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::ApplicationCommand::Command::GroupCommand
 
         # Add message context menu command.
       # 
@@ -4028,7 +4028,7 @@ module Discorb
       # _@param_ `block` — Command block.
       # 
       # _@return_ — Command object.
-      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
+      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
 
         # Add user context menu command.
       # 
@@ -4039,7 +4039,7 @@ module Discorb
       # _@param_ `block` — Command block.
       # 
       # _@return_ — Command object.
-      def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
+      def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
 
           # Setup commands.
       # 
@@ -4086,7 +4086,7 @@ module Discorb
 
       # 
       # Represents the slash command.
-      class SlashCommand < Discorb::Command::Command
+      class SlashCommand < Discorb::ApplicationCommand::Command
                                     def initialize: (
                           untyped name,
                           untyped description,
@@ -4113,7 +4113,7 @@ module Discorb
 
       # 
       # Represents the command with subcommands.
-      class GroupCommand < Discorb::Command::Command
+      class GroupCommand < Discorb::ApplicationCommand::Command
                             def initialize: (
                           untyped name,
                           untyped description,
@@ -4125,7 +4125,7 @@ module Discorb
             # Add new subcommand.
         # 
         # _@return_ — The added subcommand.
-        def slash: (String command_name, String description, ?::Hash[String, Hash[:description | :optional | :type, Object]] options) -> Discorb::Command::Command::SlashCommand
+        def slash: (String command_name, String description, ?::Hash[String, Hash[:description | :optional | :type, Object]] options) -> Discorb::ApplicationCommand::Command::SlashCommand
 
         # Add new subcommand group.
         # 
@@ -4136,7 +4136,7 @@ module Discorb
         # _@return_ — Command object.
         # 
         # _@see_ `file:docs/slash_command.md`
-        def group: (String command_name, String description) -> Discorb::Command::Command::SubcommandGroup
+        def group: (String command_name, String description) -> Discorb::ApplicationCommand::Command::SubcommandGroup
 
         # Returns the command name.
         # 
@@ -4146,7 +4146,7 @@ module Discorb
             def to_hash: () -> untyped
 
         # _@return_ — The subcommands of the command.
-        attr_reader commands: ::Array[(Discorb::Command::Command::SlashCommand | Discorb::Command::Command::SubcommandGroup)]
+        attr_reader commands: ::Array[(Discorb::ApplicationCommand::Command::SlashCommand | Discorb::ApplicationCommand::Command::SubcommandGroup)]
 
         # _@return_ — The description of the command.
         attr_reader description: String
@@ -4154,7 +4154,7 @@ module Discorb
 
       # 
       # Represents the subcommand group.
-      class SubcommandGroup < Discorb::Command::Command::GroupCommand
+      class SubcommandGroup < Discorb::ApplicationCommand::Command::GroupCommand
                         def initialize: (
                           untyped name,
                           untyped description,
@@ -4167,10 +4167,10 @@ module Discorb
             # Add new subcommand.
         # 
         # _@return_ — The added subcommand.
-        def slash: (String command_name, String description, ?::Hash[String, Hash[:description | :optional | :type, Object]] options) -> Discorb::Command::Command::SlashCommand
+        def slash: (String command_name, String description, ?::Hash[String, Hash[:description | :optional | :type, Object]] options) -> Discorb::ApplicationCommand::Command::SlashCommand
 
         # _@return_ — The subcommands of the command.
-        attr_reader commands: ::Array[Discorb::Command::Command::SlashCommand]
+        attr_reader commands: ::Array[Discorb::ApplicationCommand::Command::SlashCommand]
       end
     end
   end
@@ -5785,7 +5785,7 @@ module Discorb
   # @see file:docs/extension.md
   # @abstract
   module Extension
-    include Discorb::Command::Handler
+    include Discorb::ApplicationCommand::Handler
 
     # Define a new event.
     # 
@@ -5835,7 +5835,7 @@ module Discorb
                  String description,
                  ?::Hash[String, Hash[:description | :optional | :type, Object]] options,
                  ?guild_ids: (::Array[untyped] | bool)?
-               ) -> Discorb::Command::Command::SlashCommand
+               ) -> Discorb::ApplicationCommand::Command::SlashCommand
 
     # Add new command with group.
     # 
@@ -5850,7 +5850,7 @@ module Discorb
     # _@see_ `file:docs/slash_command.md`
     # 
     # _@see_ `file:docs/cli/setup.md`
-    def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::Command::Command::GroupCommand
+    def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) -> Discorb::ApplicationCommand::Command::GroupCommand
 
     # Add message context menu command.
     # 
@@ -5861,7 +5861,7 @@ module Discorb
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::Command::Command
+    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
 
     # Add user context menu command.
     # 
@@ -5872,7 +5872,7 @@ module Discorb
     # _@param_ `block` — Command block.
     # 
     # _@return_ — Command object.
-    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::Command::Command
+    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
 
     # Setup commands.
     # 
@@ -5889,7 +5889,7 @@ module Discorb
     attr_reader events: ::Hash[Symbol, ::Array[Discorb::Event]]
 
     # _@return_ — The commands of the extension.
-    attr_reader commands: ::Array[Discorb::Command::Command]
+    attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]
 
     attr_reader bottom_commands: untyped
 
@@ -6759,13 +6759,13 @@ module Discorb
 
     # 
     # Represents a slash command interaction.
-    class SlashCommand < Discorb::CommandInteraction
+    class SlashCommand < Discorb::ApplicationCommandInteraction
           def _set_data: (untyped data) -> untyped
     end
 
     # 
     # Represents a user context menu interaction.
-    class UserMenuCommand < Discorb::CommandInteraction
+    class UserMenuCommand < Discorb::ApplicationCommandInteraction
           def _set_data: (untyped data) -> untyped
 
       # _@return_ — The target user.
@@ -6774,7 +6774,7 @@ module Discorb
 
     # 
     # Represents a message context menu interaction.
-    class MessageMenuCommand < Discorb::CommandInteraction
+    class MessageMenuCommand < Discorb::ApplicationCommandInteraction
           def _set_data: (untyped data) -> untyped
 
       # _@return_ — The target message.

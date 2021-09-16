@@ -44,7 +44,7 @@ require_order = %w[common flag dictionary error rate_limit http intents emoji_ta
                 %w[application audit_logs color components event] +
                 %w[file guild_template image integration interaction invite log permission] +
                 %w[presence reaction role sticker utils voice_state webhook] +
-                %w[gateway_requests gateway command] +
+                %w[gateway_requests gateway app_command] +
                 %w[asset extension client extend]
 require_order.each do |name|
   require_relative "discorb/#{name}.rb"

@@ -41,7 +41,7 @@ module Discorb
     attr_reader :messages
     # @return [Discorb::Logger] The logger.
     attr_reader :log
-    # @return [Array<Discorb::Command::Command>] The commands that the client is using.
+    # @return [Array<Discorb::ApplicationCommand::Command>] The commands that the client is using.
     attr_reader :commands
     # @return [Float] The ping of the client.
     #   @note This will be calculated from heartbeat and heartbeat_ack.
@@ -391,7 +391,7 @@ module Discorb
     end
 
     include Discorb::Gateway::Handler
-    include Discorb::Command::Handler
+    include Discorb::ApplicationCommand::Handler
 
     #
     # Starts the client.
