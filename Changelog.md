@@ -145,3 +145,8 @@
 - Add: Add `-t`, `--token` option to `discorb run`
 - Add: Add `-g`, `--guild` option to `discorb setup`
 - Change: Use `Async::Task<R>` instead of `R` in return value
+
+## 0.6.1
+
+- Change: Rename `Event#discriminator` to `Event#metadata`
+- Add: Add `:override` to `Client#on`
