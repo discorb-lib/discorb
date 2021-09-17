@@ -30,6 +30,35 @@ end
 
 If you want to seperate event handlers from the client, consider using {Discorb::Extension}. {file:docs/extension.md Learn more about extensions}.
 
+Since v0.6.1, you can set `:override` to `true` to register overridable event handlers.
+
+```ruby
+client.on :message, override: true do |event|
+  puts "This event handler is overrideable!"
+end
+
+client.on :message do |event|
+  puts "Override!"
+end
+```
+
+This example will print `Override!`, but not `This event handler is overrideable!`.
+This is useful for registering event handlers for default behaviour on errors.
+
+```ruby
+# In the library...
+
+client.on :command_error, override: true do |event, error|
+  $stderr.puts "Command error:\n#{error.full_message}"
+end
+
+# In your code...
+
+client.on :command_error do |event, error|
+  event.message.reply "An error occurred while executing that command!\n#{error.full_message}"
+end
+```
+
 ## Event reference
 
 ### Client events
