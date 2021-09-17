@@ -6252,7 +6252,7 @@ module Discorb
     end
   end
 
-  class Dictionary
+  class Dictionary[K, V]
     # Initialize a new Dictionary.
     # 
     # _@param_ `hash` — A hash of items to add to the dictionary.
@@ -6288,12 +6288,12 @@ module Discorb
     # _@return_ — The item.
     # 
     # _@return_ — if the item was not found.
-    def get: (untyped id) -> Object
+    def get: (untyped id) -> V
 
     # Returns the values of the dictionary.
     # 
     # _@return_ — The values of the dictionary.
-    def values: () -> ::Array[untyped]
+    def values: () -> ::Array[V]
 
     # Checks if the dictionary has an ID.
     # 
