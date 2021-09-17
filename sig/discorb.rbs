@@ -1247,7 +1247,7 @@ module Discorb
   # This class shouldn't be instantiated directly.
   # Use {Client#on} instead.
   class Event
-    def initialize: (untyped block, untyped id, untyped discriminator) -> void
+    def initialize: (untyped block, untyped id, untyped metadata) -> void
 
     # Calls the block associated with the event.
     def call: () -> untyped
@@ -1258,8 +1258,8 @@ module Discorb
     # _@return_ — the event id.
     attr_reader id: Symbol
 
-    # _@return_ — the event discriminator.
-    attr_reader discriminator: ::Hash[untyped, untyped]
+    # _@return_ — the event metadata.
+    attr_reader metadata: ::Hash[untyped, untyped]
 
     # _@return_ — whether the event is once or not.
     attr_reader once: bool
@@ -2176,19 +2176,19 @@ module Discorb
     # 
     # _@param_ `id` — Custom ID of the event.
     # 
-    # _@param_ `discriminator` — The discriminator of the event.
+    # _@param_ `metadata` — The metadata of the event.
     # 
     # _@param_ `block` — The block to execute when the event is triggered.
     # 
     # _@return_ — The event.
     # 
     # _@see_ `file:docs/Events.md`
-    def on: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] discriminator) -> Discorb::Event
+    def on: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
 
     # Almost same as {#on}, but only triggers the event once.
     # 
     # _@return_ — The event.
-    def once: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] discriminator) -> Discorb::Event
+    def once: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
 
     # Remove event by ID.
     # 
@@ -5793,12 +5793,12 @@ module Discorb
     # 
     # _@param_ `id` — The id of the event. Used to delete the event.
     # 
-    # _@param_ `discriminator` — Other discriminators.
+    # _@param_ `metadata` — Other metadata.
     # 
     # _@param_ `block` — The block to execute when the event is triggered.
     # 
     # _@return_ — The event.
-    def event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] discriminator) -> Discorb::Event
+    def event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
 
     # Define a new once event.
     # 
@@ -5806,12 +5806,12 @@ module Discorb
     # 
     # _@param_ `id` — The id of the event. Used to delete the event.
     # 
-    # _@param_ `discriminator` — Other discriminators.
+    # _@param_ `metadata` — Other metadata.
     # 
     # _@param_ `block` — The block to execute when the event is triggered.
     # 
     # _@return_ — The event.
-    def once_event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] discriminator) -> Discorb::Event
+    def once_event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
 
     def self.extended: (untyped obj) -> untyped
 

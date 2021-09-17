@@ -99,13 +99,13 @@ module Discorb
     #
     # @param [Symbol] event_name The name of the event.
     # @param [Symbol] id Custom ID of the event.
-    # @param [Hash] discriminator The discriminator of the event.
+    # @param [Hash] metadata The metadata of the event.
     # @param [Proc] block The block to execute when the event is triggered.
     #
     # @return [Discorb::Event] The event.
     #
-    def on(event_name, id: nil, **discriminator, &block)
-      ne = Event.new(block, id, discriminator)
+    def on(event_name, id: nil, **metadata, &block)
+      ne = Event.new(block, id, metadata)
       @events[event_name] ||= []
       @events[event_name] << ne
       ne
@@ -118,9 +118,9 @@ module Discorb
     #
     # @return [Discorb::Event] The event.
     #
-    def once(event_name, id: nil, **discriminator, &block)
-      discriminator[:once] = true
-      ne = Event.new(block, id, discriminator)
+    def once(event_name, id: nil, **metadata, &block)
+      metadata[:once] = true
+      ne = Event.new(block, id, metadata)
       @events[event_name] ||= []
       @events[event_name] << ne
       ne
@@ -177,7 +177,7 @@ module Discorb
           lambda { |event_args|
             Async(annotation: "Discorb event: #{event_name}") do |task|
               if block.is_a?(Discorb::Event)
-                @events[event_name].delete(block) if block.discriminator[:once]
+                @events[event_name].delete(block) if block.metadata[:once]
               end
               block.call(*event_args)
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
@@ -369,10 +369,11 @@ module Discorb
     def extend(mod)
       if mod.respond_to?(:events)
         @events.each_value do |event|
-          event.delete_if { |c| c.discriminator[:extension] == mod.name }
+          event.delete_if { |c| c.metadata[:extension] == mod.name }
         end
         mod.events.each do |name, events|
-          @events[name] = [] if @events[name].nil?
+          @events[name] ||= []
+          @events[name].delete_if { |c| c.metadata[:override] }
           events.each do |event|
             @events[name] << event
           end

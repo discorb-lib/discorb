@@ -19,18 +19,18 @@ module Discorb
     #
     # @param [Symbol] event_name The name of the event.
     # @param [Symbol] id The id of the event. Used to delete the event.
-    # @param [Hash] discriminator Other discriminators.
+    # @param [Hash] metadata Other metadata.
     # @param [Proc] block The block to execute when the event is triggered.
     #
     # @return [Discorb::Event] The event.
     #
-    def event(event_name, id: nil, **discriminator, &block)
+    def event(event_name, id: nil, **metadata, &block)
       raise ArgumentError, "Event name must be a symbol" unless event_name.is_a?(Symbol)
       raise ArgumentError, "block must be a Proc" unless block.is_a?(Proc)
 
       @events[event_name] ||= []
-      discriminator[:extension] = self.name
-      @events[event_name] << Discorb::Event.new(block, id, discriminator)
+      metadata[:extension] = self.name
+      @events[event_name] << Discorb::Event.new(block, id, metadata)
     end
 
     #
@@ -38,13 +38,13 @@ module Discorb
     #
     # @param [Symbol] event_name The name of the event.
     # @param [Symbol] id The id of the event. Used to delete the event.
-    # @param [Hash] discriminator Other discriminators.
+    # @param [Hash] metadata Other metadata.
     # @param [Proc] block The block to execute when the event is triggered.
     #
     # @return [Discorb::Event] The event.
     #
-    def once_event(event_name, id: nil, **discriminator, &block)
-      event(event_name, id: id, once: true, **discriminator, &block)
+    def once_event(event_name, id: nil, **metadata, &block)
+      event(event_name, id: id, once: true, **metadata, &block)
     end
 
     # @return [Hash{Symbol => Array<Discorb::Event>}] The events of the extension.
