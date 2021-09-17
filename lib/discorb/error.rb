@@ -94,7 +94,7 @@ module Discorb
       @client.close!
       DiscorbError.instance_method(:initialize).bind(self).call(<<~MESSAGE)
         The client is banned from CloudFlare.
-        Hint: Try to increase the number of requests per second, e.g. Use sleep in between requests.
+        Hint: Try to decrease the number of requests per second, e.g. Use sleep in between requests.
       MESSAGE
     end
   end
