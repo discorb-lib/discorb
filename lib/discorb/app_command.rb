@@ -27,7 +27,7 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       #
-      # @return [Discorb::ApplicationCommand::Command::SlashCommand]
+      # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
       #
       # @see file:docs/application_command.md#register-slash-command
       # @see file:docs/cli/setup.md
