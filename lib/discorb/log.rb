@@ -22,34 +22,34 @@ module Discorb
       raise ArgumentError, "Invalid log level: #{level}" unless @level
     end
 
-    def debug(message)
+    def debug(message, fallback: nil)
       return unless @level <= 0
 
-      write_output("DEBUG", "\e[90m", message)
+      write_output("DEBUG", "\e[90m", message, fallback)
     end
 
-    def info(message)
+    def info(message, fallback: nil)
       return unless @level <= 1
 
-      write_output("INFO", "\e[94m", message)
+      write_output("INFO", "\e[94m", message, fallback)
     end
 
-    def warn(message)
+    def warn(message, fallback: nil)
       return unless @level <= 2
 
-      write_output("WARN", "\e[93m", message)
+      write_output("WARN", "\e[93m", message, fallback)
     end
 
-    def error(message)
+    def error(message, fallback: nil)
       return unless @level <= 3
 
-      write_output("ERROR", "\e[31m", message)
+      write_output("ERROR", "\e[31m", message, fallback)
     end
 
-    def fatal(message)
+    def fatal(message, fallback: nil)
       return unless @level <= 4
 
-      write_output("FATAL", "\e[91m", message)
+      write_output("FATAL", "\e[91m", message, fallback)
     end
 
     class << self
@@ -58,8 +58,12 @@ module Discorb
 
     private
 
-    def write_output(name, color, message)
-      return unless @out
+    def write_output(name, color, message, fallback)
+      unless @out
+        fallback.puts(message) if fallback
+
+        return
+      end
 
       if @colorize_log
         @out.puts("\e[2;90m[#{Time.now.iso8601}] #{color}#{name}\e[m -- #{message}")
