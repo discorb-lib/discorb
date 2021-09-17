@@ -91,6 +91,7 @@ module Discorb
       @commands = []
       @bottom_commands = []
       @status = :initialized
+      set_default_events
     end
 
     #
@@ -172,23 +173,17 @@ module Discorb
         end
         @log.debug "Dispatching event #{event_name}"
         events.each do |block|
-          lambda { |event_args|
+          Async do
             Async(annotation: "Discorb event: #{event_name}") do |task|
               if block.is_a?(Discorb::Event)
                 @events[event_name].delete(block) if block.metadata[:once]
               end
-              block.call(*event_args)
+              block.call(*args)
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
-              message = "An error occurred while dispatching proc with ID #{block.id.inspect}\n#{e.full_message}"
-              dispatch(:error, event_name, event_args, e)
-              if @log.out
-                @log.error message
-              else
-                warn message
-              end
+              dispatch(:error, event_name, args, e)
             end
-          }.call(args)
+          end
         end
       end
     end
@@ -480,6 +475,13 @@ module Discorb
         end
         @close_condition.wait
         @main_task.stop
+      end
+    end
+
+    def set_default_events
+      on :error, override: true do |event_name, _args, e|
+        message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
+        @log.error message, fallback: $stderr
       end
     end
   end
