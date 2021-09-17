@@ -107,6 +107,7 @@ module Discorb
     def on(event_name, id: nil, **metadata, &block)
       ne = Event.new(block, id, metadata)
       @events[event_name] ||= []
+      @events[event_name].delete_if { |e| e.metadata[:override] }
       @events[event_name] << ne
       ne
     end
@@ -120,10 +121,7 @@ module Discorb
     #
     def once(event_name, id: nil, **metadata, &block)
       metadata[:once] = true
-      ne = Event.new(block, id, metadata)
-      @events[event_name] ||= []
-      @events[event_name] << ne
-      ne
+      on(event_name, id: id, **metadata, &block)
     end
 
     #
