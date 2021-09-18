@@ -79,6 +79,11 @@ Fires when the client is ready.
 
 Fires when the client is resumed connection.
 
+#### `error(event_name, args, error)`
+
+Fires when an error occurs during an event.
+Defaults to printing the error to stderr, override to handle it yourself.
+
 ### Guild events
 
 #### `guild_join(guild)`
