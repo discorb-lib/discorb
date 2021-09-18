@@ -93,18 +93,18 @@ module Discorb
     # @return [Hash] Converted embed.
     #
     def to_hash
-      {
-        title: @title,
-        description: @description,
-        url: @url,
-        timestamp: @timestamp&.iso8601,
-        color: @color&.to_i,
-        footer: @footer&.to_hash,
-        image: @image&.to_hash,
-        thumbnail: @thumbnail&.to_hash,
-        author: @author&.to_hash,
-        fields: @fields&.map { |f| f.to_hash },
-      }
+      ret = { type: "rich" }
+      ret[:title] = @title if @title
+      ret[:description] = @description if @description
+      ret[:url] = @url if @url
+      ret[:timestamp] = @timestamp&.iso8601 if @timestamp
+      ret[:color] = @color&.to_i if @color
+      ret[:footer] = @footer&.to_hash if @footer
+      ret[:image] = @image&.to_hash if @image
+      ret[:thumbnail] = @thumbnail&.to_hash if @thumbnail
+      ret[:author] = @author&.to_hash if @author
+      ret[:fields] = @fields&.map { |f| f.to_hash } if @fields.any?
+      ret
     end
 
     #
