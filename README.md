@@ -1,3 +1,5 @@
+![discorb](./docs/assets/banner.svg)
+
 # discorb
 [![Document](https://img.shields.io/badge/Document-discord--lib.github.io-blue.svg)](https://discorb-lib.github.io/)
 [![Gem](https://img.shields.io/gem/dt/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)
