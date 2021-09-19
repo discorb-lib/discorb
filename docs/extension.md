@@ -86,7 +86,7 @@ module MyExtension
   extend Discorb::Extension
 
   event :ready do |message|
-    puts "Logged in as #{client.user}"
+    puts "Logged in as #{@client.user}"
   end
 end
 ```
