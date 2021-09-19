@@ -595,10 +595,10 @@ module Discorb
           @session_id = data[:session_id]
           @user = ClientUser.new(self, data[:user])
           @uncached_guilds = data[:guilds].map { |g| g[:id] }
-          if @uncached_guilds == []
+          if @uncached_guilds == [] or !@intents.guilds
             @ready = true
             dispatch(:ready)
-            @log.info("Guilds were cached")
+            @log.info("Successfully connected to Discord.")
           end
           @tasks << handle_heartbeat(@heartbeat_interval)
         when "GUILD_CREATE"
@@ -608,7 +608,7 @@ module Discorb
             if @uncached_guilds == []
               @ready = true
               dispatch(:ready)
-              @log.info("Guilds were cached")
+              @log.info("Successfully connected to Discord, and cached all guilds.")
             end
           elsif @guilds.has?(data[:id])
             @guilds[data[:id]].send(:_set_data, data)
