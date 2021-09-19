@@ -1,4 +1,4 @@
-![![discorb](./assets/banner.svg)](./docs/assets/banner.svg)
+![](./assets/banner.svg)![](./docs/assets/banner.svg)
 
 # discorb
 [![Document](https://img.shields.io/badge/Document-discord--lib.github.io-blue.svg)](https://discorb-lib.github.io/)
