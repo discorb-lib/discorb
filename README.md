@@ -1,7 +1,7 @@
 ![discorb](./assets/banner.svg)
 
 ----
-[![Document](https://img.shields.io/badge/Document-discord--lib.github.io-blue.svg)](https://discorb-lib.github.io/)
+[![Document](https://img.shields.io/badge/Document-discorb--lib.github.io-blue.svg)](https://discorb-lib.github.io/)
 [![Gem](https://img.shields.io/gem/dt/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)
 [![Gem](https://img.shields.io/gem/v/discorb?logo=rubygems&logoColor=fff)](https://rubygems.org/gems/discorb)
 [![Discord](https://img.shields.io/discord/863581274916913193?logo=discord&logoColor=fff&color=5865f2&label=Discord)](https://discord.gg/hCP6zq8Vpj)
