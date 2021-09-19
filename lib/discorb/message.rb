@@ -525,8 +525,8 @@ module Discorb
       elsif data[:guild_id].nil? || data[:guild_id].empty? || data[:member].nil?
         @author = @client.users[data[:author][:id]] || User.new(@client, data[:author])
       else
-        @author = guild.members[data[:author][:id]] || Member.new(@client,
-                                                                  @guild_id, data[:author], data[:member])
+        @author = guild&.members&.get(data[:author][:id]) || Member.new(@client,
+                                                                        @guild_id, data[:author], data[:member])
       end
       @content = data[:content]
       @created_at = Time.iso8601(data[:timestamp])
