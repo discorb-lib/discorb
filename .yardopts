@@ -4,6 +4,7 @@
 --tag flags:"Flags"
 --verbose
 --asset docs/assets:assets
+--asset assets:assets
 -
 docs/**/*.md
 Changelog.md
