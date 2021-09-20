@@ -150,3 +150,24 @@
 
 - Change: Rename `Event#discriminator` to `Event#metadata`
 - Add: Add `:override` to `Client#on`
+
+## 0.7.0
+
+- Add: Add `error` event
+- Fix: Fix some issues with client without guild intent
+- Add: Add alias for `#fired_by`
+- Change!: Change block usage of `ApplicationCommand::Handler#group`
+```ruby
+# before
+client.slash_group do
+  slash "help", "Help" do |interaction|
+    # ...
+  end
+end
+
+# after
+client.slash_group do |group|
+  group.slash "help", "Help" do |interaction|
+    # ...
+  end
+end
