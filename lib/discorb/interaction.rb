@@ -64,6 +64,7 @@ module Discorb
     end
 
     alias fired_by target
+    alias from target
 
     def inspect
       "#<#{self.class} id=#{@id}>"

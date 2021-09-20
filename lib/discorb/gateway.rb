@@ -57,6 +57,9 @@ module Discorb
       # @return [Discorb::Member, Discorb::User] The user or member who reacted.
       attr_reader :fired_by
 
+      alias reactor fired_by
+      alias from fired_by
+
       # @!visibility private
       def initialize(client, data)
         @client = client
@@ -399,6 +402,12 @@ module Discorb
       def guild
         @client.guilds[@guild_id]
       end
+
+      def fired_by
+        @member || user
+      end
+
+      alias from fired_by
     end
 
     #
