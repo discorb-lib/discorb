@@ -46,8 +46,8 @@ module Discorb
       # @param [String] description Command description.
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       #
-      # @yield Block to execute as the command. It can be used to define sub-commands.
-      # @yieldself [Discorb::ApplicationCommand::Command::GroupCommand] Group command.
+      # @yield Block to yield with the command.
+      # @yieldparam [Discorb::ApplicationCommand::Command::GroupCommand] group Group command.
       #
       # @return [Discorb::ApplicationCommand::Command::GroupCommand] Command object.
       #
@@ -56,7 +56,7 @@ module Discorb
       #
       def slash_group(command_name, description, guild_ids: nil, &block)
         command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
-        command.instance_eval(&block) if block_given?
+        command.yield_self(&block) if block_given?
         @commands << command
         command
       end
@@ -284,8 +284,8 @@ module Discorb
         # @param [String] command_name Group name.
         # @param [String] description Group description.
         #
-        # @yield Block to execute as the command. It can be used to define sub-commands.
-        # @yieldself [Discorb::ApplicationCommand::Command::SubcommandGroup] Group command.
+        # @yield Block to yield with the command.
+        # @yieldparam [Discorb::ApplicationCommand::Command::SubcommandGroup] group Group command.
         #
         # @return [Discorb::ApplicationCommand::Command::SubcommandGroup] Command object.
         #
@@ -293,7 +293,7 @@ module Discorb
         #
         def group(command_name, description, &block)
           command = Discorb::ApplicationCommand::Command::SubcommandGroup.new(command_name, description, @name, @client)
-          command.instance_eval(&block) if block_given?
+          command.yield_self(&block) if block_given?
           @commands << command
           command
         end
