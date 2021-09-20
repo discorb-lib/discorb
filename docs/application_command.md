@@ -136,8 +136,8 @@ Since v0.5.1, You can use block for register commands.
 
 ```ruby
 
-client.slash_group("settings", "Set settings of bot.") do
-  slash("message_expand", "Whether bot should expand message.", {
+client.slash_group("settings", "Set settings of bot.") do |group|
+  group.slash("message_expand", "Whether bot should expand message.", {
     "enabled" => {
       type: :boolean,
       description: "Whether bot should expand message."
@@ -145,7 +145,7 @@ client.slash_group("settings", "Set settings of bot.") do
   }) do |interaction|
     # ...
   end
-  slash("bump_alert", "Whether bot should notify DISBOARD bump.", {
+  group.slash("bump_alert", "Whether bot should notify DISBOARD bump.", {
     "enabled" => {
       type: :boolean,
       description: "Whether bot should notify DISBOARD bump."
@@ -164,14 +164,14 @@ group = client.slash_group("permission", "Set/Get command permissions.")
 group_user = group.group("user", "Set/Get user's command permissions.")
 
 group_user.slash("set", "Set user's command permissions.", {
-    "user_id" => {
-        type: :user,
-        description: "The user."
-    },
-    "value" => {
-        type: :boolean,
-        description: "Whether the user can use the command."
-    }
+  "user_id" => {
+      type: :user,
+      description: "The user."
+  },
+  "value" => {
+      type: :boolean,
+      description: "Whether the user can use the command."
+  }
 }) do |interaction, user|
   # ...
 end

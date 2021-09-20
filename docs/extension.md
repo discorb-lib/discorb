@@ -46,13 +46,13 @@ module MyExtension
     # ...
   end
 
-  slash_group("group", "Group") do
-    slash("subcommand", "Subcommand") do |interaction|
+  slash_group("group", "Group") do |group|
+    group.slash("subcommand", "Subcommand") do |interaction|
       # ...
     end
 
-    group("subgroup", "Subcommand group") do
-      slash("group_subcommand", "Command in Subcommand group") do |interaction|
+    group.group("subgroup", "Subcommand group") do |group|
+      group.slash("group_subcommand", "Command in Subcommand group") do |interaction|
         # ...
       end
     end
