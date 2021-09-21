@@ -192,6 +192,10 @@ end
 
 - Add: Improve `discorb init`
 
-## 0.7.4
+## 0.7.4(yanked)
 
 - Fix: Fix disconnected client
+  
+## 0.7.5
+
+- Fix: Fix critical error
