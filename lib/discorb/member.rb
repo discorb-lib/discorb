@@ -59,6 +59,8 @@ module Discorb
     # @!attribute [r] status
     #   @macro client_cache
     #   @return [Symbol] The status of the member. It's from the {#presence}.
+    # @!attribute [r] owner?
+    #   @return [Boolean] Whether the member is the owner of the guild.
 
     # @!visibility private
     def initialize(client, guild_id, user_data, member_data)
@@ -99,6 +101,10 @@ module Discorb
       guild.voice_states[@id]
     end
 
+    def owner?
+      guild.owner_id == @id
+    end
+
     def guild
       @client.guilds[@guild_id]
     end
@@ -109,7 +115,7 @@ module Discorb
 
     def permissions
       if owner?
-        Permission.new((1 << 37) - 1)
+        return Permission.new((1 << 38) - 1)
       end
       roles.map(&:permissions).sum(Permission.new(0))
     end
