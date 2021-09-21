@@ -488,7 +488,7 @@ module Discorb
           _, gateway_response = @http.get("/gateway").wait
           gateway_url = gateway_response[:url]
           endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json&compress=zlib-stream",
-                                                alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
+                                                 alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
           begin
             Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection) do |connection|
               @connection = connection
@@ -586,11 +586,13 @@ module Discorb
           interval = @heartbeat_interval
           sleep((interval / 1000.0 - 1) * rand)
           loop do
-            @heartbeat_before = Time.now.to_f
-            @connection.write({ op: 1, d: @last_s }.to_json)
-            @connection.flush
-            @log.debug "Sent opcode 1."
-            @log.debug "Waiting for heartbeat."
+            unless @connection.instance_variable_get(:@response).nil?
+              @heartbeat_before = Time.now.to_f
+              @connection.write({ op: 1, d: @last_s }.to_json)
+              @connection.flush
+              @log.debug "Sent opcode 1."
+              @log.debug "Waiting for heartbeat."
+            end
             sleep(interval / 1000.0 - 1)
           end
         end
@@ -842,12 +844,12 @@ module Discorb
           dispatch(:voice_state_update, old, current)
           if old&.channel != current&.channel
             dispatch(:voice_channel_update, old, current)
-            case [old&.channel, current&.channel]
-            in [nil, _]
+            case [old&.channel.nil?, current&.channel.nil?]
+            when [true, false]
               dispatch(:voice_channel_connect, current)
-            in [_, nil]
+            when [false, true]
               dispatch(:voice_channel_disconnect, old)
-            in _
+            when [false, false]
               dispatch(:voice_channel_move, old, current)
             end
           end
@@ -983,9 +985,9 @@ module Discorb
           dispatch(:reaction_add, ReactionEvent.new(self, data))
         when "MESSAGE_REACTION_REMOVE"
           if (target_message = @messages[data[:message_id]]) &&
-            (target_reaction = target_message.reactions.find do |r|
-              data[:emoji][:id].nil? ? r.emoji.name == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
-            end)
+             (target_reaction = target_message.reactions.find do |r|
+               data[:emoji][:id].nil? ? r.emoji.name == data[:emoji][:name] : r.emoji.id == data[:emoji][:id]
+             end)
             target_reaction.instance_variable_set(:@count, target_reaction.count - 1)
             target_message.reactions.delete(target_reaction) if target_reaction.count.zero?
           end
@@ -997,7 +999,7 @@ module Discorb
           dispatch(:reaction_remove_all, ReactionRemoveAllEvent.new(self, data))
         when "MESSAGE_REACTION_REMOVE_EMOJI"
           if (target_message = @messages[data[:message_id]]) &&
-            (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
+             (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
             target_message.reactions.delete(target_reaction)
           end
           dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(data))
@@ -1020,25 +1022,25 @@ module Discorb
         end
       end
     end
-    
+
     #
     # A class for connecting websocket with raw bytes data.
     # @private
     #
-    class RawConnection < Async::WebSocket::Connection		
-      def initialize(...)
+    class RawConnection < Async::WebSocket::Connection
+      def initialize(*)
         super
       end
-    
-			def parse(buffer)
-				# noop
+
+      def parse(buffer)
+        # noop
         buffer.to_s
-			end
-			
-			def dump(object)
-				# noop
+      end
+
+      def dump(object)
+        # noop
         object.to_s
-			end
+      end
     end
   end
 end
