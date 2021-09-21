@@ -581,8 +581,9 @@ module Discorb
         end
       end
 
-      def handle_heartbeat(interval)
+      def handle_heartbeat
         Async do |task|
+          interval = @heartbeat_interval
           sleep((interval / 1000.0 - 1) * rand)
           loop do
             @heartbeat_before = Time.now.to_f
@@ -611,7 +612,7 @@ module Discorb
             dispatch(:ready)
             @log.info("Successfully connected to Discord.")
           end
-          @tasks << handle_heartbeat(@heartbeat_interval)
+          @tasks << handle_heartbeat
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
             Guild.new(self, data, true)
