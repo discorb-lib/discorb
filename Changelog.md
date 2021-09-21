@@ -178,3 +178,12 @@ end
 ## 0.7.1
 
 - Fix: Fix error of responding to interaction
+  
+## 0.7.2
+
+- Add: Add `Member#owner?`
+- Fix: Fix `Member#permissions`
+- Add: Add `Member#guild_permissions` as alias of `Member#permissions`
+- Add: Add default role to `Member#roles`
+- Fix: Fix error in `Integration#_set_data`
+- Change: Reverse `Member#roles`
