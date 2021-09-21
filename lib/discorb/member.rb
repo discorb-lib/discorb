@@ -108,6 +108,9 @@ module Discorb
     end
 
     def permissions
+      if owner?
+        Permission.new((1 << 37) - 1)
+      end
       roles.map(&:permissions).sum(Permission.new(0))
     end
 
