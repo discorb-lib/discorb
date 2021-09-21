@@ -96,11 +96,46 @@ FILES = {
     gem "discorb", "~> #{Discorb::VERSION}"
     gem "dotenv", "~> 2.7"
   RUBY
+  ".env.sample" => <<~BASH,
+    %<token>s=
+  BASH
+  "README.md" => <<~MARKDOWN,
+    # %<name>s
+
+    Welcome to your bot: %<name>s!
+
+    TODO: Write your bot's description here.
+
+    ## Usage
+
+    TODO: Write your bot's usage here.
+
+    ## Features
+
+    TODO: Write your bot's features here.
+
+    ## How to host
+
+    1. Clone the repository.
+    2. Run `bundle install`.
+    3. Get your bot's token from the Discord developer portal.
+    4. Copy `.env.sample` to `.env` and fill in the token.
+    5. Run `bundle exec discorb run`.
+
+    TODO: Write your own customizations here.
+
+    ## License
+
+    TODO: Write your bot's license here.
+      See https://choosealicense.com/ for more information.
+      https://rubygems.org/gems/license-cli may be useful.
+
+  MARKDOWN
 }
 
 # @!visibility private
 def create_file(name)
-  File.write($path + "/#{name}", format(FILES[name], token: $values[:token]), mode: "wb")
+  File.write($path + "/#{name}", format(FILES[name], token: $values[:token], name: $values[:name]), mode: "wb")
 end
 
 # @!visibility private
@@ -132,6 +167,14 @@ def git_init
           " to change commit message of initial commit.\n"
 end
 
+# @!visibility private
+def make_descs
+  iputs "Making descriptions..."
+  create_file(".env.sample")
+  create_file("README.md")
+  sputs "Made descriptions.\n"
+end
+
 opt = OptionParser.new <<~BANNER
                          A tool to make a new project.
 
@@ -145,6 +188,8 @@ $values = {
   git: false,
   force: false,
   token: "TOKEN",
+  descs: false,
+  name: nil,
 }
 
 opt.on("--[no-]bundle", "Whether to use bundle. Default to true.") do |v|
@@ -155,8 +200,16 @@ opt.on("--[no-]git", "Whether to initialize git. Default to false.") do |v|
   $values[:git] = v
 end
 
+opt.on("--[no-]descs", "Whether to put some file for description. Default to false.") do |v|
+  $values[:descs] = v
+end
+
 opt.on("-t NAME", "--token NAME", "The name of token environment variable. Default to TOKEN.") do |v|
   $values[:token] = v
+end
+
+opt.on("-n NAME", "--name NAME", "The name of your project. Default to the directory name.") do |v|
+  $values[:name] = v
 end
 
 opt.on("-f", "--force", "Whether to force use directory. Default to false.") do |v|
@@ -187,10 +240,14 @@ if (dir = ARGV[0])
   Dir.chdir($path)
 end
 
+$values[:name] ||= Dir.pwd.split("/").last
+
 bundle_init if $values[:bundle]
 
 make_files
 
 git_init if $values[:git]
+
+make_descs if $values[:descs]
 
 sputs "\nSuccessfully made a new project at \e[32m#{$path}\e[92m."
