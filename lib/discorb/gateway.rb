@@ -1028,7 +1028,7 @@ module Discorb
     # @private
     #
     class RawConnection < Async::WebSocket::Connection
-      def initialize(*)
+      def initialize(*, **)
         super
       end
 
