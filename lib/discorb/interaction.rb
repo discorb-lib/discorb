@@ -100,6 +100,9 @@ module Discorb
       #
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       #
+      # @macro async
+      # @macro http
+      #
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def defer_source(ephemeral: false)
@@ -117,6 +120,9 @@ module Discorb
       #
       # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
       #
+      # @macro async
+      # @macro http
+      #
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.
       # @param [Discorb::Embed] embed The embed to send.
@@ -126,46 +132,48 @@ module Discorb
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
-        payload = {}
-        payload[:content] = content if content
-        payload[:tts] = tts
-        tmp_embed = if embed
-            [embed]
-          elsif embeds
-            embeds
-          end
-        payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
-        payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
-        if components
-          tmp_components = []
-          tmp_row = []
-          components.each do |c|
-            case c
-            when Array
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << c
-            when SelectMenu
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << [c]
-            else
-              tmp_row << c
+        Async do
+          payload = {}
+          payload[:content] = content if content
+          payload[:tts] = tts
+          tmp_embed = if embed
+              [embed]
+            elsif embeds
+              embeds
             end
+          payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
+          payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
+          if components
+            tmp_components = []
+            tmp_row = []
+            components.each do |c|
+              case c
+              when Array
+                tmp_components << tmp_row
+                tmp_row = []
+                tmp_components << c
+              when SelectMenu
+                tmp_components << tmp_row
+                tmp_row = []
+                tmp_components << [c]
+              else
+                tmp_row << c
+              end
+            end
+            tmp_components << tmp_row
+            payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
           end
-          tmp_components << tmp_row
-          payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
-        end
-        payload[:flags] = (ephemeral ? 1 << 6 : 0)
+          payload[:flags] = (ephemeral ? 1 << 6 : 0)
 
-        if @responded
-          @client.http.post("/webhooks/#{@application_id}/#{@token}", payload).wait
-        elsif @defered
-          @client.http.patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload).wait
-        else
-          @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 4, data: payload }).wait
+          if @responded
+            @client.http.post("/webhooks/#{@application_id}/#{@token}", payload).wait
+          elsif @defered
+            @client.http.patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload).wait
+          else
+            @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 4, data: payload }).wait
+          end
+          @responded = true
         end
-        @responded = true
       end
     end
 
@@ -192,6 +200,9 @@ module Discorb
       #
       # Response with `UPDATE_MESSAGE`(`7`).
       #
+      # @macro async
+      # @macro http
+      #
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.
       # @param [Discorb::Embed] embed The embed to send.
@@ -201,38 +212,40 @@ module Discorb
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       def edit(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
-        payload = {}
-        payload[:content] = content if content
-        payload[:tts] = tts
-        tmp_embed = if embed
-            [embed]
-          elsif embeds
-            embeds
-          end
-        payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
-        payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
-        if components
-          tmp_components = []
-          tmp_row = []
-          components.each do |c|
-            case c
-            when Array
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << c
-            when SelectMenu
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << [c]
-            else
-              tmp_row << c
+        Async do
+          payload = {}
+          payload[:content] = content if content
+          payload[:tts] = tts
+          tmp_embed = if embed
+              [embed]
+            elsif embeds
+              embeds
             end
+          payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
+          payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
+          if components
+            tmp_components = []
+            tmp_row = []
+            components.each do |c|
+              case c
+              when Array
+                tmp_components << tmp_row
+                tmp_row = []
+                tmp_components << c
+              when SelectMenu
+                tmp_components << tmp_row
+                tmp_row = []
+                tmp_components << [c]
+              else
+                tmp_row << c
+              end
+            end
+            tmp_components << tmp_row
+            payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
           end
-          tmp_components << tmp_row
-          payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
+          payload[:flags] = (ephemeral ? 1 << 6 : 0)
+          @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 6, data: payload }).wait
         end
-        payload[:flags] = (ephemeral ? 1 << 6 : 0)
-        @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 6, data: payload }).wait
       end
     end
 
