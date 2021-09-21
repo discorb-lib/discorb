@@ -80,7 +80,7 @@ module Discorb
       @enable_emoticons = data[:enable_emoticons]
       @expire_behavior = self.class.expire_behavior[data[:expire_behavior]]
       @expire_grace_period = data[:expire_grace_period]
-      @user = client.users[data[:user].to_i]
+      @user = @client.users[data[:user].to_i]
       @account = Account.new(data[:account])
       @subscriber_count = data[:subscriber_count]
       @revoked = data[:revoked]
