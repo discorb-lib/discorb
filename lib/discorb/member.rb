@@ -104,7 +104,7 @@ module Discorb
     end
 
     def roles
-      @role_ids.map { |r| guild.roles[r] }.sort_by(&:position)
+      @role_ids.map { |r| guild.roles[r] }.sort_by(&:position) + [guild.roles[guild.id]]
     end
 
     def permissions
