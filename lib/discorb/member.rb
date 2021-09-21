@@ -120,6 +120,8 @@ module Discorb
       roles.map(&:permissions).sum(Permission.new(0))
     end
 
+    alias guild_permissions permissions
+
     def hoisted_role
       @hoisted_role_id && guild.roles[@hoisted_role_id]
     end
