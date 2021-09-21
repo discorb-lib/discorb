@@ -187,3 +187,7 @@ end
 - Add: Add default role to `Member#roles`
 - Fix: Fix error in `Integration#_set_data`
 - Change: Reverse `Member#roles`
+
+## 0.7.3
+
+- Add: Improve `discorb init`
