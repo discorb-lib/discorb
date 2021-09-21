@@ -191,3 +191,7 @@ end
 ## 0.7.3
 
 - Add: Improve `discorb init`
+
+## 0.7.4
+
+- Fix: Fix disconnected client
