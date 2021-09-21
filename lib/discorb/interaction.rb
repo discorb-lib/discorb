@@ -158,7 +158,7 @@ module Discorb
         end
         payload[:flags] = (ephemeral ? 1 << 6 : 0)
         if @responded
-          @client.http.post("/webhooks/#{@id}/#{@token}", { type: 4, data: payload }).wait
+          @client.http.post("/webhooks/#{@id}/#{@token}", payload).wait
         elsif @defered
           @client.http.post("/interactions/#{@id}/#{@token}/@original/edit", { type: 4, data: payload }).wait
         else
