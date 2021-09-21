@@ -510,7 +510,9 @@ module Discorb
               raise ClientError.new("Authentication failed."), cause: nil
             when "Discord WebSocket requesting client reconnect."
               @log.info "Discord WebSocket requesting client reconnect"
-              @tasks.map(&:stop)
+              connect_gateway(false)
+            else
+              @log.error "Discord WebSocket closed: #{e.message}"
               connect_gateway(false)
             end
           rescue EOFError, Async::Wrapper::Cancelled
