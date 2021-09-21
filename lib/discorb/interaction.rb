@@ -157,10 +157,11 @@ module Discorb
           payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
         payload[:flags] = (ephemeral ? 1 << 6 : 0)
+
         if @responded
-          @client.http.post("/webhooks/#{@id}/#{@token}", payload).wait
+          @client.http.post("/webhooks/#{@application_id}/#{@token}", payload).wait
         elsif @defered
-          @client.http.post("/interactions/#{@id}/#{@token}/@original/edit", { type: 4, data: payload }).wait
+          @client.http.patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload).wait
         else
           @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 4, data: payload }).wait
         end
