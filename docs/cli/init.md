@@ -32,6 +32,18 @@ If true, the command will initialize git and commit the initial files with commi
 Use `git commit --amend -m "..."` to change the commit message.
 Default to false.
 
+### `--[no-]desc`
+
+Whether to create a description file.
+If true, the command will create a `.env.sample` and `README.md` file.
+Default to false.
+
+### `-n` `--name`
+
+The name of the project.
+It will be used in the `README.md` file.
+Default to the directory name.
+
 ### `-t`, `--token`
 
 The name of token environment variable.
@@ -49,7 +61,9 @@ The following files will be created:
 | File | Description |
 | ---- | ----------- |
 | `.env` | Environment variables. |
+| `main.rb` | Main script. |
 | `.gitignore` | Git ignore file. Won't be created if `--git` is false. |
 | `Gemfile` | Gemfile. Won't be created if `--bundle` is false. |
 | `Gemfile.lock` | Gemfile lock file. Won't be created if `--bundle` is false. |
-| `main.rb` | Main script. |
+| `README.md` | Readme file. Won't be created if `--desc` is false. |
+| `.env.sample` | Sample environment variables. Won't be created if `--desc` is false. |
