@@ -157,6 +157,7 @@
 - Fix: Fix some issues with client without guild intent
 - Add: Add alias for `#fired_by`
 - Change!: Change block usage of `ApplicationCommand::Handler#group`
+
 ```ruby
 # before
 client.slash_group do
@@ -171,3 +172,9 @@ client.slash_group do |group|
     # ...
   end
 end
+
+```
+
+## 0.7.1
+
+- Fix: Fix error of responding to interaction
