@@ -108,6 +108,10 @@ module Discorb
       "#<#{self.class} value=#{value}>"
     end
 
+    def to_h
+      @raw_value
+    end
+
     class << self
       # Create new intent object from raw value.
       # @param value [Integer] The value of the intent.
