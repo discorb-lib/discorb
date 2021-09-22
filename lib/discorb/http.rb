@@ -33,7 +33,6 @@ module Discorb
     def get(path, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
         @ratelimit_handler.wait("GET", path)
-        pp get_path(path)
         resp = http.get(get_path(path), get_headers(headers, "", audit_log_reason), **kwargs)
         data = get_response_data(resp)
         @ratelimit_handler.save("GET", path, resp)
