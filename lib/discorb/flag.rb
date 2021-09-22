@@ -8,6 +8,7 @@ module Discorb
   class Flag
     # @return [Hash{Symbol => Boolean}] the values of the flag.
     attr_reader :values
+    alias to_h values
     # @return [Integer] the value of the flag.
     attr_reader :value
 
