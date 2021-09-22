@@ -1,0 +1,51 @@
+name: Build YARD with main
+
+on:
+  workflow_dispatch:
+  push:
+    tags: 
+      - "v*"
+jobs:
+  main:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+          bundler-cache: true
+      - name: Set up git settings
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+      - name: Clone pages
+        env:
+          SSH_SECRET: ${{ secrets.SSH }}
+          GIT_SSH_COMMAND: ssh -i ~/ssh_secret
+        run: |
+          echo "$SSH_SECRET" > ~/ssh_secret
+          chmod 600 ~/ssh_secret
+          git clone git@github.com:discorb-lib/discorb-lib.github.io /tmp/pages
+      - name: Install dependencies
+        run: |
+          bundle config --local with 'docs'
+          bundle install
+      - name: Generate document
+        run: bundle exec rake document:build_all
+      - name: Push document
+        env:
+          SSH_SECRET: ${{ secrets.SSH }}
+          GIT_SSH_COMMAND: ssh -i ~/ssh_secret
+        run: |
+          echo "$SSH_SECRET" > ~/ssh_secret
+          chmod 600 ~/ssh_secret
+          cp -r ./doc/. /tmp/pages
+          cd /tmp/pages
+          git add -A
+          git commit -m "Update: Update document"
+          git update-ref -d refs/remotes/origin/user
+          git push origin main -f
+        continue-on-error: true
