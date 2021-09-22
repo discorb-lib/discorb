@@ -101,7 +101,7 @@ Dotenv.load  # Loads .env file
 
 client = Discorb::Client.new  # Create client for connecting to Discord
 
-client.once :ready do
+client.once :standby do
   puts "Logged in as #{client.user}"  # Prints username of logged in user
 end
 

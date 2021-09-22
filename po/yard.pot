@@ -203,7 +203,7 @@ msgid "client = Discorb::Client.new"
 msgstr ""
 
 #: ../README.md:35
-msgid "client.once :ready do\n"
+msgid "client.once :standby do\n"
 "  puts \"Logged in as #{client.user}\"\n"
 "end"
 msgstr ""

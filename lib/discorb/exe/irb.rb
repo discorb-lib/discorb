@@ -23,7 +23,7 @@ opt.parse!(ARGV)
 client = Discorb::Client.new(intents: Discorb::Intents.from_value(intents_value))
 $messages = []
 
-client.on :ready do
+client.on :standby do
   puts "\e[96mLogged in as #{client.user}\e[m"
 
   def message

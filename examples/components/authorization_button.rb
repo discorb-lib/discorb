@@ -8,7 +8,7 @@ def convert_role(guild, string)
   end
 end
 
-client.once :ready do
+client.once :standby do
   puts "Logged in as #{client.user}"
 end
 

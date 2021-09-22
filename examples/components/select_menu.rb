@@ -32,7 +32,7 @@ SECTIONS = [
 
 WIKIPEDIA_CREDIT = "(From: [Wikipedia](https://en.wikipedia.org/wiki/Ruby_(programming_language)))"
 
-client.once :ready do
+client.once :standby do
   puts "Logged in as #{client.user}"
 end
 
