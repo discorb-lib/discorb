@@ -203,3 +203,12 @@ end
 ## 0.7.6
 
 - Fix: Fix heartbeating error
+
+## 0.8.0
+
+- Add: Add `Guild#fetch_members`
+- Add: Add `Guild#fetch_member_list` as alias of `Guild#fetch_members`
+- Add: Add `Intents#to_h`
+- Add: Add `fetch_member` parameter to `Client#initialize`; Note you should set `false` if your bot doesn't have `GUILD_MEMBERS` intent
+- Change: Change `ready` to `standby` event
+- Change: `ready` will be fired when client receives `READY` event
