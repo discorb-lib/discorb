@@ -121,12 +121,12 @@ module Discorb
 
       # Create new intent object with default values.
       def default
-        from_value(32_509)
+        from_value(32509)
       end
 
       # Create new intent object with all intents.
       def all
-        from_value(32_767)
+        from_value(32767)
       end
 
       # Create new intent object with no intents.
