@@ -92,10 +92,12 @@ module Discorb
     def initialize(resp, client)
       @client = client
       @client.close!
-      DiscorbError.instance_method(:initialize).bind(self).call(<<~MESSAGE)
+      message = <<~MESSAGE
         The client is banned from CloudFlare.
         Hint: Try to decrease the number of requests per second, e.g. Use sleep in between requests.
       MESSAGE
+      $stderr.puts message
+      DiscorbError.instance_method(:initialize).bind(self).call(message)
     end
   end
 
