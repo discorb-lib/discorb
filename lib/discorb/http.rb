@@ -243,12 +243,12 @@ module Discorb
           API_BASE_URL + path
         end
       uri = URI(full_path)
-      uri.path + "?" + uri.query
+      full_path.sub(uri.scheme + "://" + uri.host, "")
     end
 
     def get_response_data(resp)
-      if resp["Via"].nil?
-        raise CloudFlareBanError.new(@client, resp)
+      if resp["Via"].nil? && resp.code == "429"
+        raise CloudFlareBanError.new(resp, @client)
       end
       rd = resp.body
       if rd.nil? || rd.empty?
