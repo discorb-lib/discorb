@@ -502,7 +502,6 @@ module Discorb
     # Fetch a member in the guild.
     # @macro async
     # @macro http
-    # @macro members_intent
     #
     # @param [#to_s] id The ID of the member to fetch.
     #
@@ -518,6 +517,39 @@ module Discorb
         Member.new(@client, @id, data[:user], data)
       end
     end
+
+    # Fetch members in the guild.
+    # @macro async
+    # @macro http
+    # @macro members_intent
+    #
+    # @param [Integer] limit The maximum number of members to fetch, 0 for all.
+    # @param [Integer] after The ID of the member to start fetching after.
+    #
+    # @return [Async::Task<Array<Discorb::Member>>] The list of members.
+    #
+    def fetch_members(limit: 0, after: nil)
+      Async do
+        unless limit == 0
+          _resp, data = @client.http.get("/guilds/#{@id}/members?#{URI.encode_www_form({ after: after, limit: limit })}").wait
+          next data[:members].map { |m| Member.new(@client, @id, m[:user], m) }
+        end
+        ret = []
+        after = 0
+        loop do
+          params = { after: after, limit: 100 }
+          _resp, data = @client.http.get("/guilds/#{@id}/members?#{URI.encode_www_form(params)}").wait
+          ret += data.map { |m| Member.new(@client, @id, m[:user], m) }
+          after = data.last[:user][:id]
+          if data.length != 1000
+            break
+          end
+        end
+        ret
+      end
+    end
+
+    alias fetch_member_list fetch_members
 
     #
     # Search for members by name in the guild.
