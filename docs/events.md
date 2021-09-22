@@ -22,7 +22,7 @@ Since v0.2.5, you can also register event handlers by adding a method to the cli
 client = Discorb::Client.new
 
 class << client
-  def on_ready
+  def on_standby
     puts "Ready!"
   end
 end
@@ -43,7 +43,7 @@ end
 ```
 
 This example will print `Override!`, but not `This event handler is overrideable!`.
-This is useful for registering event handlers for default behaviour on errors.
+This is useful for registering event handlers as default behaviour, such as error handlers.
 
 ```ruby
 # In the library...
@@ -55,7 +55,7 @@ end
 # In your code...
 
 client.on :command_error do |event, error|
-  event.message.reply "An error occurred while executing that command!\n#{error.full_message}"
+  event.message.reply "An error occurred while executing the command!\n#{error.full_message}"
 end
 ```
 
@@ -73,7 +73,11 @@ Fires when a event is received.
 
 #### `ready()`
 
-Fires when the client is ready.
+Fires when the client receives the `READY` event.
+
+#### `standby()`
+
+Fires when the client is standby. (When the client connects to Discord, and has cached guilds and members.)
 
 #### `resumed()`
 
