@@ -1,0 +1,38 @@
+name: Release from changelog
+
+on:
+  workflow_dispatch:
+  push:
+    tags: 
+      - "v*"
+jobs:
+  main:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+          bundler-cache: true
+      - name: Install dependencies
+        run: |
+          bundle install
+      - name: Get changelog
+        run: |
+          bundle exec ruby .github/workflows/changelog.rb
+        id: get-changelog
+      - name: Build gem
+        run: |
+          bundle exec rake build
+      - name: Release new version
+        uses: actions/release@v1
+        with:
+          asset_path: pkg/$(ls pkg)
+          asset_name: $(ls pkg)
+          body: ${{ steps.get-changelog.output.release_body }}
+          draft: false
