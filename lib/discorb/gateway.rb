@@ -1023,7 +1023,7 @@ module Discorb
 
       def ready
         Async do
-          if @fetch_member_on_ready
+          if @fetch_member
             @log.debug "Fetching members"
             barrier = Async::Barrier.new
             semaphore = Async::Semaphore.new(@guilds.length)
