@@ -8,5 +8,5 @@ end.to_h
 
 release_version = ENV["GITHUB_REF"].split("/")[-1]
 
-release_body = releases_hash[release_version]
+release_body = releases_hash[release_version] || "No release notes for this version"
 puts "::set-output name=release_body::#{release_body.gsub("\n", "\\n")}"
