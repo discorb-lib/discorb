@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 	 y="0px" width="1080px" height="150px" viewBox="0 0 1080 150" enable-background="new 0 0 1080 150" xml:space="preserve">
-<rect x="0" fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" width="1080" height="150"/>
+<rect x="0" fill="#FFFFFF" width="1080" height="150"/>
 <g>
 	<g>
 		<defs>
