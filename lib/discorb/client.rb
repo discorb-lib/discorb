@@ -64,11 +64,12 @@ module Discorb
     # @param [Boolean] colorize_log Whether to colorize the log.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
+    # @param [Boolean] fetch_member_on_ready Whether to fetch member on ready. This may slow down the client.
     #
     def initialize(
       allowed_mentions: nil, intents: nil, message_caches: 1000,
       log: nil, colorize_log: false, log_level: :info,
-      wait_until_ready: true
+      wait_until_ready: true, fetch_member_on_ready: true
     )
       @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
       @intents = (intents or Intents.default)
@@ -91,6 +92,7 @@ module Discorb
       @commands = []
       @bottom_commands = []
       @status = :initialized
+      @fetch_member_on_ready = fetch_member_on_ready
       set_default_events
     end
 
