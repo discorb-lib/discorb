@@ -29,10 +29,11 @@ jobs:
       - name: Build gem
         run: |
           bundle exec rake build
-      - name: Release new version
-        uses: actions/create-release@v1
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          asset_path: pkg/$(ls pkg)
-          asset_name: $(ls pkg)
-          body: ${{ steps.get-changelog.output.release_body }}
-          draft: false
+          files: |
+            $(ls -1 pkg/*.gem)
+          body: ${{ steps.get-changelog.outputs.release_body }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
