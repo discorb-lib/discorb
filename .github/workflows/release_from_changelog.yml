@@ -30,7 +30,7 @@ jobs:
         run: |
           bundle exec rake build
       - name: Release new version
-        uses: actions/release@v1
+        uses: actions/create-release@v1
         with:
           asset_path: pkg/$(ls pkg)
           asset_name: $(ls pkg)
