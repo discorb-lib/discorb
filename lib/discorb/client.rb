@@ -93,7 +93,7 @@ module Discorb
       @commands = []
       @bottom_commands = []
       @status = :initialized
-      @fetch_member_on_ready = fetch_member_on_ready.nil? ? !intents.members : fetch_member_on_ready
+      @fetch_member_on_ready = fetch_member_on_ready.nil? ? !(intents&.members) : fetch_member_on_ready
       set_default_events
     end
 
