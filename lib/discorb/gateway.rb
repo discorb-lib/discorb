@@ -586,7 +586,7 @@ module Discorb
           interval = @heartbeat_interval
           sleep((interval / 1000.0 - 1) * rand)
           loop do
-            unless @connection.instance_variable_get(:@response).nil?
+            unless @connection.closed?
               @heartbeat_before = Time.now.to_f
               @connection.write({ op: 1, d: @last_s }.to_json)
               @connection.flush
@@ -1030,6 +1030,16 @@ module Discorb
     class RawConnection < Async::WebSocket::Connection
       def initialize(*, **)
         super
+        @closed = false
+      end
+
+      def closed?
+        @closed
+      end
+
+      def close
+        super
+        @closed = true
       end
 
       def parse(buffer)
