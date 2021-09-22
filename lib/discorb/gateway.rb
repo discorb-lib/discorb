@@ -614,6 +614,7 @@ module Discorb
           if @uncached_guilds == [] or !@intents.guilds
             ready
           end
+          dispatch(:ready)
           @tasks << handle_heartbeat
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
@@ -1036,7 +1037,7 @@ module Discorb
             semaphore.__send__(:wait)
           end
           @ready = true
-          dispatch(:ready)
+          dispatch(:standby)
           @log.info("Client is ready!")
         end
       end
