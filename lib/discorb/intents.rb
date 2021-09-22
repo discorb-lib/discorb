@@ -82,7 +82,7 @@ module Discorb
       if @raw_value.key?(name)
         @raw_value[name]
       elsif name.end_with?("=") && @raw_value.key?(name[0..-2].to_sym)
-        raise ArgumentError, "true/false expected" if (!args.is_a? TrueClass) || args.is_a?(FalseClass)
+        raise ArgumentError, "true/false expected" unless args.is_a? TrueClass or args.is_a?(FalseClass)
 
         @raw_value[name[0..-2].to_sym] = args
       else
