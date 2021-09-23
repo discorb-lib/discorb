@@ -220,3 +220,7 @@ end
 - Add: Add `File.from_string`
 - Fix: Fix `Client#update_presence`
 - Add: Add information in `discorb run -d`
+
+## 0.8.2
+
+Fix: Fix `Client#initialize`
