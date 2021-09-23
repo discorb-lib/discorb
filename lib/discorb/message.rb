@@ -228,23 +228,23 @@ module Discorb
     def clean_content(user: true, channel: true, role: true, emoji: true, everyone: true, codeblock: false)
       ret = @content.dup
       ret.gsub!(/<@!?(\d+)>/) do |match|
-        member = @guild&.members&.find { |m| m.id == match[1] }
-        member ||= @client.users[match[1]]
+        member = guild&.members&.[]($1)
+        member ||= @client.users[$1]
         member ? "@#{member.name}" : "@Unknown User"
       end if user
       ret.gsub!(/<#(\d+)>/) do |match|
-        channel = @client.channels[match[1]]
+        channel = @client.channels[$1]
         channel ? "<##{channel.id}>" : "#Unknown Channel"
       end
       ret.gsub!(/<@&(\d+)>/) do |match|
-        role = @guild&.roles&.find { |r| r.id == match[1] }
+        role = guild&.roles&.[]($1)
         role ? "@#{role.name}" : "@Unknown Role"
       end if role
       ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) do |match|
-        match[1]
+        $1
       end if emoji
       ret.gsub!(/@(everyone|here)/, "@\u200b\\1") if everyone
-      if codeblock
+      unless codeblock
         codeblocks = ret.split("```", -1)
         original_codeblocks = @content.scan(/```(.+?)```/m)
         res = []
