@@ -5,6 +5,7 @@ require "logger"
 
 require "async"
 require "async/websocket/client"
+require_relative "./utils/colored_puts"
 
 module Discorb
   #
@@ -408,7 +409,8 @@ module Discorb
       when "run"
         require "json"
         options = JSON.parse(ENV["DISCORB_CLI_OPTIONS"], symbolize_names: true)
-        Process.daemon if options[:daemon]
+        @daemon = options[:daemon]
+
         setup_commands(token) if options[:setup]
         if options[:log_level]
           if options[:log_level] == "none"
@@ -485,6 +487,18 @@ module Discorb
       on :error, override: true do |event_name, _args, e|
         message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
         @log.error message, fallback: $stderr
+      end
+
+      once :standby do
+        if @daemon
+          title = "discorb: #{@user}"
+          Process.setproctitle title
+          sputs "Your discorb client is now in standby mode."
+          iputs "Process ID: #{Process.pid}"
+          iputs "Title: #{title}"
+
+          Process.daemon
+        end
       end
     end
   end
