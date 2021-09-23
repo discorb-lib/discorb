@@ -66,7 +66,7 @@ message.channel.post file: Discorb::File.from_string("Hello world!", "hello.txt"
 
 ## How can I pronounce `discorb`?
 
-Discorb is pronounced `disco-r-b`.
+Discorb is pronounced `disco-R-B`.
 
 ## Why did you make `discorb`?
 
