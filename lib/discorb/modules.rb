@@ -59,7 +59,8 @@ module Discorb
         end
         files = [file] if file
         if files
-          headers, payload = HTTP.multipart(payload, files)
+          seperator, payload = HTTP.multipart(payload, files)
+          headers = { "content-type" => "multipart/form-data; boundary=#{seperator}" }
         else
           headers = {}
         end

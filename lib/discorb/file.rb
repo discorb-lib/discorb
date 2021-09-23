@@ -62,7 +62,7 @@ module Discorb
     def initialize(io, filename = nil, content_type: nil)
       @io = io
       @filename = filename || (io.respond_to?(:path) ? io.path : io.object_id)
-      @content_type = content_type || MIME::Types.type_for(@filename)[0].to_s
+      @content_type = content_type || MIME::Types.type_for(@filename.to_s)[0].to_s
       @content_type = "application/octet-stream" if @content_type == ""
     end
   end

@@ -221,7 +221,7 @@ module Discorb
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}",
             "content-type" => "application/json" }
         end
-      ret.merge(headers) if !headers.nil? && headers.length.positive?
+      ret.merge!(headers) if !headers.nil? && headers.length.positive?
       ret["X-Audit-Log-Reason"] = audit_log_reason unless audit_log_reason.nil?
       ret
     end
