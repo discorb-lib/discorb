@@ -303,9 +303,15 @@ module Discorb
     #
     # @param [Discorb::Activity] activity The activity to update.
     # @param [:online, :idle, :dnd, :invisible] status The status to update.
+    # @param [String] afk Whether to set the client as AFK.
     #
-    def update_presence(activity = nil, status: nil)
-      payload = {}
+    def update_presence(activity = nil, status: nil, afk: false)
+      payload = {
+        activities: [],
+        status: status,
+        afk: nil,
+        since: nil,
+      }
       if !activity.nil?
         payload[:activities] = [activity.to_hash]
       end
