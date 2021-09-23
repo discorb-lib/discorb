@@ -499,9 +499,17 @@ module Discorb
               while (message = @connection.read)
                 @buffer << message
                 if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
-                  message = JSON.parse(@zlib_stream.inflate(@buffer), symbolize_names: true)
-                  @buffer = +""
-                  handle_gateway(message)
+                  begin
+                    data = @zlib_stream.inflate(@buffer)
+                    @buffer = +""
+                    message = JSON.parse(data, symbolize_names: true)
+                  rescue JSON::ParserError
+                    @buffer = +""
+                    @log.error "Received invalid JSON from gateway."
+                    @log.debug data
+                  else
+                    handle_gateway(message)
+                  end
                 end
               end
             end
@@ -526,7 +534,7 @@ module Discorb
       def send_gateway(opcode, **value)
         @connection.write({ op: opcode, d: value }.to_json)
         @connection.flush
-        @log.debug "Sent message with opcode #{opcode}: #{value.to_json.gsub(@token, "[Token]")}"
+        @log.debug "Sent message: #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
       end
 
       def handle_gateway(payload)
