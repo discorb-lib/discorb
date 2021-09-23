@@ -212,3 +212,11 @@ end
 - Add: Add `fetch_member` parameter to `Client#initialize`; Note you should set `false` if your bot doesn't have `GUILD_MEMBERS` intent
 - Change: Change `ready` to `standby` event
 - Change: `ready` will be fired when client receives `READY` event
+
+## 0.8.1
+
+- Add: Add FAQ
+- Fix: Fix sending files
+- Add: Add `File.from_string`
+- Fix: Fix `Client#update_presence`
+- Add: Add information in `discorb run -d`
