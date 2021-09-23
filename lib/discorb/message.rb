@@ -214,6 +214,55 @@ module Discorb
     end
 
     #
+    # Removes the mentions from the message.
+    #
+    # @param [Boolean] user Whether to clean user mentions.
+    # @param [Boolean] channel Whether to clean channel mentions.
+    # @param [Boolean] role Whether to clean role mentions.
+    # @param [Boolean] emoji Whether to clean emoji.
+    # @param [Boolean] everyone Whether to clean `@everyone` and `@here`.
+    # @param [Boolean] codeblock Whether to clean codeblocks.
+    #
+    # @return [String] The cleaned content of the message.
+    #
+    def clean_content(user: true, channel: true, role: true, emoji: true, everyone: true, codeblock: false)
+      ret = @content.dup
+      ret.gsub!(/<@!?(\d+)>/) do |match|
+        member = @guild&.members&.find { |m| m.id == match[1] }
+        member ||= @client.users[match[1]]
+        member ? "@#{member.name}" : "@Unknown User"
+      end if user
+      ret.gsub!(/<#(\d+)>/) do |match|
+        channel = @client.channels[match[1]]
+        channel ? "<##{channel.id}>" : "#Unknown Channel"
+      end
+      ret.gsub!(/<@&(\d+)>/) do |match|
+        role = @guild&.roles&.find { |r| r.id == match[1] }
+        role ? "@#{role.name}" : "@Unknown Role"
+      end if role
+      ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) do |match|
+        match[1]
+      end if emoji
+      ret.gsub!(/@(everyone|here)/, "@\u200b\\1") if everyone
+      if codeblock
+        codeblocks = ret.split("```", -1)
+        original_codeblocks = @content.scan(/```(.+?)```/m)
+        res = []
+        max = codeblocks.length
+        codeblocks.each_with_index do |codeblock, i|
+          if max % 2 == 0 && i == max - 1 or i.even?
+            res << codeblock
+          else
+            res << original_codeblocks[i / 2]
+          end
+        end
+        res.join("```")
+      else
+        ret
+      end
+    end
+
+    #
     # Edit the message.
     #
     # @param [String] content The message content.
