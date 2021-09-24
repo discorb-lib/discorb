@@ -16,14 +16,13 @@ opt = OptionParser.new <<~BANNER
                                    script                     The script to run. Defaults to 'main.rb'.
                        BANNER
 options = {
-  deamon: false,
+  title: nil,
   log_level: nil,
   log_file: nil,
   log_color: nil,
   setup: nil,
   token: false,
 }
-opt.on("-d", "--deamon", "Run as a daemon.") { |v| options[:daemon] = v }
 opt.on("-l", "--log-level LEVEL", "Log level.") do |v|
   unless LOG_LEVELS.include? v.downcase
     eputs "Invalid log level: \e[31m#{v}\e[91m"
@@ -35,7 +34,8 @@ end
 opt.on("-f", "--log-file FILE", "File to write log to.") { |v| options[:log_file] = v }
 opt.on("-c", "--[no-]log-color", "Whether to colorize log output.") { |v| options[:log_color] = v }
 opt.on("-s", "--setup", "Whether to setup application commands.") { |v| options[:setup] = v }
-opt.on("-t", "--token [ENV]", "The name of the environment variable to use for token, or just `-t` or `--token` for intractive prompt.") { |v| options[:token] = v }
+opt.on("-e", "--env [ENV]", "The name of the environment variable to use for token, or just `-e` or `--env` for intractive prompt.") { |v| options[:token] = v }
+opt.on("-t", "--title TITLE", "The title of process.") { |v| options[:title] = v }
 opt.parse!(ARGV)
 
 script = ARGV[0]
@@ -53,6 +53,8 @@ elsif options[:token].nil? || options[:token] == "-"
   ENV["DISCORB_CLI_TOKEN"] = $stdin.noecho(&:gets).chomp
   puts ""
 end
+
+ENV["DISCORB_CLI_TITLE"] = options[:title]
 
 begin
   load script
