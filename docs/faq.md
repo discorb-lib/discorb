@@ -35,7 +35,7 @@ Use {Discorb::Client#update_presence} method.
   client.on event do
     client.update_presence(
       Discorb::Activity.new(
-        name: "#{client.guilds.length} Servers"
+        "#{client.guilds.length} Servers"
       ),
       status: :online
     )
