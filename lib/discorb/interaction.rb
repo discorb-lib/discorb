@@ -169,7 +169,7 @@ module Discorb
 
           ret = if @responded
               _resp, data = @client.http.post("/webhooks/#{@application_id}/#{@token}", payload).wait
-              webhook = Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}", data)
+              webhook = Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}")
               Webhook::Message.new(data, webhook, @client)
             elsif @defered
               @client.http.patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload).wait
