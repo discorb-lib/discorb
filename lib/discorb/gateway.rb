@@ -3,7 +3,6 @@
 require "async/http"
 require "async/websocket"
 require "async/barrier"
-require "async/semaphore"
 require "json"
 require "zlib"
 
@@ -1035,10 +1034,9 @@ module Discorb
           if @fetch_member
             @log.debug "Fetching members"
             barrier = Async::Barrier.new
-            semaphore = Async::Semaphore.new(@guilds.length)
 
             @guilds.each do |guild|
-              semaphore.async(parent: barrier) do
+              barrier.async(parent: barrier) do
                 guild.fetch_members
               end
             end
