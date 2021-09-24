@@ -231,3 +231,7 @@ end
 - Change: Rename `-t`, `--token` to `-e`, `--env` parameter
 - Add: Add `-t`, `--title` parameter to `discorb run`
 - Add: Add `title` parameter to `Client#initialize`
+
+## 0.9.1
+
+- Fix: Fix member fetching
