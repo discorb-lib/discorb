@@ -235,3 +235,9 @@ end
 ## 0.9.1
 
 - Fix: Fix member fetching
+
+## 0.9.2
+
+- Add: Make `Async::Task#inspect` shorter
+- Add: `SourceResponse#post` will return message now
+- Fix: Fix member caching
