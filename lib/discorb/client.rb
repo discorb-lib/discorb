@@ -495,9 +495,9 @@ module Discorb
       end
 
       once :standby do
+        title = "discorb: #{@user}"
+        Process.setproctitle title
         if @daemon
-          title = "discorb: #{@user}"
-          Process.setproctitle title
           sputs "Your discorb client is now in standby mode."
           iputs "Process ID: #{Process.pid}"
           iputs "Title: #{title}"
