@@ -66,11 +66,13 @@ module Discorb
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
     # @param [Boolean] fetch_member Whether to fetch member on ready. This may slow down the client. Default to `false`.
+    # @param [String] title The title of the process. `false` to default, `nil` to `discorb: User#0000`. Default to `nil`.
     #
     def initialize(
       allowed_mentions: nil, intents: nil, message_caches: 1000,
       log: nil, colorize_log: false, log_level: :info,
-      wait_until_ready: true, fetch_member: false
+      wait_until_ready: true, fetch_member: false,
+      title: nil
     )
       @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
       @intents = (intents or Intents.default)
@@ -94,6 +96,7 @@ module Discorb
       @bottom_commands = []
       @status = :initialized
       @fetch_member = fetch_member
+      @title = title
       set_default_events
     end
 
@@ -495,15 +498,10 @@ module Discorb
       end
 
       once :standby do
-        title = "discorb: #{@user}"
-        Process.setproctitle title
-        if @daemon
-          sputs "Your discorb client is now in standby mode."
-          iputs "Process ID: #{Process.pid}"
-          iputs "Title: #{title}"
+        next if @title == false
 
-          Process.daemon(true, true)
-        end
+        title = @title || ENV["DISCORB_CLI_TITLE"] || "discorb: #{@user}"
+        Process.setproctitle title
       end
     end
   end
