@@ -502,7 +502,7 @@ module Discorb
           iputs "Process ID: #{Process.pid}"
           iputs "Title: #{title}"
 
-          Process.daemon(true, false)
+          Process.daemon(true, true)
         end
       end
     end
