@@ -1042,7 +1042,7 @@ module Discorb
                 guild.fetch_members
               end
             end
-            semaphore.__send__(:wait)
+            barrier.wait
           end
           @ready = true
           dispatch(:standby)
