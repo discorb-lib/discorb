@@ -223,4 +223,11 @@ end
 
 ## 0.8.2
 
-Fix: Fix `Client#initialize`
+- Fix: Fix `Client#initialize`
+
+## 0.9.0
+
+- Delete: Delete `-d` parameter from `discorb run`; This is caused by segement fault error.
+- Change: Rename `-t`, `--token` to `-e`, `--env` parameter
+- Add: Add `-t`, `--title` parameter to `discorb run`
+- Add: Add `title` parameter to `Client#initialize`
