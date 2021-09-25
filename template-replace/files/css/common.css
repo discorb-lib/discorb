@@ -532,3 +532,20 @@ dd pre.code {
 #main {
   max-width: 100vw;
 }
+
+#search input{
+  appearance: none;
+}
+
+.fixed_header{
+  padding-bottom: 0;
+  height: 80px;
+}
+
+#full_list_header{
+  font-size: 1.2em;
+}
+
+#search{
+  display: inline !important;
+}
