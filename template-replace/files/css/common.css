@@ -549,3 +549,7 @@ dd pre.code {
 #search{
   display: inline !important;
 }
+
+p.signature, h3.signature{
+  font-family: var(--font-monospace);
+}
