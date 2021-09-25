@@ -246,8 +246,8 @@ bundle_init if $values[:bundle]
 
 make_files
 
-git_init if $values[:git]
-
 make_descs if $values[:descs]
+
+git_init if $values[:git]
 
 sputs "\nSuccessfully made a new project at \e[32m#{$path}\e[92m."
