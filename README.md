@@ -1,4 +1,4 @@
-![discorb](./assets/banner.svg)
+<div align="center"><img src="./assets/banner.svg" alt="discorb"></div>
 
 <div align="center"><a href="https://discorb-lib.github.io/"><img src="https://img.shields.io/badge/Document-discorb--lib.github.io-blue.svg" alt="Document"></a>
 <a href="https://rubygems.org/gems/discorb"><img src="https://img.shields.io/gem/dt/discorb?logo=rubygems&logoColor=fff&label=Downloads" alt="Gem"></a>
