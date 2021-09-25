@@ -90,6 +90,7 @@ namespace :document do
       require_relative "template-replace/scripts/version.rb"
       require_relative "template-replace/scripts/index.rb"
       require_relative "template-replace/scripts/yard_replace.rb"
+      require_relative "template-replace/scripts/favicon.rb"
       iputs "Resetting changes"
       Dir.glob("doc/#{version}/**/*.html") do |f|
         next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
@@ -109,6 +110,8 @@ namespace :document do
       replace_index("doc/#{version}", version)
       iputs "Replacing YARD credits"
       yard_replace("doc/#{version}", version)
+      iputs "Adding favicon"
+      add_favicon("doc/#{version}")
       iputs "Successfully replaced htmls"
     end
 
