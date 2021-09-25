@@ -154,7 +154,6 @@ module Discorb
         payload[:content] = content if content != :unset
         payload[:embeds] = embed ? [embed.to_hash] : [] if embed != :unset
         payload[:embeds] = embeds.map(&:to_hash) if embeds != :unset
-        attachments = [attachment] if attachment != :unset
         payload[:attachments] = attachments.map(&:to_hash) if attachments != :unset
         payload[:allowed_mentions] = allowed_mentions if allowed_mentions != :unset
         files = [file] if file != :unset
