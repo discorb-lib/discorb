@@ -19,9 +19,9 @@ The script to run. Defaults to `main.rb`.
 
 ### Options
 
-#### `-d`, `--deamon`
+#### `-t`, `--title`
 
-Run the client in deamon mode.
+The title of the process.
 
 #### `-l`, `--log-level`
 
@@ -51,6 +51,6 @@ If not specified, the default will be:
 
 Whether to setup application commands.
 
-#### `-t`, `--token`
+#### `-e`, `--env`
 
 The name of the environment variable to use for token, or just `-t` or `--token` for intractive prompt.
