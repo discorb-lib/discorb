@@ -64,7 +64,8 @@ In `options`, hash should be like this:
 | Key | Description |
 | --- | --- |
 | `type` | The type of the argument. |
-| `required` | Whether the argument is required. |
+| `required` | Whether the argument is required. `optional` will be used if not specified. |
+| `optional` | Whether the argument is optional. `required` will be used if not specified. |
 | `description` | The description of the argument. |
 | `choices` | The choices of the argument. |
 

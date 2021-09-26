@@ -20,7 +20,8 @@ module Discorb
       #   | Key | Type | Description |
       #   | --- | --- | --- |
       #   | `:description` | `String` | Description of the option. |
-      #   | `:optional` | `Boolean` | Whether the option is optional or not. |
+      #   | `required` | Whether the argument is required. `optional` will be used if not specified. |
+      #   | `optional` | Whether the argument is optional. `required` will be used if not specified. |
       #   | `:type` | `Object` | Type of the option. |
       #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #
@@ -231,7 +232,7 @@ module Discorb
               end,
               name: name,
               description: value[:description],
-              required: !value[:optional],
+              required: value[:required].nil? ? !value[:optional] : value[:required],
             }
             if value[:choices]
               ret[:choices] = value[:choices].map { |t| { name: t[0], value: t[1] } }
