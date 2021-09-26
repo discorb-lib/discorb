@@ -60,6 +60,14 @@ module Discorb
     # @return [String] The content type of the file. If not set, it is guessed from the filename.
     attr_accessor :content_type
 
+    #
+    # Creates a new file from IO.
+    #
+    # @param [#read] io The IO of the file.
+    # @param [String] filename The filename of the file. If not set, path or object_id of the IO is used.
+    # @param [String] content_type The content type of the file. If not set, it is guessed from the filename.
+    #   If failed to guess, it is set to `application/octet-stream`.
+    #
     def initialize(io, filename = nil, content_type: nil)
       @io = io
       @filename = filename || (io.respond_to?(:path) ? io.path : io.object_id)
@@ -67,8 +75,18 @@ module Discorb
       @content_type = "application/octet-stream" if @content_type == ""
     end
 
+    #
+    # Creates a new file from a string.
+    #
+    # @param [String] string The string to create the file from.
+    # @param [String] filename The filename of the file. object_id of the string is used if not set.
+    # @param [String] content_type The content type of the file. If not set, it is guessed from the filename.
+    #
+    # @return [File] The new file.
+    #
     def self.from_string(string, filename: nil, content_type: nil)
       io = StringIO.new(string)
+      filename ||= string.object_id.to_s + ".txt"
       new(io, filename, content_type: content_type)
     end
   end
