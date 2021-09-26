@@ -38,7 +38,7 @@ module Discorb
       2 => :apng,
       3 => :lottie,
     }
-    # @!visibility private
+    # @private
     def initialize(client, data)
       @client = client
       _set_data(data)
@@ -116,7 +116,7 @@ module Discorb
       # @return [Discorb::Asset] The banner of the pack.
       attr_reader :banner
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @id = Snowflake.new(data[:id])
@@ -150,7 +150,7 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :sticker_type, :sticker_format
     end
   end

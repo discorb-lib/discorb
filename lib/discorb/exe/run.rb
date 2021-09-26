@@ -5,7 +5,7 @@ require "discorb/utils/colored_puts"
 require "io/console"
 
 ARGV.delete_at 0
-# @!visibility private
+# @private
 LOG_LEVELS = %w[none debug info warn error fatal]
 
 opt = OptionParser.new <<~BANNER

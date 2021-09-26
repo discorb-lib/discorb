@@ -43,7 +43,7 @@ module Discorb
     # @return [Net::HTTPResponse] the HTTP response.
     attr_reader :response
 
-    # @!visibility private
+    # @private
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
@@ -55,7 +55,7 @@ module Discorb
   # Represents a 400 error.
   #
   class BadRequestError < HTTPError
-    # @!visibility private
+    # @private
     def initialize(resp, data)
       @code = data[:code]
       @response = resp

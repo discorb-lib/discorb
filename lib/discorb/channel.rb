@@ -19,7 +19,7 @@ module Discorb
     @channel_type = nil
     @subclasses = []
 
-    # @!visibility private
+    # @private
     def initialize(client, data, no_cache: false)
       @client = client
       @data = {}
@@ -44,12 +44,12 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
-    # @!visibility private
+    # @private
     def self.descendants
       ObjectSpace.each_object(Class).select { |klass| klass < self }
     end
 
-    # @!visibility private
+    # @private
     def self.make_channel(client, data, no_cache: false)
       descendants.each do |klass|
         return klass.new(client, data, no_cache: no_cache) if !klass.channel_type.nil? && klass.channel_type == data[:type]
@@ -59,7 +59,7 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :channel_type
     end
 
@@ -67,7 +67,7 @@ module Discorb
       self.class.channel_type
     end
 
-    # @!visibility private
+    # @private
     def channel_id
       Async do
         @id
@@ -248,7 +248,7 @@ module Discorb
 
     @channel_type = 0
 
-    # @!visibility private
+    # @private
     def initialize(client, data, no_cache: false)
       super
       @threads = Dictionary.new
@@ -697,7 +697,7 @@ module Discorb
     attr_reader :bitrate
     # @return [Integer] The user limit of the voice channel.
     attr_reader :user_limit
-    # @!visibility private
+    # @private
     attr_reader :stage_instances
 
     include Connectable
@@ -706,7 +706,7 @@ module Discorb
     #   @return [Discorb::StageInstance] The stage instance of the channel.
 
     @channel_type = 13
-    # @!visibility private
+    # @private
     def initialize(...)
       @stage_instances = Dictionary.new
       super(...)
@@ -831,7 +831,7 @@ module Discorb
     include Messageable
     @channel_type = nil
 
-    # @!visibility private
+    # @private
     def initialize(client, data, no_cache: false)
       @members = Dictionary.new
       super
@@ -1092,7 +1092,7 @@ module Discorb
   class DMChannel < Channel
     include Messageable
 
-    # @!visibility private
+    # @private
     def channel_id
       Async do
         @id

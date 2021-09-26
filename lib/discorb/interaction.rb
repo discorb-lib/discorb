@@ -33,7 +33,7 @@ module Discorb
     @interaction_type = nil
     @interaction_name = nil
 
-    # @!visibility private
+    # @private
     def initialize(client, data)
       @client = client
       @id = Snowflake.new(data[:id])
@@ -71,10 +71,10 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :interaction_type, :interaction_name, :event_name
 
-      # @!visibility private
+      # @private
       def make_interaction(client, data)
         interaction = nil
         descendants.each do |klass|
@@ -87,7 +87,7 @@ module Discorb
         interaction
       end
 
-      # @!visibility private
+      # @private
       def descendants
         ObjectSpace.each_object(Class).select { |klass| klass < self }
       end
@@ -184,7 +184,7 @@ module Discorb
       end
 
       class CallbackMessage
-        # @!visibility private
+        # @private
         def initialize(client, data, application_id, token)
           @client = client
           @data = data
@@ -430,10 +430,10 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :command_type
 
-      # @!visibility private
+      # @private
       def make_interaction(client, data)
         nested_classes.each do |klass|
           return klass.new(client, data) if !klass.command_type.nil? && klass.command_type == data[:data][:type]
@@ -442,7 +442,7 @@ module Discorb
         CommandInteraction.new(client, data)
       end
 
-      # @!visibility private
+      # @private
       def nested_classes
         constants.select { |c| const_get(c).is_a? Class }.map { |c| const_get(c) }
       end
@@ -462,17 +462,17 @@ module Discorb
     @interaction_type = 3
     @interaction_name = :message_component
 
-    # @!visibility private
+    # @private
     def initialize(client, data)
       super
       @message = Message.new(@client, data[:message].merge({ member: data[:member] }))
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :component_type
 
-      # @!visibility private
+      # @private
       def make_interaction(client, data)
         nested_classes.each do |klass|
           return klass.new(client, data) if !klass.component_type.nil? && klass.component_type == data[:data][:component_type]
@@ -481,7 +481,7 @@ module Discorb
         MessageComponentInteraction.new(client, data)
       end
 
-      # @!visibility private
+      # @private
       def nested_classes
         constants.select { |c| const_get(c).is_a? Class }.map { |c| const_get(c) }
       end

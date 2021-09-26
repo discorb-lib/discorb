@@ -115,7 +115,7 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :styles
     end
 
@@ -236,7 +236,7 @@ module Discorb
         }
       end
 
-      # @!visibility private
+      # @private
       def hash_emoji(emoji)
         case emoji
         when UnicodeEmoji

@@ -157,7 +157,7 @@ module Discorb
         3 => :message,
       }.freeze
 
-      # @!visibility private
+      # @private
       def initialize(name, guild_ids, block, type)
         @name = name
         @guild_ids = guild_ids&.map(&:to_s)
@@ -168,7 +168,7 @@ module Discorb
         @id_map = Discorb::Dictionary.new
       end
 
-      # @!visibility private
+      # @private
       def to_hash
         {
           name: @name,
@@ -186,7 +186,7 @@ module Discorb
         # @return [Hash{String => Hash}] The options of the command.
         attr_reader :options
 
-        # @!visibility private
+        # @private
         def initialize(name, description, options, guild_ids, block, type, parent)
           super(name, guild_ids, block, type)
           @description = description
@@ -205,7 +205,7 @@ module Discorb
           (@parent + " " + @name).strip
         end
 
-        # @!visibility private
+        # @private
         def to_hash
           options_payload = options.map do |name, value|
             ret = {
@@ -256,7 +256,7 @@ module Discorb
         # @return [String] The description of the command.
         attr_reader :description
 
-        # @!visibility private
+        # @private
         def initialize(name, description, guild_ids, type, client)
           super(name, guild_ids, block, type)
           @description = description
@@ -307,7 +307,7 @@ module Discorb
           @name
         end
 
-        # @!visibility private
+        # @private
         def to_hash
           options_payload = @commands.map do |command|
             if command.is_a?(SlashCommand)
@@ -345,7 +345,7 @@ module Discorb
         # @return [Array<Discorb::ApplicationCommand::Command::SlashCommand>] The subcommands of the command.
         attr_reader :commands
 
-        # @!visibility private
+        # @private
         def initialize(name, description, parent, client)
           super(name, description, [], 1, client)
 
@@ -371,7 +371,7 @@ module Discorb
       end
 
       class << self
-        # @!visibility private
+        # @private
         attr_reader :types
       end
     end

@@ -29,7 +29,7 @@ module Discorb
       @replied_user = replied_user
     end
 
-    # @!visibility private
+    # @private
     def to_hash(other = nil)
       payload = {
         parse: %w[everyone roles users],
@@ -208,7 +208,7 @@ module Discorb
       !@guild_id.nil?
     end
 
-    # @!visibility private
+    # @private
     def initialize(client, data, no_cache: false)
       @client = client
       @data = {}
@@ -640,7 +640,7 @@ module Discorb
       # @return [Discorb::User] The user.
       attr_reader :user
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @id = Snowflake.new(data[:id])
         @name = data[:name]
@@ -665,20 +665,20 @@ module Discorb
         5 => :join_request,
       }
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @name = data[:name]
         @type = self.class.type(data[:type])
       end
 
       class << self
-        # @!visibility private
+        # @private
         attr_reader :type
       end
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :message_type
     end
   end

@@ -16,7 +16,7 @@ module Discorb
     alias me? me
     alias reacted? me
 
-    # @!visibility private
+    # @private
     def initialize(message, data)
       @message = message
       _set_data(data)

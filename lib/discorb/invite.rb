@@ -72,7 +72,7 @@ module Discorb
       2 => :guild,
     }.freeze
 
-    # @!visibility private
+    # @private
     def initialize(client, data, gateway)
       @client = client
       @data = data[:data]
@@ -138,7 +138,7 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :target_types
     end
   end

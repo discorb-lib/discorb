@@ -14,7 +14,7 @@ module Discorb
     # @return [Array<Discorb::AuditLog::Entry>] The entries in this audit log.
     attr_reader :entries
 
-    # @!visibility private
+    # @private
     def initialize(client, data, guild)
       @client = client
       @guild = guild
@@ -105,7 +105,7 @@ module Discorb
       # @!attribute [r] user
       #   @return [Discorb::User] The user who performed the action.
 
-      # @!visibility private
+      # @private
       @events = {
         1 => :guild_update,
         10 => :channel_create,
@@ -153,7 +153,7 @@ module Discorb
         112 => :thread_delete
       }.freeze
 
-      # @!visibility private
+      # @private
       @converts = {
         channel: ->(client, id, _guild_id) { client.channels[id] },
         thread: ->(client, id, _guild_id) { client.channels[id] },
@@ -163,7 +163,7 @@ module Discorb
         message: ->(client, id, _guild_id) { client.messages[id] }
       }
 
-      # @!visibility private
+      # @private
       def initialize(client, data, guild_id)
         @client = client
         @guild_id = Snowflake.new(guild_id)
@@ -217,7 +217,7 @@ module Discorb
         attr_reader :data
 
         #
-        # @!visibility private
+        # @private
         #
         def initialize(data)
           @data = data.map { |d| [d[:key].to_sym, d] }.to_h
@@ -264,7 +264,7 @@ module Discorb
         # @return [Object] The new value of the change.
         attr_reader :new_value
 
-        # @!visibility private
+        # @private
         def initialize(data)
           @key = data[:key].to_sym
           method = case @key.to_s
@@ -309,7 +309,7 @@ module Discorb
       # @return [Discorb::Integration::Account] The account of the integration.
       attr_reader :account
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @id = Snowflake.new(data[:id])
         @type = data[:type].to_sym

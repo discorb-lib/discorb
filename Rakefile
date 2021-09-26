@@ -4,7 +4,7 @@ require "bundler/gem_tasks"
 require_relative "lib/discorb/utils/colored_puts"
 task default: %i[]
 
-# @!visibility private
+# @private
 def get_version
   require_relative "lib/discorb/common"
   tag = `git tag --points-at HEAD`.force_encoding("utf-8").strip

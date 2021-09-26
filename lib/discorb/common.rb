@@ -25,7 +25,7 @@ module Discorb
       end
     end
 
-    # @!visibility private
+    # @private
     def inspect
       super
     end
@@ -40,7 +40,7 @@ module Discorb
   #
   # @see https://discord.com/developers/docs/reference#snowflakes Official Discord API docs
   class Snowflake < DiscordModel
-    # @!visibility private
+    # @private
     def initialize(value)
       @value = value.to_i
     end

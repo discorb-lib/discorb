@@ -11,7 +11,7 @@ module Discorb
     # @!attribute [r] animated?
     #   @return [Boolean] Whether the asset is animated.
 
-    # @!visibility private
+    # @private
     def initialize(target, hash, path: nil)
       @hash = hash
       @target = target
@@ -63,7 +63,7 @@ module Discorb
     # @!attribute [r] animated?
     #   @return [false] For compatibility with {Asset}, always `false`.
 
-    # @!visibility private
+    # @private
     def initialize(discriminator)
       @discriminator = discriminator.to_s.rjust(4, "0")
     end

@@ -36,7 +36,7 @@ module Discorb
 
     include Comparable
 
-    # @!visibility private
+    # @private
     def initialize(client, guild, data)
       @client = client
       @guild = guild
@@ -154,7 +154,7 @@ module Discorb
       # @!attribute [r] integration?
       #   @return [Boolean] Whether the role is an integration role.
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @bot_id = Snowflake.new(data[:bot_id])
         @integration_id = Snowflake.new(data[:integration_id])

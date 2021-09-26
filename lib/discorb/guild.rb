@@ -118,14 +118,14 @@ module Discorb
     @default_message_notifications = %i[all_messages only_mentions].freeze
     @explicit_content_filter = %i[disabled_in_text members_without_roles all_members].freeze
 
-    # @!visibility private
+    # @private
     def initialize(client, data, is_create_event)
       @client = client
       @data = {}
       _set_data(data, is_create_event)
     end
 
-    # @!visibility private
+    # @private
     def update!
       Async do
         _, data = @client.get("/guilds/#{@id}").wait
@@ -952,7 +952,7 @@ module Discorb
       # @!attribute [r] url
       #   @return [String] The vanity URL.
 
-      # @!visibility private
+      # @private
       def initialize(client, guild, data)
         @client = client
         @guild = guild
@@ -987,7 +987,7 @@ module Discorb
       # @!attribute [r] json_url
       #   @return [String] The JSON URL.
 
-      # @!visibility private
+      # @private
       def initialize(client, guild_id, data)
         @client = client
         @enabled = data[:enabled]
@@ -1050,7 +1050,7 @@ module Discorb
       # @return [String] The reason for the ban.
       attr_reader :reason
 
-      # @!visibility private
+      # @private
       def initialize(client, guild, data)
         @client = client
         @guild = guild
@@ -1060,7 +1060,7 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :nsfw_levels, :mfa_levels, :verification_levels, :default_message_notifications, :explicit_content_filter
 
       #
@@ -1175,7 +1175,7 @@ module Discorb
     # @return [Discorb::Guild] The guild the welcome screen belongs to.
     attr_reader :guild
 
-    # @!visibility private
+    # @private
     def initialize(client, guild, data)
       @client = client
       @description = data[:description]

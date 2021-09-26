@@ -54,7 +54,7 @@ module Discorb
     # @private
     attr_reader :bottom_commands
 
-    # @!visibility private
+    # @private
     attr_accessor :client
 
     def self.extended(obj)

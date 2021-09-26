@@ -28,7 +28,7 @@ module Discorb
     attr_reader :bot_require_code_grant
     alias bot_require_code_grant? bot_require_code_grant
 
-    # @!visibility private
+    # @private
     def initialize(client, data)
       @client = client
       @data = data
@@ -67,7 +67,7 @@ module Discorb
       # @return [Discorb::Application::Team::Member] The team's member.
       attr_reader :members
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @id = Snowflake.new(data[:id])
@@ -148,7 +148,7 @@ module Discorb
         end
 
         class << self
-          # @!visibility private
+          # @private
           attr_reader :membership_state
         end
       end

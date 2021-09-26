@@ -43,7 +43,7 @@ module Discorb
       1 => :kick,
     }
 
-    # @!visibility private
+    # @private
     def initialize(client, data, guild_id, no_cache: false)
       @client = client
       @data = data
@@ -88,7 +88,7 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :expire_behavior
     end
 
@@ -101,7 +101,7 @@ module Discorb
       # @return [String] The name of the account.
       attr_reader :name
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @id = data[:id]
         @name = data[:name]

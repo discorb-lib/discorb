@@ -16,7 +16,7 @@ module Discorb
     # Represents an event.
     #
     class GatewayEvent
-      # @!visibility private
+      # @private
       def initialize(data)
         @data = data
       end
@@ -61,7 +61,7 @@ module Discorb
       alias reactor fired_by
       alias from fired_by
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @data = data
@@ -129,7 +129,7 @@ module Discorb
       # @return [Discorb::Message] The message the reaction was sent in.
       attr_reader :message
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @data = data
@@ -180,7 +180,7 @@ module Discorb
       # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
       attr_reader :emoji
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @data = data
@@ -296,7 +296,7 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild the message was sent in.
 
-      # @!visibility private
+      # @private
       def initialize(client, id, data)
         @client = client
         @id = id
@@ -328,7 +328,7 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild the message was sent in.
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @data = data
@@ -381,7 +381,7 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Member, Discorb::User] The member or user that started typing.
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @data = data
@@ -458,7 +458,7 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild where the webhook was updated.
 
-      # @!visibility private
+      # @private
       def initialize(client, data)
         @client = client
         @data = data

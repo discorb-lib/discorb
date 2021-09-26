@@ -26,7 +26,7 @@ module Discorb
 
     include Discorb::Messageable
 
-    # @!visibility private
+    # @private
     def initialize(client, data)
       @client = client
       @data = {}
@@ -73,7 +73,7 @@ module Discorb
 
     alias app_owner? bot_owner?
 
-    # @!visibility private
+    # @private
     def channel_id
       Async do
         next @dm_channel_id if @dm_channel_id

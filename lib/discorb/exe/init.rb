@@ -6,7 +6,7 @@ require_relative "../utils/colored_puts"
 
 $path = Dir.pwd
 
-# @!visibility private
+# @private
 FILES = {
   "main.rb" => <<~'RUBY',
     require "discorb"
@@ -133,12 +133,12 @@ FILES = {
   MARKDOWN
 }
 
-# @!visibility private
+# @private
 def create_file(name)
   File.write($path + "/#{name}", format(FILES[name], token: $values[:token], name: $values[:name]), mode: "wb")
 end
 
-# @!visibility private
+# @private
 def make_files
   iputs "Making files..."
   create_file("main.rb")
@@ -146,7 +146,7 @@ def make_files
   sputs "Made files.\n"
 end
 
-# @!visibility private
+# @private
 def bundle_init
   iputs "Initializing bundle..."
   create_file("Gemfile")
@@ -155,7 +155,7 @@ def bundle_init
   sputs "Installed gems.\n"
 end
 
-# @!visibility private
+# @private
 def git_init
   create_file(".gitignore")
   iputs "Initializing git repository..."
@@ -167,7 +167,7 @@ def git_init
           " to change commit message of initial commit.\n"
 end
 
-# @!visibility private
+# @private
 def make_descs
   iputs "Making descriptions..."
   create_file(".env.sample")

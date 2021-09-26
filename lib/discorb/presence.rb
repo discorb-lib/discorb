@@ -19,7 +19,7 @@ module Discorb
     # @!attribute [r] activity
     #   @return [Discorb::Presence::Activity] The activity of the presence.
 
-    # @!visibility private
+    # @private
     def initialize(client, data)
       @client = client
       @data = data
@@ -89,7 +89,7 @@ module Discorb
         5 => :competing,
       }
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @name = data[:name]
         @type = self.class.activity_types[data[:type]]
@@ -140,7 +140,7 @@ module Discorb
         # @return [Time] The end time of the activity.
         attr_reader :end
 
-        # @!visibility private
+        # @private
         def initialize(data)
           @start = data[:start] && Time.at(data[:start])
           @end = data[:end] && Time.at(data[:end])
@@ -156,7 +156,7 @@ module Discorb
         # @!attribute [r] max_size
         #   @return [Integer] The max size of the party.
 
-        # @!visibility private
+        # @private
         def initialize(data)
           @id = data[:id]
           @size = data[:size]
@@ -226,7 +226,7 @@ module Discorb
         # @return [String] The match secret of the activity.
         attr_reader :match
 
-        # @!visibility private
+        # @private
         def initialize(data)
           @join = data[:join]
           @spectate = data[:spectate]
@@ -244,7 +244,7 @@ module Discorb
         attr_reader :url
         alias text label
 
-        # @!visibility private
+        # @private
         def initialize(data)
           @label = data[0]
           @url = data[1]
@@ -252,7 +252,7 @@ module Discorb
       end
 
       class << self
-        # @!visibility private
+        # @private
         attr_reader :activity_types
       end
     end
@@ -275,7 +275,7 @@ module Discorb
       # @!attribute [r] web?
       #   @return [Boolean] Whether the user is not offline on web.
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @desktop = data[:desktop]&.to_sym || :offline
         @mobile = data[:mobile]&.to_sym || :offline

@@ -138,7 +138,7 @@ module Discorb
     }.freeze
     @bits = @raw_bits.transform_values { |v| 1 << v }.freeze
 
-    # @!visibility private
+    # @private
     def initialize(allow, deny)
       @allow = allow
       @deny = deny
@@ -248,7 +248,7 @@ module Discorb
     end
 
     class << self
-      # @!visibility private
+      # @private
       attr_reader :bits
 
       #

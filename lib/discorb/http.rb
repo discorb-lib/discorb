@@ -10,7 +10,7 @@ module Discorb
   class HTTP
     @nil_body = nil
 
-    # @!visibility private
+    # @private
     def initialize(client)
       @client = client
       @ratelimit_handler = RatelimitHandler.new(client)

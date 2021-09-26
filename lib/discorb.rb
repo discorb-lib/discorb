@@ -4,7 +4,7 @@
 #
 # @author sevenc-nanashi
 module Discorb
-  # @!visibility private
+  # @private
   # @!macro [new] async
   #   @note This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
   #

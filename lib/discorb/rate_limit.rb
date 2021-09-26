@@ -6,7 +6,7 @@ module Discorb
   # @private
   #
   class RatelimitHandler
-    # @!visibility private
+    # @private
     def initialize(client)
       @client = client
       @ratelimit_hash = {}

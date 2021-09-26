@@ -40,7 +40,7 @@ module Discorb
     # @!attribute [r] roles?
     #   @return [Boolean] whether or not this emoji is restricted to certain roles.
 
-    # @!visibility private
+    # @private
     def initialize(client, guild, data)
       @client = client
       @guild = guild
@@ -147,7 +147,7 @@ module Discorb
     attr_reader :deleted
     alias deleted? deleted
 
-    # @!visibility private
+    # @private
     def initialize(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
@@ -189,7 +189,7 @@ module Discorb
     # @return [Integer] The skin tone of the emoji.
     attr_reader :skin_tone
 
-    # @!visibility private
+    # @private
     def initialize(name, tone: 0)
       if EmojiTable::DISCORD_TO_UNICODE.key?(name)
         @name = name

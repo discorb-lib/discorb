@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Discorb
-  # @!visibility private
+  # @private
   module Utils
     def try(object, message, ...)
       if object.respond_to?(message)

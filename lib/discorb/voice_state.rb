@@ -43,7 +43,7 @@ module Discorb
     #   @macro client_cache
     #   @return [Discorb::User] The user this voice state is for.
 
-    # @!visibility private
+    # @private
     def initialize(client, data)
       @client = client
       _set_data(data)
@@ -132,7 +132,7 @@ module Discorb
       2 => :guild_only,
     }
 
-    # @!visibility private
+    # @private
     def initialize(client, data, no_cache: false)
       @client = client
       @data = data
@@ -238,7 +238,7 @@ module Discorb
     attr_reader :custom
     alias custom? custom
 
-    # @!visibility private
+    # @private
     def initialize(data)
       @id = data[:id]
       @name = data[:name]

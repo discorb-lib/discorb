@@ -32,7 +32,7 @@ module Discorb
     # @!attribute [r] image?
     #   @return [Boolean] whether the file is an image.
 
-    # @!visibility private
+    # @private
     def initialize(data)
       @id = Snowflake.new(data[:id])
       @filename = data[:filename]

@@ -317,7 +317,7 @@ module Discorb
       # @return [Integer] The width of video.
       attr_reader :width
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @url = data[:url]
         @proxy_url = data[:proxy_url]
@@ -335,7 +335,7 @@ module Discorb
       # @return [String] The url of provider.
       attr_reader :url
 
-      # @!visibility private
+      # @private
       def initialize(data)
         @name = data[:name]
         @url = data[:url]

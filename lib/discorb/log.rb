@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Discorb
-  # @!visibility private
+  # @private
   class Logger
     attr_accessor :out, :colorize_log
 

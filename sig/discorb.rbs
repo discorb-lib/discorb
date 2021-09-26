@@ -13,7 +13,7 @@ module Discorb
 
   def macro: () -> void
 
-  # @!visibility private
+  # @private
   class Logger
     def initialize: (untyped _out, untyped colorize_log, untyped level) -> void
 
@@ -2132,7 +2132,7 @@ module Discorb
     def to_s: () -> String
   end
 
-  # @!visibility private
+  # @private
   module Utils
     def try: (untyped object, untyped message) -> untyped
 
