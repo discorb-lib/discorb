@@ -192,18 +192,20 @@ module Discorb
     #   end
     #
     def typing
-      Async do |task|
-        if block_given?
-          begin
-            post_task = task.async do
+      if block_given?
+        begin
+          post_task = Async do
+            loop do
               @client.http.post("/channels/#{@id}/typing", {})
               sleep(5)
             end
-            yield
-          ensure
-            post_task.stop
           end
-        else
+          yield
+        ensure
+          post_task.stop
+        end
+      else
+        Async do |task|
           @client.http.post("/channels/#{@id}/typing", {})
         end
       end
