@@ -183,6 +183,30 @@ module Discorb
     # @!attribute [r] embed
     #   @return [Discorb::Embed] The embed of the message.
     #   @return [nil] If the message has no embed.
+    # @!attribute [r] embed?
+    #   @return [Boolean] Whether the message has an embed.
+    # @!attribute [r] reply?
+    #   @return [Boolean] Whether the message is a reply.
+    # @!attribute [r] dm?
+    #   @return [Boolean] Whether the message was sent in a DM.
+    # @!attribute [r] guild?
+    #   @return [Boolean] Whether the message was sent in a guild.
+
+    def embed?
+      @embeds.any?
+    end
+
+    def reply?
+      !@message_reference.nil?
+    end
+
+    def dm?
+      @guild_id.nil?
+    end
+
+    def guild?
+      !@guild_id.nil?
+    end
 
     # @!visibility private
     def initialize(client, data, no_cache: false)
