@@ -245,3 +245,10 @@ end
 ## 0.9.3
 
 - Fix: Fix interaction responding
+
+## 0.9.4
+
+- Change: `Messageable#typing` with block is now synchronous
+- Fix: Fix some issues in document
+- Add: Add some attributes to `Message`
+- Fix: Fix guild parameter in message of message command
