@@ -60,14 +60,14 @@ In `options`, hash should be like this:
   }
 }
 ```
-
-| Key | Description |
-| --- | --- |
-| `type` | The type of the argument. |
-| `required` | Whether the argument is required. `optional` will be used if not specified. |
-| `optional` | Whether the argument is optional. `required` will be used if not specified. |
-| `description` | The description of the argument. |
-| `choices` | The choices of the argument. |
+| Key | Type | Description |
+| --- | --- | --- |
+| `:description` | `String` | Description of the option. |
+| `:required` | Whether the argument is required. `optional` will be used if not specified. |
+| `:optional` | Whether the argument is optional. `required` will be used if not specified. |
+| `:type` | `Object` | Type of the option. |
+| `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
+| `:default` | `Object` | Default value of the option. |
 
 `choices` should be unspecified if you don't want to use it.
 `choices` is hash like this:

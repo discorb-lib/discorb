@@ -363,28 +363,31 @@ module Discorb
               options = data[:options]
             end
           end
-          options ||= []
-          options.map! do |option|
-            case option[:type]
-            when 3, 4, 5, 10
-              option[:value]
-            when 6
-              guild.members[option[:value]] || guild.fetch_member(option[:value]).wait
-            when 7
-              guild.channels[option[:value]] || guild.fetch_channels.wait.find { |channel| channel.id == option[:value] }
-            when 8
-              guild.roles[option[:value]] || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
-            when 9
-              guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
-            end
-          end
 
           unless (command = @client.bottom_commands.find { |c| c.to_s == name && c.type_raw == 1 })
             @client.log.warn "Unknown command name #{name}, ignoreing"
             next
           end
 
-          command.block.call(self, *options)
+          option_map = command.options.map { |k, v| [k.to_s, v[:default]] }.to_h
+          options ||= []
+          options.each do |option|
+            val = case option[:type]
+              when 3, 4, 5, 10
+                option[:value]
+              when 6
+                guild.members[option[:value]] || guild.fetch_member(option[:value]).wait
+              when 7
+                guild.channels[option[:value]] || guild.fetch_channels.wait.find { |channel| channel.id == option[:value] }
+              when 8
+                guild.roles[option[:value]] || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+              when 9
+                guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+              end
+            option_map[option[:name]] = val
+          end
+
+          command.block.call(self, *command.options.map { |k, v| option_map[k.to_s] })
         end
       end
     end
