@@ -198,7 +198,6 @@ module Discorb
         # @macro http
         # @macro edit
         #
-        # @param [Discorb::Webhook::Message] message The message to edit.
         # @param [String] content The new content of the message.
         # @param [Discorb::Embed] embed The new embed of the message.
         # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
