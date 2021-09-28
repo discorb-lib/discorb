@@ -69,6 +69,8 @@ module Discorb
       end
     end
 
+    alias send_message post
+
     #
     # Edit a message.
     # @macro async
