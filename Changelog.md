@@ -252,3 +252,9 @@ end
 - Fix: Fix some issues in document
 - Add: Add some attributes to `Message`
 - Fix: Fix guild parameter in message of message command
+
+## 0.9.5
+
+- Fix: Fix editing message
+- Add: Add `required` in slash command argument
+- Add: Add `default` in slash command argument
