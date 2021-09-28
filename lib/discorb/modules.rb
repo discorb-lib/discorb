@@ -113,7 +113,7 @@ module Discorb
             end
           end
           tmp_components << tmp_row
-          payload[:flags] = (supress ? 1 << 2 : 0) unless flags.nil?
+          payload[:flags] = (supress ? 1 << 2 : 0) unless supress.nil?
           payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
         end
         @client.http.patch("/channels/#{channel_id.wait}/messages/#{message_id}", payload).wait
