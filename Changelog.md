@@ -258,3 +258,9 @@ end
 - Fix: Fix editing message
 - Add: Add `required` in slash command argument
 - Add: Add `default` in slash command argument
+  
+## 0.9.6
+
+- Add: Add `Messageable#send_message` as alias of `Messageable#post`
+- Fix: Fix interaction responding with updating message
+- Fix: Fix `MessageComponentInteraction#message`
