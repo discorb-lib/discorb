@@ -180,7 +180,7 @@ module Discorb
     # @return [Integer] The maximum number of values.
     attr_accessor :max_values
     # @return [Boolean] Whether the select menu is disabled.
-    attr_reader :disabled
+    attr_accessor :disabled
     alias disabled? disabled
 
     #
