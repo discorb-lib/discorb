@@ -255,7 +255,7 @@ module Discorb
       def defer_update(ephemeral: false)
         Async do
           @client.http.post("/interactions/#{@id}/#{@token}/callback", {
-            type: 7,
+            type: 6,
             data: {
               flags: (ephemeral ? 1 << 6 : 0),
             },
@@ -310,7 +310,7 @@ module Discorb
             payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
           end
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
-          @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 6, data: payload }).wait
+          @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 7, data: payload }).wait
         end
       end
     end
@@ -460,6 +460,8 @@ module Discorb
     include Interaction::UpdateResponse
     # @return [String] The content of the response.
     attr_reader :custom_id
+    # @return [Discorb::Message] The target message.
+    attr_reader :message
 
     @interaction_type = 3
     @interaction_name = :message_component
