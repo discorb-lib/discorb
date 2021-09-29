@@ -37,26 +37,7 @@ module Discorb
         payload[:allowed_mentions] =
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:message_reference] = reference.to_reference if reference
-        if components
-          tmp_components = []
-          tmp_row = []
-          components.each do |c|
-            case c
-            when Array
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << c
-            when SelectMenu
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << [c]
-            else
-              tmp_row << c
-            end
-          end
-          tmp_components << tmp_row
-          payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
-        end
+        payload[:components] = Component.to_payload(components) if components
         files = [file] if file
         if files
           seperator, payload = HTTP.multipart(payload, files)
@@ -97,27 +78,8 @@ module Discorb
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] =
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
-        if components
-          tmp_components = []
-          tmp_row = []
-          components.each do |c|
-            case c
-            when Array
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << c
-            when SelectMenu
-              tmp_components << tmp_row
-              tmp_row = []
-              tmp_components << [c]
-            else
-              tmp_row << c
-            end
-          end
-          tmp_components << tmp_row
-          payload[:flags] = (supress ? 1 << 2 : 0) unless supress.nil?
-          payload[:components] = tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
-        end
+        payload[:components] = Component.to_payload(components) if components
+        payload[:flags] = (supress ? 1 << 2 : 0) unless supress.nil?
         @client.http.patch("/channels/#{channel_id.wait}/messages/#{message_id}", payload).wait
       end
     end

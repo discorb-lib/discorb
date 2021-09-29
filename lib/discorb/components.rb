@@ -36,6 +36,34 @@ module Discorb
           )
         end
       end
+
+      #
+      # Convert components to a hash.
+      #
+      # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components Components.
+      #
+      # @return [Array<Hash>] Hash data.
+      #
+      def to_payload(components)
+        tmp_components = []
+        tmp_row = []
+        components.each do |c|
+          case c
+          when Array
+            tmp_components << tmp_row
+            tmp_row = []
+            tmp_components << c
+          when SelectMenu
+            tmp_components << tmp_row
+            tmp_row = []
+            tmp_components << [c]
+          else
+            tmp_row << c
+          end
+        end
+        tmp_components << tmp_row
+        return tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
+      end
     end
   end
 
