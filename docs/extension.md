@@ -11,7 +11,7 @@ Extension allows you to seperate your code from the main application.
 Make a new class that extends Extension.
 
 ```ruby
-class MyExtension < Extension
+class MyExtension < Discorb::Extension
   # ...
 end
 ```
@@ -21,7 +21,7 @@ end
 Use {Discorb::Extension.event} to register event, or {Discorb::Extension.once_event} to register event only once.
 
 ```ruby
-class MyExtension < Extension
+class MyExtension < Discorb::Extension
   event :message do |message|
     # ...
   end
@@ -39,7 +39,7 @@ Note block will be binded to the extension instance.
 Use {Discorb::Extension.command} to register command, see {Discorb::ApplicationCommand::Handler} for more information.
 
 ```ruby
-class MyExtension < Extension
+class MyExtension < Discorb::Extension
   slash("command", "Command") do |interaction|
     # ...
   end
@@ -64,7 +64,7 @@ end
 Use {Discorb::Client#load_extension} to load extension.
 
 ```ruby
-class MyExtension < Extension
+class MyExtension < Discorb::Extension
   event :message do |message|
     # ...
   end
@@ -78,7 +78,7 @@ client.load_extension(MyExtension)
 You can access {Discorb::Client} from extension with `@client`.
 
 ```ruby
-class MyExtension < Extension
+class MyExtension < Discorb::Extension
   event :standby do |message|
     puts "Logged in as #{@client.user}"
   end
