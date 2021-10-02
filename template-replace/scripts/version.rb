@@ -24,7 +24,7 @@ def build_version_sidebar(dir, version)
     cls += " current"
   end
   res.insert 0, template
-               .gsub("!version!", "Main")
+               .gsub("!version!", "main")
                .gsub("!path!", "/main")
                .gsub("!class!", cls)
                .gsub("!sha!", "Latest on GitHub")
