@@ -4,6 +4,12 @@
 
 ## v0.10
 
+### v0.10.1
+
+- Add: Add `Client#extensions`
+- Change: `Client#load_extension` allows instance of `Extension`
+- Add: Add `-b` option to `discorb run`
+
 ### v0.10.0
 
 - Change: Sort versions
