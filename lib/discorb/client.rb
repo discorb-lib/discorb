@@ -52,6 +52,8 @@ module Discorb
     attr_reader :status
     # @return [Integer] The session ID of connection.
     attr_reader :session_id
+    # @return [Hash{String => Discorb::Extension}] The loaded extensions.
+    attr_reader :extensions
     # @private
     attr_reader :bottom_commands
 
@@ -97,6 +99,7 @@ module Discorb
       @status = :initialized
       @fetch_member = fetch_member
       @title = title
+      @extensions = {}
       set_default_events
     end
 
@@ -369,12 +372,19 @@ module Discorb
     #
     # Load the extension.
     #
-    # @param [Class] ext The extension to load.
+    # @param [Class, Discorb::Extension] ext The extension to load.
     # @param [Object] ... The arguments to pass to the `ext#initialize`.
     #
     def load_extension(ext, ...)
-      raise ArgumentError, "#{ext} is not a extension" unless ext.is_a?(Class) && ext < Discorb::Extension
-      ins = ext.new(self, ...)
+      if ext.is_a?(Class)
+        raise ArgumentError, "#{ext} is not a extension" unless ext < Discorb::Extension
+        ins = ext.new(self, ...)
+      elsif ext.is_a?(Discorb::Extension)
+        ins = ext
+      else
+        raise ArgumentError, "#{ext} is not a extension"
+      end
+
       @events.each_value do |event|
         event.delete_if { |c| c.metadata[:extension] == ins.class.name }
       end
@@ -392,6 +402,7 @@ module Discorb
         @commands << cmd
       end
       @bottom_commands += ins.class.bottom_commands
+      @extensions[ins.class.name] = ins
       ins
     end
 
