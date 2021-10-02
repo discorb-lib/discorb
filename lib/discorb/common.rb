@@ -6,7 +6,7 @@ module Discorb
   # @return [String] The version of discorb.
   VERSION = "0.9.6"
   # @return [String] The user agent for the bot.
-  USER_AGENT = "DiscordBot (https://github.com/discorb-lib/discorb #{VERSION}) Ruby/#{RUBY_VERSION}"
+  USER_AGENT = "DiscordBot (https://discorb-lib.github.io #{VERSION}) Ruby/#{RUBY_VERSION}"
 
   #
   # @abstract
