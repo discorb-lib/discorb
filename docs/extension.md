@@ -2,16 +2,16 @@
 
 # Extension
 
-Extension allows you to split your code into multiple files.
+Extension allows you to seperate your code from the main application.
+
+# @since 
 
 ## Make a new extension
 
-Make a new module, and extend {Discorb::Extension}.
+Make a new class that extends Extension.
 
 ```ruby
-module MyExtension
-  extend Discorb::Extension
-  
+class MyExtension < Extension
   # ...
 end
 ```
@@ -21,27 +21,25 @@ end
 Use {Discorb::Extension.event} to register event, or {Discorb::Extension.once_event} to register event only once.
 
 ```ruby
-module MyExtension
-  extend Discorb::Extension
-
+class MyExtension < Extension
   event :message do |message|
     # ...
   end
 
-  once_event :ready do |message|
+  once_event :standby do |message|
     # ...
   end
 end
 ```
 
+Note block will be binded to the extension instance.
+
 ## Register Command
 
-Since v0.5.2, {Discorb::Extension} includes {Discorb::ApplicationCommand::Handler} module, so you can register command with {Discorb::ApplicationCommand::Handler#slash} and {Discorb::ApplicationCommand::Handler#slash_group}.
+Use {Discorb::Extension.command} to register command, see {Discorb::ApplicationCommand::Handler} for more information.
 
 ```ruby
-module MyExtension
-  extend Discorb::Extension
-
+class MyExtension < Extension
   slash("command", "Command") do |interaction|
     # ...
   end
@@ -63,18 +61,16 @@ end
 
 ## Load extension
 
-Use {Discorb::Client#extend} to load extension.
+Use {Discorb::Client#load_extension} to load extension.
 
 ```ruby
-module MyExtension
-  extend Discorb::Extension
-
+class MyExtension < Extension
   event :message do |message|
     # ...
   end
 end
 
-client.extend MyExtension
+client.load_extension(MyExtension)
 ```
 
 ## Access Client from extension
@@ -82,10 +78,8 @@ client.extend MyExtension
 You can access {Discorb::Client} from extension with `@client`.
 
 ```ruby
-module MyExtension
-  extend Discorb::Extension
-
-  event :ready do |message|
+class MyExtension < Extension
+  event :standby do |message|
     puts "Logged in as #{@client.user}"
   end
 end
