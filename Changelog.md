@@ -2,6 +2,15 @@
 
 # Changelog
 
+## v0.10
+
+### v0.10.0
+
+- Change: Sort versions
+- Change: Snowflake is now String
+- Change: Extension is now Class
+- Add: Add `SelectMenu#disabled=`
+
 ## v0.9
 
 ### v0.9.6
