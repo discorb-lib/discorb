@@ -369,31 +369,30 @@ module Discorb
     #
     # Load the extension.
     #
-    # @param [Module] mod The extension to load.
+    # @param [Class] ext The extension to load.
+    # @param [Object] *args The arguments to pass to the `ext#initialize`.
     #
-    def extend(mod)
-      if mod.respond_to?(:events)
-        @events.each_value do |event|
-          event.delete_if { |c| c.metadata[:extension] == mod.name }
-        end
-        mod.events.each do |name, events|
-          @events[name] ||= []
-          @events[name].delete_if { |c| c.metadata[:override] }
-          events.each do |event|
-            @events[name] << event
-          end
-        end
-        @commands.delete_if do |cmd|
-          cmd.respond_to? :extension and cmd.extension == mod.name
-        end
-        mod.commands.each do |cmd|
-          cmd.define_singleton_method(:extension) { mod.name }
-          @commands << cmd
-        end
-        @bottom_commands += mod.bottom_commands
-        mod.client = self
+    def load_extension(ext, ...)
+      raise ArgumentError, "#{ext} is not a extension" unless ext.is_a?(Class) && ext < Discorb::Extension
+      ins = ext.new(self, ...)
+      @events.each_value do |event|
+        event.delete_if { |c| c.metadata[:extension] == ins.class.name }
       end
-      super(mod)
+      ins.events.each do |name, events|
+        @events[name] ||= []
+        events.each do |event|
+          @events[name] << event
+        end
+      end
+      @commands.delete_if do |cmd|
+        cmd.respond_to? :extension and cmd.extension == ins.name
+      end
+      ins.class.commands.each do |cmd|
+        cmd.define_singleton_method(:extension) { ins.name }
+        @commands << cmd
+      end
+      @bottom_commands += ins.class.bottom_commands
+      ins
     end
 
     include Discorb::Gateway::Handler

@@ -3,64 +3,77 @@
 module Discorb
   #
   # Module to make extension.
-  # extend this module to make your own extension.
+  # Extend this module to make your own extension.
   # @see file:docs/extension.md
   # @abstract
   #
-  module Extension
-    include Discorb::ApplicationCommand::Handler
-    undef setup_commands
+  class Extension
+    extend Discorb::ApplicationCommand::Handler
 
     @events = {}
-    @client = nil
 
-    #
-    # Define a new event.
-    #
-    # @param [Symbol] event_name The name of the event.
-    # @param [Symbol] id The id of the event. Used to delete the event.
-    # @param [Hash] metadata Other metadata.
-    # @param [Proc] block The block to execute when the event is triggered.
-    #
-    # @return [Discorb::Event] The event.
-    #
-    def event(event_name, id: nil, **metadata, &block)
-      raise ArgumentError, "Event name must be a symbol" unless event_name.is_a?(Symbol)
-      raise ArgumentError, "block must be a Proc" unless block.is_a?(Proc)
-
-      @events[event_name] ||= []
-      metadata[:extension] = self.name
-      @events[event_name] << Discorb::Event.new(block, id, metadata)
+    def initialize(client)
+      @client = client
     end
 
-    #
-    # Define a new once event.
-    #
-    # @param [Symbol] event_name The name of the event.
-    # @param [Symbol] id The id of the event. Used to delete the event.
-    # @param [Hash] metadata Other metadata.
-    # @param [Proc] block The block to execute when the event is triggered.
-    #
-    # @return [Discorb::Event] The event.
-    #
-    def once_event(event_name, id: nil, **metadata, &block)
-      event(event_name, id: id, once: true, **metadata, &block)
+    def events
+      return @events if @events
+      ret = {}
+      self.class.events.each do |event, handlers|
+        ret[event] = handlers.map do |handler|
+          Discorb::Event.new(Proc.new { |*args, **kwargs| instance_exec(*args, **kwargs, &handler[2]) }, handler[0], handler[1])
+        end
+      end
+      @events = ret
     end
 
-    # @return [Hash{Symbol => Array<Discorb::Event>}] The events of the extension.
-    attr_reader :events
-    # @return [Array<Discorb::ApplicationCommand::Command>] The commands of the extension.
-    attr_reader :commands
-    # @private
-    attr_reader :bottom_commands
+    class << self
+      undef setup_commands
 
-    # @private
-    attr_accessor :client
+      #
+      # Define a new event.
+      #
+      # @param [Symbol] event_name The name of the event.
+      # @param [Symbol] id The id of the event. Used to delete the event.
+      # @param [Hash] metadata Other metadata.
+      #
+      # @return [Discorb::Event] The event.
+      #
+      def event(event_name, id: nil, **metadata, &block)
+        raise ArgumentError, "Event name must be a symbol" unless event_name.is_a?(Symbol)
+        raise ArgumentError, "block must be given" unless block_given?
 
-    def self.extended(obj)
-      obj.instance_variable_set(:@events, {})
-      obj.instance_variable_set(:@commands, [])
-      obj.instance_variable_set(:@bottom_commands, [])
+        @events[event_name] ||= []
+        metadata[:extension] = self.name
+        @events[event_name] << [id, metadata, block]
+      end
+
+      #
+      # Define a new once event.
+      #
+      # @param [Symbol] event_name The name of the event.
+      # @param [Symbol] id The id of the event. Used to delete the event.
+      # @param [Hash] metadata Other metadata.
+      # @param [Proc] block The block to execute when the event is triggered.
+      #
+      # @return [Discorb::Event] The event.
+      #
+      def once_event(event_name, id: nil, **metadata, &block)
+        event(event_name, id: id, once: true, **metadata, &block)
+      end
+
+      # @return [Hash{Symbol => Array<Discorb::Event>}] The events of the extension.
+      attr_reader :events
+      # @return [Array<Discorb::ApplicationCommand::Command>] The commands of the extension.
+      attr_reader :commands
+      # @private
+      attr_reader :bottom_commands
+
+      def inherited(klass)
+        klass.instance_variable_set(:@commands, [])
+        klass.instance_variable_set(:@bottom_commands, [])
+        klass.instance_variable_set(:@events, {})
+      end
     end
   end
 end
