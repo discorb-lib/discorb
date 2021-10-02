@@ -4,21 +4,21 @@ def build_version_sidebar(dir, version)
   raw.gsub!(template, "")
   res = +""
   i = 0
-  `git tag`.force_encoding("utf-8").split("\n").each.with_index do |tag|
+  `git tag`.force_encoding("utf-8").split("\n").reverse.each.with_index do |tag|
     i += 1
     sha = `git rev-parse #{tag}`.force_encoding("utf-8").strip
-    version = tag.delete_prefix("v")
+    tag_version = tag.delete_prefix("v")
     cls = i % 2 == 0 ? "even" : "odd"
-    if version == "."
+    if tag_version == version
       cls += " current"
     end
-    res += template.gsub("!version!", version).gsub("!path!", "../" + version).gsub("!class!", cls).gsub("!sha!", sha)
+    res += template.gsub("!version!", tag_version).gsub("!path!", "/" + version).gsub("!class!", cls).gsub("!sha!", sha)
   end
   i += 1
   cls = i % 2 == 0 ? "even" : "odd"
   if version == "main"
     cls += " current"
   end
-  res += template.gsub("!version!", "main").gsub("!path!", "../main").gsub("!class!", cls).gsub("!sha!", "(Latest on GitHub)")
+  res.insert 0, template.gsub("!version!", "Main").gsub("!path!", "/main").gsub("!class!", cls).gsub("!sha!", "Latest on GitHub")
   File.write(dir + "/version_list.html", raw.gsub("<!--replace-->", res))
 end
