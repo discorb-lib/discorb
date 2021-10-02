@@ -527,6 +527,7 @@ dd pre.code {
   padding: 9px 14px;
   border-radius: 4px;
   border: 1px solid var(--background-tertiary);
+  overflow-x: scroll;
 }
 
 #main {
