@@ -39,10 +39,11 @@ module Discorb
   # Represents Snowflake of Discord.
   #
   # @see https://discord.com/developers/docs/reference#snowflakes Official Discord API docs
-  class Snowflake < DiscordModel
+  class Snowflake < String
     # @private
     def initialize(value)
       @value = value.to_i
+      super(@value.to_s)
     end
 
     # @!attribute [r] timestamp
@@ -63,26 +64,6 @@ module Discorb
     #   Increment of snowflake.
     #
     #   @return [Integer] Increment of snowflake.
-
-    #
-    # Stringify snowflake.
-    #
-    # @return [String] Stringified snowflake.
-    #
-    def to_s
-      @value.to_s
-    end
-
-    alias to_str to_s
-
-    #
-    # Integerize snowflake.
-    #
-    # @return [Integer] Integerized snowflake.
-    #
-    def to_i
-      @value.to_i
-    end
 
     #
     # Compares snowflake with other object.
