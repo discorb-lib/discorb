@@ -7,6 +7,6 @@ client.once :standby do
   puts "Logged in as #{client.user}"
 end
 
-client.extend(MessageExpander)
+client.load_extension(MessageExpander)
 
 client.run(ENV["DISCORD_BOT_TOKEN"])

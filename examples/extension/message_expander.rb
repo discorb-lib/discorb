@@ -1,9 +1,7 @@
 require "discorb"
 
-module MessageExpander
-  extend Discorb::Extension
-
-  @message_regex = Regexp.new(
+class MessageExpander < Discorb::Extension
+  @@message_regex = Regexp.new(
     '(?!<)https://(?:ptb\.|canary\.)?discord(?:app)?\.com/channels/' \
     "(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18})(?!>)"
   )
@@ -11,7 +9,7 @@ module MessageExpander
   event :message do |message|
     next if message.author.bot?
 
-    message.content.to_enum(:scan, @message_regex).map { Regexp.last_match }.each do |match|
+    message.content.to_enum(:scan, @@message_regex).map { Regexp.last_match }.each do |match|
       ch = @client.channels[match[:channel]]
       next if ch.nil?
 
@@ -27,7 +25,7 @@ module MessageExpander
           author: Discorb::Embed::Author.new(
             url_message.author.name,
             url: url_message.jump_url,
-            icon: url_message.author.display_avatar.url,
+            icon: url_message.author.avatar.url,
           ),
           footer: Discorb::Embed::Footer.new(
             "#{url_message.guild.name} / #{ch.name}",
