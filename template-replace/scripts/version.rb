@@ -20,5 +20,8 @@ def build_version_sidebar(dir, version)
     cls += " current"
   end
   res.insert 0, template.gsub("!version!", "Main").gsub("!path!", "/main").gsub("!class!", cls).gsub("!sha!", "Latest on GitHub")
+  i += 1
+  cls = i % 2 == 0 ? "even" : "odd"
+  res.insert 0, template.gsub("!version!", "Latest").gsub("!path!", "/").gsub("!class!", cls).gsub("!sha!", "Latest on RubyGems")
   File.write(dir + "/version_list.html", raw.gsub("<!--replace-->", res))
 end
