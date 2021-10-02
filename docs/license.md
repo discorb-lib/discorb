@@ -4,4 +4,8 @@
 
 discorb is licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+----
+
 {include:file:LICENSE.txt}
+
+----

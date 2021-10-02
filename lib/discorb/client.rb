@@ -370,7 +370,7 @@ module Discorb
     # Load the extension.
     #
     # @param [Class] ext The extension to load.
-    # @param [Object] *args The arguments to pass to the `ext#initialize`.
+    # @param [Object] ... The arguments to pass to the `ext#initialize`.
     #
     def load_extension(ext, ...)
       raise ArgumentError, "#{ext} is not a extension" unless ext.is_a?(Class) && ext < Discorb::Extension

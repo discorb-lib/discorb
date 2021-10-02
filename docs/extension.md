@@ -36,7 +36,7 @@ Note block will be binded to the extension instance.
 
 ## Register Command
 
-Use {Discorb::Extension.command} to register command, see {Discorb::ApplicationCommand::Handler} for more information.
+Use `Discorb::Extension.command` to register command, see {Discorb::ApplicationCommand::Handler} for more information.
 
 ```ruby
 class MyExtension < Discorb::Extension
