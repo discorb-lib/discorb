@@ -22,6 +22,7 @@ options = {
   log_color: nil,
   setup: nil,
   token: false,
+  bundler: :default,
 }
 opt.on("-l", "--log-level LEVEL", "Log level.") do |v|
   unless LOG_LEVELS.include? v.downcase
@@ -36,6 +37,7 @@ opt.on("-c", "--[no-]log-color", "Whether to colorize log output.") { |v| option
 opt.on("-s", "--setup", "Whether to setup application commands.") { |v| options[:setup] = v }
 opt.on("-e", "--env [ENV]", "The name of the environment variable to use for token, or just `-e` or `--env` for intractive prompt.") { |v| options[:token] = v }
 opt.on("-t", "--title TITLE", "The title of process.") { |v| options[:title] = v }
+opt.on("-b", "--[no-]bundler", "Whether to use bundler. Default to true if Gemfile exists, otherwise false.") { |v| options[:bundler] = v }
 opt.parse!(ARGV)
 
 script = ARGV[0]
@@ -54,10 +56,25 @@ elsif options[:token].nil? || options[:token] == "-"
   puts ""
 end
 
+if options[:bundler] == :default
+  dir = Dir.pwd.split("/")
+  options[:bundler] = false
+  dir.length.times.reverse_each do |i|
+    if File.exist? "#{dir[0..i].join("/")}/Gemfile"
+      options[:bundler] = true
+      break
+    end
+  end
+end
+
 ENV["DISCORB_CLI_TITLE"] = options[:title]
 
-begin
-  load script
-rescue LoadError
+if File.exist? script
+  if options[:bundler]
+    system "bundle exec ruby #{script}"
+  else
+    system "ruby #{script}"
+  end
+else
   eputs "Could not load script: \e[31m#{script}\e[91m"
 end
