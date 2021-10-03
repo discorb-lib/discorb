@@ -4,6 +4,11 @@
 
 ## v0.10
 
+### v0.10.2
+
+- Change: `discorb init` is now `discorb new`
+- Add: Add `:channel_types` parameter to `ApplicationCommand::Handler#slash` and some
+
 ### v0.10.1
 
 - Add: Add `Client#extensions`
