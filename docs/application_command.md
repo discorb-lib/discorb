@@ -68,6 +68,7 @@ In `options`, hash should be like this:
 | `:type` | `Object` | Type of the option. |
 | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
 | `:default` | `Object` | Default value of the option. |
+| `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
 
 `choices` should be unspecified if you don't want to use it.
 `choices` is hash like this:

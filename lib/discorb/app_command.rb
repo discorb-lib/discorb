@@ -25,6 +25,7 @@ module Discorb
       #   | `:type` | `Object` | Type of the option. |
       #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #   | `:default` | `Object` | Default value of the option. |
+      #   | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
       #
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
@@ -237,6 +238,9 @@ module Discorb
             }
             if value[:choices]
               ret[:choices] = value[:choices].map { |t| { name: t[0], value: t[1] } }
+            end
+            if value[:channel_types]
+              ret[:channel_types] = value[:channel_types].map(&:channel_type)
             end
             ret
           end
