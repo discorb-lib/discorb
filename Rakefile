@@ -156,7 +156,7 @@ namespace :document do
     Rake::Task["document:replace:html"].execute
     Rake::Task["document:replace:css"].execute
     Rake::Task["document:replace:eol"].execute
-    tags = `git tag`.force_encoding("utf-8").split("\n")
+    tags = `git tag`.force_encoding("utf-8").split("\n").sort_by { |t| t.split(".").map(&:to_i) }
     tags.each do |tag|
       sh "git checkout #{tag} -f"
       iputs "Building #{tag}"
