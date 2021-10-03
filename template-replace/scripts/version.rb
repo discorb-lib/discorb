@@ -4,7 +4,12 @@ def build_version_sidebar(dir, version)
   raw.gsub!(template, "")
   res = +""
   i = 0
-  `git tag`.force_encoding("utf-8").split("\n").reverse.each.with_index do |tag|
+  `git tag`
+    .force_encoding("utf-8")
+    .split("\n")
+    .sort_by { |v| Gem::Version.new(v[1..]) }
+    .reverse
+    .each.with_index do |tag|
     i += 1
     sha = `git rev-parse #{tag}`.force_encoding("utf-8").strip
     tag_version = tag.delete_prefix("v")
@@ -32,7 +37,7 @@ def build_version_sidebar(dir, version)
   cls = i % 2 == 0 ? "even" : "odd"
   res.insert 0, template
                .gsub("!version!", "Latest")
-               .gsub("!path!", "/")
+               .gsub("!path!", "")
                .gsub("!class!", cls)
                .gsub("!sha!", "Latest on RubyGems")
   File.write(dir + "/version_list.html", raw.gsub("<!--replace-->", res))
