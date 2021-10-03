@@ -74,7 +74,7 @@ Create a new directory and go to it.
 Open terminal and type:
 
 ```
-discorb init
+discorb new
 ```
 
 Specify `--git` if you want to use git.

@@ -1,13 +1,13 @@
-# @title CLI: discorb init
+# @title CLI: discorb new
 
-# discorb init
+# discorb new
 
 This command will create a new project in the directory.
 
 ## Usage
 
 ```bash
-discorb init [options] [dir]
+discorb new [options] [dir]
 ```
 
 ## Options

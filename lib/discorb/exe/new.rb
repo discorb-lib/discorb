@@ -178,7 +178,7 @@ end
 opt = OptionParser.new <<~BANNER
                          A tool to make a new project.
 
-                         Usage: discorb init [options] [dir]
+                         Usage: discorb new [options] [dir]
 
                                    dir                        The directory to make the files in.
                        BANNER
