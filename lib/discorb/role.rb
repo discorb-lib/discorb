@@ -26,6 +26,10 @@ module Discorb
     # @return [Boolean] Whether the role is a default role.
     attr_reader :mentionable
     alias mentionable? mentionable
+    # @return [Discorb::Asset, nil] The icon of the role.
+    attr_reader :custom_icon
+    # @return [Discorb::Emoji, nil] The emoji of the role.
+    attr_reader :emoji
 
     # @!attribute [r] mention
     #   @return [String] The mention of the role.
@@ -33,6 +37,8 @@ module Discorb
     #   @return [Boolean] Whether the role has a color.
     # @!attribute [r] tag
     #   @return [Discorb::Role::Tag] The tag of the role.
+    # @!attribute [r] icon
+    #   @return [Discorb::Asset, Discorb::Emoji] The icon of the role.
 
     include Comparable
 
@@ -42,6 +48,10 @@ module Discorb
       @guild = guild
       @data = {}
       _set_data(data)
+    end
+
+    def icon
+      @custom_icon || @emoji
     end
 
     #
@@ -182,6 +192,8 @@ module Discorb
       @managed = data[:managed]
       @mentionable = data[:mentionable]
       @tags = data[:tags] || {}
+      @custom_icon = data[:icon] ? Asset.new(self, data[:icon], path: "role-icons/#{@id}") : nil
+      @emoji = data[:unicode_emoji] ? UnicodeEmoji.new(data[:unicode_emoji]) : nil
       @guild.roles[@id] = self unless data[:no_cache]
       @data.update(data)
     end
