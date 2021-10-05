@@ -71,9 +71,9 @@ ENV["DISCORB_CLI_TITLE"] = options[:title]
 
 if File.exist? script
   if options[:bundler]
-    system "bundle exec ruby #{script}"
+    exec "bundle exec ruby #{script}"
   else
-    system "ruby #{script}"
+    exec "ruby #{script}"
   end
 else
   eputs "Could not load script: \e[31m#{script}\e[91m"
