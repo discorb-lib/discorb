@@ -4,6 +4,13 @@
 
 ## v0.10
 
+### v0.10.3
+
+- Add: Support role icons
+- Fix: Fix version order
+- Change: Use `exec` instead of `system` in `discorb run`
+- Add: Add `Extension.loaded`
+
 ### v0.10.2
 
 - Change: `discorb init` is now `discorb new`
