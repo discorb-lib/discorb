@@ -84,3 +84,33 @@ class MyExtension < Discorb::Extension
   end
 end
 ```
+
+## Receiving Arguments on load
+
+You can receive arguments by adding some arguments to `#initialize`.
+
+```ruby
+class MyExtension < Discorb::Extension
+  def initialize(client, arg1, arg2)
+    super(client)
+    # @client = client will also work, but it's not recommended.
+    @arg1 = arg1
+    @arg2 = arg2
+  end
+end
+
+client.load_extension(MyExtension, "arg1", "arg2")
+
+```
+
+## Do something on load
+
+You can do something on load by overriding `.loaded`. Client and arguments will be passed to it.
+
+```ruby
+class MyExtension < Discorb::Extension
+  def self.loaded(client)
+    puts "This extension is loaded to #{client}"
+  end
+end
+```
