@@ -401,6 +401,9 @@ module Discorb
         cmd.define_singleton_method(:extension) { ins.name }
         @commands << cmd
       end
+
+      cls = ins.class
+      cls.loaded(self, ...) if cls.respond_to? :loaded
       @bottom_commands += ins.class.bottom_commands
       @extensions[ins.class.name] = ins
       ins
