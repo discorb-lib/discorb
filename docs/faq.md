@@ -2,13 +2,21 @@
 
 # Fequently asked questions
 
-## What is `Async::Task`?
+## What is ...?
+
+### What is `Async::Task`?
 
 Async::Task is a object for asynchronous tasks.
 
 https://socketry.github.io/async/ for more information.
 
-## How do I do something with sent messages?
+### What is `Guild`?
+
+It means a `server` in official Discord client.
+
+## How can I ...?
+
+## How can I do something with sent messages?
 
 Use `Async::Task#wait` method.
 
@@ -22,11 +30,12 @@ message = channel.post("Hello world!").wait  # => Message
 message.pin
 ```
 
-## How can I send DM to a user?
+
+### How can I send DM to a user?
 
 Use {Discorb::User#post} method, {Discorb::User} includes {Discorb::Messageable}.
 
-## How can I edit status?
+### How can I edit status?
 
 Use {Discorb::Client#update_presence} method.
 
@@ -47,7 +56,7 @@ client.on :ready do
 end
 ```
 
-## How can I send files?
+### How can I send files?
 
 Use {Discorb::File} class.
 
@@ -60,6 +69,15 @@ message.channel.post "File!", files: [Discorb::File.new(File.open("./README.md")
 
 # Send a string as a file
 message.channel.post file: Discorb::File.from_string("Hello world!", "hello.txt")
+```
+
+### How can I add reactions?
+
+Use {Discorb::Message#add_reaction} method.
+
+```ruby
+message.add_reaction Discorb::UnicodeEmoji["🤔"]
+message.add_reaction Discorb::UnicodeEmoji["thinking"]
 ```
 
 # Not fequently asked questions
