@@ -214,6 +214,7 @@ module Discorb
         placeholder: @placeholder,
         min_values: @min_values,
         max_values: @max_values,
+        disabled: @disabled,
       }
     end
 
