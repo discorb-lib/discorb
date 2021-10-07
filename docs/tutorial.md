@@ -23,6 +23,7 @@ Let's get started!
     - [Sublime Text](https://www.sublimetext.com/)
     - [Brackets](https://brackets.io/)
     - [Notepad++](https://notepad-plus-plus.org/)
+    - [Vim](https://www.vim.org/)
 - Git
 - Bundler
 
