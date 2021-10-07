@@ -2,7 +2,8 @@
 
 # Tutorial
 
-Welcome to discorb! This lib allows you to create a discord bot with ease. So, let's get started!
+Welcome to discorb! This lib allows you to create a discord bot with Ruby.
+Let's get started!
 
 ## Requirements
 
