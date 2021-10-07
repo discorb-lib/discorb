@@ -128,7 +128,7 @@ module Discorb
           if icon.is_a?(Discorb::Image)
             payload[:icon] = icon.to_s
           else
-            payload[:emoji] = icon.to_s
+            payload[:unicode_emoji] = icon.to_s
           end
         end
         @client.http.patch("/guilds/#{@guild.id}/roles/#{@id}", payload, audit_log_reason: reason).wait
