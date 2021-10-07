@@ -113,9 +113,10 @@ module Discorb
     # @param [Discorb::Color] color The new color of the role.
     # @param [Boolean] hoist Whether the role should be hoisted.
     # @param [Boolean] mentionable Whether the role should be mentionable.
+    # @param [Discorb::Image, Discorb::UnicodeEmoji] icon The new icon or emoji of the role.
     # @param [String] reason The reason for editing the role.
     #
-    def edit(name: :unset, position: :unset, color: :unset, hoist: :unset, mentionable: :unset, reason: nil)
+    def edit(name: :unset, position: :unset, color: :unset, hoist: :unset, mentionable: :unset, icon: :unset, reason: nil)
       Async do
         payload = {}
         payload[:name] = name if name != :unset
@@ -123,6 +124,13 @@ module Discorb
         payload[:color] = color.to_i if color != :unset
         payload[:hoist] = hoist if hoist != :unset
         payload[:mentionable] = mentionable if mentionable != :unset
+        if icon != :unset
+          if icon.is_a?(Discorb::Image)
+            payload[:icon] = icon.to_s
+          else
+            payload[:emoji] = icon.to_s
+          end
+        end
         @client.http.patch("/guilds/#{@guild_id}/roles/#{@id}", payload, reason: reason).wait
       end
     end
