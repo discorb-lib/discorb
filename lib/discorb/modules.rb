@@ -94,7 +94,7 @@ module Discorb
     #
     def delete_message!(message_id, reason: nil)
       Async do
-        @client.http.delete("/channels/#{channel_id.wait}/messages/#{message_id}", reason: reason).wait
+        @client.http.delete("/channels/#{channel_id.wait}/messages/#{message_id}", audit_log_reason: reason).wait
       end
     end
 

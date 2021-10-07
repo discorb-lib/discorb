@@ -63,7 +63,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.delete("/guilds/#{@guild}/integrations/#{@id}", reason: reason).wait
+        @client.http.delete("/guilds/#{@guild}/integrations/#{@id}", audit_log_reason: reason).wait
       end
     end
 
