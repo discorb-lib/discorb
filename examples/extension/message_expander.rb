@@ -1,6 +1,8 @@
 require "discorb"
 
-class MessageExpander < Discorb::Extension
+class MessageExpander
+  include Discorb::Extension
+
   @@message_regex = Regexp.new(
     '(?!<)https://(?:ptb\.|canary\.)?discord(?:app)?\.com/channels/' \
     "(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18})(?!>)"

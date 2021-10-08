@@ -2,16 +2,18 @@
 
 # Extension
 
-Extension allows you to seperate your code from the main application.
+Extension allows you to seperate events.
 
 # @since 
 
 ## Make a new extension
 
-Make a new class that extends Extension.
+Make a new class that includes Extension.
 
 ```ruby
-class MyExtension < Discorb::Extension
+class MyExtension
+  include Discorb::Extension
+
   # ...
 end
 ```
@@ -21,7 +23,9 @@ end
 Use {Discorb::Extension.event} to register event, or {Discorb::Extension.once_event} to register event only once.
 
 ```ruby
-class MyExtension < Discorb::Extension
+class MyExtension
+  include Discorb::Extension
+
   event :message do |message|
     # ...
   end
@@ -39,7 +43,9 @@ Note block will be binded to the extension instance.
 Use `Discorb::Extension.command` to register command, see {Discorb::ApplicationCommand::Handler} for more information.
 
 ```ruby
-class MyExtension < Discorb::Extension
+class MyExtension
+  include Discorb::Extension
+
   slash("command", "Command") do |interaction|
     # ...
   end
@@ -64,7 +70,9 @@ end
 Use {Discorb::Client#load_extension} to load extension.
 
 ```ruby
-class MyExtension < Discorb::Extension
+class MyExtension
+  include Discorb::Extension
+
   event :message do |message|
     # ...
   end
@@ -78,7 +86,9 @@ client.load_extension(MyExtension)
 You can access {Discorb::Client} from extension with `@client`.
 
 ```ruby
-class MyExtension < Discorb::Extension
+class MyExtension
+  include Discorb::Extension
+
   event :standby do |message|
     puts "Logged in as #{@client.user}"
   end
@@ -90,7 +100,9 @@ end
 You can receive arguments by adding some arguments to `#initialize`.
 
 ```ruby
-class MyExtension < Discorb::Extension
+class MyExtension
+  include Discorb::Extension
+
   def initialize(client, arg1, arg2)
     super(client)
     # @client = client will also work, but it's not recommended.
@@ -108,7 +120,9 @@ client.load_extension(MyExtension, "arg1", "arg2")
 You can do something on load by overriding `.loaded`. Client and arguments will be passed to it.
 
 ```ruby
-class MyExtension < Discorb::Extension
+class MyExtension
+  include Discorb::Extension
+
   def self.loaded(client)
     puts "This extension is loaded to #{client}"
   end
