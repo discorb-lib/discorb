@@ -3,7 +3,7 @@
 module Discorb
   #
   # Abstract class to make extension.
-  # Extend from this module to make your own extension.
+  # Include from this module to make your own extension.
   # @see file:docs/extension.md
   # @abstract
   #
