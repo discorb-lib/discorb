@@ -3,15 +3,11 @@
 module Discorb
   #
   # Abstract class to make extension.
-  # Inherit from this class to make your own extension.
+  # Extend from this module to make your own extension.
   # @see file:docs/extension.md
   # @abstract
   #
-  class Extension
-    extend Discorb::ApplicationCommand::Handler
-
-    @events = {}
-
+  module Extension
     def initialize(client)
       @client = client
     end
@@ -27,7 +23,12 @@ module Discorb
       @events = ret
     end
 
-    class << self
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
+    module ClassMethods
+      include Discorb::ApplicationCommand::Handler
       undef setup_commands
 
       #
@@ -69,7 +70,7 @@ module Discorb
       # @private
       attr_reader :bottom_commands
 
-      def inherited(klass)
+      def self.extended(klass)
         klass.instance_variable_set(:@commands, [])
         klass.instance_variable_set(:@bottom_commands, [])
         klass.instance_variable_set(:@events, {})
