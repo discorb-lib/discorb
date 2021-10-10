@@ -69,6 +69,7 @@ In `options`, hash should be like this:
 | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
 | `:default` | `Object` | Default value of the option. |
 | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
+| `:autocomplete` | `Proc` | Autocomplete function. |
 
 `choices` should be unspecified if you don't want to use it.
 `choices` is hash like this:
@@ -107,7 +108,7 @@ In `type`, You must use one of the following:
 | `:channel` | Channel argument. | None |
 | `:role` | Role argument. | None |
 
-### Group Slash Commands
+#### Group Slash Commands
 
 To register a group of slash commands, use {Discorb::ApplicationCommand::Handler#slash_group}.
 
@@ -238,6 +239,31 @@ end
 ```
 
 Same as above, you can use block for register commands since v0.5.1.
+
+#### Use Auto Completing
+
+Since v0.11.0, you can use auto completion by setting Proc to `:autocomplete` in options.
+The proc will be called with interaction object and the argument.
+The proc should return an hash of the autocomplete result.
+
+```ruby
+client.slash("hello2", "Greet for you", {
+  "target" => {
+    type: :string,
+    description: "Person to greet",
+    autocomplete: ->(interaction, target) {
+      {
+        "You" => interaction.target.to_s
+      }
+    },
+  },
+}) do |interaction, target|
+  interaction.post("Hello, #{target}!")
+end
+```
+
+In the above example, `You` will be displayed in the user menu.
+Due to the limitation of Discord API, the proc must return the result in less than 3 second.
 
 ### Register User Context Menu Command
 

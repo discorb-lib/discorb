@@ -26,6 +26,7 @@ module Discorb
       #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #   | `:default` | `Object` | Default value of the option. |
       #   | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
+      #   | `:autocomplete` | `Proc` | Autocomplete function. |
       #
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
