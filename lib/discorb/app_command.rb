@@ -236,12 +236,12 @@ module Discorb
               description: value[:description],
               required: value[:required].nil? ? !value[:optional] : value[:required],
             }
-            if value[:choices]
-              ret[:choices] = value[:choices].map { |t| { name: t[0], value: t[1] } }
-            end
-            if value[:channel_types]
-              ret[:channel_types] = value[:channel_types].map(&:channel_type)
-            end
+
+            ret[:choices] = value[:choices].map { |t| { name: t[0], value: t[1] } } if value[:choices]
+
+            ret[:channel_types] = value[:channel_types].map(&:channel_type) if value[:channel_types]
+
+            ret[:autocomplete] = !!value[:autocomplete] if value[:autocomplete]
             ret
           end
           {
