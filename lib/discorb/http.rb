@@ -36,13 +36,7 @@ module Discorb
         resp = http.get(get_path(path), get_headers(headers, "", audit_log_reason), **kwargs)
         data = get_response_data(resp)
         @ratelimit_handler.save("GET", path, resp)
-        test_error(if resp.code == "429"
-          @client.log.warn "Ratelimit exceeded for #{path}, trying again in #{data[:retry_after]} seconds."
-          task.sleep(data[:retry_after])
-          get(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-        else
-          [resp, data]
-        end)
+        handle_response(:patch, resp, data, path, nil, headers, audit_log_reason, kwargs)
       end
     end
 
@@ -67,12 +61,7 @@ module Discorb
         resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         data = get_response_data(resp)
         @ratelimit_handler.save("POST", path, resp)
-        test_error(if resp.code == "429"
-          task.sleep(data[:retry_after])
-          post(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-        else
-          [resp, data]
-        end)
+        handle_response(:post, resp, data, path, body, headers, audit_log_reason, kwargs)
       end
     end
 
@@ -97,12 +86,7 @@ module Discorb
         resp = http.patch(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         data = get_response_data(resp)
         @ratelimit_handler.save("PATCH", path, resp)
-        test_error(if resp.code == "429"
-          task.sleep(data[:retry_after])
-          patch(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-        else
-          [resp, data]
-        end)
+        handle_response(:patch, resp, data, path, body, headers, audit_log_reason, kwargs)
       end
     end
 
@@ -127,12 +111,7 @@ module Discorb
         resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
         data = get_response_data(resp)
         @ratelimit_handler.save("PUT", path, resp)
-        test_error(if resp.code == "429"
-          task.sleep(data[:retry_after])
-          put(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-        else
-          [resp, data]
-        end)
+        handle_response(:put, resp, data, path, body, headers, audit_log_reason, kwargs)
       end
     end
 
@@ -151,17 +130,12 @@ module Discorb
     # @raise [Discorb::HTTPError] The request was failed.
     #
     def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
-      Async do |task|
+      Async do
         @ratelimit_handler.wait("DELETE", path)
         resp = http.delete(get_path(path), get_headers(headers, "", audit_log_reason))
         data = get_response_data(resp)
         @ratelimit_handler.save("DELETE", path, resp)
-        test_error(if resp.code == "429"
-          task.sleep(data[:retry_after])
-          delete(path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-        else
-          [resp, data]
-        end)
+        handle_response(:delete, resp, data, path, nil, headers, audit_log_reason, kwargs)
       end
     end
 
@@ -198,9 +172,15 @@ module Discorb
 
     private
 
-    def test_error(ary)
-      resp, data = *ary
+    def handle_response(method, resp, data, path, body, headers, audit_log_reason, kwargs)
       case resp.code
+      when "429"
+        sleep(data[:retry_after])
+        if body
+          __send__(method, path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        else
+          __send__(method, path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        end
       when "400"
         raise BadRequestError.new(resp, data)
       when "401"
