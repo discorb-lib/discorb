@@ -12,11 +12,15 @@ https://socketry.github.io/async/ for more information.
 
 ### What is `Guild`?
 
-It means a `server` in official Discord client.
+It means a `server` of Discord.
+
+### What is difference between `User` and `Member`?
+
+`User` is a object for account, `Member` is a object for user in guild.
 
 ## How can I ...?
 
-## How can I do something with sent messages?
+### How can I do something with sent messages?
 
 Use `Async::Task#wait` method.
 
