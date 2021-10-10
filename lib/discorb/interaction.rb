@@ -490,7 +490,7 @@ module Discorb
 
         option_map = command.options.map { |k, v| [k.to_s, v[:default]] }.to_h
         options ||= []
-        options.each do |option|
+        options.each_with_index do |option|
           val = case option[:type]
             when 3, 4, 5, 10
               option[:value]
@@ -503,17 +503,10 @@ module Discorb
             when 9
               guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
             end
-          class << val
-            attr_writer :option_focused
-
-            def focused?
-              @option_focused
-            end
-          end
-          val.option_focused = option[:focused]
           option_map[option[:name]] = val
         end
-        val = command.options.values[option_map.values.index { |o| o.focused? }][:autocomplete]&.call(self, *command.options.map { |k, v| option_map[k.to_s] })
+        focused_index = options.find_index { |o| o[:focused] }
+        val = command.options.values[focused_index][:autocomplete]&.call(self, *command.options.map { |k, v| option_map[k.to_s] })
         send_complete_result(val)
       end
     end
