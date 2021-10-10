@@ -72,20 +72,11 @@ module Discorb
     end
 
     #
-    # Format the member to `@name` style.
-    #
-    # @return [String] The formatted member.
-    #
-    def to_s
-      "@#{name}"
-    end
-
-    #
     # Format the member to `Username#Discriminator` style.
     #
     # @return [String] The formatted member.
     #
-    def to_s_user
+    def to_s
       "#{username}##{discriminator}"
     end
 
