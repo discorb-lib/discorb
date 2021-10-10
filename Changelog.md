@@ -2,6 +2,17 @@
 
 # Changelog
 
+## v0.11
+
+### v0.11.0
+
+- Add: Improve documents
+- Add: Implement global rate limits
+- Add: Add support autocomplete
+- Add: Add role icon editting
+- Change: Use `include Discorb::Extension` instead of `< Discorb::Extension`
+- Fix: Fix role operation
+
 ## v0.10
 
 ### v0.10.3
