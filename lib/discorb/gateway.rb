@@ -572,6 +572,11 @@ module Discorb
               }
               send_gateway(6, **payload)
             end
+          when 7
+            @log.info "Received opcode 7, reconnecting"
+            @tasks.map(&:stop)
+            @connection.close
+            connect_gateway(false)
           when 9
             @log.warn "Received opcode 9, closed connection"
             @tasks.map(&:stop)
