@@ -175,6 +175,7 @@ module Discorb
     def handle_response(method, resp, data, path, body, headers, audit_log_reason, kwargs)
       case resp.code
       when "429"
+        @client.log.info("Rate limit exceeded for #{method} #{path}, waiting #{data[:retry_after]} seconds")
         sleep(data[:retry_after])
         if body
           __send__(method, path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
@@ -227,15 +228,19 @@ module Discorb
     end
 
     def get_response_data(resp)
-      if resp["Via"].nil? && resp.code == "429"
+      begin
+        data = JSON.parse(resp.body, symbolize_names: true)
+      rescue JSON::ParserError, TypeError
+        if resp.body.nil? || resp.body.empty?
+          data = nil
+        else
+          data = resp.body
+        end
+      end
+      if resp["Via"].nil? && resp.code == "429" && data.is_a?(String)
         raise CloudFlareBanError.new(resp, @client)
       end
-      rd = resp.body
-      if rd.nil? || rd.empty?
-        nil
-      else
-        JSON.parse(rd, symbolize_names: true)
-      end
+      data
     end
 
     def http

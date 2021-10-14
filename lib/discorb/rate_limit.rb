@@ -9,8 +9,8 @@ module Discorb
     # @private
     def initialize(client)
       @client = client
-      @ratelimit_hash = {}
-      @path_ratelimit_hash = {}
+      @current_ratelimits = {}
+      @path_ratelimit_bucket = {}
       @global = false
     end
 
@@ -25,24 +25,23 @@ module Discorb
 
       if @global
         time = b[:reset_at] - Time.now.to_i
-        @client.log.info("Global ratelimit reached, waiting #{time} seconds")
+        @client.log.info("Ratelimit: global rate limit reached, waiting #{time} seconds")
         sleep(time)
         @global = false
-        
       end
 
-      return unless hash = @path_ratelimit_hash[method + path]
+      return unless hash = @path_ratelimit_bucket[method + path]
 
-      return unless b = @ratelimit_hash[hash]
+      return unless b = @current_ratelimits[hash]
 
-      if b[:reset_at] < Time.now.to_i
-        @ratelimit_hash.delete(hash)
+      if b[:reset_at] < Time.now.to_f
+        @current_ratelimits.delete(hash)
         return
       end
       return if b[:remaining] > 0
 
-      time = b[:reset_at] - Time.now.to_i
-      @client.log.info("Ratelimit reached, waiting #{time} seconds")
+      time = b[:reset_at] - Time.now.to_f
+      @client.log.info("Ratelimit: rate limit for #{method} #{path} reached, waiting #{time} seconds")
       sleep(time)
     end
 
@@ -59,10 +58,10 @@ module Discorb
       end
       return unless resp["X-RateLimit-Remaining"]
 
-      @path_ratelimit_hash[method + path] = resp["X-RateLimit-Bucket"]
-      @ratelimit_hash[resp["X-RateLimit-Bucket"]] = {
+      @path_ratelimit_bucket[method + path] = resp["X-RateLimit-Bucket"]
+      @current_ratelimits[resp["X-RateLimit-Bucket"]] = {
         remaining: resp["X-RateLimit-Remaining"].to_i,
-        reset_at: resp["X-RateLimit-Reset"].to_i,
+        reset_at: Time.now.to_f + resp["X-RateLimit-Reset-After"].to_f,
       }
     end
   end

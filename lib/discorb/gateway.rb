@@ -495,6 +495,7 @@ module Discorb
               @connection = connection
               @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               @buffer = +""
+
               while (message = @connection.read)
                 @buffer << message
                 if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
@@ -524,7 +525,10 @@ module Discorb
               @log.error "Discord WebSocket closed: #{e.message}"
               connect_gateway(false)
             end
-          rescue EOFError, Async::Wrapper::Cancelled
+          rescue EOFError, Async::Wrapper::Cancelled, Async::Wrapper::WaitError
+            connect_gateway(false)
+          rescue => e
+            @log.error "Discord WebSocket error: #{e.message}"
             connect_gateway(false)
           end
         end
