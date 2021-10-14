@@ -506,7 +506,7 @@ module Discorb
                   rescue JSON::ParserError
                     @buffer = +""
                     @log.error "Received invalid JSON from gateway."
-                    @log.debug data
+                    @log.debug "#{data}"
                   else
                     handle_gateway(message)
                   end
@@ -537,7 +537,7 @@ module Discorb
       def send_gateway(opcode, **value)
         @connection.write({ op: opcode, d: value }.to_json)
         @connection.flush
-        @log.debug "Sent message: #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
+        @log.debug "Sent message #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
       end
 
       def handle_gateway(payload)
@@ -1033,7 +1033,7 @@ module Discorb
           if respond_to?("event_" + event_name.downcase)
             __send__("event_" + event_name.downcase, data)
           else
-            @log.debug "Received unknown event: #{event_name}\n#{data.inspect}"
+            @log.debug "#{event_name}\n#{data.inspect}"
           end
         end
       end

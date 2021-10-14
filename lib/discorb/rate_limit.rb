@@ -25,7 +25,7 @@ module Discorb
 
       if @global
         time = b[:reset_at] - Time.now.to_i
-        @client.log.info("Ratelimit: global rate limit reached, waiting #{time} seconds")
+        @client.log.info("global rate limit reached, waiting #{time} seconds")
         sleep(time)
         @global = false
       end
@@ -41,7 +41,7 @@ module Discorb
       return if b[:remaining] > 0
 
       time = b[:reset_at] - Time.now.to_f
-      @client.log.info("Ratelimit: rate limit for #{method} #{path} reached, waiting #{time} seconds")
+      @client.log.info("rate limit for #{method} #{path} reached, waiting #{time} seconds")
       sleep(time)
     end
 
