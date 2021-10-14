@@ -4,6 +4,13 @@
 
 ## v0.11
 
+### v0.11.1
+
+- Improve: Improve rate limit handling
+- Fix: Fix bug in Integration initalization
+- Change: Change log style
+- Add: Support OP code 7
+
 ### v0.11.0
 
 - Add: Improve documents
