@@ -493,7 +493,7 @@ module Discorb
         @close_condition = Async::Condition.new
         @main_task = Async do
           @status = :running
-          connect_gateway(true).wait
+          connect_gateway(false).wait
         rescue
           @status = :stopped
           @close_condition.signal

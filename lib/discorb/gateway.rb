@@ -481,11 +481,10 @@ module Discorb
     module Handler
       private
 
-      def connect_gateway(first)
+      def connect_gateway(reconnect)
         @log.info "Connecting to gateway."
         Async do
-          @http = HTTP.new(self) if first
-          @first = first
+          @http = HTTP.new(self)
           _, gateway_response = @http.get("/gateway").wait
           gateway_url = gateway_response[:url]
           endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json&compress=zlib-stream",
@@ -508,21 +507,32 @@ module Discorb
                     @log.error "Received invalid JSON from gateway."
                     @log.debug "#{data}"
                   else
-                    handle_gateway(message)
+                    handle_gateway(message, reconnect)
                   end
                 end
               end
             end
           rescue Protocol::WebSocket::ClosedError => e
-            case e.message
-            when "Authentication failed."
-              @tasks.map(&:stop)
-              raise ClientError.new("Authentication failed."), cause: nil
-            when "Discord WebSocket requesting client reconnect."
-              @log.info "Discord WebSocket requesting client reconnect"
-              connect_gateway(false)
+            @tasks.map(&:stop)
+            case e.code
+            when 4004
+              raise ClientError.new("Authentication failed"), cause: nil
+            when 4009
+              @log.info "Session timed out, reconnecting."
+              connect_gateway(true)
+            when 4014
+              raise ClientError.new("Disallowed intents were specified"), cause: nil
+            when 4002, 4003, 4005, 4007
+              raise ClientError.new(<<~EOS), cause: e
+                                               Disconnected from gateway, probably due to library issues.
+                                               #{e.message}
+
+                                               Please report this to the library issue tracker.
+                                               https://github.com/discorb-lib/discorb/issues
+                                             EOS
             else
-              @log.error "Discord WebSocket closed: #{e.message}"
+              @log.error "Discord WebSocket closed with code #{e.code}."
+              @log.debug "#{e.message}"
               connect_gateway(false)
             end
           rescue EOFError, Async::Wrapper::Cancelled, Async::Wrapper::WaitError
@@ -540,7 +550,7 @@ module Discorb
         @log.debug "Sent message #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
       end
 
-      def handle_gateway(payload)
+      def handle_gateway(payload, reconnect)
         Async do |task|
           data = payload[:d]
           @last_s = payload[:s] if payload[:s]
@@ -548,7 +558,14 @@ module Discorb
           case payload[:op]
           when 10
             @heartbeat_interval = data[:heartbeat_interval]
-            if @first
+            if reconnect
+              payload = {
+                token: @token,
+                session_id: @session_id,
+                seq: @last_s,
+              }
+              send_gateway(6, **payload)
+            else
               payload = {
                 token: @token,
                 intents: @intents.value,
@@ -557,38 +574,24 @@ module Discorb
               }
               payload[:presence] = @identify_presence if @identify_presence
               send_gateway(2, **payload)
-              Async do
-                sleep 2
-                next unless @uncached_guilds.nil?
-
-                raise ClientError, "Failed to connect to gateway.\nHint: This usually means that your intents are invalid."
-                exit 1
-              end
-            else
-              payload = {
-                token: @token,
-                session_id: @session_id,
-                seq: @last_s,
-              }
-              send_gateway(6, **payload)
             end
           when 7
             @log.info "Received opcode 7, reconnecting"
             @tasks.map(&:stop)
             @connection.close
-            connect_gateway(false)
+            connect_gateway(true)
           when 9
             @log.warn "Received opcode 9, closed connection"
             @tasks.map(&:stop)
             if data
               @log.info "Connection is resumable, reconnecting"
               @connection.close
-              connect_gateway(false)
+              connect_gateway(true)
             else
               @log.info "Connection is not resumable, reconnecting with opcode 2"
               sleep(2)
               @connection.close
-              connect_gateway(true)
+              connect_gateway(false)
             end
           when 11
             @log.debug "Received opcode 11"
