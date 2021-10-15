@@ -589,8 +589,8 @@ module Discorb
               connect_gateway(true)
             else
               @log.info "Connection is not resumable, reconnecting with opcode 2"
-              sleep(2)
               @connection.close
+              sleep(2)
               connect_gateway(false)
             end
           when 11
