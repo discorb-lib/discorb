@@ -8,7 +8,7 @@
 
 ----
 
-discorb is a Discord API wrapper for Ruby.
+discorb is a Discord API wrapper written in Ruby.
 
 ## Installation
 
@@ -98,7 +98,7 @@ end
 client.run(ENV["DISCORD_BOT_TOKEN"])
 ```
 
-Note: You must run `discorb setup` before using slash commands.
+Note you must run `discorb setup` before using slash commands.
 
 ## Contributing
 
