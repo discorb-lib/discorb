@@ -88,6 +88,11 @@ Fires when the client is resumed connection.
 Fires when an error occurs during an event.
 Defaults to printing the error to stderr, override to handle it yourself.
 
+#### `setup()`
+
+Fires when `discorb setup` is run.
+This is useful for setting up some dependencies, such as the database.
+
 ### Guild events
 
 #### `guild_join(guild)`

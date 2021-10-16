@@ -2,7 +2,7 @@
 
 # discorb setup
 
-This command will setup application commands.
+This command will setup application commands, and call `setup` event.
 
 ## Usage
 

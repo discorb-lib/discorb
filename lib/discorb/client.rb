@@ -468,6 +468,10 @@ module Discorb
           guild_ids = false
         end
         setup_commands(token, guild_ids: guild_ids).wait
+        @events[:setup]&.each do |event|
+          event.call
+        end
+        self.on_setup if respond_to? :on_setup
       end
     end
 
