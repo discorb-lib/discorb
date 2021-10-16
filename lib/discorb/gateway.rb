@@ -554,7 +554,8 @@ module Discorb
         Async do |task|
           data = payload[:d]
           @last_s = payload[:s] if payload[:s]
-          @log.debug "Received message with opcode #{payload[:op]} from gateway: #{data}"
+          @log.debug "Received message with opcode #{payload[:op]} from gateway:"
+          @log.debug "#{payload.to_json.gsub(@token, "[Token]")}"
           case payload[:op]
           when 10
             @heartbeat_interval = data[:heartbeat_interval]
