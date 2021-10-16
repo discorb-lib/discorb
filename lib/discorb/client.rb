@@ -446,16 +446,7 @@ module Discorb
                 ::File.open(options[:log_file], "a")
               end
             @log.level = options[:log_level].to_sym
-            @log.colorize_log = case options[:log_color]
-              when nil
-                if @log.out == $stdout || @log.out == $stderr
-                  true
-                else
-                  false
-                end
-              when true, false
-                options[:log_color]
-              end
+            @log.colorize_log = options[:log_color] == nil ? @log.out.isatty : options[:log_color]
           end
         end
         start_client(token)
