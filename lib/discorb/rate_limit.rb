@@ -24,7 +24,7 @@ module Discorb
       return if path.start_with?("https://")
 
       if @global
-        time = b[:reset_at] - Time.now.to_i
+        time = b[:reset_at] - Time.now.to_f
         @client.log.info("global rate limit reached, waiting #{time} seconds")
         sleep(time)
         @global = false
@@ -54,7 +54,7 @@ module Discorb
     #
     def save(method, path, resp)
       if resp["X-Ratelimit-Global"] == "true"
-        @global = Time.now.to_i + JSON.parse(resp.body, symbolize_names: true)[:retry_after]
+        @global = Time.now.to_f + JSON.parse(resp.body, symbolize_names: true)[:retry_after]
       end
       return unless resp["X-RateLimit-Remaining"]
 
