@@ -130,6 +130,7 @@ module Discorb
     #
     # Create a color from a Discord's color.
     # Currently these colors are supported:
+    #
     # | Color Name | Hexadecimal |
     # |------------|------------|
     # | `:teal` | `#1abc9c` |
