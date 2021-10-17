@@ -143,6 +143,48 @@ module Discorb
     end
 
     #
+    # Fetch the pinned messages in the channel.
+    # @macro async
+    # @macro http
+    #
+    # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
+    #
+    def fetch_pins
+      Async do
+        _resp, data = @client.http.get("/channels/#{channel_id.wait}/pins").wait
+        data.map { |pin| Message.new(@client, pin) }
+      end
+    end
+
+    #
+    # Pin a message in the channel.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::Message] message The message to pin.
+    # @param [String] reason The reason of pinning the message.
+    #
+    def pin_message(message, reason: nil)
+      Async do
+        @client.http.put("/channels/#{channel_id.wait}/pins/#{message.id}", {}, audit_log_reason: reason).wait
+      end
+    end
+
+    #
+    # Unpin a message in the channel.
+    # @macro async
+    # @macro http
+    #
+    # @param [Discorb::Message] message The message to unpin.
+    # @param [String] reason The reason of unpinning the message.
+    #
+    def unpin_message(message, reason: nil)
+      Async do
+        @client.http.delete("/channels/#{channel_id.wait}/pins/#{message.id}", audit_log_reason: reason).wait
+      end
+    end
+
+    #
     # Trigger the typing indicator in the channel.
     # @macro async
     # @macro http
