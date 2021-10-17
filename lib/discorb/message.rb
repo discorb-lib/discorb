@@ -455,7 +455,9 @@ module Discorb
     # @macro async
     # @macro http
     #
-    def unpin
+    # @param [String] reason The reason for unpinning the message.
+    #
+    def unpin(reason: nil)
       Async do
         channel.unpin_message(self, reason: reason).wait
       end
