@@ -4,6 +4,10 @@
 
 ## v0.11
 
+### v0.11.4
+
+- Fix: Fix unpinning messages
+
 ### v0.11.3
 
 - Add: Add `Snowflake#id` as alias for `Snowflake#to_s`
