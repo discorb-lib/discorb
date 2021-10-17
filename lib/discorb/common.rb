@@ -64,6 +64,8 @@ module Discorb
     #   Increment of snowflake.
     #
     #   @return [Integer] Increment of snowflake.
+    # @!attribute [r] id
+    #   Alias of to_s.
 
     #
     # Compares snowflake with other object.
@@ -105,5 +107,7 @@ module Discorb
     def increment
       @value & 0xFFF
     end
+
+    alias id to_s
   end
 end
