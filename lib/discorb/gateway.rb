@@ -494,22 +494,25 @@ module Discorb
               @connection = connection
               @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               @buffer = +""
-
-              while (message = @connection.read)
-                @buffer << message
-                if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
-                  begin
-                    data = @zlib_stream.inflate(@buffer)
-                    @buffer = +""
-                    message = JSON.parse(data, symbolize_names: true)
-                  rescue JSON::ParserError
-                    @buffer = +""
-                    @log.error "Received invalid JSON from gateway."
-                    @log.debug "#{data}"
-                  else
-                    handle_gateway(message, reconnect)
+              begin
+                while (message = @connection.read)
+                  @buffer << message
+                  if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
+                    begin
+                      data = @zlib_stream.inflate(@buffer)
+                      @buffer = +""
+                      message = JSON.parse(data, symbolize_names: true)
+                    rescue JSON::ParserError
+                      @buffer = +""
+                      @log.error "Received invalid JSON from gateway."
+                      @log.debug "#{data}"
+                    else
+                      handle_gateway(message, reconnect)
+                    end
                   end
                 end
+              rescue EOFError, Async::Wrapper::Cancelled, Async::Wrapper::WaitError
+                # Ignore
               end
             end
           rescue Protocol::WebSocket::ClosedError => e
@@ -538,8 +541,6 @@ module Discorb
               @log.debug "#{e.message}"
               connect_gateway(false)
             end
-          rescue EOFError, Async::Wrapper::Cancelled, Async::Wrapper::WaitError
-            connect_gateway(false)
           rescue => e
             @log.error "Discord WebSocket error: #{e.message}"
             connect_gateway(false)
