@@ -4,6 +4,12 @@
 
 ## v0.11
 
+### v0.11.2
+
+- Add: Add `setup` event
+- Fix: Fix gateway resuming
+- Add: Add GitHub Packages
+
 ### v0.11.1
 
 - Improve: Improve rate limit handling
