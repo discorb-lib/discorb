@@ -520,7 +520,7 @@ module Discorb
     #
     def unpin_message(message, reason: nil)
       Async do
-        @client.http.delete("/channels/#{@id}/pins/#{message.id}", {}, audit_log_reason: reason).wait
+        @client.http.delete("/channels/#{@id}/pins/#{message.id}", audit_log_reason: reason).wait
       end
     end
 
