@@ -511,8 +511,10 @@ module Discorb
                     end
                   end
                 end
-              rescue EOFError, Async::Wrapper::Cancelled, Async::Wrapper::WaitError
+              rescue Async::Wrapper::Cancelled
                 # Ignore
+              rescue Async::Wrapper::WaitError
+                retry
               end
             end
           rescue Protocol::WebSocket::ClosedError => e
