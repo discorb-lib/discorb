@@ -66,6 +66,8 @@ module Discorb
     #   @return [Integer] Increment of snowflake.
     # @!attribute [r] id
     #   Alias of to_s.
+    #
+    #   @return [String] The snowflake.
 
     #
     # Compares snowflake with other object.
