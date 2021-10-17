@@ -530,8 +530,8 @@ module Discorb
                                                Please report this to the library issue tracker.
                                                https://github.com/discorb-lib/discorb/issues
                                              EOS
-            when 1002
-              @log.info "Gateway closed with code 1002, reconnecting."
+            when 1001
+              @log.info "Gateway closed with code 1001, reconnecting."
               connect_gateway(true)
             else
               @log.error "Discord WebSocket closed with code #{e.code}."
