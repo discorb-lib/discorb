@@ -4,6 +4,11 @@
 
 ## v0.11
 
+### v0.11.3
+
+- Add: Add `Snowflake#id` as alias for `Snowflake#to_s`
+- Fix: Fix `Message#unpin`
+
 ### v0.11.2
 
 - Add: Add `setup` event
