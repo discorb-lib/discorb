@@ -38,7 +38,8 @@ module Discorb
   # @abstract
   #
   class HTTPError < DiscorbError
-    # @return [String] the HTTP response code.
+    # @return [String] the JSON response code.
+    # @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
     attr_reader :code
     # @return [Net::HTTPResponse] the HTTP response.
     attr_reader :response
@@ -47,7 +48,7 @@ module Discorb
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
-      super(data[:message])
+      super(data[:message] + " (#{@code})")
     end
   end
 
@@ -60,9 +61,11 @@ module Discorb
       @code = data[:code]
       @response = resp
       DiscorbError.instance_method(:initialize).bind(self).call(
-        [data[:message], enumerate_errors(data[:errors]).map do |ek, ev|
-          "#{ek}=>#{ev}"
-        end.join("\n")].join("\n")
+        [
+          data[:message] + " (#{@code})", enumerate_errors(data[:errors])
+            .map { |ek, ev| "#{ek}=>#{ev}" }
+            .join("\n"),
+        ].join("\n")
       )
     end
   end
