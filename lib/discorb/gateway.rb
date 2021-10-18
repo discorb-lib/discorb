@@ -513,7 +513,7 @@ module Discorb
                 end
               rescue Async::Wrapper::Cancelled
                 # Ignore
-              rescue Async::Wrapper::WaitError
+              rescue Async::Wrapper::WaitError, EOFError
                 retry
               end
             end
