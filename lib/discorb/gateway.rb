@@ -544,8 +544,7 @@ module Discorb
               connect_gateway(false)
             end
           rescue => e
-            @log.error "Discord WebSocket error: #{e.message}"
-            @log.debug "#{e.backtrace.join("\n")}"
+            @log.error "Discord WebSocket error: #{e.full_message}"
             connect_gateway(false)
           end
         end
