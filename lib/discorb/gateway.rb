@@ -513,7 +513,7 @@ module Discorb
                 end
               rescue Async::Wrapper::Cancelled
                 # Ignore
-              rescue Async::Wrapper::WaitError, EOFError
+              rescue Async::Wrapper::WaitError, EOFError, OpenSSL::SSL::SSLError
                 retry
               end
             end
