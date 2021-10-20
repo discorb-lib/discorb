@@ -642,7 +642,7 @@ module Discorb
             ready
           end
           dispatch(:ready)
-          # @tasks << handle_heartbeat
+          @tasks << handle_heartbeat
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
             Guild.new(self, data, true)
