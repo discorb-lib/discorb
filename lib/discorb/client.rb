@@ -480,8 +480,9 @@ module Discorb
 
     def start_client(token)
       Async do |task|
-        trap(:SIGINT) {
+        Signal.trap(:SIGINT) {
           @log.info "SIGINT received, closing..."
+          Signal.trap(:SIGINT, "DEFAULT")
           close!
         }
         @token = token.to_s

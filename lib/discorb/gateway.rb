@@ -482,40 +482,43 @@ module Discorb
       private
 
       def connect_gateway(reconnect)
-        @log.info "Connecting to gateway."
+        if reconnect
+          @log.info "Reconnecting to gateway..."
+        else
+          @log.info "Connecting to gateway..."
+        end
         Async do
+          @connection&.close
           @http = HTTP.new(self)
           _, gateway_response = @http.get("/gateway").wait
           gateway_url = gateway_response[:url]
           endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json&compress=zlib-stream",
                                                  alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
           begin
-            Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection) do |connection|
-              @connection = connection
-              @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
-              buffer = +""
-              begin
-                while (message = @connection.read)
-                  buffer << message
-                  if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
-                    begin
-                      data = @zlib_stream.inflate(buffer)
-                      buffer = +""
-                      message = JSON.parse(data, symbolize_names: true)
-                    rescue JSON::ParserError
-                      buffer = +""
-                      @log.error "Received invalid JSON from gateway."
-                      @log.debug "#{data}"
-                    else
-                      handle_gateway(message, reconnect)
-                    end
+            @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
+            @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
+            buffer = +""
+            begin
+              while (message = @connection.read)
+                buffer << message
+                if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
+                  begin
+                    data = @zlib_stream.inflate(buffer)
+                    buffer = +""
+                    message = JSON.parse(data, symbolize_names: true)
+                  rescue JSON::ParserError
+                    buffer = +""
+                    @log.error "Received invalid JSON from gateway."
+                    @log.debug "#{data}"
+                  else
+                    handle_gateway(message, reconnect)
                   end
                 end
-              rescue Async::Wrapper::Cancelled
-                # Ignore
-              rescue Async::Wrapper::WaitError, EOFError, OpenSSL::SSL::SSLError
-                retry
               end
+            rescue Async::Wrapper::Cancelled, OpenSSL::SSL::SSLError, Async::Wrapper::WaitError, EOFError => e
+              # Ignore
+            else # should never happen
+              connect_gateway(true)
             end
           rescue Protocol::WebSocket::ClosedError => e
             @tasks.map(&:stop)
@@ -639,7 +642,7 @@ module Discorb
             ready
           end
           dispatch(:ready)
-          @tasks << handle_heartbeat
+          # @tasks << handle_heartbeat
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
             Guild.new(self, data, true)
