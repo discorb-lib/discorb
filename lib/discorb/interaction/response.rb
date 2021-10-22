@@ -45,13 +45,8 @@ module Discorb
           payload = {}
           payload[:content] = content if content
           payload[:tts] = tts
-          tmp_embed = if embed
-              [embed]
-            elsif embeds
-              embeds
-            end
-          payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
-          payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
+          payload[:embeds] = (embeds || [embed])&.map(&:to_hash)
+          payload[:allowed_mentions] = allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
           payload[:components] = Component.to_payload(components) if components
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
 
