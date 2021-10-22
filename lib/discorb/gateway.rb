@@ -484,6 +484,7 @@ module Discorb
       def connect_gateway(reconnect)
         if reconnect
           @log.info "Reconnecting to gateway..."
+          sleep 5
         else
           @log.info "Connecting to gateway..."
         end
@@ -516,7 +517,8 @@ module Discorb
                 end
               end
             rescue Async::Wrapper::Cancelled, OpenSSL::SSL::SSLError, Async::Wrapper::WaitError, EOFError => e
-              retry
+              @log.error "Gateway connection closed: #{e.class}: #{e.message}"
+              connect_gateway(true)
             else # should never happen
               connect_gateway(true)
             end
