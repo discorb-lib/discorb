@@ -516,7 +516,7 @@ module Discorb
                 end
               end
             rescue Async::Wrapper::Cancelled, OpenSSL::SSL::SSLError, Async::Wrapper::WaitError, EOFError => e
-              # Ignore
+              retry
             else # should never happen
               connect_gateway(true)
             end
