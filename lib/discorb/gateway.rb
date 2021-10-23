@@ -518,7 +518,7 @@ module Discorb
               end
             rescue Async::Wrapper::Cancelled, OpenSSL::SSL::SSLError, Async::Wrapper::WaitError, EOFError => e
               @log.error "Gateway connection closed: #{e.class}: #{e.message}"
-              connect_gateway(false)
+              connect_gateway(true)
             else # should never happen
               connect_gateway(true)
             end
@@ -1041,6 +1041,7 @@ module Discorb
           dispatch(interaction.class.event_name, interaction)
         when "RESUMED"
           @log.info("Successfully resumed connection")
+          @tasks << handle_heartbeat
           dispatch(:resumed)
         else
           if respond_to?("event_" + event_name.downcase)
