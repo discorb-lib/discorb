@@ -484,7 +484,6 @@ module Discorb
       def connect_gateway(reconnect)
         if reconnect
           @log.info "Reconnecting to gateway..."
-          sleep 5
         else
           @log.info "Connecting to gateway..."
         end
