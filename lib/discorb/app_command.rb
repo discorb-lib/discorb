@@ -173,6 +173,14 @@ module Discorb
       end
 
       # @private
+      def replace_block(instance)
+        current_block = @block.dup
+        @block = Proc.new do |*args|
+          instance.instance_exec(*args, &current_block)
+        end
+      end
+
+      # @private
       def to_hash
         {
           name: @name,
@@ -312,6 +320,12 @@ module Discorb
         #
         def to_s
           @name
+        end
+
+        # @private
+        def block_replace(instance)
+          super
+          @commands.each { |c| c.replace_block(instance) }
         end
 
         # @private

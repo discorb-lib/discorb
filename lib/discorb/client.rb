@@ -399,6 +399,7 @@ module Discorb
       end
       ins.class.commands.each do |cmd|
         cmd.define_singleton_method(:extension) { ins.name }
+        cmd.replace_block(ins)
         @commands << cmd
       end
 
