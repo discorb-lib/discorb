@@ -395,10 +395,10 @@ module Discorb
         end
       end
       @commands.delete_if do |cmd|
-        cmd.respond_to? :extension and cmd.extension == ins.name
+        cmd.respond_to? :extension and cmd.extension == ins.class.name
       end
       ins.class.commands.each do |cmd|
-        cmd.define_singleton_method(:extension) { ins.name }
+        cmd.define_singleton_method(:extension) { ins.class.name }
         cmd.replace_block(ins)
         @commands << cmd
       end
