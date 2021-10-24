@@ -4,6 +4,11 @@
 
 ## v0.12
 
+### v0.12.2
+
+- Fix: Fix `Message#type`
+- Change: `discorb run` will lookup for `main.rb` in parent directories
+
 ### v0.12.1
 
 - Fix: Fix some texts
