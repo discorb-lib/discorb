@@ -26,6 +26,9 @@ module Discorb
 
     include Discorb::Messageable
 
+    # @!attribute [r] mention
+    #   @return [String] The user's mention.
+
     # @private
     def initialize(client, data)
       @client = client
@@ -41,6 +44,10 @@ module Discorb
     #
     def to_s
       "#{@username}##{@discriminator}"
+    end
+
+    def mention
+      "<@#{@id}>"
     end
 
     alias to_s_user to_s
