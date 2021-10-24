@@ -420,11 +420,11 @@ module Discorb
     #
     # @param [String, nil] token The token to use.
     #
-    # @note If the token is nil, you should use `discorb run` with the `-t` or `--token` option.
+    # @note If the token is nil, you should use `discorb run` with the `-e` or `--env` option.
     #
     def run(token = nil)
       token ||= ENV["DISCORB_CLI_TOKEN"]
-      raise ArgumentError, "Token is not specified, and -t/--token is not specified" if token.nil?
+      raise ArgumentError, "Token is not specified, and -e/--env is not specified" if token.nil?
       case ENV["DISCORB_CLI_FLAG"]
       when nil
         start_client(token)
