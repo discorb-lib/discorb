@@ -26,7 +26,7 @@ module Discorb
         end
 
         option_map = command.options.map { |k, v| [k.to_s, v[:default]] }.to_h
-        SlashCommand.modify_option_map(option_map, options)
+        SlashCommand.modify_option_map(option_map, options, guild)
 
         command.block.call(self, *command.options.map { |k, v| option_map[k.to_s] })
       end
@@ -59,7 +59,7 @@ module Discorb
         end
 
         # @private
-        def modify_option_map(option_map, options)
+        def modify_option_map(option_map, options, guild)
           options ||= []
           options.each_with_index do |option|
             val = case option[:type]
