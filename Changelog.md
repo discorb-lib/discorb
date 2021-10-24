@@ -4,6 +4,11 @@
 
 ## v0.12
 
+### v0.12.1
+
+- Fix: Fix some texts
+- Add: Add `User#mention`
+
 ### v0.12.0
 
 - Refactor: Refactor the code
