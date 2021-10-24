@@ -36,25 +36,25 @@ module Discorb
         def get_command_data(data)
           name = data[:name]
           options = nil
-          if (option = data[:options]&.first)
-            case option[:type]
-            when 1
-              name += " #{option[:name]}"
+          return name, options unless (option = data[:options]&.first)
+
+          case option[:type]
+          when 1
+            name += " #{option[:name]}"
+            options = option[:options]
+          when 2
+            name += " #{option[:name]}"
+            unless option[:options]&.first&.[](:type) == 1
               options = option[:options]
-            when 2
-              name += " #{option[:name]}"
-              if (option_sub = option[:options]&.first)
-                if option_sub[:type] == 1
-                  name += " #{option_sub[:name]}"
-                  options = option_sub[:options]
-                else
-                  options = option[:options]
-                end
-              end
-            else
-              options = data[:options]
+              return name, options
             end
+            option_sub = option[:options]&.first
+            name += " #{option_sub[:name]}"
+            options = option_sub[:options]
+          else
+            options = data[:options]
           end
+
           return name, options
         end
 
