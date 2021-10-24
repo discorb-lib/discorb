@@ -2,6 +2,10 @@
 
 # Changelog
 
+## Unreleased
+
+- Fix: Fix NoMethodError in command interaction
+
 ## v0.12
 
 ### v0.12.2
