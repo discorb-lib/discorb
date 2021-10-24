@@ -429,41 +429,10 @@ module Discorb
       when nil
         start_client(token)
       when "run"
-        require "json"
-        options = JSON.parse(ENV["DISCORB_CLI_OPTIONS"], symbolize_names: true)
-        @daemon = options[:daemon]
-
-        setup_commands(token) if options[:setup]
-        if options[:log_level]
-          if options[:log_level] == "none"
-            @log.out = nil
-          else
-            @log.out = case options[:log_file]
-              when nil, "stderr"
-                $stderr
-              when "stdout"
-                $stdout
-              else
-                ::File.open(options[:log_file], "a")
-              end
-            @log.level = options[:log_level].to_sym
-            @log.colorize_log = options[:log_color] == nil ? @log.out.isatty : options[:log_color]
-          end
-        end
+        before_run(token)
         start_client(token)
       when "setup"
-        guild_ids = "global"
-        if guilds = ENV["DISCORB_SETUP_GUILDS"]
-          guild_ids = guilds.split(",")
-        end
-        if guild_ids == ["global"]
-          guild_ids = false
-        end
-        setup_commands(token, guild_ids: guild_ids).wait
-        @events[:setup]&.each do |event|
-          event.call
-        end
-        self.on_setup if respond_to? :on_setup
+        run_setup(token)
       end
     end
 
@@ -478,6 +447,43 @@ module Discorb
     end
 
     private
+
+    def before_run(token)
+      require "json"
+      options = JSON.parse(ENV["DISCORB_CLI_OPTIONS"], symbolize_names: true)
+      setup_commands(token) if options[:setup]
+      if options[:log_level]
+        if options[:log_level] == "none"
+          @log.out = nil
+        else
+          @log.out = case options[:log_file]
+            when nil, "stderr"
+              $stderr
+            when "stdout"
+              $stdout
+            else
+              ::File.open(options[:log_file], "a")
+            end
+          @log.level = options[:log_level].to_sym
+          @log.colorize_log = options[:log_color] == nil ? @log.out.isatty : options[:log_color]
+        end
+      end
+    end
+
+    def run_setup(token)
+      guild_ids = "global"
+      if guilds = ENV["DISCORB_SETUP_GUILDS"]
+        guild_ids = guilds.split(",")
+      end
+      if guild_ids == ["global"]
+        guild_ids = false
+      end
+      setup_commands(token, guild_ids: guild_ids).wait
+      @events[:setup]&.each do |event|
+        event.call
+      end
+      self.on_setup if respond_to? :on_setup
+    end
 
     def start_client(token)
       Async do |task|
