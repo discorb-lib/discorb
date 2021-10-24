@@ -2,6 +2,14 @@
 
 # Changelog
 
+## v0.12
+
+### v0.12.0
+
+- Refactor: Refactor the code
+- Fix: Fix resuming gateway, finally
+- Fix: Fix `@client` in slash command handler in extension
+
 ## v0.11
 
 ### v0.11.4
