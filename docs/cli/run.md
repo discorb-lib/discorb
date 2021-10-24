@@ -16,6 +16,7 @@ discorb run [options] [script]
 #### `script`
 
 The script to run. Defaults to `main.rb`.
+If the script wasn't specified, it will also look for a file named `main.rb` in the parent directories, like rake.
 
 ### Options
 

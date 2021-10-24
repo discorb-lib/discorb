@@ -42,7 +42,22 @@ opt.parse!(ARGV)
 
 script = ARGV[0]
 
-script ||= "main.rb"
+if script.nil?
+  script = "main.rb"
+  dir = Dir.pwd
+  loop do
+    if File.exist?(File.join(dir, "main.rb"))
+      script = File.join(dir, "main.rb")
+      break
+    end
+    break if dir == File.dirname(dir)
+    dir = File.dirname(dir)
+  end
+  if File.dirname(script) != Dir.pwd
+    Dir.chdir(File.dirname(script))
+    iputs "Changed directory to \e[m#{File.dirname(script)}"
+  end
+end
 
 ENV["DISCORB_CLI_FLAG"] = "run"
 ENV["DISCORB_CLI_OPTIONS"] = JSON.generate(options)
