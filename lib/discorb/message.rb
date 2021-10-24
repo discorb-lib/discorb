@@ -109,9 +109,10 @@ module Discorb
     # * `:guild_discovery_grace_period_final_warning`
     # * `:thread_created`
     # * `:reply`
-    # * `:application_command`
+    # * `:chat_input_command`
     # * `:thread_starter_message`
     # * `:guild_invite_reminder`
+    # * `:context_menu_command`
     attr_reader :type
     # @return [Discorb::Message::Activity] The activity of the message.
     attr_reader :activity
