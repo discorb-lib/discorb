@@ -84,7 +84,7 @@ module Discorb
       @account = Account.new(data[:account])
       @subscriber_count = data[:subscriber_count]
       @revoked = data[:revoked]
-      @application = Application.new(@client, data[:application])
+      @application = data[:application] and Application.new(@client, data[:application])
     end
 
     class << self
