@@ -2,11 +2,12 @@
 
 # Changelog
 
-## Unreleased
+## v0.12
+
+### v0.12.3
 
 - Fix: Fix NoMethodError in command interaction
-
-## v0.12
+- Fix: Fix NoMethodError in Integration#initialize
 
 ### v0.12.2
 
