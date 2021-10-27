@@ -22,6 +22,7 @@ def yard_replace(dir, version)
 <h1 class="noborder title">Documentation by YARD 0.9.26</h1>
     HTML3
     HTML4
+    contents.gsub!(/Documentation by YARD \d+\.\d+\.\d+/, "discorb documentation for #{version}")
     File.write(file, contents)
   end
 end
