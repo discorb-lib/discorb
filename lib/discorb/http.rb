@@ -144,7 +144,7 @@ module Discorb
     end
 
     #
-    # A helper method to send multipart/form-data requests.
+    # A helper method to send multipart/form-data requests for creating messages.
     #
     # @param [Hash] payload The payload to send.
     # @param [Array<Discorb::File>] files The files to send.
@@ -159,15 +159,22 @@ module Discorb
 
         #{payload.to_json}
       HTTP
-      files.each do |single_file|
+      files.each_with_index do |single_file, i|
         str_payloads << <<~HTTP
-          Content-Disposition: form-data; name="file"; filename="#{single_file.filename}"
+          Content-Disposition: form-data; name="files[#{i}]"; filename="#{single_file.filename}"
           Content-Type: #{single_file.content_type}
 
           #{single_file.io.read}
         HTTP
       end
-      [boundary, "--#{boundary}\n#{str_payloads.join("\n--#{boundary}\n")}\n--#{boundary}--"]
+      payload = +"--#{boundary}".encode(Encoding::ASCII_8BIT)
+      str_payloads.each do |str_payload|
+        payload << "\r\n".encode(Encoding::ASCII_8BIT)
+        payload << str_payload.force_encoding(Encoding::ASCII_8BIT)
+        payload << "\r\n--#{boundary}".encode(Encoding::ASCII_8BIT)
+      end
+      payload += +"--".encode(Encoding::ASCII_8BIT)
+      [boundary, payload]
     end
 
     private
