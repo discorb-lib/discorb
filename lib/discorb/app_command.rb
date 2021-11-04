@@ -27,6 +27,7 @@ module Discorb
       #   | `:default` | `Object` | Default value of the option. |
       #   | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
       #   | `:autocomplete` | `Proc` | Autocomplete function. |
+      #   | `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |
       #
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
@@ -251,6 +252,10 @@ module Discorb
             ret[:channel_types] = value[:channel_types].map(&:channel_type) if value[:channel_types]
 
             ret[:autocomplete] = !!value[:autocomplete] if value[:autocomplete]
+            if value[:range]
+              ret[:min_value] = value[:range].begin
+              ret[:max_value] = value[:range].end
+            end
             ret
           end
           {
