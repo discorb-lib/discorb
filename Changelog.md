@@ -4,6 +4,12 @@
 
 ## v0.12
 
+### v0.12.4
+
+- Update: Update emoji table
+- Add: Support min_value and max_value for numeric options in slash command
+- Fix: Fix sending images
+
 ### v0.12.3
 
 - Fix: Fix NoMethodError in command interaction
