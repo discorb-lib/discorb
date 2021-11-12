@@ -478,7 +478,7 @@ module Discorb
     #
     # A module to handle gateway events.
     #
-    module Handler
+    module EventHandler
       private
 
       def connect_gateway(reconnect)

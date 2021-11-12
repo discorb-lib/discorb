@@ -4784,7 +4784,7 @@ msgstr ""
 msgid "The block to execute when the event is triggered."
 msgstr ""
 
-# @return [Discorb::Event]
+# @return [Discorb::EventHandler]
 #: ../lib/discorb/client.rb:104
 #: ../lib/discorb/client.rb:118
 #: ../lib/discorb/extension.rb:24
@@ -7040,7 +7040,7 @@ msgstr ""
 msgid "a new instance of NotSupportedWarning"
 msgstr ""
 
-# Discorb::Event
+# Discorb::EventHandler
 #: ../lib/discorb/event.rb:5
 msgid "Represents a event.\n"
 "This class shouldn't be instantiated directly.\n"
@@ -7073,7 +7073,7 @@ msgstr ""
 msgid "a new instance of Event"
 msgstr ""
 
-# Discorb::Event#call
+# Discorb::EventHandler#call
 #: ../lib/discorb/event.rb:29
 msgid "Calls the block associated with the event."
 msgstr ""
@@ -7135,7 +7135,7 @@ msgstr ""
 msgid "Define a new once event."
 msgstr ""
 
-# @return [Hash{Symbol => Array<Discorb::Event>}]
+# @return [Hash{Symbol => Array<Discorb::EventHandler>}]
 #: ../lib/discorb/extension.rb:48
 msgid "The events of the extension."
 msgstr ""

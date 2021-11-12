@@ -2,11 +2,11 @@
 
 module Discorb
   #
-  # Represents a event.
+  # Represents a event handler.
   # This class shouldn't be instantiated directly.
   # Use {Client#on} instead.
   #
-  class Event
+  class EventHandler
     # @return [Proc] the block to be called.
     attr_reader :block
     # @return [Symbol] the event id.

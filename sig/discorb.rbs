@@ -2183,12 +2183,12 @@ module Discorb
     # _@return_ — The event.
     # 
     # _@see_ `file:docs/Events.md`
-    def on: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
+    def on: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::EventHandler
 
     # Almost same as {#on}, but only triggers the event once.
     # 
     # _@return_ — The event.
-    def once: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
+    def once: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::EventHandler
 
     # Remove event by ID.
     # 
@@ -3981,7 +3981,7 @@ module Discorb
   module Command
     # 
     # Module to handle commands.
-    module Handler
+    module EventHandler
           # Add new top-level command.
       # 
       # _@param_ `command_name` — Command name.
@@ -4548,7 +4548,7 @@ module Discorb
 
     # 
     # A module to handle gateway events.
-    module Handler
+    module EventHandler
           def connect_gateway: (untyped first) -> untyped
 
             def send_gateway: (untyped opcode, **untyped value) -> untyped
@@ -5798,7 +5798,7 @@ module Discorb
     # _@param_ `block` — The block to execute when the event is triggered.
     # 
     # _@return_ — The event.
-    def event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
+    def event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::EventHandler
 
     # Define a new once event.
     # 
@@ -5811,7 +5811,7 @@ module Discorb
     # _@param_ `block` — The block to execute when the event is triggered.
     # 
     # _@return_ — The event.
-    def once_event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::Event
+    def once_event: (Symbol event_name, ?id: Symbol?, **::Hash[untyped, untyped] metadata) -> Discorb::EventHandler
 
     def self.extended: (untyped obj) -> untyped
 
@@ -5886,7 +5886,7 @@ module Discorb
     def setup_commands: (?String? token, ?guild_ids: (::Array[untyped] | bool)?) -> untyped
 
     # _@return_ — The events of the extension.
-    attr_reader events: ::Hash[Symbol, ::Array[Discorb::Event]]
+    attr_reader events: ::Hash[Symbol, ::Array[Discorb::EventHandler]]
 
     # _@return_ — The commands of the extension.
     attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]
