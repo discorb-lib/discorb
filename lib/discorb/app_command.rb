@@ -8,7 +8,7 @@ module Discorb
     #
     # Module to handle application commands.
     #
-    module EventHandler
+    module Handler
       #
       # Add new top-level command.
       #

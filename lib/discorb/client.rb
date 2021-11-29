@@ -112,10 +112,10 @@ module Discorb
     # @param [Hash] metadata The metadata of the event.
     # @param [Proc] block The block to execute when the event is triggered.
     #
-    # @return [Discorb::EventListener] The event.
+    # @return [Discorb::EventHandler] The event.
     #
     def on(event_name, id: nil, **metadata, &block)
-      ne = EventListener.new(block, id, metadata)
+      ne = EventHandler.new(block, id, metadata)
       @events[event_name] ||= []
       @events[event_name].delete_if { |e| e.metadata[:override] }
       @events[event_name] << ne

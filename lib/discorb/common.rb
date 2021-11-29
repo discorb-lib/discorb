@@ -112,4 +112,25 @@ module Discorb
 
     alias id to_s
   end
+
+  Unset = Object.new
+  class << Unset
+    def method_missing(*)
+      self
+    end
+
+    def or(other)
+      other
+    end
+  end
+
+  module DefineOr
+    refine Object do
+      def or(other)
+        self
+      end
+    end
+  end
+
+  using DefineOr
 end

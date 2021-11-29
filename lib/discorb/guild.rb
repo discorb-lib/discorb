@@ -170,6 +170,113 @@ module Discorb
     end
 
     #
+    # Fetch scheduled events for the guild.
+    # @macro async
+    # @macro http
+    #
+    # @param [Boolean] with_user_count Whether to include the user count in the events.
+    #   Defaults to `true`.
+    #
+    # @return [Array<Discorb::ScheduledEvent>] The events for the guild.
+    #
+    def fetch_scheduled_events(with_user_count: true)
+      Async do
+        _resp, events = @client.http.get("/guilds/#{@id}/scheduled-events?with_user_count=#{with_user_count}").wait
+        @scheduled_events = events.map { |e| ScheduledEvent.new(@client, e) }
+      end
+    end
+
+    #
+    # Fetch the scheduled event by ID.
+    # @macro async
+    # @macro http
+    #
+    # @param [#to_s] id The ID of the scheduled event.
+    #
+    # @return [Discorb::ScheduledEvent] The event with the given ID.
+    # @return [nil] If no event with the given ID exists.
+    #
+    def fetch_scheduled_event(id)
+      Async do
+        _resp, event = @client.http.get("/guilds/#{@id}/scheduled-events/#{id}").wait
+      rescue Discorb::NotFoundError
+        return nil
+      else
+        ScheduledEvent.new(@client, event)
+      end
+    end
+
+    #
+    # Create a scheduled event for the guild.
+    #
+    # @param [:stage_instance, :voice, :external] type The type of event to create.
+    # @param [String] name The name of the event.
+    # @param [String] description The description of the event.
+    # @param [Time] start_time The start time of the event.
+    # @param [Time, nil] end_time The end time of the event. Defaults to `nil`.
+    # @param [Discorb::Channel, Discorb::Snowflake, nil] channel The channel to run the event in.
+    # @param [String, nil] location The location of the event. Defaults to `nil`.
+    # @param [:guild_only] privacy_level The privacy level of the event. This must be `:guild_only`.
+    #
+    # @return [Discorb::ScheduledEvent] The created event.
+    #
+    def create_scheduled_event(
+      type,
+      name,
+      description,
+      start_time,
+      end_time = nil,
+      privacy_level: :guild_only,
+      location: nil,
+      channel: nil
+    )
+      Async do
+        payload = case type
+          when :stage_instance
+            raise ArgumentError, "channel must be provided for stage_instance events" unless channel
+            {
+              name: name,
+              description: description,
+              scheduled_start_time: start_time.iso8601,
+              scheduled_end_time: end_time&.iso8601,
+              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level),
+              channel_id: channel&.id,
+              entity_type: Discorb::ScheduledEvent.entity_type.key(:stage_instance),
+            }
+          when :voice
+            raise ArgumentError, "channel must be provided for voice events" unless channel
+            {
+              name: name,
+              description: description,
+              scheduled_start_time: start_time.iso8601,
+              scheduled_end_time: end_time&.iso8601,
+              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level),
+              channel_id: channel&.id,
+              entity_type: Discorb::ScheduledEvent.entity_type.key(:voice),
+            }
+          when :external
+            raise ArgumentError, "location must be provided for external events" unless location
+            raise ArgumentError, "end_time must be provided for external events" unless end_time
+            {
+              name: name,
+              description: description,
+              scheduled_start_time: start_time.iso8601,
+              scheduled_end_time: end_time.iso8601,
+              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level),
+              entity_type: Discorb::ScheduledEvent.entity_type.key(:external),
+              entity_metadata: {
+                location: location,
+              },
+            }
+          else
+            raise ArgumentError, "Invalid scheduled event type: #{type}"
+          end
+        _resp, event = @client.http.post("/guilds/#{@id}/scheduled-events", payload).wait
+        Discorb::ScheduledEvent.new(@client, event)
+      end
+    end
+
+    #
     # Fetch emoji list of the guild.
     # @macro async
     # @macro http
