@@ -90,6 +90,9 @@ module Discorb
       # * `:sticker_create`
       # * `:sticker_update`
       # * `:sticker_delete`
+      # * `:guild_scheduled_event_create`
+      # * `:guild_scheduled_event_update`
+      # * `:guild_scheduled_event_delete`
       # * `:thread_create`
       # * `:thread_update`
       # * `:thread_delete`
@@ -148,9 +151,12 @@ module Discorb
         90 => :sticker_create,
         91 => :sticker_update,
         92 => :sticker_delete,
+        100 => :guild_scheduled_event_create,
+        101 => :guild_scheduled_event_update,
+        102 => :guild_scheduled_event_delete,
         110 => :thread_create,
         111 => :thread_update,
-        112 => :thread_delete
+        112 => :thread_delete,
       }.freeze
 
       # @private
@@ -160,7 +166,7 @@ module Discorb
         role: ->(client, id, guild_id) { client.guilds[guild_id]&.roles&.[](id) },
         member: ->(client, id, guild_id) { client.guilds[guild_id]&.members&.[](id) },
         guild: ->(client, id, _guild_id) { client.guilds[id] },
-        message: ->(client, id, _guild_id) { client.messages[id] }
+        message: ->(client, id, _guild_id) { client.messages[id] },
       }
 
       # @private
@@ -171,15 +177,15 @@ module Discorb
         @user_id = Snowflake.new(data[:user_id])
         @target_id = Snowflake.new(data[:target_id])
         @type = self.class.events[data[:action_type]]
-        @target = self.class.converts[@type.to_s.split('_')[0].to_sym]&.call(client, @target_id, @gui)
+        @target = self.class.converts[@type.to_s.split("_")[0].to_sym]&.call(client, @target_id, @gui)
         @target ||= Snowflake.new(data[:target_id])
         @changes = data[:changes] && Changes.new(data[:changes])
         @reason = data[:reason]
         data[:options]&.each do |option, value|
           define_singleton_method(option) { value }
-          if option.end_with?('_id')
-            define_singleton_method(option.to_s.sub('_id', '')) do
-              self.class.converts[option.to_s.split('_')[0].to_sym]&.call(client, value, @guild_id)
+          if option.end_with?("_id")
+            define_singleton_method(option.to_s.sub("_id", "")) do
+              self.class.converts[option.to_s.split("_")[0].to_sym]&.call(client, value, @guild_id)
             end
           end
         end
@@ -203,7 +209,7 @@ module Discorb
       end
 
       def inspect
-        "#<#{self.class} #{@changes&.data&.length || 'No'} changes>"
+        "#<#{self.class} #{@changes&.data&.length || "No"} changes>"
       end
 
       class << self
@@ -268,15 +274,21 @@ module Discorb
         def initialize(data)
           @key = data[:key].to_sym
           method = case @key.to_s
-                   when /.*_id$/, 'id'
-                     ->(v) { Snowflake.new(v) }
-                   when 'permissions'
-                     ->(v) { Discorb::Permission.new(v.to_i) }
-                   else
-                     ->(v) { v }
-                   end
-          @old_value = data[:old_value].then(&method)
-          @new_value = data[:new_value].then(&method)
+            when /.*_id$/, "id"
+              ->(v) { Snowflake.new(v) }
+            when "permissions"
+              ->(v) { Discorb::Permission.new(v.to_i) }
+            when "status"
+              ->(v) { Discorb::ScheduledEvent.status[v] }
+            when "entity_type"
+              ->(v) { Discorb::ScheduledEvent.entity_type[v] }
+            when "privacy_level"
+              ->(v) { Discorb::StageInstance.privacy_level[v] || Discorb::ScheduledEvent.privacy_level[v] }
+            else
+              ->(v) { v }
+            end
+          @old_value = method.(data[:old_value])
+          @new_value = method.(data[:new_value])
         end
 
         #
