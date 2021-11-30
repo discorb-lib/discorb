@@ -503,7 +503,50 @@ Fires when a select menu is selected.
 
 ### Voice events
 
-It's too big, so they're documented in {file:docs/voice_events.md}
+Because it's big, it's documented in {file:docs/voice_events.md}.
+
+### Guild scheduled event events
+
+#### `scheduled_event_create(event)`
+
+Fires when a scheduled event is created.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `event`    | {Discorb::ScheduledEvent}| The created scheduled event. |
+
+#### `scheduled_event_cancel(event)`, `scheduled_event_delete(event)`
+
+Fires when a scheduled event is canceled or deleted.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `event`    | {Discorb::ScheduledEvent}| The deleted scheduled event. |
+
+#### `scheduled_event_edit(before, after)`
+
+Fires when a scheduled event is edited.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `before`   | {Discorb::ScheduledEvent}| The scheduled event before the edit. |
+| `after`    | {Discorb::ScheduledEvent}| The scheduled event after the edit. |
+
+#### `scheduled_event_start(event)`
+
+Fires when a scheduled event is started.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `event`    | {Discorb::ScheduledEvent}| The scheduled event that started. |
+
+#### `scheduled_event_end(event)`
+
+Fires when a scheduled event is ended.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `event`    | {Discorb::ScheduledEvent}| The scheduled event that ended. |
 
 ### Low-level events
 
@@ -530,3 +573,12 @@ Fires when `THREAD_CREATE` is received.
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
 |`thread`    | {Discorb::ThreadChannel}| The thread of the event. |
+
+#### `scheduled_event_update(before, after)`
+
+Fires when `SCHEDULED_EVENT_UPDATE` is received.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `before` | {Discorb::ScheduledEvent}| The scheduled event before the update. |
+|`after`     | {Discorb::ScheduledEvent}| The scheduled event after the update. |

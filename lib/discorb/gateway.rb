@@ -1075,11 +1075,22 @@ module Discorb
           old = event.dup
           event.send(:_set_data, data)
           dispatch(:scheduled_event_update, old, event)
+          if old.status != event.status
+            case event.status
+            when :active
+              dispatch(:scheduled_event_start, event)
+            when :completed
+              dispatch(:scheduled_event_end, event)
+            end
+          else
+            dispatch(:scheduled_event_edit, old, event)
+          end
         when "GUILD_SCHEDULED_EVENT_DELETE"
           @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
           @log.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
           guild.scheduled_events.remove(data[:id])
           dispatch(:scheduled_event_delete, event)
+          dispatch(:scheduled_event_cancel, event)
         when "GUILD_SCHEDULED_EVENT_USER_ADD"
           @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
           dispatch(:scheduled_event_user_add, ScheduledEventUserEvent.new(self, data))
