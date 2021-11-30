@@ -23,8 +23,8 @@ module Discorb
     def wait(method, path)
       return if path.start_with?("https://")
 
-      if @global
-        time = b[:reset_at] - Time.now.to_f
+      if @global && @global > Time.now.to_f
+        time = @global - Time.now.to_f
         @client.log.info("global rate limit reached, waiting #{time} seconds")
         sleep(time)
         @global = false
