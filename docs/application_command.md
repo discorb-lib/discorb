@@ -49,6 +49,8 @@ client.run(ENV["DISCORD_BOT_TOKEN"])
 | `guild_ids` | The ID of the guild to register the command in. |
 | `block` | A block that will be called when the command is invoked. |
 
+Block will be called with a {Discorb::ApplicationCommand::Interaction} object and specified options.
+
 In `options`, hash should be like this:
 
 ```ruby
@@ -121,16 +123,16 @@ group.slash("message_expand", "Whether bot should expand message.", {
     type: :boolean,
     description: "Whether bot should expand message."
   }
-}) do |interaction|
+}) do |interaction, enabled|
   # ...
 end
 
-group.slash("bump_alert", "Whether bot should notify DISBOARD bump.", {
+group.slash("level", "Whether level system is enabled.", {
   "enabled" => {
     type: :boolean,
-    description: "Whether bot should notify DISBOARD bump."
+    description: "Whether level system is enabled."
   }
-}) do |interaction|
+}) do |interaction, enabled|
   # ...
 end
 
@@ -146,15 +148,15 @@ client.slash_group("settings", "Set settings of bot.") do |group|
       type: :boolean,
       description: "Whether bot should expand message."
     }
-  }) do |interaction|
+  }) do |interaction, enabled|
     # ...
   end
-  group.slash("bump_alert", "Whether bot should notify DISBOARD bump.", {
+  group.slash("bump_alert", "Whether level system is enabled.", {
     "enabled" => {
       type: :boolean,
-      description: "Whether bot should notify DISBOARD bump."
+      description: "Whether level system is enabled."
     }
-  }) do |interaction|
+  }) do |interaction, enabled|
     # ...
   end
 end
