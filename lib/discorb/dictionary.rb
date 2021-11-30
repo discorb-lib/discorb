@@ -48,7 +48,7 @@ module Discorb
     # @param [#to_s] id The ID of the item to remove.
     #
     def remove(id)
-      @cache.remove(id.to_s)
+      @cache.delete(id.to_s)
     end
 
     #
