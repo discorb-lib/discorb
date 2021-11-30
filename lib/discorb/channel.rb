@@ -491,17 +491,24 @@ module Discorb
     # @param [Discorb::Message] message The message to start the thread.
     # @param [Integer] auto_archive_duration The duration of auto-archiving.
     # @param [Boolean] public Whether the thread is public.
+    # @param [Integer] rate_limit_per_user The rate limit per user.
+    # @param [Integer] slowmode Alias of `rate_limit_per_user`.
     # @param [String] reason The reason of starting the thread.
     #
     # @return [Async::Task<Discorb::ThreadChannel>] The started thread.
     #
-    def start_thread(name, message: nil, auto_archive_duration: 1440, public: true, reason: nil)
+    def start_thread(name, message: nil, auto_archive_duration: 1440, public: true, rate_limit_per_user: nil, slowmode: nil, reason: nil)
       Async do
         _resp, data = if message.nil?
-            @client.http.post("/channels/#{@id}/threads", {
-              name: name, auto_archive_duration: auto_archive_duration, type: public ? 11 : 10,
-            },
-                              audit_log_reason: reason).wait
+            @client.http.post(
+              "/channels/#{@id}/threads", {
+                name: name,
+                auto_archive_duration: auto_archive_duration,
+                type: public ? 11 : 10,
+                rate_limit_per_user: rate_limit_per_user || slowmode,
+              },
+              audit_log_reason: reason,
+            ).wait
           else
             @client.http.post("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads", {
               name: name, auto_archive_duration: auto_archive_duration,
