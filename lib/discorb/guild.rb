@@ -96,6 +96,9 @@ module Discorb
     # @return [Boolean] Whether the guild is available.
     attr_reader :available
     alias available? available
+    # @return [Dictionary{Discorb::Snowflake => Discorb::ScheduledEvent}] A dictionary of scheduled events in the guild.
+    attr_reader :scheduled_events
+    alias events scheduled_events
 
     # @!attribute [r] afk_channel
     #   @return [Discorb::VoiceChannel] The AFK channel for this guild.
@@ -1250,6 +1253,7 @@ module Discorb
       @presences = Dictionary.new(data[:presences].map { |pr| [Snowflake.new(pr[:user][:id]), Presence.new(@client, pr)] }.to_h)
       @max_presences = data[:max_presences]
       @stage_instances = Dictionary.new(data[:stage_instances].map { |s| [Snowflake.new(s[:id]), StageInstance.new(@client, s)] }.to_h)
+      @scheduled_events = Dictionary.new(data[:guild_scheduled_events].map { |s| [Snowflake.new(s[:id]), ScheduledEvent.new(@client, s)] }.to_h)
       @data.update(data)
     end
   end

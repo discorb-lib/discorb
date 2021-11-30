@@ -211,6 +211,28 @@ module Discorb
     end
 
     #
+    # Represents a `GUILD_SCHEDULED_EVENT_USER_ADD` and `GUILD_SCHEDULED_EVENT_USER_REMOVE` event.
+    #
+    class ScheduledEventUserEvent < GatewayEvent
+      # @return [Discorb::User] The user that triggered the event.
+      attr_reader :user
+      # @return [Discorb::Guild] The guild the event was triggered in.
+      attr_reader :guild
+      # @return [Discorb::ScheduledEvent] The scheduled event.
+      attr_reader :scheduled_event
+      # @private
+      def initialize(client, data)
+        @client = client
+        @scheduled_event_id = Snowflake.new(data[:scheduled_event_id])
+        @user_id = Snowflake.new(data[:user_id])
+        @guild_id = Snowflake.new(data[:guild_id])
+        @guild = client.guilds[data[:guild_id]]
+        @scheduled_event = @guild.scheduled_events[@scheduled_event_id]
+        @user = client.users[data[:user_id]]
+      end
+    end
+
+    #
     # Represents a `MESSAGE_UPDATE` event.
     #
 
@@ -1042,11 +1064,33 @@ module Discorb
           @log.info("Successfully resumed connection")
           @tasks << handle_heartbeat
           dispatch(:resumed)
+        when "GUILD_SCHEDULED_EVENT_CREATE"
+          @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          event = ScheduledEvent.new(self, data)
+          guild.scheduled_events[data[:id]] = event
+          dispatch(:scheduled_event_create, event)
+        when "GUILD_SCHEDULED_EVENT_UPDATE"
+          @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          @log.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
+          old = event.dup
+          event.send(:_set_data, data)
+          dispatch(:scheduled_event_update, old, event)
+        when "GUILD_SCHEDULED_EVENT_DELETE"
+          @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          @log.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
+          guild.scheduled_events.remove(data[:id])
+          dispatch(:scheduled_event_delete, event)
+        when "GUILD_SCHEDULED_EVENT_USER_ADD"
+          @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          dispatch(:scheduled_event_user_add, ScheduledEventUserEvent.new(self, data))
+        when "GUILD_SCHEDULED_EVENT_USER_REMOVE"
+          @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          dispatch(:scheduled_event_user_remove, ScheduledEventUserEvent.new(self, data))
         else
           if respond_to?("event_" + event_name.downcase)
             __send__("event_" + event_name.downcase, data)
           else
-            @log.debug "#{event_name}\n#{data.inspect}"
+            @log.debug "Unhandled event: #{event_name}\n#{data.inspect}"
           end
         end
       end
