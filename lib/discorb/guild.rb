@@ -1266,12 +1266,14 @@ module Discorb
   # |`1 << 0`|`:member_join`|
   # |`1 << 1`|`:server_boost`|
   # |`1 << 2`|`:setup_tips`|
+  # |`1 << 3`|`:join_stickers`|
   #
   class SystemChannelFlag < Flag
     @bits = {
       member_join: 0,
       server_boost: 1,
       setup_tips: 2,
+      join_stickers: 3,
     }.freeze
   end
 
