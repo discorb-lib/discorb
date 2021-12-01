@@ -51,6 +51,15 @@ module Discorb
       # @!attribute [r] guild
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild the sticker is in.
+      @sticker_type = {
+        1 => :official,
+        2 => :guild,
+      }.freeze
+      @sticker_format = {
+        1 => :png,
+        2 => :apng,
+        3 => :lottie,
+      }
 
       def guild
         @client.guilds[@guild_id]
