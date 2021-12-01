@@ -233,7 +233,7 @@ module Discorb
       @joined_at = member_data[:joined_at] && Time.iso8601(member_data[:joined_at])
       @hoisted_role_id = member_data[:hoisted_role]
       @deaf = member_data[:deaf]
-      @custom_avatar = member_data[:avatar] && Asset.new(member_data[:avatar])
+      @custom_avatar = member_data[:avatar] && Asset.new(self, member_data[:avatar])
       super(user_data)
       @display_avatar = @avatar || @custom_avatar
       @client.guilds[@guild_id].members[@id] = self unless @guild_id.nil? || @client.guilds[@guild_id].nil?
