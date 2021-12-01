@@ -2,6 +2,16 @@
 
 # Changelog
 
+## v0.13
+
+### v0.13.0
+
+- Change!: Event is now EventHandler.
+- Add: Support for scheduled events.
+- Fix: Fix bug in sticker initialization.
+- Add: Support application flags
+- Add: Add `#inspect` method to many classes.
+
 ## v0.12
 
 ### v0.12.4
