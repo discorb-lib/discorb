@@ -30,7 +30,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name} @everyone=#{@everyone} @roles=#{@roles} @users=#{@users} @replied_user=#{@replied_user}>"
+      "#<#{self.class} @everyone=#{@everyone} @roles=#{@roles} @users=#{@users} @replied_user=#{@replied_user}>"
     end
 
     # @private

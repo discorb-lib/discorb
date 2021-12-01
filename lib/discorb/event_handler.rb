@@ -26,7 +26,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name} @id=#{@id}"
+      "#<#{self.class} @id=#{@id}"
     end
 
     #

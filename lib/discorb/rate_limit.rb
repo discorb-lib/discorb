@@ -15,7 +15,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name}>"
+      "#<#{self.class}>"
     end
 
     #

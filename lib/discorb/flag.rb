@@ -97,7 +97,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name}: #{@value}>"
+      "#<#{self.class}: #{@value}>"
     end
 
     class << self

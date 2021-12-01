@@ -7,7 +7,7 @@ module Discorb
   #
   class Component
     def inspect
-      "#<#{self.class.name}>"
+      "#<#{self.class}>"
     end
 
     class << self
@@ -147,7 +147,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name}: #{@custom_id || @url}>"
+      "#<#{self.class}: #{@custom_id || @url}>"
     end
 
     class << self
@@ -227,7 +227,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name}: #{@custom_id}>"
+      "#<#{self.class}: #{@custom_id}>"
     end
 
     #

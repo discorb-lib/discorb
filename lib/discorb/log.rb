@@ -14,7 +14,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name} level=#{level}>"
+      "#<#{self.class} level=#{level}>"
     end
 
     def level

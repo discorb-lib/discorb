@@ -36,7 +36,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name} #{@type}>"
+      "#<#{self.class} #{@type}>"
     end
   end
 end

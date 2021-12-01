@@ -111,7 +111,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name} #{to_s}>"
+      "#<#{self.class} #{to_s}>"
     end
 
     alias id to_s

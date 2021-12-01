@@ -165,7 +165,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class.name} allow=#{allow} deny=#{deny}>"
+      "#<#{self.class} allow=#{allow} deny=#{deny}>"
     end
 
     #
