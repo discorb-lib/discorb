@@ -27,7 +27,8 @@ module Discorb
     # @return [Boolean] Whether the application's bot requires a code grant.
     attr_reader :bot_require_code_grant
     alias bot_require_code_grant? bot_require_code_grant
-
+    # @return [Discorb::Application::Flag] The application's flags.
+    attr_reader :flags
     # @private
     def initialize(client, data)
       @client = client
@@ -42,7 +43,7 @@ module Discorb
       @verify_key = data[:verify_key]
       @owner = @client.users[data[:owner][:id]] || User.new(@client, data[:owner])
       @team = data[:team] && Team.new(@client, data[:team])
-      @flag = Flag.new(data[:flags])
+      @flags = Flag.new(data[:flags])
     end
 
     def inspect
