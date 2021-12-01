@@ -42,6 +42,7 @@ module Discorb
       @verify_key = data[:verify_key]
       @owner = @client.users[data[:owner][:id]] || User.new(@client, data[:owner])
       @team = data[:team] && Team.new(@client, data[:team])
+      @flag = Flag.new(data[:flags])
     end
 
     def inspect
@@ -51,6 +52,34 @@ module Discorb
     alias public? bot_public?
 
     alias require_code_grant? bot_require_code_grant?
+
+    #
+    # Represents a flag for an application.
+    # ## Flag fields
+    #
+    # | Field|Value|
+    # |---|---|
+    # | `1 << 12` | `:gateway_presence` |
+    # | `1 << 13` | `:gateway_presence_limited` |
+    # | `1 << 14` | `:gateway_guild_members` |
+    # | `1 << 15` | `:gateway_guild_members_limited` |
+    # | `1 << 16` | `:verification_pending_guild_limit` |
+    # | `1 << 17` | `:embedded` |
+    # | `1 << 18` | `:gateway_message_content` |
+    # | `1 << 19` | `:gateway_message_content_limited` |
+    #
+    class Flag < Discorb::Flag
+      @bits = {
+        gateway_presence: 12,
+        gateway_presence_limited: 13,
+        gateway_guild_members: 14,
+        gateway_guild_members_limited: 15,
+        verification_pending_guild_limit: 16,
+        embedded: 17,
+        gateway_message_content: 18,
+        gateway_message_content_limited: 19,
+      }
+    end
 
     #
     # Represents a team for an application.
