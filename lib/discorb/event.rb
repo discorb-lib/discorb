@@ -1,15 +1,15 @@
 module Discorb
   class ScheduledEvent < DiscordModel
-    @@privacy_level = {
+    @privacy_level = {
       2 => :guild_only,
     }
-    @@status = {
+    @status = {
       1 => :scheduled,
       2 => :active,
       3 => :completed,
       4 => :canceled,
     }
-    @@entity_type = {
+    @entity_type = {
       1 => :stage_instance,
       2 => :voice,
       3 => :external,
@@ -261,27 +261,16 @@ module Discorb
       @scheduled_start_time = Time.iso8601(data[:scheduled_start_time])
       @scheduled_end_time = data[:scheduled_end_time] && Time.iso8601(data[:scheduled_end_time])
       @privacy_level = :guild_only # data[:privacy_level]
-      @status = @@status[data[:status]]
-      @entity_type = @@entity_type[data[:entity_type]]
+      @status = self.class.status[data[:status]]
+      @entity_type = self.class.entity_type[data[:entity_type]]
       @entity_id = data[:entity_id] && Snowflake.new(data[:entity_id])
       @entity_metadata = data[:entity_metadata] && Metadata.new(data[:entity_metadata])
       @creator = @client.users[@creator_id] || (data[:creator] && User.new(@client, data[:creator]))
       @user_count = data[:user_count]
     end
 
-    #
-    # Reader of `entity_type`.
-    #
-    def self.entity_type = @@entity_type
-
-    #
-    # Reader of `privacy_level`.
-    #
-    def self.privacy_level = @@privacy_level
-
-    #
-    # Reader of `status`.
-    #
-    def self.status = @@status
+    class << self
+      attr_reader :status, :entity_type, :privacy_level
+    end
   end
 end
