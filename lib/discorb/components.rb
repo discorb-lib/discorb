@@ -6,6 +6,10 @@ module Discorb
   # Represents a Discord component.
   #
   class Component
+    def inspect
+      "#<#{self.class.name}>"
+    end
+
     class << self
       #
       # Create a new component from hash data.
@@ -142,6 +146,10 @@ module Discorb
       end
     end
 
+    def inspect
+      "#<#{self.class.name}: #{@custom_id || @url}>"
+    end
+
     class << self
       # @private
       attr_reader :styles
@@ -216,6 +224,10 @@ module Discorb
         max_values: @max_values,
         disabled: @disabled,
       }
+    end
+
+    def inspect
+      "#<#{self.class.name}: #{@custom_id}>"
     end
 
     #

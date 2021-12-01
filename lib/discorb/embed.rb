@@ -86,6 +86,10 @@ module Discorb
       @thumbnail = (value.is_a?(String)) ? Thumbnail.new(value) : value
     end
 
+    def inspect
+      "#<#{self.class} \"#{@title}\">"
+    end
+
     #
     # Convert embed to hash.
     #

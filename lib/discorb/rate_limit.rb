@@ -14,6 +14,10 @@ module Discorb
       @global = false
     end
 
+    def inspect
+      "#<#{self.class.name}>"
+    end
+
     #
     # Wait for the rate limit to reset.
     #

@@ -25,6 +25,10 @@ module Discorb
       @rescue = nil
     end
 
+    def inspect
+      "#<#{self.class.name} @id=#{@id}"
+    end
+
     #
     # Calls the block associated with the event.
     #

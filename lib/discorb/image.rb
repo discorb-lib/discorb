@@ -16,12 +16,10 @@ module Discorb
     #
     def initialize(source, type = nil)
       if source.respond_to?(:read)
-        @bytes = source.read
+        @io = source
         @type = type || MIME::Types.type_for(source.path).first.content_type
       elsif ::File.exist?(source)
-        ::File.open(source, "rb") do |file|
-          @bytes = file.read
-        end
+        @io = ::File.open(source, "rb")
         @type = MIME::Types.type_for(source).first.to_s
       else
         raise ArgumentError, "Couldn't read file."
@@ -34,7 +32,11 @@ module Discorb
     # @return [String] The image as a Discord style.
     #
     def to_s
-      "data:#{@type};base64,#{Base64.strict_encode64(@bytes)}"
+      "data:#{@type};base64,#{Base64.strict_encode64(@io.read)}"
+    end
+
+    def inspect
+      "#<#{self.class.name} #{@type}>"
     end
   end
 end

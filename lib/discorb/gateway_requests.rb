@@ -39,6 +39,10 @@ module Discorb
       }
     end
 
+    def inspect
+      "#<#{self.class} @type=#{@type}>"
+    end
+
     class << self
       # @private
       attr_reader :types

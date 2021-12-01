@@ -164,6 +164,10 @@ module Discorb
       @deny
     end
 
+    def inspect
+      "#<#{self.class.name} allow=#{allow} deny=#{deny}>"
+    end
+
     #
     # Converts the permission overwrite to a hash.
     #

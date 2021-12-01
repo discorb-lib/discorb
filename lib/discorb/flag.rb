@@ -96,6 +96,10 @@ module Discorb
       self.class.new(~@value)
     end
 
+    def inspect
+      "#<#{self.class.name}: #{@value}>"
+    end
+
     class << self
       # @return [Hash{Integer => Symbol}] the bits of the flag.
       attr_reader :bits

@@ -89,5 +89,9 @@ module Discorb
       filename ||= string.object_id.to_s + ".txt"
       new(io, filename, content_type: content_type)
     end
+
+    def inspect
+      "#<#{self.class} filename=#{@filename} content_type=#{@content_type}>"
+    end
   end
 end

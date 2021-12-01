@@ -29,6 +29,10 @@ module Discorb
       @replied_user = replied_user
     end
 
+    def inspect
+      "#<#{self.class.name} @everyone=#{@everyone} @roles=#{@roles} @users=#{@users} @replied_user=#{@replied_user}>"
+    end
+
     # @private
     def to_hash(other = nil)
       payload = {

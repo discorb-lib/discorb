@@ -13,6 +13,10 @@ module Discorb
       @colorize_log = colorize_log
     end
 
+    def inspect
+      "#<#{self.class.name} level=#{level}>"
+    end
+
     def level
       self.class.levels[@level]
     end

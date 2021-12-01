@@ -13,6 +13,10 @@ module Discorb
     def ==(other)
       eql?(other)
     end
+
+    def inspect
+      "#<#{self.class}>"
+    end
   end
 
   # Represents a custom emoji in discord.

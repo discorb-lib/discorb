@@ -110,6 +110,10 @@ module Discorb
       @value & 0xFFF
     end
 
+    def inspect
+      "#<#{self.class.name} #{to_s}>"
+    end
+
     alias id to_s
   end
 
