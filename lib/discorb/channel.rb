@@ -372,7 +372,7 @@ module Discorb
     #
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of setting the overwrite.
-    # @param [Symbol => Boolean] perms The permission overwrites to replace.
+    # @param [{Symbol => Boolean}] perms The permission overwrites to replace.
     #
     def set_permissions(target, reason: nil, **perms)
       Async do

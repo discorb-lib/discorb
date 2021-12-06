@@ -92,7 +92,7 @@ module Discorb
     #
     # @return [Discorb::Flag] The negation of the flag.
     #
-    def ~@
+    def ~
       self.class.new(~@value)
     end
 
