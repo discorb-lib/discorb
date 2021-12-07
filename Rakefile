@@ -209,6 +209,7 @@ task :rbs do
   base.gsub!(/\n +def _set_data: \(.+\) -> untyped\n\n/, "")
   base.gsub!(/(  )?( *)# @private.+?(?:\n\n(?=\1\2#)|(?=\n\2end))/sm, "")
   base.gsub!(/untyped ([a-z_]*id)/, "_ToS \\1")
+  # #region rbs dictionary
   base.gsub!(/  class Dictionary.+?end\n/ms, <<-RBS)
   class Dictionary[K, V]
     # 
@@ -280,6 +281,7 @@ task :rbs do
     attr_accessor limit: Integer
   end
   RBS
+  # #endregion
   type_errors.each do |error, type|
     base.gsub!(error, type)
   end
