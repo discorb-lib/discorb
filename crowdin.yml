@@ -1,3 +1,4 @@
 files:
   - source: /po/yard.pot
     translation: /po/%two_letters_code%.po
+project_id: 488887
