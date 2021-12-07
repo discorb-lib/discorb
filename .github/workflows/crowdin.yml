@@ -1,7 +1,8 @@
 name: Update pot files
 
 on:
-  cron: "*/5 * * * *"
+  schedule:
+    cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
