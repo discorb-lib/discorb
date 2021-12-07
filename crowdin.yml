@@ -1,4 +1,5 @@
 files:
   - source: /po/yard.pot
     translation: /po/%two_letters_code%.po
-project_id: 488887
+project_id_env: CROWDIN_PROJECT_ID
+api_token_env: CROWDIN_PERSONAL_TOKEN
