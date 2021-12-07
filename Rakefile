@@ -196,8 +196,8 @@ task :rbs do
   require "open3"
   type_errors = {
     "SORD_ERROR_SymbolSymbolSymbolInteger" => "{ r: Integer, g: Integer, b: Integer}",
-    "SORD_ERROR_DiscorbRoleDiscorbMemberDiscorbPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]",
-    "SORD_ERROR_DiscorbRoleDiscorbMemberPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]",
+    "SORD_ERROR_DiscorbRoleDiscorbMemberDiscorbPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
+    "SORD_ERROR_DiscorbRoleDiscorbMemberPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
     "SORD_ERROR_f | SORD_ERROR_F | SORD_ERROR_d | SORD_ERROR_D | SORD_ERROR_t | SORD_ERROR_T | SORD_ERROR_R" => '"f" | "F" | "d" | "D" | "t" | "T" | "R"',
     "SORD_ERROR_dark | SORD_ERROR_light" => '"dark" | "light"',
     "SORD_ERROR_SymbolStringSymbolboolSymbolObject" => "String | Integer | Float",

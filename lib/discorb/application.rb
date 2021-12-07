@@ -131,7 +131,7 @@ module Discorb
         # @return [:invited, :accepted] The member's membership state.
         attr_reader :membership_state
         alias state membership_state
-        # @return [Array<Permissions>] The permissions of the member.
+        # @return [Array<Symbol>] The permissions of the member.
         # @note This always return `:*`.
         attr_reader :permissions
 
