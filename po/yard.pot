@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-07 23:20+0900\n"
+"POT-Creation-Date: 2021-12-07 14:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3784,107 +3784,6 @@ msgstr ""
 
 # @note
 #: ../lib/discorb.rb:25
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/channel.rb:630
-#: ../lib/discorb/channel.rb:644
-#: ../lib/discorb/channel.rb:698
-#: ../lib/discorb/channel.rb:710
-#: ../lib/discorb/channel.rb:828
-#: ../lib/discorb/emoji.rb:95
-#: ../lib/discorb/emoji.rb:105
-#: ../lib/discorb/guild.rb:1122
-#: ../lib/discorb/guild.rb:1131
-#: ../lib/discorb/guild.rb:1378
-#: ../lib/discorb/guild_template.rb:55
-#: ../lib/discorb/guild_template.rb:64
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
-#: ../lib/discorb/member.rb:185
-#: ../lib/discorb/member.rb:197
-#: ../lib/discorb/role.rb:119
-#: ../lib/discorb/role.rb:138
-#: ../lib/discorb/sticker.rb:79
-#: ../lib/discorb/sticker.rb:89
-#: ../lib/discorb/user.rb:160
-#: ../lib/discorb/voice_state.rb:177
-#: ../lib/discorb/voice_state.rb:187
-#: ../lib/discorb/webhook.rb:104
-#: ../lib/discorb/webhook.rb:114
-#: ../lib/discorb/webhook.rb:145
-msgid "The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`."
-msgstr ""
-
-# @note
-#: ../lib/discorb.rb:25
-#: ../lib/discorb/guild.rb:45
-#: ../lib/discorb/guild.rb:641
-#: ../lib/discorb/guild.rb:662
-msgid "You must enable `GUILD_MEMBERS` intent to use this method."
-msgstr ""
-
-# @note
-#: ../lib/discorb.rb:25
-#: ../lib/discorb/gateway.rb:42
-#: ../lib/discorb/gateway.rb:45
-#: ../lib/discorb/gateway.rb:48
-#: ../lib/discorb/gateway.rb:51
-#: ../lib/discorb/gateway.rb:54
-#: ../lib/discorb/gateway.rb:59
-#: ../lib/discorb/gateway.rb:61
-#: ../lib/discorb/gateway.rb:62
-#: ../lib/discorb/gateway.rb:124
-#: ../lib/discorb/gateway.rb:127
-#: ../lib/discorb/gateway.rb:130
-#: ../lib/discorb/gateway.rb:173
-#: ../lib/discorb/gateway.rb:176
-#: ../lib/discorb/gateway.rb:179
-#: ../lib/discorb/gateway.rb:258
-#: ../lib/discorb/gateway.rb:271
-#: ../lib/discorb/gateway.rb:287
-#: ../lib/discorb/gateway.rb:291
-#: ../lib/discorb/gateway.rb:314
-#: ../lib/discorb/gateway.rb:330
-#: ../lib/discorb/gateway.rb:334
-#: ../lib/discorb/gateway.rb:346
-#: ../lib/discorb/gateway.rb:362
-#: ../lib/discorb/gateway.rb:366
-#: ../lib/discorb/gateway.rb:391
-#: ../lib/discorb/gateway.rb:393
-#: ../lib/discorb/gateway.rb:417
-#: ../lib/discorb/gateway.rb:421
-#: ../lib/discorb/gateway.rb:425
-#: ../lib/discorb/gateway.rb:429
-#: ../lib/discorb/gateway.rb:433
-#: ../lib/discorb/gateway.rb:476
-#: ../lib/discorb/gateway.rb:491
-#: ../lib/discorb/gateway.rb:495
-#: ../lib/discorb/guild.rb:1091
-#: ../lib/discorb/guild.rb:1108
-#: ../lib/discorb/guild.rb:1306
-#: ../lib/discorb/guild.rb:1355
-#: ../lib/discorb/guild_template.rb:31
-#: ../lib/discorb/guild_template.rb:42
-#: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:99
-#: ../lib/discorb/member.rb:103
-#: ../lib/discorb/member.rb:116
-#: ../lib/discorb/member.rb:124
-#: ../lib/discorb/member.rb:128
-#: ../lib/discorb/member.rb:132
-#: ../lib/discorb/member.rb:136
-#: ../lib/discorb/message.rb:201
-#: ../lib/discorb/message.rb:226
-#: ../lib/discorb/message.rb:230
-#: ../lib/discorb/voice_state.rb:28
-#: ../lib/discorb/voice_state.rb:68
-#: ../lib/discorb/voice_state.rb:72
-#: ../lib/discorb/voice_state.rb:76
-msgid "This method returns an object from client cache. it will return `nil` if the object is not in cache."
-msgstr ""
-
-# @note
-#: ../lib/discorb.rb:25
 #: ../lib/discorb/channel.rb:176
 #: ../lib/discorb/channel.rb:184
 #: ../lib/discorb/channel.rb:185
@@ -3962,388 +3861,7 @@ msgstr ""
 #: ../lib/discorb/guild.rb:641
 #: ../lib/discorb/guild.rb:662
 #: ../lib/discorb/guild.rb:674
-#: ../lib/discorb/guild.rb:719
-#: ../lib/discorb/guild.rb:732
-#: ../lib/discorb/guild.rb:749
-#: ../lib/discorb/guild.rb:768
-#: ../lib/discorb/guild.rb:785
-#: ../lib/discorb/guild.rb:802
-#: ../lib/discorb/guild.rb:815
-#: ../lib/discorb/guild.rb:835
-#: ../lib/discorb/guild.rb:859
-#: ../lib/discorb/guild.rb:882
-#: ../lib/discorb/guild.rb:898
-#: ../lib/discorb/guild.rb:912
-#: ../lib/discorb/guild.rb:926
-#: ../lib/discorb/guild.rb:940
-#: ../lib/discorb/guild.rb:954
-#: ../lib/discorb/guild.rb:968
-#: ../lib/discorb/guild.rb:982
-#: ../lib/discorb/guild.rb:999
-#: ../lib/discorb/guild.rb:1016
-#: ../lib/discorb/guild.rb:1122
-#: ../lib/discorb/guild.rb:1131
-#: ../lib/discorb/guild.rb:1378
-#: ../lib/discorb/guild_template.rb:55
-#: ../lib/discorb/guild_template.rb:64
-#: ../lib/discorb/guild_template.rb:71
-#: ../lib/discorb/guild_template.rb:83
-#: ../lib/discorb/guild_template.rb:89
-#: ../lib/discorb/interaction/response.rb:15
-#: ../lib/discorb/interaction/response.rb:43
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
-#: ../lib/discorb/interaction/response.rb:163
-#: ../lib/discorb/invite.rb:105
-#: ../lib/discorb/member.rb:152
-#: ../lib/discorb/member.rb:166
-#: ../lib/discorb/member.rb:185
-#: ../lib/discorb/member.rb:197
-#: ../lib/discorb/message.rb:349
-#: ../lib/discorb/message.rb:360
-#: ../lib/discorb/message.rb:373
-#: ../lib/discorb/message.rb:379
-#: ../lib/discorb/message.rb:388
-#: ../lib/discorb/message.rb:394
-#: ../lib/discorb/message.rb:404
-#: ../lib/discorb/message.rb:410
-#: ../lib/discorb/message.rb:423
-#: ../lib/discorb/message.rb:453
-#: ../lib/discorb/message.rb:466
-#: ../lib/discorb/modules.rb:25
-#: ../lib/discorb/modules.rb:53
-#: ../lib/discorb/modules.rb:68
-#: ../lib/discorb/modules.rb:95
-#: ../lib/discorb/modules.rb:101
-#: ../lib/discorb/modules.rb:113
-#: ../lib/discorb/modules.rb:132
-#: ../lib/discorb/modules.rb:152
-#: ../lib/discorb/modules.rb:167
-#: ../lib/discorb/modules.rb:181
-#: ../lib/discorb/modules.rb:200
-#: ../lib/discorb/role.rb:99
-#: ../lib/discorb/role.rb:119
-#: ../lib/discorb/role.rb:138
-#: ../lib/discorb/sticker.rb:79
-#: ../lib/discorb/sticker.rb:89
-#: ../lib/discorb/sticker.rb:98
-#: ../lib/discorb/sticker.rb:104
-#: ../lib/discorb/user.rb:68
-#: ../lib/discorb/user.rb:81
-#: ../lib/discorb/user.rb:160
-#: ../lib/discorb/voice_state.rb:177
-#: ../lib/discorb/voice_state.rb:187
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-#: ../lib/discorb/webhook.rb:104
-#: ../lib/discorb/webhook.rb:114
-#: ../lib/discorb/webhook.rb:121
-#: ../lib/discorb/webhook.rb:128
-#: ../lib/discorb/webhook.rb:145
-#: ../lib/discorb/webhook.rb:328
-msgid "This method calls HTTP request."
-msgstr ""
-
-# @raise [Discorb::HTTPError]
-#: ../lib/discorb.rb:25
-#: ../lib/discorb/channel.rb:176
-#: ../lib/discorb/channel.rb:184
-#: ../lib/discorb/channel.rb:185
-#: ../lib/discorb/channel.rb:199
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/channel.rb:315
-#: ../lib/discorb/channel.rb:332
-#: ../lib/discorb/channel.rb:347
-#: ../lib/discorb/channel.rb:365
-#: ../lib/discorb/channel.rb:366
-#: ../lib/discorb/channel.rb:377
-#: ../lib/discorb/channel.rb:394
-#: ../lib/discorb/channel.rb:395
-#: ../lib/discorb/channel.rb:396
-#: ../lib/discorb/channel.rb:397
-#: ../lib/discorb/channel.rb:407
-#: ../lib/discorb/channel.rb:413
-#: ../lib/discorb/channel.rb:414
-#: ../lib/discorb/channel.rb:415
-#: ../lib/discorb/channel.rb:424
-#: ../lib/discorb/channel.rb:445
-#: ../lib/discorb/channel.rb:465
-#: ../lib/discorb/channel.rb:479
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-#: ../lib/discorb/channel.rb:530
-#: ../lib/discorb/channel.rb:544
-#: ../lib/discorb/channel.rb:561
-#: ../lib/discorb/channel.rb:630
-#: ../lib/discorb/channel.rb:644
-#: ../lib/discorb/channel.rb:698
-#: ../lib/discorb/channel.rb:710
-#: ../lib/discorb/channel.rb:723
-#: ../lib/discorb/channel.rb:738
-#: ../lib/discorb/channel.rb:828
-#: ../lib/discorb/client.rb:211
-#: ../lib/discorb/client.rb:229
-#: ../lib/discorb/client.rb:247
-#: ../lib/discorb/client.rb:265
-#: ../lib/discorb/client.rb:282
-#: ../lib/discorb/client.rb:299
-#: ../lib/discorb/emoji.rb:95
-#: ../lib/discorb/emoji.rb:105
-#: ../lib/discorb/emoji.rb:116
-#: ../lib/discorb/emoji.rb:124
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/event.rb:200
-#: ../lib/discorb/event.rb:206
-#: ../lib/discorb/event.rb:223
-#: ../lib/discorb/event.rb:250
-#: ../lib/discorb/gateway.rb:103
-#: ../lib/discorb/gateway.rb:152
-#: ../lib/discorb/gateway.rb:204
-#: ../lib/discorb/gateway.rb:300
-#: ../lib/discorb/guild.rb:168
-#: ../lib/discorb/guild.rb:185
-#: ../lib/discorb/guild.rb:202
-#: ../lib/discorb/guild.rb:290
-#: ../lib/discorb/guild.rb:304
-#: ../lib/discorb/guild.rb:316
-#: ../lib/discorb/guild.rb:332
-#: ../lib/discorb/guild.rb:351
-#: ../lib/discorb/guild.rb:365
-#: ../lib/discorb/guild.rb:379
-#: ../lib/discorb/guild.rb:403
-#: ../lib/discorb/guild.rb:448
-#: ../lib/discorb/guild.rb:488
-#: ../lib/discorb/guild.rb:511
-#: ../lib/discorb/guild.rb:527
-#: ../lib/discorb/guild.rb:568
-#: ../lib/discorb/guild.rb:604
-#: ../lib/discorb/guild.rb:621
-#: ../lib/discorb/guild.rb:641
-#: ../lib/discorb/guild.rb:662
-#: ../lib/discorb/guild.rb:674
-#: ../lib/discorb/guild.rb:719
-#: ../lib/discorb/guild.rb:732
-#: ../lib/discorb/guild.rb:749
-#: ../lib/discorb/guild.rb:768
-#: ../lib/discorb/guild.rb:785
-#: ../lib/discorb/guild.rb:802
-#: ../lib/discorb/guild.rb:815
-#: ../lib/discorb/guild.rb:835
-#: ../lib/discorb/guild.rb:859
-#: ../lib/discorb/guild.rb:882
-#: ../lib/discorb/guild.rb:898
-#: ../lib/discorb/guild.rb:912
-#: ../lib/discorb/guild.rb:926
-#: ../lib/discorb/guild.rb:940
-#: ../lib/discorb/guild.rb:954
-#: ../lib/discorb/guild.rb:968
-#: ../lib/discorb/guild.rb:982
-#: ../lib/discorb/guild.rb:999
-#: ../lib/discorb/guild.rb:1016
-#: ../lib/discorb/guild.rb:1122
-#: ../lib/discorb/guild.rb:1131
-#: ../lib/discorb/guild.rb:1378
-#: ../lib/discorb/guild_template.rb:55
-#: ../lib/discorb/guild_template.rb:64
-#: ../lib/discorb/guild_template.rb:71
-#: ../lib/discorb/guild_template.rb:83
-#: ../lib/discorb/guild_template.rb:89
-#: ../lib/discorb/interaction/response.rb:15
-#: ../lib/discorb/interaction/response.rb:43
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
-#: ../lib/discorb/interaction/response.rb:163
-#: ../lib/discorb/invite.rb:105
-#: ../lib/discorb/member.rb:152
-#: ../lib/discorb/member.rb:166
-#: ../lib/discorb/member.rb:185
-#: ../lib/discorb/member.rb:197
-#: ../lib/discorb/message.rb:349
-#: ../lib/discorb/message.rb:360
-#: ../lib/discorb/message.rb:373
-#: ../lib/discorb/message.rb:379
-#: ../lib/discorb/message.rb:388
-#: ../lib/discorb/message.rb:394
-#: ../lib/discorb/message.rb:404
-#: ../lib/discorb/message.rb:410
-#: ../lib/discorb/message.rb:423
-#: ../lib/discorb/message.rb:453
-#: ../lib/discorb/message.rb:466
-#: ../lib/discorb/modules.rb:25
-#: ../lib/discorb/modules.rb:53
-#: ../lib/discorb/modules.rb:68
-#: ../lib/discorb/modules.rb:95
-#: ../lib/discorb/modules.rb:101
-#: ../lib/discorb/modules.rb:113
-#: ../lib/discorb/modules.rb:132
-#: ../lib/discorb/modules.rb:152
-#: ../lib/discorb/modules.rb:167
-#: ../lib/discorb/modules.rb:181
-#: ../lib/discorb/modules.rb:200
-#: ../lib/discorb/role.rb:99
-#: ../lib/discorb/role.rb:119
-#: ../lib/discorb/role.rb:138
-#: ../lib/discorb/sticker.rb:79
-#: ../lib/discorb/sticker.rb:89
-#: ../lib/discorb/sticker.rb:98
-#: ../lib/discorb/sticker.rb:104
-#: ../lib/discorb/user.rb:68
-#: ../lib/discorb/user.rb:81
-#: ../lib/discorb/user.rb:160
-#: ../lib/discorb/voice_state.rb:177
-#: ../lib/discorb/voice_state.rb:187
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-#: ../lib/discorb/webhook.rb:104
-#: ../lib/discorb/webhook.rb:114
-#: ../lib/discorb/webhook.rb:121
-#: ../lib/discorb/webhook.rb:128
-#: ../lib/discorb/webhook.rb:145
-#: ../lib/discorb/webhook.rb:328
-msgid "HTTP request failed."
-msgstr ""
-
-# @return [nil]
-#: ../lib/discorb.rb:25
-#: ../lib/discorb/gateway.rb:42
-#: ../lib/discorb/gateway.rb:45
-#: ../lib/discorb/gateway.rb:48
-#: ../lib/discorb/gateway.rb:51
-#: ../lib/discorb/gateway.rb:54
-#: ../lib/discorb/gateway.rb:59
-#: ../lib/discorb/gateway.rb:61
-#: ../lib/discorb/gateway.rb:62
-#: ../lib/discorb/gateway.rb:124
-#: ../lib/discorb/gateway.rb:127
-#: ../lib/discorb/gateway.rb:130
-#: ../lib/discorb/gateway.rb:173
-#: ../lib/discorb/gateway.rb:176
-#: ../lib/discorb/gateway.rb:179
-#: ../lib/discorb/gateway.rb:258
-#: ../lib/discorb/gateway.rb:271
-#: ../lib/discorb/gateway.rb:287
-#: ../lib/discorb/gateway.rb:291
-#: ../lib/discorb/gateway.rb:314
-#: ../lib/discorb/gateway.rb:330
-#: ../lib/discorb/gateway.rb:334
-#: ../lib/discorb/gateway.rb:346
-#: ../lib/discorb/gateway.rb:362
-#: ../lib/discorb/gateway.rb:366
-#: ../lib/discorb/gateway.rb:391
-#: ../lib/discorb/gateway.rb:393
-#: ../lib/discorb/gateway.rb:417
-#: ../lib/discorb/gateway.rb:421
-#: ../lib/discorb/gateway.rb:425
-#: ../lib/discorb/gateway.rb:429
-#: ../lib/discorb/gateway.rb:433
-#: ../lib/discorb/gateway.rb:476
-#: ../lib/discorb/gateway.rb:491
-#: ../lib/discorb/gateway.rb:495
-#: ../lib/discorb/guild.rb:1091
-#: ../lib/discorb/guild.rb:1108
-#: ../lib/discorb/guild.rb:1306
-#: ../lib/discorb/guild.rb:1355
-#: ../lib/discorb/guild_template.rb:31
-#: ../lib/discorb/guild_template.rb:42
-#: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:99
-#: ../lib/discorb/member.rb:103
-#: ../lib/discorb/member.rb:116
-#: ../lib/discorb/member.rb:124
-#: ../lib/discorb/member.rb:128
-#: ../lib/discorb/member.rb:132
-#: ../lib/discorb/member.rb:136
-#: ../lib/discorb/message.rb:201
-#: ../lib/discorb/message.rb:226
-#: ../lib/discorb/message.rb:230
-#: ../lib/discorb/voice_state.rb:28
-#: ../lib/discorb/voice_state.rb:68
-#: ../lib/discorb/voice_state.rb:72
-#: ../lib/discorb/voice_state.rb:76
-msgid "The object wasn't cached."
-msgstr ""
-
-# @note
-#: ../lib/discorb.rb:25
-#: ../lib/discorb/channel.rb:176
-#: ../lib/discorb/channel.rb:184
-#: ../lib/discorb/channel.rb:185
-#: ../lib/discorb/channel.rb:199
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/channel.rb:315
-#: ../lib/discorb/channel.rb:332
-#: ../lib/discorb/channel.rb:347
-#: ../lib/discorb/channel.rb:365
-#: ../lib/discorb/channel.rb:366
-#: ../lib/discorb/channel.rb:377
-#: ../lib/discorb/channel.rb:394
-#: ../lib/discorb/channel.rb:395
-#: ../lib/discorb/channel.rb:396
-#: ../lib/discorb/channel.rb:397
-#: ../lib/discorb/channel.rb:407
-#: ../lib/discorb/channel.rb:413
-#: ../lib/discorb/channel.rb:414
-#: ../lib/discorb/channel.rb:415
-#: ../lib/discorb/channel.rb:424
-#: ../lib/discorb/channel.rb:445
-#: ../lib/discorb/channel.rb:465
-#: ../lib/discorb/channel.rb:479
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-#: ../lib/discorb/channel.rb:530
-#: ../lib/discorb/channel.rb:544
-#: ../lib/discorb/channel.rb:561
-#: ../lib/discorb/channel.rb:630
-#: ../lib/discorb/channel.rb:644
-#: ../lib/discorb/channel.rb:698
-#: ../lib/discorb/channel.rb:710
-#: ../lib/discorb/channel.rb:723
-#: ../lib/discorb/channel.rb:738
-#: ../lib/discorb/channel.rb:828
-#: ../lib/discorb/client.rb:211
-#: ../lib/discorb/client.rb:229
-#: ../lib/discorb/client.rb:247
-#: ../lib/discorb/client.rb:265
-#: ../lib/discorb/client.rb:282
-#: ../lib/discorb/client.rb:299
-#: ../lib/discorb/emoji.rb:95
-#: ../lib/discorb/emoji.rb:105
-#: ../lib/discorb/emoji.rb:116
-#: ../lib/discorb/emoji.rb:124
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/event.rb:200
-#: ../lib/discorb/event.rb:206
-#: ../lib/discorb/event.rb:223
-#: ../lib/discorb/event.rb:250
-#: ../lib/discorb/gateway.rb:103
-#: ../lib/discorb/gateway.rb:152
-#: ../lib/discorb/gateway.rb:204
-#: ../lib/discorb/gateway.rb:300
-#: ../lib/discorb/guild.rb:168
-#: ../lib/discorb/guild.rb:185
-#: ../lib/discorb/guild.rb:202
-#: ../lib/discorb/guild.rb:290
-#: ../lib/discorb/guild.rb:304
-#: ../lib/discorb/guild.rb:316
-#: ../lib/discorb/guild.rb:332
-#: ../lib/discorb/guild.rb:351
-#: ../lib/discorb/guild.rb:365
-#: ../lib/discorb/guild.rb:379
-#: ../lib/discorb/guild.rb:403
-#: ../lib/discorb/guild.rb:448
-#: ../lib/discorb/guild.rb:488
-#: ../lib/discorb/guild.rb:511
-#: ../lib/discorb/guild.rb:527
-#: ../lib/discorb/guild.rb:568
-#: ../lib/discorb/guild.rb:604
-#: ../lib/discorb/guild.rb:621
-#: ../lib/discorb/guild.rb:641
-#: ../lib/discorb/guild.rb:662
-#: ../lib/discorb/guild.rb:674
+#: ../lib/discorb/guild.rb:689
 #: ../lib/discorb/guild.rb:719
 #: ../lib/discorb/guild.rb:732
 #: ../lib/discorb/guild.rb:749
@@ -4427,8 +3945,497 @@ msgstr ""
 #: ../lib/discorb/webhook.rb:121
 #: ../lib/discorb/webhook.rb:128
 #: ../lib/discorb/webhook.rb:145
+#: ../lib/discorb/webhook.rb:317
 #: ../lib/discorb/webhook.rb:328
 msgid "This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result."
+msgstr ""
+
+# @note
+#: ../lib/discorb.rb:25
+#: ../lib/discorb/gateway.rb:42
+#: ../lib/discorb/gateway.rb:45
+#: ../lib/discorb/gateway.rb:48
+#: ../lib/discorb/gateway.rb:51
+#: ../lib/discorb/gateway.rb:54
+#: ../lib/discorb/gateway.rb:59
+#: ../lib/discorb/gateway.rb:61
+#: ../lib/discorb/gateway.rb:62
+#: ../lib/discorb/gateway.rb:124
+#: ../lib/discorb/gateway.rb:127
+#: ../lib/discorb/gateway.rb:130
+#: ../lib/discorb/gateway.rb:173
+#: ../lib/discorb/gateway.rb:176
+#: ../lib/discorb/gateway.rb:179
+#: ../lib/discorb/gateway.rb:258
+#: ../lib/discorb/gateway.rb:271
+#: ../lib/discorb/gateway.rb:287
+#: ../lib/discorb/gateway.rb:291
+#: ../lib/discorb/gateway.rb:314
+#: ../lib/discorb/gateway.rb:330
+#: ../lib/discorb/gateway.rb:334
+#: ../lib/discorb/gateway.rb:346
+#: ../lib/discorb/gateway.rb:362
+#: ../lib/discorb/gateway.rb:366
+#: ../lib/discorb/gateway.rb:391
+#: ../lib/discorb/gateway.rb:393
+#: ../lib/discorb/gateway.rb:417
+#: ../lib/discorb/gateway.rb:421
+#: ../lib/discorb/gateway.rb:425
+#: ../lib/discorb/gateway.rb:429
+#: ../lib/discorb/gateway.rb:433
+#: ../lib/discorb/gateway.rb:476
+#: ../lib/discorb/gateway.rb:491
+#: ../lib/discorb/gateway.rb:495
+#: ../lib/discorb/guild.rb:1091
+#: ../lib/discorb/guild.rb:1108
+#: ../lib/discorb/guild.rb:1306
+#: ../lib/discorb/guild.rb:1355
+#: ../lib/discorb/guild_template.rb:31
+#: ../lib/discorb/guild_template.rb:42
+#: ../lib/discorb/member.rb:30
+#: ../lib/discorb/member.rb:99
+#: ../lib/discorb/member.rb:103
+#: ../lib/discorb/member.rb:116
+#: ../lib/discorb/member.rb:124
+#: ../lib/discorb/member.rb:128
+#: ../lib/discorb/member.rb:132
+#: ../lib/discorb/member.rb:136
+#: ../lib/discorb/message.rb:201
+#: ../lib/discorb/message.rb:226
+#: ../lib/discorb/message.rb:230
+#: ../lib/discorb/voice_state.rb:28
+#: ../lib/discorb/voice_state.rb:68
+#: ../lib/discorb/voice_state.rb:72
+#: ../lib/discorb/voice_state.rb:76
+msgid "This method returns an object from client cache. it will return `nil` if the object is not in cache."
+msgstr ""
+
+# @note
+#: ../lib/discorb.rb:25
+#: ../lib/discorb/guild.rb:45
+#: ../lib/discorb/guild.rb:641
+#: ../lib/discorb/guild.rb:662
+msgid "You must enable `GUILD_MEMBERS` intent to use this method."
+msgstr ""
+
+# @note
+#: ../lib/discorb.rb:25
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/channel.rb:630
+#: ../lib/discorb/channel.rb:644
+#: ../lib/discorb/channel.rb:698
+#: ../lib/discorb/channel.rb:710
+#: ../lib/discorb/channel.rb:828
+#: ../lib/discorb/emoji.rb:95
+#: ../lib/discorb/emoji.rb:105
+#: ../lib/discorb/guild.rb:1122
+#: ../lib/discorb/guild.rb:1131
+#: ../lib/discorb/guild.rb:1378
+#: ../lib/discorb/guild_template.rb:55
+#: ../lib/discorb/guild_template.rb:64
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
+#: ../lib/discorb/member.rb:185
+#: ../lib/discorb/member.rb:197
+#: ../lib/discorb/role.rb:119
+#: ../lib/discorb/role.rb:138
+#: ../lib/discorb/sticker.rb:79
+#: ../lib/discorb/sticker.rb:89
+#: ../lib/discorb/user.rb:160
+#: ../lib/discorb/voice_state.rb:177
+#: ../lib/discorb/voice_state.rb:187
+#: ../lib/discorb/webhook.rb:104
+#: ../lib/discorb/webhook.rb:114
+#: ../lib/discorb/webhook.rb:145
+#: ../lib/discorb/webhook.rb:317
+msgid "The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`."
+msgstr ""
+
+# @note
+#: ../lib/discorb.rb:25
+#: ../lib/discorb/channel.rb:176
+#: ../lib/discorb/channel.rb:184
+#: ../lib/discorb/channel.rb:185
+#: ../lib/discorb/channel.rb:199
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/channel.rb:315
+#: ../lib/discorb/channel.rb:332
+#: ../lib/discorb/channel.rb:347
+#: ../lib/discorb/channel.rb:365
+#: ../lib/discorb/channel.rb:366
+#: ../lib/discorb/channel.rb:377
+#: ../lib/discorb/channel.rb:394
+#: ../lib/discorb/channel.rb:395
+#: ../lib/discorb/channel.rb:396
+#: ../lib/discorb/channel.rb:397
+#: ../lib/discorb/channel.rb:407
+#: ../lib/discorb/channel.rb:413
+#: ../lib/discorb/channel.rb:414
+#: ../lib/discorb/channel.rb:415
+#: ../lib/discorb/channel.rb:424
+#: ../lib/discorb/channel.rb:445
+#: ../lib/discorb/channel.rb:465
+#: ../lib/discorb/channel.rb:479
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+#: ../lib/discorb/channel.rb:530
+#: ../lib/discorb/channel.rb:544
+#: ../lib/discorb/channel.rb:561
+#: ../lib/discorb/channel.rb:630
+#: ../lib/discorb/channel.rb:644
+#: ../lib/discorb/channel.rb:698
+#: ../lib/discorb/channel.rb:710
+#: ../lib/discorb/channel.rb:723
+#: ../lib/discorb/channel.rb:738
+#: ../lib/discorb/channel.rb:828
+#: ../lib/discorb/client.rb:211
+#: ../lib/discorb/client.rb:229
+#: ../lib/discorb/client.rb:247
+#: ../lib/discorb/client.rb:265
+#: ../lib/discorb/client.rb:282
+#: ../lib/discorb/client.rb:299
+#: ../lib/discorb/emoji.rb:95
+#: ../lib/discorb/emoji.rb:105
+#: ../lib/discorb/emoji.rb:116
+#: ../lib/discorb/emoji.rb:124
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/event.rb:200
+#: ../lib/discorb/event.rb:206
+#: ../lib/discorb/event.rb:223
+#: ../lib/discorb/event.rb:250
+#: ../lib/discorb/gateway.rb:103
+#: ../lib/discorb/gateway.rb:152
+#: ../lib/discorb/gateway.rb:204
+#: ../lib/discorb/gateway.rb:300
+#: ../lib/discorb/guild.rb:168
+#: ../lib/discorb/guild.rb:185
+#: ../lib/discorb/guild.rb:202
+#: ../lib/discorb/guild.rb:290
+#: ../lib/discorb/guild.rb:304
+#: ../lib/discorb/guild.rb:316
+#: ../lib/discorb/guild.rb:332
+#: ../lib/discorb/guild.rb:351
+#: ../lib/discorb/guild.rb:365
+#: ../lib/discorb/guild.rb:379
+#: ../lib/discorb/guild.rb:403
+#: ../lib/discorb/guild.rb:448
+#: ../lib/discorb/guild.rb:488
+#: ../lib/discorb/guild.rb:511
+#: ../lib/discorb/guild.rb:527
+#: ../lib/discorb/guild.rb:568
+#: ../lib/discorb/guild.rb:604
+#: ../lib/discorb/guild.rb:621
+#: ../lib/discorb/guild.rb:641
+#: ../lib/discorb/guild.rb:662
+#: ../lib/discorb/guild.rb:674
+#: ../lib/discorb/guild.rb:689
+#: ../lib/discorb/guild.rb:719
+#: ../lib/discorb/guild.rb:732
+#: ../lib/discorb/guild.rb:749
+#: ../lib/discorb/guild.rb:768
+#: ../lib/discorb/guild.rb:785
+#: ../lib/discorb/guild.rb:802
+#: ../lib/discorb/guild.rb:815
+#: ../lib/discorb/guild.rb:835
+#: ../lib/discorb/guild.rb:859
+#: ../lib/discorb/guild.rb:882
+#: ../lib/discorb/guild.rb:898
+#: ../lib/discorb/guild.rb:912
+#: ../lib/discorb/guild.rb:926
+#: ../lib/discorb/guild.rb:940
+#: ../lib/discorb/guild.rb:954
+#: ../lib/discorb/guild.rb:968
+#: ../lib/discorb/guild.rb:982
+#: ../lib/discorb/guild.rb:999
+#: ../lib/discorb/guild.rb:1016
+#: ../lib/discorb/guild.rb:1122
+#: ../lib/discorb/guild.rb:1131
+#: ../lib/discorb/guild.rb:1378
+#: ../lib/discorb/guild_template.rb:55
+#: ../lib/discorb/guild_template.rb:64
+#: ../lib/discorb/guild_template.rb:71
+#: ../lib/discorb/guild_template.rb:83
+#: ../lib/discorb/guild_template.rb:89
+#: ../lib/discorb/interaction/response.rb:15
+#: ../lib/discorb/interaction/response.rb:43
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
+#: ../lib/discorb/interaction/response.rb:163
+#: ../lib/discorb/invite.rb:105
+#: ../lib/discorb/member.rb:152
+#: ../lib/discorb/member.rb:166
+#: ../lib/discorb/member.rb:185
+#: ../lib/discorb/member.rb:197
+#: ../lib/discorb/message.rb:349
+#: ../lib/discorb/message.rb:360
+#: ../lib/discorb/message.rb:373
+#: ../lib/discorb/message.rb:379
+#: ../lib/discorb/message.rb:388
+#: ../lib/discorb/message.rb:394
+#: ../lib/discorb/message.rb:404
+#: ../lib/discorb/message.rb:410
+#: ../lib/discorb/message.rb:423
+#: ../lib/discorb/message.rb:453
+#: ../lib/discorb/message.rb:466
+#: ../lib/discorb/modules.rb:25
+#: ../lib/discorb/modules.rb:53
+#: ../lib/discorb/modules.rb:68
+#: ../lib/discorb/modules.rb:95
+#: ../lib/discorb/modules.rb:101
+#: ../lib/discorb/modules.rb:113
+#: ../lib/discorb/modules.rb:132
+#: ../lib/discorb/modules.rb:152
+#: ../lib/discorb/modules.rb:167
+#: ../lib/discorb/modules.rb:181
+#: ../lib/discorb/modules.rb:200
+#: ../lib/discorb/role.rb:99
+#: ../lib/discorb/role.rb:119
+#: ../lib/discorb/role.rb:138
+#: ../lib/discorb/sticker.rb:79
+#: ../lib/discorb/sticker.rb:89
+#: ../lib/discorb/sticker.rb:98
+#: ../lib/discorb/sticker.rb:104
+#: ../lib/discorb/user.rb:68
+#: ../lib/discorb/user.rb:81
+#: ../lib/discorb/user.rb:160
+#: ../lib/discorb/voice_state.rb:177
+#: ../lib/discorb/voice_state.rb:187
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+#: ../lib/discorb/webhook.rb:104
+#: ../lib/discorb/webhook.rb:114
+#: ../lib/discorb/webhook.rb:121
+#: ../lib/discorb/webhook.rb:128
+#: ../lib/discorb/webhook.rb:145
+#: ../lib/discorb/webhook.rb:317
+#: ../lib/discorb/webhook.rb:328
+msgid "This method calls HTTP request."
+msgstr ""
+
+# @raise [Discorb::HTTPError]
+#: ../lib/discorb.rb:25
+#: ../lib/discorb/channel.rb:176
+#: ../lib/discorb/channel.rb:184
+#: ../lib/discorb/channel.rb:185
+#: ../lib/discorb/channel.rb:199
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/channel.rb:315
+#: ../lib/discorb/channel.rb:332
+#: ../lib/discorb/channel.rb:347
+#: ../lib/discorb/channel.rb:365
+#: ../lib/discorb/channel.rb:366
+#: ../lib/discorb/channel.rb:377
+#: ../lib/discorb/channel.rb:394
+#: ../lib/discorb/channel.rb:395
+#: ../lib/discorb/channel.rb:396
+#: ../lib/discorb/channel.rb:397
+#: ../lib/discorb/channel.rb:407
+#: ../lib/discorb/channel.rb:413
+#: ../lib/discorb/channel.rb:414
+#: ../lib/discorb/channel.rb:415
+#: ../lib/discorb/channel.rb:424
+#: ../lib/discorb/channel.rb:445
+#: ../lib/discorb/channel.rb:465
+#: ../lib/discorb/channel.rb:479
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+#: ../lib/discorb/channel.rb:530
+#: ../lib/discorb/channel.rb:544
+#: ../lib/discorb/channel.rb:561
+#: ../lib/discorb/channel.rb:630
+#: ../lib/discorb/channel.rb:644
+#: ../lib/discorb/channel.rb:698
+#: ../lib/discorb/channel.rb:710
+#: ../lib/discorb/channel.rb:723
+#: ../lib/discorb/channel.rb:738
+#: ../lib/discorb/channel.rb:828
+#: ../lib/discorb/client.rb:211
+#: ../lib/discorb/client.rb:229
+#: ../lib/discorb/client.rb:247
+#: ../lib/discorb/client.rb:265
+#: ../lib/discorb/client.rb:282
+#: ../lib/discorb/client.rb:299
+#: ../lib/discorb/emoji.rb:95
+#: ../lib/discorb/emoji.rb:105
+#: ../lib/discorb/emoji.rb:116
+#: ../lib/discorb/emoji.rb:124
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/event.rb:200
+#: ../lib/discorb/event.rb:206
+#: ../lib/discorb/event.rb:223
+#: ../lib/discorb/event.rb:250
+#: ../lib/discorb/gateway.rb:103
+#: ../lib/discorb/gateway.rb:152
+#: ../lib/discorb/gateway.rb:204
+#: ../lib/discorb/gateway.rb:300
+#: ../lib/discorb/guild.rb:168
+#: ../lib/discorb/guild.rb:185
+#: ../lib/discorb/guild.rb:202
+#: ../lib/discorb/guild.rb:290
+#: ../lib/discorb/guild.rb:304
+#: ../lib/discorb/guild.rb:316
+#: ../lib/discorb/guild.rb:332
+#: ../lib/discorb/guild.rb:351
+#: ../lib/discorb/guild.rb:365
+#: ../lib/discorb/guild.rb:379
+#: ../lib/discorb/guild.rb:403
+#: ../lib/discorb/guild.rb:448
+#: ../lib/discorb/guild.rb:488
+#: ../lib/discorb/guild.rb:511
+#: ../lib/discorb/guild.rb:527
+#: ../lib/discorb/guild.rb:568
+#: ../lib/discorb/guild.rb:604
+#: ../lib/discorb/guild.rb:621
+#: ../lib/discorb/guild.rb:641
+#: ../lib/discorb/guild.rb:662
+#: ../lib/discorb/guild.rb:674
+#: ../lib/discorb/guild.rb:689
+#: ../lib/discorb/guild.rb:719
+#: ../lib/discorb/guild.rb:732
+#: ../lib/discorb/guild.rb:749
+#: ../lib/discorb/guild.rb:768
+#: ../lib/discorb/guild.rb:785
+#: ../lib/discorb/guild.rb:802
+#: ../lib/discorb/guild.rb:815
+#: ../lib/discorb/guild.rb:835
+#: ../lib/discorb/guild.rb:859
+#: ../lib/discorb/guild.rb:882
+#: ../lib/discorb/guild.rb:898
+#: ../lib/discorb/guild.rb:912
+#: ../lib/discorb/guild.rb:926
+#: ../lib/discorb/guild.rb:940
+#: ../lib/discorb/guild.rb:954
+#: ../lib/discorb/guild.rb:968
+#: ../lib/discorb/guild.rb:982
+#: ../lib/discorb/guild.rb:999
+#: ../lib/discorb/guild.rb:1016
+#: ../lib/discorb/guild.rb:1122
+#: ../lib/discorb/guild.rb:1131
+#: ../lib/discorb/guild.rb:1378
+#: ../lib/discorb/guild_template.rb:55
+#: ../lib/discorb/guild_template.rb:64
+#: ../lib/discorb/guild_template.rb:71
+#: ../lib/discorb/guild_template.rb:83
+#: ../lib/discorb/guild_template.rb:89
+#: ../lib/discorb/interaction/response.rb:15
+#: ../lib/discorb/interaction/response.rb:43
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
+#: ../lib/discorb/interaction/response.rb:163
+#: ../lib/discorb/invite.rb:105
+#: ../lib/discorb/member.rb:152
+#: ../lib/discorb/member.rb:166
+#: ../lib/discorb/member.rb:185
+#: ../lib/discorb/member.rb:197
+#: ../lib/discorb/message.rb:349
+#: ../lib/discorb/message.rb:360
+#: ../lib/discorb/message.rb:373
+#: ../lib/discorb/message.rb:379
+#: ../lib/discorb/message.rb:388
+#: ../lib/discorb/message.rb:394
+#: ../lib/discorb/message.rb:404
+#: ../lib/discorb/message.rb:410
+#: ../lib/discorb/message.rb:423
+#: ../lib/discorb/message.rb:453
+#: ../lib/discorb/message.rb:466
+#: ../lib/discorb/modules.rb:25
+#: ../lib/discorb/modules.rb:53
+#: ../lib/discorb/modules.rb:68
+#: ../lib/discorb/modules.rb:95
+#: ../lib/discorb/modules.rb:101
+#: ../lib/discorb/modules.rb:113
+#: ../lib/discorb/modules.rb:132
+#: ../lib/discorb/modules.rb:152
+#: ../lib/discorb/modules.rb:167
+#: ../lib/discorb/modules.rb:181
+#: ../lib/discorb/modules.rb:200
+#: ../lib/discorb/role.rb:99
+#: ../lib/discorb/role.rb:119
+#: ../lib/discorb/role.rb:138
+#: ../lib/discorb/sticker.rb:79
+#: ../lib/discorb/sticker.rb:89
+#: ../lib/discorb/sticker.rb:98
+#: ../lib/discorb/sticker.rb:104
+#: ../lib/discorb/user.rb:68
+#: ../lib/discorb/user.rb:81
+#: ../lib/discorb/user.rb:160
+#: ../lib/discorb/voice_state.rb:177
+#: ../lib/discorb/voice_state.rb:187
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+#: ../lib/discorb/webhook.rb:104
+#: ../lib/discorb/webhook.rb:114
+#: ../lib/discorb/webhook.rb:121
+#: ../lib/discorb/webhook.rb:128
+#: ../lib/discorb/webhook.rb:145
+#: ../lib/discorb/webhook.rb:317
+#: ../lib/discorb/webhook.rb:328
+msgid "HTTP request failed."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb.rb:25
+#: ../lib/discorb/gateway.rb:42
+#: ../lib/discorb/gateway.rb:45
+#: ../lib/discorb/gateway.rb:48
+#: ../lib/discorb/gateway.rb:51
+#: ../lib/discorb/gateway.rb:54
+#: ../lib/discorb/gateway.rb:59
+#: ../lib/discorb/gateway.rb:61
+#: ../lib/discorb/gateway.rb:62
+#: ../lib/discorb/gateway.rb:124
+#: ../lib/discorb/gateway.rb:127
+#: ../lib/discorb/gateway.rb:130
+#: ../lib/discorb/gateway.rb:173
+#: ../lib/discorb/gateway.rb:176
+#: ../lib/discorb/gateway.rb:179
+#: ../lib/discorb/gateway.rb:258
+#: ../lib/discorb/gateway.rb:271
+#: ../lib/discorb/gateway.rb:287
+#: ../lib/discorb/gateway.rb:291
+#: ../lib/discorb/gateway.rb:314
+#: ../lib/discorb/gateway.rb:330
+#: ../lib/discorb/gateway.rb:334
+#: ../lib/discorb/gateway.rb:346
+#: ../lib/discorb/gateway.rb:362
+#: ../lib/discorb/gateway.rb:366
+#: ../lib/discorb/gateway.rb:391
+#: ../lib/discorb/gateway.rb:393
+#: ../lib/discorb/gateway.rb:417
+#: ../lib/discorb/gateway.rb:421
+#: ../lib/discorb/gateway.rb:425
+#: ../lib/discorb/gateway.rb:429
+#: ../lib/discorb/gateway.rb:433
+#: ../lib/discorb/gateway.rb:476
+#: ../lib/discorb/gateway.rb:491
+#: ../lib/discorb/gateway.rb:495
+#: ../lib/discorb/guild.rb:1091
+#: ../lib/discorb/guild.rb:1108
+#: ../lib/discorb/guild.rb:1306
+#: ../lib/discorb/guild.rb:1355
+#: ../lib/discorb/guild_template.rb:31
+#: ../lib/discorb/guild_template.rb:42
+#: ../lib/discorb/member.rb:30
+#: ../lib/discorb/member.rb:99
+#: ../lib/discorb/member.rb:103
+#: ../lib/discorb/member.rb:116
+#: ../lib/discorb/member.rb:124
+#: ../lib/discorb/member.rb:128
+#: ../lib/discorb/member.rb:132
+#: ../lib/discorb/member.rb:136
+#: ../lib/discorb/message.rb:201
+#: ../lib/discorb/message.rb:226
+#: ../lib/discorb/message.rb:230
+#: ../lib/discorb/voice_state.rb:28
+#: ../lib/discorb/voice_state.rb:68
+#: ../lib/discorb/voice_state.rb:72
+#: ../lib/discorb/voice_state.rb:76
+msgid "The object wasn't cached."
 msgstr ""
 
 # Discorb::ApplicationCommand
@@ -4446,20 +4453,39 @@ msgstr ""
 msgid "Add new top-level command."
 msgstr ""
 
+# @param [String]
+#: ../lib/discorb/app_command.rb:40
+#: ../lib/discorb/app_command.rb:62
+#: ../lib/discorb/app_command.rb:314
+#: ../lib/discorb/components.rb:256
+#: ../lib/discorb/embed.rb:47
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/guild.rb:226
+#: ../lib/discorb/guild.rb:1044
+#: ../lib/discorb/guild.rb:1319
+#: ../lib/discorb/guild.rb:1378
+#: ../lib/discorb/guild_template.rb:55
+#: ../lib/discorb/guild_template.rb:64
+#: ../lib/discorb/sticker.rb:79
+#: ../lib/discorb/sticker.rb:89
+msgid "tag|param|description"
+msgstr ""
+
+# @param [Proc]
+#: ../lib/discorb/app_command.rb:40
+#: ../lib/discorb/app_command.rb:81
+#: ../lib/discorb/app_command.rb:99
+#: ../lib/discorb/client.rb:117
+#: ../lib/discorb/extension.rb:62
+msgid "tag|param|block"
+msgstr ""
+
 # @param [Array<Discorb::SelectMenu::Option>]
 # @param [Hash{String => Hash{:description => String, :optional => Boolean, :type => Object}}]
 #: ../lib/discorb/app_command.rb:40
 #: ../lib/discorb/components.rb:203
 msgid "tag|param|options"
-msgstr ""
-
-# @param [Array<#to_s>, false, nil]
-#: ../lib/discorb/app_command.rb:40
-#: ../lib/discorb/app_command.rb:62
-#: ../lib/discorb/app_command.rb:81
-#: ../lib/discorb/app_command.rb:99
-#: ../lib/discorb/app_command.rb:114
-msgid "tag|param|guild_ids"
 msgstr ""
 
 # @param [String]
@@ -4503,6 +4529,15 @@ msgid "Command options.\n"
 "| `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |"
 msgstr ""
 
+# @param [Array<#to_s>, false, nil]
+#: ../lib/discorb/app_command.rb:40
+#: ../lib/discorb/app_command.rb:62
+#: ../lib/discorb/app_command.rb:81
+#: ../lib/discorb/app_command.rb:99
+#: ../lib/discorb/app_command.rb:114
+msgid "tag|param|guild_ids"
+msgstr ""
+
 # @param [Array<#to_s>, false, nil] guild_ids
 #: ../lib/discorb/app_command.rb:40
 #: ../lib/discorb/app_command.rb:62
@@ -4530,34 +4565,6 @@ msgstr ""
 msgid "Command object."
 msgstr ""
 
-# @param [Proc]
-#: ../lib/discorb/app_command.rb:40
-#: ../lib/discorb/app_command.rb:81
-#: ../lib/discorb/app_command.rb:99
-#: ../lib/discorb/client.rb:117
-#: ../lib/discorb/extension.rb:62
-msgid "tag|param|block"
-msgstr ""
-
-# @param [String]
-#: ../lib/discorb/app_command.rb:40
-#: ../lib/discorb/app_command.rb:62
-#: ../lib/discorb/app_command.rb:314
-#: ../lib/discorb/components.rb:256
-#: ../lib/discorb/embed.rb:47
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/guild.rb:226
-#: ../lib/discorb/guild.rb:1044
-#: ../lib/discorb/guild.rb:1319
-#: ../lib/discorb/guild.rb:1378
-#: ../lib/discorb/guild_template.rb:55
-#: ../lib/discorb/guild_template.rb:64
-#: ../lib/discorb/sticker.rb:79
-#: ../lib/discorb/sticker.rb:89
-msgid "tag|param|description"
-msgstr ""
-
 # @see
 #: ../lib/discorb/app_command.rb:40
 msgid "tag|see|file:docs/application_command.md#register-slash-command"
@@ -4574,6 +4581,12 @@ msgstr ""
 msgid "Add new command with group."
 msgstr ""
 
+# @see
+#: ../lib/discorb/app_command.rb:62
+#: ../lib/discorb/app_command.rb:314
+msgid "tag|see|file:docs/slash_command.md"
+msgstr ""
+
 # @yield
 #: ../lib/discorb/app_command.rb:62
 #: ../lib/discorb/app_command.rb:314
@@ -4585,12 +4598,6 @@ msgstr ""
 #: ../lib/discorb/app_command.rb:62
 #: ../lib/discorb/app_command.rb:314
 msgid "tag|yieldparam|group"
-msgstr ""
-
-# @see
-#: ../lib/discorb/app_command.rb:62
-#: ../lib/discorb/app_command.rb:314
-msgid "tag|see|file:docs/slash_command.md"
 msgstr ""
 
 # @yieldparam [Discorb::ApplicationCommand::Command::GroupCommand] group
@@ -4605,16 +4612,23 @@ msgstr ""
 msgid "Add message context menu command."
 msgstr ""
 
-# @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction
+# @yield [interaction, message]
+# @yield [interaction, user]
 #: ../lib/discorb/app_command.rb:81
 #: ../lib/discorb/app_command.rb:99
-msgid "Interaction object."
+msgid "Block to execute."
 msgstr ""
 
 # @yieldparam [Discorb::CommandInteraction::UserMenuCommand]
 #: ../lib/discorb/app_command.rb:81
 #: ../lib/discorb/app_command.rb:99
 msgid "tag|yieldparam|interaction"
+msgstr ""
+
+# @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction
+#: ../lib/discorb/app_command.rb:81
+#: ../lib/discorb/app_command.rb:99
+msgid "Interaction object."
 msgstr ""
 
 # @yieldparam [Discorb::Message]
@@ -4627,21 +4641,9 @@ msgstr ""
 msgid "Message object."
 msgstr ""
 
-# @yield [interaction, message]
-# @yield [interaction, user]
-#: ../lib/discorb/app_command.rb:81
-#: ../lib/discorb/app_command.rb:99
-msgid "Block to execute."
-msgstr ""
-
 # Discorb::ApplicationCommand::Handler#user_command
 #: ../lib/discorb/app_command.rb:88
 msgid "Add user context menu command."
-msgstr ""
-
-# @yieldparam [Discorb::User] user
-#: ../lib/discorb/app_command.rb:99
-msgid "User object."
 msgstr ""
 
 # @yieldparam [Discorb::User]
@@ -4649,29 +4651,14 @@ msgstr ""
 msgid "tag|yieldparam|user"
 msgstr ""
 
+# @yieldparam [Discorb::User] user
+#: ../lib/discorb/app_command.rb:99
+msgid "User object."
+msgstr ""
+
 # Discorb::ApplicationCommand::Handler#setup_commands
 #: ../lib/discorb/app_command.rb:106
 msgid "Setup commands."
-msgstr ""
-
-# @param [Array<#to_s>, false, nil] guild_ids
-#: ../lib/discorb/app_command.rb:114
-msgid "Guild IDs to use as default. If `false` is given, it will be global command."
-msgstr ""
-
-# @param [String] token
-#: ../lib/discorb/app_command.rb:114
-msgid "Bot token."
-msgstr ""
-
-# @note
-#: ../lib/discorb/app_command.rb:114
-msgid "`token` parameter only required if you don't run client."
-msgstr ""
-
-# @see
-#: ../lib/discorb/app_command.rb:114
-msgid "tag|see|Client#initialize"
 msgstr ""
 
 # @param [String, nil]
@@ -4679,6 +4666,26 @@ msgstr ""
 #: ../lib/discorb/app_command.rb:114
 #: ../lib/discorb/client.rb:425
 msgid "tag|param|token"
+msgstr ""
+
+# @note
+#: ../lib/discorb/app_command.rb:114
+msgid "`token` parameter only required if you don't run client."
+msgstr ""
+
+# @param [String] token
+#: ../lib/discorb/app_command.rb:114
+msgid "Bot token."
+msgstr ""
+
+# @param [Array<#to_s>, false, nil] guild_ids
+#: ../lib/discorb/app_command.rb:114
+msgid "Guild IDs to use as default. If `false` is given, it will be global command."
+msgstr ""
+
+# @see
+#: ../lib/discorb/app_command.rb:114
+msgid "tag|see|Client#initialize"
 msgstr ""
 
 # Discorb::ApplicationCommand::Command
@@ -5019,26 +5026,26 @@ msgstr ""
 msgid "URL of the asset."
 msgstr ""
 
-# @param [String] image_format
-#: ../lib/discorb/asset.rb:33
-msgid "The image format."
-msgstr ""
-
 # @param [String]
 #: ../lib/discorb/asset.rb:33
 #: ../lib/discorb/asset.rb:83
 msgid "tag|param|image_format"
 msgstr ""
 
-# @param [Integer] size
+# @param [String] image_format
 #: ../lib/discorb/asset.rb:33
-msgid "The size of the image."
+msgid "The image format."
 msgstr ""
 
 # @param [Integer]
 #: ../lib/discorb/asset.rb:33
 #: ../lib/discorb/asset.rb:83
 msgid "tag|param|size"
+msgstr ""
+
+# @param [Integer] size
+#: ../lib/discorb/asset.rb:33
+msgid "The size of the image."
 msgstr ""
 
 # Discorb::DefaultAvatar
@@ -5067,14 +5074,14 @@ msgstr ""
 msgid "The image format. This is compatible with {Asset#url}, will be ignored."
 msgstr ""
 
-# @return [String]
-#: ../lib/discorb/asset.rb:83
-msgid "URL of the avatar."
-msgstr ""
-
 # @param [Integer] size
 #: ../lib/discorb/asset.rb:83
 msgid "The size of the image. This is compatible with {Asset#url}, will be ignored."
+msgstr ""
+
+# @return [String]
+#: ../lib/discorb/asset.rb:83
+msgid "URL of the avatar."
 msgstr ""
 
 # Discorb::AuditLog
@@ -5119,14 +5126,14 @@ msgstr ""
 msgid "tag|param|index"
 msgstr ""
 
-# @return [Discorb::AuditLog::Entry]
-#: ../lib/discorb/audit_logs.rb:35
-msgid "The entry."
-msgstr ""
-
 # @param [Integer] index
 #: ../lib/discorb/audit_logs.rb:35
 msgid "The index of the entry."
+msgstr ""
+
+# @return [Discorb::AuditLog::Entry]
+#: ../lib/discorb/audit_logs.rb:35
+msgid "The entry."
 msgstr ""
 
 # @return [nil]
@@ -5278,14 +5285,14 @@ msgstr ""
 msgid "The change with the given key does not exist."
 msgstr ""
 
-# Discorb::AuditLog::Entry.converts
-#: ../lib/discorb/audit_logs.rb:217
-msgid "Returns the value of attribute converts."
-msgstr ""
-
 # Discorb::AuditLog::Entry.events
 #: ../lib/discorb/audit_logs.rb:217
 msgid "Returns the value of attribute events."
+msgstr ""
+
+# Discorb::AuditLog::Entry.converts
+#: ../lib/discorb/audit_logs.rb:217
+msgid "Returns the value of attribute converts."
 msgstr ""
 
 # Discorb::AuditLog::Entry::Changes
@@ -5341,6 +5348,11 @@ msgstr ""
 # @return [Change]
 #: ../lib/discorb/audit_logs.rb:274
 msgid "a new instance of Change"
+msgstr ""
+
+# Discorb::AuditLog::Entry::Change#method_missing
+#: ../lib/discorb/audit_logs.rb:295
+msgid "Send a message to the new value."
 msgstr ""
 
 # Discorb::AuditLog::Integration
@@ -5599,13 +5611,6 @@ msgstr ""
 msgid "tag|param|reason"
 msgstr ""
 
-# @return [Async::Task<self>]
-#: ../lib/discorb/channel.rb:176
-#: ../lib/discorb/channel.rb:184
-#: ../lib/discorb/channel.rb:185
-msgid "The deleted channel."
-msgstr ""
-
 # @param [String] reason
 #: ../lib/discorb/channel.rb:176
 #: ../lib/discorb/channel.rb:184
@@ -5613,19 +5618,16 @@ msgstr ""
 msgid "The reason of deleting the channel."
 msgstr ""
 
+# @return [Async::Task<self>]
+#: ../lib/discorb/channel.rb:176
+#: ../lib/discorb/channel.rb:184
+#: ../lib/discorb/channel.rb:185
+msgid "The deleted channel."
+msgstr ""
+
 # Discorb::GuildChannel#move
 #: ../lib/discorb/channel.rb:188
 msgid "Moves the channel to another position."
-msgstr ""
-
-# @return [Async::Task<self>]
-#: ../lib/discorb/channel.rb:199
-msgid "The moved channel."
-msgstr ""
-
-# @param [String] reason
-#: ../lib/discorb/channel.rb:199
-msgid "The reason of moving the channel."
 msgstr ""
 
 # @param [Integer]
@@ -5680,6 +5682,16 @@ msgstr ""
 # @param [Discorb::CategoryChannel] parent
 #: ../lib/discorb/channel.rb:199
 msgid "The parent of channel."
+msgstr ""
+
+# @param [String] reason
+#: ../lib/discorb/channel.rb:199
+msgid "The reason of moving the channel."
+msgstr ""
+
+# @return [Async::Task<self>]
+#: ../lib/discorb/channel.rb:199
+msgid "The moved channel."
 msgstr ""
 
 # Discorb::TextChannel
@@ -5745,49 +5757,6 @@ msgstr ""
 msgid "Edits the channel."
 msgstr ""
 
-# @param [Integer] position
-# @return [Integer]
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/guild.rb:403
-#: ../lib/discorb/guild.rb:448
-#: ../lib/discorb/guild.rb:488
-#: ../lib/discorb/guild.rb:511
-#: ../lib/discorb/guild.rb:527
-#: ../lib/discorb/guild.rb:568
-#: ../lib/discorb/guild_template.rb:163
-msgid "The position of the channel."
-msgstr ""
-
-# @param [Integer]
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-#: ../lib/discorb/guild.rb:403
-#: ../lib/discorb/guild.rb:568
-msgid "tag|param|slowmode"
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/guild.rb:403
-#: ../lib/discorb/guild.rb:568
-msgid "tag|param|nsfw"
-msgstr ""
-
-# @param [String]
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/channel.rb:723
-#: ../lib/discorb/guild.rb:403
-#: ../lib/discorb/guild.rb:568
-#: ../lib/discorb/voice_state.rb:177
-#: ../lib/discorb/voice_state.rb:187
-msgid "tag|param|topic"
-msgstr ""
-
 # @param [#to_s]
 # @param [String]
 #: ../lib/discorb/channel.rb:278
@@ -5830,6 +5799,59 @@ msgstr ""
 msgid "tag|param|name"
 msgstr ""
 
+# @param [String]
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/channel.rb:723
+#: ../lib/discorb/guild.rb:403
+#: ../lib/discorb/guild.rb:568
+#: ../lib/discorb/voice_state.rb:177
+#: ../lib/discorb/voice_state.rb:187
+msgid "tag|param|topic"
+msgstr ""
+
+# @param [Integer]
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+#: ../lib/discorb/guild.rb:403
+#: ../lib/discorb/guild.rb:568
+msgid "tag|param|rate_limit_per_user"
+msgstr ""
+
+# @param [Integer]
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+#: ../lib/discorb/guild.rb:403
+#: ../lib/discorb/guild.rb:568
+msgid "tag|param|slowmode"
+msgstr ""
+
+# @param [Integer] position
+# @return [Integer]
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/guild.rb:403
+#: ../lib/discorb/guild.rb:448
+#: ../lib/discorb/guild.rb:488
+#: ../lib/discorb/guild.rb:511
+#: ../lib/discorb/guild.rb:527
+#: ../lib/discorb/guild.rb:568
+#: ../lib/discorb/guild_template.rb:163
+msgid "The position of the channel."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/channel.rb:278
+#: ../lib/discorb/channel.rb:303
+#: ../lib/discorb/guild.rb:403
+#: ../lib/discorb/guild.rb:568
+msgid "tag|param|nsfw"
+msgstr ""
+
 # @param [Discorb::CategoryChannel, nil]
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
@@ -5866,16 +5888,6 @@ msgstr ""
 #: ../lib/discorb/channel.rb:500
 #: ../lib/discorb/channel.rb:521
 msgid "Alias of `rate_limit_per_user`."
-msgstr ""
-
-# @param [Integer]
-#: ../lib/discorb/channel.rb:278
-#: ../lib/discorb/channel.rb:303
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-#: ../lib/discorb/guild.rb:403
-#: ../lib/discorb/guild.rb:568
-msgid "tag|param|rate_limit_per_user"
 msgstr ""
 
 # @param [Integer]
@@ -5920,13 +5932,6 @@ msgstr ""
 msgid "Create webhook in the channel."
 msgstr ""
 
-# @param [Discorb::Image] avatar
-# @return [Discorb::Asset]
-#: ../lib/discorb/channel.rb:315
-#: ../lib/discorb/webhook.rb:18
-msgid "The avatar of the webhook."
-msgstr ""
-
 # @param [Discorb::Image]
 #: ../lib/discorb/channel.rb:315
 #: ../lib/discorb/user.rb:160
@@ -5935,16 +5940,23 @@ msgstr ""
 msgid "tag|param|avatar"
 msgstr ""
 
-# @return [Async::Task<Discorb::Webhook::IncomingWebhook>]
-#: ../lib/discorb/channel.rb:315
-msgid "The created webhook."
-msgstr ""
-
 # @param [String] name
 # @return [String]
 #: ../lib/discorb/channel.rb:315
 #: ../lib/discorb/webhook.rb:10
 msgid "The name of the webhook."
+msgstr ""
+
+# @param [Discorb::Image] avatar
+# @return [Discorb::Asset]
+#: ../lib/discorb/channel.rb:315
+#: ../lib/discorb/webhook.rb:18
+msgid "The avatar of the webhook."
+msgstr ""
+
+# @return [Async::Task<Discorb::Webhook::IncomingWebhook>]
+#: ../lib/discorb/channel.rb:315
+msgid "The created webhook."
 msgstr ""
 
 # Discorb::TextChannel#fetch_webhooks
@@ -5964,6 +5976,17 @@ msgstr ""
 #: ../lib/discorb/channel.rb:366
 #: ../lib/discorb/channel.rb:367
 msgid "Bulk delete messages in the channel."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/channel.rb:347
+#: ../lib/discorb/channel.rb:365
+#: ../lib/discorb/channel.rb:366
+#: ../lib/discorb/client.rb:282
+#: ../lib/discorb/gateway.rb:103
+#: ../lib/discorb/gateway.rb:152
+#: ../lib/discorb/gateway.rb:204
+msgid "tag|param|force"
 msgstr ""
 
 # @param [Boolean]
@@ -5989,17 +6012,6 @@ msgstr ""
 msgid "Whether to ignore the validation for message (14 days limit)."
 msgstr ""
 
-# @param [Boolean]
-#: ../lib/discorb/channel.rb:347
-#: ../lib/discorb/channel.rb:365
-#: ../lib/discorb/channel.rb:366
-#: ../lib/discorb/client.rb:282
-#: ../lib/discorb/gateway.rb:103
-#: ../lib/discorb/gateway.rb:152
-#: ../lib/discorb/gateway.rb:204
-msgid "tag|param|force"
-msgstr ""
-
 # Discorb::TextChannel#edit_permission
 # Discorb::TextChannel#edit_permissions
 # Discorb::TextChannel#modify_permissions
@@ -6011,6 +6023,36 @@ msgstr ""
 #: ../lib/discorb/channel.rb:397
 #: ../lib/discorb/channel.rb:398
 msgid "Set the channel's permission overwrite."
+msgstr ""
+
+# @param [Discorb::NewsChannel]
+# @param [Discorb::Role, Discorb::Member]
+# @param [Discorb::TextChannel]
+#: ../lib/discorb/channel.rb:377
+#: ../lib/discorb/channel.rb:394
+#: ../lib/discorb/channel.rb:395
+#: ../lib/discorb/channel.rb:396
+#: ../lib/discorb/channel.rb:397
+#: ../lib/discorb/channel.rb:407
+#: ../lib/discorb/channel.rb:413
+#: ../lib/discorb/channel.rb:414
+#: ../lib/discorb/channel.rb:415
+#: ../lib/discorb/channel.rb:465
+#: ../lib/discorb/channel.rb:479
+msgid "tag|param|target"
+msgstr ""
+
+# @param [Discorb::Role, Discorb::Member] target
+#: ../lib/discorb/channel.rb:377
+#: ../lib/discorb/channel.rb:394
+#: ../lib/discorb/channel.rb:395
+#: ../lib/discorb/channel.rb:396
+#: ../lib/discorb/channel.rb:397
+#: ../lib/discorb/channel.rb:407
+#: ../lib/discorb/channel.rb:413
+#: ../lib/discorb/channel.rb:414
+#: ../lib/discorb/channel.rb:415
+msgid "The target of the overwrite."
 msgstr ""
 
 # @param [String] reason
@@ -6038,36 +6080,6 @@ msgstr ""
 #: ../lib/discorb/channel.rb:396
 #: ../lib/discorb/channel.rb:397
 msgid "The permission overwrites to replace."
-msgstr ""
-
-# @param [Discorb::Role, Discorb::Member] target
-#: ../lib/discorb/channel.rb:377
-#: ../lib/discorb/channel.rb:394
-#: ../lib/discorb/channel.rb:395
-#: ../lib/discorb/channel.rb:396
-#: ../lib/discorb/channel.rb:397
-#: ../lib/discorb/channel.rb:407
-#: ../lib/discorb/channel.rb:413
-#: ../lib/discorb/channel.rb:414
-#: ../lib/discorb/channel.rb:415
-msgid "The target of the overwrite."
-msgstr ""
-
-# @param [Discorb::NewsChannel]
-# @param [Discorb::Role, Discorb::Member]
-# @param [Discorb::TextChannel]
-#: ../lib/discorb/channel.rb:377
-#: ../lib/discorb/channel.rb:394
-#: ../lib/discorb/channel.rb:395
-#: ../lib/discorb/channel.rb:396
-#: ../lib/discorb/channel.rb:397
-#: ../lib/discorb/channel.rb:407
-#: ../lib/discorb/channel.rb:413
-#: ../lib/discorb/channel.rb:414
-#: ../lib/discorb/channel.rb:415
-#: ../lib/discorb/channel.rb:465
-#: ../lib/discorb/channel.rb:479
-msgid "tag|param|target"
 msgstr ""
 
 # Discorb::TextChannel#delete_permission
@@ -6104,6 +6116,11 @@ msgstr ""
 msgid "Create an invite in the channel."
 msgstr ""
 
+# @param [Integer]
+#: ../lib/discorb/channel.rb:445
+msgid "tag|param|max_age"
+msgstr ""
+
 # @param [Integer] max_age
 #: ../lib/discorb/channel.rb:445
 msgid "The max age of the invite."
@@ -6124,9 +6141,9 @@ msgstr ""
 msgid "tag|param|temporary"
 msgstr ""
 
-# @param [Integer]
+# @param [Boolean] temporary
 #: ../lib/discorb/channel.rb:445
-msgid "tag|param|max_age"
+msgid "Whether the invite is temporary."
 msgstr ""
 
 # @param [Boolean]
@@ -6150,25 +6167,20 @@ msgstr ""
 msgid "The created invite."
 msgstr ""
 
-# @param [Boolean] temporary
-#: ../lib/discorb/channel.rb:445
-msgid "Whether the invite is temporary."
-msgstr ""
-
 # Discorb::TextChannel#follow_from
 #: ../lib/discorb/channel.rb:458
 msgid "Follow the existing announcement channel."
+msgstr ""
+
+# @param [Discorb::NewsChannel] target
+#: ../lib/discorb/channel.rb:465
+msgid "The channel to follow."
 msgstr ""
 
 # @param [String] reason
 #: ../lib/discorb/channel.rb:465
 #: ../lib/discorb/channel.rb:479
 msgid "The reason of following the channel."
-msgstr ""
-
-# @param [Discorb::NewsChannel] target
-#: ../lib/discorb/channel.rb:465
-msgid "The channel to follow."
 msgstr ""
 
 # Discorb::TextChannel#follow_to
@@ -6188,54 +6200,13 @@ msgstr ""
 msgid "Start thread in the channel."
 msgstr ""
 
-# @param [Boolean] public
+# @param [String] name
+# @return [String]
 #: ../lib/discorb/channel.rb:500
 #: ../lib/discorb/channel.rb:521
-msgid "Whether the thread is public."
-msgstr ""
-
-# @param [Integer]
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
+#: ../lib/discorb/channel.rb:768
 #: ../lib/discorb/channel.rb:828
-msgid "tag|param|auto_archive_duration"
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-#: ../lib/discorb/channel.rb:723
-msgid "tag|param|public"
-msgstr ""
-
-# @param [Integer] auto_archive_duration
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-msgid "The duration of auto-archiving."
-msgstr ""
-
-# @param [Discorb::Message] message
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-msgid "The message to start the thread."
-msgstr ""
-
-# @param [String] reason
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-msgid "The reason of starting the thread."
-msgstr ""
-
-# @return [Async::Task<Discorb::ThreadChannel>]
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-msgid "The started thread."
-msgstr ""
-
-# @param [Integer] rate_limit_per_user
-#: ../lib/discorb/channel.rb:500
-#: ../lib/discorb/channel.rb:521
-msgid "The rate limit per user."
+msgid "The name of the thread."
 msgstr ""
 
 # @param [Discorb::Message]
@@ -6249,13 +6220,54 @@ msgstr ""
 msgid "tag|param|message"
 msgstr ""
 
-# @param [String] name
-# @return [String]
+# @param [Discorb::Message] message
 #: ../lib/discorb/channel.rb:500
 #: ../lib/discorb/channel.rb:521
-#: ../lib/discorb/channel.rb:768
+msgid "The message to start the thread."
+msgstr ""
+
+# @param [Integer]
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
 #: ../lib/discorb/channel.rb:828
-msgid "The name of the thread."
+msgid "tag|param|auto_archive_duration"
+msgstr ""
+
+# @param [Integer] auto_archive_duration
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+msgid "The duration of auto-archiving."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+#: ../lib/discorb/channel.rb:723
+msgid "tag|param|public"
+msgstr ""
+
+# @param [Boolean] public
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+msgid "Whether the thread is public."
+msgstr ""
+
+# @param [Integer] rate_limit_per_user
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+msgid "The rate limit per user."
+msgstr ""
+
+# @param [String] reason
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+msgid "The reason of starting the thread."
+msgstr ""
+
+# @return [Async::Task<Discorb::ThreadChannel>]
+#: ../lib/discorb/channel.rb:500
+#: ../lib/discorb/channel.rb:521
+msgid "The started thread."
 msgstr ""
 
 # Discorb::TextChannel#fetch_archived_public_threads
@@ -6283,6 +6295,20 @@ msgstr ""
 msgid "Fetch joined archived private threads in the channel."
 msgstr ""
 
+# @param [Integer, nil]
+# @param [Integer]
+#: ../lib/discorb/channel.rb:561
+#: ../lib/discorb/dictionary.rb:15
+#: ../lib/discorb/event.rb:223
+#: ../lib/discorb/event.rb:250
+#: ../lib/discorb/guild.rb:641
+#: ../lib/discorb/guild.rb:662
+#: ../lib/discorb/guild.rb:674
+#: ../lib/discorb/message.rb:423
+#: ../lib/discorb/modules.rb:132
+msgid "tag|param|limit"
+msgstr ""
+
 # @param [#to_s]
 # @param [Discorb::Snowflake]
 # @param [Time]
@@ -6302,20 +6328,6 @@ msgstr ""
 #: ../lib/discorb/message.rb:479
 #: ../lib/discorb/message.rb:485
 msgid "<description>"
-msgstr ""
-
-# @param [Integer, nil]
-# @param [Integer]
-#: ../lib/discorb/channel.rb:561
-#: ../lib/discorb/dictionary.rb:15
-#: ../lib/discorb/event.rb:223
-#: ../lib/discorb/event.rb:250
-#: ../lib/discorb/guild.rb:641
-#: ../lib/discorb/guild.rb:662
-#: ../lib/discorb/guild.rb:674
-#: ../lib/discorb/message.rb:423
-#: ../lib/discorb/modules.rb:132
-msgid "tag|param|limit"
 msgstr ""
 
 # @param [Integer] limit
@@ -6347,11 +6359,6 @@ msgstr ""
 msgid "The bitrate of the voice channel."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/channel.rb:610
-msgid "If the user limit is not set."
-msgstr ""
-
 # @param [Integer] user_limit
 # @return [Integer]
 #: ../lib/discorb/channel.rb:610
@@ -6361,31 +6368,16 @@ msgstr ""
 msgid "The user limit of the voice channel."
 msgstr ""
 
+# @return [nil]
+#: ../lib/discorb/channel.rb:610
+msgid "If the user limit is not set."
+msgstr ""
+
 # Discorb::VoiceChannel#edit
 # Discorb::VoiceChannel#modify
 #: ../lib/discorb/channel.rb:616
 #: ../lib/discorb/channel.rb:645
 msgid "Edit the voice channel."
-msgstr ""
-
-# @param [Symbol]
-#: ../lib/discorb/channel.rb:630
-#: ../lib/discorb/channel.rb:644
-#: ../lib/discorb/channel.rb:698
-#: ../lib/discorb/channel.rb:710
-msgid "tag|param|rtc_region"
-msgstr ""
-
-# @param [String] reason
-#: ../lib/discorb/channel.rb:630
-#: ../lib/discorb/channel.rb:644
-msgid "The reason of editing the voice channel."
-msgstr ""
-
-# @param [String] name
-#: ../lib/discorb/channel.rb:630
-#: ../lib/discorb/channel.rb:644
-msgid "The name of the voice channel."
 msgstr ""
 
 # @param [Integer]
@@ -6405,16 +6397,36 @@ msgstr ""
 msgid "tag|param|user_limit"
 msgstr ""
 
+# @param [String] name
+#: ../lib/discorb/channel.rb:630
+#: ../lib/discorb/channel.rb:644
+msgid "The name of the voice channel."
+msgstr ""
+
 # @param [Integer] position
 #: ../lib/discorb/channel.rb:630
 #: ../lib/discorb/channel.rb:644
 msgid "The position of the voice channel."
 msgstr ""
 
+# @param [Symbol]
+#: ../lib/discorb/channel.rb:630
+#: ../lib/discorb/channel.rb:644
+#: ../lib/discorb/channel.rb:698
+#: ../lib/discorb/channel.rb:710
+msgid "tag|param|rtc_region"
+msgstr ""
+
 # @param [Symbol] rtc_region
 #: ../lib/discorb/channel.rb:630
 #: ../lib/discorb/channel.rb:644
 msgid "The region of the voice channel."
+msgstr ""
+
+# @param [String] reason
+#: ../lib/discorb/channel.rb:630
+#: ../lib/discorb/channel.rb:644
+msgid "The reason of editing the voice channel."
 msgstr ""
 
 # @return [Async::Task<self>]
@@ -6428,6 +6440,11 @@ msgstr ""
 msgid "Represents a stage channel."
 msgstr ""
 
+# @return [StageChannel]
+#: ../lib/discorb/channel.rb:675
+msgid "a new instance of StageChannel"
+msgstr ""
+
 # Discorb::StageChannel#edit
 # Discorb::StageChannel#modify
 #: ../lib/discorb/channel.rb:685
@@ -6435,28 +6452,16 @@ msgstr ""
 msgid "Edit the stage channel."
 msgstr ""
 
-# @param [Integer] position
-#: ../lib/discorb/channel.rb:698
-#: ../lib/discorb/channel.rb:710
-msgid "The position of the stage channel."
-msgstr ""
-
-# @param [String] reason
-#: ../lib/discorb/channel.rb:698
-#: ../lib/discorb/channel.rb:710
-msgid "The reason of editing the stage channel."
-msgstr ""
-
-# @return [Async::Task<self>]
-#: ../lib/discorb/channel.rb:698
-#: ../lib/discorb/channel.rb:710
-msgid "The edited stage channel."
-msgstr ""
-
 # @param [String] name
 #: ../lib/discorb/channel.rb:698
 #: ../lib/discorb/channel.rb:710
 msgid "The name of the stage channel."
+msgstr ""
+
+# @param [Integer] position
+#: ../lib/discorb/channel.rb:698
+#: ../lib/discorb/channel.rb:710
+msgid "The position of the stage channel."
 msgstr ""
 
 # @param [Integer] bitrate
@@ -6469,6 +6474,18 @@ msgstr ""
 #: ../lib/discorb/channel.rb:698
 #: ../lib/discorb/channel.rb:710
 msgid "The region of the stage channel."
+msgstr ""
+
+# @param [String] reason
+#: ../lib/discorb/channel.rb:698
+#: ../lib/discorb/channel.rb:710
+msgid "The reason of editing the stage channel."
+msgstr ""
+
+# @return [Async::Task<self>]
+#: ../lib/discorb/channel.rb:698
+#: ../lib/discorb/channel.rb:710
+msgid "The edited stage channel."
 msgstr ""
 
 # Discorb::StageChannel#start
@@ -6488,14 +6505,14 @@ msgstr ""
 msgid "Whether the stage instance is public or not."
 msgstr ""
 
-# @return [Async::Task<Discorb::StageInstance>]
-#: ../lib/discorb/channel.rb:723
-msgid "The started stage instance."
-msgstr ""
-
 # @param [String] reason
 #: ../lib/discorb/channel.rb:723
 msgid "The reason of starting the stage instance."
+msgstr ""
+
+# @return [Async::Task<Discorb::StageInstance>]
+#: ../lib/discorb/channel.rb:723
+msgid "The started stage instance."
 msgstr ""
 
 # Discorb::StageChannel#fetch_stage_instance
@@ -6523,16 +6540,16 @@ msgstr ""
 msgid "This ID is same as the starter message's ID"
 msgstr ""
 
-# @return [Integer]
-#: ../lib/discorb/channel.rb:771
-msgid "The number of messages in the thread."
-msgstr ""
-
 # @note
 #: ../lib/discorb/channel.rb:771
 #: ../lib/discorb/channel.rb:774
 #: ../lib/discorb/channel.rb:775
 msgid "This will stop counting at 50."
+msgstr ""
+
+# @return [Integer]
+#: ../lib/discorb/channel.rb:771
+msgid "The number of messages in the thread."
 msgstr ""
 
 # @return [Integer]
@@ -6588,6 +6605,16 @@ msgstr ""
 msgid "Edit the thread."
 msgstr ""
 
+# @param [Boolean]
+#: ../lib/discorb/channel.rb:828
+msgid "tag|param|archived"
+msgstr ""
+
+# @param [Integer] auto_archive_duration
+#: ../lib/discorb/channel.rb:828
+msgid "The auto archive duration in seconds."
+msgstr ""
+
 # @param [Integer] archive_in
 #: ../lib/discorb/channel.rb:828
 msgid "Alias of `auto_archive_duration`."
@@ -6598,14 +6625,9 @@ msgstr ""
 msgid "tag|param|locked"
 msgstr ""
 
-# @param [Integer] auto_archive_duration
+# @param [Boolean] locked
 #: ../lib/discorb/channel.rb:828
-msgid "The auto archive duration in seconds."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/channel.rb:828
-msgid "tag|param|archived"
+msgid "Whether the thread is locked or not."
 msgstr ""
 
 # @param [String] reason
@@ -6638,11 +6660,6 @@ msgstr ""
 msgid "tag|see|#unlock"
 msgstr ""
 
-# @param [Boolean] locked
-#: ../lib/discorb/channel.rb:828
-msgid "Whether the thread is locked or not."
-msgstr ""
-
 # Discorb::ThreadChannel#archive
 #: ../lib/discorb/channel.rb:842
 msgid "Helper method to archive the thread."
@@ -6663,14 +6680,14 @@ msgstr ""
 msgid "Helper method to lock the thread."
 msgstr ""
 
-# @return [self]
-#: ../lib/discorb/channel.rb:859
-msgid "The locked thread."
-msgstr ""
-
 # @param [String] reason
 #: ../lib/discorb/channel.rb:859
 msgid "The reason of locking the thread."
+msgstr ""
+
+# @return [self]
+#: ../lib/discorb/channel.rb:859
+msgid "The locked thread."
 msgstr ""
 
 # Discorb::ThreadChannel#unarchive
@@ -6678,19 +6695,24 @@ msgstr ""
 msgid "Helper method to unarchive the thread."
 msgstr ""
 
-# @return [self]
-#: ../lib/discorb/channel.rb:870
-msgid "The unarchived thread."
-msgstr ""
-
 # @param [String] reason
 #: ../lib/discorb/channel.rb:870
 msgid "The reason of unarchiving the thread."
 msgstr ""
 
+# @return [self]
+#: ../lib/discorb/channel.rb:870
+msgid "The unarchived thread."
+msgstr ""
+
 # Discorb::ThreadChannel#unlock
 #: ../lib/discorb/channel.rb:875
 msgid "Helper method to unlock the thread."
+msgstr ""
+
+# @note
+#: ../lib/discorb/channel.rb:883
+msgid "This method won't unarchive the thread. Use {#unarchive} instead."
 msgstr ""
 
 # @param [String] reason
@@ -6701,11 +6723,6 @@ msgstr ""
 # @return [self]
 #: ../lib/discorb/channel.rb:883
 msgid "The unlocked thread."
-msgstr ""
-
-# @note
-#: ../lib/discorb/channel.rb:883
-msgid "This method won't unarchive the thread. Use {#unarchive} instead."
 msgstr ""
 
 # Discorb::ThreadChannel.channel_type
@@ -6735,14 +6752,14 @@ msgstr ""
 msgid "The intents that the client is currently using."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/client.rb:19
-msgid "If never fetched application by {#fetch_application}."
-msgstr ""
-
 # @return [Discorb::Application]
 #: ../lib/discorb/client.rb:19
 msgid "The application that the client is using."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb/client.rb:19
+msgid "If never fetched application by {#fetch_application}."
 msgstr ""
 
 # @return [Discorb::HTTP]
@@ -6755,15 +6772,15 @@ msgstr ""
 msgid "The heartbeat interval."
 msgstr ""
 
+# @return [Integer]
+#: ../lib/discorb/client.rb:26
+msgid "The API version of the Discord gateway."
+msgstr ""
+
 # @return [nil]
 #: ../lib/discorb/client.rb:26
 #: ../lib/discorb/client.rb:50
 msgid "If not connected to the gateway."
-msgstr ""
-
-# @return [Integer]
-#: ../lib/discorb/client.rb:26
-msgid "The API version of the Discord gateway."
 msgstr ""
 
 # @return [String]
@@ -6850,76 +6867,6 @@ msgstr ""
 msgid "tag|param|title"
 msgstr ""
 
-# @param [Integer]
-#: ../lib/discorb/client.rb:73
-msgid "tag|param|message_caches"
-msgstr ""
-
-# @param [Integer] message_caches
-#: ../lib/discorb/client.rb:73
-msgid "The number of messages to cache."
-msgstr ""
-
-# @param [#puts]
-#: ../lib/discorb/client.rb:73
-msgid "tag|param|log"
-msgstr ""
-
-# @param [:debug, :info, :warn, :error, :critical]
-#: ../lib/discorb/client.rb:73
-msgid "tag|param|log_level"
-msgstr ""
-
-# @param [#puts] log
-#: ../lib/discorb/client.rb:73
-msgid "The IO object to use for logging."
-msgstr ""
-
-# @return [Client]
-#: ../lib/discorb/client.rb:73
-msgid "a new instance of Client"
-msgstr ""
-
-# @param [:debug, :info, :warn, :error, :critical] log_level
-#: ../lib/discorb/client.rb:73
-msgid "The log level."
-msgstr ""
-
-# @param [String] title
-#: ../lib/discorb/client.rb:73
-msgid "The title of the process. `false` to default, `nil` to `discorb: User#0000`. Default to `nil`."
-msgstr ""
-
-# @param [Boolean] fetch_member
-#: ../lib/discorb/client.rb:73
-msgid "Whether to fetch member on ready. This may slow down the client. Default to `false`."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/client.rb:73
-msgid "tag|param|colorize_log"
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/client.rb:73
-msgid "tag|param|wait_until_ready"
-msgstr ""
-
-# @param [Boolean] wait_until_ready
-#: ../lib/discorb/client.rb:73
-msgid "Whether to delay event dispatch until ready."
-msgstr ""
-
-# @param [Boolean] colorize_log
-#: ../lib/discorb/client.rb:73
-msgid "Whether to colorize the log."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/client.rb:73
-msgid "tag|param|fetch_member"
-msgstr ""
-
 # @param [Discorb::AllowedMentions]
 #: ../lib/discorb/client.rb:73
 #: ../lib/discorb/interaction/response.rb:43
@@ -6939,9 +6886,104 @@ msgstr ""
 msgid "tag|param|intents"
 msgstr ""
 
+# @param [Integer]
+#: ../lib/discorb/client.rb:73
+msgid "tag|param|message_caches"
+msgstr ""
+
+# @param [Integer] message_caches
+#: ../lib/discorb/client.rb:73
+msgid "The number of messages to cache."
+msgstr ""
+
+# @param [#puts]
+#: ../lib/discorb/client.rb:73
+msgid "tag|param|log"
+msgstr ""
+
+# @param [#puts] log
+#: ../lib/discorb/client.rb:73
+msgid "The IO object to use for logging."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/client.rb:73
+msgid "tag|param|colorize_log"
+msgstr ""
+
+# @param [Boolean] colorize_log
+#: ../lib/discorb/client.rb:73
+msgid "Whether to colorize the log."
+msgstr ""
+
+# @param [:debug, :info, :warn, :error, :critical]
+#: ../lib/discorb/client.rb:73
+msgid "tag|param|log_level"
+msgstr ""
+
+# @param [:debug, :info, :warn, :error, :critical] log_level
+#: ../lib/discorb/client.rb:73
+msgid "The log level."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/client.rb:73
+msgid "tag|param|wait_until_ready"
+msgstr ""
+
+# @param [Boolean] wait_until_ready
+#: ../lib/discorb/client.rb:73
+msgid "Whether to delay event dispatch until ready."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/client.rb:73
+msgid "tag|param|fetch_member"
+msgstr ""
+
+# @param [Boolean] fetch_member
+#: ../lib/discorb/client.rb:73
+msgid "Whether to fetch member on ready. This may slow down the client. Default to `false`."
+msgstr ""
+
+# @param [String] title
+#: ../lib/discorb/client.rb:73
+msgid "The title of the process. `false` to default, `nil` to `discorb: User#0000`. Default to `nil`."
+msgstr ""
+
+# @return [Client]
+#: ../lib/discorb/client.rb:73
+msgid "a new instance of Client"
+msgstr ""
+
 # Discorb::Client#on
 #: ../lib/discorb/client.rb:107
 msgid "Registers an event handler."
+msgstr ""
+
+# @param [String] name
+# @param [Symbol] event
+# @param [Symbol] event_name
+# @return [String]
+#: ../lib/discorb/client.rb:117
+#: ../lib/discorb/client.rb:143
+#: ../lib/discorb/client.rb:153
+#: ../lib/discorb/client.rb:346
+#: ../lib/discorb/client.rb:366
+#: ../lib/discorb/event.rb:40
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/extension.rb:43
+#: ../lib/discorb/extension.rb:62
+#: ../lib/discorb/guild.rb:226
+msgid "The name of the event."
+msgstr ""
+
+# @param [Hash] metadata
+# @return [Discorb::ScheduledEvent::Metadata]
+#: ../lib/discorb/client.rb:117
+#: ../lib/discorb/event.rb:61
+msgid "The metadata of the event."
 msgstr ""
 
 # @param [#to_s]
@@ -6966,31 +7008,6 @@ msgstr ""
 #: ../lib/discorb/guild.rb:999
 #: ../lib/discorb/modules.rb:113
 msgid "tag|param|id"
-msgstr ""
-
-# @param [Hash] metadata
-# @return [Discorb::ScheduledEvent::Metadata]
-#: ../lib/discorb/client.rb:117
-#: ../lib/discorb/event.rb:61
-msgid "The metadata of the event."
-msgstr ""
-
-# @param [String] name
-# @param [Symbol] event
-# @param [Symbol] event_name
-# @return [String]
-#: ../lib/discorb/client.rb:117
-#: ../lib/discorb/client.rb:143
-#: ../lib/discorb/client.rb:153
-#: ../lib/discorb/client.rb:346
-#: ../lib/discorb/client.rb:366
-#: ../lib/discorb/event.rb:40
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/extension.rb:43
-#: ../lib/discorb/extension.rb:62
-#: ../lib/discorb/guild.rb:226
-msgid "The name of the event."
 msgstr ""
 
 # @param [Symbol]
@@ -7055,14 +7072,14 @@ msgstr ""
 msgid "Dispatch an event."
 msgstr ""
 
-# @param [Object] args
-#: ../lib/discorb/client.rb:153
-msgid "The arguments to pass to the event."
-msgstr ""
-
 # @param [Object]
 #: ../lib/discorb/client.rb:153
 msgid "tag|param|args"
+msgstr ""
+
+# @param [Object] args
+#: ../lib/discorb/client.rb:153
+msgid "The arguments to pass to the event."
 msgstr ""
 
 # Discorb::Client#fetch_user
@@ -7080,11 +7097,6 @@ msgstr ""
 msgid "Fetch channel from ID."
 msgstr ""
 
-# @raise [Discorb::NotFoundError]
-#: ../lib/discorb/client.rb:229
-msgid "If the channel doesn't exist."
-msgstr ""
-
 # @param [Discorb::GuildChannel] channel
 # @return [Async::Task<Discorb::Channel>]
 # @return [Discorb::Channel]
@@ -7094,6 +7106,11 @@ msgstr ""
 #: ../lib/discorb/guild.rb:1122
 #: ../lib/discorb/guild.rb:1131
 msgid "The channel."
+msgstr ""
+
+# @raise [Discorb::NotFoundError]
+#: ../lib/discorb/client.rb:229
+msgid "If the channel doesn't exist."
 msgstr ""
 
 # Discorb::Client#fetch_guild
@@ -7116,16 +7133,6 @@ msgstr ""
 # Discorb::Client#fetch_invite
 #: ../lib/discorb/client.rb:255
 msgid "Fetch invite from code."
-msgstr ""
-
-# @return [Async::Task<Discorb::Invite>]
-#: ../lib/discorb/client.rb:265
-msgid "The invite."
-msgstr ""
-
-# @param [Boolean] with_expiration
-#: ../lib/discorb/client.rb:265
-msgid "Whether to include the expiration of the invite."
 msgstr ""
 
 # @param [String]
@@ -7153,20 +7160,30 @@ msgstr ""
 msgid "tag|param|with_expiration"
 msgstr ""
 
+# @param [Boolean] with_expiration
+#: ../lib/discorb/client.rb:265
+msgid "Whether to include the expiration of the invite."
+msgstr ""
+
+# @return [Async::Task<Discorb::Invite>]
+#: ../lib/discorb/client.rb:265
+msgid "The invite."
+msgstr ""
+
 # Discorb::Client#fetch_application
 #: ../lib/discorb/client.rb:273
 msgid "Fetch webhook from ID.\n"
 "If application was cached, it will be used."
 msgstr ""
 
-# @return [Async::Task<Discorb::Application>]
-#: ../lib/discorb/client.rb:282
-msgid "The application."
-msgstr ""
-
 # @param [Boolean] force
 #: ../lib/discorb/client.rb:282
 msgid "Whether to force the fetch."
+msgstr ""
+
+# @return [Async::Task<Discorb::Application>]
+#: ../lib/discorb/client.rb:282
+msgid "The application."
 msgstr ""
 
 # Discorb::Client#fetch_nitro_sticker_packs
@@ -7195,22 +7212,16 @@ msgstr ""
 msgid "tag|param|status"
 msgstr ""
 
-# @param [Discorb::Activity] activity
-#: ../lib/discorb/client.rb:313
-#: ../lib/discorb/client.rb:333
-msgid "The activity to update."
-msgstr ""
-
 # @param [Discorb::Activity]
 #: ../lib/discorb/client.rb:313
 #: ../lib/discorb/client.rb:333
 msgid "tag|param|activity"
 msgstr ""
 
-# @param [String] afk
+# @param [Discorb::Activity] activity
 #: ../lib/discorb/client.rb:313
 #: ../lib/discorb/client.rb:333
-msgid "Whether to set the client as AFK."
+msgid "The activity to update."
 msgstr ""
 
 # @param [:online, :idle, :dnd, :invisible] status
@@ -7225,23 +7236,17 @@ msgstr ""
 msgid "tag|param|afk"
 msgstr ""
 
+# @param [String] afk
+#: ../lib/discorb/client.rb:313
+#: ../lib/discorb/client.rb:333
+msgid "Whether to set the client as AFK."
+msgstr ""
+
 # Discorb::Client#await
 # Discorb::Client#event_lock
 #: ../lib/discorb/client.rb:336
 #: ../lib/discorb/client.rb:367
 msgid "Method to wait for a event."
-msgstr ""
-
-# @param [Integer] timeout
-#: ../lib/discorb/client.rb:346
-#: ../lib/discorb/client.rb:366
-msgid "The timeout in seconds."
-msgstr ""
-
-# @param [Integer]
-#: ../lib/discorb/client.rb:346
-#: ../lib/discorb/client.rb:366
-msgid "tag|param|timeout"
 msgstr ""
 
 # @param [Symbol]
@@ -7250,16 +7255,22 @@ msgstr ""
 msgid "tag|param|event"
 msgstr ""
 
+# @param [Integer]
+#: ../lib/discorb/client.rb:346
+#: ../lib/discorb/client.rb:366
+msgid "tag|param|timeout"
+msgstr ""
+
+# @param [Integer] timeout
+#: ../lib/discorb/client.rb:346
+#: ../lib/discorb/client.rb:366
+msgid "The timeout in seconds."
+msgstr ""
+
 # @param [Proc]
 #: ../lib/discorb/client.rb:346
 #: ../lib/discorb/client.rb:366
 msgid "tag|param|check"
-msgstr ""
-
-# @return [Object]
-#: ../lib/discorb/client.rb:346
-#: ../lib/discorb/client.rb:366
-msgid "The result of the event."
 msgstr ""
 
 # @param [Proc] check
@@ -7274,9 +7285,45 @@ msgstr ""
 msgid "If the event didn't occur in time."
 msgstr ""
 
+# @return [Object]
+#: ../lib/discorb/client.rb:346
+#: ../lib/discorb/client.rb:366
+msgid "The result of the event."
+msgstr ""
+
+# Discorb::Client#load_extension
+#: ../lib/discorb/client.rb:373
+msgid "Load the extension."
+msgstr ""
+
+# @param [Class, Discorb::Extension]
+#: ../lib/discorb/client.rb:378
+msgid "tag|param|ext"
+msgstr ""
+
+# @param [Class, Discorb::Extension] ext
+#: ../lib/discorb/client.rb:378
+msgid "The extension to load."
+msgstr ""
+
+# @param [Object]
+#: ../lib/discorb/client.rb:378
+msgid "tag|param|..."
+msgstr ""
+
+# @param [Object] ...
+#: ../lib/discorb/client.rb:378
+msgid "The arguments to pass to the `ext#initialize`."
+msgstr ""
+
 # Discorb::Client#run
 #: ../lib/discorb/client.rb:417
 msgid "Starts the client."
+msgstr ""
+
+# @note
+#: ../lib/discorb/client.rb:425
+msgid "This method behavior will change by CLI."
 msgstr ""
 
 # @note
@@ -7294,11 +7341,6 @@ msgstr ""
 msgid "tag|see|file:docs/cli.md"
 msgstr ""
 
-# @note
-#: ../lib/discorb/client.rb:425
-msgid "This method behavior will change by CLI."
-msgstr ""
-
 # Discorb::Client#close!
 #: ../lib/discorb/client.rb:440
 msgid "Stops the client."
@@ -7307,11 +7349,6 @@ msgstr ""
 # Discorb::Color
 #: ../lib/discorb/color.rb:5
 msgid "Represents RGB color."
-msgstr ""
-
-# @param value
-#: ../lib/discorb/color.rb:8
-msgid "the value to set the attribute value to."
 msgstr ""
 
 # @param
@@ -7328,9 +7365,9 @@ msgstr ""
 msgid "tag|param|value"
 msgstr ""
 
-# Discorb::Color#value=
-#: ../lib/discorb/color.rb:9
-msgid "Sets the attribute value"
+# @param value
+#: ../lib/discorb/color.rb:8
+msgid "the value to set the attribute value to."
 msgstr ""
 
 # Discorb::Color#value
@@ -7338,14 +7375,14 @@ msgstr ""
 msgid "Returns the value of attribute value."
 msgstr ""
 
+# Discorb::Color#value=
+#: ../lib/discorb/color.rb:9
+msgid "Sets the attribute value"
+msgstr ""
+
 # Discorb::Color#initialize
 #: ../lib/discorb/color.rb:44
 msgid "Create a color from a Integer."
-msgstr ""
-
-# @return [Color]
-#: ../lib/discorb/color.rb:48
-msgid "a new instance of Color"
 msgstr ""
 
 # @param [Integer] value
@@ -7353,6 +7390,11 @@ msgstr ""
 #: ../lib/discorb/color.rb:48
 #: ../lib/discorb/color.rb:57
 msgid "A color value."
+msgstr ""
+
+# @return [Color]
+#: ../lib/discorb/color.rb:48
+msgid "a new instance of Color"
 msgstr ""
 
 # Discorb::Color#to_i
@@ -7419,16 +7461,16 @@ msgstr ""
 msgid "tag|param|hex"
 msgstr ""
 
+# @param [String] hex
+#: ../lib/discorb/color.rb:113
+msgid "A hexadecimal string."
+msgstr ""
+
 # @return [Discorb::Color]
 #: ../lib/discorb/color.rb:113
 #: ../lib/discorb/color.rb:126
 #: ../lib/discorb/color.rb:198
 msgid "A color object."
-msgstr ""
-
-# @param [String] hex
-#: ../lib/discorb/color.rb:113
-msgid "A hexadecimal string."
 msgstr ""
 
 # Discorb::Color.from_rgb
@@ -7612,10 +7654,13 @@ msgstr ""
 msgid "Timestamp of snowflake."
 msgstr ""
 
-# @return [String]
+# @return [Integer]
+# Discorb::Snowflake#worker_id
 #: ../lib/discorb/common.rb:49
-#: ../lib/discorb/common.rb:117
-msgid "The snowflake."
+#: ../lib/discorb/common.rb:50
+#: ../lib/discorb/common.rb:101
+#: ../lib/discorb/common.rb:102
+msgid "Worker ID of snowflake."
 msgstr ""
 
 # @return [Integer]
@@ -7628,21 +7673,18 @@ msgid "Process ID of snowflake."
 msgstr ""
 
 # @return [Integer]
-# Discorb::Snowflake#worker_id
-#: ../lib/discorb/common.rb:49
-#: ../lib/discorb/common.rb:50
-#: ../lib/discorb/common.rb:101
-#: ../lib/discorb/common.rb:102
-msgid "Worker ID of snowflake."
-msgstr ""
-
-# @return [Integer]
 # Discorb::Snowflake#increment
 #: ../lib/discorb/common.rb:49
 #: ../lib/discorb/common.rb:50
 #: ../lib/discorb/common.rb:109
 #: ../lib/discorb/common.rb:110
 msgid "Increment of snowflake."
+msgstr ""
+
+# @return [String]
+#: ../lib/discorb/common.rb:49
+#: ../lib/discorb/common.rb:117
+msgid "The snowflake."
 msgstr ""
 
 # Discorb::Snowflake#id
@@ -7686,16 +7728,23 @@ msgstr ""
 msgid "Create a new component from hash data."
 msgstr ""
 
-# @return [Component]
-#: ../lib/discorb/components.rb:22
-msgid "A new component."
-msgstr ""
-
 # @param [Hash]
 #: ../lib/discorb/components.rb:22
 #: ../lib/discorb/components.rb:306
 #: ../lib/discorb/message.rb:574
 msgid "tag|param|data"
+msgstr ""
+
+# @param [Hash] data
+# @return [Array<Hash>]
+#: ../lib/discorb/components.rb:22
+#: ../lib/discorb/components.rb:51
+msgid "Hash data."
+msgstr ""
+
+# @return [Component]
+#: ../lib/discorb/components.rb:22
+msgid "A new component."
 msgstr ""
 
 # @see
@@ -7706,13 +7755,6 @@ msgstr ""
 # @see https://discord.com/developers/docs/interactions/message-components
 #: ../lib/discorb/components.rb:22
 msgid "Official Discord API documentation"
-msgstr ""
-
-# @param [Hash] data
-# @return [Array<Hash>]
-#: ../lib/discorb/components.rb:22
-#: ../lib/discorb/components.rb:51
-msgid "Hash data."
 msgstr ""
 
 # Discorb::Component.to_payload
@@ -7787,20 +7829,6 @@ msgstr ""
 msgid "Initialize a new button."
 msgstr ""
 
-# @param [:primary, :secondary, :success, :danger, :link]
-# @param [:shield, :banner1, :banner2, :banner3, :banner4]
-#: ../lib/discorb/components.rb:112
-#: ../lib/discorb/guild.rb:1184
-msgid "tag|param|style"
-msgstr ""
-
-# @param [String] url
-# @return [String]
-#: ../lib/discorb/components.rb:112
-#: ../lib/discorb/presence.rb:244
-msgid "The URL of the button."
-msgstr ""
-
 # @param [String]
 #: ../lib/discorb/components.rb:112
 #: ../lib/discorb/embed.rb:47
@@ -7813,27 +7841,11 @@ msgstr ""
 msgid "tag|param|url"
 msgstr ""
 
-# @param [Boolean]
+# @param [:primary, :secondary, :success, :danger, :link]
+# @param [:shield, :banner1, :banner2, :banner3, :banner4]
 #: ../lib/discorb/components.rb:112
-msgid "tag|param|disabled"
-msgstr ""
-
-# @param [String] custom_id
-#: ../lib/discorb/components.rb:112
-msgid "The custom ID of the button."
-msgstr ""
-
-# @param [String, Symbol]
-# @param [String]
-#: ../lib/discorb/components.rb:112
-#: ../lib/discorb/components.rb:203
-msgid "tag|param|custom_id"
-msgstr ""
-
-# @param [String]
-#: ../lib/discorb/components.rb:112
-#: ../lib/discorb/components.rb:256
-msgid "tag|param|label"
+#: ../lib/discorb/guild.rb:1184
+msgid "tag|param|style"
 msgstr ""
 
 # @param [Boolean]
@@ -7852,10 +7864,40 @@ msgstr ""
 msgid "tag|param|emoji"
 msgstr ""
 
+# @param [String] url
+# @return [String]
+#: ../lib/discorb/components.rb:112
+#: ../lib/discorb/presence.rb:244
+msgid "The URL of the button."
+msgstr ""
+
 # @return [Button]
 #: ../lib/discorb/components.rb:112
 #: ../lib/discorb/presence.rb:248
 msgid "a new instance of Button"
+msgstr ""
+
+# @param [String]
+#: ../lib/discorb/components.rb:112
+#: ../lib/discorb/components.rb:256
+msgid "tag|param|label"
+msgstr ""
+
+# @param [String, Symbol]
+# @param [String]
+#: ../lib/discorb/components.rb:112
+#: ../lib/discorb/components.rb:203
+msgid "tag|param|custom_id"
+msgstr ""
+
+# @param [String] custom_id
+#: ../lib/discorb/components.rb:112
+msgid "The custom ID of the button."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/components.rb:112
+msgid "tag|param|disabled"
 msgstr ""
 
 # Discorb::Button#to_hash
@@ -7863,14 +7905,14 @@ msgstr ""
 msgid "Converts the button to a hash."
 msgstr ""
 
-# @see
-#: ../lib/discorb/components.rb:127
-msgid "tag|see|https://discord.com/developers/docs/interactions/message-components#button-object-button-structure"
-msgstr ""
-
 # @return [Hash]
 #: ../lib/discorb/components.rb:127
 msgid "A hash representation of the button."
+msgstr ""
+
+# @see
+#: ../lib/discorb/components.rb:127
+msgid "tag|see|https://discord.com/developers/docs/interactions/message-components#button-object-button-structure"
 msgstr ""
 
 # Discorb::SelectMenu
@@ -7915,14 +7957,14 @@ msgstr ""
 msgid "Initialize a new select menu."
 msgstr ""
 
-# @param [String]
-#: ../lib/discorb/components.rb:203
-msgid "tag|param|placeholder"
-msgstr ""
-
 # @param [String, Symbol] custom_id
 #: ../lib/discorb/components.rb:203
 msgid "Custom ID of the select menu."
+msgstr ""
+
+# @param [String]
+#: ../lib/discorb/components.rb:203
+msgid "tag|param|placeholder"
 msgstr ""
 
 # @param [String] placeholder
@@ -7935,14 +7977,14 @@ msgstr ""
 msgid "tag|param|min_values"
 msgstr ""
 
-# @return [SelectMenu]
-#: ../lib/discorb/components.rb:203
-msgid "a new instance of SelectMenu"
-msgstr ""
-
 # @param [Integer]
 #: ../lib/discorb/components.rb:203
 msgid "tag|param|max_values"
+msgstr ""
+
+# @return [SelectMenu]
+#: ../lib/discorb/components.rb:203
+msgid "a new instance of SelectMenu"
 msgstr ""
 
 # Discorb::SelectMenu#to_hash
@@ -8020,14 +8062,14 @@ msgstr ""
 msgid "Converts the option to a hash."
 msgstr ""
 
-# @see
-#: ../lib/discorb/components.rb:270
-msgid "tag|see|https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure"
-msgstr ""
-
 # @return [Hash]
 #: ../lib/discorb/components.rb:270
 msgid "Hash representation of the option."
+msgstr ""
+
+# @see
+#: ../lib/discorb/components.rb:270
+msgid "tag|see|https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure"
 msgstr ""
 
 # Discorb::SelectMenu::Option.from_hash
@@ -8035,14 +8077,14 @@ msgstr ""
 msgid "Creates a new option from a hash."
 msgstr ""
 
-# @return [Discorb::SelectMenu::Option]
-#: ../lib/discorb/components.rb:306
-msgid "A new option."
-msgstr ""
-
 # @param [Hash] data
 #: ../lib/discorb/components.rb:306
 msgid "A hash representing the option."
+msgstr ""
+
+# @return [Discorb::SelectMenu::Option]
+#: ../lib/discorb/components.rb:306
+msgid "A new option."
 msgstr ""
 
 # @param [Integer] limit
@@ -8057,21 +8099,6 @@ msgstr ""
 msgid "Initialize a new Dictionary."
 msgstr ""
 
-# @param [false, Proc] sort
-#: ../lib/discorb/dictionary.rb:15
-msgid "Whether to sort the items in the dictionary."
-msgstr ""
-
-# @param [false, Proc]
-#: ../lib/discorb/dictionary.rb:15
-msgid "tag|param|sort"
-msgstr ""
-
-# @return [Dictionary]
-#: ../lib/discorb/dictionary.rb:15
-msgid "a new instance of Dictionary"
-msgstr ""
-
 # @param [Hash]
 #: ../lib/discorb/dictionary.rb:15
 #: ../lib/discorb/permission.rb:265
@@ -8081,6 +8108,21 @@ msgstr ""
 # @param [Hash] hash
 #: ../lib/discorb/dictionary.rb:15
 msgid "A hash of items to add to the dictionary."
+msgstr ""
+
+# @param [false, Proc]
+#: ../lib/discorb/dictionary.rb:15
+msgid "tag|param|sort"
+msgstr ""
+
+# @param [false, Proc] sort
+#: ../lib/discorb/dictionary.rb:15
+msgid "Whether to sort the items in the dictionary."
+msgstr ""
+
+# @return [Dictionary]
+#: ../lib/discorb/dictionary.rb:15
+msgid "a new instance of Dictionary"
 msgstr ""
 
 # Discorb::Dictionary#[]=
@@ -8168,13 +8210,13 @@ msgstr ""
 # @return [nil]
 #: ../lib/discorb/dictionary.rb:67
 #: ../lib/discorb/dictionary.rb:115
-msgid "if the item was not found."
+msgid "if the item is not found."
 msgstr ""
 
 # @return [nil]
 #: ../lib/discorb/dictionary.rb:67
 #: ../lib/discorb/dictionary.rb:115
-msgid "if the item is not found."
+msgid "if the item was not found."
 msgstr ""
 
 # Discorb::Dictionary#values
@@ -8192,14 +8234,19 @@ msgstr ""
 msgid "Checks if the dictionary has an ID."
 msgstr ""
 
+# @param [#to_s] id
+#: ../lib/discorb/dictionary.rb:92
+msgid "The ID to check."
+msgstr ""
+
 # @return [Boolean]
 #: ../lib/discorb/dictionary.rb:92
 msgid "`true` if the dictionary has the ID, `false` otherwise."
 msgstr ""
 
-# @param [#to_s] id
-#: ../lib/discorb/dictionary.rb:92
-msgid "The ID to check."
+# Discorb::Dictionary#method_missing
+#: ../lib/discorb/dictionary.rb:97
+msgid "Send a message to the array of values."
 msgstr ""
 
 # Discorb::Embed
@@ -8266,14 +8313,6 @@ msgstr ""
 msgid "The type of embed."
 msgstr ""
 
-# @param [Discorb::Embed::Thumbnail, String] thumbnail
-# @return [Discorb::Embed::Thumbnail]
-#: ../lib/discorb/embed.rb:26
-#: ../lib/discorb/embed.rb:28
-#: ../lib/discorb/embed.rb:47
-msgid "The thumbnail of embed."
-msgstr ""
-
 # @param [Discorb::Embed::Image, String] image
 # @return [Discorb::Embed::Image]
 #: ../lib/discorb/embed.rb:26
@@ -8282,16 +8321,22 @@ msgstr ""
 msgid "The image of embed."
 msgstr ""
 
+# @param [Discorb::Embed::Thumbnail, String] thumbnail
+# @return [Discorb::Embed::Thumbnail]
+#: ../lib/discorb/embed.rb:26
+#: ../lib/discorb/embed.rb:28
+#: ../lib/discorb/embed.rb:47
+msgid "The thumbnail of embed."
+msgstr ""
+
 # Discorb::Embed#initialize
 #: ../lib/discorb/embed.rb:34
 msgid "Initialize a new Embed object."
 msgstr ""
 
-# @param [Discorb::Embed::Image, String]
-# @param [Discorb::Image]
+# @param [Time]
 #: ../lib/discorb/embed.rb:47
-#: ../lib/discorb/guild.rb:332
-msgid "tag|param|image"
+msgid "tag|param|timestamp"
 msgstr ""
 
 # @param [Discorb::Embed::Author]
@@ -8314,9 +8359,11 @@ msgstr ""
 msgid "tag|param|footer"
 msgstr ""
 
-# @param [Time]
+# @param [Discorb::Embed::Image, String]
+# @param [Discorb::Image]
 #: ../lib/discorb/embed.rb:47
-msgid "tag|param|timestamp"
+#: ../lib/discorb/guild.rb:332
+msgid "tag|param|image"
 msgstr ""
 
 # @param [Discorb::Embed::Thumbnail, String]
@@ -8332,6 +8379,11 @@ msgstr ""
 # Discorb::Embed#to_hash
 #: ../lib/discorb/embed.rb:94
 msgid "Convert embed to hash."
+msgstr ""
+
+# @return [Hash]
+#: ../lib/discorb/embed.rb:99
+msgid "Converted embed."
 msgstr ""
 
 # @see
@@ -8352,11 +8404,6 @@ msgstr ""
 #: ../lib/discorb/embed.rb:262
 #: ../lib/discorb/embed.rb:306
 msgid "Offical Discord API Docs"
-msgstr ""
-
-# @return [Hash]
-#: ../lib/discorb/embed.rb:99
-msgid "Converted embed."
 msgstr ""
 
 # Discorb::Embed::Author
@@ -8390,12 +8437,6 @@ msgstr ""
 msgid "Initialize a new Author object."
 msgstr ""
 
-# @return [Author]
-#: ../lib/discorb/embed.rb:132
-#: ../lib/discorb/webhook.rb:374
-msgid "a new instance of Author"
-msgstr ""
-
 # @param [Discorb::Image, Discorb::UnicodeEmoji]
 # @param [String]
 #: ../lib/discorb/embed.rb:132
@@ -8405,19 +8446,25 @@ msgstr ""
 msgid "tag|param|icon"
 msgstr ""
 
+# @return [Author]
+#: ../lib/discorb/embed.rb:132
+#: ../lib/discorb/webhook.rb:374
+msgid "a new instance of Author"
+msgstr ""
+
 # Discorb::Embed::Author#to_hash
 #: ../lib/discorb/embed.rb:139
 msgid "Convert author to hash."
 msgstr ""
 
-# @see
-#: ../lib/discorb/embed.rb:144
-msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure"
-msgstr ""
-
 # @return [Hash]
 #: ../lib/discorb/embed.rb:144
 msgid "Converted author."
+msgstr ""
+
+# @see
+#: ../lib/discorb/embed.rb:144
+msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure"
 msgstr ""
 
 # Discorb::Embed::Footer
@@ -8427,22 +8474,17 @@ msgstr ""
 
 # @param value
 #: ../lib/discorb/embed.rb:157
-msgid "the value to set the attribute icon to."
+msgid "the value to set the attribute text to."
 msgstr ""
 
 # @param value
 #: ../lib/discorb/embed.rb:157
-msgid "the value to set the attribute text to."
+msgid "the value to set the attribute icon to."
 msgstr ""
 
 # Discorb::Embed::Footer#text
 #: ../lib/discorb/embed.rb:158
 msgid "Returns the value of attribute text."
-msgstr ""
-
-# Discorb::Embed::Footer#icon=
-#: ../lib/discorb/embed.rb:158
-msgid "Sets the attribute icon"
 msgstr ""
 
 # Discorb::Embed::Footer#text=
@@ -8455,14 +8497,14 @@ msgstr ""
 msgid "Returns the value of attribute icon."
 msgstr ""
 
+# Discorb::Embed::Footer#icon=
+#: ../lib/discorb/embed.rb:158
+msgid "Sets the attribute icon"
+msgstr ""
+
 # Discorb::Embed::Footer#initialize
 #: ../lib/discorb/embed.rb:160
 msgid "Initialize a new Footer object."
-msgstr ""
-
-# @param [String] icon
-#: ../lib/discorb/embed.rb:165
-msgid "The icon url of footer."
 msgstr ""
 
 # @param [String]
@@ -8475,6 +8517,11 @@ msgstr ""
 msgid "The text of footer."
 msgstr ""
 
+# @param [String] icon
+#: ../lib/discorb/embed.rb:165
+msgid "The icon url of footer."
+msgstr ""
+
 # @return [Footer]
 #: ../lib/discorb/embed.rb:165
 msgid "a new instance of Footer"
@@ -8485,14 +8532,14 @@ msgstr ""
 msgid "Convert footer to hash."
 msgstr ""
 
-# @see
-#: ../lib/discorb/embed.rb:176
-msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure"
-msgstr ""
-
 # @return [Hash]
 #: ../lib/discorb/embed.rb:176
 msgid "Converted footer."
+msgstr ""
+
+# @see
+#: ../lib/discorb/embed.rb:176
+msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure"
 msgstr ""
 
 # Discorb::Embed::Field
@@ -8526,14 +8573,14 @@ msgstr ""
 msgid "Initialize a new Field object."
 msgstr ""
 
-# @return [Field]
-#: ../lib/discorb/embed.rb:202
-msgid "a new instance of Field"
-msgstr ""
-
 # @param [Boolean]
 #: ../lib/discorb/embed.rb:202
 msgid "tag|param|inline"
+msgstr ""
+
+# @return [Field]
+#: ../lib/discorb/embed.rb:202
+msgid "a new instance of Field"
 msgstr ""
 
 # Discorb::Embed::Field#to_hash
@@ -8561,16 +8608,16 @@ msgstr ""
 msgid "The url of image."
 msgstr ""
 
+# @return [String]
+#: ../lib/discorb/embed.rb:231
+msgid "The proxy url of image."
+msgstr ""
+
 # @return [nil]
 #: ../lib/discorb/embed.rb:231
 #: ../lib/discorb/embed.rb:234
 #: ../lib/discorb/embed.rb:237
 msgid "The Image object wasn't created from gateway."
-msgstr ""
-
-# @return [String]
-#: ../lib/discorb/embed.rb:231
-msgid "The proxy url of image."
 msgstr ""
 
 # @return [Integer]
@@ -8604,14 +8651,14 @@ msgstr ""
 msgid "Convert image to hash for sending."
 msgstr ""
 
-# @see
-#: ../lib/discorb/embed.rb:262
-msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure"
-msgstr ""
-
 # @return [Hash]
 #: ../lib/discorb/embed.rb:262
 msgid "Converted image."
+msgstr ""
+
+# @see
+#: ../lib/discorb/embed.rb:262
+msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure"
 msgstr ""
 
 # Discorb::Embed::Thumbnail
@@ -8666,14 +8713,14 @@ msgstr ""
 msgid "Convert thumbnail to hash for sending."
 msgstr ""
 
-# @see
-#: ../lib/discorb/embed.rb:306
-msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure"
-msgstr ""
-
 # @return [Hash]
 #: ../lib/discorb/embed.rb:306
 msgid "Converted thumbnail."
+msgstr ""
+
+# @see
+#: ../lib/discorb/embed.rb:306
+msgid "tag|see|https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure"
 msgstr ""
 
 # Discorb::Embed::Video
@@ -8869,16 +8916,16 @@ msgstr ""
 msgid "Delete the emoji."
 msgstr ""
 
-# @return [Async::Task<self>]
-#: ../lib/discorb/emoji.rb:116
-#: ../lib/discorb/emoji.rb:124
-msgid "The deleted emoji."
-msgstr ""
-
 # @param [String] reason
 #: ../lib/discorb/emoji.rb:116
 #: ../lib/discorb/emoji.rb:124
 msgid "The reason for deleting the emoji."
+msgstr ""
+
+# @return [Async::Task<self>]
+#: ../lib/discorb/emoji.rb:116
+#: ../lib/discorb/emoji.rb:124
+msgid "The deleted emoji."
 msgstr ""
 
 # Discorb::PartialEmoji
@@ -8952,14 +8999,14 @@ msgstr ""
 msgid "Represents a HTTP error."
 msgstr ""
 
-# @see
-#: ../lib/discorb/error.rb:43
-msgid "tag|see|https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes"
-msgstr ""
-
 # @return [String]
 #: ../lib/discorb/error.rb:43
 msgid "the JSON response code."
+msgstr ""
+
+# @see
+#: ../lib/discorb/error.rb:43
+msgid "tag|see|https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes"
 msgstr ""
 
 # @return [Net::HTTPResponse]
@@ -9126,25 +9173,17 @@ msgstr ""
 msgid "Create a scheduled event for the guild."
 msgstr ""
 
-# @param [Time] start_time
+# @param ["f", "F", "d", "D", "t", "T", "R"]
+# @param [:playing, :streaming, :listening, :watching, :competing]
+# @param [:stage_instance, :voice, :external]
+# @param [String]
 #: ../lib/discorb/event.rb:110
 #: ../lib/discorb/event.rb:170
+#: ../lib/discorb/extend.rb:11
+#: ../lib/discorb/gateway_requests.rb:23
 #: ../lib/discorb/guild.rb:226
-msgid "The start time of the event."
-msgstr ""
-
-# @param [Time]
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/guild.rb:226
-msgid "tag|param|start_time"
-msgstr ""
-
-# @param [String, nil]
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/guild.rb:226
-msgid "tag|param|location"
+#: ../lib/discorb/image.rb:17
+msgid "tag|param|type"
 msgstr ""
 
 # @param [:stage_instance, :voice, :external] type
@@ -9154,33 +9193,18 @@ msgstr ""
 msgid "The type of event to create."
 msgstr ""
 
-# @param [:guild_only]
-# @param [:public, :guild_only]
+# @param [Time]
 #: ../lib/discorb/event.rb:110
 #: ../lib/discorb/event.rb:170
 #: ../lib/discorb/guild.rb:226
-#: ../lib/discorb/voice_state.rb:177
-#: ../lib/discorb/voice_state.rb:187
-msgid "tag|param|privacy_level"
+msgid "tag|param|start_time"
 msgstr ""
 
-# @param [String, nil] location
+# @param [Time] start_time
 #: ../lib/discorb/event.rb:110
 #: ../lib/discorb/event.rb:170
 #: ../lib/discorb/guild.rb:226
-msgid "The location of the event. Defaults to `nil`."
-msgstr ""
-
-# @see
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-msgid "tag|see|Event#complete"
-msgstr ""
-
-# @see
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-msgid "tag|see|Event#cancel"
+msgid "The start time of the event."
 msgstr ""
 
 # @param [Time, nil]
@@ -9188,19 +9212,6 @@ msgstr ""
 #: ../lib/discorb/event.rb:170
 #: ../lib/discorb/guild.rb:226
 msgid "tag|param|end_time"
-msgstr ""
-
-# @see
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-msgid "tag|see|Event#start"
-msgstr ""
-
-# @param [:guild_only] privacy_level
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/guild.rb:226
-msgid "The privacy level of the event. This must be `:guild_only`."
 msgstr ""
 
 # @param [Time, nil] end_time
@@ -9229,24 +9240,60 @@ msgstr ""
 msgid "tag|param|channel"
 msgstr ""
 
-# @param ["f", "F", "d", "D", "t", "T", "R"]
-# @param [:playing, :streaming, :listening, :watching, :competing]
-# @param [:stage_instance, :voice, :external]
-# @param [String]
-#: ../lib/discorb/event.rb:110
-#: ../lib/discorb/event.rb:170
-#: ../lib/discorb/extend.rb:11
-#: ../lib/discorb/gateway_requests.rb:23
-#: ../lib/discorb/guild.rb:226
-#: ../lib/discorb/image.rb:17
-msgid "tag|param|type"
-msgstr ""
-
 # @param [Discorb::Channel, Discorb::Snowflake, nil] channel
 #: ../lib/discorb/event.rb:110
 #: ../lib/discorb/event.rb:170
 #: ../lib/discorb/guild.rb:226
 msgid "The channel to run the event in."
+msgstr ""
+
+# @param [String, nil]
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/guild.rb:226
+msgid "tag|param|location"
+msgstr ""
+
+# @param [String, nil] location
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/guild.rb:226
+msgid "The location of the event. Defaults to `nil`."
+msgstr ""
+
+# @param [:guild_only]
+# @param [:public, :guild_only]
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/guild.rb:226
+#: ../lib/discorb/voice_state.rb:177
+#: ../lib/discorb/voice_state.rb:187
+msgid "tag|param|privacy_level"
+msgstr ""
+
+# @param [:guild_only] privacy_level
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+#: ../lib/discorb/guild.rb:226
+msgid "The privacy level of the event. This must be `:guild_only`."
+msgstr ""
+
+# @see
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+msgid "tag|see|Event#start"
+msgstr ""
+
+# @see
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+msgid "tag|see|Event#cancel"
+msgstr ""
+
+# @see
+#: ../lib/discorb/event.rb:110
+#: ../lib/discorb/event.rb:170
+msgid "tag|see|Event#complete"
 msgstr ""
 
 # Discorb::ScheduledEvent#start
@@ -9280,6 +9327,37 @@ msgstr ""
 msgid "Fetches the event users."
 msgstr ""
 
+# @note
+#: ../lib/discorb/event.rb:223
+#: ../lib/discorb/event.rb:250
+msgid "You can fetch all of members by not specifying a parameter."
+msgstr ""
+
+# @param [Integer] limit
+#: ../lib/discorb/event.rb:223
+#: ../lib/discorb/event.rb:250
+msgid "The maximum number of users to fetch. Defaults to `100`."
+msgstr ""
+
+# @param [#to_s]
+# @param [Discorb::Snowflake, nil]
+# @param [Discorb::Snowflake]
+# @param [Integer]
+#: ../lib/discorb/event.rb:223
+#: ../lib/discorb/event.rb:250
+#: ../lib/discorb/guild.rb:641
+#: ../lib/discorb/guild.rb:662
+#: ../lib/discorb/message.rb:423
+#: ../lib/discorb/modules.rb:132
+msgid "tag|param|after"
+msgstr ""
+
+# @param [#to_s] after
+#: ../lib/discorb/event.rb:223
+#: ../lib/discorb/event.rb:250
+msgid "The ID of the user to start fetching from. Defaults to `nil`."
+msgstr ""
+
 # @param [#to_s] before
 #: ../lib/discorb/event.rb:223
 #: ../lib/discorb/event.rb:250
@@ -9297,37 +9375,6 @@ msgstr ""
 #: ../lib/discorb/event.rb:250
 msgid "Whether to include the member object of the event. Defaults to `false`.\n"
 "This should be used for manual fetching of members."
-msgstr ""
-
-# @param [#to_s]
-# @param [Discorb::Snowflake, nil]
-# @param [Discorb::Snowflake]
-# @param [Integer]
-#: ../lib/discorb/event.rb:223
-#: ../lib/discorb/event.rb:250
-#: ../lib/discorb/guild.rb:641
-#: ../lib/discorb/guild.rb:662
-#: ../lib/discorb/message.rb:423
-#: ../lib/discorb/modules.rb:132
-msgid "tag|param|after"
-msgstr ""
-
-# @note
-#: ../lib/discorb/event.rb:223
-#: ../lib/discorb/event.rb:250
-msgid "You can fetch all of members by not specifying a parameter."
-msgstr ""
-
-# @param [#to_s] after
-#: ../lib/discorb/event.rb:223
-#: ../lib/discorb/event.rb:250
-msgid "The ID of the user to start fetching from. Defaults to `nil`."
-msgstr ""
-
-# @param [Integer] limit
-#: ../lib/discorb/event.rb:223
-#: ../lib/discorb/event.rb:250
-msgid "The maximum number of users to fetch. Defaults to `100`."
 msgstr ""
 
 # @return [Array<Discorb::Member>]
@@ -9384,6 +9431,11 @@ msgstr ""
 # @return [EventHandler]
 #: ../lib/discorb/event_handler.rb:20
 msgid "a new instance of EventHandler"
+msgstr ""
+
+# Discorb::EventHandler#call
+#: ../lib/discorb/event_handler.rb:33
+msgid "Calls the block associated with the event."
 msgstr ""
 
 # Time#to_df
@@ -9484,15 +9536,15 @@ msgstr ""
 msgid "The attachment proxy url."
 msgstr ""
 
+# @return [Integer]
+#: ../lib/discorb/file.rb:27
+msgid "The image height."
+msgstr ""
+
 # @return [nil]
 #: ../lib/discorb/file.rb:27
 #: ../lib/discorb/file.rb:30
 msgid "If the attachment is not an image."
-msgstr ""
-
-# @return [Integer]
-#: ../lib/discorb/file.rb:27
-msgid "The image height."
 msgstr ""
 
 # @return [Integer]
@@ -9542,17 +9594,6 @@ msgstr ""
 msgid "Creates a new file from IO."
 msgstr ""
 
-# @param [String] content_type
-#: ../lib/discorb/file.rb:71
-msgid "The content type of the file. If not set, it is guessed from the filename.\n"
-"If failed to guess, it is set to `application/octet-stream`."
-msgstr ""
-
-# @return [File]
-#: ../lib/discorb/file.rb:71
-msgid "a new instance of File"
-msgstr ""
-
 # @param [#read]
 #: ../lib/discorb/file.rb:71
 msgid "tag|param|io"
@@ -9568,6 +9609,17 @@ msgstr ""
 #: ../lib/discorb/file.rb:71
 #: ../lib/discorb/file.rb:87
 msgid "tag|param|content_type"
+msgstr ""
+
+# @param [String] content_type
+#: ../lib/discorb/file.rb:71
+msgid "The content type of the file. If not set, it is guessed from the filename.\n"
+"If failed to guess, it is set to `application/octet-stream`."
+msgstr ""
+
+# @return [File]
+#: ../lib/discorb/file.rb:71
+msgid "a new instance of File"
 msgstr ""
 
 # Discorb::File.from_string
@@ -9616,9 +9668,9 @@ msgstr ""
 msgid "Initialize the flag."
 msgstr ""
 
-# @return [Flag]
+# @note
 #: ../lib/discorb/flag.rb:21
-msgid "a new instance of Flag"
+msgid "This is usually called by the subclass."
 msgstr ""
 
 # @param [Integer] value
@@ -9626,9 +9678,9 @@ msgstr ""
 msgid "The value of the flag."
 msgstr ""
 
-# @note
+# @return [Flag]
 #: ../lib/discorb/flag.rb:21
-msgid "This is usually called by the subclass."
+msgid "a new instance of Flag"
 msgstr ""
 
 # Discorb::Flag#method_missing
@@ -9855,6 +9907,13 @@ msgid "Fetch the message.\n"
 "If message is cached, it will be returned."
 msgstr ""
 
+# @param [Boolean] force
+#: ../lib/discorb/gateway.rb:103
+#: ../lib/discorb/gateway.rb:152
+#: ../lib/discorb/gateway.rb:204
+msgid "Whether to force fetching the message."
+msgstr ""
+
 # @return [Async::Task<Discorb::Message>]
 #: ../lib/discorb/gateway.rb:103
 #: ../lib/discorb/gateway.rb:152
@@ -9863,13 +9922,6 @@ msgstr ""
 #: ../lib/discorb/message.rb:349
 #: ../lib/discorb/modules.rb:113
 msgid "The message."
-msgstr ""
-
-# @param [Boolean] force
-#: ../lib/discorb/gateway.rb:103
-#: ../lib/discorb/gateway.rb:152
-#: ../lib/discorb/gateway.rb:204
-msgid "Whether to force fetching the message."
 msgstr ""
 
 # Discorb::Gateway::ReactionRemoveAllEvent
@@ -10036,17 +10088,17 @@ msgstr ""
 msgid "The guild the user is typing in."
 msgstr ""
 
+# @return [Discorb::User]
+#: ../lib/discorb/gateway.rb:393
+#: ../lib/discorb/gateway.rb:417
+msgid "The user that is typing."
+msgstr ""
+
 # @return [Discorb::Member, Discorb::User]
 #: ../lib/discorb/gateway.rb:393
 #: ../lib/discorb/gateway.rb:429
 #: ../lib/discorb/gateway.rb:433
 msgid "The member or user that started typing."
-msgstr ""
-
-# @return [Discorb::User]
-#: ../lib/discorb/gateway.rb:393
-#: ../lib/discorb/gateway.rb:417
-msgid "The user that is typing."
 msgstr ""
 
 # @return [TypingStartEvent]
@@ -10069,10 +10121,9 @@ msgstr ""
 msgid "The type of event."
 msgstr ""
 
-# @return [Boolean]
+# @return [MessagePinEvent]
 #: ../lib/discorb/gateway.rb:450
-#: ../lib/discorb/gateway.rb:467
-msgid "Whether the message was unpinned."
+msgid "a new instance of MessagePinEvent"
 msgstr ""
 
 # @return [Boolean]
@@ -10081,9 +10132,10 @@ msgstr ""
 msgid "Whether the message was pinned."
 msgstr ""
 
-# @return [MessagePinEvent]
+# @return [Boolean]
 #: ../lib/discorb/gateway.rb:450
-msgid "a new instance of MessagePinEvent"
+#: ../lib/discorb/gateway.rb:467
+msgid "Whether the message was unpinned."
 msgstr ""
 
 # Discorb::Gateway::WebhooksUpdateEvent
@@ -10133,16 +10185,18 @@ msgstr ""
 msgid "Initializes a new Activity."
 msgstr ""
 
+# @param [:playing, :streaming, :listening, :watching, :competing] type
+# @return [Symbol]
+#: ../lib/discorb/gateway_requests.rb:23
+#: ../lib/discorb/message.rb:667
+msgid "The type of activity."
+msgstr ""
+
 # @return [Activity]
 #: ../lib/discorb/gateway_requests.rb:23
 #: ../lib/discorb/message.rb:677
 #: ../lib/discorb/presence.rb:93
 msgid "a new instance of Activity"
-msgstr ""
-
-# @param [String] url
-#: ../lib/discorb/gateway_requests.rb:23
-msgid "The URL of the activity."
 msgstr ""
 
 # @param [String] name
@@ -10152,11 +10206,9 @@ msgstr ""
 msgid "The name of the activity."
 msgstr ""
 
-# @param [:playing, :streaming, :listening, :watching, :competing] type
-# @return [Symbol]
+# @param [String] url
 #: ../lib/discorb/gateway_requests.rb:23
-#: ../lib/discorb/message.rb:667
-msgid "The type of activity."
+msgid "The URL of the activity."
 msgstr ""
 
 # Discorb::Activity#to_hash
@@ -10223,14 +10275,14 @@ msgstr ""
 msgid "A dictionary of custom emojis in the guild."
 msgstr ""
 
-# @see
-#: ../lib/discorb/guild.rb:28
-msgid "tag|see|https://discord.com/developers/docs/resources/guild#guild-object-guild-features"
-msgstr ""
-
 # @return [Array<Symbol>]
 #: ../lib/discorb/guild.rb:28
 msgid "features that are enabled in the guild."
+msgstr ""
+
+# @see
+#: ../lib/discorb/guild.rb:28
+msgid "tag|see|https://discord.com/developers/docs/resources/guild#guild-object-guild-features"
 msgstr ""
 
 # @return [:none, :elevated]
@@ -10332,16 +10384,16 @@ msgstr ""
 msgid "The amount of premium subscriptions (Server Boosts) the guild has."
 msgstr ""
 
-# @return [Symbol]
-#: ../lib/discorb/guild.rb:68
-#: ../lib/discorb/guild_template.rb:109
-msgid "The preffered language of the guild."
-msgstr ""
-
 # @note
 #: ../lib/discorb/guild.rb:68
 #: ../lib/discorb/guild_template.rb:109
 msgid "This modifies the language code, `-` will be replaced with `_`."
+msgstr ""
+
+# @return [Symbol]
+#: ../lib/discorb/guild.rb:68
+#: ../lib/discorb/guild_template.rb:109
+msgid "The preffered language of the guild."
 msgstr ""
 
 # @return [Integer]
@@ -10440,6 +10492,11 @@ msgstr ""
 msgid "Fetch scheduled events for the guild."
 msgstr ""
 
+# @param [Boolean]
+#: ../lib/discorb/guild.rb:185
+msgid "tag|param|with_user_count"
+msgstr ""
+
 # @param [Boolean] with_user_count
 #: ../lib/discorb/guild.rb:185
 msgid "Whether to include the user count in the events.\n"
@@ -10449,11 +10506,6 @@ msgstr ""
 # @return [Array<Discorb::ScheduledEvent>]
 #: ../lib/discorb/guild.rb:185
 msgid "The events for the guild."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/guild.rb:185
-msgid "tag|param|with_user_count"
 msgstr ""
 
 # Discorb::Guild#fetch_scheduled_event
@@ -10466,14 +10518,14 @@ msgstr ""
 msgid "The ID of the scheduled event."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/guild.rb:202
-msgid "If no event with the given ID exists."
-msgstr ""
-
 # @return [Discorb::ScheduledEvent]
 #: ../lib/discorb/guild.rb:202
 msgid "The event with the given ID."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb/guild.rb:202
+msgid "If no event with the given ID exists."
 msgstr ""
 
 # @return [Discorb::ScheduledEvent]
@@ -10488,17 +10540,17 @@ msgstr ""
 msgid "Fetch emoji list of the guild."
 msgstr ""
 
-# @return [Async::Task<Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}>]
-#: ../lib/discorb/guild.rb:290
-#: ../lib/discorb/guild.rb:304
-msgid "A dictionary of emoji in the guild."
-msgstr ""
-
 # @note
 #: ../lib/discorb/guild.rb:290
 #: ../lib/discorb/guild.rb:304
 #: ../lib/discorb/guild.rb:316
 msgid "This querys the API every time. We recommend using {#emojis} instead."
+msgstr ""
+
+# @return [Async::Task<Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}>]
+#: ../lib/discorb/guild.rb:290
+#: ../lib/discorb/guild.rb:304
+msgid "A dictionary of emoji in the guild."
 msgstr ""
 
 # Discorb::Guild#fetch_emoji
@@ -10521,9 +10573,9 @@ msgstr ""
 msgid "Create a custom emoji."
 msgstr ""
 
-# @return [Async::Task<Discorb::CustomEmoji>]
+# @param [Discorb::Image] image
 #: ../lib/discorb/guild.rb:332
-msgid "The created emoji."
+msgid "The image of the emoji."
 msgstr ""
 
 # @param [Array<Discorb::Role>] roles
@@ -10531,9 +10583,9 @@ msgstr ""
 msgid "A list of roles to give the emoji."
 msgstr ""
 
-# @param [Discorb::Image] image
+# @return [Async::Task<Discorb::CustomEmoji>]
 #: ../lib/discorb/guild.rb:332
-msgid "The image of the emoji."
+msgid "The created emoji."
 msgstr ""
 
 # Discorb::Guild#fetch_webhooks
@@ -10633,6 +10685,14 @@ msgstr ""
 msgid "Create a new voice channel."
 msgstr ""
 
+# @param [Integer] bitrate
+# @return [Integer]
+#: ../lib/discorb/guild.rb:448
+#: ../lib/discorb/guild.rb:527
+#: ../lib/discorb/guild_template.rb:167
+msgid "The bitrate of the channel."
+msgstr ""
+
 # @param [Integer] user_limit
 # @return [Integer]
 #: ../lib/discorb/guild.rb:448
@@ -10643,14 +10703,6 @@ msgstr ""
 # @return [Async::Task<Discorb::VoiceChannel>]
 #: ../lib/discorb/guild.rb:448
 msgid "The created voice channel."
-msgstr ""
-
-# @param [Integer] bitrate
-# @return [Integer]
-#: ../lib/discorb/guild.rb:448
-#: ../lib/discorb/guild.rb:527
-#: ../lib/discorb/guild_template.rb:167
-msgid "The bitrate of the channel."
 msgstr ""
 
 # Discorb::Guild#create_category
@@ -10701,19 +10753,21 @@ msgstr ""
 msgid "Fetch a member in the guild."
 msgstr ""
 
-# @return [Async::Task<nil>]
+# @param [#to_s] id
 #: ../lib/discorb/guild.rb:621
-msgid "If the member is not found."
+msgid "The ID of the member to fetch."
 msgstr ""
 
 # @return [Async::Task<Discorb::Member>]
 #: ../lib/discorb/guild.rb:621
+#: ../lib/discorb/guild.rb:689
 msgid "The member."
 msgstr ""
 
-# @param [#to_s] id
+# @return [Async::Task<nil>]
 #: ../lib/discorb/guild.rb:621
-msgid "The ID of the member to fetch."
+#: ../lib/discorb/guild.rb:689
+msgid "If the member is not found."
 msgstr ""
 
 # Discorb::Guild#fetch_member_list
@@ -10729,6 +10783,12 @@ msgstr ""
 msgid "The maximum number of members to fetch, 0 for all."
 msgstr ""
 
+# @param [Integer] after
+#: ../lib/discorb/guild.rb:641
+#: ../lib/discorb/guild.rb:662
+msgid "The ID of the member to start fetching after."
+msgstr ""
+
 # @return [Async::Task<Array<Discorb::Member>>]
 #: ../lib/discorb/guild.rb:641
 #: ../lib/discorb/guild.rb:662
@@ -10736,15 +10796,14 @@ msgstr ""
 msgid "The list of members."
 msgstr ""
 
-# @param [Integer] after
-#: ../lib/discorb/guild.rb:641
-#: ../lib/discorb/guild.rb:662
-msgid "The ID of the member to start fetching after."
-msgstr ""
-
 # Discorb::Guild#fetch_members_named
 #: ../lib/discorb/guild.rb:665
 msgid "Search for members by name in the guild."
+msgstr ""
+
+# @param [String] name
+#: ../lib/discorb/guild.rb:674
+msgid "The name of the member to search for."
 msgstr ""
 
 # @param [Integer] limit
@@ -10752,9 +10811,9 @@ msgstr ""
 msgid "The maximum number of members to return."
 msgstr ""
 
-# @param [String] name
-#: ../lib/discorb/guild.rb:674
-msgid "The name of the member to search for."
+# Discorb::Guild#fetch_member_named
+#: ../lib/discorb/guild.rb:682
+msgid "Almost the same as {#fetch_members_named}, but returns a single member."
 msgstr ""
 
 # Discorb::Guild#edit_nick
@@ -10766,6 +10825,14 @@ msgstr ""
 #: ../lib/discorb/guild.rb:709
 #: ../lib/discorb/guild.rb:710
 msgid "Change nickname of client member."
+msgstr ""
+
+# @param [String]
+#: ../lib/discorb/guild.rb:701
+#: ../lib/discorb/guild.rb:707
+#: ../lib/discorb/guild.rb:708
+#: ../lib/discorb/guild.rb:709
+msgid "tag|param|nickname"
 msgstr ""
 
 # @param [String] nickname
@@ -10784,17 +10851,17 @@ msgstr ""
 msgid "The reason for changing the nickname."
 msgstr ""
 
-# @param [String]
-#: ../lib/discorb/guild.rb:701
-#: ../lib/discorb/guild.rb:707
-#: ../lib/discorb/guild.rb:708
-#: ../lib/discorb/guild.rb:709
-msgid "tag|param|nickname"
-msgstr ""
-
 # Discorb::Guild#kick_member
 #: ../lib/discorb/guild.rb:712
 msgid "Kick a member from the guild."
+msgstr ""
+
+# @param [Discorb::Member]
+#: ../lib/discorb/guild.rb:719
+#: ../lib/discorb/guild.rb:785
+#: ../lib/discorb/message.rb:404
+#: ../lib/discorb/message.rb:410
+msgid "tag|param|member"
 msgstr ""
 
 # @param [Discorb::Member] member
@@ -10805,14 +10872,6 @@ msgstr ""
 # @param [String] reason
 #: ../lib/discorb/guild.rb:719
 msgid "The reason for kicking the member."
-msgstr ""
-
-# @param [Discorb::Member]
-#: ../lib/discorb/guild.rb:719
-#: ../lib/discorb/guild.rb:785
-#: ../lib/discorb/message.rb:404
-#: ../lib/discorb/message.rb:410
-msgid "tag|param|member"
 msgstr ""
 
 # Discorb::Guild#fetch_bans
@@ -10861,14 +10920,14 @@ msgstr ""
 msgid "Checks the user was banned from the guild."
 msgstr ""
 
-# @return [Async::Task<Boolean>]
-#: ../lib/discorb/guild.rb:768
-msgid "Whether the user was banned."
-msgstr ""
-
 # @param [Discorb::User] user
 #: ../lib/discorb/guild.rb:768
 msgid "The user to check."
+msgstr ""
+
+# @return [Async::Task<Boolean>]
+#: ../lib/discorb/guild.rb:768
+msgid "Whether the user was banned."
 msgstr ""
 
 # Discorb::Guild#ban_member
@@ -10876,10 +10935,9 @@ msgstr ""
 msgid "Ban a member from the guild."
 msgstr ""
 
-# @param [Integer] delete_message_days
+# @param [Discorb::Member] member
 #: ../lib/discorb/guild.rb:785
-#: ../lib/discorb/member.rb:218
-msgid "The number of days to delete messages."
+msgid "The member to ban."
 msgstr ""
 
 # @param [Integer]
@@ -10888,9 +10946,10 @@ msgstr ""
 msgid "tag|param|delete_message_days"
 msgstr ""
 
-# @param [Discorb::Member] member
+# @param [Integer] delete_message_days
 #: ../lib/discorb/guild.rb:785
-msgid "The member to ban."
+#: ../lib/discorb/member.rb:218
+msgid "The number of days to delete messages."
 msgstr ""
 
 # @param [String] reason
@@ -10903,14 +10962,14 @@ msgstr ""
 msgid "Unban a user from the guild."
 msgstr ""
 
-# @param [String] reason
-#: ../lib/discorb/guild.rb:802
-msgid "The reason for unbanning the user."
-msgstr ""
-
 # @param [Discorb::User] user
 #: ../lib/discorb/guild.rb:802
 msgid "The user to unban."
+msgstr ""
+
+# @param [String] reason
+#: ../lib/discorb/guild.rb:802
+msgid "The reason for unbanning the user."
 msgstr ""
 
 # Discorb::Guild#fetch_roles
@@ -10928,16 +10987,12 @@ msgstr ""
 msgid "Create a role in the guild."
 msgstr ""
 
-# @param [String] reason
+# @param [String] name
+# @return [String]
 #: ../lib/discorb/guild.rb:835
-msgid "The reason for creating the role."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/guild.rb:835
-#: ../lib/discorb/role.rb:119
-#: ../lib/discorb/role.rb:138
-msgid "tag|param|hoist"
+#: ../lib/discorb/guild_template.rb:140
+#: ../lib/discorb/role.rb:11
+msgid "The name of the role."
 msgstr ""
 
 # @param [Discorb::Color] color
@@ -10948,12 +11003,18 @@ msgstr ""
 msgid "The color of the role."
 msgstr ""
 
-# @param [String] name
-# @return [String]
+# @param [Boolean]
 #: ../lib/discorb/guild.rb:835
-#: ../lib/discorb/guild_template.rb:140
-#: ../lib/discorb/role.rb:11
-msgid "The name of the role."
+#: ../lib/discorb/role.rb:119
+#: ../lib/discorb/role.rb:138
+msgid "tag|param|hoist"
+msgstr ""
+
+# @param [Boolean] hoist
+#: ../lib/discorb/guild.rb:835
+#: ../lib/discorb/role.rb:119
+#: ../lib/discorb/role.rb:138
+msgid "Whether the role should be hoisted."
 msgstr ""
 
 # @param [Boolean]
@@ -10970,16 +11031,14 @@ msgstr ""
 msgid "Whether the role should be mentionable."
 msgstr ""
 
+# @param [String] reason
+#: ../lib/discorb/guild.rb:835
+msgid "The reason for creating the role."
+msgstr ""
+
 # @return [Async::Task<Discorb::Role>]
 #: ../lib/discorb/guild.rb:835
 msgid "The role."
-msgstr ""
-
-# @param [Boolean] hoist
-#: ../lib/discorb/guild.rb:835
-#: ../lib/discorb/role.rb:119
-#: ../lib/discorb/role.rb:138
-msgid "Whether the role should be hoisted."
 msgstr ""
 
 # Discorb::Guild#fetch_prune
@@ -10993,9 +11052,10 @@ msgstr ""
 msgid "tag|param|days"
 msgstr ""
 
-# @return [Async::Task<Integer>]
+# @param [Integer] days
 #: ../lib/discorb/guild.rb:859
-msgid "The number of members that will be pruned."
+#: ../lib/discorb/guild.rb:882
+msgid "The number of days to prune."
 msgstr ""
 
 # @param [Array<Discorb::Role>] roles
@@ -11004,10 +11064,9 @@ msgstr ""
 msgid "The roles that include for pruning."
 msgstr ""
 
-# @param [Integer] days
+# @return [Async::Task<Integer>]
 #: ../lib/discorb/guild.rb:859
-#: ../lib/discorb/guild.rb:882
-msgid "The number of days to prune."
+msgid "The number of members that will be pruned."
 msgstr ""
 
 # Discorb::Guild#prune
@@ -11103,6 +11162,13 @@ msgstr ""
 msgid "Fetch the sticker by ID."
 msgstr ""
 
+# @param [#to_s] id
+# @return [Discorb::Snowflake]
+#: ../lib/discorb/guild.rb:999
+#: ../lib/discorb/sticker.rb:9
+msgid "The ID of the sticker."
+msgstr ""
+
 # @return [Async::Task<Discorb::Sticker::GuildSticker>]
 #: ../lib/discorb/guild.rb:999
 msgid "The sticker."
@@ -11111,13 +11177,6 @@ msgstr ""
 # @return [Async::Task<nil>]
 #: ../lib/discorb/guild.rb:999
 msgid "If the sticker does not exist."
-msgstr ""
-
-# @param [#to_s] id
-# @return [Discorb::Snowflake]
-#: ../lib/discorb/guild.rb:999
-#: ../lib/discorb/sticker.rb:9
-msgid "The ID of the sticker."
 msgstr ""
 
 # Discorb::Guild#fetch_templates
@@ -11152,18 +11211,18 @@ msgstr ""
 msgid "Create a new template in the guild."
 msgstr ""
 
-# @param [String] description
-# @return [String]
-#: ../lib/discorb/guild.rb:1044
-#: ../lib/discorb/guild_template.rb:13
-msgid "The description of the template."
-msgstr ""
-
 # @param [String] name
 # @return [String]
 #: ../lib/discorb/guild.rb:1044
 #: ../lib/discorb/guild_template.rb:11
 msgid "The name of the template."
+msgstr ""
+
+# @param [String] description
+# @return [String]
+#: ../lib/discorb/guild.rb:1044
+#: ../lib/discorb/guild_template.rb:13
+msgid "The description of the template."
 msgstr ""
 
 # @param [String] reason
@@ -11258,9 +11317,24 @@ msgstr ""
 msgid "Return iframe HTML of the widget."
 msgstr ""
 
+# @param ["dark", "light"]
+#: ../lib/discorb/guild.rb:1146
+msgid "tag|param|theme"
+msgstr ""
+
+# @param ["dark", "light"] theme
+#: ../lib/discorb/guild.rb:1146
+msgid "The theme of the widget."
+msgstr ""
+
 # @param [Integer]
 #: ../lib/discorb/guild.rb:1146
 msgid "tag|param|width"
+msgstr ""
+
+# @param [Integer] width
+#: ../lib/discorb/guild.rb:1146
+msgid "The width of the widget."
 msgstr ""
 
 # @param [Integer]
@@ -11273,24 +11347,9 @@ msgstr ""
 msgid "The height of the widget."
 msgstr ""
 
-# @param ["dark", "light"]
-#: ../lib/discorb/guild.rb:1146
-msgid "tag|param|theme"
-msgstr ""
-
-# @param [Integer] width
-#: ../lib/discorb/guild.rb:1146
-msgid "The width of the widget."
-msgstr ""
-
 # @return [String]
 #: ../lib/discorb/guild.rb:1146
 msgid "The iframe HTML."
-msgstr ""
-
-# @param ["dark", "light"] theme
-#: ../lib/discorb/guild.rb:1146
-msgid "The theme of the widget."
 msgstr ""
 
 # Discorb::Guild::Ban
@@ -11313,9 +11372,11 @@ msgstr ""
 msgid "Returns a banner url from the guild's ID."
 msgstr ""
 
-# @return [String]
+# @param [#to_s]
+# @param [Discorb::Snowflake]
 #: ../lib/discorb/guild.rb:1184
-msgid "The url of the banner."
+#: ../lib/discorb/message.rb:543
+msgid "tag|param|guild_id"
 msgstr ""
 
 # @param [#to_s] guild_id
@@ -11326,16 +11387,14 @@ msgstr ""
 msgid "The ID of the guild."
 msgstr ""
 
-# @param [#to_s]
-# @param [Discorb::Snowflake]
-#: ../lib/discorb/guild.rb:1184
-#: ../lib/discorb/message.rb:543
-msgid "tag|param|guild_id"
-msgstr ""
-
 # @param [:shield, :banner1, :banner2, :banner3, :banner4] style
 #: ../lib/discorb/guild.rb:1184
 msgid "The style of the banner."
+msgstr ""
+
+# @return [String]
+#: ../lib/discorb/guild.rb:1184
+msgid "The url of the banner."
 msgstr ""
 
 # Discorb::SystemChannelFlag
@@ -11495,16 +11554,16 @@ msgstr ""
 msgid "Whether this template is dirty."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/guild_template.rb:31
-#: ../lib/discorb/guild_template.rb:42
-msgid "Client wasn't able to find the guild this template is based on."
-msgstr ""
-
 # @return [Discorb::Guild]
 #: ../lib/discorb/guild_template.rb:31
 #: ../lib/discorb/guild_template.rb:42
 msgid "The guild this template is based on."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb/guild_template.rb:31
+#: ../lib/discorb/guild_template.rb:42
+msgid "Client wasn't able to find the guild this template is based on."
 msgstr ""
 
 # @return [GuildTemplate]
@@ -11519,16 +11578,16 @@ msgstr ""
 msgid "Edit the template."
 msgstr ""
 
-# @param [String] description
-#: ../lib/discorb/guild_template.rb:55
-#: ../lib/discorb/guild_template.rb:64
-msgid "The new description of the template."
-msgstr ""
-
 # @param [String] name
 #: ../lib/discorb/guild_template.rb:55
 #: ../lib/discorb/guild_template.rb:64
 msgid "The new name of the template."
+msgstr ""
+
+# @param [String] description
+#: ../lib/discorb/guild_template.rb:55
+#: ../lib/discorb/guild_template.rb:64
+msgid "The new description of the template."
 msgstr ""
 
 # Discorb::GuildTemplate#update
@@ -11605,24 +11664,6 @@ msgstr ""
 msgid "Execute a GET request."
 msgstr ""
 
-# @param [Hash]
-#: ../lib/discorb/http.rb:33
-#: ../lib/discorb/http.rb:58
-#: ../lib/discorb/http.rb:83
-#: ../lib/discorb/http.rb:108
-#: ../lib/discorb/http.rb:132
-msgid "tag|param|headers"
-msgstr ""
-
-# @param [String] path
-#: ../lib/discorb/http.rb:33
-#: ../lib/discorb/http.rb:58
-#: ../lib/discorb/http.rb:83
-#: ../lib/discorb/http.rb:108
-#: ../lib/discorb/http.rb:132
-msgid "The path to the resource."
-msgstr ""
-
 # @param [String]
 #: ../lib/discorb/http.rb:33
 #: ../lib/discorb/http.rb:58
@@ -11634,13 +11675,22 @@ msgstr ""
 msgid "tag|param|path"
 msgstr ""
 
-# @param [String] audit_log_reason
+# @param [String] path
 #: ../lib/discorb/http.rb:33
 #: ../lib/discorb/http.rb:58
 #: ../lib/discorb/http.rb:83
 #: ../lib/discorb/http.rb:108
 #: ../lib/discorb/http.rb:132
-msgid "The audit log reason to send with the request."
+msgid "The path to the resource."
+msgstr ""
+
+# @param [Hash]
+#: ../lib/discorb/http.rb:33
+#: ../lib/discorb/http.rb:58
+#: ../lib/discorb/http.rb:83
+#: ../lib/discorb/http.rb:108
+#: ../lib/discorb/http.rb:132
+msgid "tag|param|headers"
 msgstr ""
 
 # @param [Hash] headers
@@ -11659,6 +11709,24 @@ msgstr ""
 #: ../lib/discorb/http.rb:108
 #: ../lib/discorb/http.rb:132
 msgid "tag|param|audit_log_reason"
+msgstr ""
+
+# @param [String] audit_log_reason
+#: ../lib/discorb/http.rb:33
+#: ../lib/discorb/http.rb:58
+#: ../lib/discorb/http.rb:83
+#: ../lib/discorb/http.rb:108
+#: ../lib/discorb/http.rb:132
+msgid "The audit log reason to send with the request."
+msgstr ""
+
+# @param [Hash]
+#: ../lib/discorb/http.rb:33
+#: ../lib/discorb/http.rb:58
+#: ../lib/discorb/http.rb:83
+#: ../lib/discorb/http.rb:108
+#: ../lib/discorb/http.rb:132
+msgid "tag|param|kwargs"
 msgstr ""
 
 # @param [Hash] kwargs
@@ -11697,15 +11765,6 @@ msgstr ""
 msgid "The response was 204."
 msgstr ""
 
-# @param [Hash]
-#: ../lib/discorb/http.rb:33
-#: ../lib/discorb/http.rb:58
-#: ../lib/discorb/http.rb:83
-#: ../lib/discorb/http.rb:108
-#: ../lib/discorb/http.rb:132
-msgid "tag|param|kwargs"
-msgstr ""
-
 # Discorb::HTTP#post
 #: ../lib/discorb/http.rb:44
 msgid "Execute a POST request."
@@ -11738,6 +11797,16 @@ msgstr ""
 msgid "A helper method to send multipart/form-data requests for creating messages."
 msgstr ""
 
+# @param [Hash]
+#: ../lib/discorb/http.rb:154
+msgid "tag|param|payload"
+msgstr ""
+
+# @param [Hash] payload
+#: ../lib/discorb/http.rb:154
+msgid "The payload to send."
+msgstr ""
+
 # @param [Array<Discorb::File>]
 #: ../lib/discorb/http.rb:154
 #: ../lib/discorb/interaction/response.rb:91
@@ -11767,16 +11836,6 @@ msgstr ""
 msgid "The boundary and body."
 msgstr ""
 
-# @param [Hash] payload
-#: ../lib/discorb/http.rb:154
-msgid "The payload to send."
-msgstr ""
-
-# @param [Hash]
-#: ../lib/discorb/http.rb:154
-msgid "tag|param|payload"
-msgstr ""
-
 # Discorb::Image
 #: ../lib/discorb/image.rb:8
 msgid "Represents an image."
@@ -11787,9 +11846,9 @@ msgstr ""
 msgid "Initializes a new Image."
 msgstr ""
 
-# @param [String] type
+# @param [#read, String]
 #: ../lib/discorb/image.rb:17
-msgid "The MIME type of the image."
+msgid "tag|param|source"
 msgstr ""
 
 # @param [#read, String] source
@@ -11797,9 +11856,9 @@ msgstr ""
 msgid "The IO source or path of the image."
 msgstr ""
 
-# @param [#read, String]
+# @param [String] type
 #: ../lib/discorb/image.rb:17
-msgid "tag|param|source"
+msgid "The MIME type of the image."
 msgstr ""
 
 # Discorb::Image#to_s
@@ -12014,14 +12073,34 @@ msgstr ""
 msgid "Whether guild presences related events are enabled."
 msgstr ""
 
+# @param [Boolean] messages
+#: ../lib/discorb/intents.rb:46
+msgid "Whether guild messages related events are enabled."
+msgstr ""
+
 # @param [Boolean]
 #: ../lib/discorb/intents.rb:46
-msgid "tag|param|dm_typing"
+msgid "tag|param|reactions"
 msgstr ""
 
 # @param [Boolean] reactions
 #: ../lib/discorb/intents.rb:46
 msgid "Whether guild reaction related events are enabled."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/intents.rb:46
+msgid "tag|param|dm_messages"
+msgstr ""
+
+# @param [Boolean] dm_messages
+#: ../lib/discorb/intents.rb:46
+msgid "Whether dm messages related events are enabled."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/intents.rb:46
+msgid "tag|param|dm_reactions"
 msgstr ""
 
 # @param [Boolean] dm_reactions
@@ -12031,32 +12110,12 @@ msgstr ""
 
 # @param [Boolean]
 #: ../lib/discorb/intents.rb:46
-msgid "tag|param|dm_reactions"
+msgid "tag|param|dm_typing"
 msgstr ""
 
-# @param [Boolean] dm_messages
+# @param [Boolean] dm_typing
 #: ../lib/discorb/intents.rb:46
-msgid "Whether dm messages related events are enabled."
-msgstr ""
-
-# @return [Intents]
-#: ../lib/discorb/intents.rb:46
-msgid "a new instance of Intents"
-msgstr ""
-
-# @param [Boolean] messages
-#: ../lib/discorb/intents.rb:46
-msgid "Whether guild messages related events are enabled."
-msgstr ""
-
-# @param [Boolean] scheduled_events
-#: ../lib/discorb/intents.rb:46
-msgid "Whether events related scheduled events are enabled."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/intents.rb:46
-msgid "tag|param|reactions"
+msgid "Whether dm typing related events are enabled."
 msgstr ""
 
 # @param [Boolean]
@@ -12064,14 +12123,14 @@ msgstr ""
 msgid "tag|param|scheduled_events"
 msgstr ""
 
-# @param [Boolean]
+# @param [Boolean] scheduled_events
 #: ../lib/discorb/intents.rb:46
-msgid "tag|param|dm_messages"
+msgid "Whether events related scheduled events are enabled."
 msgstr ""
 
-# @param [Boolean] dm_typing
+# @return [Intents]
 #: ../lib/discorb/intents.rb:46
-msgid "Whether dm typing related events are enabled."
+msgid "a new instance of Intents"
 msgstr ""
 
 # Discorb::Intents#value
@@ -12228,26 +12287,46 @@ msgstr ""
 msgid "Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`)."
 msgstr ""
 
-# @param [Boolean]
+# @param [String]
 #: ../lib/discorb/interaction/response.rb:43
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
 #: ../lib/discorb/interaction/response.rb:163
+#: ../lib/discorb/message.rb:305
 #: ../lib/discorb/modules.rb:25
 #: ../lib/discorb/modules.rb:53
+#: ../lib/discorb/modules.rb:68
 #: ../lib/discorb/webhook.rb:63
 #: ../lib/discorb/webhook.rb:92
-msgid "tag|param|tts"
+#: ../lib/discorb/webhook.rb:145
+msgid "tag|param|content"
 msgstr ""
 
-# @param [Array<Discorb::Embed>] embeds
+# @param [Discorb::Embed]
 #: ../lib/discorb/interaction/response.rb:43
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
 #: ../lib/discorb/interaction/response.rb:163
-msgid "The embeds to send. (max: 10)"
+#: ../lib/discorb/message.rb:305
+#: ../lib/discorb/modules.rb:25
+#: ../lib/discorb/modules.rb:53
+#: ../lib/discorb/modules.rb:68
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+#: ../lib/discorb/webhook.rb:145
+msgid "tag|param|embed"
 msgstr ""
 
-# @param [Boolean] tts
+# @param [Discorb::Embed] embed
 #: ../lib/discorb/interaction/response.rb:43
 #: ../lib/discorb/interaction/response.rb:163
-msgid "Whether to send the message as text-to-speech."
+#: ../lib/discorb/message.rb:305
+#: ../lib/discorb/modules.rb:25
+#: ../lib/discorb/modules.rb:53
+#: ../lib/discorb/modules.rb:68
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+msgid "The embed to send."
 msgstr ""
 
 # @param [Array<Discorb::Embed>]
@@ -12275,6 +12354,16 @@ msgstr ""
 msgid "The components to send."
 msgstr ""
 
+# @param [Boolean]
+#: ../lib/discorb/interaction/response.rb:43
+#: ../lib/discorb/interaction/response.rb:163
+#: ../lib/discorb/modules.rb:25
+#: ../lib/discorb/modules.rb:53
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+msgid "tag|param|tts"
+msgstr ""
+
 # @param [Discorb::AllowedMentions] allowed_mentions
 #: ../lib/discorb/interaction/response.rb:43
 #: ../lib/discorb/interaction/response.rb:163
@@ -12284,46 +12373,16 @@ msgstr ""
 msgid "The allowed mentions to send."
 msgstr ""
 
-# @param [Discorb::Embed] embed
+# @param [Boolean] tts
 #: ../lib/discorb/interaction/response.rb:43
 #: ../lib/discorb/interaction/response.rb:163
-#: ../lib/discorb/message.rb:305
-#: ../lib/discorb/modules.rb:25
-#: ../lib/discorb/modules.rb:53
-#: ../lib/discorb/modules.rb:68
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-msgid "The embed to send."
+msgid "Whether to send the message as text-to-speech."
 msgstr ""
 
-# @param [Discorb::Embed]
+# @param [Array<Discorb::Embed>] embeds
 #: ../lib/discorb/interaction/response.rb:43
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
 #: ../lib/discorb/interaction/response.rb:163
-#: ../lib/discorb/message.rb:305
-#: ../lib/discorb/modules.rb:25
-#: ../lib/discorb/modules.rb:53
-#: ../lib/discorb/modules.rb:68
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-#: ../lib/discorb/webhook.rb:145
-msgid "tag|param|embed"
-msgstr ""
-
-# @param [String]
-#: ../lib/discorb/interaction/response.rb:43
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
-#: ../lib/discorb/interaction/response.rb:163
-#: ../lib/discorb/message.rb:305
-#: ../lib/discorb/modules.rb:25
-#: ../lib/discorb/modules.rb:53
-#: ../lib/discorb/modules.rb:68
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-#: ../lib/discorb/webhook.rb:145
-msgid "tag|param|content"
+msgid "The embeds to send. (max: 10)"
 msgstr ""
 
 # @return [Discorb::Interaction::SourceResponse::CallbackMessage, Discorb::Webhook::Message]
@@ -12343,20 +12402,6 @@ msgstr ""
 msgid "Edits the callback message."
 msgstr ""
 
-# @param [Array<Discorb::Attachment>] attachments
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
-#: ../lib/discorb/webhook.rb:145
-msgid "The attachments to remain."
-msgstr ""
-
-# @param [Array<Discorb::Attachment>]
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
-#: ../lib/discorb/webhook.rb:145
-msgid "tag|param|attachments"
-msgstr ""
-
 # @param [Discorb::File]
 #: ../lib/discorb/interaction/response.rb:91
 #: ../lib/discorb/interaction/response.rb:115
@@ -12366,13 +12411,6 @@ msgstr ""
 #: ../lib/discorb/webhook.rb:92
 #: ../lib/discorb/webhook.rb:145
 msgid "tag|param|file"
-msgstr ""
-
-# @param [Array<Discorb::Embed>] embeds
-#: ../lib/discorb/interaction/response.rb:91
-#: ../lib/discorb/interaction/response.rb:115
-#: ../lib/discorb/webhook.rb:145
-msgid "The new embeds of the message."
 msgstr ""
 
 # @param [Discorb::File] file
@@ -12391,6 +12429,27 @@ msgstr ""
 #: ../lib/discorb/interaction/response.rb:115
 #: ../lib/discorb/webhook.rb:145
 msgid "The new embed of the message."
+msgstr ""
+
+# @param [Array<Discorb::Embed>] embeds
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
+#: ../lib/discorb/webhook.rb:145
+msgid "The new embeds of the message."
+msgstr ""
+
+# @param [Array<Discorb::Attachment>]
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
+#: ../lib/discorb/webhook.rb:145
+msgid "tag|param|attachments"
+msgstr ""
+
+# @param [Array<Discorb::Attachment>] attachments
+#: ../lib/discorb/interaction/response.rb:91
+#: ../lib/discorb/interaction/response.rb:115
+#: ../lib/discorb/webhook.rb:145
+msgid "The attachments to remain."
 msgstr ""
 
 # Discorb::Interaction::SourceResponse::CallbackMessage#delete!
@@ -12544,17 +12603,17 @@ msgstr ""
 
 # @param value
 #: ../lib/discorb/log.rb:6
-msgid "the value to set the attribute colorize_log to."
+msgid "the value to set the attribute out to."
 msgstr ""
 
 # @param value
 #: ../lib/discorb/log.rb:6
-msgid "the value to set the attribute out to."
+msgid "the value to set the attribute colorize_log to."
 msgstr ""
 
-# Discorb::Logger#colorize_log
+# Discorb::Logger#out
 #: ../lib/discorb/log.rb:7
-msgid "Returns the value of attribute colorize_log."
+msgid "Returns the value of attribute out."
 msgstr ""
 
 # Discorb::Logger#out=
@@ -12562,14 +12621,14 @@ msgstr ""
 msgid "Sets the attribute out"
 msgstr ""
 
+# Discorb::Logger#colorize_log
+#: ../lib/discorb/log.rb:7
+msgid "Returns the value of attribute colorize_log."
+msgstr ""
+
 # Discorb::Logger#colorize_log=
 #: ../lib/discorb/log.rb:7
 msgid "Sets the attribute colorize_log"
-msgstr ""
-
-# Discorb::Logger#out
-#: ../lib/discorb/log.rb:7
-msgid "Returns the value of attribute out."
 msgstr ""
 
 # @return [Logger]
@@ -12592,11 +12651,6 @@ msgstr ""
 msgid "The time the member boosted the guild."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/member.rb:12
-msgid "If the member has no nickname."
-msgstr ""
-
 # @param [String] nick
 # @return [String]
 #: ../lib/discorb/member.rb:12
@@ -12605,19 +12659,24 @@ msgstr ""
 msgid "The nickname of the member."
 msgstr ""
 
+# @return [nil]
+#: ../lib/discorb/member.rb:12
+msgid "If the member has no nickname."
+msgstr ""
+
 # @return [Time]
 #: ../lib/discorb/member.rb:14
 msgid "The time the member joined the guild."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/member.rb:17
-msgid "If the member has no custom avatar."
-msgstr ""
-
 # @return [Discorb::Asset]
 #: ../lib/discorb/member.rb:17
 msgid "The custom avatar of the member."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb/member.rb:17
+msgid "If the member has no custom avatar."
 msgstr ""
 
 # @return [Discorb::Asset]
@@ -12649,10 +12708,22 @@ msgstr ""
 msgid "Whether the member is pending (Not passed member screening)."
 msgstr ""
 
-# @return [Boolean]
+# @return [String]
 #: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:120
-msgid "Whether the member has a hoisted role."
+#: ../lib/discorb/member.rb:83
+msgid "The display name of the member."
+msgstr ""
+
+# @return [String]
+#: ../lib/discorb/member.rb:30
+#: ../lib/discorb/member.rb:87
+msgid "The mention of the member."
+msgstr ""
+
+# @return [Discorb::VoiceState]
+#: ../lib/discorb/member.rb:30
+#: ../lib/discorb/member.rb:91
+msgid "The voice state of the member."
 msgstr ""
 
 # @param [Discorb::Role] role
@@ -12664,16 +12735,10 @@ msgstr ""
 msgid "The roles of the member."
 msgstr ""
 
-# @return [nil]
+# @return [Discorb::Guild]
 #: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:116
-msgid "If the member has no hoisted role."
-msgstr ""
-
-# @return [Discorb::Activity]
-#: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:128
-msgid "The activity of the member. It's from the {#presence}."
+#: ../lib/discorb/member.rb:99
+msgid "The guild the member is in."
 msgstr ""
 
 # @return [Discorb::Role]
@@ -12682,16 +12747,28 @@ msgstr ""
 msgid "The hoisted role of the member."
 msgstr ""
 
-# @return [String]
+# @return [nil]
 #: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:83
-msgid "The display name of the member."
+#: ../lib/discorb/member.rb:116
+msgid "If the member has no hoisted role."
+msgstr ""
+
+# @return [Boolean]
+#: ../lib/discorb/member.rb:30
+#: ../lib/discorb/member.rb:120
+msgid "Whether the member has a hoisted role."
 msgstr ""
 
 # @return [Discorb::Presence]
 #: ../lib/discorb/member.rb:30
 #: ../lib/discorb/member.rb:124
 msgid "The presence of the member."
+msgstr ""
+
+# @return [Discorb::Activity]
+#: ../lib/discorb/member.rb:30
+#: ../lib/discorb/member.rb:128
+msgid "The activity of the member. It's from the {#presence}."
 msgstr ""
 
 # @return [Array<Discorb::Activity>]
@@ -12712,24 +12789,6 @@ msgstr ""
 msgid "Whether the member is the owner of the guild."
 msgstr ""
 
-# @return [String]
-#: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:87
-msgid "The mention of the member."
-msgstr ""
-
-# @return [Discorb::Guild]
-#: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:99
-msgid "The guild the member is in."
-msgstr ""
-
-# @return [Discorb::VoiceState]
-#: ../lib/discorb/member.rb:30
-#: ../lib/discorb/member.rb:91
-msgid "The voice state of the member."
-msgstr ""
-
 # Discorb::Member#to_s
 #: ../lib/discorb/member.rb:75
 msgid "Format the member to `Username#Discriminator` style."
@@ -12745,12 +12804,6 @@ msgstr ""
 msgid "Add a role to the member."
 msgstr ""
 
-# @param [Discorb::Role] role
-#: ../lib/discorb/member.rb:152
-#: ../lib/discorb/member.rb:166
-msgid "The role to add."
-msgstr ""
-
 # @param [Boolean]
 # @param [Discorb::Role]
 #: ../lib/discorb/member.rb:152
@@ -12759,6 +12812,12 @@ msgstr ""
 #: ../lib/discorb/member.rb:197
 #: ../lib/discorb/message.rb:258
 msgid "tag|param|role"
+msgstr ""
+
+# @param [Discorb::Role] role
+#: ../lib/discorb/member.rb:152
+#: ../lib/discorb/member.rb:166
+msgid "The role to add."
 msgstr ""
 
 # @param [String] reason
@@ -12783,18 +12842,6 @@ msgstr ""
 msgid "Edit the member."
 msgstr ""
 
-# @param [Discorb::StageChannel] channel
-#: ../lib/discorb/member.rb:185
-#: ../lib/discorb/member.rb:197
-msgid "The channel the member is moved to."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/member.rb:185
-#: ../lib/discorb/member.rb:197
-msgid "tag|param|deaf"
-msgstr ""
-
 # @param [String]
 #: ../lib/discorb/member.rb:185
 #: ../lib/discorb/member.rb:197
@@ -12805,6 +12852,18 @@ msgstr ""
 #: ../lib/discorb/member.rb:185
 #: ../lib/discorb/member.rb:197
 msgid "tag|param|mute"
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/member.rb:185
+#: ../lib/discorb/member.rb:197
+msgid "tag|param|deaf"
+msgstr ""
+
+# @param [Discorb::StageChannel] channel
+#: ../lib/discorb/member.rb:185
+#: ../lib/discorb/member.rb:197
+msgid "The channel the member is moved to."
 msgstr ""
 
 # Discorb::Member#kick
@@ -12857,16 +12916,6 @@ msgstr ""
 
 # @param [Boolean]
 #: ../lib/discorb/message.rb:25
-msgid "tag|param|replied_user"
-msgstr ""
-
-# @return [AllowedMentions]
-#: ../lib/discorb/message.rb:25
-msgid "a new instance of AllowedMentions"
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/message.rb:25
 #: ../lib/discorb/message.rb:258
 msgid "tag|param|everyone"
 msgstr ""
@@ -12874,6 +12923,16 @@ msgstr ""
 # @param [Boolean, Array<Discorb::User>]
 #: ../lib/discorb/message.rb:25
 msgid "tag|param|users"
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/message.rb:25
+msgid "tag|param|replied_user"
+msgstr ""
+
+# @return [AllowedMentions]
+#: ../lib/discorb/message.rb:25
+msgid "a new instance of AllowedMentions"
 msgstr ""
 
 # Discorb::Message
@@ -12976,14 +13035,14 @@ msgstr ""
 msgid "The reference of the message."
 msgstr ""
 
-# @see
-#: ../lib/discorb/message.rb:129
-msgid "tag|see|Discorb::Message::Flag"
-msgstr ""
-
 # @return [Discorb::Message::Flag]
 #: ../lib/discorb/message.rb:129
 msgid "The flag of the message."
+msgstr ""
+
+# @see
+#: ../lib/discorb/message.rb:129
+msgid "tag|see|Discorb::Message::Flag"
 msgstr ""
 
 # @return [Discorb::Message::Sticker]
@@ -13033,16 +13092,16 @@ msgstr ""
 msgid "Whether the message is pinned."
 msgstr ""
 
-# @return [Boolean]
-#: ../lib/discorb/message.rb:201
-#: ../lib/discorb/message.rb:234
-msgid "Whether the message was sent by a webhook."
-msgstr ""
-
 # @return [nil]
 #: ../lib/discorb/message.rb:201
 #: ../lib/discorb/message.rb:230
 msgid "If the message was not sent in a guild."
+msgstr ""
+
+# @return [Boolean]
+#: ../lib/discorb/message.rb:201
+#: ../lib/discorb/message.rb:234
+msgid "Whether the message was sent by a webhook."
 msgstr ""
 
 # @return [Boolean]
@@ -13077,14 +13136,14 @@ msgstr ""
 
 # @return [Boolean]
 #: ../lib/discorb/message.rb:201
-#: ../lib/discorb/message.rb:213
-msgid "Whether the message was sent in a guild."
+#: ../lib/discorb/message.rb:209
+msgid "Whether the message was sent in a DM."
 msgstr ""
 
 # @return [Boolean]
 #: ../lib/discorb/message.rb:201
-#: ../lib/discorb/message.rb:209
-msgid "Whether the message was sent in a DM."
+#: ../lib/discorb/message.rb:213
+msgid "Whether the message was sent in a guild."
 msgstr ""
 
 # @return [Message]
@@ -13096,6 +13155,11 @@ msgstr ""
 # Discorb::Message#clean_content
 #: ../lib/discorb/message.rb:247
 msgid "Removes the mentions from the message."
+msgstr ""
+
+# @param [Boolean] user
+#: ../lib/discorb/message.rb:258
+msgid "Whether to clean user mentions."
 msgstr ""
 
 # @param [Boolean] channel
@@ -13113,19 +13177,14 @@ msgstr ""
 msgid "Whether to clean emoji."
 msgstr ""
 
-# @param [Boolean]
-#: ../lib/discorb/message.rb:258
-msgid "tag|param|codeblock"
-msgstr ""
-
 # @param [Boolean] everyone
 #: ../lib/discorb/message.rb:258
 msgid "Whether to clean `@everyone` and `@here`."
 msgstr ""
 
-# @param [Boolean] user
+# @param [Boolean]
 #: ../lib/discorb/message.rb:258
-msgid "Whether to clean user mentions."
+msgid "tag|param|codeblock"
 msgstr ""
 
 # @param [Boolean] codeblock
@@ -13161,6 +13220,14 @@ msgstr ""
 msgid "The embeds to send."
 msgstr ""
 
+# @param [Discorb::AllowedMentions] allowed_mentions
+#: ../lib/discorb/message.rb:305
+#: ../lib/discorb/modules.rb:25
+#: ../lib/discorb/modules.rb:53
+#: ../lib/discorb/modules.rb:68
+msgid "The allowed mentions."
+msgstr ""
+
 # @param [Boolean]
 #: ../lib/discorb/message.rb:305
 #: ../lib/discorb/modules.rb:68
@@ -13171,14 +13238,6 @@ msgstr ""
 #: ../lib/discorb/message.rb:305
 #: ../lib/discorb/modules.rb:68
 msgid "Whether to supress embeds."
-msgstr ""
-
-# @param [Discorb::AllowedMentions] allowed_mentions
-#: ../lib/discorb/message.rb:305
-#: ../lib/discorb/modules.rb:25
-#: ../lib/discorb/modules.rb:53
-#: ../lib/discorb/modules.rb:68
-msgid "The allowed mentions."
 msgstr ""
 
 # Discorb::Message#delete!
@@ -13198,6 +13257,12 @@ msgstr ""
 msgid "Convert the message to reference object."
 msgstr ""
 
+# @param [Boolean]
+#: ../lib/discorb/message.rb:331
+#: ../lib/discorb/message.rb:543
+msgid "tag|param|fail_if_not_exists"
+msgstr ""
+
 # @param [Boolean] fail_if_not_exists
 #: ../lib/discorb/message.rb:331
 msgid "Whether to raise an error if the message does not exist."
@@ -13206,12 +13271,6 @@ msgstr ""
 # @return [Hash]
 #: ../lib/discorb/message.rb:331
 msgid "The reference object."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/message.rb:331
-#: ../lib/discorb/message.rb:543
-msgid "tag|param|fail_if_not_exists"
 msgstr ""
 
 # Discorb::Message#reply
@@ -13280,14 +13339,14 @@ msgstr ""
 msgid "The maximum number of users to fetch. `nil` for no limit."
 msgstr ""
 
-# @return [Async::Task<Array<Discorb::User>>]
-#: ../lib/discorb/message.rb:423
-msgid "The users."
-msgstr ""
-
 # @param [Discorb::Snowflake, nil] after
 #: ../lib/discorb/message.rb:423
 msgid "The ID of the user to start fetching from."
+msgstr ""
+
+# @return [Async::Task<Array<Discorb::User>>]
+#: ../lib/discorb/message.rb:423
+msgid "The users."
 msgstr ""
 
 # Discorb::Message#pin
@@ -13363,6 +13422,11 @@ msgstr ""
 msgid "Initialize a new reference."
 msgstr ""
 
+# @param [Discorb::Snowflake]
+#: ../lib/discorb/message.rb:543
+msgid "tag|param|channel_id"
+msgstr ""
+
 # @param [#to_s]
 # @param [Discorb::Snowflake]
 #: ../lib/discorb/message.rb:543
@@ -13377,11 +13441,6 @@ msgstr ""
 msgid "a new instance of Reference"
 msgstr ""
 
-# @param [Discorb::Snowflake]
-#: ../lib/discorb/message.rb:543
-msgid "tag|param|channel_id"
-msgstr ""
-
 # Discorb::Message::Reference#to_hash
 # Discorb::Message::Reference#to_reference
 #: ../lib/discorb/message.rb:551
@@ -13394,14 +13453,14 @@ msgstr ""
 msgid "Initialize a new reference from a hash."
 msgstr ""
 
-# @see
-#: ../lib/discorb/message.rb:574
-msgid "tag|see|https://discord.com/developers/docs/resources/channel#message-reference-object"
-msgstr ""
-
 # @return [Discorb::Message::Reference]
 #: ../lib/discorb/message.rb:574
 msgid "The reference."
+msgstr ""
+
+# @see
+#: ../lib/discorb/message.rb:574
+msgid "tag|see|https://discord.com/developers/docs/resources/channel#message-reference-object"
 msgstr ""
 
 # Discorb::Message::Sticker#id
@@ -13409,14 +13468,14 @@ msgstr ""
 msgid "Returns the value of attribute id."
 msgstr ""
 
-# Discorb::Message::Sticker#format
-#: ../lib/discorb/message.rb:581
-msgid "Returns the value of attribute format."
-msgstr ""
-
 # Discorb::Message::Sticker#name
 #: ../lib/discorb/message.rb:581
 msgid "Returns the value of attribute name."
+msgstr ""
+
+# Discorb::Message::Sticker#format
+#: ../lib/discorb/message.rb:581
+msgid "Returns the value of attribute format."
 msgstr ""
 
 # @return [Sticker]
@@ -13435,14 +13494,14 @@ msgstr ""
 msgid "The user ID."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/message.rb:645
-msgid "If the message is not a command."
-msgstr ""
-
 # @return [String]
 #: ../lib/discorb/message.rb:645
 msgid "The name of command."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb/message.rb:645
+msgid "If the message is not a command."
 msgstr ""
 
 # Discorb::Message::Activity
@@ -13467,16 +13526,16 @@ msgstr ""
 msgid "Post a message to the channel."
 msgstr ""
 
-# @param [Discorb::Message, Discorb::Message::Reference] reference
-#: ../lib/discorb/modules.rb:25
-#: ../lib/discorb/modules.rb:53
-msgid "The message to reply to."
-msgstr ""
-
 # @param [Discorb::Message, Discorb::Message::Reference]
 #: ../lib/discorb/modules.rb:25
 #: ../lib/discorb/modules.rb:53
 msgid "tag|param|reference"
+msgstr ""
+
+# @param [Discorb::Message, Discorb::Message::Reference] reference
+#: ../lib/discorb/modules.rb:25
+#: ../lib/discorb/modules.rb:53
+msgid "The message to reply to."
 msgstr ""
 
 # @return [Async::Task<Discorb::Message>]
@@ -13519,24 +13578,14 @@ msgstr ""
 msgid "Fetch a message history."
 msgstr ""
 
+# @param [Integer] limit
+#: ../lib/discorb/modules.rb:132
+msgid "The number of messages to fetch."
+msgstr ""
+
 # @param [Discorb::Snowflake] before
 #: ../lib/discorb/modules.rb:132
 msgid "The ID of the message to fetch before."
-msgstr ""
-
-# @param [Discorb::Snowflake] around
-#: ../lib/discorb/modules.rb:132
-msgid "The ID of the message to fetch around."
-msgstr ""
-
-# @param [Discorb::Snowflake]
-#: ../lib/discorb/modules.rb:132
-msgid "tag|param|around"
-msgstr ""
-
-# @return [Async::Task<Array<Discorb::Message>>]
-#: ../lib/discorb/modules.rb:132
-msgid "The messages."
 msgstr ""
 
 # @param [Discorb::Snowflake] after
@@ -13544,9 +13593,19 @@ msgstr ""
 msgid "The ID of the message to fetch after."
 msgstr ""
 
-# @param [Integer] limit
+# @param [Discorb::Snowflake]
 #: ../lib/discorb/modules.rb:132
-msgid "The number of messages to fetch."
+msgid "tag|param|around"
+msgstr ""
+
+# @param [Discorb::Snowflake] around
+#: ../lib/discorb/modules.rb:132
+msgid "The ID of the message to fetch around."
+msgstr ""
+
+# @return [Async::Task<Array<Discorb::Message>>]
+#: ../lib/discorb/modules.rb:132
+msgid "The messages."
 msgstr ""
 
 # Discorb::Messageable#fetch_pins
@@ -13837,19 +13896,14 @@ msgstr ""
 msgid "The emoji of the activity."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/presence.rb:70
-msgid "If the activity is not a party activity."
-msgstr ""
-
 # @return [Discorb::Presence::Activity::Party]
 #: ../lib/discorb/presence.rb:70
 msgid "The party of the activity."
 msgstr ""
 
 # @return [nil]
-#: ../lib/discorb/presence.rb:73
-msgid "If the activity has no assets."
+#: ../lib/discorb/presence.rb:70
+msgid "If the activity is not a party activity."
 msgstr ""
 
 # @return [Discorb::Presence::Activity::Asset]
@@ -13858,8 +13912,8 @@ msgid "The assets of the activity."
 msgstr ""
 
 # @return [nil]
-#: ../lib/discorb/presence.rb:76
-msgid "If the activity is not a stage activity."
+#: ../lib/discorb/presence.rb:73
+msgid "If the activity has no assets."
 msgstr ""
 
 # @return [Discorb::StageInstance]
@@ -13868,13 +13922,18 @@ msgid "The instance of the activity."
 msgstr ""
 
 # @return [nil]
-#: ../lib/discorb/presence.rb:79
-msgid "If the activity has no buttons."
+#: ../lib/discorb/presence.rb:76
+msgid "If the activity is not a stage activity."
 msgstr ""
 
 # @return [Array<Discorb::Presence::Activity::Button>]
 #: ../lib/discorb/presence.rb:79
 msgid "The buttons of the activity."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb/presence.rb:79
+msgid "If the activity has no buttons."
 msgstr ""
 
 # @return [Discorb::Presence::Activity::Flag]
@@ -13919,14 +13978,14 @@ msgstr ""
 
 # @return [Integer]
 #: ../lib/discorb/presence.rb:154
-#: ../lib/discorb/presence.rb:169
-msgid "The max size of the party."
+#: ../lib/discorb/presence.rb:165
+msgid "The current size of the party."
 msgstr ""
 
 # @return [Integer]
 #: ../lib/discorb/presence.rb:154
-#: ../lib/discorb/presence.rb:165
-msgid "The current size of the party."
+#: ../lib/discorb/presence.rb:169
+msgid "The max size of the party."
 msgstr ""
 
 # @return [Party]
@@ -14090,14 +14149,14 @@ msgstr ""
 msgid "Save the rate limit."
 msgstr ""
 
-# @param [Net::HTTPResponse] resp
-#: ../lib/discorb/rate_limit.rb:59
-msgid "The response."
-msgstr ""
-
 # @param [Net::HTTPResponse]
 #: ../lib/discorb/rate_limit.rb:59
 msgid "tag|param|resp"
+msgstr ""
+
+# @param [Net::HTTPResponse] resp
+#: ../lib/discorb/rate_limit.rb:59
+msgid "The response."
 msgstr ""
 
 # Discorb::Reaction
@@ -14125,6 +14184,16 @@ msgstr ""
 # @return [Reaction]
 #: ../lib/discorb/reaction.rb:20
 msgid "a new instance of Reaction"
+msgstr ""
+
+# Discorb::Reaction#fetch_users
+#: ../lib/discorb/reaction.rb:26
+msgid "Fetch the user that reacted with this emoji."
+msgstr ""
+
+# @return [Array<Discorb::User>]
+#: ../lib/discorb/reaction.rb:32
+msgid "The users that reacted with this emoji."
 msgstr ""
 
 # Discorb::Role
@@ -14180,14 +14249,14 @@ msgstr ""
 msgid "Compares two roles by their position."
 msgstr ""
 
-# @return [Integer]
-#: ../lib/discorb/role.rb:64
-msgid "-1 if the other role is higher, 0 if they are equal, 1 if the other role is lower."
-msgstr ""
-
 # @param [Discorb::Role] other
 #: ../lib/discorb/role.rb:64
 msgid "The role to compare to."
+msgstr ""
+
+# @return [Integer]
+#: ../lib/discorb/role.rb:64
+msgid "-1 if the other role is higher, 0 if they are equal, 1 if the other role is lower."
 msgstr ""
 
 # Discorb::Role#to_s
@@ -14222,10 +14291,10 @@ msgstr ""
 msgid "Edits the role."
 msgstr ""
 
-# @param [Discorb::Color] color
+# @param [String] name
 #: ../lib/discorb/role.rb:119
 #: ../lib/discorb/role.rb:138
-msgid "The new color of the role."
+msgid "The new name of the role."
 msgstr ""
 
 # @param [Integer] position
@@ -14234,22 +14303,22 @@ msgstr ""
 msgid "The new position of the role."
 msgstr ""
 
-# @param [String] name
+# @param [Discorb::Color] color
 #: ../lib/discorb/role.rb:119
 #: ../lib/discorb/role.rb:138
-msgid "The new name of the role."
-msgstr ""
-
-# @param [String] reason
-#: ../lib/discorb/role.rb:119
-#: ../lib/discorb/role.rb:138
-msgid "The reason for editing the role."
+msgid "The new color of the role."
 msgstr ""
 
 # @param [Discorb::Image, Discorb::UnicodeEmoji] icon
 #: ../lib/discorb/role.rb:119
 #: ../lib/discorb/role.rb:138
 msgid "The new icon or emoji of the role."
+msgstr ""
+
+# @param [String] reason
+#: ../lib/discorb/role.rb:119
+#: ../lib/discorb/role.rb:138
+msgid "The reason for editing the role."
 msgstr ""
 
 # Discorb::Role#delete!
@@ -14283,14 +14352,14 @@ msgstr ""
 
 # @return [Boolean]
 #: ../lib/discorb/role.rb:170
-#: ../lib/discorb/role.rb:186
-msgid "Whether the role is an integration role."
+#: ../lib/discorb/role.rb:182
+msgid "Whether the role is a bot role."
 msgstr ""
 
 # @return [Boolean]
 #: ../lib/discorb/role.rb:170
-#: ../lib/discorb/role.rb:182
-msgid "Whether the role is a bot role."
+#: ../lib/discorb/role.rb:186
+msgid "Whether the role is an integration role."
 msgstr ""
 
 # @return [Tag]
@@ -14368,6 +14437,18 @@ msgstr ""
 msgid "Edits the sticker."
 msgstr ""
 
+# @param [String] name
+#: ../lib/discorb/sticker.rb:79
+#: ../lib/discorb/sticker.rb:89
+msgid "The new name of the sticker."
+msgstr ""
+
+# @param [String] description
+#: ../lib/discorb/sticker.rb:79
+#: ../lib/discorb/sticker.rb:89
+msgid "The new description of the sticker."
+msgstr ""
+
 # @param [Discorb::Emoji]
 #: ../lib/discorb/sticker.rb:79
 #: ../lib/discorb/sticker.rb:89
@@ -14384,18 +14465,6 @@ msgstr ""
 #: ../lib/discorb/sticker.rb:79
 #: ../lib/discorb/sticker.rb:89
 msgid "The reason for the edit."
-msgstr ""
-
-# @param [String] name
-#: ../lib/discorb/sticker.rb:79
-#: ../lib/discorb/sticker.rb:89
-msgid "The new name of the sticker."
-msgstr ""
-
-# @param [String] description
-#: ../lib/discorb/sticker.rb:79
-#: ../lib/discorb/sticker.rb:89
-msgid "The new description of the sticker."
 msgstr ""
 
 # Discorb::Sticker::GuildSticker#delete!
@@ -14568,14 +14637,14 @@ msgstr ""
 msgid "Edit the client user."
 msgstr ""
 
-# @param [Discorb::Image] avatar
-#: ../lib/discorb/user.rb:160
-msgid "The new avatar."
-msgstr ""
-
 # @param [String] name
 #: ../lib/discorb/user.rb:160
 msgid "The new username."
+msgstr ""
+
+# @param [Discorb::Image] avatar
+#: ../lib/discorb/user.rb:160
+msgid "The new avatar."
 msgstr ""
 
 # @return [Discorb::Member]
@@ -14631,6 +14700,12 @@ msgstr ""
 
 # @return [Boolean]
 #: ../lib/discorb/voice_state.rb:28
+#: ../lib/discorb/voice_state.rb:60
+msgid "Whether the user is deafened on the server."
+msgstr ""
+
+# @return [Boolean]
+#: ../lib/discorb/voice_state.rb:28
 #: ../lib/discorb/voice_state.rb:64
 msgid "Whether the user is muted on the server."
 msgstr ""
@@ -14645,12 +14720,6 @@ msgstr ""
 #: ../lib/discorb/voice_state.rb:28
 #: ../lib/discorb/voice_state.rb:72
 msgid "The channel this voice state is for."
-msgstr ""
-
-# @return [Boolean]
-#: ../lib/discorb/voice_state.rb:28
-#: ../lib/discorb/voice_state.rb:60
-msgid "Whether the user is deafened on the server."
 msgstr ""
 
 # @return [Discorb::User]
@@ -14784,14 +14853,14 @@ msgstr ""
 msgid "The user that created this webhook."
 msgstr ""
 
-# @return [nil]
-#: ../lib/discorb/webhook.rb:21
-msgid "If the webhook is not an application webhook."
-msgstr ""
-
 # @return [Discorb::Snowflake]
 #: ../lib/discorb/webhook.rb:21
 msgid "The application ID of the webhook."
+msgstr ""
+
+# @return [nil]
+#: ../lib/discorb/webhook.rb:21
+msgid "If the webhook is not an application webhook."
 msgstr ""
 
 # @param [String] url
@@ -14823,40 +14892,10 @@ msgstr ""
 msgid "Whether the message should be sent as text-to-speech."
 msgstr ""
 
-# @param [Boolean] wait
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-msgid "Whether to wait for the message to be sent."
-msgstr ""
-
 # @param [String]
 #: ../lib/discorb/webhook.rb:63
 #: ../lib/discorb/webhook.rb:92
-msgid "tag|param|avatar_url"
-msgstr ""
-
-# @return [Async::Task<nil>]
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-msgid "If `wait` is false."
-msgstr ""
-
-# @param [String] avatar_url
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-msgid "The avatar URL of the message."
-msgstr ""
-
-# @return [Discorb::Webhook::Message]
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-msgid "The message that was sent."
-msgstr ""
-
-# @param [Boolean]
-#: ../lib/discorb/webhook.rb:63
-#: ../lib/discorb/webhook.rb:92
-msgid "tag|param|wait"
+msgid "tag|param|username"
 msgstr ""
 
 # @param [String] username
@@ -14868,7 +14907,37 @@ msgstr ""
 # @param [String]
 #: ../lib/discorb/webhook.rb:63
 #: ../lib/discorb/webhook.rb:92
-msgid "tag|param|username"
+msgid "tag|param|avatar_url"
+msgstr ""
+
+# @param [String] avatar_url
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+msgid "The avatar URL of the message."
+msgstr ""
+
+# @param [Boolean]
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+msgid "tag|param|wait"
+msgstr ""
+
+# @param [Boolean] wait
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+msgid "Whether to wait for the message to be sent."
+msgstr ""
+
+# @return [Discorb::Webhook::Message]
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+msgid "The message that was sent."
+msgstr ""
+
+# @return [Async::Task<nil>]
+#: ../lib/discorb/webhook.rb:63
+#: ../lib/discorb/webhook.rb:92
+msgid "If `wait` is false."
 msgstr ""
 
 # Discorb::Webhook#edit
@@ -14965,16 +15034,16 @@ msgstr ""
 msgid "The source channel of follower webhook."
 msgstr ""
 
-# Discorb::Webhook::FollowerWebhook#source_channel
-#: ../lib/discorb/webhook.rb:227
-#: ../lib/discorb/webhook.rb:245
-msgid "Represents a source channel of follower webhook."
-msgstr ""
-
 # Discorb::Webhook::FollowerWebhook#source_guild
 #: ../lib/discorb/webhook.rb:227
 #: ../lib/discorb/webhook.rb:241
 msgid "Represents a source guild of follower webhook."
+msgstr ""
+
+# Discorb::Webhook::FollowerWebhook#source_channel
+#: ../lib/discorb/webhook.rb:227
+#: ../lib/discorb/webhook.rb:245
+msgid "Represents a source channel of follower webhook."
 msgstr ""
 
 # @return [FollowerWebhook]
@@ -15002,6 +15071,11 @@ msgstr ""
 msgid "Represents a webhook message."
 msgstr ""
 
+# Discorb::Webhook::Message#edit
+#: ../lib/discorb/webhook.rb:310
+msgid "Edits the message."
+msgstr ""
+
 # Discorb::Webhook::Message#delete!
 #: ../lib/discorb/webhook.rb:324
 msgid "Deletes the message."
@@ -15012,16 +15086,16 @@ msgstr ""
 msgid "Represents an author of webhook message."
 msgstr ""
 
-# @return [Boolean]
-#: ../lib/discorb/webhook.rb:361
-#: ../lib/discorb/webhook.rb:362
-msgid "Whether the author is a bot."
-msgstr ""
-
 # @note
 #: ../lib/discorb/webhook.rb:361
 #: ../lib/discorb/webhook.rb:362
 msgid "This will be always `true`."
+msgstr ""
+
+# @return [Boolean]
+#: ../lib/discorb/webhook.rb:361
+#: ../lib/discorb/webhook.rb:362
+msgid "Whether the author is a bot."
 msgstr ""
 
 # @return [Discorb::Snowflake]
