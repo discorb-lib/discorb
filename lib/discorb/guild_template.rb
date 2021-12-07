@@ -98,7 +98,7 @@ module Discorb
       attr_reader :afk_timeout
       # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
       attr_reader :roles
-      # @return [Discorb::Guild::SystemChannelFlag] The flag for the system channel.
+      # @return [Discorb::SystemChannelFlag] The flag for the system channel.
       attr_reader :system_channel_flags
       # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}] A dictionary of channels in the guild.
       attr_reader :channels

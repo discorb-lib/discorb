@@ -474,7 +474,7 @@ module Discorb
     #
     # @param (see Discorb::Channel#start_thread)
     #
-    # @return [Async::Task<<Type>>] <description>
+    # @return [Async::Task<Discorb::ThreadChannel>] <description>
     #
     def start_thread(*args, **kwargs)
       Async do

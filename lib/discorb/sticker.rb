@@ -112,14 +112,10 @@ module Discorb
       attr_reader :id
       # @return [String] The name of the sticker pack.
       attr_reader :name
-      # @return [Discorb::Snowflake] The ID of the SKU.
-      attr_reader :sku_id
       # @return [Discorb::Snowflake] The cover sticker of the pack.
       attr_reader :cover_sticker_id
       # @return [String] The description of the pack.
       attr_reader :description
-      # @return [Discorb::Store::SKU] The banner asset ID of the pack.
-      attr_reader :banner_asset_id
       # @return [Array<Discorb::Sticker>] The stickers in the pack.
       attr_reader :stickers
       # @return [Discorb::Asset] The banner of the pack.

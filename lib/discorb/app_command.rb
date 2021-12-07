@@ -73,7 +73,7 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, message] Block to execute.
-      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::Message] message Message object.
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.
@@ -91,7 +91,7 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, user] Block to execute.
-      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::User] user User object.
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.

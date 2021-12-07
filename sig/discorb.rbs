@@ -1328,7 +1328,7 @@ module Discorb
                                ?slowmode: Integer?,
                                ?position: Integer?,
                                ?nsfw: bool?,
-                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]?,
+                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                ?parent: Discorb::CategoryChannel?,
                                ?reason: String?
                              ) -> Async::Task[Discorb::TextChannel]
@@ -1352,7 +1352,7 @@ module Discorb
                                 ?bitrate: Integer,
                                 ?user_limit: Integer?,
                                 ?position: Integer?,
-                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]?,
+                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                 ?parent: Discorb::CategoryChannel?,
                                 ?reason: String?
                               ) -> Async::Task[Discorb::VoiceChannel]
@@ -1371,7 +1371,7 @@ module Discorb
     def create_category_channel: (
                                    String name,
                                    ?position: Integer?,
-                                   ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]?,
+                                   ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                    ?parent: Discorb::CategoryChannel?,
                                    ?reason: String?
                                  ) -> Async::Task[Discorb::CategoryChannel]
@@ -1393,7 +1393,7 @@ module Discorb
                                 String name,
                                 ?bitrate: Integer,
                                 ?position: Integer?,
-                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]?,
+                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                 ?parent: Discorb::CategoryChannel?,
                                 ?reason: String?
                               ) -> Async::Task[Discorb::StageChannel]
@@ -1421,7 +1421,7 @@ module Discorb
                                ?slowmode: Integer?,
                                ?position: Integer?,
                                ?nsfw: bool?,
-                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]?,
+                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                ?parent: Discorb::CategoryChannel?,
                                ?reason: String?
                              ) -> Async::Task[Discorb::NewsChannel]
@@ -1638,8 +1638,8 @@ module Discorb
     # @macro async
     # @macro http
     # 
-    # @return [Async::Task<Discorb::Guild::WelcomeScreen>] The welcome screen.
-    def fetch_welcome_screen: () -> Async::Task[Discorb::Guild::WelcomeScreen]
+    # @return [Async::Task<Discorb::WelcomeScreen>] The welcome screen.
+    def fetch_welcome_screen: () -> Async::Task[Discorb::WelcomeScreen]
 
     # 
     # Fetch stickers in the guild.
@@ -1727,8 +1727,8 @@ module Discorb
     # @return [:none, :elevated] The MFA level of the guild.
     attr_reader mfa_level: Symbol
 
-    # @return [Discorb::Guild::SystemChannelFlag] The flag for the system channel.
-    attr_reader system_channel_flags: Discorb::Guild::SystemChannelFlag
+    # @return [Discorb::SystemChannelFlag] The flag for the system channel.
+    attr_reader system_channel_flags: Discorb::SystemChannelFlag
 
     # @return [Time] Time that representing when bot has joined the guild.
     attr_reader joined_at: Time
@@ -2222,11 +2222,11 @@ module Discorb
     # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # @param [Proc] block Command block.
     # @yield [interaction, message] Block to execute.
-    # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+    # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
     # @yieldparam [Discorb::Message] message Message object.
     # 
     # @return [Discorb::ApplicationCommand::Command] Command object.
-    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
+    def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
 
     # 
     # Add user context menu command.
@@ -2235,11 +2235,11 @@ module Discorb
     # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # @param [Proc] block Command block.
     # @yield [interaction, user] Block to execute.
-    # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+    # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
     # @yieldparam [Discorb::User] user User object.
     # 
     # @return [Discorb::ApplicationCommand::Command] Command object.
-    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
+    def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
 
     # 
     # Setup commands.
@@ -2657,7 +2657,7 @@ module Discorb
     attr_reader position: Integer
 
     # @return [Hash{Discorb::Role, Discorb::Member => PermissionOverwrite}] The permission overwrites of the channel.
-    attr_reader permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::DiscorbPermissionOverwrite]
+    attr_reader permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]
   end
 
   # 
@@ -4178,8 +4178,8 @@ module Discorb
     # 
     # @param (see Discorb::Channel#start_thread)
     # 
-    # @return [Async::Task<<Type>>] <description>
-    def start_thread: (*untyped args, **untyped kwargs) -> Async::Task[::Array[Type]]
+    # @return [Async::Task<Discorb::ThreadChannel>] <description>
+    def start_thread: (*untyped args, **untyped kwargs) -> Async::Task[Discorb::ThreadChannel]
 
     # Meta
     def inspect: () -> untyped
@@ -4647,17 +4647,11 @@ module Discorb
       # @return [String] The name of the sticker pack.
       attr_reader name: String
 
-      # @return [Discorb::Snowflake] The ID of the SKU.
-      attr_reader sku_id: Discorb::Snowflake
-
       # @return [Discorb::Snowflake] The cover sticker of the pack.
       attr_reader cover_sticker_id: Discorb::Snowflake
 
       # @return [String] The description of the pack.
       attr_reader description: String
-
-      # @return [Discorb::Store::SKU] The banner asset ID of the pack.
-      attr_reader banner_asset_id: Discorb::Store::SKU
 
       # @return [Array<Discorb::Sticker>] The stickers in the pack.
       attr_reader stickers: ::Array[Discorb::Sticker]
@@ -5182,11 +5176,11 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, message] Block to execute.
-      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::Message] message Message object.
       # 
       # @return [Discorb::ApplicationCommand::Command] Command object.
-      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
+      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
 
       # 
       # Add user context menu command.
@@ -5195,11 +5189,11 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, user] Block to execute.
-      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::User] user User object.
       # 
       # @return [Discorb::ApplicationCommand::Command] Command object.
-      def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
+      def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
 
       # 
       # Setup commands.
@@ -5796,11 +5790,11 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, message] Block to execute.
-      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::Message] message Message object.
       # 
       # @return [Discorb::ApplicationCommand::Command] Command object.
-      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
+      def message_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
 
       # 
       # Add user context menu command.
@@ -5809,11 +5803,11 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # @yield [interaction, user] Block to execute.
-      # @yieldparam [Discorb::ApplicationCommandInteraction::UserMenuCommand] interaction Interaction object.
+      # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
       # @yieldparam [Discorb::User] user User object.
       # 
       # @return [Discorb::ApplicationCommand::Command] Command object.
-      def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
+      def user_command: (String command_name, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
 
       # 
       # Setup commands.
@@ -6019,9 +6013,9 @@ module Discorb
         # @return [:invited, :accepted] The member's membership state.
         attr_reader membership_state: Symbol
 
-        # @return [Array<Permissions>] The permissions of the member.
+        # @return [Array<Symbol>] The permissions of the member.
         # @note This always return `:*`.
-        attr_reader permissions: ::Array[Permissions]
+        attr_reader permissions: ::Array[Symbol]
       end
     end
   end
@@ -6284,8 +6278,8 @@ module Discorb
       # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
       attr_reader roles: Discorb::Dictionary[Discorb::Snowflake, Discorb::Role]
 
-      # @return [Discorb::Guild::SystemChannelFlag] The flag for the system channel.
-      attr_reader system_channel_flags: Discorb::Guild::SystemChannelFlag
+      # @return [Discorb::SystemChannelFlag] The flag for the system channel.
+      attr_reader system_channel_flags: Discorb::SystemChannelFlag
 
       # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}] A dictionary of channels in the guild.
       attr_reader channels: Discorb::Dictionary[Discorb::Snowflake, Discorb::GuildChannel]
@@ -6654,6 +6648,14 @@ module Discorb
   class AutoComplete < Discorb::Interaction
 
   end
+
+  # HTTP client for discorb.
+  class HTTP
+  end
+  
+  # Logger for discorb.
+  class Logger
+  end
 end
 
 class Time
@@ -6664,4 +6666,14 @@ class Time
   # 
   # @return [String] The formatted time.
   def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? _type) -> String
+end
+
+module Async
+  class Task
+  end
+end
+
+module Net
+  class HTTPResponse
+  end
 end

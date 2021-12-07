@@ -28,7 +28,7 @@ module Discorb
     attr_reader :features
     # @return [:none, :elevated] The MFA level of the guild.
     attr_reader :mfa_level
-    # @return [Discorb::Guild::SystemChannelFlag] The flag for the system channel.
+    # @return [Discorb::SystemChannelFlag] The flag for the system channel.
     attr_reader :system_channel_flags
     # @return [Time] Time that representing when bot has joined the guild.
     attr_reader :joined_at
@@ -963,7 +963,7 @@ module Discorb
     # @macro async
     # @macro http
     #
-    # @return [Async::Task<Discorb::Guild::WelcomeScreen>] The welcome screen.
+    # @return [Async::Task<Discorb::WelcomeScreen>] The welcome screen.
     #
     def fetch_welcome_screen
       Async do
