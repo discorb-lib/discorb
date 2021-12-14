@@ -15,4 +15,7 @@ end
 group :docs, optional: true do
   gem "redcarpet"
   gem "yard", "~> 0.9.26"
+  gem "gettext", "~> 3.4.1"
+  gem "crowdin-api", "~> 1.0"
+  gem "rubyzip", "~> 2.3"
 end

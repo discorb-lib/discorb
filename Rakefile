@@ -67,7 +67,7 @@ namespace :document do
 
   desc "Just generate document"
   task :yard do
-    sh "bundle exec yardoc -o doc/#{version}"
+    sh "bundle exec yardoc -o doc/#{version} --locale #{ENV["rake_locale"] or "en"}"
   end
 
   desc "Replace files"
@@ -136,6 +136,12 @@ namespace :document do
       end
       sputs "Successfully replaced CRLF with LF"
     end
+
+    task :locale do
+      next if ENV["rake_locale"].nil?
+      require_relative "template-replace/scripts/locale_#{ENV["rake_locale"]}.rb"
+      replace_locale("doc/main")
+    end
   end
   task :replace => %i[replace:css replace:html replace:eol]
 
@@ -152,20 +158,22 @@ namespace :document do
     iputs "Building all versions"
     FileUtils.rm_rf("doc") rescue nil
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
-    Rake::Task["document:yard"].execute
-    Rake::Task["document:replace:html"].execute
-    Rake::Task["document:replace:css"].execute
-    Rake::Task["document:replace:eol"].execute
+    Rake::Task["document:yard"].invoke
+    Rake::Task["document:replace:html"].invoke
+    Rake::Task["document:replace:css"].invoke
+    Rake::Task["document:replace:eol"].invoke
+    Rake::Task["document:replace:locale"].invoke
     tags = `git tag`.force_encoding("utf-8").split("\n").sort_by { |t| t[1..].split(".").map(&:to_i) }
     tags.each do |tag|
       sh "git checkout #{tag} -f"
       iputs "Building #{tag}"
       FileUtils.cp_r("./tmp-template-replace/.", "./template-replace")
       version = tag.delete_prefix("v")
-      Rake::Task["document:yard"].execute
-      Rake::Task["document:replace:html"].execute
-      Rake::Task["document:replace:css"].execute
-      Rake::Task["document:replace:eol"].execute
+      Rake::Task["document:yard"].invoke
+      Rake::Task["document:replace:html"].invoke
+      Rake::Task["document:replace:css"].invoke
+      Rake::Task["document:replace:eol"].invoke
+      Rake::Task["document:replace:locale"].invoke
       FileUtils.cp_r("./doc/.", "./tmp-doc")
       FileUtils.rm_rf("doc")
     end
@@ -189,6 +197,32 @@ namespace :document do
       sh "git push -f"
     end
     sputs "Successfully pushed documents"
+  end
+
+  namespace :locale do
+    task :ja do
+      require "crowdin-api"
+      require "zip"
+      crowdin = Crowdin::Client.new do |config|
+        config.api_token = ENV["CROWDIN_PERSONAL_TOKEN"]
+        config.project_id = ENV["CROWDIN_PROJECT_ID"].to_i
+      end
+      build = crowdin.build_project_translation["data"]["id"]
+      crowdin.download_project_translations("./tmp.zip", build)
+
+      Zip::File.open("tmp.zip") do |zip|
+        zip.each do |entry|
+          zip.extract(entry, entry.name) { true }
+        end
+      end
+      ENV["rake_locale"] = "ja"
+      Rake::Task["document:yard"].invoke
+      Rake::Task["document:replace"].invoke
+    end
+
+    task :en do
+      Rake::Task["document"].invoke("locale:en")
+    end
   end
 end
 
