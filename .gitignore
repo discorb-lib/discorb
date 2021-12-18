@@ -60,4 +60,4 @@ tmp-template-replace
 tmp-doc
 doc
 *.zip
-*.po
+**/*.po
