@@ -58,8 +58,11 @@ module Discorb
 
     #
     # Delete the integration.
+    # @!async
     #
     # @param [String] reason The reason for deleting the integration.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete!(reason: nil)
       Async do

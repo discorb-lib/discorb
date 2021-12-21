@@ -43,8 +43,7 @@ module Discorb
 
     #
     # Posts a message to the webhook.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] content The content of the message.
     # @param [Boolean] tts Whether the message should be sent as text-to-speech.
@@ -93,13 +92,14 @@ module Discorb
 
     #
     # Edits the webhook.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The new name of the webhook.
     # @param [Discorb::Image] avatar The new avatar of the webhook.
     # @param [Discorb::GuildChannel] channel The new channel of the webhook.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit(name: :unset, avatar: :unset, channel: :unset)
       Async do
@@ -115,8 +115,9 @@ module Discorb
 
     #
     # Deletes the webhook.
-    # @macro async
-    # @macro http
+    # @!async
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete!
       Async do
@@ -129,8 +130,7 @@ module Discorb
 
     #
     # Edits the webhook's message.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [Discorb::Webhook::Message] message The message to edit.
@@ -141,6 +141,8 @@ module Discorb
     # @param [Discorb::File] file The file to send.
     # @param [Array<Discorb::File>] files The files to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit_message(
       message, content = :unset,
@@ -174,6 +176,8 @@ module Discorb
     # Deletes the webhook's message.
     #
     # @param [Discorb::Webhook::Message] message The message to delete.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete_message!(message)
       Async do
@@ -308,11 +312,12 @@ module Discorb
 
       #
       # Edits the message.
-      # @macro async
-      # @macro http
+      # @!async
       # @macro edit
       #
       # @param (see Webhook#edit_message)
+      #
+      # @return [Async::Task<void>] The task.
       #
       def edit(...)
         Async do
@@ -322,8 +327,9 @@ module Discorb
 
       #
       # Deletes the message.
-      # @macro async
-      # @macro http
+      # @!async
+      #
+      # @return [Async::Task<void>] The task.
       #
       def delete!
         Async do

@@ -45,12 +45,13 @@ module Discorb
 
     #
     # Edit the template.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The new name of the template.
     # @param [String] description The new description of the template.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit(name = nil, description = :unset)
       Async do
@@ -65,8 +66,9 @@ module Discorb
 
     #
     # Update the template.
-    # @macro async
-    # @macro http
+    # @!async
+    #
+    # @return [Async::Task<void>] The task.
     #
     def update
       Async do
@@ -77,8 +79,9 @@ module Discorb
 
     #
     # Delete the template.
-    # @macro async
-    # @macro http
+    # @!async
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete!
       Async do

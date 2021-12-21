@@ -7,10 +7,11 @@ module Discorb
       #
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       #
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      #
+      # @return [Async::Task<void>] The task.
       #
       def defer_source(ephemeral: false)
         Async do
@@ -27,8 +28,7 @@ module Discorb
       #
       # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
       #
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.
@@ -77,8 +77,7 @@ module Discorb
 
         #
         # Edits the callback message.
-        # @macro async
-        # @macro http
+        # @!async
         # @macro edit
         #
         # @param [String] content The new content of the message.
@@ -87,6 +86,8 @@ module Discorb
         # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
         # @param [Discorb::File] file The file to send.
         # @param [Array<Discorb::File>] files The files to send.
+        #
+        # @return [Async::Task<void>] The task.
         #
         def edit(
           content = :unset,
@@ -116,7 +117,10 @@ module Discorb
 
         #
         # Deletes the callback message.
+        # @!async
         # @note This will fail if the message is ephemeral.
+        #
+        # @return [Async::Task<void>] The task.
         #
         def delete!
           Async do
@@ -132,8 +136,11 @@ module Discorb
     module UpdateResponse
       #
       # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
+      # @!async
       #
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      #
+      # @return [Async::Task<void>] The task.
       #
       def defer_update(ephemeral: false)
         Async do
@@ -149,8 +156,7 @@ module Discorb
       #
       # Response with `UPDATE_MESSAGE`(`7`).
       #
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.
@@ -159,6 +165,8 @@ module Discorb
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
       # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      #
+      # @return [Async::Task<void>] The task.
       #
       def edit(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
         Async do

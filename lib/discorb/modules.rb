@@ -7,8 +7,7 @@ module Discorb
   module Messageable
     #
     # Post a message to the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] content The message content.
     # @param [Boolean] tts Whether the message is tts.
@@ -54,8 +53,7 @@ module Discorb
 
     #
     # Edit a message.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -64,6 +62,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit_message(message_id, content = nil, embed: nil, embeds: nil, allowed_mentions: nil,
                                                 components: nil, supress: nil)
@@ -86,11 +86,12 @@ module Discorb
 
     #
     # Delete a message.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete_message!(message_id, reason: nil)
       Async do
@@ -102,8 +103,7 @@ module Discorb
 
     #
     # Fetch a message from ID.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Snowflake] id The ID of the message.
     #
@@ -119,8 +119,7 @@ module Discorb
 
     #
     # Fetch a message history.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -144,8 +143,7 @@ module Discorb
 
     #
     # Fetch the pinned messages in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     #
@@ -158,11 +156,12 @@ module Discorb
 
     #
     # Pin a message in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def pin_message(message, reason: nil)
       Async do
@@ -172,11 +171,12 @@ module Discorb
 
     #
     # Unpin a message in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def unpin_message(message, reason: nil)
       Async do
@@ -186,8 +186,7 @@ module Discorb
 
     #
     # Trigger the typing indicator in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # If block is given, trigger typing indicator during executing block.
     # @example

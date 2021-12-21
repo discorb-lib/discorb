@@ -94,8 +94,7 @@ module Discorb
 
       # Fetch the message.
       # If message is cached, it will be returned.
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @param [Boolean] force Whether to force fetching the message.
       #
@@ -143,8 +142,7 @@ module Discorb
 
       # Fetch the message.
       # If message is cached, it will be returned.
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @param [Boolean] force Whether to force fetching the message.
       #
@@ -195,8 +193,7 @@ module Discorb
 
       # Fetch the message.
       # If message is cached, it will be returned.
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @param [Boolean] force Whether to force fetching the message.
       #
@@ -293,8 +290,7 @@ module Discorb
       end
 
       # Fetch the message.
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @return [Async::Task<Discorb::Message>] The message.
       def fetch_message

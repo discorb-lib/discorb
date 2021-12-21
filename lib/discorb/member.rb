@@ -143,11 +143,12 @@ module Discorb
 
     #
     # Add a role to the member.
-    # @macro http
-    # @macro async
+    # @!async
     #
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def add_role(role, reason: nil)
       Async do
@@ -157,11 +158,12 @@ module Discorb
 
     #
     # Remove a role to the member.
-    # @macro http
-    # @macro async
+    # @!async
     #
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def remove_role(role, reason: nil)
       Async do
@@ -171,8 +173,7 @@ module Discorb
 
     #
     # Edit the member.
-    # @macro http
-    # @macro async
+    # @!async
     # @macro edit
     #
     # @param [String] nick The nickname of the member.
@@ -181,6 +182,8 @@ module Discorb
     # @param [Boolean] deaf Whether the member is deafened.
     # @param [Discorb::StageChannel] channel The channel the member is moved to.
     # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit(nick: :unset, role: :unset, mute: :unset, deaf: :unset, channel: :unset, reason: nil)
       Async do
@@ -198,8 +201,11 @@ module Discorb
 
     #
     # Kick the member.
+    # @!async
     #
     # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def kick(reason: nil)
       Async do
@@ -209,6 +215,7 @@ module Discorb
 
     #
     # Ban the member.
+    # @!async
     #
     # @param [Integer] delete_message_days The number of days to delete messages.
     # @param [String] reason The reason for the action.

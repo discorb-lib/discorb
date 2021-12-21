@@ -90,11 +90,12 @@ module Discorb
 
     #
     # Moves the role to a new position.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Integer] position The new position.
     # @param [String] reason The reason for moving the role.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def move(position, reason: nil)
       Async do
@@ -104,8 +105,7 @@ module Discorb
 
     #
     # Edits the role.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The new name of the role.
@@ -115,6 +115,8 @@ module Discorb
     # @param [Boolean] mentionable Whether the role should be mentionable.
     # @param [Discorb::Image, Discorb::UnicodeEmoji] icon The new icon or emoji of the role.
     # @param [String] reason The reason for editing the role.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit(name: :unset, position: :unset, color: :unset, hoist: :unset, mentionable: :unset, icon: :unset, reason: nil)
       Async do
@@ -141,6 +143,8 @@ module Discorb
     # Deletes the role.
     #
     # @param [String] reason The reason for deleting the role.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete!(reason: nil)
       Async do

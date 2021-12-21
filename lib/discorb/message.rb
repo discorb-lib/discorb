@@ -294,6 +294,7 @@ module Discorb
 
     #
     # Edit the message.
+    # @!async
     #
     # @param [String] content The message content.
     # @param [Discorb::Embed] embed The embed to send.
@@ -301,6 +302,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit(content = nil, embed: nil, embeds: nil, allowed_mentions: nil,
                             components: nil, supress: nil)
@@ -312,8 +315,11 @@ module Discorb
 
     #
     # Delete the message.
+    # @!async
     #
     # @param [String] reason The reason for deleting the message.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete!(reason: nil)
       Async do
@@ -342,8 +348,7 @@ module Discorb
     end
 
     # Reply to the message.
-    # @macro async
-    # @macro http
+    # @!async
     # @param (see #post)
     # @return [Async::Task<Discorb::Message>] The message.
     def reply(*args, **kwargs)
@@ -354,8 +359,9 @@ module Discorb
 
     #
     # Publish the message.
-    # @macro async
-    # @macro http
+    # @!async
+    #
+    # @return [Async::Task<void>] The task.
     #
     def publish
       Async do
@@ -365,10 +371,11 @@ module Discorb
 
     #
     # Add a reaction to the message.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Emoji] emoji The emoji to react with.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def add_reaction(emoji)
       Async do
@@ -380,10 +387,11 @@ module Discorb
 
     #
     # Remove a reaction from the message.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Emoji] emoji The emoji to remove.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def remove_reaction(emoji)
       Async do
@@ -395,11 +403,12 @@ module Discorb
 
     #
     # Remove other member's reaction from the message.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Emoji] emoji The emoji to remove.
     # @param [Discorb::Member] member The member to remove the reaction from.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def remove_reaction_of(emoji, member)
       Async do
@@ -411,8 +420,7 @@ module Discorb
 
     #
     # Fetch reacted users of reaction.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Emoji] emoji The emoji to fetch.
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
@@ -445,10 +453,11 @@ module Discorb
 
     #
     # Pin the message.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] reason The reason for pinning the message.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def pin(reason: nil)
       Async do
@@ -458,10 +467,11 @@ module Discorb
 
     #
     # Unpin the message.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] reason The reason for unpinning the message.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def unpin(reason: nil)
       Async do
@@ -471,6 +481,7 @@ module Discorb
 
     #
     # Start thread from the message.
+    # @!async
     #
     # @param (see Discorb::Channel#start_thread)
     #

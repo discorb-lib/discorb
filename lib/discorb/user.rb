@@ -58,8 +58,7 @@ module Discorb
 
     #
     # Whether the user is a owner of the client.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Boolean] strict Whether don't allow if the user is a member of the team.
     #
@@ -150,12 +149,13 @@ module Discorb
   class ClientUser < User
     #
     # Edit the client user.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The new username.
     # @param [Discorb::Image] avatar The new avatar.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit(name: :unset, avatar: :unset)
       Async do

@@ -104,6 +104,7 @@ module Discorb
 
       #
       # Setup commands.
+      # @!async
       # @see Client#initialize
       #
       # @param [String] token Bot token.

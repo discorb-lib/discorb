@@ -90,8 +90,7 @@ module Discorb
 
     #
     # Create a scheduled event for the guild.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [:stage_instance, :voice, :external] type The type of event to create.
     # @param [String] name The name of the event.
@@ -102,6 +101,8 @@ module Discorb
     # @param [String, nil] location The location of the event. Defaults to `nil`.
     # @param [:guild_only] privacy_level The privacy level of the event. This must be `:guild_only`.
     # @param [:active, :completed, :canceled] status The status of the event.
+    #
+    # @return [Async::Task<Discorb::ScheduledEvent>] The event that was created.
     #
     # @see Event#start
     # @see Event#cancel
@@ -194,8 +195,9 @@ module Discorb
 
     #
     # Deletes the event.
-    # @macro async
-    # @macro http
+    # @!async
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete!
       Async do
@@ -207,8 +209,7 @@ module Discorb
 
     #
     # Fetches the event users.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @note You can fetch all of members by not specifying a parameter.
     #
@@ -218,7 +219,7 @@ module Discorb
     # @param [Boolean] with_member Whether to include the member object of the event. Defaults to `false`.
     #   This should be used for manual fetching of members.
     #
-    # @return [Array<Discorb::Member>] The event users.
+    # @return [Async::Task<Array<Discorb::Member>>] The event users.
     #
     def fetch_users(limit = nil, before: nil, after: nil, with_member: true)
       Async do

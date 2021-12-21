@@ -166,13 +166,14 @@ module Discorb
 
     #
     # Edits the stage instance.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] topic The new topic of the stage instance.
     # @param [:public, :guild_only] privacy_level The new privacy level of the stage instance.
     # @param [String] reason The reason for editing the stage instance.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def edit(topic: :unset, privacy_level: :unset, reason: nil)
       Async do
@@ -190,6 +191,8 @@ module Discorb
     # Deletes the stage instance.
     #
     # @param [String] reason The reason for deleting the stage instance.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete!(reason: nil)
       Async do

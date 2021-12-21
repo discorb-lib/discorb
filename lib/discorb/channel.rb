@@ -166,8 +166,7 @@ module Discorb
 
     #
     # Deletes the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] reason The reason of deleting the channel.
     #
@@ -186,8 +185,7 @@ module Discorb
 
     #
     # Moves the channel to another position.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Integer] position The position to move the channel.
     # @param [Boolean] lock_permissions Whether to lock the permissions of the channel.
@@ -256,8 +254,7 @@ module Discorb
 
     #
     # Edits the channel.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The name of the channel.
@@ -304,8 +301,7 @@ module Discorb
 
     #
     # Create webhook in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] name The name of the webhook.
     # @param [Discorb::Image] avatar The avatar of the webhook.
@@ -324,8 +320,7 @@ module Discorb
 
     #
     # Fetch webhooks in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @return [Async::Task<Array<Discorb::Webhook>>] The webhooks in the channel.
     #
@@ -338,11 +333,12 @@ module Discorb
 
     #
     # Bulk delete messages in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Message] messages The messages to delete.
     # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete_messages!(*messages, force: false)
       Async do
@@ -367,12 +363,13 @@ module Discorb
 
     #
     # Set the channel's permission overwrite.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of setting the overwrite.
     # @param [{Symbol => Boolean}] perms The permission overwrites to replace.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def set_permissions(target, reason: nil, **perms)
       Async do
@@ -398,11 +395,12 @@ module Discorb
 
     #
     # Delete the channel's permission overwrite.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of deleting the overwrite.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def delete_permissions(target, reason: nil)
       Async do
@@ -416,8 +414,7 @@ module Discorb
 
     #
     # Fetch the channel's invites.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @return [Async::Task<Array<Discorb::Invite>>] The invites in the channel.
     #
@@ -430,8 +427,7 @@ module Discorb
 
     #
     # Create an invite in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Integer] max_age The max age of the invite.
     # @param [Integer] max_uses The max uses of the invite.
@@ -456,11 +452,12 @@ module Discorb
 
     #
     # Follow the existing announcement channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::NewsChannel] target The channel to follow.
     # @param [String] reason The reason of following the channel.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def follow_from(target, reason: nil)
       Async do
@@ -470,11 +467,12 @@ module Discorb
 
     #
     # Follow the existing announcement channel from self.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Discorb::TextChannel] target The channel to follow to.
     # @param [String] reason The reason of following the channel.
+    #
+    # @return [Async::Task<void>] The task.
     #
     def follow_to(target, reason: nil)
       Async do
@@ -484,8 +482,7 @@ module Discorb
 
     #
     # Start thread in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] name The name of the thread.
     # @param [Discorb::Message] message The message to start the thread.
@@ -522,8 +519,7 @@ module Discorb
 
     #
     # Fetch archived threads in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived threads in the channel.
     #
@@ -536,8 +532,7 @@ module Discorb
 
     #
     # Fetch archived private threads in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived private threads in the channel.
     #
@@ -550,8 +545,7 @@ module Discorb
 
     #
     # Fetch joined archived private threads in the channel.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [Integer] limit The limit of threads to fetch.
     # @param [Time] before <description>
@@ -614,8 +608,7 @@ module Discorb
     @channel_type = 2
     #
     # Edit the voice channel.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The name of the voice channel.
@@ -683,8 +676,7 @@ module Discorb
 
     #
     # Edit the stage channel.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The name of the stage channel.
@@ -711,8 +703,7 @@ module Discorb
 
     #
     # Start a stage instance.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @param [String] topic The topic of the stage instance.
     # @param [Boolean] public Whether the stage instance is public or not.
@@ -729,8 +720,7 @@ module Discorb
 
     #
     # Fetch a current stage instance.
-    # @macro async
-    # @macro http
+    # @!async
     #
     # @return [Async::Task<StageInstance>] The current stage instance.
     # @return [Async::Task<nil>] If there is no current stage instance.
@@ -792,6 +782,19 @@ module Discorb
     # @!attribute [r] parent
     #   @macro client_cache
     #   @return [Discorb::GuildChannel] The parent channel of the thread.
+    # @!attribute [r] me
+    #   @return [Discorb::ThreadChannel::Member] The bot's member in the thread.
+    #   @return [nil] If the bot is not in the thread.
+    # @!attribute [r] joined?
+    #   @return [Boolean] Whether the bot is in the thread or not.
+    # @!attribute [r] guild
+    #   @macro client_cache
+    #   @return [Discorb::Guild] The guild of the thread.
+    # @!attribute [r] owner
+    #   @macro client_cache
+    #   @macro members_intent
+    #   @return [Discorb::Member] The owner of the thread.
+
 
     include Messageable
     @channel_type = nil
@@ -807,8 +810,7 @@ module Discorb
 
     #
     # Edit the thread.
-    # @macro async
-    # @macro http
+    # @!async
     # @macro edit
     #
     # @param [String] name The name of the thread.
@@ -897,7 +899,7 @@ module Discorb
     end
 
     def joined?
-      @members[@client.user.id]
+      !!me
     end
 
     def guild
@@ -912,6 +914,13 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
+    #
+    # Add a member to the thread.
+    #
+    # @param [Discorb::Member, :me] member The member to add. If `:me` is given, the bot will be added.
+    #
+    # @return [Async::Task<void>] The task.
+    #
     def add_member(member = :me)
       Async do
         if member == :me
@@ -924,6 +933,13 @@ module Discorb
 
     alias join add_member
 
+    #
+    # Remove a member from the thread.
+    #
+    # @param [Discorb::Member, :me] member The member to remove. If `:me` is given, the bot will be removed.
+    #
+    # @return [Async::Task<void>] The task.
+    #
     def remove_member(member = :me)
       Async do
         if member == :me
@@ -936,6 +952,11 @@ module Discorb
 
     alias leave remove_member
 
+    #
+    # Fetch members in the thread.
+    #
+    # @return [Array<Discorb::ThreadChannel::Member>] The members in the thread.
+    #
     def fetch_members
       Async do
         _resp, data = @client.http.get("/channels/#{@id}/thread-members").wait
@@ -959,6 +980,9 @@ module Discorb
       attr_reader :channel_type
     end
 
+    #
+    # Repre
+    #
     class Member < DiscordModel
       attr_reader :joined_at
 

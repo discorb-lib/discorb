@@ -117,6 +117,8 @@ module Discorb
     alias id to_s
   end
 
+  # @return [Object] Object that represents nil.
+  #   This is used as a default value for optional parameters.
   Unset = Object.new
   class << Unset
     def method_missing(*)

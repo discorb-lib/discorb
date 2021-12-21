@@ -67,14 +67,15 @@ module Discorb
 
       #
       # Edits the sticker.
-      # @macro async
-      # @macro http
+      # @!async
       # @macro edit
       #
       # @param [String] name The new name of the sticker.
       # @param [String] description The new description of the sticker.
       # @param [Discorb::Emoji] tag The new tags of the sticker.
       # @param [String] reason The reason for the edit.
+      #
+      # @return [Async::Task<void>] The task.
       #
       def edit(name: :unset, description: :unset, tag: :unset, reason: :unset)
         Async do
@@ -90,8 +91,7 @@ module Discorb
 
       #
       # Deletes the sticker.
-      # @macro async
-      # @macro http
+      # @!async
       #
       # @param [String] reason The reason for the deletion.
       #
