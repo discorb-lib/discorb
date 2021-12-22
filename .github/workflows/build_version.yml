@@ -35,6 +35,7 @@ jobs:
         run: |
           bundle config --local with 'docs'
           bundle install
+          gem update uri
       - name: Generate document
         run: bundle exec rake document:build_all
       - name: Push document
