@@ -2,6 +2,8 @@
 --no-private
 --markup markdown
 --tag flags:"Flags"
+--tag async:"Async"
+--hide-tag async
 --verbose
 --asset docs/assets:assets
 --asset assets:assets
