@@ -143,7 +143,7 @@ module Discorb
 
     #
     # Add a role to the member.
-    # @!async
+    # @async
     #
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
@@ -158,7 +158,7 @@ module Discorb
 
     #
     # Remove a role to the member.
-    # @!async
+    # @async
     #
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
@@ -173,7 +173,7 @@ module Discorb
 
     #
     # Edit the member.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] nick The nickname of the member.
@@ -201,7 +201,7 @@ module Discorb
 
     #
     # Kick the member.
-    # @!async
+    # @async
     #
     # @param [String] reason The reason for the action.
     #
@@ -215,7 +215,7 @@ module Discorb
 
     #
     # Ban the member.
-    # @!async
+    # @async
     #
     # @param [Integer] delete_message_days The number of days to delete messages.
     # @param [String] reason The reason for the action.

@@ -58,7 +58,7 @@ module Discorb
 
     #
     # Whether the user is a owner of the client.
-    # @!async
+    # @async
     #
     # @param [Boolean] strict Whether don't allow if the user is a member of the team.
     #
@@ -149,7 +149,7 @@ module Discorb
   class ClientUser < User
     #
     # Edit the client user.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The new username.

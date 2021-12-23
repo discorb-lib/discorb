@@ -82,7 +82,7 @@ module Discorb
 
     #
     # Edit the emoji.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The new name of the emoji.
@@ -105,7 +105,7 @@ module Discorb
 
     #
     # Delete the emoji.
-    # @!async
+    # @async
     #
     # @param [String] reason The reason for deleting the emoji.
     #

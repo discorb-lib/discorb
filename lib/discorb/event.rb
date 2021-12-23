@@ -90,7 +90,7 @@ module Discorb
 
     #
     # Create a scheduled event for the guild.
-    # @!async
+    # @async
     #
     # @param [:stage_instance, :voice, :external] type The type of event to create.
     # @param [String] name The name of the event.
@@ -195,7 +195,7 @@ module Discorb
 
     #
     # Deletes the event.
-    # @!async
+    # @async
     #
     # @return [Async::Task<void>] The task.
     #
@@ -209,7 +209,7 @@ module Discorb
 
     #
     # Fetches the event users.
-    # @!async
+    # @async
     #
     # @note You can fetch all of members by not specifying a parameter.
     #

@@ -166,7 +166,7 @@ module Discorb
 
     #
     # Edits the stage instance.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] topic The new topic of the stage instance.

@@ -100,7 +100,7 @@ module Discorb
     end
 
     # Delete the invite.
-    # @!async
+    # @async
     # @return [Async::Task<void>] The task.
     #
     def delete!(reason: nil)

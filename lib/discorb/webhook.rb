@@ -43,7 +43,7 @@ module Discorb
 
     #
     # Posts a message to the webhook.
-    # @!async
+    # @async
     #
     # @param [String] content The content of the message.
     # @param [Boolean] tts Whether the message should be sent as text-to-speech.
@@ -92,7 +92,7 @@ module Discorb
 
     #
     # Edits the webhook.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The new name of the webhook.
@@ -115,7 +115,7 @@ module Discorb
 
     #
     # Deletes the webhook.
-    # @!async
+    # @async
     #
     # @return [Async::Task<void>] The task.
     #
@@ -130,7 +130,7 @@ module Discorb
 
     #
     # Edits the webhook's message.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [Discorb::Webhook::Message] message The message to edit.
@@ -312,7 +312,7 @@ module Discorb
 
       #
       # Edits the message.
-      # @!async
+      # @async
       # @macro edit
       #
       # @param (see Webhook#edit_message)
@@ -327,7 +327,7 @@ module Discorb
 
       #
       # Deletes the message.
-      # @!async
+      # @async
       #
       # @return [Async::Task<void>] The task.
       #

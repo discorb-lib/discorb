@@ -67,7 +67,7 @@ module Discorb
 
       #
       # Edits the sticker.
-      # @!async
+      # @async
       # @macro edit
       #
       # @param [String] name The new name of the sticker.
@@ -91,7 +91,7 @@ module Discorb
 
       #
       # Deletes the sticker.
-      # @!async
+      # @async
       #
       # @param [String] reason The reason for the deletion.
       #

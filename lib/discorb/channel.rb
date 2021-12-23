@@ -166,7 +166,7 @@ module Discorb
 
     #
     # Deletes the channel.
-    # @!async
+    # @async
     #
     # @param [String] reason The reason of deleting the channel.
     #
@@ -185,7 +185,7 @@ module Discorb
 
     #
     # Moves the channel to another position.
-    # @!async
+    # @async
     #
     # @param [Integer] position The position to move the channel.
     # @param [Boolean] lock_permissions Whether to lock the permissions of the channel.
@@ -254,7 +254,7 @@ module Discorb
 
     #
     # Edits the channel.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The name of the channel.
@@ -301,7 +301,7 @@ module Discorb
 
     #
     # Create webhook in the channel.
-    # @!async
+    # @async
     #
     # @param [String] name The name of the webhook.
     # @param [Discorb::Image] avatar The avatar of the webhook.
@@ -320,7 +320,7 @@ module Discorb
 
     #
     # Fetch webhooks in the channel.
-    # @!async
+    # @async
     #
     # @return [Async::Task<Array<Discorb::Webhook>>] The webhooks in the channel.
     #
@@ -333,7 +333,7 @@ module Discorb
 
     #
     # Bulk delete messages in the channel.
-    # @!async
+    # @async
     #
     # @param [Discorb::Message] messages The messages to delete.
     # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
@@ -363,7 +363,7 @@ module Discorb
 
     #
     # Set the channel's permission overwrite.
-    # @!async
+    # @async
     #
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of setting the overwrite.
@@ -395,7 +395,7 @@ module Discorb
 
     #
     # Delete the channel's permission overwrite.
-    # @!async
+    # @async
     #
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of deleting the overwrite.
@@ -414,7 +414,7 @@ module Discorb
 
     #
     # Fetch the channel's invites.
-    # @!async
+    # @async
     #
     # @return [Async::Task<Array<Discorb::Invite>>] The invites in the channel.
     #
@@ -427,7 +427,7 @@ module Discorb
 
     #
     # Create an invite in the channel.
-    # @!async
+    # @async
     #
     # @param [Integer] max_age The max age of the invite.
     # @param [Integer] max_uses The max uses of the invite.
@@ -452,7 +452,7 @@ module Discorb
 
     #
     # Follow the existing announcement channel.
-    # @!async
+    # @async
     #
     # @param [Discorb::NewsChannel] target The channel to follow.
     # @param [String] reason The reason of following the channel.
@@ -467,7 +467,7 @@ module Discorb
 
     #
     # Follow the existing announcement channel from self.
-    # @!async
+    # @async
     #
     # @param [Discorb::TextChannel] target The channel to follow to.
     # @param [String] reason The reason of following the channel.
@@ -482,7 +482,7 @@ module Discorb
 
     #
     # Start thread in the channel.
-    # @!async
+    # @async
     #
     # @param [String] name The name of the thread.
     # @param [Discorb::Message] message The message to start the thread.
@@ -519,7 +519,7 @@ module Discorb
 
     #
     # Fetch archived threads in the channel.
-    # @!async
+    # @async
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived threads in the channel.
     #
@@ -532,7 +532,7 @@ module Discorb
 
     #
     # Fetch archived private threads in the channel.
-    # @!async
+    # @async
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived private threads in the channel.
     #
@@ -545,7 +545,7 @@ module Discorb
 
     #
     # Fetch joined archived private threads in the channel.
-    # @!async
+    # @async
     #
     # @param [Integer] limit The limit of threads to fetch.
     # @param [Time] before <description>
@@ -608,7 +608,7 @@ module Discorb
     @channel_type = 2
     #
     # Edit the voice channel.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The name of the voice channel.
@@ -676,7 +676,7 @@ module Discorb
 
     #
     # Edit the stage channel.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The name of the stage channel.
@@ -703,7 +703,7 @@ module Discorb
 
     #
     # Start a stage instance.
-    # @!async
+    # @async
     #
     # @param [String] topic The topic of the stage instance.
     # @param [Boolean] public Whether the stage instance is public or not.
@@ -720,7 +720,7 @@ module Discorb
 
     #
     # Fetch a current stage instance.
-    # @!async
+    # @async
     #
     # @return [Async::Task<StageInstance>] The current stage instance.
     # @return [Async::Task<nil>] If there is no current stage instance.
@@ -810,7 +810,7 @@ module Discorb
 
     #
     # Edit the thread.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The name of the thread.

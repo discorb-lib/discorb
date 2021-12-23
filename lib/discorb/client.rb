@@ -146,7 +146,7 @@ module Discorb
 
     #
     # Dispatch an event.
-    # @!async
+    # @async
     #
     # @param [Symbol] event_name The name of the event.
     # @param [Object] args The arguments to pass to the event.
@@ -202,7 +202,7 @@ module Discorb
 
     #
     # Fetch user from ID.
-    # @!async
+    # @async
     #
     # @param [#to_s] id <description>
     #
@@ -219,7 +219,7 @@ module Discorb
 
     #
     # Fetch channel from ID.
-    # @!async
+    # @async
     #
     # @param [#to_s] id The ID of the channel.
     #
@@ -236,7 +236,7 @@ module Discorb
 
     #
     # Fetch guild from ID.
-    # @!async
+    # @async
     #
     # @param [#to_s] id <description>
     #
@@ -253,7 +253,7 @@ module Discorb
 
     #
     # Fetch invite from code.
-    # @!async
+    # @async
     #
     # @param [String] code The code of the invite.
     # @param [Boolean] with_count Whether to include the count of the invite.
@@ -271,7 +271,7 @@ module Discorb
     #
     # Fetch webhook from ID.
     # If application was cached, it will be used.
-    # @!async
+    # @async
     #
     # @param [Boolean] force Whether to force the fetch.
     #
@@ -289,7 +289,7 @@ module Discorb
 
     #
     # Fetch nitro sticker pack from ID.
-    # @!async
+    # @async
     #
     # @return [Async::Task<Array<Discorb::Sticker::Pack>>] The packs.
     #
@@ -331,7 +331,7 @@ module Discorb
 
     #
     # Method to wait for a event.
-    # @!async
+    # @async
     #
     # @param [Symbol] event The name of the event.
     # @param [Integer] timeout The timeout in seconds.

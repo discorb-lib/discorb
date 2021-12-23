@@ -7,7 +7,7 @@ module Discorb
   module Messageable
     #
     # Post a message to the channel.
-    # @!async
+    # @async
     #
     # @param [String] content The message content.
     # @param [Boolean] tts Whether the message is tts.
@@ -53,7 +53,7 @@ module Discorb
 
     #
     # Edit a message.
-    # @!async
+    # @async
     #
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -86,7 +86,7 @@ module Discorb
 
     #
     # Delete a message.
-    # @!async
+    # @async
     #
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -103,7 +103,7 @@ module Discorb
 
     #
     # Fetch a message from ID.
-    # @!async
+    # @async
     #
     # @param [Discorb::Snowflake] id The ID of the message.
     #
@@ -119,7 +119,7 @@ module Discorb
 
     #
     # Fetch a message history.
-    # @!async
+    # @async
     #
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -143,7 +143,7 @@ module Discorb
 
     #
     # Fetch the pinned messages in the channel.
-    # @!async
+    # @async
     #
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     #
@@ -156,7 +156,7 @@ module Discorb
 
     #
     # Pin a message in the channel.
-    # @!async
+    # @async
     #
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -171,7 +171,7 @@ module Discorb
 
     #
     # Unpin a message in the channel.
-    # @!async
+    # @async
     #
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -186,7 +186,7 @@ module Discorb
 
     #
     # Trigger the typing indicator in the channel.
-    # @!async
+    # @async
     #
     # If block is given, trigger typing indicator during executing block.
     # @example

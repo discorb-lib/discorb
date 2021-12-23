@@ -7,7 +7,7 @@ module Discorb
       #
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       #
-      # @!async
+      # @async
       #
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
@@ -28,7 +28,7 @@ module Discorb
       #
       # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
       #
-      # @!async
+      # @async
       #
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.
@@ -77,7 +77,7 @@ module Discorb
 
         #
         # Edits the callback message.
-        # @!async
+        # @async
         # @macro edit
         #
         # @param [String] content The new content of the message.
@@ -117,7 +117,7 @@ module Discorb
 
         #
         # Deletes the callback message.
-        # @!async
+        # @async
         # @note This will fail if the message is ephemeral.
         #
         # @return [Async::Task<void>] The task.
@@ -136,7 +136,7 @@ module Discorb
     module UpdateResponse
       #
       # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
-      # @!async
+      # @async
       #
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
@@ -156,7 +156,7 @@ module Discorb
       #
       # Response with `UPDATE_MESSAGE`(`7`).
       #
-      # @!async
+      # @async
       #
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.

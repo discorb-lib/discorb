@@ -58,7 +58,7 @@ module Discorb
 
     #
     # Delete the integration.
-    # @!async
+    # @async
     #
     # @param [String] reason The reason for deleting the integration.
     #

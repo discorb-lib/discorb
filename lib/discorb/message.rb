@@ -294,7 +294,7 @@ module Discorb
 
     #
     # Edit the message.
-    # @!async
+    # @async
     #
     # @param [String] content The message content.
     # @param [Discorb::Embed] embed The embed to send.
@@ -315,7 +315,7 @@ module Discorb
 
     #
     # Delete the message.
-    # @!async
+    # @async
     #
     # @param [String] reason The reason for deleting the message.
     #
@@ -348,7 +348,7 @@ module Discorb
     end
 
     # Reply to the message.
-    # @!async
+    # @async
     # @param (see #post)
     # @return [Async::Task<Discorb::Message>] The message.
     def reply(*args, **kwargs)
@@ -359,7 +359,7 @@ module Discorb
 
     #
     # Publish the message.
-    # @!async
+    # @async
     #
     # @return [Async::Task<void>] The task.
     #
@@ -371,7 +371,7 @@ module Discorb
 
     #
     # Add a reaction to the message.
-    # @!async
+    # @async
     #
     # @param [Discorb::Emoji] emoji The emoji to react with.
     #
@@ -387,7 +387,7 @@ module Discorb
 
     #
     # Remove a reaction from the message.
-    # @!async
+    # @async
     #
     # @param [Discorb::Emoji] emoji The emoji to remove.
     #
@@ -403,7 +403,7 @@ module Discorb
 
     #
     # Remove other member's reaction from the message.
-    # @!async
+    # @async
     #
     # @param [Discorb::Emoji] emoji The emoji to remove.
     # @param [Discorb::Member] member The member to remove the reaction from.
@@ -420,7 +420,7 @@ module Discorb
 
     #
     # Fetch reacted users of reaction.
-    # @!async
+    # @async
     #
     # @param [Discorb::Emoji] emoji The emoji to fetch.
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
@@ -453,7 +453,7 @@ module Discorb
 
     #
     # Pin the message.
-    # @!async
+    # @async
     #
     # @param [String] reason The reason for pinning the message.
     #
@@ -467,7 +467,7 @@ module Discorb
 
     #
     # Unpin the message.
-    # @!async
+    # @async
     #
     # @param [String] reason The reason for unpinning the message.
     #
@@ -481,7 +481,7 @@ module Discorb
 
     #
     # Start thread from the message.
-    # @!async
+    # @async
     #
     # @param (see Discorb::Channel#start_thread)
     #

@@ -18,7 +18,7 @@ module Discorb
 
     #
     # Execute a GET request.
-    # @!async
+    # @async
     #
     # @param [String] path The path to the resource.
     # @param [Hash] headers The headers to send with the request.
@@ -42,7 +42,7 @@ module Discorb
 
     #
     # Execute a POST request.
-    # @!async
+    # @async
     #
     # @param [String] path The path to the resource.
     # @param [String, Hash] body The body of the request.
@@ -67,7 +67,7 @@ module Discorb
 
     #
     # Execute a PATCH request.
-    # @!async
+    # @async
     #
     # @param [String] path The path to the resource.
     # @param [String, Hash] body The body of the request.
@@ -92,7 +92,7 @@ module Discorb
 
     #
     # Execute a PUT request.
-    # @!async
+    # @async
     #
     # @param [String] path The path to the resource.
     # @param [String, Hash] body The body of the request.
@@ -117,7 +117,7 @@ module Discorb
 
     #
     # Execute a DELETE request.
-    # @!async
+    # @async
     #
     # @param [String] path The path to the resource.
     # @param [Hash] headers The headers to send with the request.

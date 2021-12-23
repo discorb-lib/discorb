@@ -90,7 +90,7 @@ module Discorb
 
     #
     # Moves the role to a new position.
-    # @!async
+    # @async
     #
     # @param [Integer] position The new position.
     # @param [String] reason The reason for moving the role.
@@ -105,7 +105,7 @@ module Discorb
 
     #
     # Edits the role.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The new name of the role.

@@ -176,7 +176,7 @@ module Discorb
 
     # 
     # Moves the role to a new position.
-    # @!async
+    # @async
     # 
     # @param [Integer] position The new position.
     # @param [String] reason The reason for moving the role.
@@ -184,7 +184,7 @@ module Discorb
 
     # 
     # Edits the role.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The new name of the role.
@@ -279,7 +279,7 @@ module Discorb
 
     # 
     # Whether the user is a owner of the client.
-    # @!async
+    # @async
     # 
     # @param [Boolean] strict Whether don't allow if the user is a member of the team.
     # 
@@ -288,7 +288,7 @@ module Discorb
 
     # 
     # Edit a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -309,7 +309,7 @@ module Discorb
 
     # 
     # Delete a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -317,7 +317,7 @@ module Discorb
 
     # 
     # Fetch a message from ID.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Snowflake] id The ID of the message.
     # 
@@ -327,7 +327,7 @@ module Discorb
 
     # 
     # Fetch a message history.
-    # @!async
+    # @async
     # 
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -344,14 +344,14 @@ module Discorb
 
     # 
     # Fetch the pinned messages in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     def fetch_pins: () -> Async::Task[::Array[Discorb::Message]]
 
     # 
     # Pin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -359,7 +359,7 @@ module Discorb
 
     # 
     # Unpin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -367,7 +367,7 @@ module Discorb
 
     # 
     # Trigger the typing indicator in the channel.
-    # @!async
+    # @async
     # 
     # If block is given, trigger typing indicator during executing block.
     # @example
@@ -430,7 +430,7 @@ module Discorb
   class ClientUser < Discorb::User
     # 
     # Edit the client user.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The new username.
@@ -882,7 +882,7 @@ module Discorb
 
     # 
     # Edit the emoji.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The new name of the emoji.
@@ -894,7 +894,7 @@ module Discorb
 
     # 
     # Delete the emoji.
-    # @!async
+    # @async
     # 
     # @param [String] reason The reason for deleting the emoji.
     # 
@@ -1049,7 +1049,7 @@ module Discorb
 
     # 
     # Create a scheduled event for the guild.
-    # @!async
+    # @async
     # 
     # @param [:stage_instance, :voice, :external] type The type of event to create.
     # @param [String] name The name of the event.
@@ -1090,12 +1090,12 @@ module Discorb
 
     # 
     # Deletes the event.
-    # @!async
+    # @async
     def delete!: () -> untyped
 
     # 
     # Fetches the event users.
-    # @!async
+    # @async
     # 
     # @note You can fetch all of members by not specifying a parameter.
     # 
@@ -1182,12 +1182,12 @@ module Discorb
   class Guild < Discorb::DiscordModel
     # 
     # Leave the guild.
-    # @!async
+    # @async
     def leave!: () -> untyped
 
     # 
     # Fetch scheduled events for the guild.
-    # @!async
+    # @async
     # 
     # @param [Boolean] with_user_count Whether to include the user count in the events.
     #   Defaults to `true`.
@@ -1197,7 +1197,7 @@ module Discorb
 
     # 
     # Fetch the scheduled event by ID.
-    # @!async
+    # @async
     # 
     # @param [#to_s] id The ID of the scheduled event.
     # 
@@ -1231,7 +1231,7 @@ module Discorb
 
     # 
     # Fetch emoji list of the guild.
-    # @!async
+    # @async
     # @note This querys the API every time. We recommend using {#emojis} instead.
     # 
     # @return [Async::Task<Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}>] A dictionary of emoji in the guild.
@@ -1239,7 +1239,7 @@ module Discorb
 
     # 
     # Fetch emoji id of the guild.
-    # @!async
+    # @async
     # @note This querys the API every time. We recommend using {#emojis} instead.
     # 
     # @param [#to_s] id The emoji id.
@@ -1249,7 +1249,7 @@ module Discorb
 
     # 
     # Create a custom emoji.
-    # @!async
+    # @async
     # 
     # @param [#to_s] name The name of the emoji.
     # @param [Discorb::Image] image The image of the emoji.
@@ -1260,28 +1260,28 @@ module Discorb
 
     # 
     # Fetch webhooks of the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Webhook>>] A list of webhooks in the guild.
     def fetch_webhooks: () -> Async::Task[::Array[Discorb::Webhook]]
 
     # 
     # Fetch audit log of the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Discorb::AuditLog>] The audit log of the guild.
     def fetch_audit_log: () -> Async::Task[Discorb::AuditLog]
 
     # 
     # Fetch channels of the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Channel>>] A list of channels in the guild.
     def fetch_channels: () -> Async::Task[::Array[Discorb::Channel]]
 
     # 
     # Create a new text channel.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the channel.
     # @param [String] topic The topic of the channel.
@@ -1308,7 +1308,7 @@ module Discorb
 
     # 
     # Create a new voice channel.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the channel.
     # @param [Integer] bitrate The bitrate of the channel.
@@ -1330,7 +1330,7 @@ module Discorb
                               ) -> Async::Task[Discorb::VoiceChannel]
 
     # Create a new category channel.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the channel.
     # @param [Integer] position The position of the channel.
@@ -1349,7 +1349,7 @@ module Discorb
 
     # 
     # Create a new stage channel.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the channel.
     # @param [Integer] bitrate The bitrate of the channel.
@@ -1370,7 +1370,7 @@ module Discorb
 
     # 
     # Create a new news channel.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the channel.
     # @param [String] topic The topic of the channel.
@@ -1397,14 +1397,14 @@ module Discorb
 
     # 
     # Fetch a list of active threads in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The list of threads.
     def fetch_active_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
 
     # 
     # Fetch a member in the guild.
-    # @!async
+    # @async
     # 
     # @param [#to_s] id The ID of the member to fetch.
     # 
@@ -1413,7 +1413,7 @@ module Discorb
     def fetch_member: (_ToS id) -> Async::Task[Discorb::Member]
 
     # Fetch members in the guild.
-    # @!async
+    # @async
     # @macro members_intent
     # 
     # @param [Integer] limit The maximum number of members to fetch, 0 for all.
@@ -1424,7 +1424,7 @@ module Discorb
 
     # 
     # Search for members by name in the guild.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the member to search for.
     # @param [Integer] limit The maximum number of members to return.
@@ -1434,7 +1434,7 @@ module Discorb
 
     # 
     # Almost the same as {#fetch_members_named}, but returns a single member.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Discorb::Member>] The member.
     # @return [Async::Task<nil>] If the member is not found.
@@ -1449,7 +1449,7 @@ module Discorb
 
     # 
     # Kick a member from the guild.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Member] member The member to kick.
     # @param [String] reason The reason for kicking the member.
@@ -1457,14 +1457,14 @@ module Discorb
 
     # 
     # Fetch a list of bans in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Guild::Ban>>] The list of bans.
     def fetch_bans: () -> Async::Task[::Array[Discorb::Guild::Ban]]
 
     # 
     # Fetch a ban in the guild.
-    # @!async
+    # @async
     # 
     # @param [Discorb::User] user The user to fetch.
     # 
@@ -1474,7 +1474,7 @@ module Discorb
 
     # 
     # Checks the user was banned from the guild.
-    # @!async
+    # @async
     # 
     # @param [Discorb::User] user The user to check.
     # 
@@ -1483,7 +1483,7 @@ module Discorb
 
     # 
     # Ban a member from the guild.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Member] member The member to ban.
     # @param [Integer] delete_message_days The number of days to delete messages.
@@ -1494,7 +1494,7 @@ module Discorb
 
     # 
     # Unban a user from the guild.
-    # @!async
+    # @async
     # 
     # @param [Discorb::User] user The user to unban.
     # @param [String] reason The reason for unbanning the user.
@@ -1502,14 +1502,14 @@ module Discorb
 
     # 
     # Fetch a list of roles in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Role>>] The list of roles.
     def fetch_roles: () -> Async::Task[::Array[Discorb::Role]]
 
     # 
     # Create a role in the guild.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the role.
     # @param [Discorb::Color] color The color of the role.
@@ -1528,7 +1528,7 @@ module Discorb
 
     # 
     # Fetch how many members will be pruned.
-    # @!async
+    # @async
     # 
     # @param [Integer] days The number of days to prune.
     # @param [Array<Discorb::Role>] roles The roles that include for pruning.
@@ -1538,7 +1538,7 @@ module Discorb
 
     # 
     # Prune members from the guild.
-    # @!async
+    # @async
     # 
     # @param [Integer] days The number of days to prune.
     # @param [Array<Discorb::Role>] roles The roles that include for pruning.
@@ -1549,56 +1549,56 @@ module Discorb
 
     # 
     # Fetch voice regions that are available in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::VoiceRegion>>] The available voice regions.
     def fetch_voice_regions: () -> Async::Task[::Array[Discorb::VoiceRegion]]
 
     # 
     # Fetch invites in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Invite>>] The invites.
     def fetch_invites: () -> Async::Task[::Array[Invite]]
 
     # 
     # Fetch integrations in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Integration>>] The integrations.
     def fetch_integrations: () -> Async::Task[::Array[Discorb::Integration]]
 
     # 
     # Fetch the widget of the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Discorb::Guild::Widget>] The widget.
     def fetch_widget: () -> Async::Task[Discorb::Guild::Widget]
 
     # 
     # Fetch the vanity URL of the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Discorb::Guild::VanityInvite>] The vanity URL.
     def fetch_vanity_invite: () -> Async::Task[Discorb::Guild::VanityInvite]
 
     # 
     # Fetch the welcome screen of the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Discorb::WelcomeScreen>] The welcome screen.
     def fetch_welcome_screen: () -> Async::Task[Discorb::WelcomeScreen]
 
     # 
     # Fetch stickers in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Sticker::GuildSticker>>] The stickers.
     def fetch_stickers: () -> Async::Task[::Array[Discorb::Sticker::GuildSticker]]
 
     # 
     # Fetch the sticker by ID.
-    # @!async
+    # @async
     # 
     # @param [#to_s] id The ID of the sticker.
     # 
@@ -1608,7 +1608,7 @@ module Discorb
 
     # 
     # Fetch templates in the guild.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Discorb::GuildTemplate>] The templates.
     def fetch_templates: () -> Async::Task[Discorb::GuildTemplate]
@@ -1787,7 +1787,7 @@ module Discorb
     class Widget < Discorb::DiscordModel
       # 
       # Edit the widget.
-      # @!async
+      # @async
       # @macro edit
       # 
       # @param [Boolean] enabled Whether the widget is enabled.
@@ -1881,7 +1881,7 @@ module Discorb
 
       # 
       # Edits the welcome screen.
-      # @!async
+      # @async
       # @macro edit
       # 
       # @param [Boolean] enabled Whether the welcome screen is enabled.
@@ -1992,7 +1992,7 @@ module Discorb
 
     # 
     # Fetch user from ID.
-    # @!async
+    # @async
     # 
     # @param [#to_s] id <description>
     # 
@@ -2003,7 +2003,7 @@ module Discorb
 
     # 
     # Fetch channel from ID.
-    # @!async
+    # @async
     # 
     # @param [#to_s] id The ID of the channel.
     # 
@@ -2014,7 +2014,7 @@ module Discorb
 
     # 
     # Fetch guild from ID.
-    # @!async
+    # @async
     # 
     # @param [#to_s] id <description>
     # 
@@ -2025,7 +2025,7 @@ module Discorb
 
     # 
     # Fetch invite from code.
-    # @!async
+    # @async
     # 
     # @param [String] code The code of the invite.
     # @param [Boolean] with_count Whether to include the count of the invite.
@@ -2037,7 +2037,7 @@ module Discorb
     # 
     # Fetch webhook from ID.
     # If application was cached, it will be used.
-    # @!async
+    # @async
     # 
     # @param [Boolean] force Whether to force the fetch.
     # 
@@ -2046,7 +2046,7 @@ module Discorb
 
     # 
     # Fetch nitro sticker pack from ID.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Sticker::Pack>>] The packs.
     def fetch_nitro_sticker_packs: () -> Async::Task[::Array[Discorb::Sticker::Pack]]
@@ -2330,7 +2330,7 @@ module Discorb
   # Represents invite of discord.
   class Invite < Discorb::DiscordModel
     # Delete the invite.
-    # @!async
+    # @async
     def delete!: (?reason: untyped) -> untyped
     # @return [String] The code of invite.
     attr_reader code: String
@@ -2384,7 +2384,7 @@ module Discorb
     # 
     # Add a role to the member.
     # @macro http
-    # @!async
+    # @async
     # 
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
@@ -2393,7 +2393,7 @@ module Discorb
     # 
     # Remove a role to the member.
     # @macro http
-    # @!async
+    # @async
     # 
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
@@ -2402,7 +2402,7 @@ module Discorb
     # 
     # Edit the member.
     # @macro http
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] nick The nickname of the member.
@@ -2564,7 +2564,7 @@ module Discorb
 
     # 
     # Deletes the channel.
-    # @!async
+    # @async
     # 
     # @param [String] reason The reason of deleting the channel.
     # 
@@ -2573,7 +2573,7 @@ module Discorb
 
     # 
     # Moves the channel to another position.
-    # @!async
+    # @async
     # 
     # @param [Integer] position The position to move the channel.
     # @param [Boolean] lock_permissions Whether to lock the permissions of the channel.
@@ -2601,7 +2601,7 @@ module Discorb
 
     # 
     # Edits the channel.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The name of the channel.
@@ -2635,7 +2635,7 @@ module Discorb
 
     # 
     # Create webhook in the channel.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the webhook.
     # @param [Discorb::Image] avatar The avatar of the webhook.
@@ -2645,14 +2645,14 @@ module Discorb
 
     # 
     # Fetch webhooks in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Webhook>>] The webhooks in the channel.
     def fetch_webhooks: () -> Async::Task[::Array[Discorb::Webhook]]
 
     # 
     # Bulk delete messages in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] messages The messages to delete.
     # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
@@ -2660,7 +2660,7 @@ module Discorb
 
     # 
     # Set the channel's permission overwrite.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of setting the overwrite.
@@ -2669,7 +2669,7 @@ module Discorb
 
     # 
     # Delete the channel's permission overwrite.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of deleting the overwrite.
@@ -2677,14 +2677,14 @@ module Discorb
 
     # 
     # Fetch the channel's invites.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Invite>>] The invites in the channel.
     def fetch_invites: () -> Async::Task[::Array[Discorb::Invite]]
 
     # 
     # Create an invite in the channel.
-    # @!async
+    # @async
     # 
     # @param [Integer] max_age The max age of the invite.
     # @param [Integer] max_uses The max uses of the invite.
@@ -2704,7 +2704,7 @@ module Discorb
 
     # 
     # Follow the existing announcement channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::NewsChannel] target The channel to follow.
     # @param [String] reason The reason of following the channel.
@@ -2712,7 +2712,7 @@ module Discorb
 
     # 
     # Follow the existing announcement channel from self.
-    # @!async
+    # @async
     # 
     # @param [Discorb::TextChannel] target The channel to follow to.
     # @param [String] reason The reason of following the channel.
@@ -2720,7 +2720,7 @@ module Discorb
 
     # 
     # Start thread in the channel.
-    # @!async
+    # @async
     # 
     # @param [String] name The name of the thread.
     # @param [Discorb::Message] message The message to start the thread.
@@ -2743,21 +2743,21 @@ module Discorb
 
     # 
     # Fetch archived threads in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived threads in the channel.
     def fetch_archived_public_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
 
     # 
     # Fetch archived private threads in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived private threads in the channel.
     def fetch_archived_private_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
 
     # 
     # Fetch joined archived private threads in the channel.
-    # @!async
+    # @async
     # 
     # @param [Integer] limit The limit of threads to fetch.
     # @param [Time] before <description>
@@ -2766,7 +2766,7 @@ module Discorb
     def fetch_joined_archived_private_threads: (?limit: Integer?, ?before: Time?) -> Async::Task[::Array[Discorb::ThreadChannel]]
     # 
     # Post a message to the channel.
-    # @!async
+    # @async
     # 
     # @param [String] content The message content.
     # @param [Boolean] tts Whether the message is tts.
@@ -2793,7 +2793,7 @@ module Discorb
 
     # 
     # Edit a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -2814,7 +2814,7 @@ module Discorb
 
     # 
     # Delete a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -2822,7 +2822,7 @@ module Discorb
 
     # 
     # Fetch a message from ID.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Snowflake] id The ID of the message.
     # 
@@ -2832,7 +2832,7 @@ module Discorb
 
     # 
     # Fetch a message history.
-    # @!async
+    # @async
     # 
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -2849,14 +2849,14 @@ module Discorb
 
     # 
     # Fetch the pinned messages in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     def fetch_pins: () -> Async::Task[::Array[Discorb::Message]]
 
     # 
     # Pin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -2864,7 +2864,7 @@ module Discorb
 
     # 
     # Unpin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -2872,7 +2872,7 @@ module Discorb
 
     # 
     # Trigger the typing indicator in the channel.
-    # @!async
+    # @async
     # 
     # If block is given, trigger typing indicator during executing block.
     # @example
@@ -2909,7 +2909,7 @@ module Discorb
 
     # 
     # Post a message to the channel.
-    # @!async
+    # @async
     # 
     # @param [String] content The message content.
     # @param [Boolean] tts Whether the message is tts.
@@ -2936,7 +2936,7 @@ module Discorb
 
     # 
     # Edit a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -2957,7 +2957,7 @@ module Discorb
 
     # 
     # Delete a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -2965,7 +2965,7 @@ module Discorb
 
     # 
     # Fetch a message from ID.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Snowflake] id The ID of the message.
     # 
@@ -2975,7 +2975,7 @@ module Discorb
 
     # 
     # Fetch a message history.
-    # @!async
+    # @async
     # 
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -2992,14 +2992,14 @@ module Discorb
 
     # 
     # Fetch the pinned messages in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     def fetch_pins: () -> Async::Task[::Array[Discorb::Message]]
 
     # 
     # Pin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -3007,7 +3007,7 @@ module Discorb
 
     # 
     # Unpin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -3015,7 +3015,7 @@ module Discorb
 
     # 
     # Trigger the typing indicator in the channel.
-    # @!async
+    # @async
     # 
     # If block is given, trigger typing indicator during executing block.
     # @example
@@ -3034,7 +3034,7 @@ module Discorb
 
     # 
     # Edit the voice channel.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The name of the voice channel.
@@ -3070,7 +3070,7 @@ module Discorb
 
     # 
     # Edit the stage channel.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The name of the stage channel.
@@ -3090,7 +3090,7 @@ module Discorb
 
     # 
     # Start a stage instance.
-    # @!async
+    # @async
     # 
     # @param [String] topic The topic of the stage instance.
     # @param [Boolean] public Whether the stage instance is public or not.
@@ -3101,7 +3101,7 @@ module Discorb
 
     # 
     # Fetch a current stage instance.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<StageInstance>] The current stage instance.
     # @return [Async::Task<nil>] If there is no current stage instance.
@@ -3125,7 +3125,7 @@ module Discorb
 
     # 
     # Edit the thread.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The name of the thread.
@@ -3203,7 +3203,7 @@ module Discorb
     def fetch_members: () -> untyped
     # 
     # Post a message to the channel.
-    # @!async
+    # @async
     # 
     # @param [String] content The message content.
     # @param [Boolean] tts Whether the message is tts.
@@ -3230,7 +3230,7 @@ module Discorb
 
     # 
     # Edit a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -3251,7 +3251,7 @@ module Discorb
 
     # 
     # Delete a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -3259,7 +3259,7 @@ module Discorb
 
     # 
     # Fetch a message from ID.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Snowflake] id The ID of the message.
     # 
@@ -3269,7 +3269,7 @@ module Discorb
 
     # 
     # Fetch a message history.
-    # @!async
+    # @async
     # 
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -3286,14 +3286,14 @@ module Discorb
 
     # 
     # Fetch the pinned messages in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     def fetch_pins: () -> Async::Task[::Array[Discorb::Message]]
 
     # 
     # Pin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -3301,7 +3301,7 @@ module Discorb
 
     # 
     # Unpin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -3309,7 +3309,7 @@ module Discorb
 
     # 
     # Trigger the typing indicator in the channel.
-    # @!async
+    # @async
     # 
     # If block is given, trigger typing indicator during executing block.
     # @example
@@ -3403,7 +3403,7 @@ module Discorb
 
     # 
     # Edit a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -3424,7 +3424,7 @@ module Discorb
 
     # 
     # Delete a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -3432,7 +3432,7 @@ module Discorb
 
     # 
     # Fetch a message from ID.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Snowflake] id The ID of the message.
     # 
@@ -3442,7 +3442,7 @@ module Discorb
 
     # 
     # Fetch a message history.
-    # @!async
+    # @async
     # 
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -3459,14 +3459,14 @@ module Discorb
 
     # 
     # Fetch the pinned messages in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     def fetch_pins: () -> Async::Task[::Array[Discorb::Message]]
 
     # 
     # Pin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -3474,7 +3474,7 @@ module Discorb
 
     # 
     # Unpin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -3482,7 +3482,7 @@ module Discorb
 
     # 
     # Trigger the typing indicator in the channel.
-    # @!async
+    # @async
     # 
     # If block is given, trigger typing indicator during executing block.
     # @example
@@ -3509,7 +3509,7 @@ module Discorb
     class ReactionEvent < Discorb::Gateway::GatewayEvent
       # Fetch the message.
       # If message is cached, it will be returned.
-      # @!async
+      # @async
       # 
       # @param [Boolean] force Whether to force fetching the message.
       # 
@@ -3564,7 +3564,7 @@ module Discorb
     class ReactionRemoveAllEvent < Discorb::Gateway::GatewayEvent
       # Fetch the message.
       # If message is cached, it will be returned.
-      # @!async
+      # @async
       # 
       # @param [Boolean] force Whether to force fetching the message.
       # 
@@ -3598,7 +3598,7 @@ module Discorb
     class ReactionRemoveEmojiEvent < Discorb::Gateway::GatewayEvent
       # Fetch the message.
       # If message is cached, it will be returned.
-      # @!async
+      # @async
       # 
       # @param [Boolean] force Whether to force fetching the message.
       # 
@@ -3660,7 +3660,7 @@ module Discorb
                       ) -> void
 
       # Fetch the message.
-      # @!async
+      # @async
       # 
       # @return [Async::Task<Discorb::Message>] The message.
       def fetch_message: () -> Async::Task[Discorb::Message]
@@ -3984,33 +3984,33 @@ module Discorb
     def to_reference: (?fail_if_not_exists: bool) -> ::Hash[untyped, untyped]
 
     # Reply to the message.
-    # @!async
+    # @async
     # @param (see #post)
     # @return [Async::Task<Discorb::Message>] The message.
     def reply: (*untyped args, **untyped kwargs) -> Async::Task[Discorb::Message]
 
     # 
     # Publish the message.
-    # @!async
+    # @async
     def publish: () -> untyped
 
     # 
     # Add a reaction to the message.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Emoji] emoji The emoji to react with.
     def add_reaction: (Discorb::Emoji emoji) -> untyped
 
     # 
     # Remove a reaction from the message.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Emoji] emoji The emoji to remove.
     def remove_reaction: (Discorb::Emoji emoji) -> untyped
 
     # 
     # Remove other member's reaction from the message.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Emoji] emoji The emoji to remove.
     # @param [Discorb::Member] member The member to remove the reaction from.
@@ -4018,7 +4018,7 @@ module Discorb
 
     # 
     # Fetch reacted users of reaction.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Emoji] emoji The emoji to fetch.
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
@@ -4029,14 +4029,14 @@ module Discorb
 
     # 
     # Pin the message.
-    # @!async
+    # @async
     # 
     # @param [String] reason The reason for pinning the message.
     def pin: (?reason: String?) -> untyped
 
     # 
     # Unpin the message.
-    # @!async
+    # @async
     # 
     # @param [String] reason The reason for unpinning the message.
     def unpin: (?reason: String?) -> untyped
@@ -4308,7 +4308,7 @@ module Discorb
   module Messageable
     # 
     # Post a message to the channel.
-    # @!async
+    # @async
     # 
     # @param [String] content The message content.
     # @param [Boolean] tts Whether the message is tts.
@@ -4335,7 +4335,7 @@ module Discorb
 
     # 
     # Edit a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
@@ -4356,7 +4356,7 @@ module Discorb
 
     # 
     # Delete a message.
-    # @!async
+    # @async
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
@@ -4364,7 +4364,7 @@ module Discorb
 
     # 
     # Fetch a message from ID.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Snowflake] id The ID of the message.
     # 
@@ -4374,7 +4374,7 @@ module Discorb
 
     # 
     # Fetch a message history.
-    # @!async
+    # @async
     # 
     # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
@@ -4391,14 +4391,14 @@ module Discorb
 
     # 
     # Fetch the pinned messages in the channel.
-    # @!async
+    # @async
     # 
     # @return [Async::Task<Array<Discorb::Message>>] The pinned messages in the channel.
     def fetch_pins: () -> Async::Task[::Array[Discorb::Message]]
 
     # 
     # Pin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
@@ -4406,7 +4406,7 @@ module Discorb
 
     # 
     # Unpin a message in the channel.
-    # @!async
+    # @async
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
@@ -4414,7 +4414,7 @@ module Discorb
 
     # 
     # Trigger the typing indicator in the channel.
-    # @!async
+    # @async
     # 
     # If block is given, trigger typing indicator during executing block.
     # @example
@@ -4473,7 +4473,7 @@ module Discorb
 
       # 
       # Edits the sticker.
-      # @!async
+      # @async
       # @macro edit
       # 
       # @param [String] name The new name of the sticker.
@@ -4489,7 +4489,7 @@ module Discorb
 
       # 
       # Deletes the sticker.
-      # @!async
+      # @async
       # 
       # @param [String] reason The reason for the deletion.
       def delete!: (?reason: String?) -> untyped
@@ -4524,7 +4524,7 @@ module Discorb
   class Webhook
     # 
     # Posts a message to the webhook.
-    # @!async
+    # @async
     # 
     # @param [String] content The content of the message.
     # @param [Boolean] tts Whether the message should be sent as text-to-speech.
@@ -4554,7 +4554,7 @@ module Discorb
 
     # 
     # Edits the webhook.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The new name of the webhook.
@@ -4564,12 +4564,12 @@ module Discorb
 
     # 
     # Deletes the webhook.
-    # @!async
+    # @async
     def delete!: () -> untyped
 
     # 
     # Edits the webhook's message.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [Discorb::Webhook::Message] message The message to edit.
@@ -4694,7 +4694,7 @@ module Discorb
     class Message < Discorb::Message
       # 
       # Edits the message.
-      # @!async
+      # @async
       # @macro edit
       # 
       # @param (see Webhook#edit_message)
@@ -4702,7 +4702,7 @@ module Discorb
 
       # 
       # Deletes the message.
-      # @!async
+      # @async
       def delete!: () -> untyped
       # @return [Discorb::Snowflake] The ID of the channel.
       attr_reader channel_id: Discorb::Snowflake
@@ -5986,7 +5986,7 @@ module Discorb
   class StageInstance < Discorb::DiscordModel
     # 
     # Edits the stage instance.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] topic The new topic of the stage instance.
@@ -6062,7 +6062,7 @@ module Discorb
   class GuildTemplate < Discorb::DiscordModel
     # 
     # Edit the template.
-    # @!async
+    # @async
     # @macro edit
     # 
     # @param [String] name The new name of the template.
@@ -6071,12 +6071,12 @@ module Discorb
 
     # 
     # Update the template.
-    # @!async
+    # @async
     def update: () -> untyped
 
     # 
     # Delete the template.
-    # @!async
+    # @async
     def delete!: () -> untyped
     # @return [String] The code of the template.
     attr_reader code: String
@@ -6244,7 +6244,7 @@ module Discorb
       # 
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       # 
-      # @!async
+      # @async
       # 
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       def defer_source: (?ephemeral: bool) -> untyped
@@ -6252,7 +6252,7 @@ module Discorb
       # 
       # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
       # 
-      # @!async
+      # @async
       # 
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.
@@ -6276,7 +6276,7 @@ module Discorb
       class CallbackMessage
         # 
         # Edits the callback message.
-        # @!async
+        # @async
         # @macro edit
         # 
         # @param [String] content The new content of the message.
@@ -6313,7 +6313,7 @@ module Discorb
       # 
       # Response with `UPDATE_MESSAGE`(`7`).
       # 
-      # @!async
+      # @async
       # 
       # @param [String] content The content of the response.
       # @param [Boolean] tts Whether to send the message as text-to-speech.
@@ -6341,7 +6341,7 @@ module Discorb
     # 
     # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
     # 
-    # @!async
+    # @async
     # 
     # @param [Boolean] ephemeral Whether to make the response ephemeral.
     def defer_source: (?ephemeral: bool) -> untyped
@@ -6349,7 +6349,7 @@ module Discorb
     # 
     # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
     # 
-    # @!async
+    # @async
     # 
     # @param [String] content The content of the response.
     # @param [Boolean] tts Whether to send the message as text-to-speech.
@@ -6404,7 +6404,7 @@ module Discorb
     # 
     # Response with `UPDATE_MESSAGE`(`7`).
     # 
-    # @!async
+    # @async
     # 
     # @param [String] content The content of the response.
     # @param [Boolean] tts Whether to send the message as text-to-speech.
@@ -6426,7 +6426,7 @@ module Discorb
     # 
     # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
     # 
-    # @!async
+    # @async
     # 
     # @param [Boolean] ephemeral Whether to make the response ephemeral.
     def defer_source: (?ephemeral: bool) -> untyped
@@ -6434,7 +6434,7 @@ module Discorb
     # 
     # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
     # 
-    # @!async
+    # @async
     # 
     # @param [String] content The content of the response.
     # @param [Boolean] tts Whether to send the message as text-to-speech.

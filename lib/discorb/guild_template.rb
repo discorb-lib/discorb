@@ -45,7 +45,7 @@ module Discorb
 
     #
     # Edit the template.
-    # @!async
+    # @async
     # @macro edit
     #
     # @param [String] name The new name of the template.
@@ -66,7 +66,7 @@ module Discorb
 
     #
     # Update the template.
-    # @!async
+    # @async
     #
     # @return [Async::Task<void>] The task.
     #
@@ -79,7 +79,7 @@ module Discorb
 
     #
     # Delete the template.
-    # @!async
+    # @async
     #
     # @return [Async::Task<void>] The task.
     #
