@@ -533,7 +533,7 @@ module Discorb
                   end
                 end
               end
-            rescue Async::Wrapper::Cancelled, OpenSSL::SSL::SSLError, Async::Wrapper::WaitError, EOFError, Errno:EPIPE => e
+            rescue Async::Wrapper::Cancelled, OpenSSL::SSL::SSLError, Async::Wrapper::WaitError, EOFError, Errno::EPIPE => e
               @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
               connect_gateway(true, no_close: true)
             else # should never happen
