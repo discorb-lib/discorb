@@ -1,4 +1,6 @@
+<!--
 # @title Application Commands
+-->
 
 # Application Commands
 

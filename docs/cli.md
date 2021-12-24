@@ -1,4 +1,6 @@
+<!--
 # @title CLI tools
+-->
 
 # CLI tools
 

@@ -1,4 +1,6 @@
+<!--
 # @title CLI: discorb new
+-->
 
 # discorb new
 
