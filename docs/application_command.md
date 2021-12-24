@@ -10,7 +10,7 @@ From: [Discord API docs](https://discord.com/developers/docs/interactions/applic
 
 ## How do I register an application command?
 
-Write to a your script:
+Write to your script:
 - {Discorb::ApplicationCommand::Handler.slash}, {Discorb::ApplicationCommand::Handler.slash_group} for slash commands,
 - {Discorb::ApplicationCommand::Handler.user_command} for user menu commands,
 - {Discorb::ApplicationCommand::Handler.message_command} for message menu commands.
@@ -245,9 +245,9 @@ Same as above, you can use block for register commands since v0.5.1.
 
 #### Use Auto Completing
 
-Since v0.11.0, you can use auto completion by setting Proc to `:autocomplete` in options.
+Since v0.11.0, you can use auto-completion by setting Proc to `:autocomplete` in options.
 The proc will be called with interaction object and the argument.
-The proc should return an hash of the autocomplete result.
+The proc should return a hash of the autocomplete result.
 
 ```ruby
 client.slash("hello2", "Greet for you", {

@@ -64,7 +64,7 @@ end
 ### Client events
 
 #### `event_receive(event_name, data)`
-Fires when a event is received.  
+Fires when an event is received.  
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
@@ -411,7 +411,7 @@ Fires when a role is deleted.
 
 #### Note
 
-These events requires the `guild_members` intent.
+These events require the `guild_members` intent.
 
 #### `member_add(member)`
 
@@ -469,7 +469,7 @@ Fires when a role is deleted.
 
 #### `invite_create(invite)`
 
-Fires when a invite is created.
+Fires when an invitation is created.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
@@ -477,7 +477,7 @@ Fires when a invite is created.
 
 #### `invite_delete(invite)`
 
-Fires when a invite is deleted.
+Fires when an invitation is deleted.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |

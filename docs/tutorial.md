@@ -162,7 +162,7 @@ You can see your bot's response by typing `hello` in your server...
 
 ![](./assets/07_hello_infinite.png)
 
-Oh no! Your bot is responding to bot's messages, and it doesn't stop!
+Oops! Your bot is responding to bot's messages, it's infinite!
 
 Terminate your bot by typing `Ctrl + C` in terminal.
 

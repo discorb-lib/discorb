@@ -6,7 +6,7 @@
 
 ### What is `Async::Task`?
 
-Async::Task is a object for asynchronous tasks.
+Async::Task is an object for asynchronous tasks.
 
 https://socketry.github.io/async/ for more information.
 
@@ -16,7 +16,7 @@ It means a `server` of Discord.
 
 ### What is difference between `User` and `Member`?
 
-`User` is a object for account, `Member` is a object for user in guild.
+`User` is an object for account, `Member` is an object for user in guild.
 
 ## How can I ...?
 
