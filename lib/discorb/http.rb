@@ -89,6 +89,7 @@ module Discorb
           ["payload_json", get_body(body)],
         ]
         files&.each_with_index do |file, i|
+          next if file.nil?
           data << [ "files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type } ]
         end
         req.set_form(data, "multipart/form-data")
