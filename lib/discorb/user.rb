@@ -157,11 +157,11 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(name: :unset, avatar: :unset)
+    def edit(name: Discorb::Unset, avatar: Discorb::Unset)
       Async do
         payload = {}
-        payload[:username] = name unless name == :unset
-        if avatar == :unset
+        payload[:username] = name unless name == Discorb::Unset
+        if avatar == Discorb::Unset
           # Nothing
         elsif avatar.nil?
           payload[:avatar] = nil

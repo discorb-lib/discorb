@@ -194,13 +194,13 @@ module Discorb
     #
     # @return [Async::Task<self>] The moved channel.
     #
-    def move(position, lock_permissions: false, parent: :unset, reason: nil)
+    def move(position, lock_permissions: false, parent: Discorb::Unset, reason: nil)
       Async do
         payload = {
           position: position,
         }
         payload[:lock_permissions] = lock_permissions
-        payload[:parent_id] = parent&.id if parent != :unset
+        payload[:parent_id] = parent&.id if parent != Discorb::Unset
         @client.http.patch("/guilds/#{@guild_id}/channels", payload, audit_log_reason: reason).wait
       end
     end
@@ -272,25 +272,25 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited channel.
     #
-    def edit(name: :unset, position: :unset, category: :unset, parent: :unset,
-             topic: :unset, nsfw: :unset, announce: :unset,
-             rate_limit_per_user: :unset, slowmode: :unset, default_auto_archive_duration: :unset,
-             archive_in: :unset, reason: nil)
+    def edit(name: Discorb::Unset, position: Discorb::Unset, category: Discorb::Unset, parent: Discorb::Unset,
+             topic: Discorb::Unset, nsfw: Discorb::Unset, announce: Discorb::Unset,
+             rate_limit_per_user: Discorb::Unset, slowmode: Discorb::Unset, default_auto_archive_duration: Discorb::Unset,
+             archive_in: Discorb::Unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name != :unset
-        payload[:announce] = announce ? 5 : 0 if announce != :unset
-        payload[:position] = position if position != :unset
-        payload[:topic] = topic || "" if topic != :unset
-        payload[:nsfw] = nsfw if nsfw != :unset
+        payload[:name] = name if name != Discorb::Unset
+        payload[:announce] = announce ? 5 : 0 if announce != Discorb::Unset
+        payload[:position] = position if position != Discorb::Unset
+        payload[:topic] = topic || "" if topic != Discorb::Unset
+        payload[:nsfw] = nsfw if nsfw != Discorb::Unset
 
-        slowmode = rate_limit_per_user if slowmode == :unset
-        payload[:rate_limit_per_user] = slowmode || 0 if slowmode != :unset
-        parent = category if parent == :unset
-        payload[:parent_id] = parent&.id if parent != :unset
+        slowmode = rate_limit_per_user if slowmode == Discorb::Unset
+        payload[:rate_limit_per_user] = slowmode || 0 if slowmode != Discorb::Unset
+        parent = category if parent == Discorb::Unset
+        payload[:parent_id] = parent&.id if parent != Discorb::Unset
 
         default_auto_archive_duration ||= archive_in
-        payload[:default_auto_archive_duration] = default_auto_archive_duration if default_auto_archive_duration != :unset
+        payload[:default_auto_archive_duration] = default_auto_archive_duration if default_auto_archive_duration != Discorb::Unset
 
         @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
@@ -620,14 +620,14 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited voice channel.
     #
-    def edit(name: :unset, position: :unset, bitrate: :unset, user_limit: :unset, rtc_region: :unset, reason: nil)
+    def edit(name: Discorb::Unset, position: Discorb::Unset, bitrate: Discorb::Unset, user_limit: Discorb::Unset, rtc_region: Discorb::Unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name != :unset
-        payload[:position] = position if position != :unset
-        payload[:bitrate] = bitrate if bitrate != :unset
-        payload[:user_limit] = user_limit if user_limit != :unset
-        payload[:rtc_region] = rtc_region if rtc_region != :unset
+        payload[:name] = name if name != Discorb::Unset
+        payload[:position] = position if position != Discorb::Unset
+        payload[:bitrate] = bitrate if bitrate != Discorb::Unset
+        payload[:user_limit] = user_limit if user_limit != Discorb::Unset
+        payload[:rtc_region] = rtc_region if rtc_region != Discorb::Unset
 
         @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
@@ -687,13 +687,13 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited stage channel.
     #
-    def edit(name: :unset, position: :unset, bitrate: :unset, rtc_region: :unset, reason: nil)
+    def edit(name: Discorb::Unset, position: Discorb::Unset, bitrate: Discorb::Unset, rtc_region: Discorb::Unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name != :unset
-        payload[:position] = position if position != :unset
-        payload[:bitrate] = bitrate if bitrate != :unset
-        payload[:rtc_region] = rtc_region if rtc_region != :unset
+        payload[:name] = name if name != Discorb::Unset
+        payload[:position] = position if position != Discorb::Unset
+        payload[:bitrate] = bitrate if bitrate != Discorb::Unset
+        payload[:rtc_region] = rtc_region if rtc_region != Discorb::Unset
         @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end
@@ -827,14 +827,14 @@ module Discorb
     # @see #unarchive
     # @see #unlock
     #
-    def edit(name: :unset, archived: :unset, auto_archive_duration: :unset, archive_in: :unset, locked: :unset, reason: nil)
+    def edit(name: Discorb::Unset, archived: Discorb::Unset, auto_archive_duration: Discorb::Unset, archive_in: Discorb::Unset, locked: Discorb::Unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name != :unset
-        payload[:archived] = archived if archived != :unset
+        payload[:name] = name if name != Discorb::Unset
+        payload[:archived] = archived if archived != Discorb::Unset
         auto_archive_duration ||= archive_in
-        payload[:auto_archive_duration] = auto_archive_duration if auto_archive_duration != :unset
-        payload[:locked] = locked if locked != :unset
+        payload[:auto_archive_duration] = auto_archive_duration if auto_archive_duration != Discorb::Unset
+        payload[:locked] = locked if locked != Discorb::Unset
         @client.http.patch("/channels/#{@id}", payload, audit_log_reason: reason).wait
         self
       end

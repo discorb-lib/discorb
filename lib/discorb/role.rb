@@ -118,15 +118,15 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(name: :unset, position: :unset, color: :unset, hoist: :unset, mentionable: :unset, icon: :unset, reason: nil)
+    def edit(name: Discorb::Unset, position: Discorb::Unset, color: Discorb::Unset, hoist: Discorb::Unset, mentionable: Discorb::Unset, icon: Discorb::Unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name != :unset
-        payload[:position] = position if position != :unset
-        payload[:color] = color.to_i if color != :unset
-        payload[:hoist] = hoist if hoist != :unset
-        payload[:mentionable] = mentionable if mentionable != :unset
-        if icon != :unset
+        payload[:name] = name if name != Discorb::Unset
+        payload[:position] = position if position != Discorb::Unset
+        payload[:color] = color.to_i if color != Discorb::Unset
+        payload[:hoist] = hoist if hoist != Discorb::Unset
+        payload[:mentionable] = mentionable if mentionable != Discorb::Unset
+        if icon != Discorb::Unset
           if icon.is_a?(Discorb::Image)
             payload[:icon] = icon.to_s
           else

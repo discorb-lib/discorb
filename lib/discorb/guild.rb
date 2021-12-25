@@ -1349,12 +1349,12 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       #
-      def edit(enabled: :unset, channels: :unset, description: :unset, reason: nil)
+      def edit(enabled: Discorb::Unset, channels: Discorb::Unset, description: Discorb::Unset, reason: nil)
         Async do
           payload = {}
-          payload[:enabled] = enabled unless enabled == :unset
-          payload[:welcome_channels] = channels.map(&:to_hash) unless channels == :unset
-          payload[:description] = description unless description == :unset
+          payload[:enabled] = enabled unless enabled == Discorb::Unset
+          payload[:welcome_channels] = channels.map(&:to_hash) unless channels == Discorb::Unset
+          payload[:description] = description unless description == Discorb::Unset
           @client.http.patch("/guilds/#{@guild.id}/welcome-screen", payload, audit_log_reason: reason).wait
         end
       end

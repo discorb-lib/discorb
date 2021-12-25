@@ -188,18 +188,18 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def edit(
-      nick: :unset, role: :unset, mute: :unset, deaf: :unset, channel: :unset, communication_disabled_until: :unset, timeout_until: :unset,
+      nick: Discorb::Unset, role: Discorb::Unset, mute: Discorb::Unset, deaf: Discorb::Unset, channel: Discorb::Unset, communication_disabled_until: Discorb::Unset, timeout_until: Discorb::Unset,
       reason: nil
     )
       Async do
         payload = {}
-        payload[:nick] = nick if nick != :unset
-        payload[:roles] = role if role != :unset
-        payload[:mute] = mute if mute != :unset
-        payload[:deaf] = deaf if deaf != :unset
-        communication_disabled_until = timeout_until if timeout_until != :unset
-        payload[:communication_disabled_until] = communication_disabled_until&.iso8601 if communication_disabled_until != :unset
-        payload[:channel_id] = channel&.id if channel != :unset
+        payload[:nick] = nick if nick != Discorb::Unset
+        payload[:roles] = role if role != Discorb::Unset
+        payload[:mute] = mute if mute != Discorb::Unset
+        payload[:deaf] = deaf if deaf != Discorb::Unset
+        communication_disabled_until = timeout_until if timeout_until != Discorb::Unset
+        payload[:communication_disabled_until] = communication_disabled_until&.iso8601 if communication_disabled_until != Discorb::Unset
+        payload[:channel_id] = channel&.id if channel != Discorb::Unset
         @client.http.patch("/guilds/#{@guild_id}/members/#{@id}", payload, audit_log_reason: reason).wait
       end
     end

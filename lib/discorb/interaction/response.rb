@@ -90,19 +90,19 @@ module Discorb
         # @return [Async::Task<void>] The task.
         #
         def edit(
-          content = :unset,
-          embed: :unset, embeds: :unset,
-          file: :unset, files: :unset,
-          attachments: :unset
+          content = Discorb::Unset,
+          embed: Discorb::Unset, embeds: Discorb::Unset,
+          file: Discorb::Unset, files: Discorb::Unset,
+          attachments: Discorb::Unset
         )
           Async do
             payload = {}
-            payload[:content] = content if content != :unset
-            payload[:embeds] = embed ? [embed.to_hash] : [] if embed != :unset
-            payload[:embeds] = embeds.map(&:to_hash) if embeds != :unset
-            payload[:attachments] = attachments.map(&:to_hash) if attachments != :unset
-            files = [file] if file != :unset
-            files = [] if files == :unset
+            payload[:content] = content if content != Discorb::Unset
+            payload[:embeds] = embed ? [embed.to_hash] : [] if embed != Discorb::Unset
+            payload[:embeds] = embeds.map(&:to_hash) if embeds != Discorb::Unset
+            payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
+            files = [file] if file != Discorb::Unset
+            files = [] if files == Discorb::Unset
             @client.http.multipart_patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload, files, headers: headers).wait
           end
         end

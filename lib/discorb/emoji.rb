@@ -91,11 +91,11 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited emoji.
     #
-    def edit(name: :unset, roles: :unset, reason: nil)
+    def edit(name: Discorb::Unset, roles: Discorb::Unset, reason: nil)
       Async do
         payload = {}
-        payload[:name] = name if name != :unset
-        payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles != :unset
+        payload[:name] = name if name != Discorb::Unset
+        payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles != Discorb::Unset
         @client.http.patch("/guilds/#{@guild.id}/emojis/#{@id}", payload, audit_log_reason: reason)
         self
       end

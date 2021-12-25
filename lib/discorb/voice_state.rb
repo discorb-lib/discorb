@@ -175,11 +175,11 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(topic: :unset, privacy_level: :unset, reason: nil)
+    def edit(topic: Discorb::Unset, privacy_level: Discorb::Unset, reason: nil)
       Async do
         payload = {}
-        payload[:topic] = topic if topic != :unset
-        payload[:privacy_level] = self.class.privacy_level.key(privacy_level) if privacy_level != :unset
+        payload[:topic] = topic if topic != Discorb::Unset
+        payload[:privacy_level] = self.class.privacy_level.key(privacy_level) if privacy_level != Discorb::Unset
         @client.http.edit("/stage-instances/#{@channel_id}", payload, audit_log_reason: reason).wait
         self
       end

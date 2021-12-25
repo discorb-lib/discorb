@@ -77,12 +77,12 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       #
-      def edit(name: :unset, description: :unset, tag: :unset, reason: :unset)
+      def edit(name: Discorb::Unset, description: Discorb::Unset, tag: Discorb::Unset, reason: Discorb::Unset)
         Async do
           payload = {}
-          payload[:name] = name unless name == :unset
-          payload[:description] = description unless description == :unset
-          payload[:tags] = tag.name unless tag == :unset
+          payload[:name] = name unless name == Discorb::Unset
+          payload[:description] = description unless description == Discorb::Unset
+          payload[:tags] = tag.name unless tag == Discorb::Unset
           @client.http.patch("/guilds/#{@guild_id}/stickers/#{@id}", payload, audit_log_reason: reason).wait
         end
       end

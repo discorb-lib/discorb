@@ -16,7 +16,7 @@ module Discorb
   #   @note You must enable `GUILD_MEMBERS` intent to use this method.
   #
   # @!macro edit
-  #   @note The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`.
+  #   @note The arguments of this method are defaultly set to `Discorb::Unset`. Specify value to set the value, if not don't specify or specify `Discorb::Unset`.
   #
   # @!macro http
   #   @note This method calls HTTP request.

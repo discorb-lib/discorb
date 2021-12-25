@@ -3812,7 +3812,7 @@ msgstr ""
 #: ../lib/discorb/webhook.rb:104
 #: ../lib/discorb/webhook.rb:114
 #: ../lib/discorb/webhook.rb:145
-msgid "The arguments of this method are defaultly set to `:unset`. Specify value to set the value, if not don't specify or specify `:unset`."
+msgid "The arguments of this method are defaultly set to `Discorb::Unset`. Specify value to set the value, if not don't specify or specify `Discorb::Unset`."
 msgstr ""
 
 # @note

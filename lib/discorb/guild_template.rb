@@ -53,11 +53,11 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(name = nil, description = :unset)
+    def edit(name = nil, description = Discorb::Unset)
       Async do
         payload = {}
         payload[:name] = name if name
-        payload[:description] = description if description != :unset
+        payload[:description] = description if description != Discorb::Unset
         @client.http.patch("/guilds/#{@source_guild_id}/templates/#{@code}", payload).wait
       end
     end

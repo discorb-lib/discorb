@@ -60,7 +60,7 @@ module Discorb
     # @return [Async::Task<nil>] If `wait` is false.
     #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
-                            file: nil, files: nil, username: nil, avatar_url: :unset, wait: true)
+                            file: nil, files: nil, username: nil, avatar_url: Discorb::Unset, wait: true)
       Async do
         payload = {}
         payload[:content] = content if content
@@ -73,7 +73,7 @@ module Discorb
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = allowed_mentions&.to_hash
         payload[:username] = username if username
-        payload[:avatar_url] = avatar_url if avatar_url != :unset
+        payload[:avatar_url] = avatar_url if avatar_url != Discorb::Unset
         files = [file]
         _resp, data = @http.multipart_post("#{url}?wait=#{wait}", files, payload, headers: headers).wait
         data && Webhook::Message.new(self, data)
@@ -93,12 +93,12 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(name: :unset, avatar: :unset, channel: :unset)
+    def edit(name: Discorb::Unset, avatar: Discorb::Unset, channel: Discorb::Unset)
       Async do
         payload = {}
-        payload[:name] = name if name != :unset
-        payload[:avatar] = avatar if avatar != :unset
-        payload[:channel_id] = Utils.try(channel, :id) if channel != :unset
+        payload[:name] = name if name != Discorb::Unset
+        payload[:avatar] = avatar if avatar != Discorb::Unset
+        payload[:channel_id] = Utils.try(channel, :id) if channel != Discorb::Unset
         @http.patch(url.to_s, payload).wait
       end
     end
@@ -137,20 +137,20 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def edit_message(
-      message, content = :unset,
-      embed: :unset, embeds: :unset,
-      file: :unset, files: :unset,
-      attachments: :unset,
-      allowed_mentions: :unset
+      message, content = Discorb::Unset,
+      embed: Discorb::Unset, embeds: Discorb::Unset,
+      file: Discorb::Unset, files: Discorb::Unset,
+      attachments: Discorb::Unset,
+      allowed_mentions: Discorb::Unset
     )
       Async do
         payload = {}
-        payload[:content] = content if content != :unset
-        payload[:embeds] = embed ? [embed.to_hash] : [] if embed != :unset
-        payload[:embeds] = embeds.map(&:to_hash) if embeds != :unset
-        payload[:attachments] = attachments.map(&:to_hash) if attachments != :unset
-        payload[:allowed_mentions] = allowed_mentions if allowed_mentions != :unset
-        files = [file] if file != :unset
+        payload[:content] = content if content != Discorb::Unset
+        payload[:embeds] = embed ? [embed.to_hash] : [] if embed != Discorb::Unset
+        payload[:embeds] = embeds.map(&:to_hash) if embeds != Discorb::Unset
+        payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
+        payload[:allowed_mentions] = allowed_mentions if allowed_mentions != Discorb::Unset
+        files = [file] if file != Discorb::Unset
         _resp, data = @http.multipart_patch("#{url}/messages/#{Utils.try(message, :id)}", payload, headers: headers).wait
         message.send(:_set_data, data)
         message
