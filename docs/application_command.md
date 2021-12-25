@@ -51,7 +51,7 @@ client.run(ENV["DISCORD_BOT_TOKEN"])
 | `guild_ids` | The ID of the guild to register the command in. |
 | `block` | A block that will be called when the command is invoked. |
 
-Block will be called with a {Discorb::ApplicationCommand::Interaction} object and specified options.
+Block will be called with a {Discorb::Interaction} object and specified options.
 
 In `options`, hash should be like this:
 

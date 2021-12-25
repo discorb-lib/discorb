@@ -4,7 +4,7 @@
 
 # discorb setup
 
-This command will setup application commands, and call `setup` event.
+This command will set up application commands, and call `setup` event.
 
 ## Usage
 
@@ -16,7 +16,7 @@ discorb setup [options] [script]
 
 #### `script`
 
-The script to setup. Defaults to `main.rb`.
+The script to set up. Defaults to `main.rb`.
 
 ### Options
 

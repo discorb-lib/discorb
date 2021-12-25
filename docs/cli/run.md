@@ -52,7 +52,7 @@ If not specified, the default will be:
 
 #### `-s`, `--setup`
 
-Whether to setup application commands.
+Whether to set up application commands.
 
 #### `-e`, `--env`
 
