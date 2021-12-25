@@ -66,6 +66,42 @@ module Discorb
     end
 
     #
+    # Execute a multipart POST request.
+    # @async
+    #
+    # @param [String] path The path to the resource.
+    # @param [String, Hash] body The body of the request.
+    # @param [Array<Discorb::File>] files The files to upload.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    #
+    def multipart_post(path, body = "", files, headers: nil, audit_log_reason: nil, **kwargs)
+      Async do |task|
+        @ratelimit_handler.wait("POST", path)
+        req = Net::HTTP::Post.new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
+        data = [
+          ["payload_json", get_body(body)],
+        ]
+        files&.each_with_index do |file, i|
+          data << [ "files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type } ]
+        end
+        req.set_form(data, "multipart/form-data")
+        session = Net::HTTP.new("discord.com", 443)
+        session.use_ssl = true
+        resp = session.request(req)
+        data = get_response_data(resp)
+        @ratelimit_handler.save("POST", path, resp)
+        handle_response(:post, resp, data, path, body, headers, audit_log_reason, kwargs)
+      end
+    end
+
+    #
     # Execute a PATCH request.
     # @async
     #
@@ -90,6 +126,40 @@ module Discorb
       end
     end
 
+    #
+    # Execute a PATCH request.
+    # @async
+    #
+    # @param [String] path The path to the resource.
+    # @param [String, Hash] body The body of the request.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    #
+    def multipart_patch(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
+      Async do |task|
+        @ratelimit_handler.wait("PATCH", path)
+        req = Net::HTTP::Patch.new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
+        data = [
+          ["payload_json", get_body(body)],
+        ]
+        files&.each_with_index do |file, i|
+          data << [ "files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type } ]
+        end
+        req.set_form(data, "multipart/form-data")
+        session = Net::HTTP.new("discord.com", 443)
+        session.use_ssl = true
+        resp = session.request(req)
+        data = get_response_data(resp)
+        @ratelimit_handler.save("PATCH", path, resp)
+        handle_response(:patch, resp, data, path, body, headers, audit_log_reason, kwargs)
+      end
+    end
     #
     # Execute a PUT request.
     # @async
@@ -141,40 +211,6 @@ module Discorb
 
     def inspect
       "#<#{self.class} client=#{@client}>"
-    end
-
-    #
-    # A helper method to send multipart/form-data requests for creating messages.
-    #
-    # @param [Hash] payload The payload to send.
-    # @param [Array<Discorb::File>] files The files to send.
-    #
-    # @return [Array(String, String)] The boundary and body.
-    #
-    def self.multipart(payload, files)
-      boundary = "DiscorbBySevenC7CMultipartFormData#{Time.now.to_f}"
-      str_payloads = [<<~HTTP]
-        Content-Disposition: form-data; name="payload_json"
-        Content-Type: application/json
-
-        #{payload.to_json}
-      HTTP
-      files.each_with_index do |single_file, i|
-        str_payloads << <<~HTTP
-          Content-Disposition: form-data; name="files[#{i}]"; filename="#{single_file.filename}"
-          Content-Type: #{single_file.content_type}
-
-          #{single_file.io.read}
-        HTTP
-      end
-      payload = +"--#{boundary}".encode(Encoding::ASCII_8BIT)
-      str_payloads.each do |str_payload|
-        payload << "\r\n".encode(Encoding::ASCII_8BIT)
-        payload << str_payload.force_encoding(Encoding::ASCII_8BIT)
-        payload << "\r\n--#{boundary}".encode(Encoding::ASCII_8BIT)
-      end
-      payload += +"--".encode(Encoding::ASCII_8BIT)
-      [boundary, payload]
     end
 
     private

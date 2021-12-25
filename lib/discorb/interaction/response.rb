@@ -102,14 +102,8 @@ module Discorb
             payload[:embeds] = embeds.map(&:to_hash) if embeds != :unset
             payload[:attachments] = attachments.map(&:to_hash) if attachments != :unset
             files = [file] if file != :unset
-            if files == :unset
-              headers = {
-                "Content-Type" => "application/json",
-              }
-            else
-              headers, payload = HTTP.multipart(payload, files)
-            end
-            @client.http.patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload, headers: headers).wait
+            files = [] if files == :unset
+            @client.http.multipart_patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload, files, headers: headers).wait
           end
         end
 

@@ -37,14 +37,8 @@ module Discorb
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:message_reference] = reference.to_reference if reference
         payload[:components] = Component.to_payload(components) if components
-        files = [file] if file
-        if files
-          seperator, payload = HTTP.multipart(payload, files)
-          headers = { "content-type" => "multipart/form-data; boundary=#{seperator}" }
-        else
-          headers = {}
-        end
-        _resp, data = @client.http.post("/channels/#{channel_id.wait}/messages", payload, headers: headers).wait
+        files = [file]
+        _resp, data = @client.http.multipart_post("/channels/#{channel_id.wait}/messages", payload, files).wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end

@@ -74,16 +74,8 @@ module Discorb
         payload[:allowed_mentions] = allowed_mentions&.to_hash
         payload[:username] = username if username
         payload[:avatar_url] = avatar_url if avatar_url != :unset
-        files = [file] if file
-        if files
-          headers, payload = HTTP.multipart(payload, files)
-        else
-          headers = {
-            "Content-Type" => "application/json",
-          }
-        end
-        _resp, data = @http.post("#{url}?wait=#{wait}", payload, headers: headers).wait
-
+        files = [file]
+        _resp, data = @http.multipart_post("#{url}?wait=#{wait}", files, payload, headers: headers).wait
         data && Webhook::Message.new(self, data)
       end
     end
@@ -159,14 +151,7 @@ module Discorb
         payload[:attachments] = attachments.map(&:to_hash) if attachments != :unset
         payload[:allowed_mentions] = allowed_mentions if allowed_mentions != :unset
         files = [file] if file != :unset
-        if files == :unset
-          headers = {
-            "Content-Type" => "application/json",
-          }
-        else
-          headers, payload = HTTP.multipart(payload, files)
-        end
-        _resp, data = @http.patch("#{url}/messages/#{Utils.try(message, :id)}", payload, headers: headers).wait
+        _resp, data = @http.multipart_patch("#{url}/messages/#{Utils.try(message, :id)}", payload, headers: headers).wait
         message.send(:_set_data, data)
         message
       end
