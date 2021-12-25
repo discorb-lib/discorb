@@ -18,6 +18,9 @@ module Discorb
     attr_reader :version
     # @return [String] The token for the interaction.
     attr_reader :token
+    # @return [Symbol] The locale of the interaction user.
+    # @note This modifies the language code, `-` will be replaced with `_`.
+    attr_reader :locale
 
     # @!attribute [r] guild
     #   @macro client_cache
@@ -43,6 +46,7 @@ module Discorb
       @member = guild.members[data[:member][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member]) if data[:member]
       @user = @client.users[data[:user][:id]] || User.new(@client, data[:user]) if data[:user]
       @token = data[:token]
+      @locale = data[:locale].to_s.gsub("-", "_").to_sym
       @version = data[:version]
       @defered = false
       @responded = false
