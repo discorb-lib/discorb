@@ -105,7 +105,7 @@ module Discorb
 
     #
     # Registers an event handler.
-    # @see file:docs/Events.md
+    # @see file:docs/Events.md Events Documentation
     #
     # @param [Symbol] event_name The name of the event.
     # @param [Symbol] id Custom ID of the event.
@@ -414,7 +414,7 @@ module Discorb
     #
     # Starts the client.
     # @note This method behavior will change by CLI.
-    # @see file:docs/cli.md
+    # @see file:docs/cli.md CLI documentation
     #
     # @param [String, nil] token The token to use.
     #

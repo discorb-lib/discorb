@@ -34,8 +34,8 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
       #
-      # @see file:docs/application_command.md#register-slash-command
-      # @see file:docs/cli/setup.md
+      # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
+      # @see file:docs/cli/setup.md CLI: setup
       #
       def slash(command_name, description, options = {}, guild_ids: nil, &block)
         command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
@@ -56,8 +56,8 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command::GroupCommand] Command object.
       #
-      # @see file:docs/slash_command.md
-      # @see file:docs/cli/setup.md
+      # @see file:docs/application_command.md Application Commands
+      # @see file:docs/cli/setup.md CLI: setup
       #
       def slash_group(command_name, description, guild_ids: nil, &block)
         command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
@@ -310,7 +310,7 @@ module Discorb
         #
         # @return [Discorb::ApplicationCommand::Command::SubcommandGroup] Command object.
         #
-        # @see file:docs/slash_command.md
+        # @see file:docs/application_command.md Application Commands
         #
         def group(command_name, description, &block)
           command = Discorb::ApplicationCommand::Command::SubcommandGroup.new(command_name, description, @name, @client)
