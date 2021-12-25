@@ -181,23 +181,45 @@ module Discorb
     # @param [Boolean] mute Whether the member is muted.
     # @param [Boolean] deaf Whether the member is deafened.
     # @param [Discorb::StageChannel] channel The channel the member is moved to.
+    # @param [Time, nil] communication_disabled_until The time the member is timed out. Set to `nil` to end the timeout.
+    # @param [Time, nil] timeout_until Alias of `communication_disabled_until`.
     # @param [String] reason The reason for the action.
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(nick: :unset, role: :unset, mute: :unset, deaf: :unset, channel: :unset, reason: nil)
+    def edit(
+      nick: :unset, role: :unset, mute: :unset, deaf: :unset, channel: :unset, communication_disabled_until: :unset, timeout_until: :unset,
+      reason: nil
+    )
       Async do
         payload = {}
         payload[:nick] = nick if nick != :unset
         payload[:roles] = role if role != :unset
         payload[:mute] = mute if mute != :unset
         payload[:deaf] = deaf if deaf != :unset
+        communication_disabled_until = timeout_until if timeout_until != :unset
+        payload[:communication_disabled_until] = communication_disabled_until&.iso8601 if communication_disabled_until != :unset
         payload[:channel_id] = channel&.id if channel != :unset
         @client.http.patch("/guilds/#{@guild_id}/members/#{@id}", payload, audit_log_reason: reason).wait
       end
     end
 
     alias modify edit
+
+    #
+    # Timeout the member.
+    # @async
+    #
+    # @param [Time] time The time until the member is timeout.
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
+    #
+    def timeout(time, reason: nil)
+      edit(communication_disabled_until: time, reason: reason)
+    end
+
+    alias disable_communication timeout
 
     #
     # Kick the member.
