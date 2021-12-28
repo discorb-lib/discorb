@@ -6,6 +6,15 @@
 
 ## v0.13
 
+### v0.13.1
+
+- Add: `Discorb::Integration#locale`, `Discorb::Integration#guild_locale`
+- Fix: Fix grammers
+- Change: Use `Discorb::Unset` instead of `:unset`
+- Add: `Member#timeout`
+- Improve: Improve sending attachments
+- Fix: Handle `EPIPE` errors
+
 ### v0.13.0
 
 - Change!: Event is now EventHandler.
