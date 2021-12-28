@@ -30,7 +30,7 @@
 ### v0.12.2
 
 - Fix: Fix `Message#type`
-- Change: `discorb run` will lookup for `main.rb` in parent directories
+- Change: `discorb run` will look up for `main.rb` in parent directories
 
 ### v0.12.1
 
