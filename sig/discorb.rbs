@@ -180,7 +180,9 @@ module Discorb
     # 
     # @param [Integer] position The new position.
     # @param [String] reason The reason for moving the role.
-    def move: (Integer position, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def move: (Integer position, ?reason: String?) -> Async::Task[void]
 
     # 
     # Edits the role.
@@ -194,6 +196,8 @@ module Discorb
     # @param [Boolean] mentionable Whether the role should be mentionable.
     # @param [Discorb::Image, Discorb::UnicodeEmoji] icon The new icon or emoji of the role.
     # @param [String] reason The reason for editing the role.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit: (
                 ?name: String,
                 ?position: Integer,
@@ -202,13 +206,15 @@ module Discorb
                 ?mentionable: bool,
                 ?icon: (Discorb::Image | Discorb::UnicodeEmoji),
                 ?reason: String?
-              ) -> untyped
+              ) -> Async::Task[void]
 
     # 
     # Deletes the role.
     # 
     # @param [String] reason The reason for deleting the role.
-    def delete!: (?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: String?) -> Async::Task[void]
 
     def tag: () -> untyped
     # @return [Discorb::Snowflake] The ID of the role.
@@ -297,6 +303,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit_message: (
                         _ToS message_id,
                         ?String? content,
@@ -305,7 +313,7 @@ module Discorb
                         ?allowed_mentions: Discorb::AllowedMentions?,
                         ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                         ?supress: bool?
-                      ) -> untyped
+                      ) -> Async::Task[void]
 
     # 
     # Delete a message.
@@ -313,7 +321,9 @@ module Discorb
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
-    def delete_message!: (_ToS message_id, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (_ToS message_id, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a message from ID.
@@ -355,7 +365,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
-    def pin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def pin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Unpin a message in the channel.
@@ -363,7 +375,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
-    def unpin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unpin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Trigger the typing indicator in the channel.
@@ -435,7 +449,9 @@ module Discorb
     # 
     # @param [String] name The new username.
     # @param [Discorb::Image] avatar The new avatar.
-    def edit: (?name: String, ?avatar: Discorb::Image) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def edit: (?name: String, ?avatar: Discorb::Image) -> Async::Task[void]
   end
 
   # 
@@ -1061,6 +1077,8 @@ module Discorb
     # @param [:guild_only] privacy_level The privacy level of the event. This must be `:guild_only`.
     # @param [:active, :completed, :canceled] status The status of the event.
     # 
+    # @return [Async::Task<Discorb::ScheduledEvent>] The event that was created.
+    # 
     # @see Event#start
     # @see Event#cancel
     # @see Event#complete
@@ -1074,7 +1092,7 @@ module Discorb
                 ?location: String?,
                 ?channel: (Discorb::Channel | Discorb::Snowflake)?,
                 ?status: Symbol
-              ) -> untyped
+              ) -> Async::Task[Discorb::ScheduledEvent]
 
     # 
     # Starts the event. Shortcut for `edit(status: :active)`.
@@ -1091,7 +1109,9 @@ module Discorb
     # 
     # Deletes the event.
     # @async
-    def delete!: () -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete!: () -> Async::Task[void]
 
     # 
     # Fetches the event users.
@@ -1105,13 +1125,13 @@ module Discorb
     # @param [Boolean] with_member Whether to include the member object of the event. Defaults to `false`.
     #   This should be used for manual fetching of members.
     # 
-    # @return [Array<Discorb::Member>] The event users.
+    # @return [Async::Task<Array<Discorb::Member>>] The event users.
     def fetch_users: (
                        ?Integer? limit,
                        ?before: untyped,
                        ?after: untyped,
                        ?with_member: bool
-                     ) -> ::Array[Discorb::Member]
+                     ) -> Async::Task[::Array[Discorb::Member]]
     # @return [Discorb::Snowflake] The ID of the event.
     attr_reader id: Discorb::Snowflake
 
@@ -1183,7 +1203,9 @@ module Discorb
     # 
     # Leave the guild.
     # @async
-    def leave!: () -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def leave!: () -> Async::Task[void]
 
     # 
     # Fetch scheduled events for the guild.
@@ -1201,12 +1223,13 @@ module Discorb
     # 
     # @param [#to_s] id The ID of the scheduled event.
     # 
-    # @return [Discorb::ScheduledEvent] The event with the given ID.
-    # @return [nil] If no event with the given ID exists.
-    def fetch_scheduled_event: (_ToS id) -> Discorb::ScheduledEvent
+    # @return [Async::Task<Discorb::ScheduledEvent>] The event with the given ID.
+    # @return [Async::Task<nil>] If no event with the given ID exists.
+    def fetch_scheduled_event: (_ToS id) -> Async::Task[Discorb::ScheduledEvent]
 
     # 
     # Create a scheduled event for the guild.
+    # @async
     # 
     # @param [:stage_instance, :voice, :external] type The type of event to create.
     # @param [String] name The name of the event.
@@ -1217,7 +1240,7 @@ module Discorb
     # @param [String, nil] location The location of the event. Defaults to `nil`.
     # @param [:guild_only] privacy_level The privacy level of the event. This must be `:guild_only`.
     # 
-    # @return [Discorb::ScheduledEvent] The created event.
+    # @return [Async::Task<Discorb::ScheduledEvent>] The created event.
     def create_scheduled_event: (
                                   Symbol _type,
                                   String name,
@@ -1227,7 +1250,7 @@ module Discorb
                                   ?privacy_level: Symbol,
                                   ?location: String?,
                                   ?channel: (Discorb::Channel | Discorb::Snowflake)?
-                                ) -> Discorb::ScheduledEvent
+                                ) -> Async::Task[Discorb::ScheduledEvent]
 
     # 
     # Fetch emoji list of the guild.
@@ -1442,10 +1465,13 @@ module Discorb
 
     # 
     # Change nickname of client member.
+    # @async
     # 
     # @param [String] nickname The nickname to set.
     # @param [String] reason The reason for changing the nickname.
-    def edit_nickname: (String nickname, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def edit_nickname: (String nickname, ?reason: String?) -> Async::Task[void]
 
     # 
     # Kick a member from the guild.
@@ -1453,7 +1479,9 @@ module Discorb
     # 
     # @param [Discorb::Member] member The member to kick.
     # @param [String] reason The reason for kicking the member.
-    def kick_member: (Discorb::Member member, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def kick_member: (Discorb::Member member, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a list of bans in the guild.
@@ -1498,7 +1526,9 @@ module Discorb
     # 
     # @param [Discorb::User] user The user to unban.
     # @param [String] reason The reason for unbanning the user.
-    def unban_user: (Discorb::User user, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unban_user: (Discorb::User user, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a list of roles in the guild.
@@ -1793,7 +1823,9 @@ module Discorb
       # @param [Boolean] enabled Whether the widget is enabled.
       # @param [Discorb::GuildChannel] channel The channel.
       # @param [String] reason The reason for editing the widget.
-      def edit: (?enabled: bool?, ?channel: Discorb::GuildChannel?, ?reason: String?) -> untyped
+      # 
+      # @return [Async::Task<void>] The task.
+      def edit: (?enabled: bool?, ?channel: Discorb::GuildChannel?, ?reason: String?) -> Async::Task[void]
 
       # 
       # Return iframe HTML of the widget.
@@ -1888,12 +1920,14 @@ module Discorb
       # @param [Array<Discorb::WelcomeScreen::Channel>] channels The channels to display the welcome screen.
       # @param [String] description The description of the welcome screen.
       # @param [String] reason The reason for editing the welcome screen.
+      # 
+      # @return [Async::Task<void>] The task.
       def edit: (
                   ?enabled: bool,
                   ?channels: ::Array[Discorb::WelcomeScreen::Channel],
                   ?description: String,
                   ?reason: String?
-                ) -> untyped
+                ) -> Async::Task[void]
 
       # @return [String] The channel's name.
       attr_reader description: String
@@ -1958,7 +1992,7 @@ module Discorb
 
     # 
     # Registers an event handler.
-    # @see file:docs/Events.md
+    # @see file:docs/Events.md Events Documentation
     # 
     # @param [Symbol] event_name The name of the event.
     # @param [Symbol] id Custom ID of the event.
@@ -1985,10 +2019,13 @@ module Discorb
 
     # 
     # Dispatch an event.
+    # @async
     # 
     # @param [Symbol] event_name The name of the event.
     # @param [Object] args The arguments to pass to the event.
-    def dispatch: (Symbol event_name, *Object args) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def dispatch: (Symbol event_name, *Object args) -> Async::Task[void]
 
     # 
     # Fetch user from ID.
@@ -2061,15 +2098,16 @@ module Discorb
 
     # 
     # Method to wait for a event.
+    # @async
     # 
     # @param [Symbol] event The name of the event.
     # @param [Integer] timeout The timeout in seconds.
     # @param [Proc] check The check to use.
     # 
-    # @return [Object] The result of the event.
+    # @return [Async::Task<Object>] The result of the event.
     # 
     # @raise [Discorb::TimeoutError] If the event didn't occur in time.
-    def event_lock: (Symbol event, ?Integer? timeout) -> Object
+    def event_lock: (Symbol event, ?Integer? timeout) -> Async::Task[Object]
 
     def inspect: () -> untyped
 
@@ -2083,7 +2121,7 @@ module Discorb
     # 
     # Starts the client.
     # @note This method behavior will change by CLI.
-    # @see file:docs/cli.md
+    # @see file:docs/cli.md CLI documentation
     # 
     # @param [String, nil] token The token to use.
     # 
@@ -2127,8 +2165,8 @@ module Discorb
     # 
     # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
     # 
-    # @see file:docs/application_command.md#register-slash-command
-    # @see file:docs/cli/setup.md
+    # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
+    # @see file:docs/cli/setup.md CLI: setup
     def slash: (
                  String command_name,
                  String description,
@@ -2148,8 +2186,8 @@ module Discorb
     # 
     # @return [Discorb::ApplicationCommand::Command::GroupCommand] Command object.
     # 
-    # @see file:docs/slash_command.md
-    # @see file:docs/cli/setup.md
+    # @see file:docs/application_command.md Application Commands
+    # @see file:docs/cli/setup.md CLI: setup
     def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommand::Command::GroupCommand group) -> void } -> Discorb::ApplicationCommand::Command::GroupCommand
 
     # 
@@ -2180,6 +2218,7 @@ module Discorb
 
     # 
     # Setup commands.
+    # @async
     # @see Client#initialize
     # 
     # @param [String] token Bot token.
@@ -2188,7 +2227,7 @@ module Discorb
     # @note `token` parameter only required if you don't run client.
     def setup_commands: (?String? token, ?guild_ids: (::Array[untyped] | bool)?) -> untyped
 
-    def connect_gateway: (untyped reconnect) -> untyped
+    def connect_gateway: (untyped reconnect, ?no_close: untyped) -> untyped
 
     def send_gateway: (untyped opcode, **untyped value) -> untyped
 
@@ -2331,7 +2370,8 @@ module Discorb
   class Invite < Discorb::DiscordModel
     # Delete the invite.
     # @async
-    def delete!: (?reason: untyped) -> untyped
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: untyped) -> Async::Task[void]
     # @return [String] The code of invite.
     attr_reader code: String
 
@@ -2383,25 +2423,26 @@ module Discorb
 
     # 
     # Add a role to the member.
-    # @macro http
     # @async
     # 
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
-    def add_role: (Discorb::Role role, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def add_role: (Discorb::Role role, ?reason: String?) -> Async::Task[void]
 
     # 
     # Remove a role to the member.
-    # @macro http
     # @async
     # 
     # @param [Discorb::Role] role The role to add.
     # @param [String] reason The reason for the action.
-    def remove_role: (Discorb::Role role, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def remove_role: (Discorb::Role role, ?reason: String?) -> Async::Task[void]
 
     # 
     # Edit the member.
-    # @macro http
     # @async
     # @macro edit
     # 
@@ -2410,24 +2451,44 @@ module Discorb
     # @param [Boolean] mute Whether the member is muted.
     # @param [Boolean] deaf Whether the member is deafened.
     # @param [Discorb::StageChannel] channel The channel the member is moved to.
+    # @param [Time, nil] communication_disabled_until The time the member is timed out. Set to `nil` to end the timeout.
+    # @param [Time, nil] timeout_until Alias of `communication_disabled_until`.
     # @param [String] reason The reason for the action.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit: (
                 ?nick: String,
                 ?role: Discorb::Role,
                 ?mute: bool,
                 ?deaf: bool,
                 ?channel: Discorb::StageChannel,
+                ?communication_disabled_until: Time?,
+                ?timeout_until: Time?,
                 ?reason: String?
-              ) -> untyped
+              ) -> Async::Task[void]
+
+    # 
+    # Timeout the member.
+    # @async
+    # 
+    # @param [Time] time The time until the member is timeout.
+    # @param [String] reason The reason for the action.
+    # 
+    # @return [Async::Task<void>] The task.
+    def timeout: (Time time, ?reason: String?) -> Async::Task[void]
 
     # 
     # Kick the member.
+    # @async
     # 
     # @param [String] reason The reason for the action.
-    def kick: (?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def kick: (?reason: String?) -> Async::Task[void]
 
     # 
     # Ban the member.
+    # @async
     # 
     # @param [Integer] delete_message_days The number of days to delete messages.
     # @param [String] reason The reason for the action.
@@ -2656,7 +2717,9 @@ module Discorb
     # 
     # @param [Discorb::Message] messages The messages to delete.
     # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
-    def delete_messages!: (*Discorb::Message messages, ?force: bool) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_messages!: (*Discorb::Message messages, ?force: bool) -> Async::Task[void]
 
     # 
     # Set the channel's permission overwrite.
@@ -2665,7 +2728,9 @@ module Discorb
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of setting the overwrite.
     # @param [{Symbol => Boolean}] perms The permission overwrites to replace.
-    def set_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?, **::Hash[Symbol, bool] perms) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def set_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?, **::Hash[Symbol, bool] perms) -> Async::Task[void]
 
     # 
     # Delete the channel's permission overwrite.
@@ -2673,7 +2738,9 @@ module Discorb
     # 
     # @param [Discorb::Role, Discorb::Member] target The target of the overwrite.
     # @param [String] reason The reason of deleting the overwrite.
-    def delete_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch the channel's invites.
@@ -2708,7 +2775,9 @@ module Discorb
     # 
     # @param [Discorb::NewsChannel] target The channel to follow.
     # @param [String] reason The reason of following the channel.
-    def follow_from: (Discorb::NewsChannel target, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def follow_from: (Discorb::NewsChannel target, ?reason: String?) -> Async::Task[void]
 
     # 
     # Follow the existing announcement channel from self.
@@ -2716,7 +2785,9 @@ module Discorb
     # 
     # @param [Discorb::TextChannel] target The channel to follow to.
     # @param [String] reason The reason of following the channel.
-    def follow_to: (Discorb::TextChannel target, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def follow_to: (Discorb::TextChannel target, ?reason: String?) -> Async::Task[void]
 
     # 
     # Start thread in the channel.
@@ -2802,6 +2873,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit_message: (
                         _ToS message_id,
                         ?String? content,
@@ -2810,7 +2883,7 @@ module Discorb
                         ?allowed_mentions: Discorb::AllowedMentions?,
                         ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                         ?supress: bool?
-                      ) -> untyped
+                      ) -> Async::Task[void]
 
     # 
     # Delete a message.
@@ -2818,7 +2891,9 @@ module Discorb
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
-    def delete_message!: (_ToS message_id, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (_ToS message_id, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a message from ID.
@@ -2860,7 +2935,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
-    def pin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def pin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Unpin a message in the channel.
@@ -2868,7 +2945,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
-    def unpin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unpin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Trigger the typing indicator in the channel.
@@ -2945,6 +3024,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit_message: (
                         _ToS message_id,
                         ?String? content,
@@ -2953,7 +3034,7 @@ module Discorb
                         ?allowed_mentions: Discorb::AllowedMentions?,
                         ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                         ?supress: bool?
-                      ) -> untyped
+                      ) -> Async::Task[void]
 
     # 
     # Delete a message.
@@ -2961,7 +3042,9 @@ module Discorb
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
-    def delete_message!: (_ToS message_id, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (_ToS message_id, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a message from ID.
@@ -3003,7 +3086,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
-    def pin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def pin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Unpin a message in the channel.
@@ -3011,7 +3096,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
-    def unpin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unpin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Trigger the typing indicator in the channel.
@@ -3184,23 +3271,29 @@ module Discorb
     # @note This method won't unarchive the thread. Use {#unarchive} instead.
     def unlock: (?reason: String?) -> self
 
-    def parent: () -> untyped
-
-    def me: () -> untyped
-
-    def joined?: () -> bool
-
-    def guild: () -> untyped
-
-    def owner: () -> untyped
-
     def inspect: () -> untyped
 
-    def add_member: (?untyped member) -> untyped
+    # 
+    # Add a member to the thread.
+    # 
+    # @param [Discorb::Member, :me] member The member to add. If `:me` is given, the bot will be added.
+    # 
+    # @return [Async::Task<void>] The task.
+    def add_member: (?(Discorb::Member | Symbol) member) -> Async::Task[void]
 
-    def remove_member: (?untyped member) -> untyped
+    # 
+    # Remove a member from the thread.
+    # 
+    # @param [Discorb::Member, :me] member The member to remove. If `:me` is given, the bot will be removed.
+    # 
+    # @return [Async::Task<void>] The task.
+    def remove_member: (?(Discorb::Member | Symbol) member) -> Async::Task[void]
 
-    def fetch_members: () -> untyped
+    # 
+    # Fetch members in the thread.
+    # 
+    # @return [Array<Discorb::ThreadChannel::Member>] The members in the thread.
+    def fetch_members: () -> ::Array[Discorb::ThreadChannel::Member]
     # 
     # Post a message to the channel.
     # @async
@@ -3239,6 +3332,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit_message: (
                         _ToS message_id,
                         ?String? content,
@@ -3247,7 +3342,7 @@ module Discorb
                         ?allowed_mentions: Discorb::AllowedMentions?,
                         ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                         ?supress: bool?
-                      ) -> untyped
+                      ) -> Async::Task[void]
 
     # 
     # Delete a message.
@@ -3255,7 +3350,9 @@ module Discorb
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
-    def delete_message!: (_ToS message_id, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (_ToS message_id, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a message from ID.
@@ -3297,7 +3394,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
-    def pin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def pin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Unpin a message in the channel.
@@ -3305,7 +3404,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
-    def unpin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unpin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Trigger the typing indicator in the channel.
@@ -3351,6 +3452,26 @@ module Discorb
     # @return [Boolean] Whether the thread is archived or not.
     attr_reader archived: bool
 
+    # @macro client_cache
+    # @return [Discorb::GuildChannel] The parent channel of the thread.
+    attr_reader parent: Discorb::GuildChannel?
+
+    # @return [Discorb::ThreadChannel::Member] The bot's member in the thread.
+    # @return [nil] If the bot is not in the thread.
+    attr_reader me: Discorb::ThreadChannel::Member?
+
+    # @return [Boolean] Whether the bot is in the thread or not.
+    attr_reader joined?: bool
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild of the thread.
+    attr_reader guild: Discorb::Guild?
+
+    # @macro client_cache
+    # @macro members_intent
+    # @return [Discorb::Member] The owner of the thread.
+    attr_reader owner: Discorb::Member?
+
     class News < Discorb::ThreadChannel
     end
 
@@ -3360,6 +3481,8 @@ module Discorb
     class Private < Discorb::ThreadChannel
     end
 
+    # 
+    # Repre
     class Member < Discorb::DiscordModel
       def initialize: (untyped cilent, untyped data) -> void
 
@@ -3412,6 +3535,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit_message: (
                         _ToS message_id,
                         ?String? content,
@@ -3420,7 +3545,7 @@ module Discorb
                         ?allowed_mentions: Discorb::AllowedMentions?,
                         ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                         ?supress: bool?
-                      ) -> untyped
+                      ) -> Async::Task[void]
 
     # 
     # Delete a message.
@@ -3428,7 +3553,9 @@ module Discorb
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
-    def delete_message!: (_ToS message_id, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (_ToS message_id, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a message from ID.
@@ -3470,7 +3597,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
-    def pin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def pin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Unpin a message in the channel.
@@ -3478,7 +3607,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
-    def unpin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unpin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Trigger the typing indicator in the channel.
@@ -3808,7 +3939,7 @@ module Discorb
     # 
     # A module to handle gateway events.
     module Handler
-      def connect_gateway: (untyped reconnect) -> untyped
+      def connect_gateway: (untyped reconnect, ?no_close: untyped) -> untyped
 
       def send_gateway: (untyped opcode, **untyped value) -> untyped
 
@@ -3953,6 +4084,7 @@ module Discorb
 
     # 
     # Edit the message.
+    # @async
     # 
     # @param [String] content The message content.
     # @param [Discorb::Embed] embed The embed to send.
@@ -3960,6 +4092,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit: (
                 ?String? content,
                 ?embed: Discorb::Embed?,
@@ -3967,13 +4101,16 @@ module Discorb
                 ?allowed_mentions: Discorb::AllowedMentions?,
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?supress: bool?
-              ) -> untyped
+              ) -> Async::Task[void]
 
     # 
     # Delete the message.
+    # @async
     # 
     # @param [String] reason The reason for deleting the message.
-    def delete!: (?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: String?) -> Async::Task[void]
 
     # 
     # Convert the message to reference object.
@@ -3992,21 +4129,27 @@ module Discorb
     # 
     # Publish the message.
     # @async
-    def publish: () -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def publish: () -> Async::Task[void]
 
     # 
     # Add a reaction to the message.
     # @async
     # 
     # @param [Discorb::Emoji] emoji The emoji to react with.
-    def add_reaction: (Discorb::Emoji emoji) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def add_reaction: (Discorb::Emoji emoji) -> Async::Task[void]
 
     # 
     # Remove a reaction from the message.
     # @async
     # 
     # @param [Discorb::Emoji] emoji The emoji to remove.
-    def remove_reaction: (Discorb::Emoji emoji) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def remove_reaction: (Discorb::Emoji emoji) -> Async::Task[void]
 
     # 
     # Remove other member's reaction from the message.
@@ -4014,7 +4157,9 @@ module Discorb
     # 
     # @param [Discorb::Emoji] emoji The emoji to remove.
     # @param [Discorb::Member] member The member to remove the reaction from.
-    def remove_reaction_of: (Discorb::Emoji emoji, Discorb::Member member) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def remove_reaction_of: (Discorb::Emoji emoji, Discorb::Member member) -> Async::Task[void]
 
     # 
     # Fetch reacted users of reaction.
@@ -4032,17 +4177,22 @@ module Discorb
     # @async
     # 
     # @param [String] reason The reason for pinning the message.
-    def pin: (?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def pin: (?reason: String?) -> Async::Task[void]
 
     # 
     # Unpin the message.
     # @async
     # 
     # @param [String] reason The reason for unpinning the message.
-    def unpin: (?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unpin: (?reason: String?) -> Async::Task[void]
 
     # 
     # Start thread from the message.
+    # @async
     # 
     # @param (see Discorb::Channel#start_thread)
     # 
@@ -4344,6 +4494,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit_message: (
                         _ToS message_id,
                         ?String? content,
@@ -4352,7 +4504,7 @@ module Discorb
                         ?allowed_mentions: Discorb::AllowedMentions?,
                         ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                         ?supress: bool?
-                      ) -> untyped
+                      ) -> Async::Task[void]
 
     # 
     # Delete a message.
@@ -4360,7 +4512,9 @@ module Discorb
     # 
     # @param [#to_s] message_id The message id.
     # @param [String] reason The reason for deleting the message.
-    def delete_message!: (_ToS message_id, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (_ToS message_id, ?reason: String?) -> Async::Task[void]
 
     # 
     # Fetch a message from ID.
@@ -4402,7 +4556,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to pin.
     # @param [String] reason The reason of pinning the message.
-    def pin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def pin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Unpin a message in the channel.
@@ -4410,7 +4566,9 @@ module Discorb
     # 
     # @param [Discorb::Message] message The message to unpin.
     # @param [String] reason The reason of unpinning the message.
-    def unpin_message: (Discorb::Message message, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def unpin_message: (Discorb::Message message, ?reason: String?) -> Async::Task[void]
 
     # 
     # Trigger the typing indicator in the channel.
@@ -4480,12 +4638,14 @@ module Discorb
       # @param [String] description The new description of the sticker.
       # @param [Discorb::Emoji] tag The new tags of the sticker.
       # @param [String] reason The reason for the edit.
+      # 
+      # @return [Async::Task<void>] The task.
       def edit: (
                   ?name: String,
                   ?description: String,
                   ?tag: Discorb::Emoji,
                   ?reason: String
-                ) -> untyped
+                ) -> Async::Task[void]
 
       # 
       # Deletes the sticker.
@@ -4560,12 +4720,16 @@ module Discorb
     # @param [String] name The new name of the webhook.
     # @param [Discorb::Image] avatar The new avatar of the webhook.
     # @param [Discorb::GuildChannel] channel The new channel of the webhook.
-    def edit: (?name: String, ?avatar: Discorb::Image, ?channel: Discorb::GuildChannel) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def edit: (?name: String, ?avatar: Discorb::Image, ?channel: Discorb::GuildChannel) -> Async::Task[void]
 
     # 
     # Deletes the webhook.
     # @async
-    def delete!: () -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete!: () -> Async::Task[void]
 
     # 
     # Edits the webhook's message.
@@ -4580,6 +4744,8 @@ module Discorb
     # @param [Discorb::File] file The file to send.
     # @param [Array<Discorb::File>] files The files to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit_message: (
                         Discorb::Webhook::Message message,
                         ?String content,
@@ -4589,13 +4755,15 @@ module Discorb
                         ?files: ::Array[Discorb::File],
                         ?attachments: ::Array[Discorb::Attachment],
                         ?allowed_mentions: Discorb::AllowedMentions
-                      ) -> untyped
+                      ) -> Async::Task[void]
 
     # 
     # Deletes the webhook's message.
     # 
     # @param [Discorb::Webhook::Message] message The message to delete.
-    def delete_message!: (Discorb::Webhook::Message message) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (Discorb::Webhook::Message message) -> Async::Task[void]
 
     # 
     # Creates URLWebhook.
@@ -4698,12 +4866,16 @@ module Discorb
       # @macro edit
       # 
       # @param (see Webhook#edit_message)
-      def edit: () -> untyped
+      # 
+      # @return [Async::Task<void>] The task.
+      def edit: () -> Async::Task[void]
 
       # 
       # Deletes the message.
       # @async
-      def delete!: () -> untyped
+      # 
+      # @return [Async::Task<void>] The task.
+      def delete!: () -> Async::Task[void]
       # @return [Discorb::Snowflake] The ID of the channel.
       attr_reader channel_id: Discorb::Snowflake
 
@@ -4935,7 +5107,7 @@ module Discorb
   # 
   # Abstract class to make extension.
   # Include from this module to make your own extension.
-  # @see file:docs/extension.md
+  # @see file:docs/extension.md Extension
   # @abstract
   module Extension
     def initialize: (untyped client) -> void
@@ -4995,8 +5167,8 @@ module Discorb
       # 
       # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
       # 
-      # @see file:docs/application_command.md#register-slash-command
-      # @see file:docs/cli/setup.md
+      # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
+      # @see file:docs/cli/setup.md CLI: setup
       def slash: (
                    String command_name,
                    String description,
@@ -5016,8 +5188,8 @@ module Discorb
       # 
       # @return [Discorb::ApplicationCommand::Command::GroupCommand] Command object.
       # 
-      # @see file:docs/slash_command.md
-      # @see file:docs/cli/setup.md
+      # @see file:docs/application_command.md Application Commands
+      # @see file:docs/cli/setup.md CLI: setup
       def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommand::Command::GroupCommand group) -> void } -> Discorb::ApplicationCommand::Command::GroupCommand
 
       # 
@@ -5048,6 +5220,7 @@ module Discorb
 
       # 
       # Setup commands.
+      # @async
       # @see Client#initialize
       # 
       # @param [String] token Bot token.
@@ -5609,8 +5782,8 @@ module Discorb
       # 
       # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
       # 
-      # @see file:docs/application_command.md#register-slash-command
-      # @see file:docs/cli/setup.md
+      # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
+      # @see file:docs/cli/setup.md CLI: setup
       def slash: (
                    String command_name,
                    String description,
@@ -5630,8 +5803,8 @@ module Discorb
       # 
       # @return [Discorb::ApplicationCommand::Command::GroupCommand] Command object.
       # 
-      # @see file:docs/slash_command.md
-      # @see file:docs/cli/setup.md
+      # @see file:docs/application_command.md Application Commands
+      # @see file:docs/cli/setup.md CLI: setup
       def slash_group: (String command_name, String description, ?guild_ids: (::Array[untyped] | bool)?) ?{ (Discorb::ApplicationCommand::Command::GroupCommand group) -> void } -> Discorb::ApplicationCommand::Command::GroupCommand
 
       # 
@@ -5662,6 +5835,7 @@ module Discorb
 
       # 
       # Setup commands.
+      # @async
       # @see Client#initialize
       # 
       # @param [String] token Bot token.
@@ -5730,7 +5904,7 @@ module Discorb
         # 
         # @return [Discorb::ApplicationCommand::Command::SubcommandGroup] Command object.
         # 
-        # @see file:docs/slash_command.md
+        # @see file:docs/application_command.md Application Commands
         def group: (String command_name, String description) ?{ (Discorb::ApplicationCommand::Command::SubcommandGroup group) -> void } -> Discorb::ApplicationCommand::Command::SubcommandGroup
 
         # 
@@ -5884,9 +6058,12 @@ module Discorb
   class Integration < Discorb::DiscordModel
     # 
     # Delete the integration.
+    # @async
     # 
     # @param [String] reason The reason for deleting the integration.
-    def delete!: (?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: String?) -> Async::Task[void]
     # @return [Discorb::Snowflake] The ID of the integration.
     attr_reader id: Discorb::Snowflake
 
@@ -5992,13 +6169,17 @@ module Discorb
     # @param [String] topic The new topic of the stage instance.
     # @param [:public, :guild_only] privacy_level The new privacy level of the stage instance.
     # @param [String] reason The reason for editing the stage instance.
-    def edit: (?topic: String, ?privacy_level: Symbol, ?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def edit: (?topic: String, ?privacy_level: Symbol, ?reason: String?) -> Async::Task[void]
 
     # 
     # Deletes the stage instance.
     # 
     # @param [String] reason The reason for deleting the stage instance.
-    def delete!: (?reason: String?) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: String?) -> Async::Task[void]
     # @return [Discorb::Snowflake] The ID of the guild this voice state is for.
     attr_reader id: Discorb::Snowflake
 
@@ -6067,17 +6248,23 @@ module Discorb
     # 
     # @param [String] name The new name of the template.
     # @param [String] description The new description of the template.
-    def edit: (?String? name, ?String description) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def edit: (?String? name, ?String description) -> Async::Task[void]
 
     # 
     # Update the template.
     # @async
-    def update: () -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def update: () -> Async::Task[void]
 
     # 
     # Delete the template.
     # @async
-    def delete!: () -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def delete!: () -> Async::Task[void]
     # @return [String] The code of the template.
     attr_reader code: String
 
@@ -6238,6 +6425,14 @@ module Discorb
     # @return [String] The token for the interaction.
     attr_reader token: String
 
+    # @return [Symbol] The locale of the user that created the interaction.
+    # @note This modifies the language code, `-` will be replaced with `_`.
+    attr_reader locale: Symbol
+
+    # @return [Symbol] The locale of the guild that created the interaction.
+    # @note This modifies the language code, `-` will be replaced with `_`.
+    attr_reader guild_locale: Symbol
+
     # 
     # A module for response with source.
     module SourceResponse
@@ -6247,7 +6442,9 @@ module Discorb
       # @async
       # 
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
-      def defer_source: (?ephemeral: bool) -> untyped
+      # 
+      # @return [Async::Task<void>] The task.
+      def defer_source: (?ephemeral: bool) -> Async::Task[void]
 
       # 
       # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
@@ -6285,6 +6482,8 @@ module Discorb
         # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
         # @param [Discorb::File] file The file to send.
         # @param [Array<Discorb::File>] files The files to send.
+        # 
+        # @return [Async::Task<void>] The task.
         def edit: (
                     ?String content,
                     ?embed: Discorb::Embed,
@@ -6292,12 +6491,15 @@ module Discorb
                     ?file: Discorb::File,
                     ?files: ::Array[Discorb::File],
                     ?attachments: ::Array[Discorb::Attachment]
-                  ) -> untyped
+                  ) -> Async::Task[void]
 
         # 
         # Deletes the callback message.
+        # @async
         # @note This will fail if the message is ephemeral.
-        def delete!: () -> untyped
+        # 
+        # @return [Async::Task<void>] The task.
+        def delete!: () -> Async::Task[void]
       end
     end
 
@@ -6306,9 +6508,12 @@ module Discorb
     module UpdateResponse
       # 
       # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
+      # @async
       # 
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
-      def defer_update: (?ephemeral: bool) -> untyped
+      # 
+      # @return [Async::Task<void>] The task.
+      def defer_update: (?ephemeral: bool) -> Async::Task[void]
 
       # 
       # Response with `UPDATE_MESSAGE`(`7`).
@@ -6322,6 +6527,8 @@ module Discorb
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
       # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      # 
+      # @return [Async::Task<void>] The task.
       def edit: (
                   String content,
                   ?tts: bool,
@@ -6330,7 +6537,7 @@ module Discorb
                   ?allowed_mentions: Discorb::AllowedMentions?,
                   ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                   ?ephemeral: bool
-                ) -> untyped
+                ) -> Async::Task[void]
     end
   end
 
@@ -6344,7 +6551,9 @@ module Discorb
     # @async
     # 
     # @param [Boolean] ephemeral Whether to make the response ephemeral.
-    def defer_source: (?ephemeral: bool) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def defer_source: (?ephemeral: bool) -> Async::Task[void]
 
     # 
     # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
@@ -6397,9 +6606,12 @@ module Discorb
 
     # 
     # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
+    # @async
     # 
     # @param [Boolean] ephemeral Whether to make the response ephemeral.
-    def defer_update: (?ephemeral: bool) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def defer_update: (?ephemeral: bool) -> Async::Task[void]
 
     # 
     # Response with `UPDATE_MESSAGE`(`7`).
@@ -6413,6 +6625,8 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] ephemeral Whether to make the response ephemeral.
+    # 
+    # @return [Async::Task<void>] The task.
     def edit: (
                 String content,
                 ?tts: bool,
@@ -6421,7 +6635,7 @@ module Discorb
                 ?allowed_mentions: Discorb::AllowedMentions?,
                 ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                 ?ephemeral: bool
-              ) -> untyped
+              ) -> Async::Task[void]
 
     # 
     # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
@@ -6429,7 +6643,9 @@ module Discorb
     # @async
     # 
     # @param [Boolean] ephemeral Whether to make the response ephemeral.
-    def defer_source: (?ephemeral: bool) -> untyped
+    # 
+    # @return [Async::Task<void>] The task.
+    def defer_source: (?ephemeral: bool) -> Async::Task[void]
 
     # 
     # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
@@ -6486,14 +6702,6 @@ module Discorb
   class AutoComplete < Discorb::Interaction
 
   end
-
-  # HTTP client for discorb.
-  class HTTP
-  end
-  
-  # Logger for discorb.
-  class Logger
-  end
 end
 
 class Time
@@ -6504,14 +6712,4 @@ class Time
   # 
   # @return [String] The formatted time.
   def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? _type) -> String
-end
-
-module Async
-  class Task
-  end
-end
-
-module Net
-  class HTTPResponse
-  end
 end
