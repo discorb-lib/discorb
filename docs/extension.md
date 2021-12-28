@@ -6,8 +6,6 @@
 
 Extension allows you to seperate events.
 
-# @since 
-
 ## Make a new extension
 
 Make a new class that includes Extension.

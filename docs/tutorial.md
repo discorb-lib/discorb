@@ -194,5 +194,4 @@ You did it! Your bot won't respond to bot's messages anymore.
 This is the end of tutorial.
 
 To learn more, check out the [documentation](https://discorb-lib.github.io/).
-
-We hope you enjoy this lib! Thanks for reading!
+You can also check out [Examples](docs/examples).
