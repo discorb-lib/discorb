@@ -25,7 +25,7 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
     # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
@@ -50,7 +50,7 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
     # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
@@ -76,7 +76,7 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
     # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
@@ -90,7 +90,7 @@ module Discorb
         ]
         files&.each_with_index do |file, i|
           next if file.nil?
-          data << [ "files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type } ]
+          data << ["files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type }]
         end
         req.set_form(data, "multipart/form-data")
         session = Net::HTTP.new("discord.com", 443)
@@ -112,7 +112,7 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
     # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
@@ -137,7 +137,7 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
     # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
@@ -150,7 +150,7 @@ module Discorb
           ["payload_json", get_body(body)],
         ]
         files&.each_with_index do |file, i|
-          data << [ "files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type } ]
+          data << ["files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type }]
         end
         req.set_form(data, "multipart/form-data")
         session = Net::HTTP.new("discord.com", 443)
@@ -161,6 +161,7 @@ module Discorb
         handle_response(:patch, resp, data, path, body, headers, audit_log_reason, kwargs)
       end
     end
+
     #
     # Execute a PUT request.
     # @async
@@ -171,7 +172,7 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
     # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
@@ -195,7 +196,7 @@ module Discorb
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
-    # @return [Array(Net::HTTPResponse, Hash)] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
     # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
     #
     # @raise [Discorb::HTTPError] The request was failed.
