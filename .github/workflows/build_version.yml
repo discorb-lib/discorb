@@ -37,7 +37,7 @@ jobs:
           bundle install
           gem update uri
       - name: Generate document
-        run: bundle exec rake document:build_all
+        run: rake document:build_all
       - name: Push document
         env:
           SSH_SECRET: ${{ secrets.SSH }}
