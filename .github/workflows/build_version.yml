@@ -33,11 +33,11 @@ jobs:
           git clone git@github.com:discorb-lib/discorb-lib.github.io /tmp/pages
       - name: Install dependencies
         run: |
-          bundle config --local with 'docs'
+          bundle config --local with 'docs,development'
           bundle install
           gem update uri
       - name: Generate document
-        run: rake document:build_all
+        run: bundle exec rake document:build_all
       - name: Push document
         env:
           SSH_SECRET: ${{ secrets.SSH }}
