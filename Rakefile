@@ -158,22 +158,22 @@ namespace :document do
     iputs "Building all versions"
     FileUtils.rm_rf("doc") rescue nil
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
-    Rake::Task["document:yard"].invoke
-    Rake::Task["document:replace:html"].invoke
-    Rake::Task["document:replace:css"].invoke
-    Rake::Task["document:replace:eol"].invoke
-    Rake::Task["document:replace:locale"].invoke
+    Rake::Task["document:yard"].execute
+    Rake::Task["document:replace:html"].execute
+    Rake::Task["document:replace:css"].execute
+    Rake::Task["document:replace:eol"].execute
+    Rake::Task["document:replace:locale"].execute
     tags = `git tag`.force_encoding("utf-8").split("\n").sort_by { |t| t[1..].split(".").map(&:to_i) }
     tags.each do |tag|
       sh "git checkout #{tag} -f"
       iputs "Building #{tag}"
       FileUtils.cp_r("./tmp-template-replace/.", "./template-replace")
       version = tag.delete_prefix("v")
-      Rake::Task["document:yard"].invoke
-      Rake::Task["document:replace:html"].invoke
-      Rake::Task["document:replace:css"].invoke
-      Rake::Task["document:replace:eol"].invoke
-      Rake::Task["document:replace:locale"].invoke
+      Rake::Task["document:yard"].execute
+      Rake::Task["document:replace:html"].execute
+      Rake::Task["document:replace:css"].execute
+      Rake::Task["document:replace:eol"].execute
+      Rake::Task["document:replace:locale"].execute
       FileUtils.cp_r("./doc/.", "./tmp-doc")
       FileUtils.rm_rf("doc")
     end
@@ -216,12 +216,12 @@ namespace :document do
         end
       end
       ENV["rake_locale"] = "ja"
-      Rake::Task["document:yard"].invoke
-      Rake::Task["document:replace"].invoke
+      Rake::Task["document:yard"].execute
+      Rake::Task["document:replace"].execute
     end
 
     task :en do
-      Rake::Task["document"].invoke("locale:en")
+      Rake::Task["document"].execute("locale:en")
     end
   end
 end
