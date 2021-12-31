@@ -6,6 +6,14 @@
 
 ## v0.13
 
+### v0.13.2
+
+- Fix: Fix MESSAGE_DELETE_BULK event
+- Fix: Delete VoiceState from `Guild#voice_states` when member leaves
+- Add: Add `VoiceChannel#members`, `VoiceChannel#voice_states`
+- Add: Add `StageChannel#members`, `StageChannel#voice_states`, `StageChannel#audiences`, `StageChannel#speakers`
+- Fix: Ignore errors on closing websocket
+
 ### v0.13.1
 
 - Add: `Discorb::Integration#locale`, `Discorb::Integration#guild_locale`
