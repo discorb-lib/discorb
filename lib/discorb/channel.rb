@@ -642,7 +642,7 @@ module Discorb
     alias modify edit
 
     def voice_states
-      guild.voice_states.select { |state| state.channel.id == @id }
+      guild.voice_states.select { |state| state.channel&.id == @id }
     end
 
     def members
@@ -749,7 +749,7 @@ module Discorb
     end
 
     def voice_states
-      guild.voice_states.select { |state| state.channel.id == @id }
+      guild.voice_states.select { |state| state.channel&.id == @id }
     end
 
     def members
