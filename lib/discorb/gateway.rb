@@ -1007,7 +1007,7 @@ module Discorb
               message.instance_variable_set(:@deleted, true)
               messages.push(message)
             else
-              messages.push(UnknownDeleteBulkMessage.new(self, id))
+              messages.push(UnknownDeleteBulkMessage.new(self, id, data))
             end
           end
           dispatch(:message_delete_bulk, messages)
