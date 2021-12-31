@@ -603,6 +603,11 @@ module Discorb
     # @return [nil] If the user limit is not set.
     attr_reader :user_limit
 
+    # @!attribute [r] members
+    #   @return [Array<Discorb::Member>] The members in the voice channel.
+    # @!attribute [r] voice_states
+    #   @return [Array<Discorb::VoiceState>] The voice states associated with the voice channel.
+
     include Connectable
 
     @channel_type = 2
@@ -635,6 +640,14 @@ module Discorb
     end
 
     alias modify edit
+
+    def voice_states
+      guild.voice_states.select { |state| state.channel.id == @id }
+    end
+
+    def members
+      voice_states.map(&:member)
+    end
 
     private
 
@@ -794,7 +807,6 @@ module Discorb
     #   @macro client_cache
     #   @macro members_intent
     #   @return [Discorb::Member] The owner of the thread.
-
 
     include Messageable
     @channel_type = nil
