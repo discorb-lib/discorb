@@ -748,6 +748,22 @@ module Discorb
       end
     end
 
+    def voice_states
+      guild.voice_states.select { |state| state.channel.id == @id }
+    end
+
+    def members
+      voice_states.map(&:member)
+    end
+
+    def speakers
+      voice_states.filter { |state| !state.suppress? }.map(&:member)
+    end
+
+    def audiences
+      voice_states.filter { |state| state.suppress? }.map(&:member)
+    end
+
     private
 
     def _set_data(data)
