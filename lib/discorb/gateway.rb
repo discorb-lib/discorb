@@ -506,7 +506,7 @@ module Discorb
           @log.info "Connecting to gateway..."
         end
         Async do
-          @connection&.close unless no_close
+          @connection&.close rescue nil unless no_close
           @http = HTTP.new(self)
           _, gateway_response = @http.get("/gateway").wait
           gateway_url = gateway_response[:url]
