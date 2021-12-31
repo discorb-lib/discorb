@@ -884,6 +884,7 @@ module Discorb
             current = VoiceState.new(self, data)
             guild.voice_states[data[:user_id]] = current
           else
+            guild.voice_states.remove(data[:user_id]) if data[:channel_id].nil?
             old = VoiceState.new(self, current.instance_variable_get(:@data))
             current.send(:_set_data, data)
           end
