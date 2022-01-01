@@ -6,6 +6,11 @@
 
 ## v0.13
 
+### v0.13.3
+
+- Fix: Fix INTEGRATION_xxx event
+- Change: Change description
+
 ### v0.13.2
 
 - Fix: Fix MESSAGE_DELETE_BULK event
