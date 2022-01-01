@@ -109,6 +109,35 @@ module Discorb
     end
 
     #
+    # Represents a `INTEGRATION_DELETE` event.
+    #
+    class IntegrationDeleteEvent < GatewayEvent
+      # @return [Discorb::Snowflake] The ID of the integration.
+      attr_reader :id
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild of the integration.
+      # @!attribute [r] user
+      #   @macro client_cache
+      #   @return [Discorb::User] The user associated with the integration.
+
+      # @private
+      def initialize(client, data)
+        @id = Snowflake.new(data[:id])
+        @guild_id = data[:guild_id]
+        @user_id = data[:application_id]
+      end
+
+      def guild
+        @client.guilds[@guild_id]
+      end
+
+      def user
+        @client.users[@user_id]
+      end
+    end
+
+    #
     # Represents a `MESSAGE_REACTION_REMOVE_ALL` event.
     #
     class ReactionRemoveAllEvent < GatewayEvent
@@ -866,9 +895,8 @@ module Discorb
           dispatch(:integration_update, integration)
         when "INTEGRATION_DELETE"
           return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return @log.warn "Unknown integration id #{data[:id]}, ignoring" unless (integration = guild.integrations.delete(data[:id]))
 
-          dispatch(:integration_delete, integration)
+          dispatch(:integration_delete, IntegrationDeleteEvent.new(self, data))
         when "WEBHOOKS_UPDATE"
           dispatch(:webhooks_update, WebhooksUpdateEvent.new(self, data))
         when "INVITE_CREATE"

@@ -47,7 +47,7 @@ module Discorb
         "avatars"
       when Guild, IncomingWebhook::Guild
         "icons"
-      when Application
+      when Application, Integration::Application
         "app-icons"
       when Application::Team
         "team-icons"

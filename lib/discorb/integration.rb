@@ -49,7 +49,6 @@ module Discorb
       @data = data
       @guild_id = guild_id
       _set_data(data)
-      guild.integrations[@id] = self unless no_cache
     end
 
     def guild
@@ -108,6 +107,36 @@ module Discorb
       def initialize(data)
         @id = data[:id]
         @name = data[:name]
+      end
+    end
+
+    #
+    # Represents an application for an integration.
+    #
+    class Application < DiscordModel
+      # @return [Discorb::Snowflake] The ID of the application.
+      attr_reader :id
+      # @return [String] The name of the application.
+      attr_reader :name
+      # @return [Asset] The icon of the application.
+      # @return [nil] If the application has no icon.
+      attr_reader :icon
+      # @return [String] The description of the application.
+      attr_reader :description
+      # @return [String] The summary of the application.
+      attr_reader :summary
+      # @return [Discorb::User] The bot user associated with the application.
+      # @return [nil] If the application has no bot user.
+      attr_reader :bot
+
+      # @private
+      def initialize(client, data)
+        @id = Snowflake.new(data[:id])
+        @name = data[:name]
+        @icon = data[:icon] && Asset.new(self, data[:icon])
+        @description = data[:description]
+        @summary = data[:summary]
+        @bot = data[:bot] and client.users[data[:bot][:id]] || Discorb::User.new(client, data[:bot])
       end
     end
   end
