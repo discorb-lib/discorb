@@ -9,7 +9,7 @@
 
 ----
 
-discorb is a Discord API wrapper written in Ruby.
+discorb is a Discord API wrapper for Ruby, Using [socketry/async](https://github.com/socketry/async).
 
 ## Installation
 
