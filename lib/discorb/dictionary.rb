@@ -16,6 +16,7 @@ module Discorb
       @cache = hash.transform_keys(&:to_s)
       @limit = limit
       @sort = sort
+      @cache = @cache.sort_by(&@sort).to_h if @sort
     end
 
     #
