@@ -75,6 +75,13 @@ module Discorb
     end
 
     #
+    # Convert the dictionary to a hash.
+    #
+    def to_h
+      @cache
+    end
+
+    #
     # Returns the values of the dictionary.
     #
     # @return [Array] The values of the dictionary.
