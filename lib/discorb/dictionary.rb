@@ -40,7 +40,7 @@ module Discorb
     # @param [Discorb::Dictionary] other The dictionary to merge.
     #
     def merge(other)
-      @cache.merge!(other)
+      @cache.merge!(other.to_h)
     end
 
     #
@@ -112,7 +112,7 @@ module Discorb
       end
     end
 
-    def respond_to_missing?(name, args, kwargs)
+    def respond_to_missing?(name, ...)
       if values.respond_to?(name)
         true
       else
