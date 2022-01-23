@@ -1064,7 +1064,7 @@ module Discorb
   class CategoryChannel < GuildChannel
     @channel_type = 4
 
-    def channels(data)
+    def channels
       @client.channels.values.filter { |channel| channel.parent == self }
     end
 
