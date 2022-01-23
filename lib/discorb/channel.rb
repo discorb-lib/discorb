@@ -1062,24 +1062,26 @@ module Discorb
   end
 
   class CategoryChannel < GuildChannel
-    attr_reader :channels
-
     @channel_type = 4
 
+    def channels(data)
+      @client.channels.values.filter { |channel| channel.parent == self }
+    end
+
     def text_channels
-      @channels.filter { |c| c.is_a? TextChannel }
+      channels.filter { |c| c.is_a? TextChannel }
     end
 
     def voice_channels
-      @channels.filter { |c| c.is_a? VoiceChannel }
+      channels.filter { |c| c.is_a? VoiceChannel }
     end
 
     def news_channel
-      @channels.filter { |c| c.is_a? NewsChannel }
+      channels.filter { |c| c.is_a? NewsChannel }
     end
 
     def stage_channels
-      @channels.filter { |c| c.is_a? StageChannel }
+      channels.filter { |c| c.is_a? StageChannel }
     end
 
     def create_text_channel(*args, **kwargs)
@@ -1096,13 +1098,6 @@ module Discorb
 
     def create_stage_channel(*args, **kwargs)
       guild.create_stage_channel(*args, parent: self, **kwargs)
-    end
-
-    private
-
-    def _set_data(data)
-      @channels = @client.channels.values.filter { |channel| channel.parent == self }
-      super
     end
   end
 
