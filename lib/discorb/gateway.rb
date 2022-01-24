@@ -1178,7 +1178,7 @@ module Discorb
         @closed = true
       end
 
-      if force_close
+      def force_close
         @framer.instance_variable_get(:@stream).close
         @closed = true
       end
