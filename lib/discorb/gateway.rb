@@ -528,14 +528,22 @@ module Discorb
     module Handler
       private
 
-      def connect_gateway(reconnect, no_close: false)
+      def connect_gateway(reconnect, force_close: false)
         if reconnect
           @log.info "Reconnecting to gateway..."
         else
           @log.info "Connecting to gateway..."
         end
         Async do
-          @connection&.close rescue nil unless no_close
+          if @connection
+            Async do
+              if force_close
+                @connection.force_close
+              else
+                @connection.close
+              end
+            end
+          end
           @http = HTTP.new(self)
           _, gateway_response = @http.get("/gateway").wait
           gateway_url = gateway_response[:url]
@@ -564,7 +572,7 @@ module Discorb
               end
             rescue Async::Wrapper::Cancelled, OpenSSL::SSL::SSLError, Async::Wrapper::WaitError, EOFError, Errno::EPIPE, IOError => e
               @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
-              connect_gateway(true, no_close: true)
+              connect_gateway(true, force_close: true)
             else # should never happen
               connect_gateway(true)
             end
@@ -1167,6 +1175,10 @@ module Discorb
 
       def close
         super
+        @closed = true
+      end
+
+      if force_close
         @framer.instance_variable_get(:@stream).close
         @closed = true
       end
