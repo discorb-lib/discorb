@@ -10,6 +10,7 @@ module Discorb
     def initialize(client)
       @client = client
       @path_ratelimit_bucket = {}
+      @path_ratelimit_hash = {}
       @global = false
     end
 
@@ -31,7 +32,9 @@ module Discorb
         @global = false
       end
 
-      return unless bucket = @path_ratelimit_bucket[path.identifier + path.major_param]
+      return unless hash = @path_ratelimit_hash[path.identifier]
+
+      return unless bucket = @path_ratelimit_bucket[hash + path.major_param]
 
       if bucket[:reset_at] < Time.now.to_f
         @path_ratelimit_bucket.delete(path.identifier + path.major_param)
@@ -55,8 +58,8 @@ module Discorb
         @global = Time.now.to_f + JSON.parse(resp.body, symbolize_names: true)[:retry_after]
       end
       return unless resp["X-RateLimit-Remaining"]
-
-      @path_ratelimit_bucket[path.identifier + path.major_param] = {
+      @path_ratelimit_hash[path.identifier] = resp["X-Ratelimit-Bucket"]
+      @path_ratelimit_bucket[resp["X-Ratelimit-Bucket"] + path.major_param] = {
         remaining: resp["X-RateLimit-Remaining"].to_i,
         reset_at: Time.now.to_f + resp["X-RateLimit-Reset-After"].to_f,
       }
