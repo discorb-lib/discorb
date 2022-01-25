@@ -545,7 +545,7 @@ module Discorb
             end
           end
           @http = HTTP.new(self)
-          _, gateway_response = @http.get("/gateway").wait
+          _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
           gateway_url = gateway_response[:url]
           endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json&compress=zlib-stream",
                                                  alpn_protocols: Async::HTTP::Protocol::HTTP11.names)

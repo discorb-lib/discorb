@@ -75,7 +75,7 @@ module Discorb
         payload[:username] = username if username
         payload[:avatar_url] = avatar_url if avatar_url != Discorb::Unset
         files = [file]
-        _resp, data = @http.multipart_post("#{url}?wait=#{wait}", files, payload, headers: headers).wait
+        _resp, data = @http.multipart_request(Route.new("#{url}?wait=#{wait}", "//webhooks/:webhook_id/:token", :post), files, payload, headers: headers).wait
         data && Webhook::Message.new(self, data)
       end
     end
@@ -99,7 +99,7 @@ module Discorb
         payload[:name] = name if name != Discorb::Unset
         payload[:avatar] = avatar if avatar != Discorb::Unset
         payload[:channel_id] = Utils.try(channel, :id) if channel != Discorb::Unset
-        @http.patch(url.to_s, payload).wait
+        @http.request(Route.new(url, "//webhooks/:webhook_id/:token", :patch), payload).wait
       end
     end
 
@@ -113,7 +113,7 @@ module Discorb
     #
     def delete!
       Async do
-        @http.delete(url).wait
+        @http.request(Route.new(url, "//webhooks/:webhook_id/:token", :delete)).wait
         self
       end
     end
@@ -151,7 +151,7 @@ module Discorb
         payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
         payload[:allowed_mentions] = allowed_mentions if allowed_mentions != Discorb::Unset
         files = [file] if file != Discorb::Unset
-        _resp, data = @http.multipart_patch("#{url}/messages/#{Utils.try(message, :id)}", payload, headers: headers).wait
+        _resp, data = @http.multipart_request(Route.new("#{url}/messages/#{Utils.try(message, :id)}", "//webhooks/:webhook_id/:token/messages/:message_id", :patch), payload, headers: headers).wait
         message.send(:_set_data, data)
         message
       end
@@ -166,7 +166,10 @@ module Discorb
     #
     def delete_message!(message)
       Async do
-        @http.delete("#{url}/messages/#{Utils.try(message, :id)}").wait
+        @http.request(Route.new(
+          "#{url}/messages/#{Utils.try(message, :id)}",
+          "//webhooks/:webhook_id/:token/messages/:message_id", :delete
+        )).wait
         message
       end
     end

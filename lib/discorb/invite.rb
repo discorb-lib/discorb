@@ -105,7 +105,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.delete("/invites/#{@code}", audit_log_reason: reason)
+        @client.http.request(Route.new("/invites/#{@code}", "//invites/:code", :delete), audit_log_reason: reason)
       end
     end
 

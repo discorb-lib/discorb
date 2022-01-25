@@ -152,7 +152,7 @@ module Discorb
     #
     def add_role(role, reason: nil)
       Async do
-        @client.http.put("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", nil, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", "//guilds/:guild_id/members/:user_id/roles/:role_id", :put), nil, audit_log_reason: reason).wait
       end
     end
 
@@ -167,7 +167,7 @@ module Discorb
     #
     def remove_role(role, reason: nil)
       Async do
-        @client.http.delete("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", "//guilds/:guild_id/members/:user_id/roles/:role_id", :delete), audit_log_reason: reason).wait
       end
     end
 
@@ -200,7 +200,7 @@ module Discorb
         communication_disabled_until = timeout_until if timeout_until != Discorb::Unset
         payload[:communication_disabled_until] = communication_disabled_until&.iso8601 if communication_disabled_until != Discorb::Unset
         payload[:channel_id] = channel&.id if channel != Discorb::Unset
-        @client.http.patch("/guilds/#{@guild_id}/members/#{@id}", payload, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}", "//guilds/:guild_id/members/:user_id", :patch), payload, audit_log_reason: reason).wait
       end
     end
 

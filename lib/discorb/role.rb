@@ -99,7 +99,7 @@ module Discorb
     #
     def move(position, reason: nil)
       Async do
-        @client.http.patch("/guilds/#{@guild.id}/roles", { id: @id, position: position }, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild.id}/roles", "//guilds/:guild_id/roles", :patch), { id: @id, position: position }, audit_log_reason: reason).wait
       end
     end
 
@@ -133,7 +133,7 @@ module Discorb
             payload[:unicode_emoji] = icon.to_s
           end
         end
-        @client.http.patch("/guilds/#{@guild.id}/roles/#{@id}", payload, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild.id}/roles/#{@id}", "//guilds/:guild_id/roles/:role_id", :patch), payload, audit_log_reason: reason).wait
       end
     end
 
@@ -148,7 +148,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.delete("/guilds/#{@guild.id}/roles/#{@id}", audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild.id}/roles/#{@id}", "//guilds/:guild_id/roles/:role_id", :delete), audit_log_reason: reason).wait
       end
     end
 

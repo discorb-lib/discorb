@@ -212,7 +212,7 @@ module Discorb
     #
     def fetch_user(id)
       Async do
-        _resp, data = @http.get("/users/#{id}").wait
+        _resp, data = @http.request(Route.new("/users/#{id}", "//users/:user_id", :get)).wait
         User.new(self, data)
       end
     end
@@ -229,7 +229,7 @@ module Discorb
     #
     def fetch_channel(id)
       Async do
-        _resp, data = @http.get("/channels/#{id}").wait
+        _resp, data = @http.request(Route.new("/channels/#{id}", "//channels/:channel_id", :get)).wait
         Channel.make_channel(self, data)
       end
     end
@@ -246,7 +246,7 @@ module Discorb
     #
     def fetch_guild(id)
       Async do
-        _resp, data = @http.get("/guilds/#{id}").wait
+        _resp, data = @http.request(Route.new("/guilds/#{id}", "//guilds/:guild_id", :get)).wait
         Guild.new(self, data, false)
       end
     end
@@ -263,7 +263,7 @@ module Discorb
     #
     def fetch_invite(code, with_count: false, with_expiration: false)
       Async do
-        _resp, data = @http.get("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}").wait
+        _resp, data = @http.request(Route.new("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}", "//invites/:code", :get)).wait
         Invite.new(self, data, false)
       end
     end
@@ -281,7 +281,7 @@ module Discorb
       Async do
         next @application if @application && !force
 
-        _resp, data = @http.get("/oauth2/applications/@me").wait
+        _resp, data = @http.request(Route.new("/oauth2/applications/@me", "//oauth2/applications/@me", :get)).wait
         @application = Application.new(self, data)
         @application
       end
@@ -295,7 +295,7 @@ module Discorb
     #
     def fetch_nitro_sticker_packs
       Async do
-        _resp, data = @http.get("/stickers-packs").wait
+        _resp, data = @http.request(Route.new("/stickers-packs", "//stickers-packs", :get)).wait
         data.map { |pack| Sticker::Pack.new(self, pack) }
       end
     end

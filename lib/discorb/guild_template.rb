@@ -58,7 +58,7 @@ module Discorb
         payload = {}
         payload[:name] = name if name
         payload[:description] = description if description != Discorb::Unset
-        @client.http.patch("/guilds/#{@source_guild_id}/templates/#{@code}", payload).wait
+        @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code", :patch), payload).wait
       end
     end
 
@@ -72,7 +72,7 @@ module Discorb
     #
     def update
       Async do
-        _resp, data = @client.http.put("/guilds/#{@source_guild_id}/templates/#{@code}").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code", :put)).wait
         _set_data(data)
       end
     end
@@ -85,7 +85,7 @@ module Discorb
     #
     def delete!
       Async do
-        @client.http.delete("/guilds/#{@source_guild_id}/templates/#{@code}").wait
+        @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code", :delete)).wait
       end
     end
 

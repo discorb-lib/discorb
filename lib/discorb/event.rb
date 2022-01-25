@@ -164,7 +164,7 @@ module Discorb
           else
             raise ArgumentError, "Invalid scheduled event type: #{type}"
           end
-        @client.http.patch("/guilds/#{@guild_id}/scheduled-events/#{@id}", payload).wait
+        @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}", "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :patch), payload).wait
       end
     end
 
@@ -201,7 +201,7 @@ module Discorb
     #
     def delete!
       Async do
-        @client.http.delete("/guilds/#{@guild_id}/scheduled-events/#{@id}").wait
+        @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}", "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :delete)).wait
       end
     end
 
@@ -227,7 +227,7 @@ module Discorb
           after = 0
           res = []
           while true
-            _resp, users = @client.http.get("/guilds/#{@guild_id}/scheduled-events/#{@id}/users?limit=100&after=#{after}&with_member=true").wait
+            _resp, users = @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}/users?limit=100&after=#{after}&with_member=true", "//guilds/:guild_id/scheduled-events/:scheduled_event_id/users", :get)).wait
             if users.empty?
               break
             end
@@ -242,7 +242,7 @@ module Discorb
             after: Discorb::Utils.try(around, :id),
             with_member: with_member,
           }.filter { |_k, v| !v.nil? }.to_h
-          _resp, messages = @client.http.get("/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}").wait
+          _resp, messages = @client.http.request(Route.new("/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}", "//channels/:channel_id/messages", :get)).wait
           messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
         end
       end

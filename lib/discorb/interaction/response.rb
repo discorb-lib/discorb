@@ -15,7 +15,7 @@ module Discorb
       #
       def defer_source(ephemeral: false)
         Async do
-          @client.http.post("/interactions/#{@id}/#{@token}/callback", {
+          @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), {
             type: 5,
             data: {
               flags: (ephemeral ? 1 << 6 : 0),
@@ -51,14 +51,14 @@ module Discorb
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
 
           ret = if @responded
-              _resp, data = @client.http.post("/webhooks/#{@application_id}/#{@token}", payload).wait
+              _resp, data = @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}", "//webhooks/:webhook_id/:token", :post), payload).wait
               webhook = Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}")
               Webhook::Message.new(webhook, data, @client)
             elsif @defered
-              @client.http.patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload).wait
+              @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original", "//webhooks/:webhook_id/:token/messages/@original", :patch), payload).wait
               CallbackMessage.new(@client, payload, @application_id, @token)
             else
-              @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 4, data: payload }).wait
+              @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), { type: 4, data: payload }).wait
               CallbackMessage.new(@client, payload, @application_id, @token)
             end
           @responded = true
@@ -103,7 +103,7 @@ module Discorb
             payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
             files = [file] if file != Discorb::Unset
             files = [] if files == Discorb::Unset
-            @client.http.multipart_patch("/webhooks/#{@application_id}/#{@token}/messages/@original", payload, files, headers: headers).wait
+            @client.http.multipart_request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original", "//webhooks/:webhook_id/:token/messages/@original", :patch), payload, files, headers: headers).wait
           end
         end
 
@@ -118,7 +118,7 @@ module Discorb
         #
         def delete!
           Async do
-            @client.http.delete("/webhooks/#{@application_id}/#{@token}/messages/@original").wait
+            @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original", "//webhooks/:webhook_id/:token/messages/@original", :delete)).wait
           end
         end
       end
@@ -138,7 +138,7 @@ module Discorb
       #
       def defer_update(ephemeral: false)
         Async do
-          @client.http.post("/interactions/#{@id}/#{@token}/callback", {
+          @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), {
             type: 6,
             data: {
               flags: (ephemeral ? 1 << 6 : 0),
@@ -176,7 +176,7 @@ module Discorb
           payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
           payload[:components] = Component.to_payload(components) if components
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
-          @client.http.post("/interactions/#{@id}/#{@token}/callback", { type: 7, data: payload }).wait
+          @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), { type: 7, data: payload }).wait
         end
       end
     end
