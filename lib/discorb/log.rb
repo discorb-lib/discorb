@@ -71,10 +71,11 @@ module Discorb
 
       time = Time.now.iso8601
       if @colorize_log
-        @out.puts("\e[90m#{time}\e[0m #{color}#{name.ljust(5)}\e[0m #{message}")
+        @out.write("\e[90m#{time}\e[0m #{color}#{name.ljust(5)}\e[0m #{message}\n")
       else
-        @out.puts("#{time} #{name.ljust(5)} #{message}")
+        @out.write("#{time} #{name.ljust(5)} #{message}\n")
       end
+      @out.flush
     end
   end
 end

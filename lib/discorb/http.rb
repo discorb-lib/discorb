@@ -17,10 +17,11 @@ module Discorb
     end
 
     #
-    # Execute a GET request.
+    # Execute a request.
     # @async
     #
-    # @param [String] path The path to the resource.
+    # @param [Discorb::Route] path The path to the resource.
+    # @param [String, Hash] body The body of the request. Defaults to an empty string.
     # @param [Hash] headers The headers to send with the request.
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
@@ -30,46 +31,25 @@ module Discorb
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
-    def get(path, headers: nil, audit_log_reason: nil, **kwargs)
+    def request(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        @ratelimit_handler.wait("GET", path)
-        resp = http.get(get_path(path), get_headers(headers, "", audit_log_reason), **kwargs)
+        @ratelimit_handler.wait(path)
+        if %i[post patch put].include? path.method
+          resp = http.send(path.method, get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
+        else
+          resp = http.send(path.method, get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
+        end
         data = get_response_data(resp)
-        @ratelimit_handler.save("GET", path, resp)
-        handle_response(:patch, resp, data, path, nil, headers, audit_log_reason, kwargs)
+        @ratelimit_handler.save(path, resp)
+        handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
       end
     end
 
     #
-    # Execute a POST request.
+    # Execute a multipart request.
     # @async
     #
-    # @param [String] path The path to the resource.
-    # @param [String, Hash] body The body of the request.
-    # @param [Hash] headers The headers to send with the request.
-    # @param [String] audit_log_reason The audit log reason to send with the request.
-    # @param [Hash] kwargs The keyword arguments.
-    #
-    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
-    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
-    #
-    # @raise [Discorb::HTTPError] The request was failed.
-    #
-    def post(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
-      Async do |task|
-        @ratelimit_handler.wait("POST", path)
-        resp = http.post(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        data = get_response_data(resp)
-        @ratelimit_handler.save("POST", path, resp)
-        handle_response(:post, resp, data, path, body, headers, audit_log_reason, kwargs)
-      end
-    end
-
-    #
-    # Execute a multipart POST request.
-    # @async
-    #
-    # @param [String] path The path to the resource.
+    # @param [Discorb::Route] path The path to the resource.
     # @param [String, Hash] body The body of the request.
     # @param [Array<Discorb::File>] files The files to upload.
     # @param [Hash] headers The headers to send with the request.
@@ -81,10 +61,10 @@ module Discorb
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
-    def multipart_post(path, body = "", files, headers: nil, audit_log_reason: nil, **kwargs)
+    def multipart_request(path, body = "", files, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |task|
-        @ratelimit_handler.wait("POST", path)
-        req = Net::HTTP::Post.new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
+        @ratelimit_handler.wait(path)
+        req = Net::HTTP.const_get(path.method.to_s.capitalize).new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
         data = [
           ["payload_json", get_body(body)],
         ]
@@ -97,117 +77,8 @@ module Discorb
         session.use_ssl = true
         resp = session.request(req)
         data = get_response_data(resp)
-        @ratelimit_handler.save("POST", path, resp)
-        handle_response(:post, resp, data, path, body, headers, audit_log_reason, kwargs)
-      end
-    end
-
-    #
-    # Execute a PATCH request.
-    # @async
-    #
-    # @param [String] path The path to the resource.
-    # @param [String, Hash] body The body of the request.
-    # @param [Hash] headers The headers to send with the request.
-    # @param [String] audit_log_reason The audit log reason to send with the request.
-    # @param [Hash] kwargs The keyword arguments.
-    #
-    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
-    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
-    #
-    # @raise [Discorb::HTTPError] The request was failed.
-    #
-    def patch(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
-      Async do |task|
-        @ratelimit_handler.wait("PATCH", path)
-        resp = http.patch(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        data = get_response_data(resp)
-        @ratelimit_handler.save("PATCH", path, resp)
-        handle_response(:patch, resp, data, path, body, headers, audit_log_reason, kwargs)
-      end
-    end
-
-    #
-    # Execute a PATCH request.
-    # @async
-    #
-    # @param [String] path The path to the resource.
-    # @param [String, Hash] body The body of the request.
-    # @param [Hash] headers The headers to send with the request.
-    # @param [String] audit_log_reason The audit log reason to send with the request.
-    # @param [Hash] kwargs The keyword arguments.
-    #
-    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
-    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
-    #
-    # @raise [Discorb::HTTPError] The request was failed.
-    #
-    def multipart_patch(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
-      Async do |task|
-        @ratelimit_handler.wait("PATCH", path)
-        req = Net::HTTP::Patch.new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
-        data = [
-          ["payload_json", get_body(body)],
-        ]
-        files&.each_with_index do |file, i|
-          data << ["files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type }]
-        end
-        req.set_form(data, "multipart/form-data")
-        session = Net::HTTP.new("discord.com", 443)
-        session.use_ssl = true
-        resp = session.request(req)
-        data = get_response_data(resp)
-        @ratelimit_handler.save("PATCH", path, resp)
-        handle_response(:patch, resp, data, path, body, headers, audit_log_reason, kwargs)
-      end
-    end
-
-    #
-    # Execute a PUT request.
-    # @async
-    #
-    # @param [String] path The path to the resource.
-    # @param [String, Hash] body The body of the request.
-    # @param [Hash] headers The headers to send with the request.
-    # @param [String] audit_log_reason The audit log reason to send with the request.
-    # @param [Hash] kwargs The keyword arguments.
-    #
-    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
-    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
-    #
-    # @raise [Discorb::HTTPError] The request was failed.
-    #
-    def put(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
-      Async do |task|
-        @ratelimit_handler.wait("PUT", path)
-        resp = http.put(get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        data = get_response_data(resp)
-        @ratelimit_handler.save("PUT", path, resp)
-        handle_response(:put, resp, data, path, body, headers, audit_log_reason, kwargs)
-      end
-    end
-
-    #
-    # Execute a DELETE request.
-    # @async
-    #
-    # @param [String] path The path to the resource.
-    # @param [Hash] headers The headers to send with the request.
-    # @param [String] audit_log_reason The audit log reason to send with the request.
-    # @param [Hash] kwargs The keyword arguments.
-    #
-    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
-    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
-    #
-    # @raise [Discorb::HTTPError] The request was failed.
-    #
-    def delete(path, headers: nil, audit_log_reason: nil, **kwargs)
-      Async do
-        @ratelimit_handler.wait("DELETE", path)
-        resp = http.delete(get_path(path), get_headers(headers, "", audit_log_reason))
-        data = get_response_data(resp)
-        @ratelimit_handler.save("DELETE", path, resp)
-        handle_response(:delete, resp, data, path, nil, headers, audit_log_reason, kwargs)
+        @ratelimit_handler.save(path, resp)
+        handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
       end
     end
 
@@ -217,16 +88,12 @@ module Discorb
 
     private
 
-    def handle_response(method, resp, data, path, body, headers, audit_log_reason, kwargs)
+    def handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
       case resp.code
       when "429"
-        @client.log.info("Rate limit exceeded for #{method} #{path}, waiting #{data[:retry_after]} seconds")
+        @client.log.info("Rate limit exceeded for #{path.method} #{path.url}, waiting #{data[:retry_after]} seconds")
         sleep(data[:retry_after])
-        if body
-          __send__(method, path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-        else
-          __send__(method, path, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
-        end
+        request(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
       when "400"
         raise BadRequestError.new(resp, data)
       when "401"
@@ -263,10 +130,10 @@ module Discorb
     end
 
     def get_path(path)
-      full_path = if path.start_with?("https://")
-          path
+      full_path = if path.url.start_with?("https://")
+          path.url
         else
-          API_BASE_URL + path
+          API_BASE_URL + path.url
         end
       uri = URI(full_path)
       full_path.sub(uri.scheme + "://" + uri.host, "")

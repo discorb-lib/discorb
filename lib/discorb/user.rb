@@ -84,7 +84,7 @@ module Discorb
       Async do
         next @dm_channel_id if @dm_channel_id
 
-        _resp, dm_channel = @client.http.post("/users/@me/channels", { recipient_id: @id }).wait
+        _resp, dm_channel = @client.http.request(Route.new("/users/@me/channels", "//users/@me/channels", :post), { recipient_id: @id }).wait
         @dm_channel_id = dm_channel[:id]
         @dm_channel_id
       end
@@ -168,7 +168,7 @@ module Discorb
         else
           payload[:avatar] = avatar.to_s
         end
-        @client.http.patch("/users/@me", payload).wait
+        @client.http.request(Route.new("/users/@me", "//users/@me", :patch), payload).wait
         self
       end
     end

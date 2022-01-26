@@ -129,10 +129,20 @@ module Discorb
           end
           final_guild_ids = local_commands.map(&:guild_ids).flatten.map(&:to_s).uniq
           app_info = fetch_application.wait
-          http.put("/applications/#{app_info.id}/commands", global_commands.map(&:to_hash)).wait unless global_commands.empty?
+          @http.request(Route.new(
+            "/applications/#{app_info.id}/commands",
+            "//applications/:application_id/commands",
+            :put
+          ),
+                        global_commands.map(&:to_hash)).wait unless global_commands.empty?
           final_guild_ids.each do |guild_id|
             commands = local_commands.select { |c| c.guild_ids.include?(guild_id) }
-            http.put("/applications/#{app_info.id}/guilds/#{guild_id}/commands", commands.map(&:to_hash)).wait
+            @http.request(
+              Route.new("/applications/#{app_info.id}/guilds/#{guild_id}/commands",
+                        "//applications/:application_id/guilds/:guild_id/commands",
+                        :put),
+              commands.map(&:to_hash)
+            ).wait
           end unless final_guild_ids.empty?
           @log.info "Successfully setup commands"
         end

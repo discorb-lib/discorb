@@ -168,7 +168,7 @@ module Discorb
     #
     def leave!
       Async do
-        @client.http.delete("/users/@me/guilds/#{@id}").wait
+        @client.http.request(Route.new("/users/@me/guilds/#{@id}", "//users/@me/guilds/:guild_id", :delete)).wait
         @client.guilds.delete(@id)
       end
     end
@@ -184,7 +184,7 @@ module Discorb
     #
     def fetch_scheduled_events(with_user_count: true)
       Async do
-        _resp, events = @client.http.get("/guilds/#{@id}/scheduled-events?with_user_count=#{with_user_count}").wait
+        _resp, events = @client.http.request(Route.new("/guilds/#{@id}/scheduled-events?with_user_count=#{with_user_count}", "//guilds/:guild_id/scheduled-events", :get)).wait
         @scheduled_events = events.map { |e| ScheduledEvent.new(@client, e) }
       end
     end
@@ -200,7 +200,7 @@ module Discorb
     #
     def fetch_scheduled_event(id)
       Async do
-        _resp, event = @client.http.get("/guilds/#{@id}/scheduled-events/#{id}").wait
+        _resp, event = @client.http.request(Route.new("/guilds/#{@id}/scheduled-events/#{id}", "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :get)).wait
       rescue Discorb::NotFoundError
         return nil
       else
@@ -274,7 +274,7 @@ module Discorb
           else
             raise ArgumentError, "Invalid scheduled event type: #{type}"
           end
-        _resp, event = @client.http.post("/guilds/#{@id}/scheduled-events", payload).wait
+        _resp, event = @client.http.request(Route.new("/guilds/#{@id}/scheduled-events", "//guilds/:guild_id/scheduled-events", :post), payload).wait
         Discorb::ScheduledEvent.new(@client, event)
       end
     end
@@ -288,7 +288,7 @@ module Discorb
     #
     def fetch_emoji_list
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/emojis").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/emojis", "//guilds/:guild_id/emojis", :get)).wait
         @emojis = Dictionary.new
         ids = @emojis.map(&:id).map(&:to_s)
         data.map do |e|
@@ -312,7 +312,7 @@ module Discorb
     # @return [Async::Task<Discorb::CustomEmoji>] The emoji with the given id.
     #
     def fetch_emoji(id)
-      _resp, data = @client.http.get("/guilds/#{@id}/emojis/#{id}").wait
+      _resp, data = @client.http.request(Route.new("/guilds/#{@id}/emojis/#{id}", "//guilds/:guild_id/emojis/:emoji_id", :get)).wait
       @emojis[e[:id]] = CustomEmoji.new(@client, self, data)
     end
 
@@ -327,14 +327,12 @@ module Discorb
     # @return [Async::Task<Discorb::CustomEmoji>] The created emoji.
     #
     def create_emoji(name, image, roles: [])
-      _resp, data = @client.http.post(
-        "/guilds/#{@id}/emojis",
-        {
-          name: name,
-          image: image.to_s,
-          roles: roles.map { |r| Discorb::Utils.try(r, :id) },
-        }
-      ).wait
+      _resp, data = @client.http.request(Route.new("/guilds/#{@id}/emojis", "//guilds/:guild_id/emojis", :post),
+                                         {
+        name: name,
+        image: image.to_s,
+        roles: roles.map { |r| Discorb::Utils.try(r, :id) },
+      }).wait
       @emojis[data[:id]] = CustomEmoji.new(@client, self, data)
     end
 
@@ -346,7 +344,7 @@ module Discorb
     #
     def fetch_webhooks
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/webhooks").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/webhooks", "//guilds/:guild_id/webhooks", :get)).wait
         data.map { |webhook| Webhook.new([@client, webhook]) }
       end
     end
@@ -359,7 +357,7 @@ module Discorb
     #
     def fetch_audit_log
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/audit-logs").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/audit-logs", "//guilds/:guild_id/audit-logs", :get)).wait
         AuditLog.new(@client, data, self)
       end
     end
@@ -372,7 +370,7 @@ module Discorb
     #
     def fetch_channels
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/channels").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/channels", "//guilds/:guild_id/channels", :get)).wait
         data.map { |c| Channel.make_channel(@client, c) }
       end
     end
@@ -415,9 +413,7 @@ module Discorb
           end
         end
         payload[:parent_id] = parent.id if parent
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/channels", "//guilds/:guild_id/channels", :post), payload, audit_log_reason: reason).wait
         payload[:parent_id] = parent&.id
         Channel.make_channel(@client, data)
       end
@@ -457,9 +453,7 @@ module Discorb
           end
         end
         payload[:parent_id] = parent.id if parent
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/channels", "//guilds/:guild_id/channels", :post), payload, audit_log_reason: reason).wait
         payload[:parent_id] = parent&.id
         Channel.make_channel(@client, data)
       end
@@ -492,9 +486,7 @@ module Discorb
           end
         end
         payload[:parent_id] = parent&.id
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/channels", "//guilds/:guild_id/channels", :post), payload, audit_log_reason: reason).wait
         Channel.make_channel(@client, data)
       end
     end
@@ -531,9 +523,7 @@ module Discorb
           end
         end
         payload[:parent_id] = parent&.id
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/channels", "//guilds/:guild_id/channels", :post), payload, audit_log_reason: reason).wait
         Channel.make_channel(@client, data)
       end
     end
@@ -576,9 +566,7 @@ module Discorb
         end
         payload[:nsfw] = nsfw unless nsfw.nil?
         payload[:parent_id] = parent&.id
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/channels", payload, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/channels", "//guilds/:guild_id/channels", :post), payload, audit_log_reason: reason).wait
         Channel.make_channel(@client, data)
       end
     end
@@ -591,7 +579,7 @@ module Discorb
     #
     def fetch_active_threads
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/threads/active").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/threads/active", "//guilds/:guild_id/threads/active", :get)).wait
         data[:threads].map { |t| Channel.make_thread(@client, t) }
       end
     end
@@ -607,7 +595,7 @@ module Discorb
     #
     def fetch_member(id)
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/members/#{id}").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/members/#{id}", "//guilds/:guild_id/members/:user_id", :get)).wait
       rescue Discorb::NotFoundError
         nil
       else
@@ -627,14 +615,14 @@ module Discorb
     def fetch_members(limit: 0, after: nil)
       Async do
         unless limit == 0
-          _resp, data = @client.http.get("/guilds/#{@id}/members?#{URI.encode_www_form({ after: after, limit: limit })}").wait
+          _resp, data = @client.http.request(Route.new("/guilds/#{@id}/members?#{URI.encode_www_form({ after: after, limit: limit })}", "//guilds/:guild_id/members", :get)).wait
           next data[:members].map { |m| Member.new(@client, @id, m[:user], m) }
         end
         ret = []
         after = 0
         loop do
           params = { after: after, limit: 100 }
-          _resp, data = @client.http.get("/guilds/#{@id}/members?#{URI.encode_www_form(params)}").wait
+          _resp, data = @client.http.request(Route.new("/guilds/#{@id}/members?#{URI.encode_www_form(params)}", "//guilds/:guild_id/members", :get)).wait
           ret += data.map { |m| Member.new(@client, @id, m[:user], m) }
           after = data.last[:user][:id]
           if data.length != 1000
@@ -658,7 +646,7 @@ module Discorb
     #
     def fetch_members_named(name, limit: 1)
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/members/search?#{URI.encode_www_form({ query: name, limit: limit })}").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/members/search?#{URI.encode_www_form({ query: name, limit: limit })}", "//guilds/:guild_id/members/search", :get)).wait
         data.map { |d| Member.new(@client, @id, d[:user], d) }
       end
     end
@@ -687,7 +675,7 @@ module Discorb
     #
     def edit_nickname(nickname, reason: nil)
       Async do
-        @client.http.patch("/guilds/#{@id}/members/@me/nick", { nick: nickname }, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@id}/members/@me/nick", "//guilds/:guild_id/members/@me/nick", :patch), { nick: nickname }, audit_log_reason: reason).wait
       end
     end
 
@@ -706,7 +694,7 @@ module Discorb
     #
     def kick_member(member, reason: nil)
       Async do
-        @client.http.delete("/guilds/#{@id}/members/#{member.id}", audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@id}/members/#{member.id}", "//guilds/:guild_id/members/:user_id", :delete), audit_log_reason: reason).wait
       end
     end
 
@@ -718,7 +706,7 @@ module Discorb
     #
     def fetch_bans
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/bans").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/bans", "//guilds/:guild_id/bans", :get)).wait
         data.map { |d| Ban.new(@client, self, d) }
       end
     end
@@ -734,7 +722,7 @@ module Discorb
     #
     def fetch_ban(user)
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/bans/#{user.id}").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/bans/#{user.id}", "//guilds/:guild_id/bans/:user_id", :get)).wait
       rescue Discorb::NotFoundError
         nil
       else
@@ -768,9 +756,7 @@ module Discorb
     #
     def ban_member(member, delete_message_days: 0, reason: nil)
       Async do
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/bans", { user: member.id, delete_message_days: delete_message_days }, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/bans", "//guilds/:guild_id/bans", :post), { user: member.id, delete_message_days: delete_message_days }, audit_log_reason: reason).wait
         Ban.new(@client, self, data)
       end
     end
@@ -786,7 +772,7 @@ module Discorb
     #
     def unban_user(user, reason: nil)
       Async do
-        @client.http.delete("/guilds/#{@id}/bans/#{user.id}", audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@id}/bans/#{user.id}", "//guilds/:guild_id/bans/:user_id", :delete), audit_log_reason: reason).wait
       end
     end
 
@@ -798,7 +784,7 @@ module Discorb
     #
     def fetch_roles
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/roles").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/roles", "//guilds/:guild_id/roles", :get)).wait
         data.map { |d| Role.new(@client, self, d) }
       end
     end
@@ -822,9 +808,7 @@ module Discorb
         payload[:color] = color.to_i if color
         payload[:hoist] = hoist if hoist
         payload[:mentionable] = mentionable if mentionable
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/roles", payload, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/roles", "//guilds/:guild_id/roles", :post), payload, audit_log_reason: reason).wait
         Role.new(@client, self, data)
       end
     end
@@ -845,7 +829,7 @@ module Discorb
           include_roles: @id.to_s,
         }
         param[:include_roles] = roles.map(&:id).map(&:to_s).join(";") if roles.any?
-        _resp, data = @client.http.get("/guilds/#{@id}/prune?#{URI.encode_www_form(params)}").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/prune?#{URI.encode_www_form(params)}", "//guilds/:guild_id/prune", :get)).wait
         data[:pruned]
       end
     end
@@ -862,9 +846,7 @@ module Discorb
     #
     def prune(days = 7, roles: [], reason: nil)
       Async do
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/prune", { days: days, roles: roles.map(&:id) }, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/prune", "//guilds/:guild_id/prune", :post), { days: days, roles: roles.map(&:id) }, audit_log_reason: reason).wait
         data[:pruned]
       end
     end
@@ -877,7 +859,7 @@ module Discorb
     #
     def fetch_voice_regions
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/voice").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/voice", "//guilds/:guild_id/voice", :get)).wait
         data.map { |d| VoiceRegion.new(@client, d) }
       end
     end
@@ -890,7 +872,7 @@ module Discorb
     #
     def fetch_invites
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/invites").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/invites", "//guilds/:guild_id/invites", :get)).wait
         data.map { |d| Invite.new(@client, d) }
       end
     end
@@ -903,7 +885,7 @@ module Discorb
     #
     def fetch_integrations
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/integrations").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/integrations", "//guilds/:guild_id/integrations", :get)).wait
         data.map { |d| Integration.new(@client, d) }
       end
     end
@@ -916,7 +898,7 @@ module Discorb
     #
     def fetch_widget
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/widget").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/widget", "//guilds/:guild_id/widget", :get)).wait
         Widget.new(@client, @id, data)
       end
     end
@@ -929,7 +911,7 @@ module Discorb
     #
     def fetch_vanity_invite
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/vanity-url").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/vanity-url", "//guilds/:guild_id/vanity-url", :get)).wait
         VanityInvite.new(@client, self, data)
       end
     end
@@ -942,7 +924,7 @@ module Discorb
     #
     def fetch_welcome_screen
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/welcome-screen").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/welcome-screen", "//guilds/:guild_id/welcome-screen", :get)).wait
         WelcomeScreen.new(@client, self, data)
       end
     end
@@ -955,7 +937,7 @@ module Discorb
     #
     def fetch_stickers
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/stickers").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/stickers", "//guilds/:guild_id/stickers", :get)).wait
         data.map { |d| Sticker::GuildSticker.new(@client, d) }
       end
     end
@@ -971,7 +953,7 @@ module Discorb
     #
     def fetch_sticker(id)
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/stickers/#{id}").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/stickers/#{id}", "//guilds/:guild_id/stickers/:sticker_id", :get)).wait
       rescue Discorb::NotFoundError
         nil
       else
@@ -987,7 +969,7 @@ module Discorb
     #
     def fetch_templates
       Async do
-        _resp, data = @client.http.get("/guilds/#{@id}/templates").wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/templates", "//guilds/:guild_id/templates", :get)).wait
         data.map { |d| GuildTemplate.new(@client, d) }
       end
     end
@@ -1015,9 +997,7 @@ module Discorb
     #
     def create_template(name, description = nil, reason: nil)
       Async do
-        _resp, data = @client.http.post(
-          "/guilds/#{@id}/templates", { name: name, description: description }, audit_log_reason: reason,
-        ).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/templates", "//guilds/:guild_id/templates", :post), { name: name, description: description }, audit_log_reason: reason).wait
         GuildTemplate.new(@client, data)
       end
     end
@@ -1097,7 +1077,7 @@ module Discorb
           payload = {}
           payload[:enabled] = enabled unless enabled.nil?
           payload[:channel_id] = channel.id if channel_id
-          @client.http.patch("/guilds/#{@guild_id}/widget", payload, audit_log_reason: reason).wait
+          @client.http.request(Route.new("/guilds/#{@guild_id}/widget", "//guilds/:guild_id/widget", :patch), payload, audit_log_reason: reason).wait
         end
       end
 
@@ -1355,7 +1335,7 @@ module Discorb
           payload[:enabled] = enabled unless enabled == Discorb::Unset
           payload[:welcome_channels] = channels.map(&:to_hash) unless channels == Discorb::Unset
           payload[:description] = description unless description == Discorb::Unset
-          @client.http.patch("/guilds/#{@guild.id}/welcome-screen", payload, audit_log_reason: reason).wait
+          @client.http.request(Route.new("/guilds/#{@guild.id}/welcome-screen", "//guilds/:guild_id/welcome-screen", :patch), payload, audit_log_reason: reason).wait
         end
       end
     end

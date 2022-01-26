@@ -27,7 +27,7 @@ module Discorb
 
     # @private
     def send_complete_result(val)
-      @client.http.post("/interactions/#{@id}/#{@token}/callback", {
+      @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), {
         type: 8,
         data: {
           choices: val.map do |vk, vv|

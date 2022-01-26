@@ -38,7 +38,7 @@ module Discorb
         payload[:message_reference] = reference.to_reference if reference
         payload[:components] = Component.to_payload(components) if components
         files = [file]
-        _resp, data = @client.http.multipart_post("/channels/#{channel_id.wait}/messages", payload, files).wait
+        _resp, data = @client.http.multipart_request(Route.new("/channels/#{channel_id.wait}/messages", "//channels/:channel_id/messages", :post), payload, files).wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -74,7 +74,7 @@ module Discorb
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:components] = Component.to_payload(components) if components
         payload[:flags] = (supress ? 1 << 2 : 0) unless supress.nil?
-        @client.http.patch("/channels/#{channel_id.wait}/messages/#{message_id}", payload).wait
+        @client.http.request(Route.new("/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id", :patch), payload).wait
       end
     end
 
@@ -89,7 +89,7 @@ module Discorb
     #
     def delete_message!(message_id, reason: nil)
       Async do
-        @client.http.delete("/channels/#{channel_id.wait}/messages/#{message_id}", audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id", :delete), audit_log_reason: reason).wait
       end
     end
 
@@ -106,7 +106,7 @@ module Discorb
     #
     def fetch_message(id)
       Async do
-        _resp, data = @client.http.get("/channels/#{channel_id.wait}/messages/#{id}").wait
+        _resp, data = @client.http.request(Route.new("/channels/#{channel_id.wait}/messages/#{id}", "//channels/:channel_id/messages/:message_id", :get)).wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -130,7 +130,7 @@ module Discorb
           after: Discorb::Utils.try(around, :id),
           around: Discorb::Utils.try(before, :id),
         }.filter { |_k, v| !v.nil? }.to_h
-        _resp, messages = @client.http.get("/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}").wait
+        _resp, messages = @client.http.request(Route.new("/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}", "//channels/:channel_id/messages", :get)).wait
         messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
       end
     end
@@ -143,7 +143,7 @@ module Discorb
     #
     def fetch_pins
       Async do
-        _resp, data = @client.http.get("/channels/#{channel_id.wait}/pins").wait
+        _resp, data = @client.http.request(Route.new("/channels/#{channel_id.wait}/pins", "//channels/:channel_id/pins", :get)).wait
         data.map { |pin| Message.new(@client, pin) }
       end
     end
@@ -159,7 +159,7 @@ module Discorb
     #
     def pin_message(message, reason: nil)
       Async do
-        @client.http.put("/channels/#{channel_id.wait}/pins/#{message.id}", {}, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{channel_id.wait}/pins/#{message.id}", "//channels/:channel_id/pins/:message_id", :put), {}, audit_log_reason: reason).wait
       end
     end
 
@@ -174,7 +174,7 @@ module Discorb
     #
     def unpin_message(message, reason: nil)
       Async do
-        @client.http.delete("/channels/#{channel_id.wait}/pins/#{message.id}", audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{channel_id.wait}/pins/#{message.id}", "//channels/:channel_id/pins/:message_id", :delete), audit_log_reason: reason).wait
       end
     end
 
@@ -195,7 +195,7 @@ module Discorb
         begin
           post_task = Async do
             loop do
-              @client.http.post("/channels/#{@id}/typing", {})
+              @client.http.request(Route.new("/channels/#{@id}/typing", "//channels/:channel_id/typing", :post), {})
               sleep(5)
             end
           end
@@ -205,7 +205,7 @@ module Discorb
         end
       else
         Async do |task|
-          @client.http.post("/channels/#{@id}/typing", {})
+          @client.http.request(Route.new("/channels/#{@id}/typing", "//channels/:channel_id/typing", :post), {})
         end
       end
     end
