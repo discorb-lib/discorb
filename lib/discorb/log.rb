@@ -75,6 +75,7 @@ module Discorb
       else
         @out.write("#{time} #{name.ljust(5)} #{message}\n")
       end
+      @out.flush
     end
   end
 end
