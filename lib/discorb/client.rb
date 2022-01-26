@@ -63,7 +63,7 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions that the client is using.
     # @param [Discorb::Intents] intents The intents that the client is currently using.
     # @param [Integer] message_caches The number of messages to cache.
-    # @param [#puts] log The IO object to use for logging.
+    # @param [#write] log The IO object to use for logging.
     # @param [Boolean] colorize_log Whether to colorize the log.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
