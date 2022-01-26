@@ -1,0 +1,45 @@
+{
+  "t": "READY",
+  "s": 1,
+  "op": 0,
+  "d": {
+    "v": 9,
+    "user_settings": {},
+    "user": {
+      "verified": true,
+      "username": "test bot lol",
+      "mfa_enabled": true,
+      "id": "804818670974402591",
+      "flags": 0,
+      "email": null,
+      "discriminator": "6736",
+      "bot": true,
+      "avatar": null
+    },
+    "session_id": "c060b403386bdd7c3487b15c620b4a91",
+    "relationships": [],
+    "private_channels": [],
+    "presences": [],
+    "guilds": [
+      {
+        "unavailable": true,
+        "id": "857373681096327180"
+      }
+    ],
+    "guild_join_requests": [],
+    "geo_ordered_rtc_regions": [
+      "japan",
+      "hongkong",
+      "singapore",
+      "india",
+      "russia"
+    ],
+    "application": {
+      "id": "804818670974402591",
+      "flags": 303104
+    },
+    "_trace": [
+      "[\"gateway-prd-main-b5mb\",{\"micros\":109104,\"calls\":[\"discord-sessions-blue-prd-2-62\",{\"micros\":107322,\"calls\":[\"start_session\",{\"micros\":48014,\"calls\":[\"api-prd-main-mkcg\",{\"micros\":44369,\"calls\":[\"get_user\",{\"micros\":4772},\"add_authorized_ip\",{\"micros\":1447},\"get_guilds\",{\"micros\":7935},\"coros_wait\",{\"micros\":1}]}]},\"guilds_connect\",{\"micros\":2,\"calls\":[]},\"presence_connect\",{\"micros\":27087,\"calls\":[]}]}]}]"
+    ]
+  }
+}
