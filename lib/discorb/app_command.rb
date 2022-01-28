@@ -129,12 +129,20 @@ module Discorb
           end
           final_guild_ids = local_commands.map(&:guild_ids).flatten.map(&:to_s).uniq
           app_info = fetch_application.wait
-          @http.request(Route.new(
-            "/applications/#{app_info.id}/commands",
-            "//applications/:application_id/commands",
-            :put
-          ),
-                        global_commands.map(&:to_hash)).wait unless global_commands.empty?
+          @http.request(
+            Route.new(
+              "/applications/#{app_info.id}/commands",
+              "//applications/:application_id/commands",
+              :put
+            ),
+            global_commands.map(&:to_hash)
+          ).wait unless global_commands.empty?
+          if ENV["DISCORB_CLI_FLAG"] == "setup"
+            sputs "Registered commands for global:"
+            global_commands.each do |command|
+              iputs "- #{command.name}"
+            end
+          end
           final_guild_ids.each do |guild_id|
             commands = local_commands.select { |c| c.guild_ids.include?(guild_id) }
             @http.request(
@@ -143,6 +151,10 @@ module Discorb
                         :put),
               commands.map(&:to_hash)
             ).wait
+            sputs "Registered commands for #{guild_id}:"
+            commands.each do |command|
+              iputs "- #{command.name}"
+            end
           end unless final_guild_ids.empty?
           @log.info "Successfully setup commands"
         end
