@@ -175,12 +175,12 @@ module Discorb
       # Represents the assets of an activity.
       #
       class Asset < DiscordModel
-        # @return [String] The large image ID of the asset.
+        # @return [String] The large image ID or URL of the asset.
         attr_reader :large_image
         alias large_id large_image
         # @return [String] The large text of the activity.
         attr_reader :large_text
-        # @return [String] The small image ID of the activity.
+        # @return [String] The small image ID or URL of the activity.
         attr_reader :small_image
         alias small_id small_image
         # @return [String] The small text of the activity.
