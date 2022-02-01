@@ -137,7 +137,7 @@ module Discorb
       @avatar = data[:avatar] ? Asset.new(self, data[:avatar]) : DefaultAvatar.new(data[:discriminator])
       @bot = data[:bot]
       @raw_data = data
-      @client.users[@id] = self if !data[:no_cache] && data.is_a?(User)
+      @client.users[@id] = self if !data[:no_cache]
       @created_at = @id.timestamp
       @data.update(data)
     end
