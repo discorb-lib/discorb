@@ -528,20 +528,16 @@ module Discorb
     module Handler
       private
 
-      def connect_gateway(reconnect, force_close: false)
+      def connect_gateway(reconnect)
         if reconnect
           @log.info "Reconnecting to gateway..."
         else
           @log.info "Connecting to gateway..."
         end
         Async do
-          if @connection
+          if @connection and !@connection.closed?
             Async do
-              if force_close
-                @connection.force_close
-              else
-                @connection.close
-              end
+              @connection.close
             end
           end
           @http = HTTP.new(self)
@@ -578,7 +574,8 @@ module Discorb
                    Errno::ECONNRESET,
                    IOError => e
               @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
-              connect_gateway(true, force_close: true)
+              @connection.force_close
+              connect_gateway(true)
             else # should never happen
               connect_gateway(true)
             end
@@ -610,6 +607,7 @@ module Discorb
             end
           rescue => e
             @log.error "Discord WebSocket error: #{e.full_message}"
+            @connection.force_close
             connect_gateway(false)
           end
         end
@@ -648,7 +646,7 @@ module Discorb
               send_gateway(2, **payload)
             end
           when 7
-            @log.info "Received opcode 7, reconnecting"
+            @log.info "Received opcode 7, stopping tasks"
             @tasks.map(&:stop)
           when 9
             @log.warn "Received opcode 9, closed connection"
@@ -1187,7 +1185,7 @@ module Discorb
       end
 
       def force_close
-        @framer.instance_variable_get(:@stream).close
+        @framer.instance_variable_get(:@stream).instance_variable_get(:@io).instance_variable_get(:@io).instance_variable_get(:@io).close
         @closed = true
       end
 
