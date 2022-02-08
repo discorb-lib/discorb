@@ -4,7 +4,7 @@ require_relative "common"
 
 RSpec.describe "Discorb::Client" do
   include_context "mocks"
-  context "#run" do
+  context "gateway" do
     it "should connect to gateway" do
       client = Discorb::Client.new(log_level: :debug)
       allow(client).to receive(:http).and_return(http)
@@ -13,14 +13,14 @@ RSpec.describe "Discorb::Client" do
         expect({
           opcode: opcode,
           payload: payload,
-        }).to eq(@next_gateway_request)
+        }).to eq($next_gateway_request)
       }
       class << client
         attr_accessor :next_gateway_request, :token
         public :handle_gateway
       end
 
-      @next_gateway_request = {
+      $next_gateway_request = {
         opcode: 2,
         payload: {
           compress: false, intents: Discorb::Intents.default.value,
@@ -44,44 +44,45 @@ RSpec.describe "Discorb::Client" do
       ).wait
       expect(client.instance_variable_get(:@ready)).to be true
     end
+    it "should send valid payload to change presence" do
+      client  # initialize client
+      %i[online idle dnd offline].each do |status|
+        expect_gateway_request(
+          3,
+          activities: [],
+          status: status,
+          afk: nil,
+          since: nil,
+
+        )
+        client.change_presence(status: status).wait
+      end
+    end
   end
   context "#fetch_xxx" do
-    it "should request to GET /channels/:channel_id" do
-      expect_request(:get, "/channels/875268362790400000") {
+    it "should request to GET /guilds/:guild_id" do
+      expect_request(:get, "/guilds/863581274916913193") {
         {
           code: 200,
-          body: {
-            banner: nil,
-            guild_id: "857373681096327180",
-            id: "875268362790400000",
-            last_message_id: "905198643630456892",
-            name: "Test",
-            nsfw: false,
-            parent_id: nil,
-            permission_overwrites: [],
-            position: 10,
-            rate_limit_per_user: 0,
-            topic: nil,
-            type: 0,
-          },
+          body: File.read("#{__dir__}/payloads/guild.json").then { JSON.parse(_1, symbolize_names: true) },
         }
       }
-      client.fetch_channel(875268362790400000).wait
+      client.fetch_guild(863581274916913193).wait
+    end
+    it "should request to GET /channels/:channel_id" do
+      expect_request(:get, "/channels/863581274916913196") {
+        {
+          code: 200,
+          body: File.read("#{__dir__}/payloads/channels/text_channel.json").then { JSON.parse(_1, symbolize_names: true) },
+        }
+      }
+      client.fetch_channel(863581274916913196).wait
     end
     it "should request to GET /users/:user_id" do
       expect_request(:get, "/users/686547120534454315") {
         {
           code: 200,
-          body: {
-            accent_color: 4763861,
-            avatar: "a_8d1e355edd6a291d70e1cc75c0d31252",
-            banner: nil,
-            banner_color: "#48b0d5",
-            discriminator: "7740",
-            id: "686547120534454315",
-            public_flags: 64,
-            username: "Nanashi.",
-          },
+          body: File.read("#{__dir__}/payloads/users/user.json").then { JSON.parse(_1, symbolize_names: true) },
         }
       }
       client.fetch_user(686547120534454315).wait

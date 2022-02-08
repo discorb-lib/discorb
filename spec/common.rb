@@ -5,20 +5,19 @@ require "async"
 Response = Struct.new(:code, :body)
 RSpec.shared_context "mocks" do
   def expect_request(method, path, body: nil, headers: nil, &response)
-    @next_request = {
+    $next_request = {
       method: method,
       path: path,
       body: body,
       headers: headers,
     }
-    @next_response = response
+    $next_response = response
   end
 
   def expect_gateway_request(opcode, payload)
-    @next_gateway_request = {
-      opcode: opcode,
-      payload: payload,
-    }
+    $next_gateway_request.clear
+    $next_gateway_request[:opcode] = opcode
+    $next_gateway_request[:payload] = payload
   end
 
   let(:http) do
@@ -29,9 +28,9 @@ RSpec.shared_context "mocks" do
         path: path.url,
         body: nil,
         headers: headers,
-      }).to eq(@next_request)
+      }).to eq($next_request)
       Async do
-        data = @next_response.call
+        data = $next_response.call
         [Response.new(data[:code], data[:body]), data[:body]]
       end
     }
@@ -41,23 +40,21 @@ RSpec.shared_context "mocks" do
   let(:client) {
     client = Discorb::Client.new
     client.instance_variable_set(:@http, http)
+    client.instance_variable_set(:@connection, :dummy)
     allow(client).to receive(:http).and_return(http)
     allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
-
     allow(client).to receive(:send_gateway) { |opcode, **payload|
       expect({
         opcode: opcode,
         payload: payload,
-      }).to eq(@next_gateway_request)
+      }).to eq($next_gateway_request) if $next_gateway_request
     }
 
-    @next_gateway_request = {
-      opcode: 2,
-      payload: {
-        compress: false, intents: Discorb::Intents.default.value,
-        properties: { "$browser" => "discorb", "$device" => "discorb", "$os" => RUBY_PLATFORM },
-        token: "Token",
-      },
+    $next_gateway_request[:opcode] = 2
+    $next_gateway_request[:payload] = {
+      compress: false, intents: Discorb::Intents.default.value,
+      properties: { "$browser" => "discorb", "$device" => "discorb", "$os" => RUBY_PLATFORM },
+      token: "Token",
     }
 
     class << client

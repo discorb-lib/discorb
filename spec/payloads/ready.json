@@ -7,23 +7,23 @@
     "user_settings": {},
     "user": {
       "verified": true,
-      "username": "test bot lol",
+      "username": "discorb manager",
       "mfa_enabled": true,
-      "id": "804818670974402591",
+      "id": "863585556054147092",
       "flags": 0,
       "email": null,
-      "discriminator": "6736",
+      "discriminator": "4008",
       "bot": true,
-      "avatar": null
+      "avatar": "2ddeadb972532897f18179f50ccca4d8"
     },
-    "session_id": "c060b403386bdd7c3487b15c620b4a91",
+    "session_id": "02a2489c16c1f5d07ae0f33819277143",
     "relationships": [],
     "private_channels": [],
     "presences": [],
     "guilds": [
       {
         "unavailable": true,
-        "id": "857373681096327180"
+        "id": "863581274916913193"
       }
     ],
     "guild_join_requests": [],
@@ -35,11 +35,11 @@
       "russia"
     ],
     "application": {
-      "id": "804818670974402591",
+      "id": "863585556054147092",
       "flags": 303104
     },
     "_trace": [
-      "[\"gateway-prd-main-b5mb\",{\"micros\":109104,\"calls\":[\"discord-sessions-blue-prd-2-62\",{\"micros\":107322,\"calls\":[\"start_session\",{\"micros\":48014,\"calls\":[\"api-prd-main-mkcg\",{\"micros\":44369,\"calls\":[\"get_user\",{\"micros\":4772},\"add_authorized_ip\",{\"micros\":1447},\"get_guilds\",{\"micros\":7935},\"coros_wait\",{\"micros\":1}]}]},\"guilds_connect\",{\"micros\":2,\"calls\":[]},\"presence_connect\",{\"micros\":27087,\"calls\":[]}]}]}]"
+      "[\"gateway-prd-main-zzkj\",{\"micros\":76852,\"calls\":[\"discord-sessions-blue-prd-2-56\",{\"micros\":75051,\"calls\":[\"start_session\",{\"micros\":46333,\"calls\":[\"api-prd-main-vwwt\",{\"micros\":37416,\"calls\":[\"get_user\",{\"micros\":7314},\"add_authorized_ip\",{\"micros\":2336},\"get_guilds\",{\"micros\":7483},\"coros_wait\",{\"micros\":2}]}]},\"guilds_connect\",{\"micros\":2,\"calls\":[]},\"presence_connect\",{\"micros\":0,\"calls\":[]}]}]}]"
     ]
   }
 }
