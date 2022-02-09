@@ -262,6 +262,8 @@ module Discorb
                 9
               when Float, :float
                 10
+              when :attachment
+                11
               else
                 raise ArgumentError, "Invalid option type: #{value[:type]}"
               end,

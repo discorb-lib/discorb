@@ -27,7 +27,7 @@ module Discorb
         end
 
         option_map = command.options.map { |k, v| [k.to_s, v[:default]] }.to_h
-        SlashCommand.modify_option_map(option_map, options, guild)
+        SlashCommand.modify_option_map(option_map, options, guild, @attachments)
 
         command.block.call(self, *command.options.map { |k, v| option_map[k.to_s] })
       end
@@ -60,7 +60,7 @@ module Discorb
         end
 
         # @private
-        def modify_option_map(option_map, options, guild)
+        def modify_option_map(option_map, options, guild, attachments)
           options ||= []
           options.each_with_index do |option|
             val = case option[:type]
@@ -74,6 +74,8 @@ module Discorb
                 guild.roles[option[:value]] || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
               when 9
                 guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+              when 11
+                attachments[option[:value]]
               end
             option_map[option[:name]] = val
           end
@@ -93,6 +95,7 @@ module Discorb
       private
 
       def _set_data(data)
+        super
         @target = guild.members[data[:target_id]] || Discorb::Member.new(@client, @guild_id, data[:resolved][:users][data[:target_id].to_sym], data[:resolved][:members][data[:target_id].to_sym])
         @client.commands.find { |c| c.name == data[:name] && c.type_raw == 2 }.block.call(self, @target)
       end
@@ -110,7 +113,8 @@ module Discorb
       private
 
       def _set_data(data)
-        @target = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s))
+        super
+        @target = @messages[data[:target_id]]
         @client.commands.find { |c| c.name == data[:name] && c.type_raw == 3 }.block.call(self, @target)
       end
     end
@@ -118,7 +122,22 @@ module Discorb
     private
 
     def _set_data(data)
+      super
       @name = data[:name]
+      data[:resolved][:users]&.each do |id, user|
+        @client.users[id] = Discorb::User.new(@client, user)
+      end
+      data[:resolved][:members]&.each do |id, member|
+        @client.members[id] = Discorb::Member.new(
+          @client, @guild_id, data[:resolved][:users][id], member
+        )
+      end
+      @messages = data[:resolved][:messages]&.to_h do |id, message|
+        [id.to_s, Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s)).merge(guild_id: @guild_id.to_s)]
+      end || {}
+      @attachments = data[:resolved][:attachments]&.to_h do |id, attachment|
+        [id.to_s, Attachment.new(attachment)]
+      end || {}
     end
 
     class << self
