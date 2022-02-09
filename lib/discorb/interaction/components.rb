@@ -7,6 +7,8 @@ module Discorb
   class MessageComponentInteraction < Interaction
     include Interaction::SourceResponse
     include Interaction::UpdateResponse
+    include Interaction::ModalResponse
+
     # @return [String] The content of the response.
     attr_reader :custom_id
     # @return [Discorb::Message] The target message.

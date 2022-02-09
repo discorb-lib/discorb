@@ -1094,7 +1094,7 @@ module Discorb
           dispatch(:typing_start, TypingStartEvent.new(self, data))
         when "INTERACTION_CREATE"
           interaction = Interaction.make_interaction(self, data)
-          dispatch(:integration_create, interaction)
+          dispatch(:interaction_create, interaction)
 
           dispatch(interaction.class.event_name, interaction)
         when "RESUMED"

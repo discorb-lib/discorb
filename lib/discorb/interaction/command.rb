@@ -6,6 +6,7 @@ module Discorb
     @interaction_type = 2
     @interaction_name = :application_command
     include Interaction::SourceResponse
+    include Interaction::ModalResponse
 
     #
     # Represents a slash command interaction.
