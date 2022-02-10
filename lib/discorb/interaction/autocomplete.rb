@@ -18,7 +18,7 @@ module Discorb
         end
 
         option_map = command.options.map { |k, v| [k.to_s, v[:default]] }.to_h
-        Discorb::CommandInteraction::SlashCommand.modify_option_map(option_map, options, guild)
+        Discorb::CommandInteraction::SlashCommand.modify_option_map(option_map, options, guild, {})
         focused_index = options.find_index { |o| o[:focused] }
         val = command.options.values[focused_index][:autocomplete]&.call(self, *command.options.map { |k, v| option_map[k.to_s] })
         send_complete_result(val)
