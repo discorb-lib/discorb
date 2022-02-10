@@ -124,20 +124,24 @@ module Discorb
     def _set_data(data)
       super
       @name = data[:name]
-      data[:resolved][:users]&.each do |id, user|
-        @client.users[id] = Discorb::User.new(@client, user)
+      if data[:resolved]
+        data[:resolved][:users]&.each do |id, user|
+          @client.users[id] = Discorb::User.new(@client, user)
+        end
+        data[:resolved][:members]&.each do |id, member|
+          @client.members[id] = Discorb::Member.new(
+            @client, @guild_id, data[:resolved][:users][id], member
+          )
+        end
+        @messages = data[:resolved][:messages]&.to_h do |id, message|
+          [id.to_s, Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s)).merge(guild_id: @guild_id.to_s)]
+        end || {}
+        @attachments = data[:resolved][:attachments]&.to_h do |id, attachment|
+          [id.to_s, Attachment.new(attachment)]
+        end || {}
+      else
+        @messages, @attachments = {}, {}
       end
-      data[:resolved][:members]&.each do |id, member|
-        @client.members[id] = Discorb::Member.new(
-          @client, @guild_id, data[:resolved][:users][id], member
-        )
-      end
-      @messages = data[:resolved][:messages]&.to_h do |id, message|
-        [id.to_s, Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s)).merge(guild_id: @guild_id.to_s)]
-      end || {}
-      @attachments = data[:resolved][:attachments]&.to_h do |id, attachment|
-        [id.to_s, Attachment.new(attachment)]
-      end || {}
     end
 
     class << self
