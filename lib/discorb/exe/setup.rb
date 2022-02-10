@@ -6,6 +6,7 @@ ARGV.delete_at 0
 
 options = {
   guilds: nil,
+  script: true,
 }
 
 opt = OptionParser.new <<~BANNER
@@ -16,6 +17,7 @@ opt = OptionParser.new <<~BANNER
                                    script                     The script to setup.
                        BANNER
 opt.on("-g", "--guild ID", Array, "The guild ID to setup, use comma for setup commands in multiple guilds, or `global` for setup global commands.") { |v| options[:guilds] = v }
+opt.on("-s", "--[no-]script", "Whether to run `:setup` event. This may be useful if setup script includes operation that shouldn't run twice. Default to true.") { |v| options[:script] = v }
 opt.parse!(ARGV)
 
 script = ARGV[0]
@@ -29,6 +31,8 @@ elsif options[:guilds]
 else
   ENV["DISCORB_SETUP_GUILDS"] = nil
 end
+
+ENV["DISCORB_SETUP_SCRIPT"] = options[:script].to_s if options[:script]
 
 begin
   load script
