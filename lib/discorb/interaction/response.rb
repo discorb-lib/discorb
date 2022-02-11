@@ -181,6 +181,25 @@ module Discorb
       end
     end
 
+    module ModalResponse
+      #
+      # Response with `MODAL`(`9`).
+      #
+      # @param [String] title The title of the modal.
+      # @param [String] custom_id The custom id of the modal.
+      # @param [Array<Discorb::TextInput>] components The text inputs to send.
+      #
+      # @return [Async::Task<void>] The task.
+      #
+      def show_modal(title, custom_id, components)
+        payload = { title: title, custom_id: custom_id, components: Component.to_payload(components) }
+        @client.http.request(
+          Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post),
+          { type: 9, data: payload }
+        ).wait
+      end
+    end
+
     private
 
     def _set_data(*)

@@ -6,6 +6,14 @@
 
 ## v0.13
 
+### v0.13.4
+
+- Add: Show command on `discorb setup`
+- Fix: Fix issue when logging in to file(#6, thanks `deanpcmad`)
+- Fix: Fix rate limit handing
+- Fix: Fix `Client#users`, it was always empty
+- Fix: Fix sorting dictionary
+
 ### v0.13.3
 
 - Fix: Fix INTEGRATION_xxx event
