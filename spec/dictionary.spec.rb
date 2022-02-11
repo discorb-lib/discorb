@@ -8,10 +8,10 @@ RSpec.describe "Discorb::Dictionary" do
     )
   }
   context ".new" do
-    it "should create an empty dictionary" do
+    it "creates an empty dictionary" do
       expect { Discorb::Dictionary.new }.to_not raise_error
     end
-    it "should create with elements" do
+    it "creates with elements" do
       expect {
         Discorb::Dictionary.new(
           { foo: :bar, fizz: :buzz }
@@ -20,14 +20,14 @@ RSpec.describe "Discorb::Dictionary" do
     end
   end
   context "#[]" do
-    it "should transform non-string keys to strings" do
+    it "transforms non-string keys to strings" do
       expect(dict[:foo]).to be :bar
       expect(dict["foo"]).to be :bar
     end
-    it "should return value with integer index" do
+    it "returns value with integer index" do
       expect(dict[0]).to be :bar
     end
-    it "should sort keys" do
+    it "sorts keys" do
       new_dict = Discorb::Dictionary.new(
         { hoge: :fuga, foo: :bar, fizz: :buzz },
         sort: proc { |a, b| a.to_s },
@@ -36,7 +36,7 @@ RSpec.describe "Discorb::Dictionary" do
       new_dict[:a] = :b
       expect(new_dict[0]).to be :b
     end
-    it "should follow limits" do
+    it "follows limits" do
       new_dict = Discorb::Dictionary.new(
         { hoge: :fuga, foo: :bar, fizz: :buzz },
         limit: 4,
@@ -48,7 +48,7 @@ RSpec.describe "Discorb::Dictionary" do
     end
   end
   context "#to_h" do
-    it "should return hash" do
+    it "returns hash" do
       expect(dict.to_h).to eq({
         "foo" => :bar,
         "fizz" => :buzz,
@@ -57,7 +57,7 @@ RSpec.describe "Discorb::Dictionary" do
     end
   end
   context "#values" do
-    it "should return values" do
+    it "returns values" do
       expect(dict.values).to eq [:bar, :buzz, :fuga]
     end
   end
@@ -69,7 +69,7 @@ RSpec.describe "Discorb::Dictionary" do
     end
   end
   context "#merge" do
-    it "should merge dictionary" do
+    it "merges dictionary" do
       dict2 = Discorb::Dictionary.new(
         { piyo: :poyo, fizz: :buzz2 }
       )
@@ -80,7 +80,7 @@ RSpec.describe "Discorb::Dictionary" do
     end
   end
   context "#remove" do
-    it "should remove item" do
+    it "removes item" do
       dict.remove("foo")
       expect(dict.to_h).to eq(
         { "fizz" => :buzz, "hoge" => :fuga }

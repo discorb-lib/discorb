@@ -5,7 +5,7 @@ require_relative "common"
 RSpec.describe "Discorb::Client" do
   include_context "mocks"
   context "gateway" do
-    it "should connect to gateway" do
+    it "connects to gateway" do
       client = Discorb::Client.new(log_level: :debug)
       allow(client).to receive(:http).and_return(http)
       allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
@@ -44,7 +44,7 @@ RSpec.describe "Discorb::Client" do
       ).wait
       expect(client.instance_variable_get(:@ready)).to be true
     end
-    it "should send valid payload to change presence" do
+    it "sends valid payload to change presence" do
       client  # initialize client
       %i[online idle dnd offline].each do |status|
         expect_gateway_request(
@@ -60,7 +60,7 @@ RSpec.describe "Discorb::Client" do
     end
   end
   context "#fetch_xxx" do
-    it "should request to GET /guilds/:guild_id" do
+    it "requests to GET /guilds/:guild_id" do
       expect_request(:get, "/guilds/863581274916913193") {
         {
           code: 200,
@@ -69,7 +69,7 @@ RSpec.describe "Discorb::Client" do
       }
       client.fetch_guild(863581274916913193).wait
     end
-    it "should request to GET /channels/:channel_id" do
+    it "requests to GET /channels/:channel_id" do
       expect_request(:get, "/channels/863581274916913196") {
         {
           code: 200,
@@ -78,7 +78,7 @@ RSpec.describe "Discorb::Client" do
       }
       client.fetch_channel(863581274916913196).wait
     end
-    it "should request to GET /users/:user_id" do
+    it "requests to GET /users/:user_id" do
       expect_request(:get, "/users/686547120534454315") {
         {
           code: 200,
