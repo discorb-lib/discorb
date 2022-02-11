@@ -22,4 +22,5 @@ end
 
 group :ci do
   gem "rspec", "~> 3.10"
+  gem "async-rspec", "~> 1.16"
 end

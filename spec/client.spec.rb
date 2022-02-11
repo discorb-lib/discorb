@@ -1,9 +1,11 @@
 require "rspec"
 require "discorb"
+require "async/rspec"
 require_relative "common"
 
 RSpec.describe "Discorb::Client" do
   include_context "mocks"
+  include_context Async::RSpec::Reactor
   context "gateway" do
     it "connects to gateway" do
       client = Discorb::Client.new(log_level: :debug)
@@ -86,6 +88,47 @@ RSpec.describe "Discorb::Client" do
         }
       }
       client.fetch_user(686547120534454315).wait
+    end
+  end
+  context "events" do
+    it "registers an event handler" do
+      cond = Async::Condition.new
+      client.on :test do
+        cond.signal true
+      end
+      Async do
+        sleep 0.1
+        client.dispatch :test
+      end
+      expect(cond.wait).to be true
+    end
+    it "registers an event handler that will be run once" do
+      timeouted = false
+      cond = Async::Condition.new
+      client.once :test do
+        cond.signal true
+      end
+      client.dispatch :test
+      Async do |task|
+        task.with_timeout(0.1) do
+          cond.wait
+        rescue Async::TimeoutError
+          timeouted = true
+        end
+      end.wait
+      expect(timeouted).to be true
+    end
+    it "returns the task that stops until the event is fired" do
+      task = client.event_lock(:event)
+      Async do
+        client.dispatch(:event, 1)
+      end
+      expect(task.wait).to eq 1
+    end
+    it "raises timeout error" do
+      expect {
+        client.event_lock(:event, 0.1).wait
+      }.to raise_error(Discorb::TimeoutError)
     end
   end
 end
