@@ -27,7 +27,7 @@ module Discorb
         end
 
         option_map = command.options.map { |k, v| [k.to_s, v[:default]] }.to_h
-        SlashCommand.modify_option_map(option_map, options, guild, @attachments)
+        SlashCommand.modify_option_map(option_map, options, guild, @members, @attachments)
 
         command.block.call(self, *command.options.map { |k, v| option_map[k.to_s] })
       end
@@ -60,7 +60,7 @@ module Discorb
         end
 
         # @private
-        def modify_option_map(option_map, options, guild, attachments)
+        def modify_option_map(option_map, options, guild, members, attachments)
           options ||= []
           options.each_with_index do |option|
             val = case option[:type]
@@ -73,7 +73,7 @@ module Discorb
               when 8
                 guild.roles[option[:value]] || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
               when 9
-                guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+                members[option[:value]] || guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
               when 11
                 attachments[option[:value]]
               end
@@ -129,18 +129,18 @@ module Discorb
           @client.users[id] = Discorb::User.new(@client, user)
         end
         data[:resolved][:members]&.each do |id, member|
-          @client.members[id] = Discorb::Member.new(
+          @members[id] = Discorb::Member.new(
             @client, @guild_id, data[:resolved][:users][id], member
           )
         end
-        @messages = data[:resolved][:messages]&.to_h do |id, message|
-          [id.to_s, Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s)).merge(guild_id: @guild_id.to_s)]
-        end || {}
-        @attachments = data[:resolved][:attachments]&.to_h do |id, attachment|
-          [id.to_s, Attachment.new(attachment)]
-        end || {}
+        data[:resolved][:messages]&.to_h do |id, message|
+          @messages[id.to_i] = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s)).merge(guild_id: @guild_id.to_s)
+        end
+        data[:resolved][:attachments]&.to_h do |id, attachment|
+          @attachments[id.to_s] = Attachment.new(attachment)
+        end
       else
-        @messages, @attachments = {}, {}
+        @messages, @attachments, @members = {}, {}, {}
       end
     end
 
