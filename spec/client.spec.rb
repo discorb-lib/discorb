@@ -89,6 +89,24 @@ RSpec.describe "Discorb::Client" do
       }
       client.fetch_user(686547120534454315).wait
     end
+    it "requests to GET /invites/:code" do
+      expect_request(:get, "/invites/hCP6zq8Vpj?with_count=true&with_expiration=true") {
+        {
+          code: 200,
+          body: File.read("#{__dir__}/payloads/invite.json").then { JSON.parse(_1, symbolize_names: true) },
+        }
+      }
+      client.fetch_invite("hCP6zq8Vpj").wait
+    end
+    it "requests to GET /sticker-packs" do
+      expect_request(:get, "/sticker-packs") {
+        {
+          code: 200,
+          body: File.read("#{__dir__}/payloads/sticker_packs.json").then { JSON.parse(_1, symbolize_names: true) },
+        }
+      }
+      client.fetch_nitro_sticker_packs.wait
+    end
   end
   context "events" do
     it "registers an event handler" do
@@ -111,6 +129,7 @@ RSpec.describe "Discorb::Client" do
       client.dispatch :test
       Async do |task|
         task.with_timeout(0.1) do
+          Async { sleep 0; client.dispatch :test }
           cond.wait
         rescue Async::TimeoutError
           timeouted = true
