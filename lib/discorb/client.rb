@@ -261,7 +261,7 @@ module Discorb
     #
     # @return [Async::Task<Discorb::Invite>] The invite.
     #
-    def fetch_invite(code, with_count: false, with_expiration: false)
+    def fetch_invite(code, with_count: true, with_expiration: true)
       Async do
         _resp, data = @http.request(Route.new("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}", "//invites/:code", :get)).wait
         Invite.new(self, data, false)
@@ -295,8 +295,8 @@ module Discorb
     #
     def fetch_nitro_sticker_packs
       Async do
-        _resp, data = @http.request(Route.new("/stickers-packs", "//stickers-packs", :get)).wait
-        data.map { |pack| Sticker::Pack.new(self, pack) }
+        _resp, data = @http.request(Route.new("/sticker-packs", "//sticker-packs", :get)).wait
+        data[:sticker_packs].map { |pack| Sticker::Pack.new(self, pack) }
       end
     end
 
