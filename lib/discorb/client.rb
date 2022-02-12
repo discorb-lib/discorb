@@ -295,8 +295,8 @@ module Discorb
     #
     def fetch_nitro_sticker_packs
       Async do
-        _resp, data = @http.request(Route.new("/stickers-packs", "//stickers-packs", :get)).wait
-        data.map { |pack| Sticker::Pack.new(self, pack) }
+        _resp, data = @http.request(Route.new("/sticker-packs", "//sticker-packs", :get)).wait
+        data[:sticker_packs].map { |pack| Sticker::Pack.new(self, pack) }
       end
     end
 
