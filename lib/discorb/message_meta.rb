@@ -1,5 +1,5 @@
 module Discorb
-  class Message
+  class Message < DiscordModel
     #
     # Represents message flag.
     # ## Flag fields
