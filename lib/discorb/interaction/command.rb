@@ -124,6 +124,8 @@ module Discorb
     def _set_data(data)
       super
       @name = data[:name]
+      @messages, @attachments, @members = {}, {}, {}
+
       if data[:resolved]
         data[:resolved][:users]&.each do |id, user|
           @client.users[id] = Discorb::User.new(@client, user)
@@ -139,8 +141,6 @@ module Discorb
         data[:resolved][:attachments]&.to_h do |id, attachment|
           @attachments[id.to_s] = Attachment.new(attachment)
         end
-      else
-        @messages, @attachments, @members = {}, {}, {}
       end
     end
 

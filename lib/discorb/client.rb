@@ -398,12 +398,20 @@ module Discorb
       ins.class.commands.each do |cmd|
         cmd.define_singleton_method(:extension) { ins.class.name }
         cmd.replace_block(ins)
+        cmd.block.define_singleton_method(:self_replaced) { true }
         @commands << cmd
       end
 
       cls = ins.class
       cls.loaded(self, ...) if cls.respond_to? :loaded
-      @bottom_commands += ins.class.bottom_commands
+      ins.class.bottom_commands.each do |cmd|
+        unless cmd.respond_to? :self_replaced
+          cmd.define_singleton_method(:extension) { ins.class.name }
+          cmd.replace_block(ins)
+          cmd.block.define_singleton_method(:self_replaced) { true }
+        end
+        @bottom_commands << cmd
+      end
       @extensions[ins.class.name] = ins
       ins
     end
