@@ -323,3 +323,7 @@ task :rbs do
 end
 
 task :document => %i[document:yard document:replace]
+
+task :lint do
+  sh "rubocop lib"
+end

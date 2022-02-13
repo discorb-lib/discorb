@@ -19,3 +19,7 @@ group :docs, optional: true do
   gem "crowdin-api", "~> 1.0"
   gem "rubyzip", "~> 2.3"
 end
+
+group :lint, optional: true do
+  gem "rubocop", "~> 1.25"
+end
