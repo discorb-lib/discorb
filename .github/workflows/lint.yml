@@ -14,4 +14,4 @@ jobs:
       - name: rubocop
         uses: reviewdog/action-rubocop@v2
         with:
-          rubocop_version: Gemfile
+          rubocop_version: 1.25
