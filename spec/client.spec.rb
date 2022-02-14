@@ -3,9 +3,7 @@ require "discorb"
 require "async/rspec"
 require_relative "common"
 
-RSpec.describe "Discorb::Client" do
-  include_context "mocks"
-  include_context Async::RSpec::Reactor
+RSpec.describe Discorb::Client do
   context "gateway" do
     it "connects to gateway" do
       client = Discorb::Client.new(log_level: :debug)
@@ -53,9 +51,7 @@ RSpec.describe "Discorb::Client" do
           3,
           activities: [],
           status: status,
-          afk: nil,
           since: nil,
-
         )
         client.change_presence(status: status).wait
       end

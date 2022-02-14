@@ -22,7 +22,19 @@ RSpec.shared_context "mocks" do
 
   let(:http) do
     http = double("Twitter client")
-    allow(http).to receive(:request) { |path, headers|
+    allow(http).to receive(:request) { |path, body, headers|
+      expect({
+        method: path.method,
+        path: path.url,
+        body: body,
+        headers: headers,
+      }).to eq($next_request)
+      Async do
+        data = $next_response.call
+        [Response.new(data[:code], data[:body]), data[:body]]
+      end
+    }
+    allow(http).to receive(:multipart_request) { |path, headers|
       expect({
         method: path.method,
         path: path.url,
