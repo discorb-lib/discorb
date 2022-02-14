@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Discorb
 
   #
@@ -5,9 +6,9 @@ module Discorb
   # @abstract
   #
   class MessageComponentInteraction < Interaction
-    include Interaction::SourceResponse
-    include Interaction::UpdateResponse
-    include Interaction::ModalResponse
+    include Interaction::SourceResponder
+    include Interaction::UpdateResponder
+    include Interaction::ModalResponder
 
     # @return [String] The content of the response.
     attr_reader :custom_id

@@ -17,7 +17,7 @@ module Discorb
       ret = {}
       self.class.events.each do |event, handlers|
         ret[event] = handlers.map do |handler|
-          Discorb::EventHandler.new(Proc.new { |*args, **kwargs| instance_exec(*args, **kwargs, &handler[2]) }, handler[0], handler[1])
+          Discorb::EventHandler.new(proc { |*args, **kwargs| instance_exec(*args, **kwargs, &handler[2]) }, handler[0], handler[1])
         end
       end
       @events = ret
@@ -27,6 +27,10 @@ module Discorb
       base.extend(ClassMethods)
     end
 
+    #
+    # @private
+    # Module for adding class methods to the extension class.
+    #
     module ClassMethods
       include Discorb::ApplicationCommand::Handler
       undef setup_commands

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # description: Run a client.
 require "optparse"
 require "json"
@@ -6,7 +7,7 @@ require "io/console"
 
 ARGV.delete_at 0
 # @private
-LOG_LEVELS = %w[none debug info warn error fatal]
+LOG_LEVELS = %w[none debug info warn error fatal].freeze
 
 opt = OptionParser.new <<~BANNER
                          This command will run a client.

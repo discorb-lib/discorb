@@ -186,10 +186,8 @@ module Discorb
         @log.debug "Dispatching event #{event_name}"
         events.each do |block|
           Async do
-            Async(annotation: "Discorb event: #{event_name}") do |task|
-              if block.is_a?(Discorb::EventHandler)
-                @events[event_name].delete(block) if block.metadata[:once]
-              end
+            Async(annotation: "Discorb event: #{event_name}") do |_task|
+              @events[event_name].delete(block) if block.is_a?(Discorb::EventHandler) && block.metadata[:once]
               block.call(*args)
               @log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
@@ -305,18 +303,14 @@ module Discorb
     #
     # @param [Discorb::Activity] activity The activity to update.
     # @param [:online, :idle, :dnd, :invisible] status The status to update.
-    # @param [String] afk Whether to set the client as AFK.
     #
-    def update_presence(activity = nil, status: nil, afk: false)
+    def update_presence(activity = nil, status: nil)
       payload = {
         activities: [],
         status: status,
-        afk: nil,
         since: nil,
       }
-      if !activity.nil?
-        payload[:activities] = [activity.to_hash]
-      end
+      payload[:activities] = [activity.to_hash] unless activity.nil?
       payload[:status] = status unless status.nil?
       if @connection
         Async do
@@ -374,10 +368,11 @@ module Discorb
     # @param [Object] ... The arguments to pass to the `ext#initialize`.
     #
     def load_extension(ext, ...)
-      if ext.is_a?(Class)
+      case ext
+      when Class
         raise ArgumentError, "#{ext} is not a extension" unless ext < Discorb::Extension
         ins = ext.new(self, ...)
-      elsif ext.is_a?(Discorb::Extension)
+      when Discorb::Extension
         ins = ext
       else
         raise ArgumentError, "#{ext} is not a extension"
@@ -471,7 +466,7 @@ module Discorb
               ::File.open(options[:log_file], "a")
             end
           @log.level = options[:log_level].to_sym
-          @log.colorize_log = options[:log_color] == nil ? @log.out.isatty : options[:log_color]
+          @log.colorize_log = options[:log_color].nil? ? @log.out.isatty : options[:log_color]
         end
       end
     end
@@ -481,9 +476,7 @@ module Discorb
       if guilds = ENV["DISCORB_SETUP_GUILDS"]
         guild_ids = guilds.split(",")
       end
-      if guild_ids == ["global"]
-        guild_ids = false
-      end
+      guild_ids = false if guild_ids == ["global"]
       setup_commands(token, guild_ids: guild_ids).wait
       if ENV["DISCORB_SETUP_SCRIPT"] == "true"
         @events[:setup]&.each do |event|
@@ -494,18 +487,18 @@ module Discorb
     end
 
     def start_client(token)
-      Async do |task|
-        Signal.trap(:SIGINT) {
+      Async do |_task|
+        Signal.trap(:SIGINT) do
           @log.info "SIGINT received, closing..."
           Signal.trap(:SIGINT, "DEFAULT")
           close!
-        }
+        end
         @token = token.to_s
         @close_condition = Async::Condition.new
         @main_task = Async do
           @status = :running
           connect_gateway(false).wait
-        rescue
+        rescue StandardError
           @status = :stopped
           @close_condition.signal
           raise

@@ -105,7 +105,7 @@ module Discorb
         @party = data[:party] && Party.new(data[:party])
         @assets = data[:assets] && Asset.new(data[:assets])
         @instance = data[:instance]
-        @buttons = data[:buttons] && data[:buttons].map { |b| Button.new(b) }
+        @buttons = data[:buttons]&.map { |b| Button.new(b) }
         @flags = data[:flags] && Flag.new(data[:flags])
       end
 
@@ -147,6 +147,9 @@ module Discorb
         end
       end
 
+      #
+      # Represents the party of an activity.
+      #
       class Party < DiscordModel
         # @return [String] The id of the party.
         attr_reader :id

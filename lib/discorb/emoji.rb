@@ -202,9 +202,7 @@ module Discorb
       else
         raise ArgumentError, "No such emoji: #{name}"
       end
-      if tone > 0
-        @value += EmojiTable::SKIN_TONES[tone]
-      end
+      @value += EmojiTable::SKIN_TONES[tone] if tone.positive?
     end
 
     # @return [String] The unicode string of the emoji.

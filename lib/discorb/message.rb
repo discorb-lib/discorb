@@ -2,68 +2,6 @@
 
 module Discorb
   #
-  # Represents a allowed mentions in a message.
-  #
-  class AllowedMentions
-    # @return [Boolean] Whether to allow @everyone or @here.
-    attr_accessor :everyone
-    # @return [Boolean, Array<Discorb::Role>] The roles to allow, or false to disable.
-    attr_accessor :roles
-    # @return [Boolean, Array<Discorb::User>] The users to allow, or false to disable.
-    attr_accessor :users
-    # @return [Boolean] Whether to ping the user that sent the message to reply.
-    attr_accessor :replied_user
-
-    #
-    # Initializes a new instance of the AllowedMentions class.
-    #
-    # @param [Boolean] everyone Whether to allow @everyone or @here.
-    # @param [Boolean, Array<Discorb::Role>] roles The roles to allow, or false to disable.
-    # @param [Boolean, Array<Discorb::User>] users The users to allow, or false to disable.
-    # @param [Boolean] replied_user Whether to ping the user that sent the message to reply.
-    #
-    def initialize(everyone: nil, roles: nil, users: nil, replied_user: nil)
-      @everyone = everyone
-      @roles = roles
-      @users = users
-      @replied_user = replied_user
-    end
-
-    def inspect
-      "#<#{self.class} @everyone=#{@everyone} @roles=#{@roles} @users=#{@users} @replied_user=#{@replied_user}>"
-    end
-
-    # @private
-    def to_hash(other = nil)
-      payload = {
-        parse: %w[everyone roles users],
-      }
-      replied_user = nil_merge(@replied_user, other&.replied_user)
-      everyone = nil_merge(@everyone, other&.everyone)
-      roles = nil_merge(@roles, other&.roles)
-      users = nil_merge(@users, other&.users)
-      payload[:replied_user] = replied_user
-      payload[:parse].delete("everyone") if everyone == false
-      if (roles == false) || roles.is_a?(Array)
-        payload[:roles] = roles.map { |u| u.id.to_s } if roles.is_a? Array
-        payload[:parse].delete("roles")
-      end
-      if (users == false) || users.is_a?(Array)
-        payload[:users] = users.map { |u| u.id.to_s } if users.is_a? Array
-        payload[:parse].delete("users")
-      end
-      payload
-    end
-
-    def nil_merge(*args)
-      args.each do |a|
-        return a unless a.nil?
-      end
-      nil
-    end
-  end
-
-  #
   # Represents a message.
   #
   class Message < DiscordModel
@@ -257,38 +195,44 @@ module Discorb
     #
     def clean_content(user: true, channel: true, role: true, emoji: true, everyone: true, codeblock: false)
       ret = @content.dup
-      ret.gsub!(/<@!?(\d+)>/) do |match|
-        member = guild&.members&.[]($1)
-        member ||= @client.users[$1]
-        member ? "@#{member.name}" : "@Unknown User"
-      end if user
-      ret.gsub!(/<#(\d+)>/) do |match|
+      if user
+        ret.gsub!(/<@!?(\d+)>/) do |_match|
+          member = guild&.members&.[]($1)
+          member ||= @client.users[$1]
+          member ? "@#{member.name}" : "@Unknown User"
+        end
+      end
+      ret.gsub!(/<#(\d+)>/) do |_match|
         channel = @client.channels[$1]
         channel ? "<##{channel.id}>" : "#Unknown Channel"
       end
-      ret.gsub!(/<@&(\d+)>/) do |match|
-        role = guild&.roles&.[]($1)
-        role ? "@#{role.name}" : "@Unknown Role"
-      end if role
-      ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) do |match|
-        $1
-      end if emoji
+      if role
+        ret.gsub!(/<@&(\d+)>/) do |_match|
+          role = guild&.roles&.[]($1)
+          role ? "@#{role.name}" : "@Unknown Role"
+        end
+      end
+      if emoji
+        ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) do |_match|
+          $1
+        end
+      end
       ret.gsub!(/@(everyone|here)/, "@\u200b\\1") if everyone
-      unless codeblock
+      if codeblock
+        ret
+      else
         codeblocks = ret.split("```", -1)
         original_codeblocks = @content.scan(/```(.+?)```/m)
         res = []
         max = codeblocks.length
-        codeblocks.each_with_index do |codeblock, i|
-          if max % 2 == 0 && i == max - 1 or i.even?
-            res << codeblock
+        codeblocks.each_with_index do |single_codeblock, i|
+          res << if max.even? && i == max - 1 || i.even?
+            single_codeblock
           else
-            res << original_codeblocks[i / 2]
+            original_codeblocks[i / 2]
           end
         end
         res.join("```")
-      else
-        ret
       end
     end
 
@@ -499,201 +443,6 @@ module Discorb
 
     def inspect
       "#<#{self.class} #{@content.inspect} id=#{@id}>"
-    end
-
-    #
-    # Represents message flag.
-    # ## Flag fields
-    # |Field|Value|
-    # |-|-|
-    # |`1 << 0`|`:crossposted`|
-    # |`1 << 1`|`:crosspost`|
-    # |`1 << 2`|`:supress_embeds`|
-    # |`1 << 3`|`:source_message_deleted`|
-    # |`1 << 4`|`:urgent`|
-    # |`1 << 5`|`:has_thread`|
-    # |`1 << 6`|`:ephemeral`|
-    # |`1 << 7`|`:loading`|
-    #
-    class Flag < Discorb::Flag
-      @bits = {
-        crossposted: 0,
-        crosspost: 1,
-        supress_embeds: 2,
-        source_message_deleted: 3,
-        urgent: 4,
-        has_thread: 5,
-        ephemeral: 6,
-        loading: 7,
-      }.freeze
-    end
-
-    #
-    # Represents reference of message.
-    #
-    class Reference
-      # @return [Discorb::Snowflake] The guild ID.
-      attr_accessor :guild_id
-      # @return [Discorb::Snowflake] The channel ID.
-      attr_accessor :channel_id
-      # @return [Discorb::Snowflake] The message ID.
-      attr_accessor :message_id
-      # @return [Boolean] Whether fail the request if the message is not found.
-      attr_accessor :fail_if_not_exists
-
-      alias fail_if_not_exists? fail_if_not_exists
-
-      #
-      # Initialize a new reference.
-      #
-      # @param [Discorb::Snowflake] guild_id The guild ID.
-      # @param [Discorb::Snowflake] channel_id The channel ID.
-      # @param [Discorb::Snowflake] message_id The message ID.
-      # @param [Boolean] fail_if_not_exists Whether fail the request if the message is not found.
-      #
-      def initialize(guild_id, channel_id, message_id, fail_if_not_exists: true)
-        @guild_id = guild_id
-        @channel_id = channel_id
-        @message_id = message_id
-        @fail_if_not_exists = fail_if_not_exists
-      end
-
-      #
-      # Convert the reference to a hash.
-      #
-      # @return [Hash] The hash.
-      #
-      def to_hash
-        {
-          message_id: @message_id,
-          channel_id: @channel_id,
-          guild_id: @guild_id,
-          fail_if_not_exists: @fail_if_not_exists,
-        }
-      end
-
-      alias to_reference to_hash
-
-      #
-      # Initialize a new reference from a hash.
-      #
-      # @param [Hash] data The hash.
-      #
-      # @return [Discorb::Message::Reference] The reference.
-      # @see https://discord.com/developers/docs/resources/channel#message-reference-object
-      #
-      def self.from_hash(data)
-        new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
-      end
-    end
-
-    class Sticker
-      attr_reader :id, :name, :format
-
-      def initialize(data)
-        @id = Snowflake.new(data[:id])
-        @name = data[:name]
-        @format = Discorb::Sticker.sticker_format[data[:format]]
-      end
-    end
-
-    private
-
-    def _set_data(data)
-      @id = Snowflake.new(data[:id])
-      @channel_id = data[:channel_id]
-
-      if data[:guild_id]
-        @guild_id = data[:guild_id]
-        @dm = nil
-      else
-        @dm = Discorb::DMChannel.new(@client, data[:channel_id])
-        @guild_id = nil
-      end
-
-      if data[:member].nil? && data[:webhook_id]
-        @webhook_id = Snowflake.new(data[:webhook_id])
-        @author = Webhook::Message::Author.new(data[:author])
-      elsif data[:guild_id].nil? || data[:guild_id].empty? || data[:member].nil?
-        @author = @client.users[data[:author][:id]] || User.new(@client, data[:author])
-      else
-        @author = guild&.members&.get(data[:author][:id]) || Member.new(@client,
-                                                                        @guild_id, data[:author], data[:member])
-      end
-      @content = data[:content]
-      @created_at = Time.iso8601(data[:timestamp])
-      @updated_at = data[:edited_timestamp].nil? ? nil : Time.iso8601(data[:edited_timestamp])
-
-      @tts = data[:tts]
-      @mention_everyone = data[:mention_everyone]
-      @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
-      @attachments = data[:attachments].map { |a| Attachment.new(a) }
-      @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
-      @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
-      @pinned = data[:pinned]
-      @type = self.class.message_type[data[:type]]
-      @activity = data[:activity] && Activity.new(data[:activity])
-      @application_id = data[:application_id]
-      @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
-      @flag = Flag.new(0b111 - data[:flags])
-      @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
-      # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
-      @interaction = data[:interaction] && Message::Interaction.new(@client, data[:interaction])
-      @thread = data[:thread] && Channel.make_channel(@client, data[:thread])
-      @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
-      @data.update(data)
-      @deleted = false
-    end
-
-    #
-    # Represents a interaction of message.
-    #
-    class Interaction < DiscordModel
-      # @return [Discorb::Snowflake] The user ID.
-      attr_reader :id
-      # @return [String] The name of command.
-      # @return [nil] If the message is not a command.
-      attr_reader :name
-      # @return [Class] The type of interaction.
-      attr_reader :type
-      # @return [Discorb::User] The user.
-      attr_reader :user
-
-      # @private
-      def initialize(client, data)
-        @id = Snowflake.new(data[:id])
-        @name = data[:name]
-        @type = Discorb::Interaction.descendants.find { |c| c.interaction_type == data[:type] }
-        @user = client.users[data[:user][:id]] || User.new(client, data[:user])
-      end
-    end
-
-    #
-    # Represents a activity of message.
-    #
-    class Activity < DiscordModel
-      # @return [String] The name of activity.
-      attr_reader :name
-      # @return [Symbol] The type of activity.
-      attr_reader :type
-
-      @type = {
-        1 => :join,
-        2 => :spectate,
-        3 => :listen,
-        5 => :join_request,
-      }
-
-      # @private
-      def initialize(data)
-        @name = data[:name]
-        @type = self.class.type(data[:type])
-      end
-
-      class << self
-        # @private
-        attr_reader :type
-      end
     end
 
     class << self

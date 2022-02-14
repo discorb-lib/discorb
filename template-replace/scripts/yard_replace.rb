@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "yard"
 
 def yard_replace(dir, version)
@@ -22,11 +23,11 @@ def yard_replace(dir, version)
 <h1 class="noborder title">Documentation by YARD 0.9.26</h1>
     HTML3
     HTML4
-    if version == "main"
-      display_version = "(main)"
+    display_version = if version == "main"
+      "(main)"
     else
-      display_version = "v" + version
-    end
+      "v" + version
+                      end
     contents.gsub!(/Documentation by YARD \d+\.\d+\.\d+/, "discorb #{display_version} documentation")
     File.write(file, contents)
   end

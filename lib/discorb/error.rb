@@ -11,9 +11,7 @@ module Discorb
     def enumerate_errors(hash)
       res = {}
       _recr_items([], hash, res)
-      if res == { "" => nil }
-        res = {}
-      end
+      res = {} if res == { "" => nil }
       res
     end
 
@@ -64,7 +62,7 @@ module Discorb
         [
           data[:message] + " (#{@code})", enumerate_errors(data[:errors])
             .map { |ek, ev| "#{ek}=>#{ev}" }
-            .join("\n"),
+            .join("\n")
         ].join("\n")
       )
     end
@@ -92,14 +90,14 @@ module Discorb
   # Represents a error because of a cloudflare ban.
   #
   class CloudFlareBanError < HTTPError
-    def initialize(resp, client)
+    def initialize(_resp, client)
       @client = client
       @client.close!
       message = <<~MESSAGE
         The client is banned from CloudFlare.
         Hint: Try to decrease the number of requests per second, e.g. Use sleep in between requests.
       MESSAGE
-      $stderr.puts message
+      warn message
       DiscorbError.instance_method(:initialize).bind(self).call(message)
     end
   end

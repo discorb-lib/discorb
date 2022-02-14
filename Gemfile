@@ -13,11 +13,15 @@ group :development, optional: true do
 end
 
 group :docs, optional: true do
-  gem "redcarpet"
-  gem "yard", "~> 0.9.26"
-  gem "gettext", "~> 3.4.1"
   gem "crowdin-api", "~> 1.0"
+  gem "gettext", "~> 3.4.1"
+  gem "redcarpet"
   gem "rubyzip", "~> 2.3"
+  gem "yard", "~> 0.9.26"
+end
+
+group :lint, optional: true do
+  gem "rubocop", "~> 1.25"
 end
 
 group :ci do

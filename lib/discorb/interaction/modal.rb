@@ -6,7 +6,7 @@ module Discorb
   # Represents a modal interaction.
   #
   class ModalInteraction < Interaction
-    include Interaction::SourceResponse
+    include Interaction::SourceResponder
 
     @interaction_type = 5
     @interaction_name = :modal_submit

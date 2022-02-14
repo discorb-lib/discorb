@@ -187,9 +187,9 @@ module Discorb
           @nsfw = data[:nsfw]
           @rate_limit_per_user = data[:rate_limit_per_user]
           @parent_id = data[:parent_id]
-          @permission_overwrites = data[:permission_overwrites].map do |ow|
+          @permission_overwrites = data[:permission_overwrites].to_h do |ow|
             [Snowflake.new(ow[:id]), PermissionOverwrite.new(ow[:allow], ow[:deny])]
-          end.to_h
+          end
           @type = Discorb::Channel.descendants.find { |c| c.channel_type == data[:type] }
         end
       end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 
 client = Discorb::Client.new
@@ -24,8 +25,8 @@ client.on :message do |message|
     res = res.wait if res.is_a? Async::Task
     message.channel.post("```rb\n#{res.inspect[...1990]}\n```")
   end
-rescue Exception => error
-  message.reply embed: Discorb::Embed.new("Error!", "```rb\n#{error.full_message(highlight: false)[...1990]}\n```",
+rescue Exception => e
+  message.reply embed: Discorb::Embed.new("Error!", "```rb\n#{e.full_message(highlight: false)[...1990]}\n```",
                                           color: Discorb::Color[:red])
 end
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 require "json"
 
@@ -20,7 +21,7 @@ def build_embed_from_message(message)
   embed
 end
 
-client.message_command("Bookmark", guild_ids: [857373681096327180]) do |interaction, message|
+client.message_command("Bookmark", guild_ids: [857_373_681_096_327_180]) do |interaction, message|
   unless channel = bookmark_channel(interaction.guild)
     interaction.post("Bookmark channel not found. Please create one called `bookmarks`.", ephemeral: true)
     next

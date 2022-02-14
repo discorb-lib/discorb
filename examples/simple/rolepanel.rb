@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 intents = Discorb::Intents.new
 intents.members = true

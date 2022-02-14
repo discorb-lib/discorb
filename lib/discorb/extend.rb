@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# rubocop: disable Style/Documentation
 
 class Time
   #
@@ -18,22 +19,26 @@ class Time
 end
 
 # @private
-class Async::Node
-  def description
-    @object_name ||= "#{self.class}:0x#{object_id.to_s(16)}#{@transient ? " transient" : nil}"
+module Async
+  class Node
+    def description
+      @object_name ||= "#{self.class}:0x#{object_id.to_s(16)}#{@transient ? " transient" : nil}"
 
-    if @annotation
-      "#{@object_name} #{@annotation}"
-    elsif line = self.backtrace(0, 1)&.first
-      "#{@object_name} #{line}"
-    else
-      @object_name
+      if @annotation
+        "#{@object_name} #{@annotation}"
+      elsif line = self.backtrace(0, 1)&.first
+        "#{@object_name} #{line}"
+      else
+        @object_name
+      end
     end
-  end
 
-  def to_s
-    "\#<#{self.description}>"
-  end
+    def to_s
+      "\#<#{self.description}>"
+    end
 
-  alias inspect to_s
+    alias inspect to_s
+  end
 end
+
+# rubocop: enable Style/Documentation

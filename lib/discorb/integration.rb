@@ -44,7 +44,7 @@ module Discorb
     }
 
     # @private
-    def initialize(client, data, guild_id, no_cache: false)
+    def initialize(client, data, guild_id)
       @client = client
       @data = data
       @guild_id = guild_id

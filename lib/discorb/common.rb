@@ -6,7 +6,7 @@ module Discorb
   # @return [String] The version of discorb.
   VERSION = "0.13.4"
   # @return [String] The user agent for the bot.
-  USER_AGENT = "DiscordBot (https://discorb-lib.github.io #{VERSION}) Ruby/#{RUBY_VERSION}"
+  USER_AGENT = "DiscordBot (https://discorb-lib.github.io #{VERSION}) Ruby/#{RUBY_VERSION}".freeze
 
   #
   # @abstract
@@ -26,9 +26,6 @@ module Discorb
     end
 
     # @private
-    def inspect
-      super
-    end
 
     def hash
       @id.hash
@@ -111,7 +108,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class} #{to_s}>"
+      "#<#{self.class} #{self}>"
     end
 
     alias id to_s
@@ -146,26 +143,7 @@ module Discorb
     end
   end
 
-  # @return [Object] Object that represents nil.
+  # @return [Object] Object that represents unspecified value.
   #   This is used as a default value for optional parameters.
   Unset = Object.new
-  class << Unset
-    def method_missing(*)
-      self
-    end
-
-    def or(other)
-      other
-    end
-  end
-
-  module DefineOr
-    refine Object do
-      def or(other)
-        self
-      end
-    end
-  end
-
-  using DefineOr
 end

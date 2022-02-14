@@ -64,7 +64,7 @@ module Discorb
 
     def write_output(name, color, message, fallback)
       unless @out
-        fallback.puts(message) if fallback
+        fallback&.puts(message)
 
         return
       end

@@ -1,24 +1,25 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
 
 script = ARGV[0]
 
 if script.nil?
   puts "\e[94mThis is a tool for discorb. Currently these tools are available:\e[m"
 
-  discorb_path = $:.find { |path| File.directory?(path + "/discorb") }
+  discorb_path = $LOAD_PATH.find { |path| File.directory?(path + "/discorb") }
   scripts = {}
-  Dir.glob(discorb_path + "/discorb/exe/*.rb") do |script|
-    name = File.basename(script, ".rb")
-    description = File.read(script).match(/# description: (.+)/)&.[](1) || "No description"
+  Dir.glob(discorb_path + "/discorb/exe/*.rb") do |exe_script|
+    name = File.basename(exe_script, ".rb")
+    description = File.read(exe_script).match(/# description: (.+)/)&.[](1) || "No description"
     scripts[name] = description
   end
-  max_length = scripts.keys.map { |key| key.length }.max
+  max_length = scripts.keys.map(&:length).max
   scripts.sort.each do |name, description|
     puts "\e[90m#{name.rjust(max_length)}\e[m - #{description}"
   end
 
-  puts "\e[94m\nTo run a tool, type:\e[m\n" +
-         "\e[34m  discorb [script]\e[m"
+  puts "\e[94m\nTo run a tool, type:\e[m\n" \
+       "\e[34m  discorb [script]\e[m"
 
   exit 1
 end

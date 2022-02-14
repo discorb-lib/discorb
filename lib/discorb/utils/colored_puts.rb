@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # @private
 def sputs(text)
   puts "\e[92m#{text}\e[m"

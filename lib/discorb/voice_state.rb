@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Represents a state of user in voice channel.
+  #
   class VoiceState < DiscordModel
     # @return [Discorb::Member] The member associated with this voice state.
     attr_reader :member

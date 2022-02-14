@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # description: Setup application commands.
 require "optparse"
 require "discorb/utils/colored_puts"
@@ -24,12 +25,10 @@ script = ARGV[0]
 script ||= "main.rb"
 ENV["DISCORB_CLI_FLAG"] = "setup"
 
-if options[:guilds] == ["global"]
-  ENV["DISCORB_SETUP_GUILDS"] = "global"
+ENV["DISCORB_SETUP_GUILDS"] = if options[:guilds] == ["global"]
+  "global"
 elsif options[:guilds]
-  ENV["DISCORB_SETUP_GUILDS"] = options[:guilds].join(",")
-else
-  ENV["DISCORB_SETUP_GUILDS"] = nil
+  options[:guilds].join(",")
 end
 
 ENV["DISCORB_SETUP_SCRIPT"] = options[:script].to_s if options[:script]

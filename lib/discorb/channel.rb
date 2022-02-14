@@ -211,9 +211,9 @@ module Discorb
       @guild_id = data[:guild_id]
       @position = data[:position]
       @permission_overwrites = if data[:permission_overwrites]
-          data[:permission_overwrites].map do |ow|
+          data[:permission_overwrites].to_h do |ow|
             [(ow[:type] == 1 ? guild.roles : guild.members)[ow[:id]], PermissionOverwrite.new(ow[:allow], ow[:deny])]
-          end.to_h
+          end
         else
           {}
         end
@@ -759,7 +759,7 @@ module Discorb
     end
 
     def audiences
-      voice_states.filter { |state| state.suppress? }.map(&:member)
+      voice_states.filter(&:suppress?).map(&:member)
     end
 
     private
@@ -990,14 +990,23 @@ module Discorb
       end
     end
 
+    #
+    # Represents a thread in news channel(aka announcement channel).
+    #
     class News < ThreadChannel
       @channel_type = 10
     end
 
+    #
+    # Represents a public thread in text channel.
+    #
     class Public < ThreadChannel
       @channel_type = 11
     end
 
+    #
+    # Represents a private thread in text channel.
+    #
     class Private < ThreadChannel
       @channel_type = 12
     end
@@ -1007,7 +1016,7 @@ module Discorb
     end
 
     #
-    # Repre
+    # Represents a member in a thread.
     #
     class Member < DiscordModel
       attr_reader :joined_at
@@ -1059,6 +1068,9 @@ module Discorb
     end
   end
 
+  #
+  # Represents a category in a guild.
+  #
   class CategoryChannel < GuildChannel
     @channel_type = 4
 
@@ -1099,6 +1111,9 @@ module Discorb
     end
   end
 
+  #
+  # Represents a DM channel.
+  #
   class DMChannel < Channel
     include Messageable
 

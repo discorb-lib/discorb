@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 LOCALES = {
   "ja" => {
     selector: {
@@ -14,15 +15,15 @@ LOCALES = {
     },
   },
 
-}
+}.freeze
 
 def replace_sidebar_name(dir)
-  regex = /<a target="_self" href="(.+)_list\.html">\s*([a-zA-Z ]+?)\s*<\/a>/
+  regex = %r{<a target="_self" href="(.+)_list\.html">\s*([a-zA-Z ]+?)\s*</a>}
 
   Dir.glob("#{dir}/*_list.html") do |file|
     content = File.read(file)
     new_content = content.dup
-    content.scan(regex) do |url, name|
+    content.scan(regex) do |_url, name|
       new_content.gsub!(
         Regexp.last_match[0],
         Regexp.last_match[0].gsub(name, LOCALES[ENV["rake_locale"]][:selector][name])
@@ -33,7 +34,7 @@ def replace_sidebar_name(dir)
 end
 
 def replace_title(dir)
-  regex = /(?:<h1 id="full_list_header">|<title>)([a-zA-Z ]+?)(?:<\/title>|<\/h1>)/
+  regex = %r{(?:<h1 id="full_list_header">|<title>)([a-zA-Z ]+?)(?:</title>|</h1>)}
 
   Dir.glob("#{dir}/*.html") do |file|
     content = File.read(file)

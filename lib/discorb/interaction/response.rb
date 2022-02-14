@@ -1,9 +1,13 @@
+# frozen_string_literal: true
 module Discorb
+  #
+  # Represents an interaction of Discord.
+  #
   class Interaction
     #
     # A module for response with source.
     #
-    module SourceResponse
+    module SourceResponder
       #
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       #
@@ -38,14 +42,14 @@ module Discorb
       # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
-      # @return [Discorb::Interaction::SourceResponse::CallbackMessage, Discorb::Webhook::Message] The callback message.
+      # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message] The callback message.
       #
       def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
         Async do
           payload = {}
           payload[:content] = content if content
           payload[:tts] = tts
-          payload[:embeds] = (embeds || [embed])&.map { |e| e&.to_hash }.filter { _1 }
+          payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }
           payload[:allowed_mentions] = allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
           payload[:components] = Component.to_payload(components) if components
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
@@ -66,6 +70,9 @@ module Discorb
         end
       end
 
+      #
+      # Represents of a callback message of interaction.
+      #
       class CallbackMessage
         # @private
         def initialize(client, data, application_id, token)
@@ -127,7 +134,7 @@ module Discorb
     #
     # A module for response with update.
     #
-    module UpdateResponse
+    module UpdateResponder
       #
       # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
       # @async
@@ -181,7 +188,10 @@ module Discorb
       end
     end
 
-    module ModalResponse
+    #
+    # A module for response with modal.
+    #
+    module ModalResponder
       #
       # Response with `MODAL`(`9`).
       #
