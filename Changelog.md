@@ -4,6 +4,18 @@
 
 # Changelog
 
+## v0.14
+
+### v0.14.0
+
+- Add: Support Modal interaction
+- Add: Support attachment option type in slash command
+- Fix: Connections will no longer stacked
+- Fix: Fix Client#fetch_nitro_sticker_packs returning 404
+- Fix: Fix `self` reference in subcommand of extension
+- Refactor: Refactored many things
+- Refactor: Add Rubocop
+
 ## v0.13
 
 ### v0.13.4
