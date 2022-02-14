@@ -117,7 +117,7 @@ module Discorb
           label: @label,
           value: @value,
           description: @description,
-          emoji: hash_emoji(@emoji),
+          emoji: @emoji&.to_hash,
           default: @default,
         }
       end

@@ -61,7 +61,7 @@ module Discorb
           label: @label,
           style: self.class.styles[@style],
           url: @url,
-          emoji: hash_emoji(@emoji),
+          emoji: @emoji&.to_hash,
           disabled: @disabled,
         }
       else
@@ -70,7 +70,7 @@ module Discorb
           label: @label,
           style: self.class.styles[@style],
           custom_id: @custom_id,
-          emoji: hash_emoji(@emoji),
+          emoji: @emoji&.to_hash,
           disabled: @disabled,
         }
       end
