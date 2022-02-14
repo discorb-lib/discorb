@@ -64,3 +64,6 @@ Style/GuardClause: # For make it extendable
 
 Layout/EndOfLine: # For git
   EnforcedStyle: lf
+
+Lint/ScriptPermission: # For GitHub Actions
+  Enabled: false
