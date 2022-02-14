@@ -32,13 +32,13 @@ module Discorb
     # @raise [Discorb::HTTPError] The request was failed.
     #
     def request(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
-      Async do |task|
+      Async do |_task|
         @ratelimit_handler.wait(path)
-        if %i[post patch put].include? path.method
-          resp = http.send(path.method, get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
-        else
-          resp = http.send(path.method, get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
-        end
+        resp = if %i[post patch put].include? path.method
+            http.send(path.method, get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
+          else
+            http.send(path.method, get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
+          end
         data = get_response_data(resp)
         @ratelimit_handler.save(path, resp)
         handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
@@ -61,12 +61,12 @@ module Discorb
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
-    def multipart_request(path, body = "", files, headers: nil, audit_log_reason: nil, **kwargs)
-      Async do |task|
+    def multipart_request(path, body, files, headers: nil, audit_log_reason: nil, **kwargs)
+      Async do |_task|
         @ratelimit_handler.wait(path)
         req = Net::HTTP.const_get(path.method.to_s.capitalize).new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
         data = [
-          ["payload_json", get_body(body)],
+          ["payload_json", get_body(body)]
         ]
         files&.each_with_index do |file, i|
           next if file.nil?
@@ -143,15 +143,13 @@ module Discorb
       begin
         data = JSON.parse(resp.body, symbolize_names: true)
       rescue JSON::ParserError, TypeError
-        if resp.body.nil? || resp.body.empty?
-          data = nil
-        else
-          data = resp.body
-        end
+        data = if resp.body.nil? || resp.body.empty?
+            nil
+          else
+            resp.body
+          end
       end
-      if resp["Via"].nil? && resp.code == "429" && data.is_a?(String)
-        raise CloudFlareBanError.new(resp, @client)
-      end
+      raise CloudFlareBanError.new(resp, @client) if resp["Via"].nil? && resp.code == "429" && data.is_a?(String)
       data
     end
 

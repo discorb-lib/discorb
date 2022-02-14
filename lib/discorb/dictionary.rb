@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Discorb
+  #
+  # Extended hash class. This is used for storing pair of ID and object.
+  #
   class Dictionary
     # @return [Integer] The maximum number of items in the dictionary.
     attr_accessor :limit

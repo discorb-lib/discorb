@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # description: Make files for the discorb project.
 
 require "optparse"
@@ -131,7 +132,7 @@ FILES = {
       https://rubygems.org/gems/license-cli may be useful.
 
   MARKDOWN
-}
+}.freeze
 
 # @private
 def create_file(name)
@@ -162,8 +163,8 @@ def git_init
   system "git init"
   system "git add ."
   system "git commit -m \"Initial commit\""
-  sputs "Initialized repository, use " +
-          "\e[32mgit commit --amend -m '...'\e[92m" +
+  sputs "Initialized repository, use " \
+          "\e[32mgit commit --amend -m '...'\e[92m" \
           " to change commit message of initial commit.\n"
 end
 
@@ -225,13 +226,11 @@ if (dir = ARGV[0])
   if Dir.exist?($path)
     if Dir.empty?($path)
       iputs "Found \e[30m#{dir}\e[90m and empty, using this directory."
-    else
-      if $values[:force]
-        iputs "Found \e[30m#{dir}\e[90m and not empty, but force is on, using this directory."
+    elsif $values[:force]
+      iputs "Found \e[30m#{dir}\e[90m and not empty, but force is on, using this directory."
       else
         eputs "Directory \e[31m#{dir}\e[91m already exists and not empty. Use \e[31m-f\e[91m to force."
         exit
-      end
     end
   else
     Dir.mkdir($path)

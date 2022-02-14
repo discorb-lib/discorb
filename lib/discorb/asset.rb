@@ -80,7 +80,9 @@ module Discorb
     #
     # @return [String] URL of the avatar.
     #
+    # rubocop: disable Lint/UnusedMethodArgument
     def url(image_format: nil, size: 1024)
+      # rubocop: enable Lint/UnusedMethodArgument
       "https://cdn.discordapp.com/embed/avatars/#{@discriminator.to_i % 5}.png"
     end
 

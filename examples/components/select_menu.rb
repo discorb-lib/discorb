@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 
 client = Discorb::Client.new
@@ -21,7 +22,7 @@ SECTIONS = [
     > So I decided to make it.
     Matsumoto describes the design of Ruby as being like a simple Lisp language at its core, with an object system like that of Smalltalk, blocks inspired by higher-order functions, and practical utility like that of Perl.
   WIKI
-  ["First publication", <<~WIKI],
+  ["First publication", <<~WIKI]
     The first public release of Ruby 0.95 was announced on Japanese domestic newsgroups on December 21, 1995.
     Subsequently, three more versions of Ruby were released in two days.
     The release coincided with the launch of the Japanese-language ruby-list mailing list, which was the first mailing list for the new language.

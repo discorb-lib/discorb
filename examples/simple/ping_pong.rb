@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 
 client = Discorb::Client.new

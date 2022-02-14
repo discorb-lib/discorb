@@ -226,7 +226,7 @@ module Discorb
         # @private
         #
         def initialize(data)
-          @data = data.map { |d| [d[:key].to_sym, d] }.to_h
+          @data = data.to_h { |d| [d[:key].to_sym, d] }
           @data.each do |k, v|
             define_singleton_method(k) { Change.new(v) }
           end
@@ -287,8 +287,8 @@ module Discorb
             else
               ->(v) { v }
             end
-          @old_value = method.(data[:old_value])
-          @new_value = method.(data[:new_value])
+          @old_value = method.call(data[:old_value])
+          @new_value = method.call(data[:new_value])
         end
 
         #

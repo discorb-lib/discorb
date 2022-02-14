@@ -614,7 +614,7 @@ module Discorb
     #
     def fetch_members(limit: 0, after: nil)
       Async do
-        unless limit == 0
+        unless limit.zero?
           _resp, data = @client.http.request(Route.new("/guilds/#{@id}/members?#{URI.encode_www_form({ after: after, limit: limit })}", "//guilds/:guild_id/members", :get)).wait
           next data[:members].map { |m| Member.new(@client, @id, m[:user], m) }
         end
@@ -625,9 +625,7 @@ module Discorb
           _resp, data = @client.http.request(Route.new("/guilds/#{@id}/members?#{URI.encode_www_form(params)}", "//guilds/:guild_id/members", :get)).wait
           ret += data.map { |m| Member.new(@client, @id, m[:user], m) }
           after = data.last[:user][:id]
-          if data.length != 1000
-            break
-          end
+          break if data.length != 1000
         end
         ret
       end
@@ -1099,7 +1097,7 @@ module Discorb
       def iframe(theme: "dark", width: 350, height: 500)
         [
           %(<iframe src="https://canary.discord.com/widget?id=#{@guild_id}&theme=#{theme}" width="#{width}" height="#{height}"),
-          %(allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>),
+          %(allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>)
         ].join
       end
     end
@@ -1152,9 +1150,9 @@ module Discorb
       @unavailable = false
       @name = data[:name]
       @members = Discorb::Dictionary.new
-      data[:members].each do |m|
-        Member.new(@client, @id, m[:user], m)
-      end if data[:members]
+      data[:members]&.each do |m|
+          Member.new(@client, @id, m[:user], m)
+        end
       @splash = data[:splash] && Asset.new(self, data[:splash], path: "splashes/#{@id}")
       @discovery_splash = data[:discovery_splash] && Asset.new(self, data[:discovery_splash], path: "discovery-splashes/#{@id}")
       @owner_id = data[:owner_id]
@@ -1200,13 +1198,13 @@ module Discorb
       tmp_channels = data[:channels].filter { |c| !c.key?(:thread_metadata) }.map do |c|
         Channel.make_channel(@client, c.merge({ guild_id: @id }))
       end
-      @channels = Dictionary.new(tmp_channels.map { |c| [c.id, c] }.to_h, sort: ->(c) { c[1].position })
-      @voice_states = Dictionary.new(data[:voice_states].map { |v| [Snowflake.new(v[:user_id]), VoiceState.new(@client, v.merge({ guild_id: @id }))] }.to_h)
+      @channels = Dictionary.new(tmp_channels.to_h { |c| [c.id, c] }, sort: ->(c) { c[1].position })
+      @voice_states = Dictionary.new(data[:voice_states].to_h { |v| [Snowflake.new(v[:user_id]), VoiceState.new(@client, v.merge({ guild_id: @id }))] })
       @threads = data[:threads] ? data[:threads].map { |t| Channel.make_channel(@client, t) } : []
-      @presences = Dictionary.new(data[:presences].map { |pr| [Snowflake.new(pr[:user][:id]), Presence.new(@client, pr)] }.to_h)
+      @presences = Dictionary.new(data[:presences].to_h { |pr| [Snowflake.new(pr[:user][:id]), Presence.new(@client, pr)] })
       @max_presences = data[:max_presences]
-      @stage_instances = Dictionary.new(data[:stage_instances].map { |s| [Snowflake.new(s[:id]), StageInstance.new(@client, s)] }.to_h)
-      @scheduled_events = Dictionary.new(data[:guild_scheduled_events].map { |s| [Snowflake.new(s[:id]), ScheduledEvent.new(@client, s)] }.to_h)
+      @stage_instances = Dictionary.new(data[:stage_instances].to_h { |s| [Snowflake.new(s[:id]), StageInstance.new(@client, s)] })
+      @scheduled_events = Dictionary.new(data[:guild_scheduled_events].to_h { |s| [Snowflake.new(s[:id]), ScheduledEvent.new(@client, s)] })
       @data.update(data)
     end
   end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Discorb
   #
   # Represents a command interaction.
@@ -5,8 +6,8 @@ module Discorb
   class CommandInteraction < Interaction
     @interaction_type = 2
     @interaction_name = :application_command
-    include Interaction::SourceResponse
-    include Interaction::ModalResponse
+    include Interaction::SourceResponder
+    include Interaction::ModalResponder
 
     #
     # Represents a slash command interaction.
@@ -26,10 +27,10 @@ module Discorb
           return
         end
 
-        option_map = command.options.map { |k, v| [k.to_s, v[:default]] }.to_h
+        option_map = command.options.to_h { |k, v| [k.to_s, v[:default]] }
         SlashCommand.modify_option_map(option_map, options, guild, @members, @attachments)
 
-        command.block.call(self, *command.options.map { |k, v| option_map[k.to_s] })
+        command.block.call(self, *command.options.map { |k, _v| option_map[k.to_s] })
       end
 
       class << self
@@ -56,13 +57,13 @@ module Discorb
             options = data[:options]
           end
 
-          return name, options
+          [name, options]
         end
 
         # @private
         def modify_option_map(option_map, options, guild, members, attachments)
           options ||= []
-          options.each_with_index do |option|
+          options.each do |option|
             val = case option[:type]
               when 3, 4, 5, 10
                 option[:value]
@@ -135,7 +136,7 @@ module Discorb
             @client, @guild_id, data[:resolved][:users][id], member
           )
         end
-        data[:resolved][:messages]&.to_h do |id, message|
+        data[:resolved][:messages]&.to_h do |id, _message|
           @messages[id.to_i] = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s)).merge(guild_id: @guild_id.to_s)
         end
         data[:resolved][:attachments]&.to_h do |id, attachment|

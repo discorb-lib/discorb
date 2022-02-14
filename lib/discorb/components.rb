@@ -74,7 +74,7 @@ module Discorb
           end
         end
         tmp_components << tmp_row
-        return tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
+        tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
       end
     end
   end
@@ -345,12 +345,12 @@ module Discorb
     STYLES = {
       short: 1,
       paragraph: 2,
-    }
+    }.freeze
 
     # @return [String] The label of the text input.
     attr_accessor :label
     # @return [String] The custom id of the text input.
-    attr_accessor :value
+    attr_accessor :custom_id
     # @return [:short, :paragraph] The style of the text input.
     attr_accessor :style
     # @return [Integer, nil] The minimum length of the text input.
@@ -368,7 +368,7 @@ module Discorb
     # Initialize a new text input component.
     #
     # @param [String] label The label of the text input.
-    # @param [String] value The custom id of the text input.
+    # @param [String] custom_id The custom id of the text input.
     # @param [:short, :paragraph] style The style of the text input.
     # @param [Integer, nil] min_length The minimum length of the text input.
     # @param [Integer, nil] max_length The maximum length of the text input.

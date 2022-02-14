@@ -1,6 +1,6 @@
 name: Lint with RuboCop
 on:
-  - pull_request
+  - push
 jobs:
   rubocop:
     runs-on: ubuntu-latest
@@ -10,7 +10,9 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.0
-      - name: rubocop
-        uses: reviewdog/action-rubocop@v2
-        with:
-          rubocop_version: 1.25
+      - name: Install gems
+        run: |
+          gem install rubocop
+      - name: Run rubocop
+        run: |
+          rubocop lib

@@ -151,7 +151,7 @@ module Discorb
         payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
         payload[:allowed_mentions] = allowed_mentions if allowed_mentions != Discorb::Unset
         files = [file] if file != Discorb::Unset
-        _resp, data = @http.multipart_request(Route.new("#{url}/messages/#{Utils.try(message, :id)}", "//webhooks/:webhook_id/:token/messages/:message_id", :patch), payload, headers: headers).wait
+        _resp, data = @http.multipart_request(Route.new("#{url}/messages/#{Utils.try(message, :id)}", "//webhooks/:webhook_id/:token/messages/:message_id", :patch), payload, files).wait
         message.send(:_set_data, data)
         message
       end

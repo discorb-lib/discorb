@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # description: Show information of discorb.
 
 puts "  disco\e[31mrb\e[m -  A new Discord API wrapper in Ruby.  \n\n"

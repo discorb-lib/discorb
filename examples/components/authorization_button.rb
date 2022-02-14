@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 
 client = Discorb::Client.new
@@ -27,7 +28,7 @@ client.on :message do |message|
     components: [
       Discorb::Button.new(
         "Get role", custom_id: "auth:#{role.id}",
-      ),
+      )
     ],
   )
 end

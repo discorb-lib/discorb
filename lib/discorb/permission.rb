@@ -174,13 +174,13 @@ module Discorb
     # @return [Hash] The permission overwrite as a hash.
     #
     def to_hash
-      self.class.bits.keys.map do |field|
+      self.class.bits.keys.to_h do |field|
         [field, if @allow & self.class.bits[field] != 0
           true
         elsif @deny & self.class.bits[method] != 0
           false
         end]
-      end.to_h
+      end
     end
 
     #

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 # description: Connect to discord and start IRB.
 
@@ -31,13 +32,13 @@ client.on :standby do
   end
 
   def dirb_help
-    puts <<~EOS
+    puts <<~MESSAGE
            \e[96mDiscord-IRB\e[m
            This is a debug client for Discord.
            \e[90mmessage\e[m to get latest message.
 
            \e[36mhttps://discorb-lib.github.io/#{Discorb::VERSION}/file.irb.html\e[m for more information.
-         EOS
+         MESSAGE
   end
 
   puts <<~FIRST_MESSAGE
@@ -56,7 +57,7 @@ end
 
 token = ENV["DISCORD_BOT_TOKEN"] || ENV["DISCORD_TOKEN"]
 if token.nil?
-  if File.exists?(token_file)
+  if File.exist?(token_file)
     token = File.read(token_file)
   else
     print "\e[90mToken?\e[m : "

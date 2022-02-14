@@ -5,15 +5,14 @@ require_relative "lib/discorb/utils/colored_puts"
 task default: %i[]
 
 # @private
-def get_version
+def current_version
   require_relative "lib/discorb/common"
   tag = `git tag --points-at HEAD`.force_encoding("utf-8").strip
   if tag.empty?
-    version = "main"
+    "main"
   else
-    version = Discorb::VERSION
+    Discorb::VERSION
   end
-  version
 end
 
 desc "Build emoji_table.rb"
@@ -63,8 +62,7 @@ end
 
 desc "Generate document and replace"
 namespace :document do
-  version = get_version
-
+  version = current_version
   desc "Just generate document"
   task :yard do
     sh "bundle exec yardoc -o doc/#{version} --locale #{ENV["rake_locale"] or "en"}"
@@ -86,12 +84,12 @@ namespace :document do
 
     desc "Replace HTML"
     task :html do
-      require_relative "template-replace/scripts/sidebar.rb"
-      require_relative "template-replace/scripts/version.rb"
-      require_relative "template-replace/scripts/index.rb"
-      require_relative "template-replace/scripts/yard_replace.rb"
-      require_relative "template-replace/scripts/favicon.rb"
-      require_relative "template-replace/scripts/arrow.rb"
+      require_relative "template-replace/scripts/sidebar"
+      require_relative "template-replace/scripts/version"
+      require_relative "template-replace/scripts/index"
+      require_relative "template-replace/scripts/yard_replace"
+      require_relative "template-replace/scripts/favicon"
+      require_relative "template-replace/scripts/arrow"
       iputs "Resetting changes"
       Dir.glob("doc/#{version}/**/*.html") do |f|
         next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
@@ -143,20 +141,18 @@ namespace :document do
       replace_locale("doc/main")
     end
   end
-  task :replace => %i[replace:css replace:html replace:eol]
+  task replace: %i[replace:css replace:html replace:eol]
 
   desc "Build all versions"
   task :build_all do
     require "fileutils"
 
-    class Bundler::Definition
-      def validate_platforms!
-        # noop
-      end
-    end
-
     iputs "Building all versions"
-    FileUtils.rm_rf("doc") rescue nil
+    begin
+      FileUtils.rm_rf("doc")
+    rescue StandardError
+      nil
+    end
     FileUtils.cp_r("./template-replace/.", "./tmp-template-replace")
     Rake::Task["document:yard"].execute
     Rake::Task["document:replace:html"].execute
@@ -181,7 +177,7 @@ namespace :document do
     FileUtils.cp_r("./tmp-doc/.", "./doc")
     FileUtils.cp_r("./doc/#{tags.last.delete_prefix("v")}/.", "./doc")
     sputs "Successfully built all versions"
-  rescue => e
+  rescue StandardError => e
     sh "git switch main -f"
     raise e
   end
@@ -322,7 +318,7 @@ task :rbs do
   File.write("sig/discorb.rbs", base)
 end
 
-task :document => %i[document:yard document:replace]
+task document: %i[document:yard document:replace]
 
 task :lint do
   sh "rubocop lib"

@@ -1,4 +1,8 @@
+# frozen_string_literal: true
 module Discorb
+  #
+  # Represents a message in Discord.
+  #
   class Message < DiscordModel
     #
     # Represents message flag.
@@ -86,6 +90,9 @@ module Discorb
       end
     end
 
+    #
+    # Represents a sticker.
+    #
     class Sticker
       attr_reader :id, :name, :format
 

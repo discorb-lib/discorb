@@ -43,7 +43,7 @@ module Discorb
       # @private
       def replace_block(instance)
         current_block = @block.dup
-        @block = Proc.new do |*args|
+        @block = proc do |*args|
           instance.instance_exec(*args, &current_block)
         end
       end
@@ -120,7 +120,7 @@ module Discorb
 
             ret[:channel_types] = value[:channel_types].map(&:channel_type) if value[:channel_types]
 
-            ret[:autocomplete] = !!value[:autocomplete] if value[:autocomplete]
+            ret[:autocomplete] = !value[:autocomplete].nil? if value[:autocomplete]
             if value[:range]
               ret[:min_value] = value[:range].begin
               ret[:max_value] = value[:range].end

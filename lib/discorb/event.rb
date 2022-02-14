@@ -1,4 +1,8 @@
+# frozen_string_literal: true
 module Discorb
+  #
+  # Represents an event in guild.
+  #
   class ScheduledEvent < DiscordModel
     @privacy_level = {
       2 => :guild_only,
@@ -120,7 +124,7 @@ module Discorb
       status: Discorb::Unset
     )
       Async do
-        payload = case (type == Discorb::Unset) ? @entity_type : type
+        payload = case type == Discorb::Unset ? @entity_type : type
           when :stage_instance
             raise ArgumentError, "channel must be provided for stage_instance events" unless channel
             {
@@ -226,11 +230,9 @@ module Discorb
         if limit.nil?
           after = 0
           res = []
-          while true
+          loop do
             _resp, users = @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}/users?limit=100&after=#{after}&with_member=true", "//guilds/:guild_id/scheduled-events/:scheduled_event_id/users", :get)).wait
-            if users.empty?
-              break
-            end
+            break if users.empty?
             res += users.map { |u| Member.new(@client, @guild_id, u[:user], u[:member]) }
             after = users.last[:user][:id]
           end
@@ -238,8 +240,8 @@ module Discorb
         else
           params = {
             limit: limit,
-            before: Discorb::Utils.try(after, :id),
-            after: Discorb::Utils.try(around, :id),
+            before: Discorb::Utils.try(before, :id),
+            after: Discorb::Utils.try(after, :id),
             with_member: with_member,
           }.filter { |_k, v| !v.nil? }.to_h
           _resp, messages = @client.http.request(Route.new("/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}", "//channels/:channel_id/messages", :get)).wait

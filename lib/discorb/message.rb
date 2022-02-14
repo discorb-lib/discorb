@@ -195,38 +195,44 @@ module Discorb
     #
     def clean_content(user: true, channel: true, role: true, emoji: true, everyone: true, codeblock: false)
       ret = @content.dup
-      ret.gsub!(/<@!?(\d+)>/) do |match|
-        member = guild&.members&.[]($1)
-        member ||= @client.users[$1]
-        member ? "@#{member.name}" : "@Unknown User"
-      end if user
-      ret.gsub!(/<#(\d+)>/) do |match|
+      if user
+        ret.gsub!(/<@!?(\d+)>/) do |_match|
+          member = guild&.members&.[]($1)
+          member ||= @client.users[$1]
+          member ? "@#{member.name}" : "@Unknown User"
+        end
+      end
+      ret.gsub!(/<#(\d+)>/) do |_match|
         channel = @client.channels[$1]
         channel ? "<##{channel.id}>" : "#Unknown Channel"
       end
-      ret.gsub!(/<@&(\d+)>/) do |match|
-        role = guild&.roles&.[]($1)
-        role ? "@#{role.name}" : "@Unknown Role"
-      end if role
-      ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) do |match|
-        $1
-      end if emoji
+      if role
+        ret.gsub!(/<@&(\d+)>/) do |_match|
+          role = guild&.roles&.[]($1)
+          role ? "@#{role.name}" : "@Unknown Role"
+        end
+      end
+      if emoji
+        ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) do |_match|
+          $1
+        end
+      end
       ret.gsub!(/@(everyone|here)/, "@\u200b\\1") if everyone
-      unless codeblock
+      if codeblock
+        ret
+      else
         codeblocks = ret.split("```", -1)
         original_codeblocks = @content.scan(/```(.+?)```/m)
         res = []
         max = codeblocks.length
-        codeblocks.each_with_index do |codeblock, i|
-          if max % 2 == 0 && i == max - 1 or i.even?
-            res << codeblock
+        codeblocks.each_with_index do |single_codeblock, i|
+          res << if max.even? && i == max - 1 || i.even?
+            single_codeblock
           else
-            res << original_codeblocks[i / 2]
+            original_codeblocks[i / 2]
           end
         end
         res.join("```")
-      else
-        ret
       end
     end
 

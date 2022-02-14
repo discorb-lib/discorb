@@ -1,5 +1,7 @@
 AllCops:
   NewCops: enable
+  Exclude:
+    - examples/**/*.rb
 
 Layout:
   Enabled: false
@@ -53,3 +55,12 @@ Lint/AmbiguousOperatorPrecedence:  # Not needed
 
 Style/GlobalVars: # For /exe
   Enabled: false
+
+Lint/Debugger: # For /exe
+  Enabled: false
+
+Style/GuardClause: # For make it extendable
+  Enabled: false
+
+Layout/EndOfLine: # For git
+  EnforcedStyle: lf

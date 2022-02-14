@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 require_relative "message_expander"
 

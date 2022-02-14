@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def replace_arrow(dir)
   Dir.glob("#{dir}/**/*.html") do |file|
     content = File.read(file)

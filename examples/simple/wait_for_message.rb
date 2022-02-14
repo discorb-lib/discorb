@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 
 client = Discorb::Client.new
@@ -10,16 +11,16 @@ client.on :message do |message|
   next if message.author.bot?
   next unless message.content == "!quiz"
 
-  operator = [:+, :-, :*].sample
+  operator = %i[+ - *].sample
   num1 = rand(1..10)
   num2 = rand(1..10)
 
   val = num1.send(operator, num2)
   message.channel.post("Quiz: `#{num1} #{operator} #{num2}`")
   begin
-    msg = client.event_lock(:message, 30) { |m|
+    msg = client.event_lock(:message, 30) do |m|
       m.content == val.to_s && m.channel == message.channel
-    }.wait
+    end.wait
   rescue Discorb::TimeoutError
     message.channel.post("No one answered...")
   else

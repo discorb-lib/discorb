@@ -122,7 +122,7 @@ module Discorb
       #   @return [Discorb::User] The user associated with the integration.
 
       # @private
-      def initialize(client, data)
+      def initialize(_client, data)
         @id = Snowflake.new(data[:id])
         @guild_id = data[:guild_id]
         @user_id = data[:application_id]
@@ -261,7 +261,6 @@ module Discorb
     #
     # Represents a `MESSAGE_UPDATE` event.
     #
-
     class MessageUpdateEvent < GatewayEvent
       # @return [Discorb::Message] The message before update.
       attr_reader :before
@@ -393,6 +392,9 @@ module Discorb
       end
     end
 
+    #
+    # Represents a `GUILD_INTEGRATIONS_UPDATE` event.
+    #
     class GuildIntegrationsUpdateEvent < GatewayEvent
       def initialize(client, data)
         @client = client
@@ -535,7 +537,7 @@ module Discorb
           @log.info "Connecting to gateway..."
         end
         Async do
-          if @connection and !@connection.closed?
+          if @connection && !@connection.closed?
             Async do
               @connection.close
             end
@@ -590,13 +592,13 @@ module Discorb
             when 4014
               raise ClientError.new("Disallowed intents were specified"), cause: nil
             when 4002, 4003, 4005, 4007
-              raise ClientError.new(<<~EOS), cause: e
-                                               Disconnected from gateway, probably due to library issues.
-                                               #{e.message}
+              raise ClientError.new(<<~ERROR), cause: e
+                                                 Disconnected from gateway, probably due to library issues.
+                                                 #{e.message}
 
-                                               Please report this to the library issue tracker.
-                                               https://github.com/discorb-lib/discorb/issues
-                                             EOS
+                                                 Please report this to the library issue tracker.
+                                                 https://github.com/discorb-lib/discorb/issues
+                                               ERROR
             when 1001
               @log.info "Gateway closed with code 1001, reconnecting."
               connect_gateway(true)
@@ -605,7 +607,7 @@ module Discorb
               @log.debug "#{e.message}"
               connect_gateway(false)
             end
-          rescue => e
+          rescue StandardError => e
             @log.error "Discord WebSocket error: #{e.full_message}"
             @connection.force_close
             connect_gateway(false)
@@ -620,7 +622,7 @@ module Discorb
       end
 
       def handle_gateway(payload, reconnect)
-        Async do |task|
+        Async do |_task|
           data = payload[:d]
           @last_s = payload[:s] if payload[:s]
           @log.debug "Received message with opcode #{payload[:op]} from gateway:"
@@ -671,7 +673,7 @@ module Discorb
       end
 
       def handle_heartbeat
-        Async do |task|
+        Async do |_task|
           interval = @heartbeat_interval
           sleep((interval / 1000.0 - 1) * rand)
           loop do
@@ -698,9 +700,7 @@ module Discorb
           @session_id = data[:session_id]
           @user = ClientUser.new(self, data[:user])
           @uncached_guilds = data[:guilds].map { |g| g[:id] }
-          if @uncached_guilds == [] or !@intents.guilds
-            ready
-          end
+          ready if (@uncached_guilds == []) || !@intents.guilds
           dispatch(:ready)
           @tasks << handle_heartbeat
         when "GUILD_CREATE"
@@ -903,7 +903,7 @@ module Discorb
         when "INTEGRATION_UPDATE"
           return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
-          before = Integration.new(self, data, data[:guild_id])
+          integration = Integration.new(self, data, data[:guild_id])
           dispatch(:integration_update, integration)
         when "INTEGRATION_DELETE"
           return @log.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
@@ -1112,15 +1112,15 @@ module Discorb
           old = event.dup
           event.send(:_set_data, data)
           dispatch(:scheduled_event_update, old, event)
-          if old.status != event.status
+          if old.status == event.status
+            dispatch(:scheduled_event_edit, old, event)
+          else
             case event.status
             when :active
               dispatch(:scheduled_event_start, event)
             when :completed
               dispatch(:scheduled_event_end, event)
             end
-          else
-            dispatch(:scheduled_event_edit, old, event)
           end
         when "GUILD_SCHEDULED_EVENT_DELETE"
           @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
@@ -1180,7 +1180,7 @@ module Discorb
       def close
         super
         @closed = true
-      rescue
+      rescue StandardError
         force_close
       end
 

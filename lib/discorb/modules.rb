@@ -204,7 +204,7 @@ module Discorb
           post_task.stop
         end
       else
-        Async do |task|
+        Async do |_task|
           @client.http.request(Route.new("/channels/#{@id}/typing", "//channels/:channel_id/typing", :post), {})
         end
       end

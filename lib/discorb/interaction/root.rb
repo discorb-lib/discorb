@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Discorb
   #
   # Represents a user interaction with the bot.
