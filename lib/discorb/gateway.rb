@@ -545,7 +545,13 @@ module Discorb
           @http = HTTP.new(self)
           _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
           gateway_url = gateway_response[:url]
-          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=10&encoding=json&compress=zlib-stream",
+          gateway_version = if @intents.to_h[:message_content] == :unset
+              @log.debug "message_content intent not set, using gateway version 9"
+              9
+            else
+              10
+            end
+          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream",
                                                  alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
           begin
             @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)

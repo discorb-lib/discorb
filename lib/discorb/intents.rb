@@ -19,6 +19,7 @@ module Discorb
       dm_messages: 1 << 12,
       dm_reactions: 1 << 13,
       dm_typing: 1 << 14,
+      message_content: 1 << 15,
       scheduled_events: 1 << 16,
     }.freeze
 
@@ -39,9 +40,13 @@ module Discorb
     # @param dm_messages [Boolean] Whether dm messages related events are enabled.
     # @param dm_reactions [Boolean] Whether dm reactions related events are enabled.
     # @param dm_typing [Boolean] Whether dm typing related events are enabled.
+    # @param message_content [Boolean] Whether message content will be sent with events.
     # @param scheduled_events [Boolean] Whether events related scheduled events are enabled.
     #
     # @note You must enable privileged intents to use `members` and/or `presences` intents.
+    # @note Message Content Intent is not required to use `message_content` intents for now,
+    #   this will be required in 4/30/2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
+    #   You should specify `message_content` intent for preventing unexpected changes in the future.
     #
     def initialize(guilds: true,
                    members: false,
@@ -58,6 +63,7 @@ module Discorb
                    dm_messages: true,
                    dm_reactions: true,
                    dm_typing: true,
+                   message_content: :unset,
                    scheduled_events: true)
       @raw_value = {
         guilds: guilds,
@@ -75,8 +81,11 @@ module Discorb
         dm_messages: dm_messages,
         dm_reactions: dm_reactions,
         dm_typing: dm_typing,
+        message_content: message_content,
         scheduled_events: scheduled_events,
       }
+
+      warn "You should specify `message_content` intent for preventing unexpected changes in the future." if message_content == :unset
     end
 
     #
@@ -129,9 +138,7 @@ module Discorb
 
       # Create new intent object with default values.
       # This will return intents without members and presence.
-      def default
-        from_value(@intent_bits.values.reduce(:+) - @intent_bits[:members] - @intent_bits[:presences])
-      end
+      alias default new
 
       # Create new intent object with all intents.
       def all
