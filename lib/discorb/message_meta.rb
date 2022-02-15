@@ -103,54 +103,6 @@ module Discorb
       end
     end
 
-    private
-
-    def _set_data(data)
-      @id = Snowflake.new(data[:id])
-      @channel_id = data[:channel_id]
-
-      if data[:guild_id]
-        @guild_id = data[:guild_id]
-        @dm = nil
-      else
-        @dm = Discorb::DMChannel.new(@client, data[:channel_id])
-        @guild_id = nil
-      end
-
-      if data[:member].nil? && data[:webhook_id]
-        @webhook_id = Snowflake.new(data[:webhook_id])
-        @author = Webhook::Message::Author.new(data[:author])
-      elsif data[:guild_id].nil? || data[:guild_id].empty? || data[:member].nil?
-        @author = @client.users[data[:author][:id]] || User.new(@client, data[:author])
-      else
-        @author = guild&.members&.get(data[:author][:id]) || Member.new(@client,
-                                                                        @guild_id, data[:author], data[:member])
-      end
-      @content = data[:content]
-      @created_at = Time.iso8601(data[:timestamp])
-      @updated_at = data[:edited_timestamp].nil? ? nil : Time.iso8601(data[:edited_timestamp])
-
-      @tts = data[:tts]
-      @mention_everyone = data[:mention_everyone]
-      @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
-      @attachments = data[:attachments].map { |a| Attachment.new(a) }
-      @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
-      @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
-      @pinned = data[:pinned]
-      @type = self.class.message_type[data[:type]]
-      @activity = data[:activity] && Activity.new(data[:activity])
-      @application_id = data[:application_id]
-      @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
-      @flag = Flag.new(0b111 - data[:flags])
-      @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
-      # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
-      @interaction = data[:interaction] && Message::Interaction.new(@client, data[:interaction])
-      @thread = data[:thread] && Channel.make_channel(@client, data[:thread])
-      @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
-      @data.update(data)
-      @deleted = false
-    end
-
     #
     # Represents a interaction of message.
     #
