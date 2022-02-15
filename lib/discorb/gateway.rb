@@ -545,7 +545,7 @@ module Discorb
           @http = HTTP.new(self)
           _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
           gateway_url = gateway_response[:url]
-          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json&compress=zlib-stream",
+          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=10&encoding=json&compress=zlib-stream",
                                                  alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
           begin
             @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
