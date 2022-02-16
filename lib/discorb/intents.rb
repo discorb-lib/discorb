@@ -45,7 +45,7 @@ module Discorb
     #
     # @note You must enable privileged intents to use `members` and/or `presences` intents.
     # @note Message Content Intent is not required to use `message_content` intents for now,
-    #   this will be required in 4/30/2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
+    #   this will be required in April 30, 2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
     #   You should specify `message_content` intent for preventing unexpected changes in the future.
     #
     def initialize(guilds: true,
