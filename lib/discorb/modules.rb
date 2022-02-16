@@ -80,20 +80,22 @@ module Discorb
           end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] =
-          allowed_mentions != Discorb::Unset ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
+          allowed_mentions == Discorb::Unset ? @client.allowed_mentions.to_hash : allowed_mentions.to_hash(@client.allowed_mentions)
         payload[:components] = Component.to_payload(components) if components != Discorb::Unset
         payload[:flags] = (supress ? 1 << 2 : 0) if supress != Discorb::Unset
-        payload[:attachments] = attachments.map.with_index do |a, i|
-          {
-            id: i,
-            filename: a.filename,
-            description: a.description,
-          }
-        end if attachments != Discorb::Unset
+        if attachments != Discorb::Unset
+          payload[:attachments] = attachments.map.with_index do |a, i|
+            {
+              id: i,
+              filename: a.filename,
+              description: a.description,
+            }
+          end
+        end
         @client.http.multipart_request(
           Route.new("/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id", :patch),
           payload,
-          attachments != Discorb::Unset ? attachments : []
+          attachments == Discorb::Unset ? [] : attachments
         ).wait
       end
     end

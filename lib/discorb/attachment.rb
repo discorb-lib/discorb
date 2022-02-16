@@ -49,12 +49,13 @@ module Discorb
     # @param [Boolean] will_close Whether the IO will be closed after the attachment is sent.
     #
     def initialize(source, filename = nil, description: nil, content_type: nil, will_close: true)
-      if source.respond_to?(:read)
-        @io = source
-      else
-        @io = File.open(source, "rb")
-      end
+      @io = if source.respond_to?(:read)
+          source
+        else
+          File.open(source, "rb")
+        end
       @filename = filename || (@io.respond_to?(:path) ? @io.path : @io.object_id)
+      @description = description
       @content_type = content_type || MIME::Types.type_for(@filename.to_s)[0].to_s
       @content_type = "application/octet-stream" if @content_type == ""
       @will_close = will_close

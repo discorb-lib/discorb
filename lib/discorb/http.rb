@@ -66,7 +66,7 @@ module Discorb
         @ratelimit_handler.wait(path)
         req = Net::HTTP.const_get(path.method.to_s.capitalize).new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
         data = [
-          ["payload_json", get_body(body)],
+          ["payload_json", get_body(body)]
         ]
         files&.each_with_index do |file, i|
           next if file.nil?
@@ -86,7 +86,7 @@ module Discorb
         session = Net::HTTP.new("discord.com", 443)
         session.use_ssl = true
         resp = session.request(req)
-        files&.then { _1.filter { |f| f.will_close }.each { |f| f.io.close } }
+        files&.then { _1.filter(&:will_close).each { |f| f.io.close } }
         data = get_response_data(resp)
         @ratelimit_handler.save(path, resp)
         handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
