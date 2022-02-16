@@ -63,7 +63,7 @@ module Discorb
                    dm_messages: true,
                    dm_reactions: true,
                    dm_typing: true,
-                   message_content: :unset,
+                   message_content: nil,
                    scheduled_events: true)
       @raw_value = {
         guilds: guilds,
