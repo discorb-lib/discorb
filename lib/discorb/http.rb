@@ -66,16 +66,27 @@ module Discorb
         @ratelimit_handler.wait(path)
         req = Net::HTTP.const_get(path.method.to_s.capitalize).new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
         data = [
-          ["payload_json", get_body(body)]
+          ["payload_json", get_body(body)],
         ]
         files&.each_with_index do |file, i|
           next if file.nil?
-          data << ["files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type }]
+          if file.created_by == :discord
+            request_io = StringIO.new(
+              cdn_http.get(URI.parse(file.url).path, {
+                "Content-Type" => nil,
+                "User-Agent" => Discorb::USER_AGENT,
+              }).body
+            )
+            data << ["files[#{i}]", request_io, { filename: file.filename, content_type: file.content_type }]
+          else
+            data << ["files[#{i}]", file.io, { filename: file.filename, content_type: file.content_type }]
+          end
         end
         req.set_form(data, "multipart/form-data")
         session = Net::HTTP.new("discord.com", 443)
         session.use_ssl = true
         resp = session.request(req)
+        files&.then { _1.filter { |f| f.will_close }.each { |f| f.io.close } }
         data = get_response_data(resp)
         @ratelimit_handler.save(path, resp)
         handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
@@ -155,6 +166,12 @@ module Discorb
 
     def http
       https = Net::HTTP.new("discord.com", 443)
+      https.use_ssl = true
+      https
+    end
+
+    def cdn_http
+      https = Net::HTTP.new("cdn.discordapp.com", 443)
       https.use_ssl = true
       https
     end

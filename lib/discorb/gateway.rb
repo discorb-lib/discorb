@@ -305,7 +305,7 @@ module Discorb
         @timestamp = Time.iso8601(data[:edited_timestamp])
         @mention_everyone = data[:mention_everyone]
         @mention_roles = data[:mention_roles].map { |r| guild.roles[r] } if data.key?(:mention_roles)
-        @attachments = data[:attachments].map { |a| Attachment.new(a) } if data.key?(:attachments)
+        @attachments = data[:attachments].map { |a| Attachment.from_hash(a) } if data.key?(:attachments)
         @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : [] if data.key?(:embeds)
       end
 

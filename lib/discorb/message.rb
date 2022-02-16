@@ -244,16 +244,17 @@ module Discorb
     # @param [Discorb::Embed] embed The embed to send.
     # @param [Array<Discorb::Embed>] embeds The embeds to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
+    # @param [Array<Discorb::Attachment>] attachments The new attachments.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(content = nil, embed: nil, embeds: nil, allowed_mentions: nil,
-                            components: nil, supress: nil)
+    def edit(content = Discorb::Unset, embed: Discorb::Unset, embeds: Discorb::Unset, allowed_mentions: Discorb::Unset,
+                                       attachments: Discorb::Unset, components: Discorb::Unset, supress: Discorb::Unset)
       Async do
         channel.edit_message(@id, content, embed: embed, embeds: embeds, allowed_mentions: allowed_mentions,
-                                           components: components, supress: supress).wait
+                                           attachments: attachments, components: components, supress: supress).wait
       end
     end
 
@@ -474,7 +475,7 @@ module Discorb
       @tts = data[:tts]
       @mention_everyone = data[:mention_everyone]
       @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
-      @attachments = data[:attachments].map { |a| Attachment.new(a) }
+      @attachments = data[:attachments].map { |a| Attachment.from_hash(a) }
       @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
       @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
       @pinned = data[:pinned]
