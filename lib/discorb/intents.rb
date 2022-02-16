@@ -84,8 +84,6 @@ module Discorb
         message_content: message_content,
         scheduled_events: scheduled_events,
       }
-
-      warn "You should specify `message_content` intent for preventing unexpected changes in the future." if message_content == :unset
     end
 
     #
