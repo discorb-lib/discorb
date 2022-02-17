@@ -62,19 +62,19 @@ client.on :ready do
 end
 ```
 
-### How can I send files?
+### How can I send attachments?
 
-Use {Discorb::File} class.
+Use {Discorb::Attachment} class.
 
 ```ruby
-# Send a file
-message.channel.post file: Discorb::File.new(File.open("./README.md"))
+# Send an attachment
+message.channel.post attachment: Discorb::Attachment.new(File.open("./README.md"))
 
-# Send some files with text
-message.channel.post "File!", files: [Discorb::File.new(File.open("./README.md")), Discorb::File.new(File.open("./License.txt"))]
+# Send some attachment with text
+message.channel.post "File!", attachments: [Discorb::Attachment.new("./README.md"), Discorb::Attachment.new(File.open("./License.txt"))]
 
-# Send a string as a file
-message.channel.post file: Discorb::File.from_string("Hello world!", "hello.txt")
+# Send a string as an attachment
+message.channel.post attachments: Discorb::Attachment.from_string("Hello world!", "hello.txt")
 ```
 
 ### How can I add reactions?

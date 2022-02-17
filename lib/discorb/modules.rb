@@ -16,13 +16,13 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
     # @param [Discorb::Message, Discorb::Message::Reference] reference The message to reply to.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
-    # @param [Discorb::File] file The file to send.
-    # @param [Array<Discorb::File>] files The files to send.
+    # @param [Discorb::Attachment] attachment The attachment to send.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to send.
     #
     # @return [Async::Task<Discorb::Message>] The message sent.
     #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
-                            reference: nil, components: nil, file: nil, files: nil)
+                            reference: nil, components: nil, attachment: nil, attachments: nil)
       Async do
         payload = {}
         payload[:content] = content if content
@@ -37,8 +37,15 @@ module Discorb
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:message_reference] = reference.to_reference if reference
         payload[:components] = Component.to_payload(components) if components
-        files = [file]
-        _resp, data = @client.http.multipart_request(Route.new("/channels/#{channel_id.wait}/messages", "//channels/:channel_id/messages", :post), payload, files).wait
+        attachments = [attachment] if attachment
+        payload[:attachments] = attachments.map.with_index do |a, i|
+          {
+            id: i,
+            filename: a.filename,
+            description: a.description,
+          }
+        end
+        _resp, data = @client.http.multipart_request(Route.new("/channels/#{channel_id.wait}/messages", "//channels/:channel_id/messages", :post), payload, attachments).wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -48,33 +55,48 @@ module Discorb
     #
     # Edit a message.
     # @async
+    # @!macro edit
     #
     # @param [#to_s] message_id The message id.
     # @param [String] content The message content.
     # @param [Discorb::Embed] embed The embed to send.
     # @param [Array<Discorb::Embed>] embeds The embeds to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
+    # @param [Array<Discorb::Attachment>] attachments The new attachments.
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Boolean] supress Whether to supress embeds.
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit_message(message_id, content = nil, embed: nil, embeds: nil, allowed_mentions: nil,
-                                                components: nil, supress: nil)
+    def edit_message(message_id, content = Discorb::Unset, embed: Discorb::Unset, embeds: Discorb::Unset, allowed_mentions: Discorb::Unset,
+                                                           attachments: Discorb::Unset, components: Discorb::Unset, supress: Discorb::Unset)
       Async do
         payload = {}
-        payload[:content] = content if content
-        tmp_embed = if embed
+        payload[:content] = content if content != Discorb::Unset
+        tmp_embed = if embed != Discorb::Unset
             [embed]
-          elsif embeds
+          elsif embeds != Discorb::Unset
             embeds
           end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] =
-          allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
-        payload[:components] = Component.to_payload(components) if components
-        payload[:flags] = (supress ? 1 << 2 : 0) unless supress.nil?
-        @client.http.request(Route.new("/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id", :patch), payload).wait
+          allowed_mentions == Discorb::Unset ? @client.allowed_mentions.to_hash : allowed_mentions.to_hash(@client.allowed_mentions)
+        payload[:components] = Component.to_payload(components) if components != Discorb::Unset
+        payload[:flags] = (supress ? 1 << 2 : 0) if supress != Discorb::Unset
+        if attachments != Discorb::Unset
+          payload[:attachments] = attachments.map.with_index do |a, i|
+            {
+              id: i,
+              filename: a.filename,
+              description: a.description,
+            }
+          end
+        end
+        @client.http.multipart_request(
+          Route.new("/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id", :patch),
+          payload,
+          attachments == Discorb::Unset ? [] : attachments
+        ).wait
       end
     end
 

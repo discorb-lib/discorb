@@ -305,7 +305,7 @@ module Discorb
         @timestamp = Time.iso8601(data[:edited_timestamp])
         @mention_everyone = data[:mention_everyone]
         @mention_roles = data[:mention_roles].map { |r| guild.roles[r] } if data.key?(:mention_roles)
-        @attachments = data[:attachments].map { |a| Attachment.new(a) } if data.key?(:attachments)
+        @attachments = data[:attachments].map { |a| Attachment.from_hash(a) } if data.key?(:attachments)
         @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : [] if data.key?(:embeds)
       end
 
@@ -545,7 +545,13 @@ module Discorb
           @http = HTTP.new(self)
           _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
           gateway_url = gateway_response[:url]
-          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=9&encoding=json&compress=zlib-stream",
+          gateway_version = if @intents.to_h[:message_content].nil?
+              warn "message_content intent not set, using gateway version 9. You should specify `message_content` intent for preventing unexpected changes in the future."
+              9
+            else
+              10
+            end
+          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream",
                                                  alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
           begin
             @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
