@@ -476,7 +476,7 @@ module Discorb
       @mention_everyone = data[:mention_everyone]
       @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
       @attachments = data[:attachments].map { |a| Attachment.from_hash(a) }
-      @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
+      @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : []
       @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
       @pinned = data[:pinned]
       @type = self.class.message_type[data[:type]]

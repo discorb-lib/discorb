@@ -306,7 +306,7 @@ module Discorb
         @mention_everyone = data[:mention_everyone]
         @mention_roles = data[:mention_roles].map { |r| guild.roles[r] } if data.key?(:mention_roles)
         @attachments = data[:attachments].map { |a| Attachment.from_hash(a) } if data.key?(:attachments)
-        @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : [] if data.key?(:embeds)
+        @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : [] if data.key?(:embeds)
       end
 
       def channel
