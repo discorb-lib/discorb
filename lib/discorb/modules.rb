@@ -37,7 +37,8 @@ module Discorb
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
         payload[:message_reference] = reference.to_reference if reference
         payload[:components] = Component.to_payload(components) if components
-        attachments = [attachment] if attachment
+        attachments ||= attachment ? [attachment] : []
+
         payload[:attachments] = attachments.map.with_index do |a, i|
           {
             id: i,
@@ -45,6 +46,7 @@ module Discorb
             description: a.description,
           }
         end
+
         _resp, data = @client.http.multipart_request(Route.new("/channels/#{channel_id.wait}/messages", "//channels/:channel_id/messages", :post), payload, attachments).wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
