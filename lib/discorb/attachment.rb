@@ -95,10 +95,10 @@ module Discorb
     #
     # @return [File] The new file.
     #
-    def self.from_string(string, filename: nil, content_type: nil)
+    def self.from_string(string, filename = nil, content_type: nil, description: nil)
       io = StringIO.new(string)
       filename ||= string.object_id.to_s + ".txt"
-      new(io, filename, content_type: content_type)
+      new(io, filename, content_type: content_type, description: description, will_close: true)
     end
   end
 end
