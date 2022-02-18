@@ -33,7 +33,7 @@ jobs:
           git clone git@github.com:discorb-lib/discorb-lib.github.io /tmp/pages
       - name: Install dependencies
         run: |
-          bundle config --local with 'docs development'
+          bundle config --local with 'docs development lint'
           bundle install
           gem update uri
       - name: Generate document

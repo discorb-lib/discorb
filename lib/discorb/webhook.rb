@@ -334,7 +334,7 @@ module Discorb
         @channel_id = Snowflake.new(data[:channel_id])
         @author = Author.new(data[:author])
         @attachments = data[:attachments].map { |a| Attachment.new(a) }
-        @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.new(data: e) } : []
+        @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : []
         @mentions = data[:mentions].map { |m| Mention.new(m) }
         @mention_roles = data[:mention_roles].map { |m| Snowflake.new(m) }
         @mention_everyone = data[:mention_everyone]

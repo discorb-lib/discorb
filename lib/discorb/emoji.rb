@@ -121,6 +121,15 @@ module Discorb
 
     alias destroy! delete!
 
+    # @private
+    def to_hash
+      {
+        name: @name,
+        id: @id,
+        animated: @animated,
+      }
+    end
+
     private
 
     def _set_data(data)
@@ -221,6 +230,15 @@ module Discorb
 
     def inspect
       "#<#{self.class} :#{@name}:>"
+    end
+
+    # @private
+    def to_hash
+      {
+        name: @value,
+        id: nil,
+        animated: false,
+      }
     end
 
     class << self

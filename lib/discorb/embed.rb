@@ -45,37 +45,38 @@ module Discorb
     # @param [Discorb::Embed::Thumbnail, String] thumbnail The thumbnail of embed.
     #
     def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil,
-                                                   fields: nil, footer: nil, image: nil, thumbnail: nil, data: nil)
-      if data.nil?
-        @title = title
-        @description = description
-        @url = url
-        @timestamp = timestamp
-        @color = color
-        @author = author
-        @fields = fields || []
-        @footer = footer
-        @image = image && (image.is_a?(String) ? Image.new(image) : image)
-        @thumbnail = thumbnail && (thumbnail.is_a?(String) ? Thumbnail.new(thumbnail) : thumbnail)
-        @type = "rich"
-      else
-        @title = data[:title]
-        @description = data[:description]
-        @url = data[:url]
-        @timestamp = data[:timestamp] && Time.iso8601(data[:timestamp])
-        @type = data[:type]
-        @color = data[:color] && Color.new(data[:color])
-        @footer = data[:footer] && Footer.new(data[:footer][:text], icon: data[:footer][:icon_url])
-        @author = if data[:author]
-            Author.new(data[:author][:name], icon: data[:author][:icon_url],
-                                             url: data[:author][:url])
-          end
-        @thumbnail = data[:thumbnail] && Thumbnail.new(data[:thumbnail])
-        @image = data[:image] && Image.new(data[:image])
-        @video = data[:video] && Video.new(data[:video])
-        @provider = data[:provider] && Provider.new(data[:provider])
-        @fields = data[:fields] ? data[:fields].map { |f| Field.new(f[:name], f[:value], inline: f[:inline]) } : []
-      end
+                                                   fields: nil, footer: nil, image: nil, thumbnail: nil)
+      @title = title
+      @description = description
+      @url = url
+      @timestamp = timestamp
+      @color = color
+      @author = author
+      @fields = fields || []
+      @footer = footer
+      @image = image && (image.is_a?(String) ? Image.new(image) : image)
+      @thumbnail = thumbnail && (thumbnail.is_a?(String) ? Thumbnail.new(thumbnail) : thumbnail)
+      @type = "rich"
+    end
+
+    # @private
+    def initialize_hash(data)
+      @title = data[:title]
+      @description = data[:description]
+      @url = data[:url]
+      @timestamp = data[:timestamp] && Time.iso8601(data[:timestamp])
+      @type = data[:type]
+      @color = data[:color] && Color.new(data[:color])
+      @footer = data[:footer] && Footer.new(data[:footer][:text], icon: data[:footer][:icon_url])
+      @author = if data[:author]
+          Author.new(data[:author][:name], icon: data[:author][:icon_url],
+                                           url: data[:author][:url])
+        end
+      @thumbnail = data[:thumbnail] && Thumbnail.new(data[:thumbnail])
+      @image = data[:image] && Image.new(data[:image])
+      @video = data[:video] && Video.new(data[:video])
+      @provider = data[:provider] && Provider.new(data[:provider])
+      @fields = data[:fields] ? data[:fields].map { |f| Field.new(f[:name], f[:value], inline: f[:inline]) } : []
     end
 
     def image=(value)
@@ -109,6 +110,12 @@ module Discorb
       ret[:author] = @author&.to_hash if @author
       ret[:fields] = @fields&.map { |f| f.to_hash } if @fields.any?
       ret
+    end
+
+    def self.from_hash(data)
+      inst = allocate
+      inst.initialize_hash(data)
+      inst
     end
 
     #

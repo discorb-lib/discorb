@@ -239,17 +239,15 @@ module Discorb
     # @return [Time] The time when the last pinned message was pinned.
     attr_reader :last_pin_timestamp
     alias last_pinned_at last_pin_timestamp
-    # @return [Array<Discorb::ThreadChannel>] The threads in the channel.
-    attr_reader :threads
 
     include Messageable
 
     @channel_type = 0
 
-    # @private
-    def initialize(client, data, no_cache: false)
-      super
-      @threads = Dictionary.new
+    # @!attribute [r] threads
+    #   @return [Array<Discorb::ThreadChannel>] The threads in the channel.
+    def threads
+      guild.threads.select { |thread| thread.parent == self }
     end
 
     #
@@ -829,8 +827,6 @@ module Discorb
     def initialize(client, data, no_cache: false)
       @members = Dictionary.new
       super
-      @client.channels[@parent_id].threads[@id] = self
-
       @client.channels[@id] = self unless no_cache
     end
 

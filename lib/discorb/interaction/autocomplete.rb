@@ -21,7 +21,7 @@ module Discorb
         option_map = command.options.to_h { |k, v| [k.to_s, v[:default]] }
         Discorb::CommandInteraction::SlashCommand.modify_option_map(option_map, options, guild, {}, {})
         focused_index = options.find_index { |o| o[:focused] }
-        val = command.options.values[focused_index][:autocomplete]&.call(self, *command.options.map { |k, _v| option_map[k.to_s] })
+        val = command.options.values.filter { |option| option[:type] != :attachment }[focused_index][:autocomplete]&.call(self, *command.options.map { |k, _v| option_map[k.to_s] })
         send_complete_result(val)
       end
     end
