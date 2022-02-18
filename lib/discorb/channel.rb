@@ -827,8 +827,6 @@ module Discorb
     def initialize(client, data, no_cache: false)
       @members = Dictionary.new
       super
-      @client.channels[@parent_id].threads[@id] = self
-
       @client.channels[@id] = self unless no_cache
     end
 
