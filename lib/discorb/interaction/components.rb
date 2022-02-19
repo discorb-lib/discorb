@@ -21,7 +21,7 @@ module Discorb
     # @private
     def initialize(client, data)
       super
-      @message = Message.new(@client, data[:message].merge({ member: data[:member] }))
+      @message = Message.new(@client, data[:message].merge({ member: data[:member], guild_id: data[:guild_id] }))
     end
 
     class << self
