@@ -248,6 +248,19 @@ module Discorb
       end
     end
 
+    #
+    # Checks if the member can manage the given role.
+    #
+    # @param [Discorb::Role] role The role.
+    #
+    # @return [Boolean] `true` if the member can manage the role.
+    #
+    def can_manage?(role)
+      return true if owner?
+      top_role = roles.max_by(&:position)
+      top_role.position > role.position
+    end
+
     private
 
     def _set_data(user_data, member_data)
