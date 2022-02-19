@@ -3702,5 +3702,2136 @@ module Discorb
 
     # @return [Discorb::Message::Reference] The reference of the message.
     attr_reader message_reference: Discorb::Message::Reference
+
+    # @return [Discorb::Message::Sticker] The sticker of the message.
+    attr_reader stickers: Discorb::Message::Sticker
+
+    # @return [Discorb::Message::Interaction] The interaction of the message.
+    attr_reader interaction: Discorb::Message::Interaction
+
+    # @return [Discorb::ThreadChannel] The thread channel of the message.
+    attr_reader thread: Discorb::ThreadChannel
+
+    # @return [Array<Array<Discorb::Components>>] The components of the message.
+    attr_reader components: ::Array[::Array[Discorb::Components]]
+
+    # @return [Boolean] Whether the message is deleted.
+    attr_reader deleted: bool
+
+    # @return [Boolean] Whether the message is tts.
+    attr_reader tts: bool
+
+    # @return [Boolean] Whether the message mentions everyone.
+    attr_reader mention_everyone: bool
+
+    # @return [Boolean] Whether the message is pinned.
+    attr_reader pinned: bool
+
+    # @macro client_cache
+    # @return [Discorb::Channel] The channel the message was sent in.
+    attr_reader channel: Discorb::Channel?
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild the message was sent in.
+    # @return [nil] If the message was not sent in a guild.
+    attr_reader guild: Discorb::Guild?
+
+    # @return [Boolean] Whether the message was sent by a webhook.
+    attr_reader webhook?: bool
+
+    # @return [Boolean] Whether the message was edited.
+    attr_reader edited?: bool
+
+    # @return [String] The URL to jump to the message.
+    attr_reader jump_url: String
+
+    # @return [Discorb::Embed] The embed of the message.
+    # @return [nil] If the message has no embed.
+    attr_reader embed: Discorb::Embed?
+
+    # 
+    # Represents message flag.
+    # ## Flag fields
+    # |Field|Value|
+    # |-|-|
+    # |`1 << 0`|`:crossposted`|
+    # |`1 << 1`|`:crosspost`|
+    # |`1 << 2`|`:supress_embeds`|
+    # |`1 << 3`|`:source_message_deleted`|
+    # |`1 << 4`|`:urgent`|
+    # |`1 << 5`|`:has_thread`|
+    # |`1 << 6`|`:ephemeral`|
+    # |`1 << 7`|`:loading`|
+    class Flag < Discorb::Flag
+    end
+
+    # 
+    # Represents reference of message.
+    class Reference
+      # 
+      # Initialize a new reference.
+      # 
+      # @param [Discorb::Snowflake] guild_id The guild ID.
+      # @param [Discorb::Snowflake] channel_id The channel ID.
+      # @param [Discorb::Snowflake] message_id The message ID.
+      # @param [Boolean] fail_if_not_exists Whether fail the request if the message is not found.
+      def initialize: (
+                        Discorb::Snowflake guild_id,
+                        Discorb::Snowflake channel_id,
+                        Discorb::Snowflake message_id,
+                        ?fail_if_not_exists: bool
+                      ) -> void
+
+      # 
+      # Convert the reference to a hash.
+      # 
+      # @return [Hash] The hash.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # 
+      # Initialize a new reference from a hash.
+      # 
+      # @param [Hash] data The hash.
+      # 
+      # @return [Discorb::Message::Reference] The reference.
+      # @see https://discord.com/developers/docs/resources/channel#message-reference-object
+      def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::Message::Reference
+
+      # @return [Discorb::Snowflake] The guild ID.
+      attr_accessor guild_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The channel ID.
+      attr_accessor channel_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The message ID.
+      attr_accessor message_id: Discorb::Snowflake
+
+      # @return [Boolean] Whether fail the request if the message is not found.
+      attr_accessor fail_if_not_exists: bool
+    end
+
+    class Sticker
+      def initialize: (untyped data) -> void
+
+      # Returns the value of attribute id.
+      attr_reader id: untyped
+
+      # Returns the value of attribute name.
+      attr_reader name: untyped
+
+      # Returns the value of attribute format.
+      attr_reader format: untyped
+    end
+
+    # 
+    # Represents a interaction of message.
+    class Interaction < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped client, untyped data) -> void
+
+      # @return [Discorb::Snowflake] The user ID.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [String] The name of command.
+      # @return [nil] If the message is not a command.
+      attr_reader name: String?
+
+      # @return [Class] The type of interaction.
+      attr_reader type: Class
+
+      # @return [Discorb::User] The user.
+      attr_reader user: Discorb::User
+    end
+
+    # 
+    # Represents a activity of message.
+    class Activity < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped data) -> void
+
+      # @return [String] The name of activity.
+      attr_reader name: String
+
+      # @return [Symbol] The type of activity.
+      attr_reader type: Symbol
+    end
   end
+
+  # 
+  # Module for sending and reading messages.
+  module Messageable
+    # 
+    # Post a message to the channel.
+    # 
+    # @param [String] content The message content.
+    # @param [Boolean] tts Whether the message is tts.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
+    # @param [Discorb::Message, Discorb::Message::Reference] reference The message to reply to.
+    # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+    # @param [Discorb::File] file The file to send.
+    # @param [Array<Discorb::File>] files The files to send.
+    # 
+    # @return [Discorb::Message] The message sent.
+    def post: (
+                ?String? content,
+                ?tts: bool,
+                ?embed: Discorb::Embed?,
+                ?embeds: ::Array[Discorb::Embed]?,
+                ?allowed_mentions: Discorb::AllowedMentions?,
+                ?reference: (Discorb::Message | Discorb::Message::Reference)?,
+                ?components: (::Array[Discorb::Components] | ::Array[::Array[Discorb::Components]])?,
+                ?file: Discorb::File?,
+                ?files: ::Array[Discorb::File]?
+              ) -> Discorb::Message
+
+    # 
+    # Fetch a message from ID.
+    # 
+    # @param [Discorb::Snowflake] id The ID of the message.
+    # 
+    # @return [Discorb::Message] The message.
+    # @raise [Discorb::NotFoundError] If the message is not found.
+    def fetch_message: (Discorb::Snowflake id) -> Discorb::Message
+
+    # 
+    # Fetch a message history.
+    # 
+    # @param [Integer] limit The number of messages to fetch.
+    # @param [Discorb::Snowflake] before The ID of the message to fetch before.
+    # @param [Discorb::Snowflake] after The ID of the message to fetch after.
+    # @param [Discorb::Snowflake] around The ID of the message to fetch around.
+    # 
+    # @return [Array<Discorb::Message>] The messages.
+    def fetch_messages: (
+                          ?Integer limit,
+                          ?before: Discorb::Snowflake?,
+                          ?after: Discorb::Snowflake?,
+                          ?around: Discorb::Snowflake?
+                        ) -> ::Array[Discorb::Message]
+
+    # 
+    # Trigger the typing indicator in the channel.
+    # @macro async
+    # @macro http
+    # 
+    # If block is given, trigger typing indicator during executing block.
+    # @example
+    #   channel.typing do
+    #     channel.post("Waiting for 60 seconds...")
+    #     sleep 60
+    #     channel.post("Done!")
+    #   end
+    def typing: () -> untyped
+  end
+
+  # 
+  # Represents a sticker.
+  class Sticker < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+    # @return [Discorb::Snowflake] The ID of the sticker.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the sticker.
+    attr_reader name: String
+
+    # @return [Array<String>] The tags of the sticker.
+    attr_reader tags: ::Array[String]
+
+    # @return [:official, :guild] The type of sticker.
+    attr_reader type: Symbol
+
+    # @return [:png, :apng, :lottie] The format of the sticker.
+    attr_reader format: Symbol
+
+    # @return [String] The URL of the sticker.
+    attr_reader description: String
+
+    # @return [Discorb::Sticker] The ID of the sticker pack.
+    attr_reader pack_id: Discorb::Sticker
+
+    # @return [Integer] The sort value of the sticker.
+    attr_reader sort_value: Integer
+
+    # @return [Discorb::Snowflake] The ID of the guild the sticker is in.
+    attr_reader guild_id: Discorb::Snowflake
+
+    # @return [Discorb::User] The user who created the sticker.
+    attr_reader user: Discorb::User
+
+    # @return [Boolean] Whether the sticker is available.
+    attr_reader available: bool
+
+    # 
+    # Represents a sticker of guilds.
+    class GuildSticker < Discorb::Sticker
+      # 
+      # Edits the sticker.
+      # @macro async
+      # @macro http
+      # @macro edit
+      # 
+      # @param [String] name The new name of the sticker.
+      # @param [String] description The new description of the sticker.
+      # @param [Discorb::Emoji] tag The new tags of the sticker.
+      # @param [String] reason The reason for the edit.
+      def edit: (
+                  ?name: String,
+                  ?description: String,
+                  ?tag: Discorb::Emoji,
+                  ?reason: String
+                ) -> untyped
+
+      # 
+      # Deletes the sticker.
+      # @macro async
+      # @macro http
+      # 
+      # @param [String] reason The reason for the deletion.
+      def delete!: (?reason: String?) -> untyped
+
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild the sticker is in.
+      attr_reader guild: untyped
+    end
+
+    # 
+    # Represents a sticker pack.
+    class Pack < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped client, untyped data) -> void
+
+      # @return [Discorb::Snowflake] The ID of the sticker pack.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [String] The name of the sticker pack.
+      attr_reader name: String
+
+      # @return [Discorb::Snowflake] The ID of the SKU.
+      attr_reader sku_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The cover sticker of the pack.
+      attr_reader cover_sticker_id: Discorb::Snowflake
+
+      # @return [String] The description of the pack.
+      attr_reader description: String
+
+      # @return [Discorb::Store::SKU] The banner asset ID of the pack.
+      attr_reader banner_asset_id: Discorb::Store::SKU
+
+      # @return [Array<Discorb::Sticker>] The stickers in the pack.
+      attr_reader stickers: ::Array[Discorb::Sticker]
+
+      # @return [Discorb::Asset] The banner of the pack.
+      attr_reader banner: Discorb::Asset
+    end
+  end
+
+  # 
+  # Represents a webhook.
+  # @abstract
+  class Webhook
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+
+    def inspect: () -> untyped
+
+    # 
+    # Posts a message to the webhook.
+    # @macro async
+    # @macro http
+    # 
+    # @param [String] content The content of the message.
+    # @param [Boolean] tts Whether the message should be sent as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Discorb::File] file The file to send.
+    # @param [Array<Discorb::File>] files The files to send.
+    # @param [String] username The username of the message.
+    # @param [String] avatar_url The avatar URL of the message.
+    # @param [Boolean] wait Whether to wait for the message to be sent.
+    # 
+    # @return [Discorb::Webhook::Message] The message that was sent.
+    # @return [nil] If `wait` is false.
+    def post: (
+                ?String? content,
+                ?tts: bool,
+                ?embed: Discorb::Embed?,
+                ?embeds: ::Array[Discorb::Embed]?,
+                ?allowed_mentions: Discorb::AllowedMentions?,
+                ?file: Discorb::File?,
+                ?files: ::Array[Discorb::File]?,
+                ?username: String?,
+                ?avatar_url: String,
+                ?wait: bool
+              ) -> Discorb::Webhook::Message
+
+    # 
+    # Edits the webhook.
+    # @macro async
+    # @macro http
+    # @macro edit
+    # 
+    # @param [String] name The new name of the webhook.
+    # @param [Discorb::Image] avatar The new avatar of the webhook.
+    # @param [Discorb::GuildChannel] channel The new channel of the webhook.
+    def edit: (?name: String, ?avatar: Discorb::Image, ?channel: Discorb::GuildChannel) -> untyped
+
+    # 
+    # Deletes the webhook.
+    # @macro async
+    # @macro http
+    def delete!: () -> untyped
+
+    # 
+    # Edits the webhook's message.
+    # @macro async
+    # @macro http
+    # @macro edit
+    # 
+    # @param [Discorb::Webhook::Message] message The message to edit.
+    # @param [String] content The new content of the message.
+    # @param [Discorb::Embed] embed The new embed of the message.
+    # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
+    # @param [Discorb::File] file The file to send.
+    # @param [Array<Discorb::File>] files The files to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    def edit_message: (
+                        Discorb::Webhook::Message message,
+                        ?String content,
+                        ?embed: Discorb::Embed,
+                        ?embeds: ::Array[Discorb::Embed],
+                        ?file: Discorb::File,
+                        ?files: ::Array[Discorb::File],
+                        ?attachments: ::Array[Discorb::Attachment],
+                        ?allowed_mentions: Discorb::AllowedMentions
+                      ) -> untyped
+
+    # 
+    # Deletes the webhook's message.
+    # 
+    # @param [Discorb::Webhook::Message] message The message to delete.
+    def delete_message!: (Discorb::Webhook::Message message) -> untyped
+
+    # 
+    # Creates URLWebhook.
+    # 
+    # @param [String] url The URL of the webhook.
+    # 
+    # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
+    def self.new: (String url) -> Discorb::Webhook::URLWebhook
+
+    def self.from_url: (untyped url) -> untyped
+
+    # @return [String] The name of the webhook.
+    attr_reader name: String
+
+    # @return [Discorb::Snowflake] The ID of the guild this webhook belongs to.
+    attr_reader guild_id: Discorb::Snowflake
+
+    # @return [Discorb::Snowflake] The ID of the channel this webhook belongs to.
+    attr_reader channel_id: Discorb::Snowflake
+
+    # @return [Discorb::User] The user that created this webhook.
+    attr_reader user: Discorb::User
+
+    # @return [Discorb::Asset] The avatar of the webhook.
+    attr_reader avatar: Discorb::Asset
+
+    # @return [Discorb::Snowflake] The application ID of the webhook.
+    # @return [nil] If the webhook is not an application webhook.
+    attr_reader application_id: Discorb::Snowflake?
+
+    # @return [String] The URL of the webhook.
+    attr_reader token: String
+
+    # 
+    # Represents a webhook from URL.
+    class URLWebhook < Discorb::Webhook
+      # 
+      # Initializes the webhook from URL.
+      # 
+      # @param [String] url The URL of the webhook.
+      def initialize: (String url) -> void
+
+      # @return [String] The URL of the webhook.
+      attr_reader url: String
+    end
+
+    # 
+    # Represents a bot created webhook.
+    class IncomingWebhook < Discorb::Webhook
+      # @!visibility private
+      def initialize: (untyped client, untyped data) -> void
+
+      # @return [String] The URL of the webhook.
+      attr_reader url: String
+    end
+
+    # 
+    # Represents a webhook of channel following.
+    class FollowerWebhook < Discorb::Webhook
+      # @!visibility private
+      def initialize: (untyped client, untyped data) -> void
+
+      # Represents a source guild of follower webhook.
+      # @return [Discorb::Guild, Discorb::Webhook::FollowerWebhook::Guild] The source guild of follower webhook.
+      attr_reader source_guild: (Discorb::Guild | Discorb::Webhook::FollowerWebhook::Guild)
+
+      # Represents a source channel of follower webhook.
+      # @return [Discorb::Channel, Discorb::Webhook::FollowerWebhook::Channel] The source channel of follower webhook.
+      attr_reader source_channel: (Discorb::Channel | Discorb::Webhook::FollowerWebhook::Channel)
+
+      # 
+      # Represents a guild of follower webhook.
+      class Guild < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [Discorb::Snowflake] The ID of the guild.
+        attr_reader id: Discorb::Snowflake
+
+        # @return [String] The name of the guild.
+        attr_reader name: String
+
+        # @return [Discorb::Asset] The icon of the guild.
+        attr_reader icon: Discorb::Asset
+      end
+
+      # 
+      # Represents a channel of follower webhook.
+      class Channel < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [Discorb::Snowflake] The ID of the channel.
+        attr_reader id: Discorb::Snowflake
+
+        # @return [String] The name of the channel.
+        attr_reader name: String
+      end
+    end
+
+    # 
+    # Represents a webhook from oauth2.
+    class ApplicationWebhook < Discorb::Webhook
+    end
+
+    # 
+    # Represents a webhook message.
+    class Message < Discorb::Message
+      # @!visibility private
+      def initialize: (untyped webhook, untyped data, ?untyped client) -> void
+
+      # 
+      # Edits the message.
+      # @macro async
+      # @macro http
+      # @macro edit
+      # 
+      # @param (see Webhook#edit_message)
+      def edit: () -> untyped
+
+      # 
+      # Deletes the message.
+      # @macro async
+      # @macro http
+      def delete!: () -> untyped
+      # @return [Discorb::Snowflake] The ID of the channel.
+      attr_reader channel_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the guild.
+      attr_reader guild_id: Discorb::Snowflake
+
+      # 
+      # Represents an author of webhook message.
+      class Author < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [Boolean] Whether the author is a bot.
+        # @note This will be always `true`.
+        attr_reader bot: bool
+
+        # @return [Discorb::Snowflake] The ID of the author.
+        attr_reader id: Discorb::Snowflake
+
+        # @return [String] The name of the author.
+        attr_reader username: String
+
+        # @return [Discorb::Asset] The avatar of the author.
+        attr_reader avatar: Discorb::Asset
+
+        # @return [String] The discriminator of the author.
+        attr_reader discriminator: String
+      end
+    end
+  end
+
+  # 
+  # A class to handle internet requests.
+  # This class is internal use only.
+  class Internet
+    # @!visibility private
+    def initialize: (untyped client) -> void
+
+    # 
+    # Execute a GET request.
+    # @macro async
+    # 
+    # @param [String] path The path to the resource.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    # 
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # 
+    # @raise [Discorb::HTTPError] The request was failed.
+    def get: (
+               String path,
+               ?headers: ::Hash[untyped, untyped]?,
+               ?audit_log_reason: String?,
+               **::Hash[untyped, untyped] kwargs
+             ) -> SORD_ERROR_ArrayNetHTTPResponseHash
+
+    # 
+    # Execute a POST request.
+    # @macro async
+    # 
+    # @param [String] path The path to the resource.
+    # @param [String, Hash] body The body of the request.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    # 
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # 
+    # @raise [Discorb::HTTPError] The request was failed.
+    def post: (
+                String path,
+                ?(String | ::Hash[untyped, untyped]) body,
+                ?headers: ::Hash[untyped, untyped]?,
+                ?audit_log_reason: String?,
+                **::Hash[untyped, untyped] kwargs
+              ) -> SORD_ERROR_ArrayNetHTTPResponseHash
+
+    # 
+    # Execute a PATCH request.
+    # @macro async
+    # 
+    # @param [String] path The path to the resource.
+    # @param [String, Hash] body The body of the request.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    # 
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # 
+    # @raise [Discorb::HTTPError] The request was failed.
+    def patch: (
+                 String path,
+                 ?(String | ::Hash[untyped, untyped]) body,
+                 ?headers: ::Hash[untyped, untyped]?,
+                 ?audit_log_reason: String?,
+                 **::Hash[untyped, untyped] kwargs
+               ) -> SORD_ERROR_ArrayNetHTTPResponseHash
+
+    # 
+    # Execute a PUT request.
+    # @macro async
+    # 
+    # @param [String] path The path to the resource.
+    # @param [String, Hash] body The body of the request.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    # 
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # 
+    # @raise [Discorb::HTTPError] The request was failed.
+    def put: (
+               String path,
+               ?(String | ::Hash[untyped, untyped]) body,
+               ?headers: ::Hash[untyped, untyped]?,
+               ?audit_log_reason: String?,
+               **::Hash[untyped, untyped] kwargs
+             ) -> SORD_ERROR_ArrayNetHTTPResponseHash
+
+    # 
+    # Execute a DELETE request.
+    # @macro async
+    # 
+    # @param [String] path The path to the resource.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    # 
+    # @return [Array[Net::HTTPResponse, Hash]] The response and as JSON.
+    # @return [Array[Net::HTTPResponse, nil]] The response was 204.
+    # 
+    # @raise [Discorb::HTTPError] The request was failed.
+    def delete: (
+                  String path,
+                  ?headers: ::Hash[untyped, untyped]?,
+                  ?audit_log_reason: String?,
+                  **::Hash[untyped, untyped] kwargs
+                ) -> SORD_ERROR_ArrayNetHTTPResponseHash
+
+    def inspect: () -> untyped
+
+    # 
+    # A helper method to send multipart/form-data requests.
+    # 
+    # @param [Hash] payload The payload to send.
+    # @param [Array<Discorb::File>] files The files to send.
+    # 
+    # @return [Array[String, String]] The boundary and body.
+    def self.multipart: (::Hash[untyped, untyped] payload, ::Array[Discorb::File] files) -> SORD_ERROR_ArrayStringString
+
+    def test_error: (untyped ary) -> untyped
+
+    def get_headers: (untyped headers, ?untyped body, ?untyped audit_log_reason) -> untyped
+
+    def get_body: (untyped body) -> untyped
+
+    def get_path: (untyped path) -> untyped
+
+    def http: () -> untyped
+
+    def recr_utf8: (untyped data) -> untyped
+  end
+
+  # 
+  # Represents a presence of user.
+  class Presence < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+
+    def inspect: () -> untyped
+    # @return [:online, :idle, :dnd, :offline] The status of the user.
+    attr_reader status: Symbol
+
+    # @return [Array<Discorb::Presence::Activity>] The activities of the user.
+    attr_reader activities: ::Array[Discorb::Presence::Activity]
+
+    # @return [Discorb::Presence::ClientStatus] The client status of the user.
+    attr_reader client_status: Discorb::Presence::ClientStatus
+
+    # @return [Discorb::User] The user of the presence.
+    attr_reader user: Discorb::User
+
+    # @return [Discorb::Guild] The guild of the presence.
+    attr_reader guild: Discorb::Guild
+
+    # @return [Discorb::Presence::Activity] The activity of the presence.
+    attr_reader activity: Discorb::Presence::Activity
+
+    # 
+    # Represents an activity of a user.
+    class Activity < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped data) -> void
+
+      # 
+      # Convert the activity to a string.
+      # 
+      # @return [String] The string representation of the activity.
+      def to_s: () -> String
+
+      # @return [String] The name of the activity.
+      attr_reader name: String
+
+      # @return [:game, :streaming, :listening, :watching, :custom, :competing] The type of the activity.
+      attr_reader type: Symbol
+
+      # @return [String] The url of the activity.
+      attr_reader url: String
+
+      # @return [Time] The time the activity was created.
+      attr_reader created_at: Time
+
+      # @return [Discorb::Presence::Activity::Timestamps] The timestamps of the activity.
+      attr_reader timestamps: Discorb::Presence::Activity::Timestamps
+
+      # @return [Discorb::Snowflake] The application id of the activity.
+      attr_reader application_id: Discorb::Snowflake
+
+      # @return [String] The details of the activity.
+      attr_reader details: String
+
+      # @return [String] The state of party.
+      attr_reader state: String
+
+      # @return [Discorb::Emoji] The emoji of the activity.
+      attr_reader emoji: Discorb::Emoji
+
+      # @return [Discorb::Presence::Activity::Party] The party of the activity.
+      # @return [nil] If the activity is not a party activity.
+      attr_reader party: Discorb::Presence::Activity::Party?
+
+      # @return [Discorb::Presence::Activity::Asset] The assets of the activity.
+      # @return [nil] If the activity has no assets.
+      attr_reader assets: Discorb::Presence::Activity::Asset?
+
+      # @return [Discorb::StageInstance] The instance of the activity.
+      # @return [nil] If the activity is not a stage activity.
+      attr_reader instance: Discorb::StageInstance?
+
+      # @return [Array<Discorb::Presence::Activity::Button>] The buttons of the activity.
+      # @return [nil] If the activity has no buttons.
+      attr_reader buttons: ::Array[Discorb::Presence::Activity::Button]?
+
+      # @return [Discorb::Presence::Activity::Flag] The flags of the activity.
+      attr_reader flags: Discorb::Presence::Activity::Flag
+
+      # 
+      # Represents the timestamps of an activity.
+      class Timestamps < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [Time] The start time of the activity.
+        attr_reader start: Time
+
+        # @return [Time] The end time of the activity.
+        attr_reader end: Time
+      end
+
+      class Party < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [String] The id of the party.
+        attr_reader id: String
+
+        # @return [Integer] The current size of the party.
+        attr_reader current_size: Integer
+
+        # @return [Integer] The max size of the party.
+        attr_reader max_size: Integer
+      end
+
+      # 
+      # Represents the assets of an activity.
+      class Asset < Discorb::DiscordModel
+        def initialize: (untyped data) -> void
+
+        # @return [String] The large image ID of the asset.
+        attr_reader large_image: String
+
+        # @return [String] The large text of the activity.
+        attr_reader large_text: String
+
+        # @return [String] The small image ID of the activity.
+        attr_reader small_image: String
+
+        # @return [String] The small text of the activity.
+        attr_reader small_text: String
+      end
+
+      # 
+      # Represents the flags of an activity.
+      # ## Flag fields
+      # |`1 << 0`|`:instance`|
+      # |`1 << 1`|`:join`|
+      # |`1 << 2`|`:spectate`|
+      # |`1 << 3`|`:join_request`|
+      # |`1 << 4`|`:sync`|
+      # |`1 << 5`|`:play`|
+      class Flag < Discorb::Flag
+      end
+
+      # 
+      # Represents a secrets of an activity.
+      class Secrets < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [String] The join secret of the activity.
+        attr_reader join: String
+
+        # @return [String] The spectate secret of the activity.
+        attr_reader spectate: String
+
+        # @return [String] The match secret of the activity.
+        attr_reader match: String
+      end
+
+      # 
+      # Represents a button of an activity.
+      class Button < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [String] The text of the button.
+        attr_reader label: String
+
+        # @return [String] The URL of the button.
+        attr_reader url: String
+      end
+    end
+
+    # 
+    # Represents a user's client status.
+    class ClientStatus < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped data) -> void
+
+      # @return [Symbol] The desktop status of the user.
+      attr_reader desktop: Symbol
+
+      # @return [Symbol] The mobile status of the user.
+      attr_reader mobile: Symbol
+
+      # @return [Symbol] The web status of the user.
+      attr_reader web: Symbol
+
+      # @return [Boolean] Whether the user is not offline on desktop.
+      attr_reader desktop?: bool
+
+      # @return [Boolean] Whether the user is not offline on mobile.
+      attr_reader mobile?: bool
+
+      # @return [Boolean] Whether the user is not offline on web.
+      attr_reader web?: bool
+    end
+  end
+
+  # 
+  # Represents a reaction to a message.
+  class Reaction < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped message, untyped data) -> void
+
+    # 
+    # Fetch the user that reacted with this emoji.
+    # 
+    # @param (see Message#fetch_reacted_users)
+    # 
+    # @return [Array<Discorb::User>] The users that reacted with this emoji.
+    def fetch_users: () -> ::Array[Discorb::User]
+    # @return [Integer] The number of users that have reacted with this emoji.
+    attr_reader count: Integer
+
+    # @return [Discorb::Emoji] The emoji that was reacted with.
+    attr_reader emoji: Discorb::Emoji
+
+    # @return [Discorb::Message] The message that this reaction is on.
+    attr_reader message: Discorb::Message
+
+    # @return [Boolean] Whether client user reacted with this emoji.
+    attr_reader me: bool
+  end
+
+  # 
+  # Module to make extension.
+  # extend this module to make your own extension.
+  # @see file:docs/extension.md
+  # @abstract
+  module Extension
+  end
+
+  # 
+  # Represents a Discord audit log.
+  class AuditLog < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data, untyped guild) -> void
+
+    # 
+    # Gets an entry from entries.
+    # 
+    # @param [Integer] index The index of the entry.
+    # 
+    # @return [Discorb::AuditLog::Entry] The entry.
+    # @return [nil] If the index is out of range.
+    def []: (Integer index) -> Discorb::AuditLog::Entry
+
+    # @return [Array<Discorb::Webhook>] The webhooks in this audit log.
+    attr_reader webhooks: ::Array[Discorb::Webhook]
+
+    # @return [Array<Discorb::User>] The users in this audit log.
+    attr_reader users: ::Array[Discorb::User]
+
+    # @return [Array<Discorb::ThreadChannel>] The threads in this audit log.
+    attr_reader threads: ::Array[Discorb::ThreadChannel]
+
+    # @return [Array<Discorb::AuditLog::Entry>] The entries in this audit log.
+    attr_reader entries: ::Array[Discorb::AuditLog::Entry]
+
+    # 
+    # Represents an entry in an audit log.
+    class Entry < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped client, untyped data, _ToS guild_id) -> void
+
+      # 
+      # Get a change with the given key.
+      # 
+      # @param [Symbol] key The key to get.
+      # 
+      # @return [Discorb::AuditLog::Entry::Change] The change with the given key.
+      # @return [nil] The change with the given key does not exist.
+      def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
+
+      def inspect: () -> untyped
+
+      # @return [Discorb::Snowflake] The ID of the entry.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the user who performed the action.
+      attr_reader user_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the target of the action.
+      attr_reader target_id: Discorb::Snowflake
+
+      # @return [Symbol] The type of the entry.
+      # These symbols will be used:
+      # 
+      # * `:guild_update`
+      # * `:channel_create`
+      # * `:channel_update`
+      # * `:channel_delete`
+      # * `:channel_overwrite_create`
+      # * `:channel_overwrite_update`
+      # * `:channel_overwrite_delete`
+      # * `:member_kick`
+      # * `:member_prune`
+      # * `:member_ban_add`
+      # * `:member_ban_remove`
+      # * `:member_update`
+      # * `:member_role_update`
+      # * `:member_move`
+      # * `:member_disconnect`
+      # * `:bot_add`
+      # * `:role_create`
+      # * `:role_update`
+      # * `:role_delete`
+      # * `:invite_create`
+      # * `:invite_update`
+      # * `:invite_delete`
+      # * `:webhook_create`
+      # * `:webhook_update`
+      # * `:webhook_delete`
+      # * `:emoji_create`
+      # * `:emoji_update`
+      # * `:emoji_delete`
+      # * `:message_delete`
+      # * `:message_bulk_delete`
+      # * `:message_pin`
+      # * `:message_unpin`
+      # * `:integration_create`
+      # * `:integration_update`
+      # * `:integration_delete`
+      # * `:stage_instance_create`
+      # * `:stage_instance_update`
+      # * `:stage_instance_delete`
+      # * `:sticker_create`
+      # * `:sticker_update`
+      # * `:sticker_delete`
+      # * `:thread_create`
+      # * `:thread_update`
+      # * `:thread_delete`
+      attr_reader type: Symbol
+
+      # @return [Discorb::AuditLog::Entry::Changes] The changes in this entry.
+      attr_reader changes: Discorb::AuditLog::Entry::Changes
+
+      # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message] The target of the entry.
+      attr_reader target: (Discorb::Channel | Discorb::Role | Discorb::Member | Discorb::Guild | Discorb::Message)
+
+      # @return [Hash{Symbol => Object}] The optional data for this entry.
+      # @note You can use dot notation to access the data.
+      attr_reader options: ::Hash[Symbol, Object]
+
+      # @return [Discorb::User] The user who performed the action.
+      attr_reader user: Discorb::User
+
+      # 
+      # Represents the changes in an audit log entry.
+      class Changes < Discorb::DiscordModel
+        # 
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        def inspect: () -> untyped
+
+        # 
+        # Get keys of changes.
+        # 
+        # @return [Array<Symbol>] The keys of the changes.
+        def keys: () -> ::Array[Symbol]
+
+        # 
+        # Get a change with the given key.
+        # 
+        # @param [Symbol] key The key to get.
+        # 
+        # @return [Discorb::AuditLog::Entry::Change] The change with the given key.
+        # @return [nil] The change with the given key does not exist.
+        def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
+
+        # Returns the value of attribute data.
+        attr_reader data: untyped
+      end
+
+      # 
+      # Represents a change in an audit log entry.
+      # @note This instance will try to call a method of {#new_value} if the method wasn't defined.
+      class Change < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        def method_missing: (untyped method) -> untyped
+
+        def inspect: () -> untyped
+
+        def respond_to_missing?: (untyped method, ?untyped include_private) -> bool
+
+        # @return [Symbol] The key of the change.
+        attr_reader key: Symbol
+
+        # @return [Object] The old value of the change.
+        attr_reader old_value: Object
+
+        # @return [Object] The new value of the change.
+        attr_reader new_value: Object
+      end
+    end
+
+    # 
+    # Represents an integration in an audit log entry.
+    class Integration < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped data) -> void
+
+      def inspect: () -> untyped
+
+      # @return [Discorb::Snowflake] The ID of the integration.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [Symbol] The type of the integration.
+      attr_reader type: Symbol
+
+      # @return [String] The name of the integration.
+      attr_reader name: String
+
+      # @return [Discorb::Integration::Account] The account of the integration.
+      attr_reader account: Discorb::Integration::Account
+    end
+  end
+
+  # 
+  # @abstract
+  # Represents a Discord component.
+  class Component
+    # 
+    # Create a new component from hash data.
+    # 
+    # @see https://discord.com/developers/docs/interactions/message-components Official Discord API documentation
+    # @param [Hash] data Hash data.
+    # 
+    # @return [Component] A new component.
+    def self.from_hash: (::Hash[untyped, untyped] data) -> Component
+  end
+
+  # 
+  # Represents a button component.
+  class Button < Discorb::Component
+    # 
+    # Initialize a new button.
+    # 
+    # @param [String] label The label of the button.
+    # @param [:primary, :secondary, :success, :danger, :link] style The style of the button.
+    # @param [Discorb::Emoji] emoji The emoji of the button.
+    # @param [String] custom_id The custom ID of the button.
+    # @param [String] url The URL of the button.
+    # @param [Boolean] disabled Whether the button is disabled.
+    def initialize: (
+                      String label,
+                      ?Symbol style,
+                      ?emoji: Discorb::Emoji?,
+                      ?custom_id: String?,
+                      ?url: String?,
+                      ?disabled: bool
+                    ) -> void
+
+    # 
+    # Converts the button to a hash.
+    # 
+    # @see https://discord.com/developers/docs/interactions/message-components#button-object-button-structure Official Discord API docs
+    # @return [Hash] A hash representation of the button.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    def hash_emoji: (untyped emoji) -> untyped
+
+    # @return [String] The label of the button.
+    attr_accessor label: String
+
+    # @return [:primary, :secondary, :success, :danger, :link] The style of the button.
+    attr_accessor style: Symbol
+
+    # @return [Discorb::Emoji] The emoji of the button.
+    attr_accessor emoji: Discorb::Emoji
+
+    # @return [String] The custom ID of the button.
+    #   Won't be used if the style is `:link`.
+    attr_accessor custom_id: String
+
+    # @return [String] The URL of the button.
+    #   Only used when the style is `:link`.
+    attr_accessor url: String
+
+    # @return [Boolean] Whether the button is disabled.
+    attr_accessor disabled: bool
+  end
+
+  # 
+  # Represents a select menu component.
+  class SelectMenu < Discorb::Component
+    # 
+    # Initialize a new select menu.
+    # 
+    # @param [String, Symbol] custom_id Custom ID of the select menu.
+    # @param [Array<Discorb::SelectMenu::Option>] options The options of the select menu.
+    # @param [String] placeholder The placeholder of the select menu.
+    # @param [Integer] min_values The minimum number of values.
+    # @param [Integer] max_values The maximum number of values.
+    def initialize: (
+                      (String | Symbol) custom_id,
+                      ::Array[Discorb::SelectMenu::Option] options,
+                      ?placeholder: String?,
+                      ?min_values: Integer,
+                      ?max_values: Integer
+                    ) -> void
+
+    # 
+    # Converts the select menu to a hash.
+    # 
+    # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure Official Discord API docs
+    # @return [Hash] A hash representation of the select menu.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    def hash_emoji: (untyped emoji) -> untyped
+
+    # @return [String] The custom ID of the select menu.
+    attr_accessor custom_id: String
+
+    # @return [Array<SelectMenu::Option>] The options of the select menu.
+    attr_accessor options: ::Array[SelectMenu::Option]
+
+    # @return [Integer] The minimum number of values.
+    attr_accessor min_values: Integer
+
+    # @return [Integer] The maximum number of values.
+    attr_accessor max_values: Integer
+
+    # @return [Boolean] Whether the select menu is disabled.
+    attr_reader disabled: bool
+
+    # 
+    # Represents an option of a select menu.
+    class Option
+      # 
+      # Initialize a new option.
+      # 
+      # @param [String] label The label of the option.
+      # @param [String] value The value of the option.
+      # @param [String] description The description of the option.
+      # @param [Discorb::Emoji] emoji The emoji of the option.
+      # @param [Boolean] default Whether the option is default.
+      def initialize: (
+                        String label,
+                        String value,
+                        ?description: String?,
+                        ?emoji: Discorb::Emoji?,
+                        ?default: bool
+                      ) -> void
+
+      # 
+      # Converts the option to a hash.
+      # 
+      # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure Official Discord API docs
+      # @return [Hash] Hash representation of the option.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # @!visibility private
+      def hash_emoji: (untyped emoji) -> untyped
+
+      # 
+      # Creates a new option from a hash.
+      # 
+      # @param [Hash] data A hash representing the option.
+      # 
+      # @return [Discorb::SelectMenu::Option] A new option.
+      def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::SelectMenu::Option
+
+      # @return [String] The label of the option.
+      attr_accessor label: String
+
+      # @return [String] The value of the option.
+      attr_accessor value: String
+
+      # @return [String] The description of the option.
+      attr_accessor description: String
+
+      # @return [Discorb::Emoji] The emoji of the option.
+      attr_accessor emoji: Discorb::Emoji
+
+      # @return [Boolean] Whether the option is default.
+      attr_accessor default: bool
+    end
+  end
+
+  class Dictionary[K, V]
+    # 
+    # Initialize a new Dictionary.
+    # 
+    # @param [Hash] hash A hash of items to add to the dictionary.
+    # @param [Integer] limit The maximum number of items in the dictionary.
+    # @param [false, Proc] sort Whether to sort the items in the dictionary.
+    def initialize: (?::Hash[untyped, untyped] hash, ?limit: Integer?, ?sort: (bool | Proc)) -> void
+
+    # 
+    # Registers a new item in the dictionary.
+    # 
+    # @param [#to_s] id The ID of the item.
+    # @param [Object] body The item to register.
+    # 
+    # @return [self] The dictionary.
+    def register: (_ToS id, Object body) -> self
+
+    # 
+    # Merges another dictionary into this one.
+    # 
+    # @param [Discorb::Dictionary] other The dictionary to merge.
+    def merge: (Discorb::Dictionary other) -> untyped
+
+    # 
+    # Removes an item from the dictionary.
+    # 
+    # @param [#to_s] id The ID of the item to remove.
+    def remove: (_ToS id) -> untyped
+
+    # 
+    # Get an item from the dictionary.
+    # 
+    # @param [#to_s] id The ID of the item.
+    # @return [Object] The item.
+    # @return [nil] if the item was not found.
+    # 
+    # @overload get(index)
+    #   @param [Integer] index The index of the item.
+    # 
+    #   @return [Object] The item.
+    #   @return [nil] if the item is not found.
+    def get: (K id) -> V?
+
+    # 
+    # Returns the values of the dictionary.
+    # 
+    # @return [Array] The values of the dictionary.
+    def values: () -> ::Array[V]
+
+    # 
+    # Checks if the dictionary has an ID.
+    # 
+    # @param [#to_s] id The ID to check.
+    # 
+    # @return [Boolean] `true` if the dictionary has the ID, `false` otherwise.
+    def has?: (_ToS id) -> bool
+
+    # 
+    # Send a message to the array of values.
+    def method_missing: (untyped name) -> untyped
+
+    def respond_to_missing?: (untyped name, untyped args, untyped kwargs) -> bool
+
+    def inspect: () -> untyped
+
+    # @return [Integer] The maximum number of items in the dictionary.
+    attr_accessor limit: Integer
+  end
+
+  # 
+  # Represents a permission per guild.
+  # ## Flag fields
+  # |`1 << 0`|`:create_instant_invite`|
+  # |`1 << 1`|`:kick_members`|
+  # |`1 << 2`|`:ban_members`|
+  # |`1 << 3`|`:administrator`|
+  # |`1 << 4`|`:manage_channels`|
+  # |`1 << 5`|`:manage_guild`|
+  # |`1 << 6`|`:add_reactions`|
+  # |`1 << 7`|`:view_audit_log`|
+  # |`1 << 8`|`:priority_speaker`|
+  # |`1 << 9`|`:stream`|
+  # |`1 << 10`|`:view_channel`|
+  # |`1 << 11`|`:send_messages`|
+  # |`1 << 12`|`:send_tts_messages`|
+  # |`1 << 13`|`:manage_messages`|
+  # |`1 << 14`|`:embed_links`|
+  # |`1 << 15`|`:attach_files`|
+  # |`1 << 16`|`:read_message_history`|
+  # |`1 << 17`|`:mention_everyone`|
+  # |`1 << 18`|`:use_external_emojis`|
+  # |`1 << 19`|`:view_guild_insights`|
+  # |`1 << 20`|`:connect`|
+  # |`1 << 21`|`:speak`|
+  # |`1 << 22`|`:mute_members`|
+  # |`1 << 23`|`:deafen_members`|
+  # |`1 << 24`|`:move_members`|
+  # |`1 << 25`|`:use_vad`|
+  # |`1 << 26`|`:change_nickname`|
+  # |`1 << 27`|`:manage_nicknames`|
+  # |`1 << 28`|`:manage_roles`|
+  # |`1 << 29`|`:manage_webhooks`|
+  # |`1 << 30`|`:manage_emojis`|
+  # |`1 << 31`|`:use_slash_commands`|
+  # |`1 << 32`|`:request_to_speak`|
+  # |`1 << 34`|`:manage_threads`|
+  # |`1 << 35`|`:use_public_threads`|
+  # |`1 << 36`|`:use_private_threads`|
+  class Permission < Discorb::Flag
+  end
+
+  # 
+  # Represents a permission per channel.
+  class PermissionOverwrite
+    # @!visibility private
+    def initialize: (untyped allow, untyped deny) -> void
+
+    def allow: () -> untyped
+
+    def deny: () -> untyped
+
+    def allow_value: () -> untyped
+
+    def deny_value: () -> untyped
+
+    # 
+    # Converts the permission overwrite to a hash.
+    # 
+    # @return [Hash] The permission overwrite as a hash.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    # 
+    # Union of the permission overwrites.
+    # 
+    # @param [Discorb::PermissionOverwrite] other The other permission overwrite.
+    # 
+    # @return [Discorb::PermissionOverwrite] The union of the permission overwrites.
+    def +: (Discorb::PermissionOverwrite other) -> Discorb::PermissionOverwrite
+
+    # 
+    # Returns whether overwrite of the given field.
+    # 
+    # @param [Symbol] field The field to check.
+    # 
+    # @return [true, false, nil] Whether the field is allowed, denied or not set.
+    def []: (Symbol field) -> bool?
+
+    # 
+    # Sets the given field to the given value.
+    # 
+    # @param [Symbol] key The field to set.
+    # @param [Boolean] bool The value to set.
+    def []=: (Symbol key, bool bool) -> untyped
+
+    def method_missing: (untyped method, ?untyped bool) -> untyped
+
+    def respond_to_missing?: (untyped method, untyped _arg) -> bool
+
+    # 
+    # Initializes a permission overwrite from a hash.
+    # 
+    # @param [Hash] hash The hash to initialize the permission overwrite from.
+    # 
+    # @return [Discorb::PermissionOverwrite] The permission overwrite.
+    def self.from_hash: (::Hash[untyped, untyped] hash) -> Discorb::PermissionOverwrite
+  end
+
+  # 
+  # Represents a Discord application.
+  class Application < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+
+    def inspect: () -> untyped
+
+    # @return [Discorb::Snowflake] The application's ID.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The application's name.
+    attr_reader name: String
+
+    # @return [Discorb::Asset] The application's icon.
+    attr_reader icon: Discorb::Asset
+
+    # @return [String] The application's description.
+    attr_reader description: String
+
+    # @return [String] The application's summary.
+    attr_reader summary: String
+
+    # @return [String] The application's public key.
+    attr_reader verify_key: String
+
+    # @return [Discorb::User] The application's owner.
+    attr_reader owner: Discorb::User
+
+    # @return [Discorb::Application::Team] The application's team.
+    attr_reader team: Discorb::Application::Team
+
+    # @return [Boolean] Whether the application's bot is public.
+    attr_reader bot_public: bool
+
+    # @return [Boolean] Whether the application's bot requires a code grant.
+    attr_reader bot_require_code_grant: bool
+
+    # 
+    # Represents a team for an application.
+    class Team < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped client, untyped data) -> void
+
+      # 
+      # The team's owner.
+      # 
+      # @return [Discorb::Application::Team::Member] The team's owner.
+      def owner: () -> Discorb::Application::Team::Member
+
+      def inspect: () -> untyped
+
+      # @return [Discorb::Snowflake] The team's ID.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [Discorb::Asset] The team's icon.
+      attr_reader icon: Discorb::Asset
+
+      # @return [String] The team's name.
+      attr_reader name: String
+
+      # @return [Discorb::Snowflake] The team's owner's ID.
+      attr_reader owner_user_id: Discorb::Snowflake
+
+      # @return [Discorb::Application::Team::Member] The team's member.
+      attr_reader members: Discorb::Application::Team::Member
+
+      # 
+      # Represents a member of team.
+      class Member < Discorb::DiscordModel
+        def initialize: (untyped client, untyped team, untyped data) -> void
+
+        def pending?: () -> bool
+
+        def accepted?: () -> bool
+
+        def inspect: () -> untyped
+
+        def owner?: () -> bool
+
+        def ==: (untyped other) -> untyped
+
+        # @return [Discorb::User] The user.
+        attr_reader user: Discorb::User
+
+        # @return [Snowflake] The ID of member's team.
+        attr_reader team_id: Snowflake
+
+        # @return [:invited, :accepted] The member's membership state.
+        attr_reader membership_state: Symbol
+
+        # @return [Array<Permissions>] The permissions of the member.
+        # @note This always return `:*`.
+        attr_reader permissions: ::Array[Permissions]
+      end
+    end
+  end
+
+  # 
+  # A table of emoji names and their unicode values.
+  module EmojiTable
+    DISCORD_TO_UNICODE: untyped
+    UNICODE_TO_DISCORD: untyped
+  end
+
+  # 
+  # Represents a integration.
+  class Integration < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (
+                      untyped client,
+                      untyped data,
+                      _ToS guild_id,
+                      ?no_cache: untyped
+                    ) -> void
+
+    def guild: () -> untyped
+
+    # 
+    # Delete the integration.
+    # 
+    # @param [String] reason The reason for deleting the integration.
+    def delete!: (?reason: String?) -> untyped
+    # @return [Discorb::Snowflake] The ID of the integration.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [Symbol] The type of integration.
+    attr_reader type: Symbol
+
+    # @return [Boolean] Whether the integration is enabled.
+    attr_reader enabled: bool
+
+    # @return [Boolean] Whether the integration is syncing.
+    attr_reader syncing: bool
+
+    # @return [Boolean] Whether the integration is enabled emoticons.
+    attr_reader enable_emoticons: bool
+
+    # @return [:remove_role, :kick] The behavior of the integration when it expires.
+    attr_reader expire_behavior: Symbol
+
+    # @return [Integer] The grace period of the integration.
+    attr_reader expire_grace_period: Integer
+
+    # @return [Discorb::User] The user for the integration.
+    attr_reader user: Discorb::User
+
+    # @return [Discorb::Integration::Account] The account for the integration.
+    attr_reader account: Discorb::Integration::Account
+
+    # @return [Integer] The number of subscribers for the integration.
+    attr_reader subscriber_count: Integer
+
+    # @return [Boolean] Whether the integration is revoked.
+    attr_reader revoked: bool
+
+    # @return [Discorb::Application] The application for the integration.
+    attr_reader application: Discorb::Application
+
+    # 
+    # Represents an account for an integration.
+    class Account < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped data) -> void
+
+      # @return [String] The ID of the account.
+      attr_reader id: String
+
+      # @return [String] The name of the account.
+      attr_reader name: String
+    end
+  end
+
+  # 
+  # Represents a user interaction with the bot.
+  class Interaction < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+
+    def guild: () -> untyped
+
+    def channel: () -> untyped
+
+    def target: () -> untyped
+
+    def inspect: () -> untyped
+
+    # @!visibility private
+    def self.make_interaction: (untyped client, untyped data) -> untyped
+
+    # @!visibility private
+    def self.descendants: () -> untyped
+
+    def _set_data: () -> untyped
+
+    # @return [Discorb::Snowflake] The ID of the interaction.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [Discorb::Snowflake] The ID of the application that created the interaction.
+    attr_reader application_id: Discorb::Snowflake
+
+    # @return [Symbol] The type of interaction.
+    attr_reader type: Symbol
+
+    # @return [Discorb::Member] The member that created the interaction.
+    attr_reader member: Discorb::Member
+
+    # @return [Discorb::User] The user that created the interaction.
+    attr_reader user: Discorb::User
+
+    # @return [Integer] The type of interaction.
+    # @note This is always `1` for now.
+    attr_reader version: Integer
+
+    # @return [String] The token for the interaction.
+    attr_reader token: String
+
+    # 
+    # A module for response with source.
+    module SourceResponse
+      # 
+      # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
+      # 
+      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      def defer_source: (?hide: bool) -> untyped
+
+      # 
+      # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
+      # 
+      # @param [String] content The content of the response.
+      # @param [Boolean] tts Whether to send the message as text-to-speech.
+      # @param [Discorb::Embed] embed The embed to send.
+      # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+      # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+      # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      def post: (
+                  String content,
+                  ?tts: bool,
+                  ?embed: Discorb::Embed?,
+                  ?embeds: ::Array[Discorb::Embed]?,
+                  ?allowed_mentions: Discorb::AllowedMentions?,
+                  ?components: (::Array[Discorb::Components] | ::Array[::Array[Discorb::Components]])?,
+                  ?hide: bool
+                ) -> untyped
+    end
+
+    # 
+    # A module for response with update.
+    module UpdateResponse
+      # 
+      # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
+      # 
+      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      def defer_update: (?hide: bool) -> untyped
+
+      # 
+      # Response with `UPDATE_MESSAGE`(`7`).
+      # 
+      # @param [String] content The content of the response.
+      # @param [Boolean] tts Whether to send the message as text-to-speech.
+      # @param [Discorb::Embed] embed The embed to send.
+      # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+      # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+      # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+      # @param [Boolean] hide Whether to hide the response (ephemeral).
+      def edit: (
+                  String content,
+                  ?tts: bool,
+                  ?embed: Discorb::Embed?,
+                  ?embeds: ::Array[Discorb::Embed]?,
+                  ?allowed_mentions: Discorb::AllowedMentions?,
+                  ?components: (::Array[Discorb::Components] | ::Array[::Array[Discorb::Components]])?,
+                  ?hide: bool
+                ) -> untyped
+    end
+  end
+
+  # 
+  # Represents a slash command interaction.
+  # @todo Implement this.
+  class SlashCommandInteraction < Discorb::Interaction
+    def _set_data: (untyped data) -> untyped
+  end
+
+  # 
+  # Represents a message component interaction.
+  # @abstract
+  class MessageComponentInteraction < Discorb::Interaction
+    include Discorb::Interaction::SourceResponse
+    include Discorb::Interaction::UpdateResponse
+
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+
+    # @!visibility private
+    def self.make_interaction: (untyped client, untyped data) -> untyped
+
+    # @!visibility private
+    def self.nested_classes: () -> untyped
+
+    # 
+    # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
+    # 
+    # @param [Boolean] hide Whether to hide the response (ephemeral).
+    def defer_update: (?hide: bool) -> untyped
+
+    # 
+    # Response with `UPDATE_MESSAGE`(`7`).
+    # 
+    # @param [String] content The content of the response.
+    # @param [Boolean] tts Whether to send the message as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+    # @param [Boolean] hide Whether to hide the response (ephemeral).
+    def edit: (
+                String content,
+                ?tts: bool,
+                ?embed: Discorb::Embed?,
+                ?embeds: ::Array[Discorb::Embed]?,
+                ?allowed_mentions: Discorb::AllowedMentions?,
+                ?components: (::Array[Discorb::Components] | ::Array[::Array[Discorb::Components]])?,
+                ?hide: bool
+              ) -> untyped
+
+    # 
+    # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
+    # 
+    # @param [Boolean] hide Whether to hide the response (ephemeral).
+    def defer_source: (?hide: bool) -> untyped
+
+    # 
+    # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
+    # 
+    # @param [String] content The content of the response.
+    # @param [Boolean] tts Whether to send the message as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Array<Discorb::Components>, Array<Array<Discorb::Components>>] components The components to send.
+    # @param [Boolean] hide Whether to hide the response (ephemeral).
+    def post: (
+                String content,
+                ?tts: bool,
+                ?embed: Discorb::Embed?,
+                ?embeds: ::Array[Discorb::Embed]?,
+                ?allowed_mentions: Discorb::AllowedMentions?,
+                ?components: (::Array[Discorb::Components] | ::Array[::Array[Discorb::Components]])?,
+                ?hide: bool
+              ) -> untyped
+
+    # @return [String] The content of the response.
+    attr_reader custom_id: String
+
+    # 
+    # Represents a button interaction.
+    class Button < Discorb::MessageComponentInteraction      # @return [String] The custom id of the button.
+      attr_reader custom_id: String
+    end
+
+    # 
+    # Represents a select menu interaction.
+    class SelectMenu < Discorb::MessageComponentInteraction      # @return [String] The custom id of the select menu.
+      attr_reader custom_id: String
+
+      # @return [Array<String>] The selected options.
+      attr_reader values: ::Array[String]
+
+      # @!attribute [r] value
+      #   @return [String] The first selected value.
+      attr_reader value: untyped
+    end
+  end
+
+  class VoiceState < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+    # @return [Discorb::Member] The member associated with this voice state.
+    attr_reader member: Discorb::Member
+
+    # @return [Discorb::Snowflake] The ID of the guild this voice state is for.
+    attr_reader session_id: Discorb::Snowflake
+
+    # @return [Time] The time at which the user requested to speak.
+    attr_reader request_to_speak_timestamp: Time
+
+    # @return [Boolean] Whether the user is deafened.
+    attr_reader self_deaf: bool
+
+    # @return [Boolean] Whether the user is muted.
+    attr_reader self_mute: bool
+
+    # @return [Boolean] Whether the user is streaming.
+    attr_reader self_stream: bool
+
+    # @return [Boolean] Whether the user is video-enabled.
+    attr_reader self_video: bool
+
+    # @return [Boolean] Whether the user is suppressed. (Is at audience)
+    attr_reader suppress: bool
+
+    # @return [Boolean] Whether the user is deafened.
+    attr_reader deaf?: bool
+
+    # @return [Boolean] Whether the user is muted.
+    attr_reader mute?: bool
+
+    # @return [Boolean] Whether the user is deafened on the server.
+    attr_reader server_deaf?: bool
+
+    # @return [Boolean] Whether the user is muted on the server.
+    attr_reader server_mute?: bool
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild this voice state is for.
+    attr_reader guild: Discorb::Guild?
+
+    # @macro client_cache
+    # @return [Discorb::Channel] The channel this voice state is for.
+    attr_reader channel: Discorb::Channel?
+
+    # @macro client_cache
+    # @return [Discorb::User] The user this voice state is for.
+    attr_reader user: Discorb::User?
+  end
+
+  # 
+  # Represents a stage instance of a voice state.
+  class StageInstance < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data, ?no_cache: untyped) -> void
+
+    def guild: () -> untyped
+
+    def channel: () -> untyped
+
+    def discoverable?: () -> bool
+
+    def public?: () -> bool
+
+    def guild_only?: () -> bool
+
+    def inspect: () -> untyped
+
+    # 
+    # Edits the stage instance.
+    # @macro async
+    # @macro http
+    # @macro edit
+    # 
+    # @param [String] topic The new topic of the stage instance.
+    # @param [:public, :guild_only] privacy_level The new privacy level of the stage instance.
+    # @param [String] reason The reason for editing the stage instance.
+    def edit: (?topic: String, ?privacy_level: Symbol, ?reason: String?) -> untyped
+
+    # 
+    # Deletes the stage instance.
+    # 
+    # @param [String] reason The reason for deleting the stage instance.
+    def delete!: (?reason: String?) -> untyped
+    # @return [Discorb::Snowflake] The ID of the guild this voice state is for.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The topic of the stage instance.
+    attr_reader topic: String
+
+    # @return [:public, :guild_only] The privacy level of the stage instance.
+    attr_reader privacy_level: Symbol
+  end
+
+  # 
+  # Represents a voice region.
+  class VoiceRegion < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped data) -> void
+
+    # @return [Discorb::Snowflake] The ID of the voice region.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the voice region.
+    attr_reader name: String
+
+    # @return [Boolean] Whether the voice region is VIP.
+    attr_reader vip: bool
+
+    # @return [Boolean] Whether the voice region is optimal.
+    attr_reader optimal: bool
+
+    # @return [Boolean] Whether the voice region is deprecated.
+    attr_reader deprecated: bool
+
+    # @return [Boolean] Whether the voice region is custom.
+    attr_reader custom: bool
+  end
+
+  # 
+  # Represents a guild template.
+  class GuildTemplate < Discorb::DiscordModel
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+
+    # 
+    # Edit the template.
+    # @macro async
+    # @macro http
+    # @macro edit
+    # 
+    # @param [String] name The new name of the template.
+    # @param [String] description The new description of the template.
+    def edit: (?String? name, ?String description) -> untyped
+
+    # 
+    # Update the template.
+    # @macro async
+    # @macro http
+    def update: () -> untyped
+
+    # 
+    # Delete the template.
+    # @macro async
+    # @macro http
+    def delete!: () -> untyped
+    # @return [String] The code of the template.
+    attr_reader code: String
+
+    # @return [String] The name of the template.
+    attr_reader name: String
+
+    # @return [String] The description of the template.
+    attr_reader description: String
+
+    # @return [Integer] The number of times this template has been used.
+    attr_reader usage_count: Integer
+
+    # @return [Discorb::User] The user who created this template.
+    attr_reader creator: Discorb::User
+
+    # @return [Time] The time this template was created.
+    attr_reader created_at: Time
+
+    # @return [Time] The time this template was last updated.
+    attr_reader updated_at: Time
+
+    # @return [Discorb::Guild] The guild where the template was created.
+    attr_reader source_guild_id: Discorb::Guild
+
+    # @return [Discorb::GuildTemplate::TemplateGuild] The guild where the template was created.
+    attr_reader serialized_source_guild: Discorb::GuildTemplate::TemplateGuild
+
+    # @return [Boolean] Whether this template is dirty.
+    attr_reader is_dirty: bool
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild this template is based on.
+    # @return [nil] Client wasn't able to find the guild this template is based on.
+    attr_reader source_guild: Discorb::Guild?
+
+    # 
+    # Represents a guild in guild template.
+    class TemplateGuild < Discorb::DiscordModel
+      # @!visibility private
+      def initialize: (untyped data) -> void
+
+      # @return [String] The name of the guild.
+      attr_reader name: String
+
+      # @return [Integer] The AFK timeout of the guild.
+      attr_reader afk_timeout: Integer
+
+      # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
+      attr_reader roles: Discorb::Dictionary[Discorb::Snowflake, Discorb::Role]
+
+      # @return [Discorb::Guild::SystemChannelFlag] The flag for the system channel.
+      attr_reader system_channel_flags: Discorb::Guild::SystemChannelFlag
+
+      # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}] A dictionary of channels in the guild.
+      attr_reader channels: Discorb::Dictionary[Discorb::Snowflake, Discorb::GuildChannel]
+
+      # @return [String] The description of the guild.
+      attr_reader description: String
+
+      # @return [Symbol] The preffered language of the guild.
+      # @note This modifies the language code, `-` will be replaced with `_`.
+      attr_reader preferred_locale: Symbol
+
+      # @return [:none, :low, :medium, :high, :very_high] The verification level of the guild.
+      attr_reader verification_level: Symbol
+
+      # @return [:all_messages, :only_mentions] The default message notification level of the guild.
+      attr_reader default_message_notifications: Symbol
+
+      # @return [:disabled_in_text, :members_without_roles, :all_members] The explict content filter level of the guild.
+      attr_reader explicit_content_filter: Symbol
+
+      # @return [Boolean] Whether the guild enabled the widget.
+      attr_reader widget_enabled: bool
+
+      # 
+      # Represents a role in guild template.
+      class Role < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [String] The name of the role.
+        attr_reader name: String
+
+        # @return [Discorb::Permission] The permissions of the role.
+        attr_reader permissions: Discorb::Permission
+
+        # @return [Discorb::Color] The color of the role.
+        attr_reader color: Discorb::Color
+      end
+
+      # 
+      # Represents a channel in guild template.
+      class Channel < Discorb::DiscordModel
+        # @!visibility private
+        def initialize: (untyped data) -> void
+
+        # @return [String] The name of the channel.
+        attr_reader name: String
+
+        # @return [Integer] The position of the channel.
+        attr_reader position: Integer
+
+        # @return [String] The type of the channel.
+        attr_reader topic: String
+
+        # @return [Integer] The bitrate of the channel.
+        attr_reader bitrate: Integer
+
+        # @return [Integer] The user limit of the channel.
+        attr_reader user_limit: Integer
+
+        # @return [Boolean] Whether the channel is nsfw.
+        attr_reader nsfw: bool
+
+        # @return [Integer] The rate limit of the channel.
+        attr_reader rate_limit_per_user: Integer
+
+        # @return [Class] The class of the channel.
+        attr_reader type: Class
+      end
+    end
+  end
+
+  # 
+  # Represents an activity for Gateway Command.
+  class Activity
+    # 
+    # Initializes a new Activity.
+    # 
+    # @param [String] name The name of the activity.
+    # @param [:playing, :streaming, :listening, :watching, :competing] type The type of activity.
+    # @param [String] url The URL of the activity.
+    def initialize: (String name, ?Symbol _type, ?String? url) -> void
+
+    # 
+    # Converts the activity to a hash.
+    # 
+    # @return [Hash] A hash representation of the activity.
+    def to_hash: () -> ::Hash[untyped, untyped]
+  end
+end
+
+class Time
+  # 
+  # Format a time object to a Discord formatted string.
+  # 
+  # @param ["f", "F", "d", "D", "t", "T", "R"] type The format to use.
+  # 
+  # @return [String] The formatted time.
+  def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? _type) -> String
 end
