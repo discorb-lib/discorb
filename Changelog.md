@@ -4,6 +4,15 @@
 
 # Changelog
 
+## v0.15
+
+### v0.15.0
+
+- Add: Migrate to API v10
+- Add: Add `TextChannel#threads`
+- Add: Support editing attachments
+- Delete!: Delete File class - Use Attachment class instead
+
 ## v0.14
 
 ### v0.14.0
