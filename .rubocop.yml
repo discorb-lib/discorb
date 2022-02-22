@@ -3,6 +3,7 @@ AllCops:
   TargetRubyVersion: 3.0
   Exclude:
     - examples/**/*.rb
+    - lib/discorb/emoji_table.rb  # Auto-generated
 
 Layout:
   Enabled: false
@@ -10,10 +11,10 @@ Metrics:
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:  # Disabled for rufo
-  Enabled: false
+  EnforcedStyleForMultiline: consistent_comma
 
 Style/StringLiterals:  # Disabled for rufo
-  Enabled: false
+  EnforcedStyle: double_quotes
 
 Style/TrailingCommaInArguments:  # Disabled for rufo
   Enabled: false
