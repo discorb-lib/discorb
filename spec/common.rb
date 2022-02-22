@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "rspec"
 require "discorb"
 require "async"
@@ -49,17 +50,19 @@ RSpec.shared_context "mocks" do
 
     http
   end
-  let(:client) {
+  let(:client) do
     client = Discorb::Client.new
     client.instance_variable_set(:@http, http)
     client.instance_variable_set(:@connection, :dummy)
     allow(client).to receive(:http).and_return(http)
     allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
     allow(client).to receive(:send_gateway) { |opcode, **payload|
-      expect({
-        opcode: opcode,
-        payload: payload,
-      }).to eq($next_gateway_request) if $next_gateway_request
+      if $next_gateway_request
+        expect({
+          opcode: opcode,
+          payload: payload,
+        }).to eq($next_gateway_request)
+      end
     }
 
     $next_gateway_request[:opcode] = 2
@@ -87,5 +90,5 @@ RSpec.shared_context "mocks" do
       false
     ).wait
     client
-  }
+  end
 end

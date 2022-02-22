@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "rspec"
 require "discorb"
 require "async/rspec"
@@ -59,48 +60,48 @@ RSpec.describe Discorb::Client do
   end
   context "#fetch_xxx" do
     it "requests to GET /guilds/:guild_id" do
-      expect_request(:get, "/guilds/863581274916913193") {
+      expect_request(:get, "/guilds/863581274916913193") do
         {
           code: 200,
           body: File.read("#{__dir__}/payloads/guild.json").then { JSON.parse(_1, symbolize_names: true) },
         }
-      }
-      client.fetch_guild(863581274916913193).wait
+      end
+      client.fetch_guild(863_581_274_916_913_193).wait
     end
     it "requests to GET /channels/:channel_id" do
-      expect_request(:get, "/channels/863581274916913196") {
+      expect_request(:get, "/channels/863581274916913196") do
         {
           code: 200,
           body: File.read("#{__dir__}/payloads/channels/text_channel.json").then { JSON.parse(_1, symbolize_names: true) },
         }
-      }
-      client.fetch_channel(863581274916913196).wait
+      end
+      client.fetch_channel(863_581_274_916_913_196).wait
     end
     it "requests to GET /users/:user_id" do
-      expect_request(:get, "/users/686547120534454315") {
+      expect_request(:get, "/users/686547120534454315") do
         {
           code: 200,
           body: File.read("#{__dir__}/payloads/users/user.json").then { JSON.parse(_1, symbolize_names: true) },
         }
-      }
-      client.fetch_user(686547120534454315).wait
+      end
+      client.fetch_user(686_547_120_534_454_315).wait
     end
     it "requests to GET /invites/:code" do
-      expect_request(:get, "/invites/hCP6zq8Vpj?with_count=true&with_expiration=true") {
+      expect_request(:get, "/invites/hCP6zq8Vpj?with_count=true&with_expiration=true") do
         {
           code: 200,
           body: File.read("#{__dir__}/payloads/invite.json").then { JSON.parse(_1, symbolize_names: true) },
         }
-      }
+      end
       client.fetch_invite("hCP6zq8Vpj").wait
     end
     it "requests to GET /sticker-packs" do
-      expect_request(:get, "/sticker-packs") {
+      expect_request(:get, "/sticker-packs") do
         {
           code: 200,
           body: File.read("#{__dir__}/payloads/sticker_packs.json").then { JSON.parse(_1, symbolize_names: true) },
         }
-      }
+      end
       client.fetch_nitro_sticker_packs.wait
     end
   end
@@ -125,7 +126,8 @@ RSpec.describe Discorb::Client do
       client.dispatch :test
       Async do |task|
         task.with_timeout(0.1) do
-          Async { sleep 0; client.dispatch :test }
+          Async do sleep 0
+ client.dispatch :test end
           cond.wait
         rescue Async::TimeoutError
           timeouted = true
@@ -141,9 +143,9 @@ RSpec.describe Discorb::Client do
       expect(task.wait).to eq 1
     end
     it "raises timeout error" do
-      expect {
+      expect do
         client.event_lock(:event, 0.1).wait
-      }.to raise_error(Discorb::TimeoutError)
+      end.to raise_error(Discorb::TimeoutError)
     end
   end
 end

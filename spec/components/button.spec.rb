@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "discorb"
 
 RSpec.describe Discorb::Button do

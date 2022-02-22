@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 require "discorb"
 
 RSpec.describe Discorb::Button do
   it "creates a select menu" do
-    expect {
+    expect do
       Discorb::TextInput.new("text", "text", :short)
-    }.not_to raise_error
+    end.not_to raise_error
   end
   it "converts to payload" do
     expect(Discorb::TextInput.new("text", "text", :short).to_hash).to eq(

@@ -1,22 +1,23 @@
+# frozen_string_literal: true
 require "rspec"
 require "discorb"
 
 RSpec.describe "Discorb::Dictionary" do
-  let(:dict) {
+  let(:dict) do
     Discorb::Dictionary.new(
       { foo: :bar, fizz: :buzz, hoge: :fuga }
     )
-  }
+  end
   context ".new" do
     it "creates an empty dictionary" do
       expect { Discorb::Dictionary.new }.to_not raise_error
     end
     it "creates with elements" do
-      expect {
+      expect do
         Discorb::Dictionary.new(
           { foo: :bar, fizz: :buzz }
         )
-      }.to_not raise_error
+      end.to_not raise_error
     end
   end
   context "#[]" do
@@ -30,7 +31,7 @@ RSpec.describe "Discorb::Dictionary" do
     it "sorts keys" do
       new_dict = Discorb::Dictionary.new(
         { hoge: :fuga, foo: :bar, fizz: :buzz },
-        sort: proc { |a, b| a.to_s },
+        sort: proc { |a, _b| a.to_s },
       )
       expect(new_dict[0]).to be :buzz
       new_dict[:a] = :b
@@ -58,7 +59,7 @@ RSpec.describe "Discorb::Dictionary" do
   end
   context "#values" do
     it "returns values" do
-      expect(dict.values).to eq [:bar, :buzz, :fuga]
+      expect(dict.values).to eq %i[bar buzz fuga]
     end
   end
   context "#has?" do

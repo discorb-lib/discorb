@@ -25,6 +25,6 @@ group :lint, optional: true do
 end
 
 group :ci do
-  gem "rspec", "~> 3.10"
   gem "async-rspec", "~> 1.16"
+  gem "rspec", "~> 3.10"
 end
