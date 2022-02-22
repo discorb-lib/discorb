@@ -126,8 +126,10 @@ RSpec.describe Discorb::Client do
       client.dispatch :test
       Async do |task|
         task.with_timeout(0.1) do
-          Async do sleep 0
- client.dispatch :test end
+          Async do
+            sleep 0
+            client.dispatch :test
+          end
           cond.wait
         rescue Async::TimeoutError
           timeouted = true
