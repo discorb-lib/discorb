@@ -393,21 +393,6 @@ module Discorb
     end
 
     #
-    # Represents a `GUILD_INTEGRATIONS_UPDATE` event.
-    #
-    class GuildIntegrationsUpdateEvent < GatewayEvent
-      def initialize(client, data)
-        @client = client
-        @data = data
-        @guild_id = Snowflake.new(data[:guild_id])
-      end
-
-      def guild
-        @client.guilds[@guild_id]
-      end
-    end
-
-    #
     # Represents a `TYPING_START` event.
     #
     class TypingStartEvent < GatewayEvent
@@ -718,7 +703,7 @@ module Discorb
               ready
             end
           elsif @guilds.has?(data[:id])
-            @guilds[data[:id]].send(:_set_data, data)
+            @guilds[data[:id]].send(:_set_data, data, true)
             dispatch(:guild_available, guild)
           else
             guild = Guild.new(self, data, true)
@@ -741,7 +726,7 @@ module Discorb
           return @log.warn "Unknown guild id #{data[:id]}, ignoring" unless (guild = @guilds.delete(data[:id]))
 
           dispatch(:guild_delete, guild)
-          if guild.has?(:unavailable)
+          if data[:unavailable]
             dispatch(:guild_destroy, guild)
           else
             dispatch(:guild_leave, guild)
@@ -902,8 +887,7 @@ module Discorb
             guild.emojis.delete(emoji)
           end
         when "GUILD_INTEGRATIONS_UPDATE"
-          # dispatch(:guild_integrations_update, GuildIntegrationsUpdateEvent.new(self, data))
-          # Currently not implemented
+          dispatch(:guild_integrations_update, @guilds[data[:guild_id]])
         when "INTEGRATION_CREATE"
           dispatch(:integration_create, Integration.new(self, data, data[:guild_id]))
         when "INTEGRATION_UPDATE"

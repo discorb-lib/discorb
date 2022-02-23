@@ -55,6 +55,8 @@ module Discorb
       @cache.delete(id.to_s)
     end
 
+    alias delete remove
+
     #
     # Get an item from the dictionary.
     #
