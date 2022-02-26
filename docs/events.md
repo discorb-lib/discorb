@@ -487,6 +487,46 @@ Fires when an invitation is deleted.
 
 ### Interaction events
 
+#### `interaction_create(interaction)`
+
+Fires when an interaction is created. This will fire for all interactions.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `interaction` | {Discorb::Interaction}| The created interaction. |
+
+#### `application_command(interaction)`
+
+Fires when an application command is used.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `interaction` | {Discorb::CommandInteraction}| The created interaction. |
+
+#### `slash_command(interaction)`
+
+Fires when a slash command is used.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `interaction` | {Discorb::CommandInteraction::SlashCommand}| The created interaction. |
+
+#### `message_command(interaction)`
+
+Fires when a message command is used.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `interaction` | {Discorb::CommandInteraction::MessageMenuCommand}| The created interaction. |
+
+#### `user_command(interaction)`
+
+Fires when a user command is used.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `interaction` | {Discorb::CommandInteraction::UserMenuCommand}| The created interaction. |
+
 #### `button_click(interaction)`
 
 Fires when a button is clicked.
@@ -502,6 +542,16 @@ Fires when a select menu is selected.
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
 |`interaction`| {Discorb::MessageComponentInteraction::SelectMenu}| The interaction object. |
+
+#### `form_submit(interaction)`
+
+Fires when a form is submitted.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+| `interaction` | {Discorb::ModalInteraction} | The interaction object. |
+
+#### `slash_command
 
 ### Voice events
 

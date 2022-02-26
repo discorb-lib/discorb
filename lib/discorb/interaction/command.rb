@@ -14,6 +14,7 @@ module Discorb
     #
     class SlashCommand < CommandInteraction
       @command_type = 1
+      @event_name = :slash_command
 
       private
 
@@ -89,6 +90,7 @@ module Discorb
     #
     class UserMenuCommand < CommandInteraction
       @command_type = 2
+      @event_name = :user_command
 
       # @return [Discorb::Member, Discorb::User] The target user.
       attr_reader :target
@@ -107,6 +109,7 @@ module Discorb
     #
     class MessageMenuCommand < CommandInteraction
       @command_type = 3
+      @event_name = :message_command
 
       # @return [Discorb::Message] The target message.
       attr_reader :target
@@ -147,12 +150,16 @@ module Discorb
 
     class << self
       # @private
-      attr_reader :command_type
+      attr_reader :command_type, :event_name
 
       # @private
       def make_interaction(client, data)
         nested_classes.each do |klass|
-          return klass.new(client, data) if !klass.command_type.nil? && klass.command_type == data[:data][:type]
+          if !klass.command_type.nil? && klass.command_type == data[:data][:type]
+            interaction = klass.new(client, data)
+            client.dispatch(klass.event_name, interaction)
+            return interaction
+          end
         end
         client.log.warn("Unknown command type #{data[:type]}, initialized CommandInteraction")
         CommandInteraction.new(client, data)
