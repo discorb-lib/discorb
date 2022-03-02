@@ -444,7 +444,7 @@ module Discorb
           temporary: temporary,
           unique: unique,
         }, audit_log_reason: reason).wait
-        Invite.new(@client, data)
+        Invite.new(@client, data, false)
       end
     end
 
