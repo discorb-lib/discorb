@@ -309,6 +309,7 @@ module Discorb
         activities: [],
         status: status,
         since: nil,
+        afk: nil,
       }
       payload[:activities] = [activity.to_hash] unless activity.nil?
       payload[:status] = status unless status.nil?
