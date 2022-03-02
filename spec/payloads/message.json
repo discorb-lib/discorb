@@ -1,0 +1,24 @@
+{
+  "id": "947128891238133822",
+  "type": 0,
+  "content": "",
+  "channel_id": "869844300937175080",
+  "author": {
+    "id": "686547120534454315",
+    "username": "Nanashi.",
+    "avatar": "a_8d1e355edd6a291d70e1cc75c0d31252",
+    "discriminator": "7740",
+    "public_flags": 64
+  },
+  "attachments": [],
+  "embeds": [],
+  "mentions": [],
+  "mention_roles": [],
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false,
+  "timestamp": "2022-02-26T13:52:04.475000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": []
+}

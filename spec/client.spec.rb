@@ -53,6 +53,7 @@ RSpec.describe Discorb::Client do
           activities: [],
           status: status,
           since: nil,
+          afk: nil,
         )
         client.change_presence(status: status).wait
       end

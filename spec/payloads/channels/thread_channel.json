@@ -1,0 +1,20 @@
+{
+  "id": "947128891238133822",
+  "guild_id": "863581274916913193",
+  "parent_id": "869844300937175080",
+  "owner_id": "686547120534454315",
+  "type": 11,
+  "name": "thread",
+  "last_message_id": "948586983133937714",
+  "thread_metadata": {
+    "archived": false,
+    "archive_timestamp": "2022-03-02T14:26:00.655000+00:00",
+    "auto_archive_duration": 1440,
+    "locked": false,
+    "create_timestamp": "2022-03-02T14:26:00.655000+00:00"
+  },
+  "message_count": 0,
+  "member_count": 1,
+  "rate_limit_per_user": 0,
+  "flags": 0
+}
