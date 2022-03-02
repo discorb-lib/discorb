@@ -2,14 +2,16 @@
 require "rspec"
 require "discorb"
 require "async"
+require "async/rspec"
 
 Response = Struct.new(:code, :body)
 RSpec.shared_context "mocks" do
-  def expect_request(method, path, body: nil, headers: nil, &response)
+  def expect_request(method, path, body: nil, files: {}, headers: nil, &response)
     $next_request = {
       method: method,
       path: path,
       body: body,
+      files: files,
       headers: headers,
     }
     $next_response = response
@@ -28,6 +30,7 @@ RSpec.shared_context "mocks" do
         method: path.method,
         path: path.url,
         body: body,
+        files: {},
         headers: headers,
       }).to eq($next_request)
       Async do
@@ -35,11 +38,12 @@ RSpec.shared_context "mocks" do
         [Response.new(data[:code], data[:body]), data[:body]]
       end
     }
-    allow(http).to receive(:multipart_request) { |path, headers|
+    allow(http).to receive(:multipart_request) { |path, body, files, headers|
       expect({
         method: path.method,
         path: path.url,
-        body: nil,
+        body: body,
+        files: files.to_h { |f| [f.name, f.read] },
         headers: headers,
       }).to eq($next_request)
       Async do
@@ -64,6 +68,7 @@ RSpec.shared_context "mocks" do
         }).to eq($next_gateway_request)
       end
     }
+    $next_gateway_request ||= {}
 
     $next_gateway_request[:opcode] = 2
     $next_gateway_request[:payload] = {
