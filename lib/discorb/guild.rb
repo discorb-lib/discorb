@@ -121,19 +121,18 @@ module Discorb
     @default_message_notifications = %i[all_messages only_mentions].freeze
     @explicit_content_filter = %i[disabled_in_text members_without_roles all_members].freeze
 
+    #
+    # Creates a new guild object.
     # @private
+    #
+    # @param [Discorb::Client] client The client that owns this guild.
+    # @param [Hash] data The data of the guild.
+    # @param [Boolean] is_create_event Whether the guild is created by a `GUILD_CREATE` event.
+    #
     def initialize(client, data, is_create_event)
       @client = client
       @data = {}
       _set_data(data, is_create_event)
-    end
-
-    # @private
-    def update!
-      Async do
-        _, data = @client.get("/guilds/#{@id}").wait
-        _set_data(data, false)
-      end
     end
 
     def afk_channel
@@ -858,7 +857,7 @@ module Discorb
     def fetch_voice_regions
       Async do
         _resp, data = @client.http.request(Route.new("/guilds/#{@id}/voice", "//guilds/:guild_id/voice", :get)).wait
-        data.map { |d| VoiceRegion.new(@client, d) }
+        data.map { |d| VoiceRegion.new(d) }
       end
     end
 
@@ -871,7 +870,7 @@ module Discorb
     def fetch_invites
       Async do
         _resp, data = @client.http.request(Route.new("/guilds/#{@id}/invites", "//guilds/:guild_id/invites", :get)).wait
-        data.map { |d| Invite.new(@client, d) }
+        data.map { |d| Invite.new(@client, d, false) }
       end
     end
 
@@ -884,7 +883,7 @@ module Discorb
     def fetch_integrations
       Async do
         _resp, data = @client.http.request(Route.new("/guilds/#{@id}/integrations", "//guilds/:guild_id/integrations", :get)).wait
-        data.map { |d| Integration.new(@client, d) }
+        data.map { |d| Integration.new(@client, d, @id) }
       end
     end
 
@@ -1012,7 +1011,14 @@ module Discorb
       # @!attribute [r] url
       #   @return [String] The vanity URL.
 
+      #
+      # Initialize a new instance of the {VanityInvite} class.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Discorb::Guild] guild The guild.
+      # @param [Hash] data The data of the invite.
+      #
       def initialize(client, guild, data)
         @client = client
         @guild = guild
@@ -1047,7 +1053,14 @@ module Discorb
       # @!attribute [r] json_url
       #   @return [String] The JSON URL.
 
+      #
+      # Initialize a new instance of the {Widget} class.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Discorb::Snowflake] guild_id The guild ID.
+      # @param [Hash] data The data from Discord.
+      #
       def initialize(client, guild_id, data)
         @client = client
         @enabled = data[:enabled]
@@ -1097,7 +1110,7 @@ module Discorb
       def iframe(theme: "dark", width: 350, height: 500)
         [
           %(<iframe src="https://canary.discord.com/widget?id=#{@guild_id}&theme=#{theme}" width="#{width}" height="#{height}"),
-          %(allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>)
+          %(allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>),
         ].join
       end
     end
@@ -1111,7 +1124,14 @@ module Discorb
       # @return [String] The reason for the ban.
       attr_reader :reason
 
+      #
+      # Initialize a new instance of the {Ban} class.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Discorb::Guild] guild The guild.
+      # @param [Hash] data The data from Discord.
+      #
       def initialize(client, guild, data)
         @client = client
         @guild = guild
@@ -1151,8 +1171,8 @@ module Discorb
       @name = data[:name]
       @members = Discorb::Dictionary.new
       data[:members]&.each do |m|
-          Member.new(@client, @id, m[:user], m)
-        end
+        Member.new(@client, @id, m[:user], m)
+      end
       @splash = data[:splash] && Asset.new(self, data[:splash], path: "splashes/#{@id}")
       @discovery_splash = data[:discovery_splash] && Asset.new(self, data[:discovery_splash], path: "discovery-splashes/#{@id}")
       @owner_id = data[:owner_id]
@@ -1239,7 +1259,14 @@ module Discorb
     # @return [Discorb::Guild] The guild the welcome screen belongs to.
     attr_reader :guild
 
+    #
+    # Initializes the welcome screen.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Discorb::Guild] guild The guild the welcome screen belongs to.
+    # @param [Hash] data The data of the welcome screen.
+    #
     def initialize(client, guild, data)
       @client = client
       @description = data[:description]

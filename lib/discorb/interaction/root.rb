@@ -38,7 +38,13 @@ module Discorb
     @interaction_type = nil
     @interaction_name = nil
 
+    #
+    # Initialize a new interaction.
     # @private
+    #
+    # @param [Discorb::Client] client The client this interaction belongs to.
+    # @param [Hash] data The data of the interaction.
+    #
     def initialize(client, data)
       @client = client
       @id = Snowflake.new(data[:id])
@@ -81,7 +87,13 @@ module Discorb
       # @private
       attr_reader :interaction_type, :interaction_name, :event_name
 
+      #
+      # Create a new Interaction instance from the data.
       # @private
+      #
+      # @param [Discorb::Client] client The client this interaction belongs to.
+      # @param [Hash] data The data of the interaction.
+      #
       def make_interaction(client, data)
         interaction = nil
         descendants.each do |klass|
@@ -94,7 +106,10 @@ module Discorb
         interaction
       end
 
+      #
+      # Returns the descendants of the class.
       # @private
+      #
       def descendants
         ObjectSpace.each_object(Class).select { |klass| klass < self }
       end

@@ -33,7 +33,13 @@ module Discorb
     #   @return [Discorb::Guild] The guild this template is based on.
     #   @return [nil] Client wasn't able to find the guild this template is based on.
 
+    #
+    # Initialize a new template.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data from Discord.
+    #
     def initialize(client, data)
       @client = client
       _set_data(data)
@@ -120,7 +126,12 @@ module Discorb
       attr_reader :widget_enabled
       alias widget_enabled? widget_enabled
 
+      #
+      # Initialize a new guild in guild template.
       # @private
+      #
+      # @param [Hash] data The data from Discord.
+      #
       def initialize(data)
         @name = data[:name]
         @description = data[:description]
@@ -146,7 +157,12 @@ module Discorb
         # @return [Discorb::Color] The color of the role.
         attr_reader :color
 
+        #
+        # Initialize a new role in guild template.
         # @private
+        #
+        # @param [Hash] data The data from Discord.
+        #
         def initialize(data)
           @name = data[:name]
           @permissions = Permission.new(data[:permissions])
@@ -177,7 +193,12 @@ module Discorb
         # @return [Class] The class of the channel.
         attr_reader :type
 
+        #
+        # Initialize a new channel in guild template.
         # @private
+        #
+        # @param [Hash] data The data from Discord.
+        #
         def initialize(data)
           @name = data[:name]
           @position = data[:position]

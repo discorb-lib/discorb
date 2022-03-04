@@ -44,7 +44,14 @@ module Discorb
     # @!attribute [r] roles?
     #   @return [Boolean] whether or not this emoji is restricted to certain roles.
 
+    #
+    # Initialize a new custom emoji.
     # @private
+    #
+    # @param [Discorb::Client] client The client that owns this emoji.
+    # @param [Discorb::Guild] guild The guild that owns this emoji.
+    # @param [Hash] data The data of the emoji.
+    #
     def initialize(client, guild, data)
       @client = client
       @guild = guild
@@ -121,7 +128,12 @@ module Discorb
 
     alias destroy! delete!
 
+    #
+    # Converts the object to a hash.
     # @private
+    #
+    # @return [Hash] The hash represents the object.
+    #
     def to_hash
       {
         name: @name,
@@ -158,7 +170,12 @@ module Discorb
     attr_reader :deleted
     alias deleted? deleted
 
+    #
+    # Initialize a new partial custom emoji.
     # @private
+    #
+    # @param [Hash] data The data of the emoji.
+    #
     def initialize(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
@@ -200,7 +217,12 @@ module Discorb
     # @return [Integer] The skin tone of the emoji.
     attr_reader :skin_tone
 
-    # @private
+    #
+    # Initialize a new unicode emoji.
+    #
+    # @param [String] name The name of the emoji.
+    # @param [Integer] tone The skin tone of the emoji.
+    #
     def initialize(name, tone: 0)
       if EmojiTable::DISCORD_TO_UNICODE.key?(name)
         @name = name
@@ -232,7 +254,12 @@ module Discorb
       "#<#{self.class} :#{@name}:>"
     end
 
+    #
+    # Converts the object to a hash.
     # @private
+    #
+    # @return [Hash] The hash represents the object.
+    #
     def to_hash
       {
         name: @value,

@@ -72,7 +72,14 @@ module Discorb
       2 => :guild,
     }.freeze
 
+    #
+    # Initialize a new invite.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of invite.
+    # @param [Boolean] gateway Whether the data is from gateway.
+    #
     def initialize(client, data, gateway)
       @client = client
       @data = data[:data]

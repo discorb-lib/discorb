@@ -37,7 +37,12 @@ module Discorb
   #
   # @see https://discord.com/developers/docs/reference#snowflakes Official Discord API docs
   class Snowflake < String
+    #
+    # Initialize new snowflake.
     # @private
+    #
+    # @param [#to_s] value The value of the snowflake.
+    #
     def initialize(value)
       @value = value.to_i
       super(@value.to_s)

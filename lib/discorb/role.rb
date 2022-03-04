@@ -42,7 +42,14 @@ module Discorb
 
     include Comparable
 
+    #
+    # Initializes a new role.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Discorb::Guild] guild The guild the role belongs to.
+    # @param [Hash] data The data of the role.
+    #
     def initialize(client, guild, data)
       @client = client
       @guild = guild
@@ -176,7 +183,12 @@ module Discorb
       # @!attribute [r] integration?
       #   @return [Boolean] Whether the role is an integration role.
 
+      #
+      # Initializes a new tag.
       # @private
+      #
+      # @param [Hash] data The data of the tag.
+      #
       def initialize(data)
         @bot_id = Snowflake.new(data[:bot_id])
         @integration_id = Snowflake.new(data[:integration_id])

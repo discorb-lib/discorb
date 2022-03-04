@@ -38,12 +38,21 @@ module Discorb
     #   @macro client_cache
     #   @return [Discorb::Guild] The guild this integration is in.
 
-    @expire_behavior = {
+    # @private
+    # @return [{Integer => String}] The map of the expire behavior.
+    EXPIRE_BEHAVIOR = {
       0 => :remove_role,
       1 => :kick,
-    }
+    }.freeze
 
+    #
+    # Initialize a new integration.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the welcome screen.
+    # @param [Discorb::Guild] guild The guild this integration is in.
+    #
     def initialize(client, data, guild_id)
       @client = client
       @data = data
@@ -80,7 +89,7 @@ module Discorb
       @syncing = data[:syncing]
       @role_id = Snowflake.new(data[:role_id])
       @enable_emoticons = data[:enable_emoticons]
-      @expire_behavior = self.class.expire_behavior[data[:expire_behavior]]
+      @expire_behavior = EXPIRE_BEHAVIOR[data[:expire_behavior]]
       @expire_grace_period = data[:expire_grace_period]
       @user = @client.users[data[:user][:id]] or Discorb::User.new(@client, data[:user])
       @account = Account.new(data[:account])
@@ -103,7 +112,12 @@ module Discorb
       # @return [String] The name of the account.
       attr_reader :name
 
+      #
+      # Initialize a new account.
       # @private
+      #
+      # @param [Hash] data The data from Discord.
+      #
       def initialize(data)
         @id = data[:id]
         @name = data[:name]
@@ -129,7 +143,13 @@ module Discorb
       # @return [nil] If the application has no bot user.
       attr_reader :bot
 
+      #
+      # Initialize a new application.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The data from Discord.
+      #
       def initialize(client, data)
         @id = Snowflake.new(data[:id])
         @name = data[:name]

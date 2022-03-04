@@ -117,7 +117,13 @@ module Discorb
       # @return [Discorb::User] The user.
       attr_reader :user
 
+      #
+      # Initialize a new interaction.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The interaction data.
+      #
       def initialize(client, data)
         @id = Snowflake.new(data[:id])
         @name = data[:name]
@@ -142,7 +148,12 @@ module Discorb
         5 => :join_request,
       }
 
+      #
+      # Initialize a new activity.
       # @private
+      #
+      # @param [Hash] data The activity data.
+      #
       def initialize(data)
         @name = data[:name]
         @type = self.class.type(data[:type])

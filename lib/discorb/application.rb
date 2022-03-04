@@ -29,7 +29,13 @@ module Discorb
     alias bot_require_code_grant? bot_require_code_grant
     # @return [Discorb::Application::Flag] The application's flags.
     attr_reader :flags
+    #
+    # Initializes a new instance of the Application class.
     # @private
+    #
+    # @param [Discorb::Client] client The client that instantiated the object.
+    # @param [Hash] data The data of the object.
+    #
     def initialize(client, data)
       @client = client
       @data = data
@@ -97,7 +103,13 @@ module Discorb
       # @return [Discorb::Application::Team::Member] The team's member.
       attr_reader :members
 
+      #
+      # Initializes a new instance of the Team class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the object.
+      #
       def initialize(client, data)
         @client = client
         @id = Snowflake.new(data[:id])
@@ -142,7 +154,9 @@ module Discorb
         # @!attribute [r] owner?
         #   @return [Boolean] Whether the member is the team's owner.
 
-        @membership_state = {
+        # @private
+        # @return [{Integer => Symbol}] The permission map.
+        MEMBERSHIP_STATE = {
           1 => :invited,
           2 => :accepted,
         }.freeze
@@ -153,7 +167,7 @@ module Discorb
           @team = team
           @user = client.users[data[:user][:id]] || User.new(client, data[:user])
           @team_id = Snowflake.new(data[:team_id])
-          @membership_state = self.class.membership_state[data[:membership_state]]
+          @membership_state = MEMBERSHIP_STATE[data[:membership_state]]
           @permissions = data[:permissions].map(&:to_sym)
         end
 
@@ -175,11 +189,6 @@ module Discorb
 
         def ==(other)
           super || @user == other
-        end
-
-        class << self
-          # @private
-          attr_reader :membership_state
         end
       end
     end

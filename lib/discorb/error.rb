@@ -42,7 +42,10 @@ module Discorb
     # @return [Net::HTTPResponse] the HTTP response.
     attr_reader :response
 
+    #
+    # Initialize a new instance of the HTTPError class.
     # @private
+    #
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
@@ -54,7 +57,10 @@ module Discorb
   # Represents a 400 error.
   #
   class BadRequestError < HTTPError
+    #
+    # Initialize a new instance of the BadRequestError class.
     # @private
+    #
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
@@ -62,7 +68,7 @@ module Discorb
         [
           data[:message] + " (#{@code})", enumerate_errors(data[:errors])
             .map { |ek, ev| "#{ek}=>#{ev}" }
-            .join("\n")
+            .join("\n"),
         ].join("\n")
       )
     end

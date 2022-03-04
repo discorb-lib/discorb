@@ -138,7 +138,13 @@ module Discorb
     }.freeze
     @bits = @raw_bits.transform_values { |v| 1 << v }.freeze
 
+    #
+    # Initializes a new PermissionOverwrite.
     # @private
+    #
+    # @param allow [Integer] The allowed permissions.
+    # @param deny [Integer] The denied permissions.
+    #
     def initialize(allow, deny)
       @allow = allow
       @deny = deny
@@ -175,11 +181,14 @@ module Discorb
     #
     def to_hash
       self.class.bits.keys.to_h do |field|
-        [field, if @allow & self.class.bits[field] != 0
-          true
-        elsif @deny & self.class.bits[method] != 0
-          false
-        end]
+        [
+          field,
+          if @allow & self.class.bits[field] != 0
+            true
+          elsif @deny & self.class.bits[field] != 0
+            false
+          end,
+        ]
       end
     end
 

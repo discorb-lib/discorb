@@ -4,7 +4,10 @@
 #
 # @author sevenc-nanashi
 module Discorb
+  #
+  # Method to define a macro for YARD.
   # @private
+  #
   # @!macro [new] async
   #   @note This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
   #
@@ -23,7 +26,6 @@ module Discorb
   #   @raise [Discorb::HTTPError] HTTP request failed.
   #
   def macro
-    # NOTE: this method is only for YARD.
     puts "Wow, You found the easter egg!\n"
     red = "\e[31m"
     reset = "\e[m"

@@ -33,6 +33,7 @@ module Discorb
     # @return [:client, :discord] The attachment was created by.
     attr_reader :created_by
     # @private
+    # @return [Boolean] Whether the attachment will be closed after it is sent.
     attr_reader :will_close
 
     # @!attribute [r] image?
@@ -62,7 +63,10 @@ module Discorb
       @created_by = :client
     end
 
+    #
+    # Initializes the object from a hash.
     # @private
+    #
     def initialize_hash(data)
       @id = Snowflake.new(data[:id])
       @filename = data[:filename]
@@ -79,7 +83,10 @@ module Discorb
       @content_type.start_with? "image/"
     end
 
+    #
+    # Creates a new file from a hash.
     # @private
+    #
     def self.from_hash(data)
       inst = allocate
       inst.initialize_hash(data)

@@ -29,16 +29,27 @@ module Discorb
     attr_reader :available
     alias available? available
 
-    @sticker_type = {
+    # @private
+    # @return [{Integer => Symbol}] The mapping of sticker types.
+    STICKER_TYPE = {
       1 => :official,
       2 => :guild,
     }.freeze
-    @sticker_format = {
+
+    # @private
+    # @return [{Integer => Symbol}] The mapping of sticker format.
+    STICKER_FORMAT = {
       1 => :png,
       2 => :apng,
       3 => :lottie,
-    }
+    }.freeze
+    #
+    # Initialize a new sticker.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The sticker data.
+    #
     def initialize(client, data)
       @client = client
       _set_data(data)
@@ -51,15 +62,6 @@ module Discorb
       # @!attribute [r] guild
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild the sticker is in.
-      @sticker_type = {
-        1 => :official,
-        2 => :guild,
-      }.freeze
-      @sticker_format = {
-        1 => :png,
-        2 => :apng,
-        3 => :lottie,
-      }
 
       def guild
         @client.guilds[@guild_id]
@@ -121,7 +123,13 @@ module Discorb
       # @return [Discorb::Asset] The banner of the pack.
       attr_reader :banner
 
+      #
+      # Initialize a new sticker pack.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The sticker pack data.
+      #
       def initialize(client, data)
         @client = client
         @id = Snowflake.new(data[:id])
@@ -141,8 +149,8 @@ module Discorb
       @id = Snowflake.new(data[:id])
       @name = data[:name]
       @tags = data[:tags].split(",")
-      @type = self.class.sticker_type[data[:type]]
-      @format = self.class.sticker_format[data[:format]]
+      @type = STICKER_TYPE[data[:type]]
+      @format = STICKER_FORMAT[data[:format]]
       @description = data[:description]
       @available = data[:available]
       if @type == :official

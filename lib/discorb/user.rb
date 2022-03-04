@@ -29,7 +29,13 @@ module Discorb
     # @!attribute [r] mention
     #   @return [String] The user's mention.
 
+    #
+    # Initializes a new user.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The user data.
+    #
     def initialize(client, data)
       @client = client
       @data = {}
@@ -79,7 +85,12 @@ module Discorb
 
     alias app_owner? bot_owner?
 
+    #
+    # Returns the dm channel id of the user.
     # @private
+    #
+    # @return [Async::Task<Discorb::Snowflake>] A task that resolves to the channel id.
+    #
     def channel_id
       Async do
         next @dm_channel_id if @dm_channel_id

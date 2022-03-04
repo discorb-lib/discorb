@@ -16,7 +16,13 @@ module Discorb
     alias me? me
     alias reacted? me
 
+    #
+    # Initialize a new reaction.
     # @private
+    #
+    # @param [Discorb::Message] message The message that this reaction is on.
+    # @param [Hash] data The data of the reaction.
+    #
     def initialize(message, data)
       @message = message
       _set_data(data)

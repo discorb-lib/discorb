@@ -59,7 +59,12 @@ module Discorb
       @type = "rich"
     end
 
+    #
+    # Initialize embed from hash.
     # @private
+    #
+    # @param [Hash] data The hash data to initialize embed.
+    #
     def initialize_hash(data)
       @title = data[:title]
       @description = data[:description]
@@ -328,7 +333,12 @@ module Discorb
       # @return [Integer] The width of video.
       attr_reader :width
 
+      #
+      # Initialize a new Video object.
       # @private
+      #
+      # @param [Hash] data The data of video.
+      #
       def initialize(data)
         @url = data[:url]
         @proxy_url = data[:proxy_url]
@@ -346,7 +356,12 @@ module Discorb
       # @return [String] The url of provider.
       attr_reader :url
 
+      #
+      # Initialize a new Provider object.
       # @private
+      #
+      # @param [Hash] data The data of provider.
+      #
       def initialize(data)
         @name = data[:name]
         @url = data[:url]

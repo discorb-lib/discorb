@@ -152,7 +152,14 @@ module Discorb
       !@guild_id.nil?
     end
 
+    #
+    # Initialize a new message.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the welcome screen.
+    # @param [Boolean] no_cache Whether to disable caching.
+    #
     def initialize(client, data, no_cache: false)
       @client = client
       @data = {}
@@ -446,7 +453,8 @@ module Discorb
       "#<#{self.class} #{@content.inspect} id=#{@id}>"
     end
 
-    # @private
+    private
+
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @channel_id = data[:channel_id]

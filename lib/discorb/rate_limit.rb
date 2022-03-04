@@ -6,7 +6,12 @@ module Discorb
   # @private
   #
   class RatelimitHandler
+    #
+    # Initialize a rate limit handler.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    #
     def initialize(client)
       @client = client
       @path_ratelimit_bucket = {}

@@ -19,7 +19,10 @@ module Discorb
     @channel_type = nil
     @subclasses = []
 
+    #
+    # Initializes a new instance of the Channel class.
     # @private
+    #
     def initialize(client, data, no_cache: false)
       @client = client
       @data = {}
@@ -44,12 +47,22 @@ module Discorb
       "#<#{self.class} \"##{@name}\" id=#{@id}>"
     end
 
+    #
+    # Returns the descendants of the Channel class.
     # @private
+    #
     def self.descendants
       ObjectSpace.each_object(Class).select { |klass| klass < self }
     end
 
+    #
+    # Creates a new instance of the Channel class or instance of its descendants.
     # @private
+    #
+    # @param [Discorb::Client] client The client that instantiated the object.
+    # @param [Hash] data The data of the object.
+    # @param [Boolean] no_cache Whether to disable cache the object.
+    #
     def self.make_channel(client, data, no_cache: false)
       descendants.each do |klass|
         return klass.new(client, data, no_cache: no_cache) if !klass.channel_type.nil? && klass.channel_type == data[:type]
@@ -59,7 +72,10 @@ module Discorb
     end
 
     class << self
+      #
       # @private
+      # @return [Integer] The type of the channel.
+      #
       attr_reader :channel_type
     end
 
@@ -67,7 +83,12 @@ module Discorb
       self.class.channel_type
     end
 
+    #
+    # Returns the channel id to request.
     # @private
+    #
+    # @return [Async::Task<Discorb::Snowflake>] A task that resolves to the channel id.
+    #
     def channel_id
       Async do
         @id
@@ -114,7 +135,7 @@ module Discorb
     #
     # @param [Discorb::GuildChannel] other The channel to compare.
     #
-    # @return [-1, 1] -1 if the channel is at lower than the other, 1 if the channel is at highter than the other.
+    # @return [-1, 0, 1] -1 if the channel is at lower than the other, 1 if the channel is at highter than the other.
     #
     def <=>(other)
       return 0 unless other.respond_to?(:position)
@@ -419,7 +440,7 @@ module Discorb
     def fetch_invites
       Async do
         _resp, data = @client.http.request(Route.new("/channels/#{@id}/invites", "//channels/:channel_id/invites", :get)).wait
-        data.map { |invite| Invite.new(@client, invite) }
+        data.map { |invite| Invite.new(@client, invite, false) }
       end
     end
 
@@ -444,7 +465,7 @@ module Discorb
           temporary: temporary,
           unique: unique,
         }, audit_log_reason: reason).wait
-        Invite.new(@client, data)
+        Invite.new(@client, data, false)
       end
     end
 
@@ -664,7 +685,10 @@ module Discorb
     attr_reader :bitrate
     # @return [Integer] The user limit of the voice channel.
     attr_reader :user_limit
+    #
     # @private
+    # @return [Discorb::Dictionary{Discorb::Snowflake => StageInstance}] The stage instances associated with the stage channel.
+    #
     attr_reader :stage_instances
 
     include Connectable
@@ -673,7 +697,10 @@ module Discorb
     #   @return [Discorb::StageInstance] The stage instance of the channel.
 
     @channel_type = 13
+    #
+    # Initialize a new stage channel.
     # @private
+    #
     def initialize(...)
       @stage_instances = Dictionary.new
       super(...)
@@ -823,7 +850,14 @@ module Discorb
     include Messageable
     @channel_type = nil
 
+    #
+    # Initialize a new thread channel.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the thread channel.
+    # @param [Boolean] no_cache Whether to disable the cache.
+    #
     def initialize(client, data, no_cache: false)
       @members = Dictionary.new
       super
@@ -1113,7 +1147,12 @@ module Discorb
   class DMChannel < Channel
     include Messageable
 
+    #
+    # Returns the channel id to request.
     # @private
+    #
+    # @return [Async::Task<Discorb::Snowflake>] A task that resolves to the channel id.
+    #
     def channel_id
       Async do
         @id

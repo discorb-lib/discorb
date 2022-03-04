@@ -22,7 +22,13 @@ module Discorb
     # @return [String] The URL of the webhook.
     attr_reader :token
 
+    #
+    # Initializes a webhook.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the webhook.
+    #
     def initialize(client, data)
       @name = data[:name]
       @guild_id = data[:guild_id] && Snowflake.new(data[:guild_id])
@@ -200,7 +206,13 @@ module Discorb
       # @!attribute [r] url
       #   @return [String] The URL of the webhook.
 
+      #
+      # Initializes the incoming webhook.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [String] url The URL of the webhook.
+      #
       def initialize(client, data)
         super
         @token = data[:token]
@@ -222,7 +234,13 @@ module Discorb
       #   Represents a source channel of follower webhook.
       #   @return [Discorb::Channel, Discorb::Webhook::FollowerWebhook::Channel] The source channel of follower webhook.
 
+      #
+      # Initializes the follower webhook.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The data of the follower webhook.
+      #
       def initialize(client, data)
         super
         @source_guild = FollowerWebhook::Guild.new(data[:source_guild])
@@ -248,7 +266,12 @@ module Discorb
         # @return [Discorb::Asset] The icon of the guild.
         attr_reader :icon
 
+        #
+        # Initialize a new guild.
         # @private
+        #
+        # @param [Hash] data The data of the guild.
+        #
         def initialize(data)
           @id = Snowflake.new(data[:id])
           @name = data[:name]
@@ -265,7 +288,12 @@ module Discorb
         # @return [String] The name of the channel.
         attr_reader :name
 
+        #
+        # Initialize a new channel.
         # @private
+        #
+        # @param [Hash] data The data of the channel.
+        #
         def initialize(data)
           @id = Snowflake.new(data[:id])
           @name = data[:name]
@@ -290,7 +318,13 @@ module Discorb
       # @return [Discorb::Snowflake] The ID of the guild.
       attr_reader :guild_id
 
+      #
+      # Initializes the message.
       # @private
+      #
+      # @param [Discorb::Webhook] webhook The webhook.
+      # @param [Hash] data The data of the message.
+      # @param [Discorb::Client] client The client. This will be nil if it's created from {URLWebhook}.
       def initialize(webhook, data, client = nil)
         @client = client
         @webhook = webhook
@@ -364,7 +398,12 @@ module Discorb
         # @return [String] The discriminator of the author.
         attr_reader :discriminator
 
+        #
+        # Initializes the author.
         # @private
+        #
+        # @param [Hash] data The data of the author.
+        #
         def initialize(data)
           @data = data
           @bot = data[:bot]

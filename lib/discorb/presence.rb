@@ -19,7 +19,13 @@ module Discorb
     # @!attribute [r] activity
     #   @return [Discorb::Presence::Activity] The activity of the presence.
 
+    #
+    # Initialize a presence.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the presence.
+    #
     def initialize(client, data)
       @client = client
       @data = data
@@ -80,19 +86,26 @@ module Discorb
       # @return [Discorb::Presence::Activity::Flag] The flags of the activity.
       attr_reader :flags
 
-      @activity_types = {
+      # @private
+      # @return [{Integer => Symbol}] The mapping of activity types.
+      ACTIVITY_TYPES = {
         0 => :game,
         1 => :streaming,
         2 => :listening,
         3 => :watching,
         4 => :custom,
         5 => :competing,
-      }
+      }.freeze
 
+      #
+      # Initialize the activity.
       # @private
+      #
+      # @param [Hash] data The activity data.
+      #
       def initialize(data)
         @name = data[:name]
-        @type = self.class.activity_types[data[:type]]
+        @type = ACTIVITY_TYPES[data[:type]]
         @url = data[:url]
         @created_at = Time.at(data[:created_at])
         @timestamps = data[:timestamps] && Timestamps.new(data[:timestamps])
@@ -140,7 +153,12 @@ module Discorb
         # @return [Time] The end time of the activity.
         attr_reader :end
 
+        #
+        # Initialize the timestamps.
         # @private
+        #
+        # @param [Hash] data The timestamps data.
+        #
         def initialize(data)
           @start = data[:start] && Time.at(data[:start])
           @end = data[:end] && Time.at(data[:end])
@@ -159,7 +177,12 @@ module Discorb
         # @!attribute [r] max_size
         #   @return [Integer] The max size of the party.
 
+        #
+        # Initialize the party.
         # @private
+        #
+        # @param [Hash] data The party data.
+        #
         def initialize(data)
           @id = data[:id]
           @size = data[:size]
@@ -229,7 +252,12 @@ module Discorb
         # @return [String] The match secret of the activity.
         attr_reader :match
 
+        #
+        # Initialize the secrets.
         # @private
+        #
+        # @param [Hash] data The secrets data.
+        #
         def initialize(data)
           @join = data[:join]
           @spectate = data[:spectate]
@@ -247,16 +275,16 @@ module Discorb
         attr_reader :url
         alias text label
 
+        #
+        # Initialize the button.
         # @private
+        #
+        # @param [Hash] data The button data.
+        #
         def initialize(data)
           @label = data[0]
           @url = data[1]
         end
-      end
-
-      class << self
-        # @private
-        attr_reader :activity_types
       end
     end
 
@@ -278,7 +306,12 @@ module Discorb
       # @!attribute [r] web?
       #   @return [Boolean] Whether the user is not offline on web.
 
+      #
+      # Initialize the client status.
       # @private
+      #
+      # @param [Hash] data The client status data.
+      #
       def initialize(data)
         @desktop = data[:desktop]&.to_sym || :offline
         @mobile = data[:mobile]&.to_sym || :offline

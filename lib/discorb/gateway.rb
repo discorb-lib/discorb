@@ -14,9 +14,15 @@ module Discorb
   module Gateway
     #
     # Represents an event.
+    # @abstract
     #
     class GatewayEvent
+      #
+      # Initializes a new instance of the GatewayEvent class.
       # @private
+      #
+      # @param [Hash] data The data of the event.
+      #
       def initialize(data)
         @data = data
       end
@@ -61,7 +67,13 @@ module Discorb
       alias reactor fired_by
       alias from fired_by
 
+      #
+      # Initializes a new instance of the ReactionEvent class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, data)
         @client = client
         @data = data
@@ -121,7 +133,14 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::User] The user associated with the integration.
 
+      #
+      # Initialize a new instance of the IntegrationDeleteEvent class.
       # @private
+      #
+      #
+      # @param [Hash] data The data of the event.
+      #
+      #
       def initialize(_client, data)
         @id = Snowflake.new(data[:id])
         @guild_id = data[:guild_id]
@@ -157,7 +176,13 @@ module Discorb
       # @return [Discorb::Message] The message the reaction was sent in.
       attr_reader :message
 
+      #
+      # Initialize a new instance of the ReactionRemoveAllEvent class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, data)
         @client = client
         @data = data
@@ -207,7 +232,13 @@ module Discorb
       # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
       attr_reader :emoji
 
+      #
+      # Initialize a new instance of the ReactionRemoveEmojiEvent class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, data)
         @client = client
         @data = data
@@ -246,7 +277,13 @@ module Discorb
       attr_reader :guild
       # @return [Discorb::ScheduledEvent] The scheduled event.
       attr_reader :scheduled_event
+      #
+      # Initialize a new instance of the ScheduledEventUserEvent class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, data)
         @client = client
         @scheduled_event_id = Snowflake.new(data[:scheduled_event_id])
@@ -342,7 +379,13 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild the message was sent in.
 
+      #
+      # Initialize a new instance of the UnknownDeleteBulkMessage class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, id, data)
         @client = client
         @id = id
@@ -374,7 +417,13 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild the message was sent in.
 
+      #
+      # Initialize a new instance of the InviteDeleteEvent class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, data)
         @client = client
         @data = data
@@ -415,7 +464,13 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Member, Discorb::User] The member or user that started typing.
 
+      #
+      # Initialize a new instance of the TypingStartEvent class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, data)
         @client = client
         @data = data
@@ -492,7 +547,13 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild where the webhook was updated.
 
+      #
+      # Initialize a new instance of the WebhooksUpdateEvent class.
       # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
       def initialize(client, data)
         @client = client
         @data = data
@@ -800,7 +861,7 @@ module Discorb
 
           if (member = thread.members[data[:id]])
             old = ThreadChannel::Member.new(self, member.instance_variable_get(:@data))
-            member._set_data(data)
+            member.send(:_set_data, data)
           else
             old = nil
             member = ThreadChannel::Member.new(self, data)
@@ -1079,7 +1140,7 @@ module Discorb
              (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
             target_message.reactions.delete(target_reaction)
           end
-          dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(data))
+          dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(self, data))
         when "TYPING_START"
           dispatch(:typing_start, TypingStartEvent.new(self, data))
         when "INTERACTION_CREATE"
