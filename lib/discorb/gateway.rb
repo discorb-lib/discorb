@@ -1140,7 +1140,7 @@ module Discorb
              (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
             target_message.reactions.delete(target_reaction)
           end
-          dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(data))
+          dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(self, data))
         when "TYPING_START"
           dispatch(:typing_start, TypingStartEvent.new(self, data))
         when "INTERACTION_CREATE"

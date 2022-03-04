@@ -135,7 +135,7 @@ module Discorb
     #
     # @param [Discorb::GuildChannel] other The channel to compare.
     #
-    # @return [-1, 1] -1 if the channel is at lower than the other, 1 if the channel is at highter than the other.
+    # @return [-1, 0, 1] -1 if the channel is at lower than the other, 1 if the channel is at highter than the other.
     #
     def <=>(other)
       return 0 unless other.respond_to?(:position)
@@ -440,7 +440,7 @@ module Discorb
     def fetch_invites
       Async do
         _resp, data = @client.http.request(Route.new("/channels/#{@id}/invites", "//channels/:channel_id/invites", :get)).wait
-        data.map { |invite| Invite.new(@client, invite) }
+        data.map { |invite| Invite.new(@client, invite, false) }
       end
     end
 

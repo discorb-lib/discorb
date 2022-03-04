@@ -181,11 +181,14 @@ module Discorb
     #
     def to_hash
       self.class.bits.keys.to_h do |field|
-        [field, if @allow & self.class.bits[field] != 0
-          true
-        elsif @deny & self.class.bits[method] != 0
-          false
-        end,]
+        [
+          field,
+          if @allow & self.class.bits[field] != 0
+            true
+          elsif @deny & self.class.bits[field] != 0
+            false
+          end,
+        ]
       end
     end
 

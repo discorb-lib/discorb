@@ -857,7 +857,7 @@ module Discorb
     def fetch_voice_regions
       Async do
         _resp, data = @client.http.request(Route.new("/guilds/#{@id}/voice", "//guilds/:guild_id/voice", :get)).wait
-        data.map { |d| VoiceRegion.new(@client, d) }
+        data.map { |d| VoiceRegion.new(d) }
       end
     end
 
@@ -870,7 +870,7 @@ module Discorb
     def fetch_invites
       Async do
         _resp, data = @client.http.request(Route.new("/guilds/#{@id}/invites", "//guilds/:guild_id/invites", :get)).wait
-        data.map { |d| Invite.new(@client, d) }
+        data.map { |d| Invite.new(@client, d, false) }
       end
     end
 
@@ -883,7 +883,7 @@ module Discorb
     def fetch_integrations
       Async do
         _resp, data = @client.http.request(Route.new("/guilds/#{@id}/integrations", "//guilds/:guild_id/integrations", :get)).wait
-        data.map { |d| Integration.new(@client, d) }
+        data.map { |d| Integration.new(@client, d, @id) }
       end
     end
 
