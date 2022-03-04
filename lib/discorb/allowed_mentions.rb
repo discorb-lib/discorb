@@ -32,7 +32,14 @@ module Discorb
       "#<#{self.class} @everyone=#{@everyone} @roles=#{@roles} @users=#{@users} @replied_user=#{@replied_user}>"
     end
 
+    #
+    # Converts the object to a hash.
     # @private
+    #
+    # @param [Discorb::AllowedMentions, nil] other The object to merge.
+    #
+    # @return [Hash] The hash.
+    #
     def to_hash(other = nil)
       payload = {
         parse: %w[everyone roles users],

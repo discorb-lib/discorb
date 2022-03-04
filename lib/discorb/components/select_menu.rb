@@ -122,24 +122,6 @@ module Discorb
         }
       end
 
-      # @private
-      def hash_emoji(emoji)
-        case emoji
-        when UnicodeEmoji
-          {
-            id: nil,
-            name: emoji.to_s,
-            animated: false,
-          }
-        when CustomEmoji
-          {
-            id: emoji.id,
-            name: emoji.name,
-            animated: emoji.animated?,
-          }
-        end
-      end
-
       class << self
         #
         # Creates a new option from a hash.

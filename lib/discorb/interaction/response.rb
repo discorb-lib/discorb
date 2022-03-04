@@ -74,7 +74,15 @@ module Discorb
       # Represents of a callback message of interaction.
       #
       class CallbackMessage
+        #
+        # Initializes a new instance of CallbackMessage.
         # @private
+        #
+        # @param [Client] client The client.
+        # @param [Hash] data The payload.
+        # @param [String] application_id The application ID.
+        # @param [String] token The token.
+        #
         def initialize(client, data, application_id, token)
           @client = client
           @data = data

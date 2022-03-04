@@ -35,7 +35,12 @@ module Discorb
       end
 
       class << self
+        #
+        # Get command data from the given data.
         # @private
+        #
+        # @param [Hash] data The data of the command.
+        #
         def get_command_data(data)
           name = data[:name]
           options = nil
@@ -61,7 +66,15 @@ module Discorb
           [name, options]
         end
 
+        #
+        # Modify the option map with the given options.
         # @private
+        #
+        # @param [Hash] option_map The option map to modify.
+        # @param [Array<Hash>] options The options for modifying.
+        # @param [Discorb::Guild] guild The guild where the command is executed.
+        # @param [{Discorb::Snowflake => Discorb::Member}] members The cached members of the guild.
+        # @param [{Integer => Discorb::Attachment}] attachments The cached attachments of the message.
         def modify_option_map(option_map, options, guild, members, attachments)
           options ||= []
           options.each do |option|
@@ -69,7 +82,7 @@ module Discorb
               when 3, 4, 5, 10
                 option[:value]
               when 6
-                guild.members[option[:value]] || guild.fetch_member(option[:value]).wait
+                members[option[:value]] || guild.members[option[:value]] || guild.fetch_member(option[:value]).wait
               when 7
                 guild.channels[option[:value]] || guild.fetch_channels.wait.find { |channel| channel.id == option[:value] }
               when 8
@@ -152,7 +165,13 @@ module Discorb
       # @private
       attr_reader :command_type, :event_name
 
+      #
+      # Creates a new CommandInteraction instance for the given data.
       # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The data for the command.
+      #
       def make_interaction(client, data)
         nested_classes.each do |klass|
           if !klass.command_type.nil? && klass.command_type == data[:data][:type]
@@ -165,7 +184,10 @@ module Discorb
         CommandInteraction.new(client, data)
       end
 
+      #
+      # Returns the classes under this class.
       # @private
+      #
       def nested_classes
         constants.select { |c| const_get(c).is_a? Class }.map { |c| const_get(c) }
       end

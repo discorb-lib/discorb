@@ -18,7 +18,13 @@ module Discorb
     @interaction_type = 3
     @interaction_name = :message_component
 
+    #
+    # Initialize a new message component interaction.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data.
+    #
     def initialize(client, data)
       super
       @message = Message.new(@client, data[:message].merge({ member: data[:member], guild_id: data[:guild_id] }))
@@ -26,9 +32,13 @@ module Discorb
 
     class << self
       # @private
+      # @return [Integer] The component type.
       attr_reader :component_type
 
+      #
+      # Create a MessageComponentInteraction instance for the given data.
       # @private
+      #
       def make_interaction(client, data)
         nested_classes.each do |klass|
           return klass.new(client, data) if !klass.component_type.nil? && klass.component_type == data[:data][:component_type]
@@ -37,7 +47,10 @@ module Discorb
         MessageComponentInteraction.new(client, data)
       end
 
+      #
+      # Returns the classes under this class.
       # @private
+      #
       def nested_classes
         constants.select { |c| const_get(c).is_a? Class }.map { |c| const_get(c) }
       end

@@ -7,7 +7,8 @@ module Discorb
     @interaction_type = 4
     @interaction_name = :auto_complete
 
-    # @private
+    private
+
     def _set_data(data)
       super
       Sync do
@@ -26,7 +27,6 @@ module Discorb
       end
     end
 
-    # @private
     def send_complete_result(val)
       @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), {
         type: 8,

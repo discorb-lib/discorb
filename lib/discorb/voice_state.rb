@@ -46,7 +46,13 @@ module Discorb
     #   @macro client_cache
     #   @return [Discorb::User] The user this voice state is for.
 
+    #
+    # Initialize a new voice state.
     # @private
+    #
+    # @param [Discorb::Client] client The client this voice state belongs to.
+    # @param [Hash] data The data of the voice state.
+    #
     def initialize(client, data)
       @client = client
       _set_data(data)
@@ -135,7 +141,14 @@ module Discorb
       2 => :guild_only,
     }
 
+    #
+    # Initialize a new instance of the StageInstance class.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the stage instance.
+    # @param [Boolean] no_cache Whether to disable caching.
+    #
     def initialize(client, data, no_cache: false)
       @client = client
       @data = data
@@ -246,7 +259,12 @@ module Discorb
     attr_reader :custom
     alias custom? custom
 
+    #
+    # Initialize a new instance of the VoiceRegion class.
     # @private
+    #
+    # @param [Hash] data The data of the voice region.
+    #
     def initialize(data)
       @id = data[:id]
       @name = data[:name]

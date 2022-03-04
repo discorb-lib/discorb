@@ -138,7 +138,13 @@ module Discorb
     }.freeze
     @bits = @raw_bits.transform_values { |v| 1 << v }.freeze
 
+    #
+    # Initializes a new PermissionOverwrite.
     # @private
+    #
+    # @param allow [Integer] The allowed permissions.
+    # @param deny [Integer] The denied permissions.
+    #
     def initialize(allow, deny)
       @allow = allow
       @deny = deny
@@ -179,7 +185,7 @@ module Discorb
           true
         elsif @deny & self.class.bits[method] != 0
           false
-        end]
+        end,]
       end
     end
 

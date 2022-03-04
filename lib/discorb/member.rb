@@ -62,7 +62,15 @@ module Discorb
     # @!attribute [r] owner?
     #   @return [Boolean] Whether the member is the owner of the guild.
 
+    #
+    # Initialize a new instance of the member.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Discorb::Snowflake] guild_id The ID of the guild.
+    # @param [Hash] user_data The data of the user.
+    # @param [Hash] member_data The data of the member.
+    #
     def initialize(client, guild_id, user_data, member_data)
       @guild_id = guild_id
       @client = client

@@ -14,7 +14,10 @@ module Discorb
     # @return [Array<Discorb::AuditLog::Entry>] The entries in this audit log.
     attr_reader :entries
 
+    #
+    # Initializes a new instance of the AuditLog class.
     # @private
+    #
     def initialize(client, data, guild)
       @client = client
       @guild = guild
@@ -108,8 +111,11 @@ module Discorb
       # @!attribute [r] user
       #   @return [Discorb::User] The user who performed the action.
 
+      #
+      # @return [{Integer => Symbol}] The map of events to their respective changes.
       # @private
-      @events = {
+      #
+      EVENTS = {
         1 => :guild_update,
         10 => :channel_create,
         11 => :channel_update,
@@ -159,24 +165,30 @@ module Discorb
         112 => :thread_delete,
       }.freeze
 
+      #
+      # The converter for the change.
       # @private
-      @converts = {
+      #
+      CONVERTERS = {
         channel: ->(client, id, _guild_id) { client.channels[id] },
         thread: ->(client, id, _guild_id) { client.channels[id] },
         role: ->(client, id, guild_id) { client.guilds[guild_id]&.roles&.[](id) },
         member: ->(client, id, guild_id) { client.guilds[guild_id]&.members&.[](id) },
         guild: ->(client, id, _guild_id) { client.guilds[id] },
         message: ->(client, id, _guild_id) { client.messages[id] },
-      }
+      }.freeze
 
+      #
+      # Initializes a new AuditLog entry.
       # @private
+      #
       def initialize(client, data, guild_id)
         @client = client
         @guild_id = Snowflake.new(guild_id)
         @id = Snowflake.new(data[:id])
         @user_id = Snowflake.new(data[:user_id])
         @target_id = Snowflake.new(data[:target_id])
-        @type = self.class.events[data[:action_type]]
+        @type = EVENTS[data[:action_type]]
         @target = self.class.converts[@type.to_s.split("_")[0].to_sym]&.call(client, @target_id, @gui)
         @target ||= Snowflake.new(data[:target_id])
         @changes = data[:changes] && Changes.new(data[:changes])
@@ -223,7 +235,10 @@ module Discorb
         attr_reader :data
 
         #
+        # Initializes a new changes object.
         # @private
+        #
+        # @param [Hash] data The data to initialize with.
         #
         def initialize(data)
           @data = data.to_h { |d| [d[:key].to_sym, d] }
@@ -232,6 +247,9 @@ module Discorb
           end
         end
 
+        #
+        # Formats the changes into a string.
+        #
         def inspect
           "#<#{self.class} #{@data.length} changes>"
         end
@@ -270,7 +288,10 @@ module Discorb
         # @return [Object] The new value of the change.
         attr_reader :new_value
 
+        #
+        # Initializes a new change object.
         # @private
+        #
         def initialize(data)
           @key = data[:key].to_sym
           method = case @key.to_s
@@ -298,10 +319,20 @@ module Discorb
           @new_value.__send__(method, ...)
         end
 
+        #
+        # Format the change into a string.
+        #
+        # @return [String] The string representation of the change.
+        #
         def inspect
           "#<#{self.class} #{@key.inspect} #{@old_value.inspect} -> #{@new_value.inspect}>"
         end
 
+        #
+        # Whether the change responds to the given method.
+        #
+        # @return [Boolean] Whether the change responds to the given method.
+        #
         def respond_to_missing?(method, include_private = false)
           @new_value.respond_to?(method, include_private)
         end
@@ -321,7 +352,10 @@ module Discorb
       # @return [Discorb::Integration::Account] The account of the integration.
       attr_reader :account
 
+      #
+      # Initializes a new integration object.
       # @private
+      #
       def initialize(data)
         @id = Snowflake.new(data[:id])
         @type = data[:type].to_sym

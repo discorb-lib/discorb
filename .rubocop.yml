@@ -10,7 +10,10 @@ Metrics:
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:  # Disabled for rufo
-  Enabled: false
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArrayLiteral:  # Disabled for rufo
+  EnforcedStyleForMultiline: consistent_comma
 
 Style/StringLiterals:  # Disabled for rufo
   Enabled: false

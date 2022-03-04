@@ -11,7 +11,13 @@ module Discorb
     # @!attribute [r] animated?
     #   @return [Boolean] Whether the asset is animated.
 
+    #
+    # Initialize a new instance of the Asset class.
     # @private
+    #
+    # @param [Discorb::Client] client The client that instantiated the object.
+    # @param [Hash] data The data of the object.
+    #
     def initialize(target, hash, path: nil)
       @hash = hash
       @target = target
@@ -63,7 +69,10 @@ module Discorb
     # @!attribute [r] animated?
     #   @return [false] For compatibility with {Asset}, always `false`.
 
+    #
+    # Initialize a new instance of the DefaultAvatar class.
     # @private
+    #
     def initialize(discriminator)
       @discriminator = discriminator.to_s.rjust(4, "0")
     end

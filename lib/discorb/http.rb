@@ -10,7 +10,12 @@ module Discorb
   class HTTP
     @nil_body = nil
 
+    #
+    # Initializes the http client.
     # @private
+    #
+    # @param [Discorb::Client] client The client.
+    #
     def initialize(client)
       @client = client
       @ratelimit_handler = RatelimitHandler.new(client)
@@ -66,7 +71,7 @@ module Discorb
         @ratelimit_handler.wait(path)
         req = Net::HTTP.const_get(path.method.to_s.capitalize).new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
         data = [
-          ["payload_json", get_body(body)]
+          ["payload_json", get_body(body)],
         ]
         files&.each_with_index do |file, i|
           next if file.nil?
@@ -123,7 +128,7 @@ module Discorb
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}" }
         else
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}",
-            "content-type" => "application/json" }
+            "content-type" => "application/json", }
         end
       ret.merge!(headers) if !headers.nil? && headers.length.positive?
       ret["X-Audit-Log-Reason"] = audit_log_reason unless audit_log_reason.nil?
