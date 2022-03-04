@@ -24,7 +24,7 @@ group :lint, optional: true do
   gem "rubocop", "~> 1.25"
 end
 
-group :ci do
+group :spec do
   gem "async-rspec", "~> 1.16"
   gem "rspec", "~> 3.10"
 end
