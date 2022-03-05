@@ -124,9 +124,20 @@ module Discorb
     end
 
     #
+    # Represents an entry in embed.
+    # @abstract
+    # @private
+    #
+    class Entry
+      def inspect
+        "#<#{self.class}>"
+      end
+    end
+
+    #
     # Represents an author of embed.
     #
-    class Author
+    class Author < Entry
       # @return [String] The name of author.
       attr_accessor :name
       # @return [String, nil] The url of author.
@@ -165,7 +176,7 @@ module Discorb
     #
     # Represemts a footer of embed.
     #
-    class Footer
+    class Footer < Entry
       attr_accessor :text, :icon
 
       #
@@ -196,7 +207,7 @@ module Discorb
     #
     # Represents a field of embed.
     #
-    class Field
+    class Field < Entry
       # @return [String] The name of field.
       attr_accessor :name
       # @return [String] The value of field.
@@ -235,7 +246,7 @@ module Discorb
     #
     # Represents an image of embed.
     #
-    class Image
+    class Image < Entry
       # @return [String] The url of image.
       attr_accessor :url
       # @return [String] The proxy url of image.
@@ -279,7 +290,7 @@ module Discorb
     #
     # Represents a thumbnail of embed.
     #
-    class Thumbnail
+    class Thumbnail < Entry
       # @return [String] The url of thumbnail.
       attr_accessor :url
       # @return [String] The proxy url of thumbnail.
@@ -323,7 +334,7 @@ module Discorb
     #
     # Represents a video of embed.
     #
-    class Video
+    class Video < Entry
       # @return [String] The url of video.
       attr_reader :url
       # @return [String] The proxy url of video.
@@ -350,7 +361,7 @@ module Discorb
     #
     # Represents a provider of embed.
     #
-    class Provider
+    class Provider < Entry
       # @return [String] The name of provider.
       attr_reader :name
       # @return [String] The url of provider.

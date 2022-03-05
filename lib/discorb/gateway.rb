@@ -26,6 +26,10 @@ module Discorb
       def initialize(data)
         @data = data
       end
+
+      def inspect
+        "#<#{self.class}>"
+      end
     end
 
     #
@@ -1224,6 +1228,10 @@ module Discorb
         @closed = false
       end
 
+      def inspect
+        "<#{self.class.name} #{io.fileno}>"
+      end
+
       def closed?
         @closed
       end
@@ -1236,8 +1244,12 @@ module Discorb
       end
 
       def force_close
-        @framer.instance_variable_get(:@stream).instance_variable_get(:@io).instance_variable_get(:@io).instance_variable_get(:@io).close
+        io.close
         @closed = true
+      end
+
+      def io
+        @framer.instance_variable_get(:@stream).instance_variable_get(:@io).instance_variable_get(:@io).instance_variable_get(:@io)
       end
 
       def parse(buffer)

@@ -88,18 +88,31 @@ module Discorb
       def self.from_hash(data)
         new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
       end
+
+      def inspect
+        "#<#{self.class.name} #{@channel_id}/#{@message_id}>"
+      end
     end
 
     #
     # Represents a sticker.
     #
     class Sticker
-      attr_reader :id, :name, :format
+      # @return [Discorb::Snowflake] The sticker ID.
+      attr_reader :id
+      # @return [String] The sticker name.
+      attr_reader :name
+      # @return [Symbol] The sticker format.
+      attr_reader :format
 
       def initialize(data)
         @id = Snowflake.new(data[:id])
         @name = data[:name]
-        @format = Discorb::Sticker.sticker_format[data[:format]]
+        @format = Discorb::Sticker::STICKER_FORMAT[data[:format]]
+      end
+
+      def inspect
+        "#<#{self.class.name} #{@id}: #{@name} format=#{@format}>"
       end
     end
 
@@ -107,7 +120,7 @@ module Discorb
     # Represents a interaction of message.
     #
     class Interaction < DiscordModel
-      # @return [Discorb::Snowflake] The user ID.
+      # @return [Discorb::Snowflake] The interaction ID.
       attr_reader :id
       # @return [String] The name of command.
       # @return [nil] If the message is not a command.
@@ -129,6 +142,10 @@ module Discorb
         @name = data[:name]
         @type = Discorb::Interaction.descendants.find { |c| c.interaction_type == data[:type] }
         @user = client.users[data[:user][:id]] || User.new(client, data[:user])
+      end
+
+      def inspect
+        "<#{self.class.name} #{@id}: #{@name} type=#{@type} #{@user}>"
       end
     end
 
@@ -157,6 +174,10 @@ module Discorb
       def initialize(data)
         @name = data[:name]
         @type = self.class.type(data[:type])
+      end
+
+      def inspect
+        "<#{self.class.name} #{@name} type=#{@type}>"
       end
 
       class << self

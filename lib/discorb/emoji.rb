@@ -147,7 +147,7 @@ module Discorb
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
-      @roles = data[:role] ? data[:role].map { |r| Role.new(@client, r) } : []
+      @roles = data[:role] ? data[:role].map { |r| Role.new(@client, guild, r) } : []
       @user = User.new(@client, data[:user]) if data[:user]
       @require_colons = data[:require_colons]
       @managed = data[:managed]

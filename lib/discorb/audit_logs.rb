@@ -27,6 +27,10 @@ module Discorb
       @entries = data[:audit_log_entries].map { |entry| AuditLog::Entry.new(@client, entry, guild.id) }
     end
 
+    def inspect
+      "<#{self.class} #{@entries.length} entries>"
+    end
+
     #
     # Gets an entry from entries.
     #

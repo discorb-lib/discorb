@@ -25,8 +25,11 @@ module Discorb
       end
     end
 
-    # @private
+    def inspect
+      "#<#{self.class}: #{@id}>"
+    end
 
+    # @private
     def hash
       @id.hash
     end
@@ -130,6 +133,10 @@ module Discorb
       @url = url
       @key = key
       @method = method
+    end
+
+    def inspect
+      "#<#{self.class} #{self.identifier}>"
     end
 
     def hash

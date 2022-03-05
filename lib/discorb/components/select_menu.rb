@@ -122,6 +122,10 @@ module Discorb
         }
       end
 
+      def inspect
+        "#<#{self.class} #{@label}: #{@value}>"
+      end
+
       class << self
         #
         # Creates a new option from a hash.

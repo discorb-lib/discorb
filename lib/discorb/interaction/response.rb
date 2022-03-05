@@ -136,6 +136,10 @@ module Discorb
             @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original", "//webhooks/:webhook_id/:token/messages/@original", :delete)).wait
           end
         end
+
+        def inspect
+          "#<#{self.class.name} application_id=#{@application_id}"
+        end
       end
     end
 
