@@ -277,6 +277,10 @@ module Discorb
           @name = data[:name]
           @icon = Asset.new(self, data[:icon])
         end
+
+        def inspect
+          "#<#{self.class.name} #{@id}: #{@name}>"
+        end
       end
 
       #
@@ -297,6 +301,10 @@ module Discorb
         def initialize(data)
           @id = Snowflake.new(data[:id])
           @name = data[:name]
+        end
+
+        def inspect
+          "#<#{self.class.name} #{@id}: #{@name}>"
         end
       end
     end
@@ -423,6 +431,10 @@ module Discorb
         end
 
         alias to_s_user to_s
+
+        def inspect
+          "#<#{self.class.name} #{self}>"
+        end
       end
     end
 

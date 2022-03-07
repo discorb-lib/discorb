@@ -83,6 +83,14 @@ module Discorb
       @content_type.start_with? "image/"
     end
 
+    def inspect
+      if @created_by == :discord
+        "<#{self.class} #{@id}: #{@filename}>"
+      else
+        "<#{self.class} #{io.fileno}: #{@filename}>"
+      end
+    end
+
     #
     # Creates a new file from a hash.
     # @private
@@ -100,7 +108,7 @@ module Discorb
     # @param [String] filename The filename of the file. object_id of the string is used if not set.
     # @param [String] content_type The content type of the file. If not set, it is guessed from the filename.
     #
-    # @return [File] The new file.
+    # @return [Discorb::Attachment] The new file.
     #
     def self.from_string(string, filename = nil, content_type: nil, description: nil)
       io = StringIO.new(string)

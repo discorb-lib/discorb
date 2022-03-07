@@ -36,6 +36,10 @@ module Discorb
       def initialize(data)
         @location = data[:location]
       end
+
+      def inspect
+        "#<#{self.class.name} #{@name}>"
+      end
     end
 
     # @return [Discorb::Snowflake] The ID of the event.
