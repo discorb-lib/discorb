@@ -5,11 +5,11 @@ module Discorb
   class Logger
     attr_accessor :out, :colorize_log
 
-    @levels = %i[debug info warn error fatal].freeze
+    LEVELS = %i[debug info warn error fatal].freeze
 
     def initialize(out, colorize_log, level)
       @out = out
-      @level = self.class.levels.index(level)
+      @level = LEVELS.index(level)
       @colorize_log = colorize_log
     end
 
@@ -18,11 +18,11 @@ module Discorb
     end
 
     def level
-      self.class.levels[@level]
+      LEVELS[@level]
     end
 
     def level=(level)
-      @level = self.class.levels.index(level)
+      @level = LEVELS.index(level)
       raise ArgumentError, "Invalid log level: #{level}" unless @level
     end
 

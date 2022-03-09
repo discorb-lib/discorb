@@ -16,10 +16,10 @@ RSpec.describe Discorb::Component do
               label: "label",
               style: 1,
               type: 2, 
-            }
+            },
           ],
           type: 1,
-        }
+        },
       ]
     )
   end

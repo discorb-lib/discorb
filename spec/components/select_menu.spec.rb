@@ -5,13 +5,13 @@ RSpec.describe Discorb::Button do
   it "creates a select menu" do
     expect do
       Discorb::SelectMenu.new("menu", [
-        Discorb::SelectMenu::Option.new("label", "value")
+        Discorb::SelectMenu::Option.new("label", "value"),
       ])
     end.not_to raise_error
   end
   it "converts to payload" do
     expect(Discorb::SelectMenu.new("menu", [
-      Discorb::SelectMenu::Option.new("label", "value")
+      Discorb::SelectMenu::Option.new("label", "value"),
     ]).to_hash).to eq(
       {
         custom_id: "menu",

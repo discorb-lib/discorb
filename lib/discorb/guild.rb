@@ -115,11 +115,21 @@ module Discorb
     # @!attribute [r] me
     #   @return [Discorb::Member] The client's member in the guild.
 
-    @mfa_levels = %i[none elevated].freeze
-    @nsfw_levels = %i[default explicit safe age_restricted].freeze
-    @verification_levels = %i[none low medium high very_high].freeze
-    @default_message_notifications = %i[all_messages only_mentions].freeze
-    @explicit_content_filter = %i[disabled_in_text members_without_roles all_members].freeze
+    # @private
+    # @return [Array<Symbol>] The mapping of mfa_level.
+    MFA_LEVELS = %i[none elevated].freeze
+    # @private
+    # @return [Array<Symbol>] The mapping of nsfw_level.
+    NSFW_LEVELS = %i[default explicit safe age_restricted].freeze
+    # @private
+    # @return [Array<Symbol>] The mapping of verification_level.
+    VERIFICATION_LEVELS = %i[none low medium high very_high].freeze
+    # @private
+    # @return [Array<Symbol>] The mapping of default_message_notifications.
+    DEFAULT_MESSAGE_NOTIFICATIONS = %i[all_messages only_mentions].freeze
+    # @private
+    # @return [Array<Symbol>] The mapping of explicit_content_filter.
+    EXPLICIT_CONTENT_FILTER = %i[disabled_in_text members_without_roles all_members].freeze
 
     #
     # Creates a new guild object.
@@ -241,9 +251,9 @@ module Discorb
               description: description,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
-              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level),
+              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level),
               channel_id: channel&.id,
-              entity_type: Discorb::ScheduledEvent.entity_type.key(:stage_instance),
+              entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:stage_instance),
             }
           when :voice
             raise ArgumentError, "channel must be provided for voice events" unless channel
@@ -252,9 +262,9 @@ module Discorb
               description: description,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
-              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level),
+              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level),
               channel_id: channel&.id,
-              entity_type: Discorb::ScheduledEvent.entity_type.key(:voice),
+              entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:voice),
             }
           when :external
             raise ArgumentError, "location must be provided for external events" unless location
@@ -264,8 +274,8 @@ module Discorb
               description: description,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time.iso8601,
-              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level),
-              entity_type: Discorb::ScheduledEvent.entity_type.key(:external),
+              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level),
+              entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:external),
               entity_metadata: {
                 location: location,
               },
@@ -1141,9 +1151,6 @@ module Discorb
     end
 
     class << self
-      # @private
-      attr_reader :nsfw_levels, :mfa_levels, :verification_levels, :default_message_notifications, :explicit_content_filter
-
       #
       # Returns a banner url from the guild's ID.
       #
@@ -1190,10 +1197,10 @@ module Discorb
         @emojis[e[:id]] = CustomEmoji.new(@client, self, e)
       end
       @features = data[:features].map { |f| f.downcase.to_sym }
-      @mfa_level = self.class.mfa_levels[data[:mfa_level]]
-      @verification_level = self.class.verification_levels[data[:verification_level]]
-      @default_message_notifications = self.class.default_message_notifications[data[:default_message_notifications]]
-      @explicit_content_filter = self.class.explicit_content_filter[data[:explicit_content_filter]]
+      @mfa_level = MFA_LEVELS[data[:mfa_level]]
+      @verification_level = VERIFICATION_LEVELS[data[:verification_level]]
+      @default_message_notifications = DEFAULT_MESSAGE_NOTIFICATIONS[data[:default_message_notifications]]
+      @explicit_content_filter = EXPLICIT_CONTENT_FILTER[data[:explicit_content_filter]]
       @system_channel_id = data[:system_channel_id]
       @system_channel_flag = SystemChannelFlag.new(0b111 - data[:system_channel_flags])
       @rules_channel_id = data[:rules_channel_id]
@@ -1208,7 +1215,7 @@ module Discorb
       @approximate_member_count = data[:approximate_member_count]
       @approximate_presence_count = data[:approximate_presence_count]
       @welcome_screen = data[:welcome_screen].nil? ? nil : WelcomeScreen.new(@client, self, data[:welcome_screen])
-      @nsfw_level = self.class.nsfw_levels[data[:nsfw_level]]
+      @nsfw_level = NSFW_LEVELS[data[:nsfw_level]]
       return unless is_create_event
 
       @stickers = data[:stickers].nil? ? [] : data[:stickers].map { |s| Sticker::GuildSticker.new(self, s) }

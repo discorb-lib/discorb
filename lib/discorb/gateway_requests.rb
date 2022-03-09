@@ -5,7 +5,9 @@ module Discorb
   # Represents an activity for Gateway Command.
   #
   class Activity
-    @types = {
+    # @private
+    # @return [{Symbol => Integer}] The mapping of activity types.
+    TYPES = {
       playing: 0,
       streaming: 1,
       listening: 2,
@@ -22,7 +24,7 @@ module Discorb
     #
     def initialize(name, type = :playing, url = nil)
       @name = name
-      @type = self.class.types[type]
+      @type = TYPES[type] or raise ArgumentError, "Invalid activity type: #{type}"
       @url = url
     end
 
@@ -41,11 +43,6 @@ module Discorb
 
     def inspect
       "#<#{self.class} @type=#{@type}>"
-    end
-
-    class << self
-      # @private
-      attr_reader :types
     end
   end
 end

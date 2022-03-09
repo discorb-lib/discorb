@@ -21,7 +21,9 @@ module Discorb
     attr_accessor :disabled
     alias disabled? disabled
 
-    @styles = {
+    # @private
+    # @return [{Symbol => Integer}] The mapping of button styles.
+    STYLES = {
       primary: 1,
       secondary: 2,
       success: 3,
@@ -59,7 +61,7 @@ module Discorb
         {
           type: 2,
           label: @label,
-          style: self.class.styles[@style],
+          style: STYLES[@style],
           url: @url,
           emoji: @emoji&.to_hash,
           disabled: @disabled,
@@ -68,7 +70,7 @@ module Discorb
         {
           type: 2,
           label: @label,
-          style: self.class.styles[@style],
+          style: STYLES[@style],
           custom_id: @custom_id,
           emoji: @emoji&.to_hash,
           disabled: @disabled,
@@ -81,9 +83,6 @@ module Discorb
     end
 
     class << self
-      # @private
-      attr_reader :styles
-
       #
       # Creates a new button from a hash.
       #

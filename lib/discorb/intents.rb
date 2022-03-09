@@ -3,7 +3,9 @@
 module Discorb
   # Represents intents.
   class Intents
-    @intent_bits = {
+    # @private
+    # @return [{Symbol => Integer}] The mapping of intent names to bit values.
+    INTENT_BITS = {
       guilds: 1 << 0,
       members: 1 << 1,
       bans: 1 << 2,
@@ -109,7 +111,7 @@ module Discorb
     # @return [Integer] The value of the intent.
     def value
       res = 0
-      self.class.intent_bits.each do |intent, bit|
+      INTENT_BITS.each do |intent, bit|
         res += bit if @raw_value[intent]
       end
       res
@@ -147,8 +149,6 @@ module Discorb
       def none
         from_value(0)
       end
-
-      attr_reader :intent_bits
     end
   end
 end

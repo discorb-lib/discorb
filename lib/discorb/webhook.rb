@@ -371,7 +371,7 @@ module Discorb
 
       def _set_data(data)
         @id = Snowflake.new(data[:id])
-        @type = Discorb::Message.message_type[data[:type]]
+        @type = Discorb::Message::MESSAGE_TYPE[data[:type]]
         @content = data[:content]
         @channel_id = Snowflake.new(data[:channel_id])
         @author = Author.new(data[:author])

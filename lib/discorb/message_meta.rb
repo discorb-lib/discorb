@@ -158,12 +158,14 @@ module Discorb
       # @return [Symbol] The type of activity.
       attr_reader :type
 
-      @type = {
+      # @private
+      # @return [{Integer => Symbol}] The mapping of activity type.
+      TYPES = {
         1 => :join,
         2 => :spectate,
         3 => :listen,
         5 => :join_request,
-      }
+      }.freeze
 
       #
       # Initialize a new activity.
@@ -173,16 +175,11 @@ module Discorb
       #
       def initialize(data)
         @name = data[:name]
-        @type = self.class.type(data[:type])
+        @type = TYPES[data[:type]]
       end
 
       def inspect
         "<#{self.class.name} #{@name} type=#{@type}>"
-      end
-
-      class << self
-        # @private
-        attr_reader :type
       end
     end
   end
