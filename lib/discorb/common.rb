@@ -100,7 +100,7 @@ module Discorb
     end
 
     def timestamp
-      Time.at(((@value >> 22) + 1_420_070_400_000) / 1000)
+      Time.at(((@value >> 22) + 1_420_070_400_000) / 1000.0)
     end
 
     def worker_id
