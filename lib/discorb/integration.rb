@@ -98,11 +98,6 @@ module Discorb
       @application = data[:application] and Application.new(@client, data[:application])
     end
 
-    class << self
-      # @private
-      attr_reader :expire_behavior
-    end
-
     #
     # Represents an account for an integration.
     #

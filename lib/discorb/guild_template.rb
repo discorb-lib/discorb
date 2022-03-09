@@ -136,9 +136,9 @@ module Discorb
         @name = data[:name]
         @description = data[:description]
         @region = data[:region]
-        @verification_level = Discorb::Guild.mfa_levels[data[:verification_level]]
-        @default_message_notifications = Discorb::Guild.notification_levels[data[:default_message_notifications]]
-        @explicit_content_filter = Discorb::Guild.explicit_content_filter[data[:explicit_content_filter]]
+        @verification_level = Discorb::Guild::MFA_LEVELS[data[:verification_level]]
+        @default_message_notifications = Discorb::Guild::NOTIFICATION_LEVELS[data[:default_message_notifications]]
+        @explicit_content_filter = Discorb::Guild::EXPLICIT_CONTENT_FILTERS[data[:explicit_content_filter]]
         @preferred_locale = data[:preferred_locale]
         @afk_timeout = data[:afk_timeout]
         @roles = data[:roles].map { |r| Role.new(r) }

@@ -195,7 +195,7 @@ module Discorb
       Async do
         payload = {}
         payload[:topic] = topic if topic != Discorb::Unset
-        payload[:privacy_level] = self.class.privacy_level.key(privacy_level) if privacy_level != Discorb::Unset
+        payload[:privacy_level] = PRIVACY_LEVEL.key(privacy_level) if privacy_level != Discorb::Unset
         @client.http.request(
           Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:channel_id", :patch), payload, audit_log_reason: reason,
         ).wait
@@ -229,7 +229,7 @@ module Discorb
       @guild_id = Snowflake.new(data[:guild_id])
       @channel_id = Snowflake.new(data[:channel_id])
       @topic = data[:topic]
-      @privacy_level = self.class.privacy_level[data[:privacy_level]]
+      @privacy_level = PRIVACY_LEVEL[data[:privacy_level]]
       @discoverable_disabled = data[:discoverable_disabled]
     end
 

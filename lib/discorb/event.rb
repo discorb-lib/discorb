@@ -4,20 +4,26 @@ module Discorb
   # Represents an event in guild.
   #
   class ScheduledEvent < DiscordModel
-    @privacy_level = {
+    # @private
+    # @return [{Integer => Symbol}] The mapping of privacy level.
+    PRIVACY_LEVEL = {
       2 => :guild_only,
-    }
-    @status = {
+    }.freeze
+    # @private
+    # @return [{Integer => Symbol}] The mapping of status.
+    STATUS = {
       1 => :scheduled,
       2 => :active,
       3 => :completed,
       4 => :canceled,
-    }
-    @entity_type = {
+    }.freeze
+    # @private
+    # @return [{Integer => Symbol}] The mapping of entity_type.
+    ENTITY_TYPE = {
       1 => :stage_instance,
       2 => :voice,
       3 => :external,
-    }
+    }.freeze
 
     # @!visibility private
     def initialize(client, data)
@@ -136,10 +142,10 @@ module Discorb
               description: description,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
-              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level) || Discorb::Unset,
+              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) || Discorb::Unset,
               channel_id: channel&.id,
-              entity_type: Discorb::ScheduledEvent.entity_type.key(:stage_instance),
-              status: Discorb::ScheduledEvent.status.key(status) || Discorb::Unset,
+              entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:stage_instance),
+              status: Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset,
             }.reject { |_, v| v == Discorb::Unset }
           when :voice
             raise ArgumentError, "channel must be provided for voice events" unless channel
@@ -148,10 +154,10 @@ module Discorb
               description: description,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
-              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level) || Discorb::Unset,
+              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) || Discorb::Unset,
               channel_id: channel&.id,
-              entity_type: Discorb::ScheduledEvent.entity_type.key(:voice),
-              status: Discorb::ScheduledEvent.status.key(status) || Discorb::Unset,
+              entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:voice),
+              status: Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset,
             }.reject { |_, v| v == Discorb::Unset }
           when :external
             raise ArgumentError, "location must be provided for external events" unless location
@@ -162,12 +168,12 @@ module Discorb
               channel_id: nil,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time.iso8601,
-              privacy_level: Discorb::ScheduledEvent.privacy_level.key(privacy_level) || Discorb::Unset,
-              entity_type: Discorb::ScheduledEvent.entity_type.key(:external),
+              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) || Discorb::Unset,
+              entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:external),
               entity_metadata: {
                 location: location,
               },
-              status: Discorb::ScheduledEvent.status.key(status) || Discorb::Unset,
+              status: Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset,
             }.reject { |_, v| v == Discorb::Unset }
           else
             raise ArgumentError, "Invalid scheduled event type: #{type}"
@@ -268,8 +274,8 @@ module Discorb
       @scheduled_start_time = Time.iso8601(data[:scheduled_start_time])
       @scheduled_end_time = data[:scheduled_end_time] && Time.iso8601(data[:scheduled_end_time])
       @privacy_level = :guild_only # data[:privacy_level]
-      @status = self.class.status[data[:status]]
-      @entity_type = self.class.entity_type[data[:entity_type]]
+      @status = STATUS[data[:status]]
+      @entity_type = ENTITY_TYPE[data[:entity_type]]
       @entity_id = data[:entity_id] && Snowflake.new(data[:entity_id])
       @entity_metadata = data[:entity_metadata] && Metadata.new(data[:entity_metadata])
       @creator = @client.users[@creator_id] || (data[:creator] && User.new(@client, data[:creator]))

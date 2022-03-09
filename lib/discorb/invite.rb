@@ -66,7 +66,9 @@ module Discorb
     #   Whether the invite is temporary.
     #   @return [Boolean]
 
-    @target_types = {
+    # @private
+    # @return [{Integer => Symbol}] The mapping of target types.
+    TARGET_TYPES = {
       nil => :voice,
       1 => :stream,
       2 => :guild,
@@ -131,7 +133,7 @@ module Discorb
         @expires_at = data[:expires_at] && Time.iso8601(data[:expires_at])
       end
       @inviter_data = data[:inviter]
-      @target_type = self.class.target_types[data[:target_type]]
+      @target_type = TARGET_TYPES[data[:target_type]]
       @target_user = @client.users[data[:target_user][:id]] || User.new(@client, data[:target_user]) if data[:target_user]
       # @target_application = nil
 
@@ -143,11 +145,6 @@ module Discorb
       @max_age = data[:max_age]
       @temporary = data[:temporary]
       @created_at = Time.iso8601(data[:created_at])
-    end
-
-    class << self
-      # @private
-      attr_reader :target_types
     end
   end
 end

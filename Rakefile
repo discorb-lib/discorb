@@ -320,6 +320,12 @@ end
 
 task document: %i[document:yard document:replace]
 
+desc "Lint code with rubocop"
 task :lint do
   sh "rubocop lib"
+end
+
+desc "Autofix code with rubocop"
+task "lint:fix" do
+  sh "rubocop lib -A"
 end
