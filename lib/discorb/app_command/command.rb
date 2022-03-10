@@ -45,7 +45,7 @@ module Discorb
         @guild_ids = guild_ids&.map(&:to_s)
         @block = block
         @raw_type = type
-        @type = Discorb::ApplicationCommand::Command.types[type]
+        @type = Discorb::ApplicationCommand::Command::TYPES[type]
         @type_raw = type
         @id_map = Discorb::Dictionary.new
       end
