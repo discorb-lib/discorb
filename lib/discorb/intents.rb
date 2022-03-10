@@ -103,7 +103,7 @@ module Discorb
       end
     end
 
-    def respond_to_missing?(sym, include_private)
+    def respond_to_missing?(name, include_private)
       @raw_value.key?(name) ? true : super
     end
 
