@@ -130,7 +130,7 @@ module Discorb
       # @param value [Integer] The value of the intent.
       def from_value(value)
         raw_value = {}
-        @intent_bits.each do |intent, bit|
+        INTENT_BITS.each do |intent, bit|
           raw_value[intent] = value & bit != 0
         end
         new(**raw_value)
@@ -142,7 +142,7 @@ module Discorb
 
       # Create new intent object with all intents.
       def all
-        from_value(@intent_bits.values.reduce(:+))
+        from_value(INTENT_BITS.values.reduce(:+))
       end
 
       # Create new intent object with no intents.
