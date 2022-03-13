@@ -6,6 +6,15 @@
 
 ## v0.15
 
+### v0.15.1
+
+- Add: Add `Member#can_manage?`
+- Add: Add `Discorb::VERSION_ARRAY`
+- Fix: `Snowflake#timestamp` includes milliseconds now
+- Fix: `TextChannel#create_invite` will no longer return `ArgumentError`
+- Fix: Connection will not closed with 4001 when `Client#update_presence`
+  is called
+
 ### v0.15.0
 
 - Add: Migrate to API v10
