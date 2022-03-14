@@ -54,6 +54,8 @@ module Discorb
     attr_reader :session_id
     # @return [Hash{String => Discorb::Extension}] The loaded extensions.
     attr_reader :extensions
+    # @return [Hash{Integer => Discorb::Shard}] The shards of the client.
+    attr_reader :shards
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
     attr_reader :bottom_commands
@@ -102,6 +104,7 @@ module Discorb
       @title = title
       @extensions = {}
       @mutex = {}
+      @shards = {}
       set_default_events
     end
 
@@ -315,7 +318,7 @@ module Discorb
       }
       payload[:activities] = [activity.to_hash] unless activity.nil?
       payload[:status] = status unless status.nil?
-      if @connection
+      if connection
         Async do
           send_gateway(3, **payload)
         end
@@ -426,15 +429,15 @@ module Discorb
     #
     # @note If the token is nil, you should use `discorb run` with the `-e` or `--env` option.
     #
-    def run(token = nil)
+    def run(token = nil, shards: nil, shard_count: nil)
       token ||= ENV["DISCORB_CLI_TOKEN"]
       raise ArgumentError, "Token is not specified, and -e/--env is not specified" if token.nil?
       case ENV["DISCORB_CLI_FLAG"]
       when nil
-        start_client(token)
+        start_client(token, shards: shards, shard_count: shard_count)
       when "run"
         before_run(token)
-        start_client(token)
+        start_client(token, shards: shards, shard_count: shard_count)
       when "setup"
         run_setup(token)
       end
@@ -444,10 +447,9 @@ module Discorb
     # Stops the client.
     #
     def close!
-      @connection.send_close
+      connection.send_close
       @tasks.each(&:stop)
       @status = :closed
-      @close_condition.signal
     end
 
     private
@@ -489,26 +491,64 @@ module Discorb
       end
     end
 
-    def start_client(token)
-      Async do |_task|
-        Signal.trap(:SIGINT) do
-          @log.info "SIGINT received, closing..."
-          Signal.trap(:SIGINT, "DEFAULT")
-          close!
-        end
-        @token = token.to_s
-        @close_condition = Async::Condition.new
-        @main_task = Async do
-          @status = :running
-          connect_gateway(false).wait
-        rescue StandardError
-          @status = :stopped
-          @close_condition.signal
-          raise
-        end
-        @close_condition.wait
-        @main_task.stop
+    def set_status(status, shard)
+      if shard.nil?
+        @status = status
+      else
+        @shards[shard].status = status
       end
+    end
+
+    def connection
+      if shard_id
+        @shards[shard_id].connection
+      else
+        @connection
+      end
+    end
+
+    def connection=(value)
+      if shard_id
+        @shards[shard_id].connection = value
+      else
+        @connection = value
+      end
+    end
+
+    def start_client(token, shards: nil, shard_count: nil)
+      @token = token.to_s
+      @shard_count = shard_count
+      Signal.trap(:SIGINT) do
+        @log.info "SIGINT received, closing..."
+        Signal.trap(:SIGINT, "DEFAULT")
+        close!
+      end
+      if shards.nil?
+        main_loop(nil)
+      else
+        shards.each do |shard|
+          @shards[shard] = Shard.new(self, shard, shard_count)
+        end
+        @shards.each_value { |s| s.thread.join }
+      end
+    end
+
+    def main_loop(shard)
+      close_condition = Async::Condition.new
+      main_task = Async do
+        set_status(:running, shard)
+        connect_gateway(false).wait
+      rescue StandardError
+        set_status(:running, shard)
+        close_condition.signal
+        raise
+      end
+      close_condition.wait
+      main_task.stop
+    end
+
+    def shard_id
+      Thread.current.thread_variable_get("shard_id")
     end
 
     def set_default_events

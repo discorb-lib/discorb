@@ -588,8 +588,8 @@ module Discorb
         end
 
         Async do
-          @mutex[:gateway] ||= Mutex.new
-          @mutex[:gateway].synchronize do
+          @mutex["gateway_#{shard_id}"] ||= Mutex.new
+          @mutex["gateway_#{shard_id}"].synchronize do
             @http = HTTP.new(self)
             _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
             gateway_url = gateway_response[:url]
@@ -602,15 +602,15 @@ module Discorb
             endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream",
                                                    alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
             begin
-              @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
-              @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
+              self.connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
+              zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               buffer = +""
               begin
-                while (message = @connection.read)
+                while (message = connection.read)
                   buffer << message
                   if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
                     begin
-                      data = @zlib_stream.inflate(buffer)
+                      data = zlib_stream.inflate(buffer)
                       buffer = +""
                       message = JSON.parse(data, symbolize_names: true)
                     rescue JSON::ParserError
@@ -630,11 +630,11 @@ module Discorb
                      Errno::ECONNRESET,
                      IOError => e
                 @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
-                @connection.force_close
+                connection.force_close
                 connect_gateway(true)
                 next
               else # should never happen
-                @connection.force_close
+                connection.force_close
                 connect_gateway(true)
                 next
               end
@@ -645,7 +645,7 @@ module Discorb
                 raise ClientError.new("Authentication failed"), cause: nil
               when 4009
                 @log.info "Session timed out, reconnecting."
-                @connection.force_close
+                connection.force_close
                 connect_gateway(true)
                 next
               when 4014
@@ -660,19 +660,19 @@ module Discorb
                                                  ERROR
               when 1001
                 @log.info "Gateway closed with code 1001, reconnecting."
-                @connection.force_close
+                connection.force_close
                 connect_gateway(true)
                 next
               else
                 @log.error "Discord WebSocket closed with code #{e.code}."
                 @log.debug "#{e.message}"
-                @connection.force_close
+                connection.force_close
                 connect_gateway(false)
                 next
               end
             rescue StandardError => e
               @log.error "Discord WebSocket error: #{e.full_message}"
-              @connection.force_close
+              connection.force_close
               connect_gateway(false)
               next
             end
@@ -681,8 +681,8 @@ module Discorb
       end
 
       def send_gateway(opcode, **value)
-        @connection.write({ op: opcode, d: value }.to_json)
-        @connection.flush
+        connection.write({ op: opcode, d: value }.to_json)
+        connection.flush
         @log.debug "Sent message #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
       end
 
@@ -709,6 +709,7 @@ module Discorb
                 compress: false,
                 properties: { "$os" => RUBY_PLATFORM, "$browser" => "discorb", "$device" => "discorb" },
               }
+              payload[:shard] = [shard_id, @shard_count] if shard_id
               payload[:presence] = @identify_presence if @identify_presence
               send_gateway(2, **payload)
             end
@@ -720,11 +721,11 @@ module Discorb
             @tasks.map(&:stop)
             if data
               @log.info "Connection is resumable, reconnecting"
-              @connection.close
+              connection.close
               connect_gateway(true)
             else
               @log.info "Connection is not resumable, reconnecting with opcode 2"
-              @connection.close
+              connection.close
               sleep(2)
               connect_gateway(false)
             end
@@ -742,10 +743,10 @@ module Discorb
           interval = @heartbeat_interval
           sleep((interval / 1000.0 - 1) * rand)
           loop do
-            unless @connection.closed?
+            unless connection.closed?
               @heartbeat_before = Time.now.to_f
-              @connection.write({ op: 1, d: @last_s }.to_json)
-              @connection.flush
+              connection.write({ op: 1, d: @last_s }.to_json)
+              connection.flush
               @log.debug "Sent opcode 1."
               @log.debug "Waiting for heartbeat."
             end
@@ -1222,7 +1223,7 @@ module Discorb
           end
           @ready = true
           dispatch(:standby)
-          @log.info("Client is ready!")
+          @log.info("Shard #{shard_id} is ready!")
         end
       end
     end
