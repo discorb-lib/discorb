@@ -581,14 +581,15 @@ module Discorb
       private
 
       def connect_gateway(reconnect)
-        @mutex[:gateway] ||= Mutex.new
-        @mutex[:gateway].synchronize do
-          if reconnect
-            @log.info "Reconnecting to gateway..."
-          else
-            @log.info "Connecting to gateway..."
-          end
-          Async do
+        if reconnect
+          @log.info "Reconnecting to gateway..."
+        else
+          @log.info "Connecting to gateway..."
+        end
+
+        Async do
+          @mutex[:gateway] ||= Mutex.new
+          @mutex[:gateway].synchronize do
             if @connection && !@connection.closed?
               Async do
                 @connection.close
