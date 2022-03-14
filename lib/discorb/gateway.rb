@@ -590,11 +590,6 @@ module Discorb
         Async do
           @mutex[:gateway] ||= Mutex.new
           @mutex[:gateway].synchronize do
-            if @connection && !@connection.closed?
-              Async do
-                @connection.close
-              end
-            end
             @http = HTTP.new(self)
             _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
             gateway_url = gateway_response[:url]
@@ -637,8 +632,11 @@ module Discorb
                 @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
                 @connection.force_close
                 connect_gateway(true)
+                next
               else # should never happen
+                @connection.force_close
                 connect_gateway(true)
+                next
               end
             rescue Protocol::WebSocket::ClosedError => e
               @tasks.map(&:stop)
@@ -647,7 +645,9 @@ module Discorb
                 raise ClientError.new("Authentication failed"), cause: nil
               when 4009
                 @log.info "Session timed out, reconnecting."
+                @connection.force_close
                 connect_gateway(true)
+                next
               when 4014
                 raise ClientError.new("Disallowed intents were specified"), cause: nil
               when 4001, 4002, 4003, 4005, 4007
@@ -660,16 +660,21 @@ module Discorb
                                                  ERROR
               when 1001
                 @log.info "Gateway closed with code 1001, reconnecting."
+                @connection.force_close
                 connect_gateway(true)
+                next
               else
                 @log.error "Discord WebSocket closed with code #{e.code}."
                 @log.debug "#{e.message}"
+                @connection.force_close
                 connect_gateway(false)
+                next
               end
             rescue StandardError => e
               @log.error "Discord WebSocket error: #{e.full_message}"
               @connection.force_close
               connect_gateway(false)
+              next
             end
           end
         end
