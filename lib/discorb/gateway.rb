@@ -690,8 +690,8 @@ module Discorb
         Async do |_task|
           data = payload[:d]
           @last_s = payload[:s] if payload[:s]
-          @log.debug "Received message with opcode #{payload[:op]} from gateway:"
-          @log.debug "#{payload.to_json.gsub(@token, "[Token]")}"
+          @log.debug "Received message with opcode #{payload[:op]} from gateway."
+          @log.trace "#{payload.to_json.gsub(@token, "[Token]")}"
           case payload[:op]
           when 10
             @heartbeat_interval = data[:heartbeat_interval]
@@ -721,14 +721,16 @@ module Discorb
             @tasks.map(&:stop)
             if data
               @log.info "Connection is resumable, reconnecting"
-              connection.close
+              connection.force_close
               connect_gateway(true)
             else
               @log.info "Connection is not resumable, reconnecting with opcode 2"
-              connection.close
+              connection.force_close
+
               sleep(2)
               connect_gateway(false)
             end
+            next
           when 11
             @log.debug "Received opcode 11"
             @ping = Time.now.to_f - @heartbeat_before
