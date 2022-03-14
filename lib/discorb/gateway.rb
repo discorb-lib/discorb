@@ -581,92 +581,95 @@ module Discorb
       private
 
       def connect_gateway(reconnect)
-        if reconnect
-          @log.info "Reconnecting to gateway..."
-        else
-          @log.info "Connecting to gateway..."
-        end
-        Async do
-          if @connection && !@connection.closed?
-            Async do
-              @connection.close
-            end
+        @mutex[:gateway] ||= Mutex.new
+        @mutex[:gateway].synchronize do
+          if reconnect
+            @log.info "Reconnecting to gateway..."
+          else
+            @log.info "Connecting to gateway..."
           end
-          @http = HTTP.new(self)
-          _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
-          gateway_url = gateway_response[:url]
-          gateway_version = if @intents.to_h[:message_content].nil?
-              warn "message_content intent not set, using gateway version 9. You should specify `message_content` intent for preventing unexpected changes in the future."
-              9
-            else
-              10
+          Async do
+            if @connection && !@connection.closed?
+              Async do
+                @connection.close
+              end
             end
-          endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream",
-                                                 alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
-          begin
-            @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
-            @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
-            buffer = +""
+            @http = HTTP.new(self)
+            _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
+            gateway_url = gateway_response[:url]
+            gateway_version = if @intents.to_h[:message_content].nil?
+                warn "message_content intent not set, using gateway version 9. You should specify `message_content` intent for preventing unexpected changes in the future."
+                9
+              else
+                10
+              end
+            endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream",
+                                                   alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
             begin
-              while (message = @connection.read)
-                buffer << message
-                if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
-                  begin
-                    data = @zlib_stream.inflate(buffer)
-                    buffer = +""
-                    message = JSON.parse(data, symbolize_names: true)
-                  rescue JSON::ParserError
-                    buffer = +""
-                    @log.error "Received invalid JSON from gateway."
-                    @log.debug "#{data}"
-                  else
-                    handle_gateway(message, reconnect)
+              @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
+              @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
+              buffer = +""
+              begin
+                while (message = @connection.read)
+                  buffer << message
+                  if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
+                    begin
+                      data = @zlib_stream.inflate(buffer)
+                      buffer = +""
+                      message = JSON.parse(data, symbolize_names: true)
+                    rescue JSON::ParserError
+                      buffer = +""
+                      @log.error "Received invalid JSON from gateway."
+                      @log.debug "#{data}"
+                    else
+                      handle_gateway(message, reconnect)
+                    end
                   end
                 end
+              rescue Async::Wrapper::Cancelled,
+                     OpenSSL::SSL::SSLError,
+                     Async::Wrapper::WaitError,
+                     EOFError,
+                     Errno::EPIPE,
+                     Errno::ECONNRESET,
+                     IOError => e
+                @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
+                @connection.force_close
+                connect_gateway(true)
+              else # should never happen
+                connect_gateway(true)
               end
-            rescue Async::Wrapper::Cancelled,
-                   OpenSSL::SSL::SSLError,
-                   Async::Wrapper::WaitError,
-                   EOFError,
-                   Errno::EPIPE,
-                   Errno::ECONNRESET,
-                   IOError => e
-              @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
-              @connection.force_close
-              connect_gateway(true)
-            else # should never happen
-              connect_gateway(true)
-            end
-          rescue Protocol::WebSocket::ClosedError => e
-            @tasks.map(&:stop)
-            case e.code
-            when 4004
-              raise ClientError.new("Authentication failed"), cause: nil
-            when 4009
-              @log.info "Session timed out, reconnecting."
-              connect_gateway(true)
-            when 4014
-              raise ClientError.new("Disallowed intents were specified"), cause: nil
-            when 4002, 4003, 4005, 4007
-              raise ClientError.new(<<~ERROR), cause: e
-                                                 Disconnected from gateway, probably due to library issues.
-                                                 #{e.message}
+            rescue Protocol::WebSocket::ClosedError => e
+              @tasks.map(&:stop)
+              case e.code
+              when 4004
+                raise ClientError.new("Authentication failed"), cause: nil
+              when 4009
+                @log.info "Session timed out, reconnecting."
+                connect_gateway(true)
+              when 4014
+                raise ClientError.new("Disallowed intents were specified"), cause: nil
+              when 4002, 4003, 4005, 4007
+                raise ClientError.new(<<~ERROR), cause: e
+                                                   Disconnected from gateway, probably due to library issues.
+                                                   #{e.message}
 
-                                                 Please report this to the library issue tracker.
-                                                 https://github.com/discorb-lib/discorb/issues
-                                               ERROR
-            when 1001
-              @log.info "Gateway closed with code 1001, reconnecting."
-              connect_gateway(true)
-            else
-              @log.error "Discord WebSocket closed with code #{e.code}."
-              @log.debug "#{e.message}"
+                                                   Please report this to the library issue tracker.
+                                                   https://github.com/discorb-lib/discorb/issues
+                                                 ERROR
+              when 1001
+                @log.info "Gateway closed with code 1001, reconnecting."
+                connect_gateway(true)
+              else
+                @log.error "Discord WebSocket closed with code #{e.code}."
+                @log.debug "#{e.message}"
+                connect_gateway(false)
+              end
+            rescue StandardError => e
+              @log.error "Discord WebSocket error: #{e.full_message}"
+              @connection.force_close
               connect_gateway(false)
             end
-          rescue StandardError => e
-            @log.error "Discord WebSocket error: #{e.full_message}"
-            @connection.force_close
-            connect_gateway(false)
           end
         end
       end

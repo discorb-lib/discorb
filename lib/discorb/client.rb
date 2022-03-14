@@ -54,10 +54,8 @@ module Discorb
     attr_reader :session_id
     # @return [Hash{String => Discorb::Extension}] The loaded extensions.
     attr_reader :extensions
-    #
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
-    #
     attr_reader :bottom_commands
 
     #
@@ -103,6 +101,7 @@ module Discorb
       @fetch_member = fetch_member
       @title = title
       @extensions = {}
+      @mutex = {}
       set_default_events
     end
 
