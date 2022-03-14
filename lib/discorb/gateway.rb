@@ -650,7 +650,7 @@ module Discorb
                 connect_gateway(true)
               when 4014
                 raise ClientError.new("Disallowed intents were specified"), cause: nil
-              when 4002, 4003, 4005, 4007
+              when 4001, 4002, 4003, 4005, 4007
                 raise ClientError.new(<<~ERROR), cause: e
                                                    Disconnected from gateway, probably due to library issues.
                                                    #{e.message}
