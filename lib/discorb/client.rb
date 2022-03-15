@@ -40,8 +40,6 @@ module Discorb
     attr_reader :emojis
     # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Message}] A dictionary of messages.
     attr_reader :messages
-    # @return [Logger] The logger.
-    attr_reader :log
     # @return [Array<Discorb::ApplicationCommand::Command>] The commands that the client is using.
     attr_reader :commands
     # @return [Float] The ping of the client.
@@ -70,7 +68,8 @@ module Discorb
     # @!attribute [r] shard_id
     #   @return [Discorb::Shard] The current shard ID. This is implemented with Thread variables.
     #   @return [nil] If client has no shard.
-
+    # @!attribute [r] log
+    #   @return [Logger] The logger.
     #
     # Initializes a new client.
     #
@@ -93,7 +92,7 @@ module Discorb
       @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
-      @log = log || Logger.new($stdout, progname: "discorb")
+      @logger = log || Logger.new($stdout, progname: "discorb")
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
@@ -195,16 +194,16 @@ module Discorb
           events << event_method
         end
         if events.nil?
-          @log.debug "Event #{event_name} doesn't have any proc, skipping"
+          log.debug "Event #{event_name} doesn't have any proc, skipping"
           next
         end
-        @log.debug "Dispatching event #{event_name}"
+        log.debug "Dispatching event #{event_name}"
         events.each do |block|
           Async do
             Async(annotation: "Discorb event: #{event_name}") do |_task|
               @events[event_name].delete(block) if block.is_a?(Discorb::EventHandler) && block.metadata[:once]
               block.call(*args)
-              @log.debug "Dispatched proc with ID #{block.id.inspect}"
+              log.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
               dispatch(:error, event_name, args, e)
             end
@@ -467,11 +466,15 @@ module Discorb
     end
 
     def session_id
-      if shard_id
-        @shards[shard_id].session_id
+      if shard
+        shard.session_id
       else
         @session_id
       end
+    end
+
+    def log
+      shard&.logger || @logger
     end
 
     def shard
@@ -541,7 +544,7 @@ module Discorb
       @token = token.to_s
       @shard_count = shard_count
       Signal.trap(:SIGINT) do
-        @log.info "SIGINT received, closing..."
+        log.info "SIGINT received, closing..."
         Signal.trap(:SIGINT, "DEFAULT")
         close!
       end
@@ -591,7 +594,7 @@ module Discorb
     def set_default_events
       on :error, override: true do |event_name, _args, e|
         message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
-        @log.error message, fallback: $stderr
+        log.error message, fallback: $stderr
       end
 
       once :standby do

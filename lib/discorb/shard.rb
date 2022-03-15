@@ -9,6 +9,8 @@ module Discorb
     attr_reader :id
     # @return [Thread] The thread of the shard.
     attr_reader :thread
+    # @return [Logger] The logger of the shard.
+    attr_reader :logger
     # @private
     # @return [Integer] The internal index of the shard.
     attr_reader :index
@@ -33,14 +35,15 @@ module Discorb
       @session_id = nil
       @next_shard = nil
       @main_task = nil
+      @logger = client.log.dup.tap { |l| l.progname = "discorb: shard #{id}" }
       @thread = Thread.new do
-        Thread.current.thread_variable_set("shard_id", number)
+        Thread.current.thread_variable_set("shard_id", id)
         Thread.current.thread_variable_set("shard", self)
         if @index.positive?
           Thread.stop
           sleep 5  # Somehow discord disconnects the shard without a little sleep.
         end
-        client.send(:main_loop, number)
+        client.send(:main_loop, id)
       end
     end
 
@@ -65,7 +68,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class} #{@number}/#{@shard_count} #{@status}>"
+      "#<#{self.class} #{id}/#{@shard_count} #{@status}>"
     end
   end
 end

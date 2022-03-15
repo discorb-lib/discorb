@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "discorb"
 
-client = Discorb::Client.new
+client = Discorb::Client.new(log: Logger.new($stdout))
 
 client.once :standby do
   puts "Logged in as #{client.user}"
