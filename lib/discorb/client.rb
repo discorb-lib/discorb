@@ -61,6 +61,16 @@ module Discorb
     # @return [{String => Thread::Mutex}] A hash of mutexes.
     attr_reader :mutex
 
+    # @!attribute [r] session_id
+    #   @return [String] The session ID of the client or current shard.
+    #   @return [nil] If not connected to the gateway.
+    # @!attribute [r] shard
+    #   @return [Discorb::Shard] The current shard. This is implemented with Thread variables.
+    #   @return [nil] If client has no shard.
+    # @!attribute [r] shard_id
+    #   @return [Discorb::Shard] The current shard ID. This is implemented with Thread variables.
+    #   @return [nil] If client has no shard.
+
     #
     # Initializes a new client.
     #
@@ -465,6 +475,14 @@ module Discorb
       end
     end
 
+    def shard
+      Thread.current.thread_variable_get("shard")
+    end
+
+    def shard_id
+      Thread.current.thread_variable_get("shard_id")
+    end
+
     private
 
     def before_run(token)
@@ -518,10 +536,6 @@ module Discorb
       else
         @connection
       end
-    end
-
-    def shard
-      Thread.current.thread_variable_get("shard")
     end
 
     def connection=(value)
@@ -589,10 +603,6 @@ module Discorb
       else
         @main_task = value
       end
-    end
-
-    def shard_id
-      Thread.current.thread_variable_get("shard_id")
     end
 
     def set_default_events

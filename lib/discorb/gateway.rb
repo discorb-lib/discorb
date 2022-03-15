@@ -680,8 +680,14 @@ module Discorb
       end
 
       def send_gateway(opcode, **value)
-        connection.write({ op: opcode, d: value }.to_json)
-        connection.flush
+        if @shards.any? && shard.nil?
+          @shards.map(&:connection)
+        else
+          [connection]
+        end.each do |con|
+          con.write({ op: opcode, d: value }.to_json)
+          con.flush
+        end
         @log.debug "Sent message to fd #{connection.io.fileno}: #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
       end
 
@@ -1166,7 +1172,11 @@ module Discorb
         when "RESUMED"
           @log.info("Successfully resumed connection")
           @tasks << handle_heartbeat
-          dispatch(:resumed)
+          if shard
+            dispatch(:shard_resumed, shard)
+          else
+            dispatch(:resumed)
+          end
         when "GUILD_SCHEDULED_EVENT_CREATE"
           @log.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
           event = ScheduledEvent.new(self, data)
@@ -1223,11 +1233,24 @@ module Discorb
             barrier.wait
           end
           @ready = true
-          dispatch(:standby)
-          @log.info("Shard #{shard_id} is ready!")
-          self.shard&.next_shard&.tap do |shard|
-            @log.debug("Starting shard #{shard.number}")
-            shard.start
+
+          if self.shard
+            @log.info("Shard #{shard_id} is ready!")
+            self.shard&.tap do |shard|
+              if shard.next_shard
+                dispatch(:shard_standby, shard)
+                shard.next_shard.tap do |next_shard|
+                  @log.debug("Starting shard #{shard.id}")
+                  next_shard.start
+                end
+              else
+                @log.info("All shards are ready!")
+                dispatch(:standby)
+              end
+            end
+          else
+            @log.info("Client is ready!")
+            dispatch(:standby)
           end
         end
       end

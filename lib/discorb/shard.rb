@@ -5,20 +5,29 @@ module Discorb
   # Represents a shard.
   #
   class Shard
-    attr_reader :number, :thread, :shard_count, :index
+    # @return [Integer] The ID of the shard.
+    attr_reader :id
+    # @return [Thread] The thread of the shard.
+    attr_reader :thread
+    # @private
+    # @return [Integer] The internal index of the shard.
+    attr_reader :index
+    # @private
     attr_accessor :status, :connection, :session_id, :next_shard, :main_task
+
     #
     # Initializes a new shard.
+    # @private
     #
     # @param [Discorb::Client] client The client.
-    # @param [Integer] number The number of the shard.
-    # @param [Integer] shard_count The number of shards.
+    # @param [Integer] id The ID of the shard.
+    # @param [Integer] count The number of shards.
     # @param [Integer] index The index of the shard.
     #
-    def initialize(client, number, shard_count, index)
+    def initialize(client, id, count, index)
       @client = client
-      @number = number
-      @shard_count = shard_count
+      @id = id
+      @shard_count = count
       @status = :idle
       @index = index
       @session_id = nil
@@ -35,10 +44,20 @@ module Discorb
       end
     end
 
+    #
+    # Starts the shard.
+    #
+    # @return [void]
+    #
     def start
       @thread.wakeup
     end
 
+    #
+    # Stops the shard.
+    #
+    # @return [void]
+    #
     def close!
       @status = :closed
       @main_task&.stop

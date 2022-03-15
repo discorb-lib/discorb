@@ -30,13 +30,13 @@ class << client
 end
 ```
 
-If you want to seperate event handlers from the client, consider using {Discorb::Extension}. {file:docs/extension.md Learn more about extensions}.
+If you want to separate event handlers from the client, consider using {Discorb::Extension}. {file:docs/extension.md Learn more about extensions}.
 
-Since v0.6.1, you can set `:override` to `true` to register overridable event handlers.
+Since v0.6.1, you can set `:override` to `true` to register event handlers that can be overridden.
 
 ```ruby
 client.on :message, override: true do |event|
-  puts "This event handler is overrideable!"
+  puts "This event handler can be overridden."
 end
 
 client.on :message do |event|
@@ -44,8 +44,8 @@ client.on :message do |event|
 end
 ```
 
-This example will print `Override!`, but not `This event handler is overrideable!`.
-This is useful for registering event handlers as default behaviour, such as error handlers.
+This example will print `Override!`, but not `This event handler can be overridden.`.
+This is useful for registering event handlers as default behavior, such as error handlers.
 
 ```ruby
 # In the library...
@@ -94,6 +94,22 @@ Defaults to printing the error to stderr, override to handle it yourself.
 
 Fires when `discorb setup` is run.
 This is useful for setting up some dependencies, such as the database.
+
+#### `shard_standby(shard)`
+
+Fires when a shard is standby.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+|`shard`     | {Discorb::Shard} | The shard that is standby. |
+
+#### `shard_resumed(shard)`
+
+Fires when a shard is resumed connection.
+
+| Parameter  | Type  | Description |
+| ---------- | ----- | ----------- |
+|`shard`     | {Discorb::Shard} | The shard that is standby. |
 
 ### Guild events
 

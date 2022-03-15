@@ -9,9 +9,9 @@ end
 
 client.on :message do |message|
   next if message.author.bot?
-  next unless message.content == "ping"
+  next unless message.content == "!inspect"
 
-  message.channel.post("Pong!")
+  message.channel.post("I'm #{client.user}, running on shard #{client.shard_id}!")
 end
 
 client.run(ENV["DISCORD_BOT_TOKEN"], shards: [0, 1], shard_count: 2)
