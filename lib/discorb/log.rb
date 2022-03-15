@@ -66,7 +66,7 @@ module Discorb
       end
       if shard_id = Thread.current.thread_variable_get("shard_id")
         message = if @colorize_log
-            "\e[9#{shard_id % 7 + 1}m[#{shard_id}]\e[0m #{message}"
+            "\e[9#{shard_id % 6 + 1}m[#{shard_id}]\e[0m #{message}"
           else
             "[#{shard_id}] #{message}"
           end
