@@ -40,8 +40,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "async", "~> 1.30.1"
-  spec.add_dependency "async-http", "~> 0.56.5"
-  spec.add_dependency "async-websocket", "~> 0.19.0"
+  spec.add_dependency "websocket-client-simple", "~> 0.5.1"
 
   spec.add_dependency "mime-types", "~> 3.3"
   # For more information and examples about making a new gem, checkout our

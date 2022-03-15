@@ -62,10 +62,6 @@ module Discorb
       write_output("FATAL", "\e[91m", message, fallback)
     end
 
-    class << self
-      attr_reader :levels
-    end
-
     private
 
     def write_output(name, color, message, fallback)

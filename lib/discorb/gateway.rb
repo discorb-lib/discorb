@@ -581,15 +581,15 @@ module Discorb
       private
 
       def connect_gateway(reconnect)
-        if reconnect
-          @log.info "Reconnecting to gateway..."
-        else
-          @log.info "Connecting to gateway..."
-        end
-
         Async do
           @mutex["gateway_#{shard_id}"] ||= Mutex.new
           @mutex["gateway_#{shard_id}"].synchronize do
+            if reconnect
+              @log.info "Reconnecting to gateway..."
+            else
+              @log.info "Connecting to gateway..."
+            end
+
             @http = HTTP.new(self)
             _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
             gateway_url = gateway_response[:url]
@@ -599,14 +599,18 @@ module Discorb
               else
                 10
               end
-            endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream",
-                                                   alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
+            endpoint = Async::HTTP::Endpoint.parse(
+              "#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream&_=#{Time.now.to_i}",
+              alpn_protocols: Async::HTTP::Protocol::HTTP11.names,
+            )
             begin
               self.connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
               zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               buffer = +""
               begin
                 while (message = connection.read)
+                  puts "#{shard_id}: #{message.length}"
+                  puts "#{shard_id}: #{connection.io.fileno}"
                   buffer << message
                   if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
                     begin
@@ -630,10 +634,6 @@ module Discorb
                      Errno::ECONNRESET,
                      IOError => e
                 @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
-                connection.force_close
-                connect_gateway(true)
-                next
-              else # should never happen
                 connection.force_close
                 connect_gateway(true)
                 next
@@ -683,7 +683,7 @@ module Discorb
       def send_gateway(opcode, **value)
         connection.write({ op: opcode, d: value }.to_json)
         connection.flush
-        @log.debug "Sent message #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
+        @log.debug "Sent message to fd #{connection.io.fileno}: #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
       end
 
       def handle_gateway(payload, reconnect)
@@ -698,7 +698,7 @@ module Discorb
             if reconnect
               payload = {
                 token: @token,
-                session_id: @session_id,
+                session_id: session_id,
                 seq: @last_s,
               }
               send_gateway(6, **payload)
@@ -730,7 +730,6 @@ module Discorb
               sleep(2)
               connect_gateway(false)
             end
-            next
           when 11
             @log.debug "Received opcode 11"
             @ping = Time.now.to_f - @heartbeat_before
@@ -765,11 +764,12 @@ module Discorb
         case event_name
         when "READY"
           @api_version = data[:v]
-          @session_id = data[:session_id]
+          self.session_id = data[:session_id]
           @user = ClientUser.new(self, data[:user])
           @uncached_guilds = data[:guilds].map { |g| g[:id] }
           ready if (@uncached_guilds == []) || !@intents.guilds
           dispatch(:ready)
+
           @tasks << handle_heartbeat
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
@@ -1226,6 +1226,10 @@ module Discorb
           @ready = true
           dispatch(:standby)
           @log.info("Shard #{shard_id} is ready!")
+          self.shard&.next_shard&.tap do |shard|
+            @log.debug("Starting shard #{shard.number}")
+            shard.start
+          end
         end
       end
     end

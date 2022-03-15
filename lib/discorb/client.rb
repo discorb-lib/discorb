@@ -50,8 +50,6 @@ module Discorb
     attr_reader :ping
     # @return [:initialized, :running, :closed] The status of the client.
     attr_reader :status
-    # @return [Integer] The session ID of connection.
-    attr_reader :session_id
     # @return [Hash{String => Discorb::Extension}] The loaded extensions.
     attr_reader :extensions
     # @return [Hash{Integer => Discorb::Shard}] The shards of the client.
@@ -59,6 +57,9 @@ module Discorb
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
     attr_reader :bottom_commands
+    # @private
+    # @return [{String => Thread::Mutex}] A hash of mutexes.
+    attr_reader :mutex
 
     #
     # Initializes a new client.
@@ -452,6 +453,14 @@ module Discorb
       @status = :closed
     end
 
+    def session_id
+      if shard_id
+        @shards[shard_id].session_id
+      else
+        @session_id
+      end
+    end
+
     private
 
     def before_run(token)
@@ -507,11 +516,23 @@ module Discorb
       end
     end
 
+    def shard
+      Thread.current.thread_variable_get("shard")
+    end
+
     def connection=(value)
       if shard_id
         @shards[shard_id].connection = value
       else
         @connection = value
+      end
+    end
+
+    def session_id=(value)
+      if shard_id
+        @shards[shard_id].session_id = value
+      else
+        @session_id = value
       end
     end
 
@@ -526,10 +547,13 @@ module Discorb
       if shards.nil?
         main_loop(nil)
       else
-        shards.each do |shard|
-          @shards[shard] = Shard.new(self, shard, shard_count)
+        @shards = shards.map.with_index do |shard, i|
+          Shard.new(self, shard, shard_count, i)
         end
-        @shards.each_value { |s| s.thread.join }
+        @shards[..-1].each_with_index do |shard, i|
+          shard.next_shard = @shards[i + 1]
+        end
+        @shards.each { |s| s.thread.join }
       end
     end
 

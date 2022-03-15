@@ -4,10 +4,11 @@ require "optparse"
 require "json"
 require "discorb/utils/colored_puts"
 require "io/console"
+require "discorb"
 
 ARGV.delete_at 0
 # @private
-LOG_LEVELS = %w[none debug info warn error fatal].freeze
+LOG_LEVELS = (Discorb::Logger::LEVELS + [:none]).map(&:to_s).freeze
 
 opt = OptionParser.new <<~BANNER
                          This command will run a client.
