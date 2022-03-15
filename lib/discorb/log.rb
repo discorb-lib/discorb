@@ -5,7 +5,7 @@ module Discorb
   class Logger
     attr_accessor :out, :colorize_log
 
-    LEVELS = %i[trace debug info warn error fatal].freeze
+    LEVELS = %i[debug info warn error fatal].freeze
 
     def initialize(out, colorize_log, level)
       @out = out
@@ -24,12 +24,6 @@ module Discorb
     def level=(level)
       @level = LEVELS.index(level)
       raise ArgumentError, "Invalid log level: #{level}" unless @level
-    end
-
-    def trace(message, fallback: nil)
-      return unless @level <= 0
-
-      write_output("TRACE", "\e[90m", message, fallback)
     end
 
     def debug(message, fallback: nil)
