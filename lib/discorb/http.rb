@@ -107,7 +107,7 @@ module Discorb
     def handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
       case resp.code
       when "429"
-        @client.log.info("Rate limit exceeded for #{path.method} #{path.url}, waiting #{data[:retry_after]} seconds")
+        @client.logger.info("Rate limit exceeded for #{path.method} #{path.url}, waiting #{data[:retry_after]} seconds")
         sleep(data[:retry_after])
         request(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
       when "400"
@@ -128,7 +128,7 @@ module Discorb
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}" }
         else
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}",
-            "content-type" => "application/json", }
+            "content-type" => "application/json" }
         end
       ret.merge!(headers) if !headers.nil? && headers.length.positive?
       ret["X-Audit-Log-Reason"] = audit_log_reason unless audit_log_reason.nil?

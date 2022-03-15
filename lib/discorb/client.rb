@@ -68,8 +68,9 @@ module Discorb
     # @!attribute [r] shard_id
     #   @return [Discorb::Shard] The current shard ID. This is implemented with Thread variables.
     #   @return [nil] If client has no shard.
-    # @!attribute [r] log
+    # @!attribute [r] logger
     #   @return [Logger] The logger.
+
     #
     # Initializes a new client.
     #
@@ -194,16 +195,16 @@ module Discorb
           events << event_method
         end
         if events.nil?
-          log.debug "Event #{event_name} doesn't have any proc, skipping"
+          logger.debug "Event #{event_name} doesn't have any proc, skipping"
           next
         end
-        log.debug "Dispatching event #{event_name}"
+        logger.debug "Dispatching event #{event_name}"
         events.each do |block|
           Async do
             Async(annotation: "Discorb event: #{event_name}") do |_task|
               @events[event_name].delete(block) if block.is_a?(Discorb::EventHandler) && block.metadata[:once]
               block.call(*args)
-              log.debug "Dispatched proc with ID #{block.id.inspect}"
+              logger.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
               dispatch(:error, event_name, args, e)
             end
@@ -473,7 +474,7 @@ module Discorb
       end
     end
 
-    def log
+    def logger
       shard&.logger || @logger
     end
 
@@ -544,7 +545,7 @@ module Discorb
       @token = token.to_s
       @shard_count = shard_count
       Signal.trap(:SIGINT) do
-        log.info "SIGINT received, closing..."
+        logger.info "SIGINT received, closing..."
         Signal.trap(:SIGINT, "DEFAULT")
         close!
       end
@@ -594,7 +595,7 @@ module Discorb
     def set_default_events
       on :error, override: true do |event_name, _args, e|
         message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
-        log.error message, fallback: $stderr
+        logger.error message, fallback: $stderr
       end
 
       once :standby do

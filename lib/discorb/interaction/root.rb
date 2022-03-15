@@ -100,7 +100,7 @@ module Discorb
           interaction = klass.make_interaction(client, data) if !klass.interaction_type.nil? && klass.interaction_type == data[:type]
         end
         if interaction.nil?
-          client.log.warn("Unknown interaction type #{data[:type]}, initialized Interaction")
+          client.logger.warn("Unknown interaction type #{data[:type]}, initialized Interaction")
           interaction = Interaction.new(client, data)
         end
         interaction

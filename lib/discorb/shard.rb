@@ -35,7 +35,7 @@ module Discorb
       @session_id = nil
       @next_shard = nil
       @main_task = nil
-      @logger = client.log.dup.tap { |l| l.progname = "discorb: shard #{id}" }
+      @logger = client.logger.dup.tap { |l| l.progname = "discorb: shard #{id}" }
       @thread = Thread.new do
         Thread.current.thread_variable_set("shard_id", id)
         Thread.current.thread_variable_set("shard", self)
