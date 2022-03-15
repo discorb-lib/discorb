@@ -40,7 +40,7 @@ module Discorb
     attr_reader :emojis
     # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Message}] A dictionary of messages.
     attr_reader :messages
-    # @return [Discorb::Logger] The logger.
+    # @return [Logger] The logger.
     attr_reader :log
     # @return [Array<Discorb::ApplicationCommand::Command>] The commands that the client is using.
     attr_reader :commands
@@ -77,8 +77,7 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions that the client is using.
     # @param [Discorb::Intents] intents The intents that the client is currently using.
     # @param [Integer] message_caches The number of messages to cache.
-    # @param [#write] log The IO object to use for logging.
-    # @param [Boolean] colorize_log Whether to colorize the log.
+    # @param [Logger] log The IO object to use for logging.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
     # @param [Boolean] fetch_member Whether to fetch member on ready. This may slow down the client. Default to `false`.
@@ -86,7 +85,7 @@ module Discorb
     #
     def initialize(
       allowed_mentions: nil, intents: nil, message_caches: 1000,
-      log: nil, colorize_log: false, log_level: :info,
+      log: nil,
       wait_until_ready: true, fetch_member: false,
       title: nil
     )
@@ -94,7 +93,7 @@ module Discorb
       @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
-      @log = Logger.new(log, colorize_log, log_level)
+      @log = log || Logger.new($stdout, progname: "discorb")
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
@@ -489,22 +488,6 @@ module Discorb
       require "json"
       options = JSON.parse(ENV["DISCORB_CLI_OPTIONS"], symbolize_names: true)
       setup_commands(token) if options[:setup]
-      if options[:log_level]
-        if options[:log_level] == "none"
-          @log.out = nil
-        else
-          @log.out = case options[:log_file]
-            when nil, "stderr"
-              $stderr
-            when "stdout"
-              $stdout
-            else
-              ::File.open(options[:log_file], "a")
-            end
-          @log.level = options[:log_level].to_sym
-          @log.colorize_log = options[:log_color].nil? ? @log.out.isatty : options[:log_color]
-        end
-      end
     end
 
     def run_setup(token)
