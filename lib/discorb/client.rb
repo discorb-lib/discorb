@@ -448,7 +448,11 @@ module Discorb
     # Stops the client.
     #
     def close!
-      connection.send_close
+      if @shards.any?
+        @shards.each(&:close!)
+      else
+        @connection.send_close
+      end
       @tasks.each(&:stop)
       @status = :closed
     end
@@ -559,7 +563,7 @@ module Discorb
 
     def main_loop(shard)
       close_condition = Async::Condition.new
-      main_task = Async do
+      self.main_task = Async do
         set_status(:running, shard)
         connect_gateway(false).wait
       rescue StandardError
@@ -569,6 +573,22 @@ module Discorb
       end
       close_condition.wait
       main_task.stop
+    end
+
+    def main_task
+      if shard_id
+        shard.main_task
+      else
+        @main_task
+      end
+    end
+
+    def main_task=(value)
+      if shard_id
+        shard.main_task = value
+      else
+        @main_task = value
+      end
     end
 
     def shard_id

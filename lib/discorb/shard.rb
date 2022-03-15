@@ -6,7 +6,7 @@ module Discorb
   #
   class Shard
     attr_reader :number, :thread, :shard_count, :index
-    attr_accessor :status, :connection, :session_id, :next_shard
+    attr_accessor :status, :connection, :session_id, :next_shard, :main_task
     #
     # Initializes a new shard.
     #
@@ -23,17 +23,26 @@ module Discorb
       @index = index
       @session_id = nil
       @next_shard = nil
+      @main_task = nil
       @thread = Thread.new do
         Thread.current.thread_variable_set("shard_id", number)
         Thread.current.thread_variable_set("shard", self)
-        Thread.stop if @index.positive?
-        sleep 5
+        if @index.positive?
+          Thread.stop
+          sleep 5  # Somehow discord disconnects the shard without a little sleep.
+        end
         client.send(:main_loop, number)
       end
     end
 
     def start
       @thread.wakeup
+    end
+
+    def close!
+      @status = :closed
+      @main_task&.stop
+      @thread.kill
     end
 
     def inspect

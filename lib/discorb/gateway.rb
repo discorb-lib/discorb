@@ -631,6 +631,7 @@ module Discorb
                      Errno::EPIPE,
                      Errno::ECONNRESET,
                      IOError => e
+                next if @status == :closed
                 @log.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
                 connection.force_close
                 connect_gateway(true)
