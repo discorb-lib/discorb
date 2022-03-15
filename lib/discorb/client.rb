@@ -41,7 +41,7 @@ module Discorb
     # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Message}] A dictionary of messages.
     attr_reader :messages
     # @return [Logger] The logger.
-    attr_reader :log
+    attr_reader :logger
     # @return [Array<Discorb::ApplicationCommand::Command>] The commands that the client is using.
     attr_reader :commands
     # @return [Float] The ping of the client.
@@ -64,7 +64,7 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions that the client is using.
     # @param [Discorb::Intents] intents The intents that the client is currently using.
     # @param [Integer] message_caches The number of messages to cache.
-    # @param [Logger] log The IO object to use for logging.
+    # @param [Logger] logger The IO object to use for logging.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
     # @param [Boolean] fetch_member Whether to fetch member on ready. This may slow down the client. Default to `false`.
@@ -72,7 +72,7 @@ module Discorb
     #
     def initialize(
       allowed_mentions: nil, intents: nil, message_caches: 1000,
-      log: nil,
+      logger: nil,
       wait_until_ready: true, fetch_member: false,
       title: nil
     )
@@ -80,7 +80,7 @@ module Discorb
       @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
-      @log = log || Logger.new($stdout, progname: "discorb")
+      @logger = logger || Logger.new($stdout, progname: "discorb")
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
@@ -181,16 +181,16 @@ module Discorb
           events << event_method
         end
         if events.nil?
-          @log.debug "Event #{event_name} doesn't have any proc, skipping"
+          @logger.debug "Event #{event_name} doesn't have any proc, skipping"
           next
         end
-        @log.debug "Dispatching event #{event_name}"
+        @logger.debug "Dispatching event #{event_name}"
         events.each do |block|
           Async do
             Async(annotation: "Discorb event: #{event_name}") do |_task|
               @events[event_name].delete(block) if block.is_a?(Discorb::EventHandler) && block.metadata[:once]
               block.call(*args)
-              @log.debug "Dispatched proc with ID #{block.id.inspect}"
+              @logger.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
               dispatch(:error, event_name, args, e)
             end
@@ -475,7 +475,7 @@ module Discorb
     def start_client(token)
       Async do |_task|
         Signal.trap(:SIGINT) do
-          @log.info "SIGINT received, closing..."
+          @logger.info "SIGINT received, closing..."
           Signal.trap(:SIGINT, "DEFAULT")
           close!
         end
@@ -497,7 +497,7 @@ module Discorb
     def set_default_events
       on :error, override: true do |event_name, _args, e|
         message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
-        @log.error message, fallback: $stderr
+        @logger.error message, fallback: $stderr
       end
 
       once :standby do

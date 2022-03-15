@@ -160,7 +160,7 @@ module Discorb
               end
             end
           end
-          @log.info "Successfully setup commands"
+          @logger.info "Successfully setup commands"
         end
       end
     end

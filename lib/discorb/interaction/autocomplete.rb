@@ -15,7 +15,7 @@ module Discorb
         name, options = Discorb::CommandInteraction::SlashCommand.get_command_data(data)
 
         unless (command = @client.bottom_commands.find { |c| c.to_s == name && c.type_raw == 1 })
-          @client.log.warn "Unknown command name #{name}, ignoring"
+          @client.logger.warn "Unknown command name #{name}, ignoring"
           next
         end
 
@@ -40,7 +40,7 @@ module Discorb
         },
       }).wait
     rescue Discorb::NotFoundError
-      @client.log.warn "Failed to send auto complete result, This may be caused by the suggestion is taking too long (over 3 seconds) to respond", fallback: $stderr
+      @client.logger.warn "Failed to send auto complete result, This may be caused by the suggestion is taking too long (over 3 seconds) to respond", fallback: $stderr
     end
 
     class << self
