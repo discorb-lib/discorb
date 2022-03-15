@@ -6,8 +6,6 @@ require "discorb/utils/colored_puts"
 require "io/console"
 
 ARGV.delete_at 0
-# @private
-LOG_LEVELS = %w[none debug info warn error fatal].freeze
 
 opt = OptionParser.new <<~BANNER
                          This command will run a client.
@@ -18,23 +16,10 @@ opt = OptionParser.new <<~BANNER
                        BANNER
 options = {
   title: nil,
-  log_level: nil,
-  log_file: nil,
-  log_color: nil,
   setup: nil,
   token: false,
   bundler: :default,
 }
-opt.on("-l", "--log-level LEVEL", "Log level.") do |v|
-  unless LOG_LEVELS.include? v.downcase
-    eputs "Invalid log level: \e[31m#{v}\e[91m"
-    eputs "Valid log levels: \e[31m#{LOG_LEVELS.join("\e[91m, \e[31m")}\e[91m"
-    exit 1
-  end
-  options[:log_level] = v.downcase
-end
-opt.on("-f", "--log-file FILE", "File to write log to.") { |v| options[:log_file] = v }
-opt.on("-c", "--[no-]log-color", "Whether to colorize log output.") { |v| options[:log_color] = v }
 opt.on("-s", "--setup", "Whether to setup application commands.") { |v| options[:setup] = v }
 opt.on("-e", "--env [ENV]", "The name of the environment variable to use for token, or just `-e` or `--env` for intractive prompt.") { |v| options[:token] = v }
 opt.on("-t", "--title TITLE", "The title of process.") { |v| options[:title] = v }
