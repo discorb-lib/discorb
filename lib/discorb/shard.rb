@@ -27,6 +27,7 @@ module Discorb
         Thread.current.thread_variable_set("shard_id", number)
         Thread.current.thread_variable_set("shard", self)
         Thread.stop if @index.positive?
+        sleep 5
         client.send(:main_loop, number)
       end
     end

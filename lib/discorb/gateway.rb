@@ -609,8 +609,6 @@ module Discorb
               buffer = +""
               begin
                 while (message = connection.read)
-                  puts "#{shard_id}: #{message.length}"
-                  puts "#{shard_id}: #{connection.io.fileno}"
                   buffer << message
                   if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
                     begin
