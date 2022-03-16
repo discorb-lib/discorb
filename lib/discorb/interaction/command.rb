@@ -180,7 +180,7 @@ module Discorb
             return interaction
           end
         end
-        client.log.warn("Unknown command type #{data[:type]}, initialized CommandInteraction")
+        client.logger.warn("Unknown command type #{data[:type]}, initialized CommandInteraction")
         CommandInteraction.new(client, data)
       end
 

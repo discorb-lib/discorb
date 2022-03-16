@@ -43,7 +43,7 @@ module Discorb
         nested_classes.each do |klass|
           return klass.new(client, data) if !klass.component_type.nil? && klass.component_type == data[:data][:component_type]
         end
-        client.log.warn("Unknown component type #{data[:component_type]}, initialized Interaction")
+        client.logger.warn("Unknown component type #{data[:component_type]}, initialized Interaction")
         MessageComponentInteraction.new(client, data)
       end
 
