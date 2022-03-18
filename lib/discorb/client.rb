@@ -77,7 +77,7 @@ module Discorb
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions that the client is using.
     # @param [Discorb::Intents] intents The intents that the client is currently using.
     # @param [Integer] message_caches The number of messages to cache.
-    # @param [Logger] log The IO object to use for logging.
+    # @param [Logger] logger The IO object to use for logging.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
     # @param [Boolean] fetch_member Whether to fetch member on ready. This may slow down the client. Default to `false`.
@@ -85,7 +85,7 @@ module Discorb
     #
     def initialize(
       allowed_mentions: nil, intents: nil, message_caches: 1000,
-      log: nil,
+      logger: nil,
       wait_until_ready: true, fetch_member: false,
       title: nil
     )
@@ -93,7 +93,7 @@ module Discorb
       @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
-      @logger = log || Logger.new($stdout, progname: "discorb")
+      @logger = logger || Logger.new($stdout, progname: "discorb")
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
