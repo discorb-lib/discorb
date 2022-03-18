@@ -581,15 +581,15 @@ module Discorb
       private
 
       def connect_gateway(reconnect)
-        if reconnect
-          @logger.info "Reconnecting to gateway..."
-        else
-          @logger.info "Connecting to gateway..."
-        end
-
         Async do
-          @mutex[:gateway] ||= Mutex.new
-          @mutex[:gateway].synchronize do
+          @mutex["gateway_#{shard_id}"] ||= Mutex.new
+          @mutex["gateway_#{shard_id}"].synchronize do
+            if reconnect
+              logger.info "Reconnecting to gateway..."
+            else
+              logger.info "Connecting to gateway..."
+            end
+
             @http = HTTP.new(self)
             _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
             gateway_url = gateway_response[:url]
@@ -599,24 +599,26 @@ module Discorb
               else
                 10
               end
-            endpoint = Async::HTTP::Endpoint.parse("#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream",
-                                                   alpn_protocols: Async::HTTP::Protocol::HTTP11.names)
+            endpoint = Async::HTTP::Endpoint.parse(
+              "#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream&_=#{Time.now.to_i}",
+              alpn_protocols: Async::HTTP::Protocol::HTTP11.names,
+            )
             begin
-              @connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
-              @zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
+              self.connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
+              zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               buffer = +""
               begin
-                while (message = @connection.read)
+                while (message = connection.read)
                   buffer << message
                   if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
                     begin
-                      data = @zlib_stream.inflate(buffer)
+                      data = zlib_stream.inflate(buffer)
                       buffer = +""
                       message = JSON.parse(data, symbolize_names: true)
                     rescue JSON::ParserError
                       buffer = +""
-                      @logger.error "Received invalid JSON from gateway."
-                      @logger.debug "#{data}"
+                      logger.error "Received invalid JSON from gateway."
+                      logger.debug "#{data}"
                     else
                       handle_gateway(message, reconnect)
                     end
@@ -629,12 +631,9 @@ module Discorb
                      Errno::EPIPE,
                      Errno::ECONNRESET,
                      IOError => e
-                @logger.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
-                @connection.force_close
-                connect_gateway(true)
-                next
-              else # should never happen
-                @connection.force_close
+                next if @status == :closed
+                logger.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
+                connection.force_close
                 connect_gateway(true)
                 next
               end
@@ -644,8 +643,8 @@ module Discorb
               when 4004
                 raise ClientError.new("Authentication failed"), cause: nil
               when 4009
-                @logger.info "Session timed out, reconnecting."
-                @connection.force_close
+                logger.info "Session timed out, reconnecting."
+                connection.force_close
                 connect_gateway(true)
                 next
               when 4014
@@ -659,20 +658,20 @@ module Discorb
                                                    https://github.com/discorb-lib/discorb/issues
                                                  ERROR
               when 1001
-                @logger.info "Gateway closed with code 1001, reconnecting."
-                @connection.force_close
+                logger.info "Gateway closed with code 1001, reconnecting."
+                connection.force_close
                 connect_gateway(true)
                 next
               else
-                @logger.error "Discord WebSocket closed with code #{e.code}."
-                @logger.debug "#{e.message}"
-                @connection.force_close
+                logger.error "Discord WebSocket closed with code #{e.code}."
+                logger.debug "#{e.message}"
+                connection.force_close
                 connect_gateway(false)
                 next
               end
             rescue StandardError => e
-              @logger.error "Discord WebSocket error: #{e.full_message}"
-              @connection.force_close
+              logger.error "Discord WebSocket error: #{e.full_message}"
+              connection.force_close
               connect_gateway(false)
               next
             end
@@ -681,24 +680,30 @@ module Discorb
       end
 
       def send_gateway(opcode, **value)
-        @connection.write({ op: opcode, d: value }.to_json)
-        @connection.flush
-        @logger.debug "Sent message #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
+        if @shards.any? && shard.nil?
+          @shards.map(&:connection)
+        else
+          [connection]
+        end.each do |con|
+          con.write({ op: opcode, d: value }.to_json)
+          con.flush
+        end
+        logger.debug "Sent message to fd #{connection.io.fileno}: #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
       end
 
       def handle_gateway(payload, reconnect)
         Async do |_task|
           data = payload[:d]
           @last_s = payload[:s] if payload[:s]
-          @logger.debug "Received message with opcode #{payload[:op]} from gateway:"
-          @logger.debug "#{payload.to_json.gsub(@token, "[Token]")}"
+          logger.debug "Received message with opcode #{payload[:op]} from gateway."
+          logger.debug "#{payload.to_json.gsub(@token, "[Token]")}"
           case payload[:op]
           when 10
             @heartbeat_interval = data[:heartbeat_interval]
             if reconnect
               payload = {
                 token: @token,
-                session_id: @session_id,
+                session_id: session_id,
                 seq: @last_s,
               }
               send_gateway(6, **payload)
@@ -709,27 +714,29 @@ module Discorb
                 compress: false,
                 properties: { "$os" => RUBY_PLATFORM, "$browser" => "discorb", "$device" => "discorb" },
               }
+              payload[:shard] = [shard_id, @shard_count] if shard_id
               payload[:presence] = @identify_presence if @identify_presence
               send_gateway(2, **payload)
             end
           when 7
-            @logger.info "Received opcode 7, stopping tasks"
+            logger.info "Received opcode 7, stopping tasks"
             @tasks.map(&:stop)
           when 9
-            @logger.warn "Received opcode 9, closed connection"
+            logger.warn "Received opcode 9, closed connection"
             @tasks.map(&:stop)
             if data
-              @logger.info "Connection is resumable, reconnecting"
-              @connection.close
+              logger.info "Connection is resumable, reconnecting"
+              connection.force_close
               connect_gateway(true)
             else
-              @logger.info "Connection is not resumable, reconnecting with opcode 2"
-              @connection.close
+              logger.info "Connection is not resumable, reconnecting with opcode 2"
+              connection.force_close
+
               sleep(2)
               connect_gateway(false)
             end
           when 11
-            @logger.debug "Received opcode 11"
+            logger.debug "Received opcode 11"
             @ping = Time.now.to_f - @heartbeat_before
           when 0
             handle_event(payload[:t], data)
@@ -742,12 +749,12 @@ module Discorb
           interval = @heartbeat_interval
           sleep((interval / 1000.0 - 1) * rand)
           loop do
-            unless @connection.closed?
+            unless connection.closed?
               @heartbeat_before = Time.now.to_f
-              @connection.write({ op: 1, d: @last_s }.to_json)
-              @connection.flush
-              @logger.debug "Sent opcode 1."
-              @logger.debug "Waiting for heartbeat."
+              connection.write({ op: 1, d: @last_s }.to_json)
+              connection.flush
+              logger.debug "Sent opcode 1."
+              logger.debug "Waiting for heartbeat."
             end
             sleep(interval / 1000.0 - 1)
           end
@@ -755,25 +762,26 @@ module Discorb
       end
 
       def handle_event(event_name, data)
-        return @logger.debug "Client isn't ready; event #{event_name} wasn't handled" if @wait_until_ready && !@ready && !%w[READY GUILD_CREATE].include?(event_name)
+        return logger.debug "Client isn't ready; event #{event_name} wasn't handled" if @wait_until_ready && !@ready && !%w[READY GUILD_CREATE].include?(event_name)
 
         dispatch(:event_receive, event_name, data)
-        @logger.debug "Handling event #{event_name}"
+        logger.debug "Handling event #{event_name}"
         case event_name
         when "READY"
           @api_version = data[:v]
-          @session_id = data[:session_id]
+          self.session_id = data[:session_id]
           @user = ClientUser.new(self, data[:user])
           @uncached_guilds = data[:guilds].map { |g| g[:id] }
           ready if (@uncached_guilds == []) || !@intents.guilds
           dispatch(:ready)
+
           @tasks << handle_heartbeat
         when "GUILD_CREATE"
           if @uncached_guilds.include?(data[:id])
             Guild.new(self, data, true)
             @uncached_guilds.delete(data[:id])
             if @uncached_guilds == []
-              @logger.debug "All guilds cached"
+              logger.debug "All guilds cached"
               ready
             end
           elsif @guilds.has?(data[:id])
@@ -794,10 +802,10 @@ module Discorb
             current.send(:_set_data, data, false)
             dispatch(:guild_update, before, current)
           else
-            @logger.warn "Unknown guild id #{data[:id]}, ignoring"
+            logger.warn "Unknown guild id #{data[:id]}, ignoring"
           end
         when "GUILD_DELETE"
-          return @logger.warn "Unknown guild id #{data[:id]}, ignoring" unless (guild = @guilds.delete(data[:id]))
+          return logger.warn "Unknown guild id #{data[:id]}, ignoring" unless (guild = @guilds.delete(data[:id]))
 
           dispatch(:guild_delete, guild)
           if data[:unavailable]
@@ -806,39 +814,39 @@ module Discorb
             dispatch(:guild_leave, guild)
           end
         when "GUILD_ROLE_CREATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           nr = Role.new(@client, guild, data[:role])
           guild.roles[data[:role][:id]] = nr
           dispatch(:role_create, nr)
         when "GUILD_ROLE_UPDATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return @logger.warn "Unknown role id #{data[:role][:id]}, ignoring" unless guild.roles.has?(data[:role][:id])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown role id #{data[:role][:id]}, ignoring" unless guild.roles.has?(data[:role][:id])
 
           current = guild.roles[data[:role][:id]]
           before = Role.new(@client, guild, current.instance_variable_get(:@data).update({ no_cache: true }))
           current.send(:_set_data, data[:role])
           dispatch(:role_update, before, current)
         when "GUILD_ROLE_DELETE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return @logger.warn "Unknown role id #{data[:role_id]}, ignoring" unless (role = guild.roles.delete(data[:role_id]))
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown role id #{data[:role_id]}, ignoring" unless (role = guild.roles.delete(data[:role_id]))
 
           dispatch(:role_delete, role)
         when "CHANNEL_CREATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           nc = Channel.make_channel(self, data)
           guild.channels[data[:id]] = nc
 
           dispatch(:channel_create, nc)
         when "CHANNEL_UPDATE"
-          return @logger.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = @channels[data[:id]])
+          return logger.warn "Unknown channel id #{data[:id]}, ignoring" unless (current = @channels[data[:id]])
 
           before = Channel.make_channel(self, current.instance_variable_get(:@data), no_cache: true)
           current.send(:_set_data, data)
           dispatch(:channel_update, before, current)
         when "CHANNEL_DELETE"
-          return @logger.warn "Unknown channel id #{data[:id]}, ignoring" unless (channel = @channels.delete(data[:id]))
+          return logger.warn "Unknown channel id #{data[:id]}, ignoring" unless (channel = @channels.delete(data[:id]))
 
           @guilds[data[:guild_id]]&.channels&.delete(data[:id])
           dispatch(:channel_delete, channel)
@@ -854,13 +862,13 @@ module Discorb
             dispatch(:thread_new, thread)
           end
         when "THREAD_UPDATE"
-          return @logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
+          return logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
           before = Channel.make_channel(self, thread.instance_variable_get(:@data), no_cache: true)
           thread.send(:_set_data, data)
           dispatch(:thread_update, before, thread)
         when "THREAD_DELETE"
-          return @logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels.delete(data[:id]))
+          return logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels.delete(data[:id]))
 
           @guilds[data[:guild_id]]&.channels&.delete(data[:id])
           dispatch(:thread_delete, thread)
@@ -870,7 +878,7 @@ module Discorb
             @channels[thread.id] = thread
           end
         when "THREAD_MEMBER_UPDATE"
-          return @logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
+          return logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
           if (member = thread.members[data[:id]])
             old = ThreadChannel::Member.new(self, member.instance_variable_get(:@data))
@@ -882,7 +890,7 @@ module Discorb
           end
           dispatch(:thread_member_update, thread, old, member)
         when "THREAD_MEMBERS_UPDATE"
-          return @logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
+          return logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
           thread.instance_variable_set(:@member_count, data[:member_count])
           members = []
@@ -900,37 +908,37 @@ module Discorb
           instance = StageInstance.new(self, data)
           dispatch(:stage_instance_create, instance)
         when "STAGE_INSTANCE_UPDATE"
-          return @logger.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
-          return @logger.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances[data[:id]])
+          return logger.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
+          return logger.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances[data[:id]])
 
           old = StageInstance.new(self, instance.instance_variable_get(:@data), no_cache: true)
           current.send(:_set_data, data)
           dispatch(:stage_instance_update, old, current)
         when "STAGE_INSTANCE_DELETE"
-          return @logger.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
-          return @logger.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances.delete(data[:id]))
+          return logger.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
+          return logger.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances.delete(data[:id]))
 
           dispatch(:stage_instance_delete, instance)
         when "GUILD_MEMBER_ADD"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           nm = Member.new(self, data[:guild_id], data[:user].update({ no_cache: true }), data)
           guild.members[nm.id] = nm
           dispatch(:member_add, nm)
         when "GUILD_MEMBER_UPDATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return @logger.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (nm = guild.members[data[:user][:id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (nm = guild.members[data[:user][:id]])
 
           old = Member.new(self, data[:guild_id], data[:user], data.update({ no_cache: true }))
           nm.send(:_set_data, data[:user], data)
           dispatch(:member_update, old, nm)
         when "GUILD_MEMBER_REMOVE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return @logger.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (member = guild.members.delete(data[:user][:id]))
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (member = guild.members.delete(data[:user][:id]))
 
           dispatch(:member_remove, member)
         when "GUILD_BAN_ADD"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           user = if @users.has? data[:user][:id]
               @users[data[:user][:id]]
@@ -940,7 +948,7 @@ module Discorb
 
           dispatch(:guild_ban_add, guild, user)
         when "GUILD_BAN_REMOVE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           user = if @users.has? data[:user][:id]
               @users[data[:user][:id]]
@@ -950,7 +958,7 @@ module Discorb
 
           dispatch(:guild_ban_remove, guild, user)
         when "GUILD_EMOJIS_UPDATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           before_emojis = guild.emojis.values.map(&:id).to_set
           data[:emojis].each do |emoji|
@@ -965,12 +973,12 @@ module Discorb
         when "INTEGRATION_CREATE"
           dispatch(:integration_create, Integration.new(self, data, data[:guild_id]))
         when "INTEGRATION_UPDATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           integration = Integration.new(self, data, data[:guild_id])
           dispatch(:integration_update, integration)
         when "INTEGRATION_DELETE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           dispatch(:integration_delete, IntegrationDeleteEvent.new(self, data))
         when "WEBHOOKS_UPDATE"
@@ -980,7 +988,7 @@ module Discorb
         when "INVITE_DELETE"
           dispatch(:invite_delete, InviteDeleteEvent.new(self, data))
         when "VOICE_STATE_UPDATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           current = guild.voice_states[data[:user_id]]
           if current.nil?
@@ -1077,7 +1085,7 @@ module Discorb
             end
           end
         when "PRESENCE_UPDATE"
-          return @logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
+          return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
 
           guild.presences[data[:user][:id]] = Presence.new(self, data)
         when "MESSAGE_UPDATE"
@@ -1162,17 +1170,21 @@ module Discorb
 
           dispatch(interaction.class.event_name, interaction)
         when "RESUMED"
-          @logger.info("Successfully resumed connection")
+          logger.info("Successfully resumed connection")
           @tasks << handle_heartbeat
-          dispatch(:resumed)
+          if shard
+            dispatch(:shard_resumed, shard)
+          else
+            dispatch(:resumed)
+          end
         when "GUILD_SCHEDULED_EVENT_CREATE"
-          @logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
           event = ScheduledEvent.new(self, data)
           guild.scheduled_events[data[:id]] = event
           dispatch(:scheduled_event_create, event)
         when "GUILD_SCHEDULED_EVENT_UPDATE"
-          @logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
-          @logger.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
+          logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          logger.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
           old = event.dup
           event.send(:_set_data, data)
           dispatch(:scheduled_event_update, old, event)
@@ -1187,22 +1199,22 @@ module Discorb
             end
           end
         when "GUILD_SCHEDULED_EVENT_DELETE"
-          @logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
-          @logger.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
+          logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          logger.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
           guild.scheduled_events.remove(data[:id])
           dispatch(:scheduled_event_delete, event)
           dispatch(:scheduled_event_cancel, event)
         when "GUILD_SCHEDULED_EVENT_USER_ADD"
-          @logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
           dispatch(:scheduled_event_user_add, ScheduledEventUserEvent.new(self, data))
         when "GUILD_SCHEDULED_EVENT_USER_REMOVE"
-          @logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
+          logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
           dispatch(:scheduled_event_user_remove, ScheduledEventUserEvent.new(self, data))
         else
           if respond_to?("event_" + event_name.downcase)
             __send__("event_" + event_name.downcase, data)
           else
-            @logger.debug "Unhandled event: #{event_name}\n#{data.inspect}"
+            logger.debug "Unhandled event: #{event_name}\n#{data.inspect}"
           end
         end
       end
@@ -1210,7 +1222,7 @@ module Discorb
       def ready
         Async do
           if @fetch_member
-            @logger.debug "Fetching members"
+            logger.debug "Fetching members"
             barrier = Async::Barrier.new
 
             @guilds.each do |guild|
@@ -1221,8 +1233,25 @@ module Discorb
             barrier.wait
           end
           @ready = true
-          dispatch(:standby)
-          @logger.info("Client is ready!")
+
+          if self.shard
+            logger.info("Shard #{shard_id} is ready!")
+            self.shard&.tap do |shard|
+              if shard.next_shard
+                dispatch(:shard_standby, shard)
+                shard.next_shard.tap do |next_shard|
+                  logger.debug("Starting shard #{next_shard.id}")
+                  next_shard.start
+                end
+              else
+                logger.info("All shards are ready!")
+                dispatch(:standby)
+              end
+            end
+          else
+            logger.info("Client is ready!")
+            dispatch(:standby)
+          end
         end
       end
     end

@@ -40,8 +40,6 @@ module Discorb
     attr_reader :emojis
     # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Message}] A dictionary of messages.
     attr_reader :messages
-    # @return [Logger] The logger.
-    attr_reader :logger
     # @return [Array<Discorb::ApplicationCommand::Command>] The commands that the client is using.
     attr_reader :commands
     # @return [Float] The ping of the client.
@@ -50,13 +48,28 @@ module Discorb
     attr_reader :ping
     # @return [:initialized, :running, :closed] The status of the client.
     attr_reader :status
-    # @return [Integer] The session ID of connection.
-    attr_reader :session_id
     # @return [Hash{String => Discorb::Extension}] The loaded extensions.
     attr_reader :extensions
+    # @return [Hash{Integer => Discorb::Shard}] The shards of the client.
+    attr_reader :shards
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
     attr_reader :bottom_commands
+    # @private
+    # @return [{String => Thread::Mutex}] A hash of mutexes.
+    attr_reader :mutex
+
+    # @!attribute [r] session_id
+    #   @return [String] The session ID of the client or current shard.
+    #   @return [nil] If not connected to the gateway.
+    # @!attribute [r] shard
+    #   @return [Discorb::Shard] The current shard. This is implemented with Thread variables.
+    #   @return [nil] If client has no shard.
+    # @!attribute [r] shard_id
+    #   @return [Discorb::Shard] The current shard ID. This is implemented with Thread variables.
+    #   @return [nil] If client has no shard.
+    # @!attribute [r] logger
+    #   @return [Logger] The logger.
 
     #
     # Initializes a new client.
@@ -101,6 +114,7 @@ module Discorb
       @title = title
       @extensions = {}
       @mutex = {}
+      @shards = {}
       set_default_events
     end
 
@@ -181,16 +195,16 @@ module Discorb
           events << event_method
         end
         if events.nil?
-          @logger.debug "Event #{event_name} doesn't have any proc, skipping"
+          logger.debug "Event #{event_name} doesn't have any proc, skipping"
           next
         end
-        @logger.debug "Dispatching event #{event_name}"
+        logger.debug "Dispatching event #{event_name}"
         events.each do |block|
           Async do
             Async(annotation: "Discorb event: #{event_name}") do |_task|
               @events[event_name].delete(block) if block.is_a?(Discorb::EventHandler) && block.metadata[:once]
               block.call(*args)
-              @logger.debug "Dispatched proc with ID #{block.id.inspect}"
+              logger.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
               dispatch(:error, event_name, args, e)
             end
@@ -314,7 +328,7 @@ module Discorb
       }
       payload[:activities] = [activity.to_hash] unless activity.nil?
       payload[:status] = status unless status.nil?
-      if @connection
+      if connection
         Async do
           send_gateway(3, **payload)
         end
@@ -425,15 +439,15 @@ module Discorb
     #
     # @note If the token is nil, you should use `discorb run` with the `-e` or `--env` option.
     #
-    def run(token = nil)
+    def run(token = nil, shards: nil, shard_count: nil)
       token ||= ENV["DISCORB_CLI_TOKEN"]
       raise ArgumentError, "Token is not specified, and -e/--env is not specified" if token.nil?
       case ENV["DISCORB_CLI_FLAG"]
       when nil
-        start_client(token)
+        start_client(token, shards: shards, shard_count: shard_count)
       when "run"
         before_run(token)
-        start_client(token)
+        start_client(token, shards: shards, shard_count: shard_count)
       when "setup"
         run_setup(token)
       end
@@ -443,10 +457,33 @@ module Discorb
     # Stops the client.
     #
     def close!
-      @connection.send_close
+      if @shards.any?
+        @shards.each(&:close!)
+      else
+        @connection.send_close
+      end
       @tasks.each(&:stop)
       @status = :closed
-      @close_condition.signal
+    end
+
+    def session_id
+      if shard
+        shard.session_id
+      else
+        @session_id
+      end
+    end
+
+    def logger
+      shard&.logger || @logger
+    end
+
+    def shard
+      Thread.current.thread_variable_get("shard")
+    end
+
+    def shard_id
+      Thread.current.thread_variable_get("shard_id")
     end
 
     private
@@ -472,32 +509,93 @@ module Discorb
       end
     end
 
-    def start_client(token)
-      Async do |_task|
-        Signal.trap(:SIGINT) do
-          @logger.info "SIGINT received, closing..."
-          Signal.trap(:SIGINT, "DEFAULT")
-          close!
+    def set_status(status, shard)
+      if shard.nil?
+        @status = status
+      else
+        @shards[shard].status = status
+      end
+    end
+
+    def connection
+      if shard_id
+        @shards[shard_id].connection
+      else
+        @connection
+      end
+    end
+
+    def connection=(value)
+      if shard_id
+        @shards[shard_id].connection = value
+      else
+        @connection = value
+      end
+    end
+
+    def session_id=(value)
+      if shard_id
+        @shards[shard_id].session_id = value
+      else
+        @session_id = value
+      end
+    end
+
+    def start_client(token, shards: nil, shard_count: nil)
+      @token = token.to_s
+      @shard_count = shard_count
+      Signal.trap(:SIGINT) do
+        logger.info "SIGINT received, closing..."
+        Signal.trap(:SIGINT, "DEFAULT")
+        close!
+      end
+      if shards.nil?
+        main_loop(nil)
+      else
+        @shards = shards.map.with_index do |shard, i|
+          Shard.new(self, shard, shard_count, i)
         end
-        @token = token.to_s
-        @close_condition = Async::Condition.new
-        @main_task = Async do
-          @status = :running
-          connect_gateway(false).wait
-        rescue StandardError
-          @status = :stopped
-          @close_condition.signal
-          raise
+        @shards[..-1].each_with_index do |shard, i|
+          shard.next_shard = @shards[i + 1]
         end
-        @close_condition.wait
-        @main_task.stop
+        @shards.each { |s| s.thread.join }
+      end
+    end
+
+    def main_loop(shard)
+      close_condition = Async::Condition.new
+      self.main_task = Async do
+        set_status(:running, shard)
+        connect_gateway(false).wait
+      rescue StandardError
+        set_status(:running, shard)
+        close_condition.signal
+        raise
+      end
+      close_condition.wait
+      main_task.stop
+    end
+
+    def main_task
+      if shard_id
+        shard.main_task
+      else
+        @main_task
+      end
+    end
+
+    def main_task=(value)
+      if shard_id
+        shard.main_task = value
+      else
+        @main_task = value
       end
     end
 
     def set_default_events
       on :error, override: true do |event_name, _args, e|
         message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
-        @logger.error message, fallback: $stderr
+        logger.error message, fallback: $stderr
       end
 
       once :standby do

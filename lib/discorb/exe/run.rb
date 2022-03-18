@@ -4,6 +4,7 @@ require "optparse"
 require "json"
 require "discorb/utils/colored_puts"
 require "io/console"
+require "discorb"
 
 ARGV.delete_at 0
 
