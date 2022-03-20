@@ -4,6 +4,15 @@
 
 # Changelog
 
+## v0.16
+
+### v0.16.0
+
+- Change!: Use built-in Logger instead of custom Logger.
+- Delete!: `--log-level`, `--[no-]log-color` is deleted.
+- Add: Support sharding
+- Add: Use Mutex for preventing connection duplications.
+
 ## v0.15
 
 ### v0.15.1
