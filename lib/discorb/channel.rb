@@ -233,7 +233,7 @@ module Discorb
       @position = data[:position]
       @permission_overwrites = if data[:permission_overwrites]
           data[:permission_overwrites].to_h do |ow|
-            [(ow[:type] == 1 ? guild.roles : guild.members)[ow[:id]], PermissionOverwrite.new(ow[:allow], ow[:deny])]
+            [(ow[:type] == 1 ? guild.roles : guild.members)[ow[:id]], PermissionOverwrite.new(ow[:allow].to_i, ow[:deny].to_i)]
           end
         else
           {}
