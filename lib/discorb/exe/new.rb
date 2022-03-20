@@ -3,6 +3,7 @@
 
 require "optparse"
 require "discorb"
+require "pathname"
 require_relative "../utils/colored_puts"
 
 $path = Dir.pwd
@@ -129,7 +130,6 @@ FILES = {
 
     TODO: Write your bot's license here.
       See https://choosealicense.com/ for more information.
-      https://rubygems.org/gems/license-cli may be useful.
 
   MARKDOWN
 }.freeze
@@ -249,4 +249,4 @@ make_descs if $values[:descs]
 
 git_init if $values[:git]
 
-sputs "\nSuccessfully made a new project at \e[32m#{$path}\e[92m."
+sputs "\nSuccessfully made a new project at \e[32m#{Pathname.new($path).cleanpath.split[-1]}\e[92m."
