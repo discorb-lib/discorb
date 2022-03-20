@@ -9,13 +9,13 @@ RSpec.describe Discorb::Component do
       [
         {
           components: [
-            { 
+            {
               custom_id: "id",
               disabled: false,
               emoji: nil,
               label: "label",
               style: 1,
-              type: 2, 
+              type: 2,
             },
           ],
           type: 1,
