@@ -32,7 +32,7 @@ module Discorb
       # return if path.url.start_with?("https://")
       if @global && @global > Time.now.to_f
         time = @global - Time.now.to_f
-        @client.log.info("global rate limit reached, waiting #{time} seconds")
+        @client.logger.info("global rate limit reached, waiting #{time} seconds")
         sleep(time)
         @global = false
       end
@@ -48,7 +48,7 @@ module Discorb
       return if (bucket[:remaining]).positive?
 
       time = bucket[:reset_at] - Time.now.to_f
-      @client.log.info("rate limit for #{path.identifier} with #{path.major_param} reached, waiting #{time.round(4)} seconds")
+      @client.logger.info("rate limit for #{path.identifier} with #{path.major_param} reached, waiting #{time.round(4)} seconds")
       sleep(time)
     end
 

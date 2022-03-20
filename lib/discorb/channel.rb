@@ -67,7 +67,7 @@ module Discorb
       descendants.each do |klass|
         return klass.new(client, data, no_cache: no_cache) if !klass.channel_type.nil? && klass.channel_type == data[:type]
       end
-      client.log.warn("Unknown channel type #{data[:type]}, initialized GuildChannel")
+      client.logger.warn("Unknown channel type #{data[:type]}, initialized GuildChannel")
       GuildChannel.new(client, data)
     end
 

@@ -4,7 +4,25 @@
 
 # Changelog
 
+## v0.16
+
+### v0.16.0
+
+- Change!: Use built-in Logger instead of custom Logger.
+- Delete!: `--log-level`, `--[no-]log-color` is deleted.
+- Add: Support sharding
+- Add: Use Mutex for preventing connection duplications.
+
 ## v0.15
+
+### v0.15.1
+
+- Add: Add `Member#can_manage?`
+- Add: Add `Discorb::VERSION_ARRAY`
+- Fix: `Snowflake#timestamp` includes milliseconds now
+- Fix: `TextChannel#create_invite` will no longer return `ArgumentError`
+- Fix: Connection will not closed with 4001 when `Client#update_presence`
+  is called
 
 ### v0.15.0
 

@@ -24,7 +24,7 @@ module Discorb
         name, options = SlashCommand.get_command_data(data)
 
         unless (command = @client.bottom_commands.find { |c| c.to_s == name && c.type_raw == 1 })
-          @client.log.warn "Unknown command name #{name}, ignoring"
+          @client.logger.warn "Unknown command name #{name}, ignoring"
           return
         end
 
@@ -180,7 +180,7 @@ module Discorb
             return interaction
           end
         end
-        client.log.warn("Unknown command type #{data[:type]}, initialized CommandInteraction")
+        client.logger.warn("Unknown command type #{data[:type]}, initialized CommandInteraction")
         CommandInteraction.new(client, data)
       end
 

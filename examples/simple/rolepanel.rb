@@ -2,7 +2,7 @@
 require "discorb"
 intents = Discorb::Intents.new
 intents.members = true
-client = Discorb::Client.new(intents: intents, log: $stdout, colorize_log: true)
+client = Discorb::Client.new(intents: intents)
 
 def convert_role(guild, string)
   guild.roles.find do |role|

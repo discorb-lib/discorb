@@ -17,6 +17,7 @@ Style/TrailingCommaInArrayLiteral:  # Disabled for rufo
   EnforcedStyleForMultiline: consistent_comma
 
 Style/StringLiterals:  # Disabled for rufo
+  Enabled: true
   EnforcedStyle: double_quotes
 
 Style/TrailingCommaInArguments:  # Disabled for rufo
