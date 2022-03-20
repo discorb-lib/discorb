@@ -1,8 +1,6 @@
 name: Lint with RuboCop
 on:
   push:
-    branches:
-      - main
 jobs:
   rubocop:
     runs-on: ubuntu-latest
