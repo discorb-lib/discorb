@@ -26,7 +26,7 @@ module Discorb
     #
     # @return [Array<Discorb::NewsChannel>] The news channels.
     #
-    def news_channel
+    def news_channels
       channels.filter { |c| c.is_a? NewsChannel }
     end
 
