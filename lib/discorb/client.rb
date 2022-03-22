@@ -93,7 +93,11 @@ module Discorb
       @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
-      @logger = logger || Logger.new($stdout, progname: "discorb")
+      @logger = logger || Logger.new(
+        $stdout,
+        progname: "discorb",
+        level: Logger::ERROR,
+      )
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
@@ -563,17 +567,13 @@ module Discorb
     end
 
     def main_loop(shard)
-      close_condition = Async::Condition.new
-      self.main_task = Async do
+      begin
         set_status(:running, shard)
         connect_gateway(false).wait
       rescue StandardError
-        set_status(:running, shard)
-        close_condition.signal
+        set_status(:closed, shard)
         raise
       end
-      close_condition.wait
-      main_task.stop
     end
 
     def main_task
@@ -595,7 +595,7 @@ module Discorb
     def set_default_events
       on :error, override: true do |event_name, _args, e|
         message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
-        logger.error message, fallback: $stderr
+        logger.error message
       end
 
       once :standby do

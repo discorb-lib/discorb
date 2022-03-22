@@ -42,7 +42,7 @@ module Discorb
 end
 
 require_order = %w[common flag dictionary error rate_limit http intents emoji_table modules] +
-                %w[message_meta allowed_mentions] +
+                %w[channel/manager message_meta allowed_mentions] +
                 %w[user member guild emoji channel embed message] +
                 %w[application audit_logs color components event event_handler] +
                 %w[attachment guild_template image integration interaction invite permission] +
