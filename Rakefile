@@ -135,6 +135,7 @@ namespace :document do
       sputs "Successfully replaced CRLF with LF"
     end
 
+    desc "change locale of current document"
     task :locale do
       next if ENV["rake_locale"].nil?
       require_relative "template-replace/scripts/locale_#{ENV["rake_locale"]}.rb"
@@ -196,6 +197,7 @@ namespace :document do
   end
 
   namespace :locale do
+    desc "Generate Japanese document"
     task :ja do
       require "crowdin-api"
       require "zip"
@@ -216,12 +218,14 @@ namespace :document do
       Rake::Task["document:replace"].execute
     end
 
+    desc "Generate English document"
     task :en do
       Rake::Task["document"].execute("locale:en")
     end
   end
 end
 
+desc "Generate rbs file using sord"
 task :rbs do
   require "open3"
   type_errors = {
@@ -315,6 +319,7 @@ task :rbs do
   type_errors.each do |error, type|
     base.gsub!(error, type)
   end
+  base.gsub!("end\n\n\nend", "end\n")
   File.write("sig/discorb.rbs", base)
 end
 
@@ -322,10 +327,10 @@ task document: %i[document:yard document:replace]
 
 desc "Lint code with rubocop"
 task :lint do
-  sh "rubocop lib"
+  sh "rubocop lib Rakefile --require rubocop-rake"
 end
 
 desc "Autofix code with rubocop"
 task "lint:fix" do
-  sh "rubocop lib -A"
+  sh "rubocop lib Rakefile -A --require rubocop-rake"
 end
