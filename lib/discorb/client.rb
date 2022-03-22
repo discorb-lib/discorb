@@ -599,7 +599,7 @@ module Discorb
     def set_default_events
       on :error, override: true do |event_name, _args, e|
         message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
-        logger.error message, fallback: $stderr
+        logger.error message
       end
 
       once :standby do

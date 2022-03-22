@@ -40,7 +40,7 @@ module Discorb
         },
       }).wait
     rescue Discorb::NotFoundError
-      @client.logger.warn "Failed to send auto complete result, This may be caused by the suggestion is taking too long (over 3 seconds) to respond", fallback: $stderr
+      @client.logger.warn "Failed to send auto complete result, This may be caused by the suggestion is taking too long (over 3 seconds) to respond"
     end
 
     class << self
