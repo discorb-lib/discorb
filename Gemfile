@@ -6,11 +6,12 @@ source "https://rubygems.org"
 gemspec
 
 gem "rake", "~> 13.0"
+gem "rubocop", "~> 1.25"
+gem "rubocop-rake", "~> 0.6.0"
 
-group :development, optional: true do
-  gem "rufo", "~> 0.13.0"
-  gem "sord", "~> 3.0.1"
-end
+gem "rufo", "~> 0.13.0"
+gem "sord", "~> 3.0.1"
+gem "lefthook", "~> 0.7.7"
 
 group :docs, optional: true do
   gem "crowdin-api", "~> 1.0"
@@ -18,8 +19,4 @@ group :docs, optional: true do
   gem "redcarpet"
   gem "rubyzip", "~> 2.3"
   gem "yard", "~> 0.9.26"
-end
-
-group :lint, optional: true do
-  gem "rubocop", "~> 1.25"
 end
