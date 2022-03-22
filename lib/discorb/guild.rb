@@ -100,6 +100,8 @@ module Discorb
     attr_reader :scheduled_events
     alias events scheduled_events
 
+    include Discorb::ChannelManager
+
     # @!attribute [r] afk_channel
     #   @return [Discorb::VoiceChannel] The AFK channel for this guild.
     #   @macro client_cache
