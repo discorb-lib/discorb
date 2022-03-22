@@ -567,13 +567,11 @@ module Discorb
     end
 
     def main_loop(shard)
-      begin
-        set_status(:running, shard)
-        connect_gateway(false).wait
-      rescue StandardError
-        set_status(:closed, shard)
-        raise
-      end
+      set_status(:running, shard)
+      connect_gateway(false).wait
+    rescue StandardError
+      set_status(:closed, shard)
+      raise
     end
 
     def main_task

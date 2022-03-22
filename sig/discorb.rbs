@@ -7230,6 +7230,3 @@ class Time
   # @return [String] The formatted time.
   def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? _type) -> String
 end
-
-
-end
