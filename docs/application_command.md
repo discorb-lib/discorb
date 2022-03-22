@@ -67,8 +67,8 @@ In `options`, hash should be like this:
 | Key | Type | Description |
 | --- | --- | --- |
 | `:description` | `String` | Description of the option. |
-| `:required` | Whether the argument is required. `optional` will be used if not specified. |
-| `:optional` | Whether the argument is optional. `required` will be used if not specified. |
+| `:required` | Boolean(true | false) | Whether the argument is required. `optional` will be used if not specified. |
+| `:optional` | Boolean(true | false) | Whether the argument is optional. `required` will be used if not specified. |
 | `:type` | `Object` | Type of the option. |
 | `:choice` | `Hash{String => String, Integer, Float}` | Choice of the option. |
 | `:default` | `Object` | Default value of the option. |
