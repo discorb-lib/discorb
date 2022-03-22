@@ -93,7 +93,11 @@ module Discorb
       @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
-      @logger = logger || Logger.new($stdout, progname: "discorb")
+      @logger = logger || Logger.new(
+        $stdout,
+        progname: "discorb",
+        level: Logger::ERROR,
+      )
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
