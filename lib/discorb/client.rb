@@ -567,17 +567,13 @@ module Discorb
     end
 
     def main_loop(shard)
-      close_condition = Async::Condition.new
-      self.main_task = Async do
+      begin
         set_status(:running, shard)
         connect_gateway(false).wait
       rescue StandardError
         set_status(:closed, shard)
-        close_condition.signal
         raise
       end
-      close_condition.wait
-      main_task.stop
     end
 
     def main_task
