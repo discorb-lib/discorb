@@ -572,7 +572,7 @@ module Discorb
         set_status(:running, shard)
         connect_gateway(false).wait
       rescue StandardError
-        set_status(:running, shard)
+        set_status(:closed, shard)
         close_condition.signal
         raise
       end
