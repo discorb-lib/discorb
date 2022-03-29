@@ -210,7 +210,11 @@ module Discorb
               block.call(*args)
               logger.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
-              dispatch(:error, event_name, args, e)
+              if event_name == :error
+                raise e
+              else
+                dispatch(:error, event_name, args, e)
+              end
             end
           end
         end
