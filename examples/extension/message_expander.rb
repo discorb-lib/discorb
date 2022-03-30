@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 require "discorb"
 
+#
+# Class for expanding message URL.
+#
 class MessageExpander
   include Discorb::Extension
 
-  @@message_regex = Regexp.new(
+  MESSAGE_PATTERN = Regexp.new(
     '(?!<)https://(?:ptb\.|canary\.)?discord(?:app)?\.com/channels/' \
     "(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18})(?!>)"
   )
@@ -12,7 +15,7 @@ class MessageExpander
   event :message do |message|
     next if message.author.bot?
 
-    message.content.to_enum(:scan, @@message_regex).map { Regexp.last_match }.each do |match|
+    message.content.to_enum(:scan, MESSAGE_PATTERN).map { Regexp.last_match }.each do |match|
       ch = @client.channels[match[:channel]]
       next if ch.nil?
 

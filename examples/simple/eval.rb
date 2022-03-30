@@ -25,7 +25,7 @@ client.on :message do |message|
     res = res.wait if res.is_a? Async::Task
     message.channel.post("```rb\n#{res.inspect[...1990]}\n```")
   end
-rescue Exception => e
+rescue Exception => e # rubocop:disable Lint/RescueException
   message.reply embed: Discorb::Embed.new("Error!", "```rb\n#{e.full_message(highlight: false)[...1990]}\n```",
                                           color: Discorb::Color[:red])
 end
