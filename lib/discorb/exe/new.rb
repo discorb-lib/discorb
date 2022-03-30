@@ -25,7 +25,8 @@ FILES = {
     client.run ENV["%<token>s"]  # Starts client
   RUBY
   ".env" => <<~BASH,
-    %<token>s=Y0urB0tT0k3nHer3.Th1sT0ken.W0ntWorkB3c4useItH4sM34n1ng
+    # Put your token after `%<token>s=`
+    %<token>s=
   BASH
   ".gitignore" => <<~GITIGNORE,
     *.gem
