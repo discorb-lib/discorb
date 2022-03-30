@@ -1,8 +1,6 @@
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
-  Exclude:
-    - examples/**/*.rb
 
 Layout:
   Enabled: false

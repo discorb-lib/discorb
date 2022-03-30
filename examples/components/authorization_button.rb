@@ -28,7 +28,7 @@ client.on :message do |message|
     components: [
       Discorb::Button.new(
         "Get role", custom_id: "auth:#{role.id}",
-      )
+      ),
     ],
   )
 end

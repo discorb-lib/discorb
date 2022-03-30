@@ -26,17 +26,16 @@ script ||= "main.rb"
 ENV["DISCORB_CLI_FLAG"] = "setup"
 
 ENV["DISCORB_SETUP_GUILDS"] = if options[:guilds] == ["global"]
-  "global"
-elsif options[:guilds]
-  options[:guilds].join(",")
-end
+    "global"
+  elsif options[:guilds]
+    options[:guilds].join(",")
+  end
 
 ENV["DISCORB_SETUP_SCRIPT"] = options[:script].to_s if options[:script]
 
-begin
+if File.exist? script
   load script
-rescue LoadError
-  eputs "Could not load script: \e[31m#{script}\e[m"
-else
   sputs "Successfully set up commands for \e[32m#{script}\e[m."
+else
+  eputs "Could not load script: \e[31m#{script}\e[m"
 end
