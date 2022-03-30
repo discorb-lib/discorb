@@ -89,7 +89,7 @@ module Discorb
         payload[:name] = name
         payload[:avatar] = avatar.to_s if avatar
         _resp, data = @client.http.request(Route.new("/channels/#{@id}/webhooks", "//channels/:channel_id/webhooks", :post), payload).wait
-        Webhook.new([@client, data])
+        Webhook.from_data(@client, data)
       end
     end
 

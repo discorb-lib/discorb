@@ -71,13 +71,14 @@ In `options`, hash should be like this:
 | `:optional` | Boolean(true | false) | Whether the argument is optional. `required` will be used if not specified. |
 | `:type` | `Object` | Type of the option. |
 | `:choice` | `Hash{String => String, Integer, Float}` | Choice of the option. |
+| `:choice_localizations` | `Hash{String => Hash{Symbol => String}}` | Localization of the choice. Key must be the name of a choice. (See below for example) |
 | `:default` | `Object` | Default value of the option. |
 | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
 | `:autocomplete` | `Proc` | Autocomplete function. |
 | `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |
 
 `choices` should be unspecified if you don't want to use it.
-`choices` is hash like this:
+`choices` example:
 
 ```ruby
 {
@@ -315,3 +316,92 @@ end
 | --- | --- |
 | `interaction` | The interaction object. |
 | `message` | The message object. |
+
+### Localizing command
+
+You can localize commands with passing parameters, or setting Hash to name.
+Also, you can change the text by checking `interaction.locale` and `interaction.guild_locale`.
+
+Command name localize example:
+
+```ruby
+localizations = {
+  localized: {
+    text: {
+      en: "Hello, %s!",
+      ja: "%sさん、こんにちは！",
+    },
+  },
+}
+
+client.slash({
+  default: "greet",
+  ja: "挨拶",
+}, {
+  default: "Bot greets. Cute OwO",
+  ja: "Botが挨拶します。かわいいね",
+}, {
+  "name" => {
+    name_localizations: {
+      ja: "名前",
+    },
+    description: {
+      default: "The name to greet.",
+      ja: "挨拶する人の名前。",
+    },
+    type: :string,
+    optional: true,
+  },
+}) do |interaction, name|
+  interaction.post(
+    (localizations[:localized][:text][interaction.locale] || localizations[:localized][:text][:en]) % [name || interaction.target.to_s_user],
+    ephemeral: true,
+  )
+end
+```
+
+Option localize example:
+
+```ruby
+{
+  "vocaloid" => {
+    name_localizations: {
+      ja: "ボカロ",
+    },
+    required: true,
+    description: "The vocaloid which you like.",
+    description_localizations: {
+      ja: "好きなボカロ。",
+    },
+    type: :string,
+    choices: {
+      "Hatsune Miku" => "miku",
+      "Kagamine Rin" => "rin",
+      "Kagamine Len" => "len",
+      "Megurine Luka" => "luka",
+      "MEIKO" => "meiko",
+      "KAITO" => "kaito",
+    },
+    choice_localizations: {
+      "Hatsune Miku" => {
+        ja: "初音ミク",
+      },
+      "Kagamine Rin" => {
+        ja: "鏡音リン",
+      },
+      "Kagamine Len" => {
+        ja: "鏡音レン",
+      },
+      "Megurine Luka" => {
+        ja: "巡音ルカ",
+      },
+      "MEIKO" => {
+        ja: "MEIKO",
+      },
+      "KAITO" => {
+        ja: "KAITO",
+      },
+    }
+  }
+}
+```

@@ -113,7 +113,12 @@ module Discorb
       def _set_data(data)
         super
         @target = guild.members[data[:target_id]] || Discorb::Member.new(@client, @guild_id, data[:resolved][:users][data[:target_id].to_sym], data[:resolved][:members][data[:target_id].to_sym])
-        @client.commands.find { |c| c.name == data[:name] && c.type_raw == 2 }.block.call(self, @target)
+        command = @client.commands.find { |c| c.name["default"] == data[:name] && c.type_raw == 2 }
+        if command
+          command.block.call(self, @target)
+        else
+          @client.logger.warn "Unknown command name #{data[:name]}, ignoring"
+        end
       end
     end
 
@@ -132,7 +137,12 @@ module Discorb
       def _set_data(data)
         super
         @target = @messages[data[:target_id]]
-        @client.commands.find { |c| c.name == data[:name] && c.type_raw == 3 }.block.call(self, @target)
+        command = @client.commands.find { |c| c.name["default"] == data[:name] && c.type_raw == 3 }
+        if command
+          command.block.call(self, @target)
+        else
+          @client.logger.warn "Unknown command name #{data[:name]}, ignoring"
+        end
       end
     end
 
@@ -152,10 +162,11 @@ module Discorb
             @client, @guild_id, data[:resolved][:users][id], member
           )
         end
-        data[:resolved][:messages]&.to_h do |id, _message|
-          @messages[id.to_i] = Message.new(@client, data[:resolved][:messages][data[:target_id].to_sym].merge(guild_id: @guild_id.to_s)).merge(guild_id: @guild_id.to_s)
+
+        data[:resolved][:messages]&.each do |id, message|
+          @messages[id.to_s] = Message.new(@client, message.merge(guild_id: @guild_id.to_s))
         end
-        data[:resolved][:attachments]&.to_h do |id, attachment|
+        data[:resolved][:attachments]&.each do |id, attachment|
           @attachments[id.to_s] = Attachment.new(attachment)
         end
       end

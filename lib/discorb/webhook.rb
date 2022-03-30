@@ -447,23 +447,31 @@ module Discorb
       # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
       #
       def new(url)
-        if self != Webhook
-          return super(*url) if url.is_a?(Array)
-
-          return super
-        end
-        if url.is_a?(String)
+        if self == Webhook
           URLWebhook.new(url)
         else
-          case url[1][:type]
-          when 1
-            IncomingWebhook
-          when 2
-            FollowerWebhook
-          when 3
-            ApplicationWebhook
-          end.new(url)
+          super
         end
+      end
+
+      #
+      # Creates Webhook with discord data.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The data of the webhook.
+      #
+      # @return [Discorb::Webhook] The Webhook.
+      #
+      def from_data(client, data)
+        case data[:type]
+        when 1
+          IncomingWebhook
+        when 2
+          FollowerWebhook
+        when 3
+          ApplicationWebhook
+        end.new(client, data)
       end
 
       def from_url(url)

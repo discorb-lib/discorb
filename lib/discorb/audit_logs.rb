@@ -21,7 +21,7 @@ module Discorb
     def initialize(client, data, guild)
       @client = client
       @guild = guild
-      @webhooks = data[:webhooks].map { |webhook| Webhook.new([@client, webhook]) }
+      @webhooks = data[:webhooks].map { |webhook| Webhook.from_data(@client, webhook) }
       @users = data[:users].map { |user| client.users[user[:id]] || User.new(@client, user) }
       @threads = data[:threads].map { |thread| client.channels[thread[:id]] || Channel.make_channel(@client, thread, no_cache: true) }
       @entries = data[:audit_log_entries].map { |entry| AuditLog::Entry.new(@client, entry, guild.id) }

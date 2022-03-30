@@ -10,7 +10,7 @@ module Discorb
     # @abstract
     #
     class Command < DiscordModel
-      # @return [String] The name of the command.
+      # @return [Hash{Symbol => String}] The name of the command.
       attr_reader :name
       # @return [Array<#to_s>] The guild ids that the command is enabled in.
       attr_reader :guild_ids
@@ -35,13 +35,13 @@ module Discorb
       # Initialize a new command.
       # @private
       #
-      # @param [String] name The name of the command.
+      # @param [String, Hash{Symbol => String}] name The name of the command.
       # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
       # @param [Proc] block The block of the command.
       # @param [:chat_input, :user, :message] type The type of the command.
       #
       def initialize(name, guild_ids, block, type)
-        @name = name
+        @name = name.is_a?(String) ? { "default" => name } : ApplicationCommand.modify_localization_hash(name)
         @guild_ids = guild_ids&.map(&:to_s)
         @block = block
         @raw_type = type
@@ -71,7 +71,8 @@ module Discorb
       #
       def to_hash
         {
-          name: @name,
+          name: @name["default"],
+          name_localizations: @name.except("default"),
           default_permission: @default_permission,
           type: @type_raw,
         }
@@ -90,8 +91,8 @@ module Discorb
         # Initialize a new slash command.
         # @private
         #
-        # @param [String] name The name of the command.
-        # @param [String] description The description of the command.
+        # @param [String, Hash{Symbol => String}] name The name of the command. The hash should have `default`, and language keys.
+        # @param [String, Hash{Symbol => String}] description The description of the command. The hash should have `default`, and language keys.
         # @param [Hash{String => Hash}] options The options of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [Proc] block The block of the command.
@@ -113,7 +114,7 @@ module Discorb
         # @return [String] The name of the command.
         #
         def to_s
-          (@parent + " " + @name).strip
+          (@parent + " " + @name["default"]).strip
         end
 
         #
@@ -148,11 +149,29 @@ module Discorb
                 raise ArgumentError, "Invalid option type: #{value[:type]}"
               end,
               name: name,
-              description: value[:description],
+              name_localizations: ApplicationCommand.modify_localization_hash(value[:name_localizations]),
               required: value[:required].nil? ? !value[:optional] : value[:required],
             }
 
-            ret[:choices] = value[:choices].map { |t| { name: t[0], value: t[1] } } if value[:choices]
+            if @description.is_a?(String)
+              ret[:description] = ret[:description]
+            else
+              description = ApplicationCommand.modify_localization_hash(@description)
+              ret[:description] = description["default"]
+              ret[:description_localizations] = description.except("default")
+            end
+            if value[:choices]
+              ret[:choices] = value[:choices].map do |k, v|
+                r = {
+                  name: k, value: v,
+                }
+                if value[:choice_localizations]
+                  r[:name_localizations] = value[:choice_localizations][k]
+                  r.delete(:name_localizations) if r[:name_localizations].nil?
+                end
+                r
+              end
+            end
 
             ret[:channel_types] = value[:channel_types].map(&:channel_type) if value[:channel_types]
 
@@ -164,9 +183,11 @@ module Discorb
             ret
           end
           {
-            name: @name,
+            name: @name["default"],
+            name_localizations: @name.except("default"),
             default_permission: true,
-            description: @description,
+            description: @description["default"],
+            description_localizations: @description.except("default"),
             options: options_payload,
           }
         end
@@ -262,16 +283,20 @@ module Discorb
           options_payload = @commands.map do |command|
             if command.is_a?(SlashCommand)
               {
-                name: command.name,
-                description: command.description,
+                name: command.name["default"],
+                name_localizations: command.name.except("default"),
+                description: command.description["default"],
+                description_localizations: command.description.except("default"),
                 default_permission: true,
                 type: 1,
                 options: command.to_hash[:options],
               }
             else
               {
-                name: command.name,
-                description: command.description,
+                name: command.name["default"],
+                name_localizations: command.name.except("default"),
+                description: command.description["default"],
+                description_localizations: command.description.except("default"),
                 default_permission: true,
                 type: 2,
                 options: command.commands.map { |c| c.to_hash.merge(type: 1) },
@@ -280,9 +305,11 @@ module Discorb
           end
 
           {
-            name: @name,
+            name: @name["default"],
+            name_localizations: @name.except("default"),
+            description: @description["default"],
+            description_localizations: @description.except("default"),
             default_permission: @enabled,
-            description: @description,
             options: options_payload,
           }
         end
