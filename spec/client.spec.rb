@@ -67,7 +67,7 @@ RSpec.describe Discorb::Client do
           body: File.read("#{__dir__}/payloads/guild.json").then { JSON.parse(_1, symbolize_names: true) },
         }
       end
-      client.fetch_guild(863_581_274_916_913_193).wait
+      client.fetch_guild("863581274916913193").wait
     end
     it "requests to GET /channels/:channel_id" do
       expect_request(:get, "/channels/863581274916913196") do
@@ -76,7 +76,7 @@ RSpec.describe Discorb::Client do
           body: File.read("#{__dir__}/payloads/channels/text_channel.json").then { JSON.parse(_1, symbolize_names: true) },
         }
       end
-      client.fetch_channel(863_581_274_916_913_196).wait
+      client.fetch_channel("863581274916913196").wait
     end
     it "requests to GET /users/:user_id" do
       expect_request(:get, "/users/686547120534454315") do
@@ -85,7 +85,7 @@ RSpec.describe Discorb::Client do
           body: File.read("#{__dir__}/payloads/users/user.json").then { JSON.parse(_1, symbolize_names: true) },
         }
       end
-      client.fetch_user(686_547_120_534_454_315).wait
+      client.fetch_user("686547120534454315").wait
     end
     it "requests to GET /invites/:code" do
       expect_request(:get, "/invites/hCP6zq8Vpj?with_count=true&with_expiration=true") do
