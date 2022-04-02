@@ -7,7 +7,7 @@ require_relative "common"
 RSpec.describe Discorb::Client do
   context "gateway" do
     it "connects to gateway" do
-      client = Discorb::Client.new(log_level: :debug)
+      client = Discorb::Client.new
       allow(client).to receive(:http).and_return(http)
       allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
       allow(client).to receive(:send_gateway) { |opcode, **payload|
