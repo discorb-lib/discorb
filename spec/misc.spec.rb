@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require "discorb"
-require "open3"
 
 RSpec.describe "Classes" do
   ObjectSpace.each_object(Class).filter { |c| c.name&.start_with?("Discorb::") }.each do |klass|
