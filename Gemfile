@@ -9,6 +9,8 @@ gem "rake", "~> 13.0"
 gem "rubocop", "~> 1.25"
 gem "rubocop-rake", "~> 0.6.0"
 
+gem "rspec", "~> 3.11"
+
 gem "lefthook", "~> 0.7.7"
 gem "rufo", "~> 0.13.0"
 gem "sord", "~> 3.0.1"
