@@ -7,6 +7,7 @@ RSpec.describe Discorb::Button do
       Discorb::TextInput.new("text", "text", :short)
     end.not_to raise_error
   end
+
   it "converts to payload" do
     expect(Discorb::TextInput.new("text", "text", :short).to_hash).to eq(
       {

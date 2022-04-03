@@ -8,9 +8,11 @@ require_relative "../common"
     let(:channel) do
       channel_class.new(client, JSON.load_file(__dir__ + "/../payloads/channels/text_channel.json", symbolize_names: true))
     end
+
     it "initializes successfully" do
       expect { channel }.not_to raise_error
     end
+
     it "posts message" do
       expect_request(
         :post,
@@ -32,17 +34,7 @@ require_relative "../common"
       end
       expect(channel.post("msg").wait).to be_a Discorb::Message
     end
-    context "permissions" do
-      it "returns { Discorb::Member, Discorb::Role => Discorb::PermissionOverwrite }" do
-        expect(channel.permission_overwrites).to be_a Hash
-        expect(channel.permission_overwrites.keys).to all(
-          satisfy { |k| k.is_a?(Discorb::Role) || k.is_a?(Discorb::Member) },
-        )
-        expect(channel.permission_overwrites.values).to all(
-          satisfy { |k| k.is_a?(Discorb::PermissionOverwrite) },
-        )
-      end
-    end
+
     it "creates new invite" do
       expect_request(
         :post,
@@ -64,6 +56,7 @@ require_relative "../common"
       end
       expect(channel.create_invite(max_age: 0, max_uses: 1, temporary: false, unique: false).wait).to be_a Discorb::Invite
     end
+
     it "creates new thread" do
       expect_request(
         :post,
@@ -84,6 +77,17 @@ require_relative "../common"
         }
       end
       expect(channel.create_thread("thread").wait).to be_a Discorb::ThreadChannel
+    end
+
+    # -- permissions
+    it "returns { Discorb::Member, Discorb::Role => Discorb::PermissionOverwrite }" do
+      expect(channel.permission_overwrites).to be_a Hash
+      expect(channel.permission_overwrites.keys).to all(
+        satisfy { |k| k.is_a?(Discorb::Role) || k.is_a?(Discorb::Member) },
+      )
+      expect(channel.permission_overwrites.values).to all(
+        satisfy { |k| k.is_a?(Discorb::PermissionOverwrite) },
+      )
     end
   end
 end

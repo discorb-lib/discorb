@@ -5,7 +5,7 @@ require "async"
 require "async/rspec"
 
 Response = Struct.new(:code, :body)
-RSpec.shared_context "mocks" do
+RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
   def expect_request(method, path, body: nil, files: {}, headers: nil, &response)
     $next_request = {
       method: method,
@@ -24,7 +24,7 @@ RSpec.shared_context "mocks" do
   end
 
   let(:http) do
-    http = double("Twitter client")
+    http = instance_double("Discorb::HTTP")
     allow(http).to receive(:request) { |path, body, headers|
       expect({
         method: path.method,

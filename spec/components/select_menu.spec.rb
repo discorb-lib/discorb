@@ -9,6 +9,7 @@ RSpec.describe Discorb::Button do
       ])
     end.not_to raise_error
   end
+
   it "converts to payload" do
     expect(Discorb::SelectMenu.new("menu", [
       Discorb::SelectMenu::Option.new("label", "value"),

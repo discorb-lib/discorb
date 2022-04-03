@@ -3,7 +3,7 @@ require "discorb"
 
 RSpec.describe Discorb::Component do
   it "creates action row" do
-    expect(Discorb::Component.to_payload(
+    expect(described_class.to_payload(
       [Discorb::Button.new("label", :primary, custom_id: "id")]
     )).to eq(
       [

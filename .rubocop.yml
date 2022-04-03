@@ -73,3 +73,12 @@ Lint/ScriptPermission: # For GitHub Actions
 
 Style/NumericLiterals:  # For style
   Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
