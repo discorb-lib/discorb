@@ -193,7 +193,7 @@ module Discorb
         @user_id = Snowflake.new(data[:user_id])
         @target_id = Snowflake.new(data[:target_id])
         @type = EVENTS[data[:action_type]]
-        @target = self.class.converts[@type.to_s.split("_")[0].to_sym]&.call(client, @target_id, @gui)
+        @target = CONVERTERS[@type.to_s.split("_")[0].to_sym]&.call(client, @target_id, @gui)
         @target ||= Snowflake.new(data[:target_id])
         @changes = data[:changes] && Changes.new(data[:changes])
         @reason = data[:reason]
@@ -201,7 +201,7 @@ module Discorb
           define_singleton_method(option) { value }
           if option.end_with?("_id")
             define_singleton_method(option.to_s.sub("_id", "")) do
-              self.class.converts[option.to_s.split("_")[0].to_sym]&.call(client, value, @guild_id)
+              CONVERTERS[option.to_s.split("_")[0].to_sym]&.call(client, value, @guild_id)
             end
           end
         end
@@ -304,11 +304,11 @@ module Discorb
             when "permissions"
               ->(v) { Discorb::Permission.new(v.to_i) }
             when "status"
-              ->(v) { Discorb::ScheduledEvent.status[v] }
+              ->(v) { Discorb::ScheduledEvent::STATUS[v] }
             when "entity_type"
-              ->(v) { Discorb::ScheduledEvent.entity_type[v] }
+              ->(v) { Discorb::ScheduledEvent::ENTITY_TYPE[v] }
             when "privacy_level"
-              ->(v) { Discorb::StageInstance.privacy_level[v] || Discorb::ScheduledEvent.privacy_level[v] }
+              ->(v) { Discorb::StageInstance::PRIVACY_LEVEL[v] || Discorb::ScheduledEvent::PRIVACY_LEVEL[v] }
             else
               ->(v) { v }
             end

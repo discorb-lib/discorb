@@ -1,0 +1,24 @@
+name: Run spec
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+          bundler-cache: true
+      - name: Install dependencies
+        run: |
+          bundle config --local with 'spec'
+          bundle install
+          gem update uri
+      - name: Run spec
+        run: bundle exec rake spec:all

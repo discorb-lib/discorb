@@ -1,0 +1,36 @@
+{
+  "channel": {
+    "id": "863589962464100352",
+    "name": "📜rules",
+    "type": 0
+  },
+  "code": "hCP6zq8Vpj",
+  "expires_at": null,
+  "guild": {
+    "banner": null,
+    "description": null,
+    "features": [
+      "NEW_THREAD_PERMISSIONS",
+      "COMMUNITY",
+      "NEWS",
+      "THREADS_ENABLED"
+    ],
+    "icon": "4cafffafaeeb8e8ed9b89a09131f49bc",
+    "id": "863581274916913193",
+    "name": "discorb",
+    "nsfw": false,
+    "nsfw_level": 0,
+    "premium_subscription_count": 0,
+    "splash": null,
+    "vanity_url_code": null,
+    "verification_level": 1
+  },
+  "inviter": {
+    "avatar": "a_8d1e355edd6a291d70e1cc75c0d31252",
+    "discriminator": "7740",
+    "id": "686547120534454315",
+    "public_flags": 64,
+    "username": "Nanashi."
+  },
+  "type": 0
+}

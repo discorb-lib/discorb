@@ -1,2 +1,3 @@
 template-replace/**/* linguist-documentation
 sig/* linguist-generated
+lib/discorb/emoji_table.rb linguist-generated

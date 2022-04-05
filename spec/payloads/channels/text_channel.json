@@ -1,0 +1,26 @@
+{
+  "guild_id": "863581274916913193",
+  "id": "863581274916913196",
+  "last_message_id": "931626650154709032",
+  "name": "👋welcome",
+  "nsfw": false,
+  "parent_id": null,
+  "permission_overwrites": [
+    {
+      "allow": "0",
+      "deny": "2048",
+      "id": "863585556054147092",
+      "type": 0
+    },
+    {
+      "allow": "2048",
+      "deny": "0",
+      "id": "863590041393823774",
+      "type": 1
+    }
+  ],
+  "position": 1,
+  "rate_limit_per_user": 0,
+  "topic": null,
+  "type": 0
+}
