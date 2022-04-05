@@ -26,6 +26,7 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
   let(:http) do
     http = instance_double("Discorb::HTTP")
     allow(http).to receive(:request) { |path, body, headers|
+      body = nil if %i[get delete].include?(path.method)
       expect({
         method: path.method,
         path: path.url,
