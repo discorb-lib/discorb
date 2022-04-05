@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 RSpec.describe Discorb::User do
   %w[user bot].each do |data_name|
-    let(:data) { JSON.load_file(__dir__ + "/../payloads/users/#{data_name}.json", symbolize_names: true) }
+    let(:data) { JSON.load_file(__dir__ + "/payloads/users/#{data_name}.json", symbolize_names: true) }
     let(:user) { described_class.new(client, data) }
     it "initializes successfully" do
       expect { user }.not_to raise_error
