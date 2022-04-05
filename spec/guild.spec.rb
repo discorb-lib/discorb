@@ -43,6 +43,7 @@ RSpec.describe Discorb::Guild do
       body: {
         type: Discorb::VoiceChannel.channel_type,
         name: "new_channel",
+        bitrate: 64000,
       },
       headers: { audit_log_reason: "reason" },
     ) do
