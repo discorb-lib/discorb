@@ -8,17 +8,23 @@ on:
 
 jobs:
   main:
+    strategy:
+      matrix:
+        ruby-version:
+          - "3.0"
+          - "3.1"
     runs-on: ubuntu-latest
     steps:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.2
+          ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          bundle config --local with 'spec'
           bundle install
           gem update uri
       - name: Run spec
-        run: bundle exec rake spec:all
+        run: bundle exec rake spec
