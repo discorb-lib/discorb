@@ -214,7 +214,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.request(Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:stage_instance_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:stage_instance_id", :delete), {}, audit_log_reason: reason).wait
         self
       end
     end

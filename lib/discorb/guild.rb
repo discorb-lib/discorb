@@ -703,7 +703,7 @@ module Discorb
     #
     def kick_member(member, reason: nil)
       Async do
-        @client.http.request(Route.new("/guilds/#{@id}/members/#{member.id}", "//guilds/:guild_id/members/:user_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@id}/members/#{member.id}", "//guilds/:guild_id/members/:user_id", :delete), {}, audit_log_reason: reason).wait
       end
     end
 
@@ -781,7 +781,7 @@ module Discorb
     #
     def unban_user(user, reason: nil)
       Async do
-        @client.http.request(Route.new("/guilds/#{@id}/bans/#{user.id}", "//guilds/:guild_id/bans/:user_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@id}/bans/#{user.id}", "//guilds/:guild_id/bans/:user_id", :delete), {}, audit_log_reason: reason).wait
       end
     end
 

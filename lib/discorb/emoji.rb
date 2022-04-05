@@ -120,7 +120,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.request(Route.new("/guilds/#{@guild.id}/emojis/#{@id}", "//guilds/:guild_id/emojis/:emoji_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild.id}/emojis/#{@id}", "//guilds/:guild_id/emojis/:emoji_id", :delete), {}, audit_log_reason: reason).wait
         @available = false
         self
       end
