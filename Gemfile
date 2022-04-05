@@ -11,6 +11,7 @@ gem "rubocop-rake", "~> 0.6.0"
 gem "rubocop-rspec", "~> 2.9"
 
 gem "rspec", "~> 3.11"
+gem "async-rspec", "~> 1.16"
 
 gem "lefthook", "~> 0.7.7"
 gem "rufo", "~> 0.13.0"
