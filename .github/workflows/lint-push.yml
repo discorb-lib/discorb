@@ -12,7 +12,7 @@ jobs:
           ruby-version: 3.0.0
       - name: Install gems
         run: |
-          gem install rubocop
+          gem install rubocop rake
       - name: Run rubocop
         run: |
-          rubocop lib
+          rake spec
