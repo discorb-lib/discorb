@@ -15,4 +15,4 @@ jobs:
           gem install rubocop rake
       - name: Run rubocop
         run: |
-          rake spec
+          rake lint
