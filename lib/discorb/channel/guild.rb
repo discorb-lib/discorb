@@ -90,7 +90,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.request(Route.new(base_url.wait.to_s, "//webhooks/:webhook_id/:token", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new(base_url.wait.to_s, "//webhooks/:webhook_id/:token", :delete), {}, audit_log_reason: reason).wait
         @deleted = true
         self
       end
@@ -164,7 +164,7 @@ module Discorb
     #
     def delete_permissions(target, reason: nil)
       Async do
-        @client.http.request(Route.new("/channels/#{@id}/permissions/#{target.id}", "//channels/:channel_id/permissions/:target_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{@id}/permissions/#{target.id}", "//channels/:channel_id/permissions/:target_id", :delete), {}, audit_log_reason: reason).wait
       end
     end
 

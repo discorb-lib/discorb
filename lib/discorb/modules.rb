@@ -113,7 +113,7 @@ module Discorb
     #
     def delete_message!(message_id, reason: nil)
       Async do
-        @client.http.request(Route.new("/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id", :delete), {}, audit_log_reason: reason).wait
       end
     end
 
@@ -198,7 +198,7 @@ module Discorb
     #
     def unpin_message(message, reason: nil)
       Async do
-        @client.http.request(Route.new("/channels/#{channel_id.wait}/pins/#{message.id}", "//channels/:channel_id/pins/:message_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{channel_id.wait}/pins/#{message.id}", "//channels/:channel_id/pins/:message_id", :delete), {}, audit_log_reason: reason).wait
       end
     end
 

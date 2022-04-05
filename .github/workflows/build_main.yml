@@ -3,7 +3,7 @@ name: Build YARD with main
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/8 * * * *"
+    - cron: "0 * * * *"
 
 jobs:
   main:
