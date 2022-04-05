@@ -85,7 +85,9 @@ module Discorb
     # @return [Boolean] Whether the message is pinned.
     attr_reader :pinned
     alias pinned? pinned
-    @message_type = {
+    # @private
+    # @return [{Integer => Symbol}] The mapping of message type.
+    MESSAGE_TYPE = {
       0 => :default,
       1 => :recipient_add,
       2 => :recipient_remove,
@@ -487,7 +489,7 @@ module Discorb
       @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : []
       @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
       @pinned = data[:pinned]
-      @type = self.class.message_type[data[:type]]
+      @type = MESSAGE_TYPE[data[:type]]
       @activity = data[:activity] && Activity.new(data[:activity])
       @application_id = data[:application_id]
       @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
@@ -499,11 +501,6 @@ module Discorb
       @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
       @data.update(data)
       @deleted = false
-    end
-
-    class << self
-      # @private
-      attr_reader :message_type
     end
   end
 end

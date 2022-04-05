@@ -1,0 +1,15 @@
+{
+  "id": "944416820830560296",
+  "last_message_id": null,
+  "type": 2,
+  "name": "Voice #1",
+  "position": 0,
+  "parent_id": "944416775448190996",
+  "bitrate": 64000,
+  "user_limit": 0,
+  "rtc_region": null,
+  "guild_id": "863581274916913193",
+  "permission_overwrites": [],
+  "rate_limit_per_user": 0,
+  "nsfw": false
+}

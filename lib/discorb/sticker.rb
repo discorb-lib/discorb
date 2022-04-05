@@ -161,10 +161,5 @@ module Discorb
         @user = data[:user] && (@client.users[data[:user][:id]] || User.new(@client, data[:user]))
       end
     end
-
-    class << self
-      # @private
-      attr_reader :sticker_type, :sticker_format
-    end
   end
 end

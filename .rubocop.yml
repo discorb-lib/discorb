@@ -70,3 +70,15 @@ Layout/EndOfLine: # For git
 
 Lint/ScriptPermission: # For GitHub Actions
   Enabled: false
+
+Style/NumericLiterals:  # For style
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false

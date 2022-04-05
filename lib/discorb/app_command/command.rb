@@ -353,11 +353,6 @@ module Discorb
           command
         end
       end
-
-      class << self
-        # @private
-        attr_reader :types
-      end
     end
   end
 end
