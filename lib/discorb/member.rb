@@ -173,7 +173,7 @@ module Discorb
     #
     def remove_role(role, reason: nil)
       Async do
-        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", "//guilds/:guild_id/members/:user_id/roles/:role_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", "//guilds/:guild_id/members/:user_id/roles/:role_id", :delete), {}, audit_log_reason: reason).wait
       end
     end
 

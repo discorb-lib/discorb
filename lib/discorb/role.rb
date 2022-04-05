@@ -155,7 +155,7 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.request(Route.new("/guilds/#{@guild.id}/roles/#{@id}", "//guilds/:guild_id/roles/:role_id", :delete), audit_log_reason: reason).wait
+        @client.http.request(Route.new("/guilds/#{@guild.id}/roles/#{@id}", "//guilds/:guild_id/roles/:role_id", :delete), {}, audit_log_reason: reason).wait
       end
     end
 
