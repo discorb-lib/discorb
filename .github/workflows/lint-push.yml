@@ -12,7 +12,7 @@ jobs:
           ruby-version: 3.0.0
       - name: Install gems
         run: |
-          gem install rubocop rake
+          bundle install
       - name: Run rubocop
         run: |
           rake lint
