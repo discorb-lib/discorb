@@ -6,6 +6,8 @@ module Discorb
   class CategoryChannel < GuildChannel
     @channel_type = 4
 
+    include Discorb::ChannelManager
+
     def channels
       @client.channels.values.filter { |channel| channel.parent == self }
     end
