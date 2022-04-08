@@ -3,7 +3,7 @@ module Discorb
   #
   # Manages channels.
   #
-  module ChannelManager
+  module ChannelContainer
     #
     # Returns text channels.
     #
