@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Discorb
   #
-  # Manages channels.
+  # Module for container of channels.
   #
   module ChannelContainer
     #
