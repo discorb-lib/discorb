@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require_relative "../common"
 RSpec.describe Discorb::ChannelContainer do
   specify "Discorb::Guild includes Discorb::ChannelContainer" do
     expect(Discorb::Guild.ancestors).to include(described_class)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative "./common"
 
 RSpec.describe Discorb::ClientUser do
   it "sends PATCH /users/@me" do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative "./common"
 
 RSpec.describe Discorb::Snowflake do
   %w[863581274916913193 686547120534454315 613425648685547541 81384788765712384].each do |id|

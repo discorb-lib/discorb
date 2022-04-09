@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require "rspec"
 require "objspace"
+require_relative "./common"
 
 ObjectSpace.each_object(Class).filter { |c| c < Discorb::Flag }.each do |klass|
   RSpec.describe klass do

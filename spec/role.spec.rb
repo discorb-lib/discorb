@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative "./common"
 
 RSpec.describe Discorb::Role do
   JSON.load_file(__dir__ + "/payloads/guild.json", symbolize_names: true)[:roles].each do |role_data|

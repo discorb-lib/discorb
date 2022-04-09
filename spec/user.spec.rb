@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require_relative "./common"
+
 RSpec.describe Discorb::User do
   %w[user bot].each do |data_name|
     let(:data) { JSON.load_file(__dir__ + "/payloads/users/#{data_name}.json", symbolize_names: true) }

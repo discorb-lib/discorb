@@ -1,22 +1,21 @@
 # frozen_string_literal: true
-require "rspec"
-require "discorb"
+require_relative "./common"
 
-RSpec.describe "Discorb::Dictionary" do
+RSpec.describe Discorb::Dictionary do
   let(:dict) do
-    Discorb::Dictionary.new(
+    described_class.new(
       { foo: :bar, fizz: :buzz, hoge: :fuga }
     )
   end
 
   describe ".new" do
     it "creates an empty dictionary" do
-      expect { Discorb::Dictionary.new }.not_to raise_error
+      expect { described_class.new }.not_to raise_error
     end
 
     it "creates with elements" do
       expect do
-        Discorb::Dictionary.new(
+        described_class.new(
           { foo: :bar, fizz: :buzz }
         )
       end.not_to raise_error
@@ -34,7 +33,7 @@ RSpec.describe "Discorb::Dictionary" do
     end
 
     it "sorts keys" do
-      new_dict = Discorb::Dictionary.new(
+      new_dict = described_class.new(
         { hoge: :fuga, foo: :bar, fizz: :buzz },
         sort: proc { |a, _b| a.to_s },
       )
@@ -44,7 +43,7 @@ RSpec.describe "Discorb::Dictionary" do
     end
 
     it "follows limits" do
-      new_dict = Discorb::Dictionary.new(
+      new_dict = described_class.new(
         { hoge: :fuga, foo: :bar, fizz: :buzz },
         limit: 4,
       )
@@ -81,7 +80,7 @@ RSpec.describe "Discorb::Dictionary" do
 
   describe "#merge" do
     it "merges dictionary" do
-      dict2 = Discorb::Dictionary.new(
+      dict2 = described_class.new(
         { piyo: :poyo, fizz: :buzz2 }
       )
       dict.merge(dict2)

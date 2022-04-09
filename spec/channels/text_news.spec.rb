@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "rspec"
-require "discorb"
 require_relative "../common"
 
 [Discorb::TextChannel, Discorb::NewsChannel].each do |channel_class|

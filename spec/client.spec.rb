@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-require "rspec"
-require "discorb"
-require "async/rspec"
-require_relative "common"
+require_relative "./common"
 
 RSpec.describe Discorb::Client do
   describe "#fetch_xxx" do
