@@ -6,13 +6,18 @@ source "https://rubygems.org"
 gemspec
 
 gem "rake", "~> 13.0"
+
+# Rubocop
 gem "rubocop", "~> 1.25"
 gem "rubocop-rake", "~> 0.6.0"
 gem "rubocop-rspec", "~> 2.9"
 
+# RSpec
 gem "rspec", "~> 3.11"
 gem "async-rspec", "~> 1.16"
+gem "parallel_tests", "~> 3.8"
 
+# Other development tools
 gem "lefthook", "~> 0.7.7"
 gem "rufo", "~> 0.13.0"
 gem "sord", "~> 3.0.1"

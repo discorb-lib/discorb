@@ -2,17 +2,7 @@
 
 require "bundler/gem_tasks"
 require_relative "lib/discorb/utils/colored_puts"
-begin
-  require "rspec/core/rake_task"
-rescue LoadError
-  task :spec do
-    raise "rspec is required to run the specs."
-  end
-else
-  RSpec::Core::RakeTask.new(:spec).tap do |task|
-    task.pattern = "spec/**/*.spec.rb"
-  end
-end
+require "parallel_tests"
 task default: %i[]
 
 # @private
@@ -24,6 +14,11 @@ def current_version
   else
     Discorb::VERSION
   end
+end
+
+desc "Run spec with parallel_rspec"
+task :spec do
+  sh "parallel_rspec -p spec/**/*.rb"
 end
 
 desc "Build emoji_table.rb"
