@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative "common"
 
 RSpec.describe Discorb::Guild do
   let(:data) { JSON.load_file(__dir__ + "/payloads/guild.json", symbolize_names: true) }
