@@ -18,7 +18,7 @@ end
 
 desc "Run spec with parallel_rspec"
 task :spec do
-  sh "parallel_rspec spec/**/*.rb"
+  sh "parallel_rspec spec/*.spec.rb spec/**/*.spec.rb"
 end
 
 desc "Build emoji_table.rb"
