@@ -711,12 +711,23 @@ module Discorb
     # Fetch a list of bans in the guild.
     # @async
     #
+    # @param [Integer] limit The number of bans to fetch.
+    # @param [Discorb::Snowflake] before The ID of the ban to fetch before.
+    # @param [Discorb::Snowflake] after The ID of the ban to fetch after.
+    # @param [Discorb::Snowflake] around The ID of the ban to fetch around.
+    #
     # @return [Async::Task<Array<Discorb::Guild::Ban>>] The list of bans.
     #
-    def fetch_bans
+    def fetch_bans(limit = 50, before: nil, after: nil, around: nil)
       Async do
-        _resp, data = @client.http.request(Route.new("/guilds/#{@id}/bans", "//guilds/:guild_id/bans", :get)).wait
-        data.map { |d| Ban.new(@client, self, d) }
+        params = {
+          limit: limit,
+          before: Discorb::Utils.try(after, :id),
+          after: Discorb::Utils.try(around, :id),
+          around: Discorb::Utils.try(before, :id),
+        }.filter { |_k, v| !v.nil? }.to_h
+        _resp, bans = @client.http.request(Route.new("/guilds/#{@id}/bans?#{URI.encode_www_form(params)}", "//guilds/:guild_id/bans", :get)).wait
+        bans.map { |d| Ban.new(@client, self, d) }
       end
     end
 
@@ -1149,6 +1160,10 @@ module Discorb
         @guild = guild
         @reason = data[:reason]
         @user = @client.users[data[:user][:id]] || User.new(@client, data[:user])
+      end
+
+      def inspect
+        "<#{self.class.name} #{@user}>"
       end
     end
 
