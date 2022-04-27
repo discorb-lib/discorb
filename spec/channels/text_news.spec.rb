@@ -77,15 +77,16 @@ require_relative "../common"
       expect(channel.create_thread("thread").wait).to be_a Discorb::ThreadChannel
     end
 
-    # -- permissions
-    it "returns { Discorb::Member, Discorb::Role => Discorb::PermissionOverwrite }" do
-      expect(channel.permission_overwrites).to be_a Hash
-      expect(channel.permission_overwrites.keys).to all(
-        satisfy { |k| k.is_a?(Discorb::Role) || k.is_a?(Discorb::Member) },
-      )
-      expect(channel.permission_overwrites.values).to all(
-        satisfy { |k| k.is_a?(Discorb::PermissionOverwrite) },
-      )
+    describe "permissions" do
+      it "returns { Discorb::Member, Discorb::Role => Discorb::PermissionOverwrite }" do
+        expect(channel.permission_overwrites).to be_a Hash
+        expect(channel.permission_overwrites.keys).to all(
+          satisfy { |k| k.is_a?(Discorb::Role) || k.is_a?(Discorb::Member) },
+        )
+        expect(channel.permission_overwrites.values).to all(
+          satisfy { |k| k.is_a?(Discorb::PermissionOverwrite) },
+        )
+      end
     end
   end
 end

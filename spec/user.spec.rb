@@ -9,31 +9,33 @@ RSpec.describe Discorb::User do
       expect { user }.not_to raise_error
     end
 
-    # -- Parsing data
-    specify "#id returns the id as Snowflake" do
-      expect(user.id).to be_a Discorb::Snowflake
-      expect(user.id).to eq data[:id]
+    describe "parsing" do
+      specify "#id returns the id as Snowflake" do
+        expect(user.id).to be_a Discorb::Snowflake
+        expect(user.id).to eq data[:id]
+      end
+
+      specify "#name returns the name" do
+        expect(user.name).to eq data[:username]
+      end
+
+      specify "#avatar returns Asset object" do
+        expect(user.avatar).to be_a Discorb::Asset
+      end
     end
 
-    specify "#name returns the name" do
-      expect(user.name).to eq data[:username]
-    end
+    describe "helpers" do
+      specify "#to_s returns name with `name#discriminator` format" do
+        expect(user.to_s).to eq "#{data[:username]}##{data[:discriminator]}"
+      end
 
-    specify "#avatar returns Asset object" do
-      expect(user.avatar).to be_a Discorb::Asset
-    end
+      specify "#mention returns `<@user_id>`" do
+        expect(user.mention).to eq "<@#{data[:id]}>"
+      end
 
-    # -- helper methods
-    specify "#to_s returns name with `name#discriminator` format" do
-      expect(user.to_s).to eq "#{data[:username]}##{data[:discriminator]}"
-    end
-
-    specify "#mention returns `<@user_id>`" do
-      expect(user.mention).to eq "<@#{data[:id]}>"
-    end
-
-    specify "#bot? returns true if user is bot" do
-      expect(user.bot?).to eq data[:bot] == true
+      specify "#bot? returns true if user is bot" do
+        expect(user.bot?).to eq data[:bot] == true
+      end
     end
   end
 end
