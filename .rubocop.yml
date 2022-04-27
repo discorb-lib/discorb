@@ -2,6 +2,10 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
 
+require:
+- rubocop-rake
+- rubocop-rspec
+
 Layout:
   Enabled: false
 Metrics:

@@ -333,10 +333,10 @@ task document: %i[document:yard document:replace]
 
 desc "Lint code with rubocop"
 task :lint do
-  sh "rubocop lib spec Rakefile --require rubocop-rake --require rubocop-rspec"
+  sh "rubocop lib spec Rakefile"
 end
 
 desc "Autofix code with rubocop"
 task "lint:fix" do
-  sh "rubocop lib spec Rakefile -A --require rubocop-rake --require rubocop-rspec"
+  sh "rubocop lib spec Rakefile -A"
 end

@@ -37,7 +37,7 @@ pre-commit:
   commands:
     linting:
       glob: "*.rb"
-      run: rubocop {staged_files} --require rubocop-rake --require rubocop-rspec
+      run: rubocop {staged_files}
 
 commit-msg:
   scripts:
