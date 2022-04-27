@@ -10,7 +10,7 @@ module Discorb
     # @return [Array<Discorb::TextChannel>] The text channels.
     #
     def text_channels
-      channels.filter { |c| c.is_a? TextChannel }
+      channels.filter { |c| c.instance_of? TextChannel }
     end
 
     #
@@ -19,7 +19,7 @@ module Discorb
     # @return [Array<Discorb::VoiceChannel>] The voice channels.
     #
     def voice_channels
-      channels.filter { |c| c.is_a? VoiceChannel }
+      channels.filter { |c| c.instance_of? VoiceChannel }
     end
 
     #
@@ -28,7 +28,7 @@ module Discorb
     # @return [Array<Discorb::NewsChannel>] The news channels.
     #
     def news_channels
-      channels.filter { |c| c.is_a? NewsChannel }
+      channels.filter { |c| c.instance_of? NewsChannel }
     end
 
     #
@@ -37,7 +37,7 @@ module Discorb
     # @return [Array<Discorb::StageChannel>] The stage channels.
     #
     def stage_channels
-      channels.filter { |c| c.is_a? StageChannel }
+      channels.filter { |c| c.instance_of? StageChannel }
     end
   end
 end
