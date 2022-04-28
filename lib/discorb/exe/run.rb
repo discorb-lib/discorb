@@ -50,7 +50,7 @@ ENV["DISCORB_CLI_FLAG"] = "run"
 ENV["DISCORB_CLI_OPTIONS"] = JSON.generate(options)
 
 if options[:token]
-  ENV["DISCORB_CLI_TOKEN"] = ENV[options[:token]]
+  ENV["DISCORB_CLI_TOKEN"] = ENV.fetch(options[:token], nil)
   raise "#{options[:token]} is not set." if ENV["DISCORB_CLI_TOKEN"].nil?
 elsif options[:token].nil? || options[:token] == "-"
   print "\e[90mPlease enter your token: \e[m"

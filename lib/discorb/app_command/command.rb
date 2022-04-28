@@ -248,7 +248,7 @@ module Discorb
         #
         def group(command_name, description, &block)
           command = Discorb::ApplicationCommand::Command::SubcommandGroup.new(command_name, description, @name, @client)
-          command.yield_self(&block) if block_given?
+          command.then(&block) if block_given?
           @commands << command
           command
         end

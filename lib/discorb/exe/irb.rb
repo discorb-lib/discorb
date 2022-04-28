@@ -55,7 +55,7 @@ client.on :message do |message|
   $messages << message
 end
 
-token = ENV["DISCORD_BOT_TOKEN"] || ENV["DISCORD_TOKEN"]
+token = ENV.fetch("DISCORD_BOT_TOKEN", nil) || ENV.fetch("DISCORD_TOKEN", nil)
 if token.nil?
   if File.exist?(token_file)
     token = File.read(token_file)

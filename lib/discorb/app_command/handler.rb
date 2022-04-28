@@ -73,7 +73,7 @@ module Discorb
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
         command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
-        command.yield_self(&block) if block_given?
+        command.then(&block) if block_given?
         @commands << command
         command
       end
@@ -155,7 +155,7 @@ module Discorb
               global_commands.map(&:to_hash)
             ).wait
           end
-          if ENV["DISCORB_CLI_FLAG"] == "setup"
+          if ENV.fetch("DISCORB_CLI_FLAG", nil) == "setup"
             sputs "Registered commands for global:"
             global_commands.each do |command|
               iputs "- #{command.name["default"]}"

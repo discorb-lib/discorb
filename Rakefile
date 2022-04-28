@@ -71,7 +71,7 @@ namespace :document do
   version = current_version
   desc "Just generate document"
   task :yard do
-    sh "bundle exec yardoc -o doc/#{version} --locale #{ENV["rake_locale"] or "en"}"
+    sh "bundle exec yardoc -o doc/#{version} --locale #{ENV.fetch("rake_locale", nil) or "en"}"
   end
 
   desc "Replace files"
@@ -144,7 +144,7 @@ namespace :document do
     desc "change locale of current document"
     task :locale do
       next if ENV["rake_locale"].nil?
-      require_relative "template-replace/scripts/locale_#{ENV["rake_locale"]}.rb"
+      require_relative "template-replace/scripts/locale_#{ENV.fetch("rake_locale", nil)}.rb"
       replace_locale("doc/main")
     end
   end
@@ -208,7 +208,7 @@ namespace :document do
       require "crowdin-api"
       require "zip"
       crowdin = Crowdin::Client.new do |config|
-        config.api_token = ENV["CROWDIN_PERSONAL_TOKEN"]
+        config.api_token = ENV.fetch("CROWDIN_PERSONAL_TOKEN", nil)
         config.project_id = ENV["CROWDIN_PROJECT_ID"].to_i
       end
       build = crowdin.build_project_translation["data"]["id"]

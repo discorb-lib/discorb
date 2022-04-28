@@ -448,9 +448,9 @@ module Discorb
     # @note If the token is nil, you should use `discorb run` with the `-e` or `--env` option.
     #
     def run(token = nil, shards: nil, shard_count: nil)
-      token ||= ENV["DISCORB_CLI_TOKEN"]
+      token ||= ENV.fetch("DISCORB_CLI_TOKEN", nil)
       raise ArgumentError, "Token is not specified, and -e/--env is not specified" if token.nil?
-      case ENV["DISCORB_CLI_FLAG"]
+      case ENV.fetch("DISCORB_CLI_FLAG", nil)
       when nil
         start_client(token, shards: shards, shard_count: shard_count)
       when "run"
@@ -498,18 +498,18 @@ module Discorb
 
     def before_run(token)
       require "json"
-      options = JSON.parse(ENV["DISCORB_CLI_OPTIONS"], symbolize_names: true)
+      options = JSON.parse(ENV.fetch("DISCORB_CLI_OPTIONS", nil), symbolize_names: true)
       setup_commands(token) if options[:setup]
     end
 
     def run_setup(token)
       guild_ids = "global"
-      if guilds = ENV["DISCORB_SETUP_GUILDS"]
+      if guilds = ENV.fetch("DISCORB_SETUP_GUILDS", nil)
         guild_ids = guilds.split(",")
       end
       guild_ids = false if guild_ids == ["global"]
       setup_commands(token, guild_ids: guild_ids).wait
-      if ENV["DISCORB_SETUP_SCRIPT"] == "true"
+      if ENV.fetch("DISCORB_SETUP_SCRIPT", nil) == "true"
         @events[:setup]&.each do |event|
           event.call
         end
@@ -603,7 +603,7 @@ module Discorb
       once :standby do
         next if @title == false
 
-        title = @title || ENV["DISCORB_CLI_TITLE"] || "discorb: #{@user}"
+        title = @title || ENV.fetch("DISCORB_CLI_TITLE", nil) || "discorb: #{@user}"
         Process.setproctitle title
       end
     end
