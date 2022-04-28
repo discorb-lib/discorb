@@ -60,7 +60,7 @@ require_relative "../common"
         :post,
         "/channels/863581274916913196/threads",
         body: {
-          auto_archive_duration: 1440,
+          auto_archive_duration: nil,
           name: "thread",
           rate_limit_per_user: nil,
           type: 11,
@@ -75,6 +75,30 @@ require_relative "../common"
         }
       end
       expect(channel.create_thread("thread").wait).to be_a Discorb::ThreadChannel
+    end
+
+    Discorb::TextChannel::DEFAULT_AUTO_ARCHIVE_DURATION.each do |value, name|
+      it "creates new thread with #{value} auto_archive_duration when passed #{name}" do
+        expect_request(
+          :post,
+          "/channels/863581274916913196/threads",
+          body: {
+            auto_archive_duration: value,
+            name: "thread",
+            rate_limit_per_user: nil,
+            type: 11,
+          },
+          headers: {
+            audit_log_reason: nil,
+          },
+        ) do
+          {
+            code: 200,
+            body: File.read("#{__dir__}/../payloads/channels/thread_channel.json").then { JSON.parse(_1, symbolize_names: true) },
+          }
+        end
+        expect(channel.create_thread("thread", auto_archive_duration: name).wait).to be_a Discorb::ThreadChannel
+      end
     end
 
     describe "permissions" do
