@@ -16,8 +16,19 @@ module Discorb
     # @return [Time] The time when the last pinned message was pinned.
     attr_reader :last_pin_timestamp
     alias last_pinned_at last_pin_timestamp
+    # @return [Integer] The default value of duration of auto archive.
+    attr_reader :default_auto_archive_duration
 
     include Messageable
+
+    # @return [{Integer => Symbol}] The auto archive duration map.
+    # @private
+    DEFAULT_AUTO_ARCHIVE_DURATION = {
+      60 => :hour,
+      1440 => :day,
+      4320 => :three_days,
+      10080 => :week,
+    }.freeze
 
     @channel_type = 0
 
@@ -157,7 +168,7 @@ module Discorb
     #
     # @param [String] name The name of the thread.
     # @param [Discorb::Message] message The message to start the thread.
-    # @param [Integer] auto_archive_duration The duration of auto-archiving.
+    # @param [:hour, :day, :three_days, :week] auto_archive_duration The duration of auto-archiving.
     # @param [Boolean] public Whether the thread is public.
     # @param [Integer] rate_limit_per_user The rate limit per user.
     # @param [Integer] slowmode Alias of `rate_limit_per_user`.
@@ -165,20 +176,30 @@ module Discorb
     #
     # @return [Async::Task<Discorb::ThreadChannel>] The started thread.
     #
-    def start_thread(name, message: nil, auto_archive_duration: 1440, public: true, rate_limit_per_user: nil, slowmode: nil, reason: nil)
+    def start_thread(name, message: nil, auto_archive_duration: nil, public: true, rate_limit_per_user: nil, slowmode: nil, reason: nil)
+      auto_archive_duration ||= @default_auto_archive_duration
+      auto_archive_duration_value = DEFAULT_AUTO_ARCHIVE_DURATION.key(auto_archive_duration)
       Async do
         _resp, data = if message.nil?
-            @client.http.request(Route.new("/channels/#{@id}/threads", "//channels/:channel_id/threads", :post), {
-              name: name,
-              auto_archive_duration: auto_archive_duration,
-              type: public ? 11 : 10,
-              rate_limit_per_user: rate_limit_per_user || slowmode,
-            },
-                                 audit_log_reason: reason).wait
+            @client.http.request(
+              Route.new("/channels/#{@id}/threads", "//channels/:channel_id/threads", :post),
+              {
+                name: name,
+                auto_archive_duration: auto_archive_duration_value,
+                type: public ? 11 : 10,
+                rate_limit_per_user: rate_limit_per_user || slowmode,
+              },
+              audit_log_reason: reason,
+            ).wait
           else
-            @client.http.request(Route.new("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads", "//channels/:channel_id/messages/:message_id/threads", :post), {
-              name: name, auto_archive_duration: auto_archive_duration,
-            }, audit_log_reason: reason).wait
+            @client.http.request(
+              Route.new("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads", "//channels/:channel_id/messages/:message_id/threads", :post),
+              {
+                name: name,
+                auto_archive_duration: auto_archive_duration_value,
+              },
+              audit_log_reason: reason,
+            ).wait
           end
         Channel.make_channel(@client, data)
       end
@@ -249,6 +270,7 @@ module Discorb
       @last_message_id = data[:last_message_id]
       @rate_limit_per_user = data[:rate_limit_per_user]
       @last_pin_timestamp = data[:last_pin_timestamp] && Time.iso8601(data[:last_pin_timestamp])
+      @default_auto_archive_duration = DEFAULT_AUTO_ARCHIVE_DURATION[data[:default_auto_archive_duration]]
       super
     end
   end
