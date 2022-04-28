@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 module Discorb
-  #
-  # Handles application commands.
-  #
   module ApplicationCommand
     #
     # Represents a application command.
@@ -20,8 +17,6 @@ module Discorb
       attr_reader :type
       # @return [Integer] The raw type of the command.
       attr_reader :type_raw
-      # @return [Discorb::Dictionary{Discorb::Snowflake, :global => Discorb::Snowflake}] The ID mapping.
-      attr_reader :id_map
 
       # @private
       # @return [{Integer => Symbol}] The mapping of raw types to types.
@@ -44,14 +39,12 @@ module Discorb
         @name = name.is_a?(String) ? { "default" => name } : ApplicationCommand.modify_localization_hash(name)
         @guild_ids = guild_ids&.map(&:to_s)
         @block = block
-        @raw_type = type
         @type = Discorb::ApplicationCommand::Command::TYPES[type]
         @type_raw = type
-        @id_map = Discorb::Dictionary.new
       end
 
       #
-      # Changes the self pointer to the given object.
+      # Changes the self pointer of block to the given object.
       # @private
       #
       # @param [Object] instance The object to change the self pointer to.
@@ -73,7 +66,6 @@ module Discorb
         {
           name: @name["default"],
           name_localizations: @name.except("default"),
-          default_permission: @default_permission,
           type: @type_raw,
         }
       end
@@ -82,7 +74,7 @@ module Discorb
       # Represents the slash command.
       #
       class SlashCommand < Command
-        # @return [String] The description of the command.
+        # @return [Hash{String => String}] The description of the command.
         attr_reader :description
         # @return [Hash{String => Hash}] The options of the command.
         attr_reader :options
@@ -103,9 +95,7 @@ module Discorb
           super(name, guild_ids, block, type)
           @description = description.is_a?(String) ? { "default" => description } : ApplicationCommand.modify_localization_hash(description)
           @options = options
-          @id = nil
           @parent = parent
-          @id_map = Discorb::Dictionary.new
         end
 
         #
@@ -114,7 +104,7 @@ module Discorb
         # @return [String] The name of the command.
         #
         def to_s
-          (@parent + " " + @name["default"]).strip
+          "#{@parent} #{@name["default"]}".strip
         end
 
         #
@@ -185,7 +175,6 @@ module Discorb
           {
             name: @name["default"],
             name_localizations: @name.except("default"),
-            default_permission: true,
             description: @description["default"],
             description_localizations: @description.except("default"),
             options: options_payload,
@@ -217,7 +206,6 @@ module Discorb
           @description = description
           @commands = []
           @client = client
-          @id_map = Discorb::Dictionary.new
         end
 
         #
@@ -287,7 +275,6 @@ module Discorb
                 name_localizations: command.name.except("default"),
                 description: command.description["default"],
                 description_localizations: command.description.except("default"),
-                default_permission: true,
                 type: 1,
                 options: command.to_hash[:options],
               }
@@ -297,7 +284,6 @@ module Discorb
                 name_localizations: command.name.except("default"),
                 description: command.description["default"],
                 description_localizations: command.description.except("default"),
-                default_permission: true,
                 type: 2,
                 options: command.commands.map { |c| c.to_hash.merge(type: 1) },
               }
@@ -309,7 +295,6 @@ module Discorb
             name_localizations: @name.except("default"),
             description: @description["default"],
             description_localizations: @description.except("default"),
-            default_permission: @enabled,
             options: options_payload,
           }
         end
