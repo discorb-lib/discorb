@@ -101,7 +101,7 @@ module Discorb
         #
         def initialize(name, description, options, guild_ids, block, type, parent)
           super(name, guild_ids, block, type)
-          @description = description
+          @description = description.is_a?(String) ? { "default" => description } : ApplicationCommand.modify_localization_hash(description)
           @options = options
           @id = nil
           @parent = parent
