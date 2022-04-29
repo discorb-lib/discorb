@@ -112,6 +112,13 @@ module Discorb
       def max_value
         2 ** @bits.values.max - 1
       end
+
+      #
+      # Initialize a new flag with keys.
+      #
+      def from_keys(*keys)
+        new(keys.sum { |k| 1 << @bits[k] })
+      end
     end
   end
 end

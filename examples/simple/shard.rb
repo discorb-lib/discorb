@@ -14,4 +14,4 @@ client.on :message do |message|
   message.channel.post("I'm #{client.user}, running on shard #{client.shard_id}!")
 end
 
-client.run(ENV["DISCORD_BOT_TOKEN"], shards: [0, 1], shard_count: 2)
+client.run(ENV.fetch("DISCORD_BOT_TOKEN", nil), shards: [0, 1], shard_count: 2)

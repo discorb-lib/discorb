@@ -31,6 +31,8 @@ module Discorb
       #   | `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |
       #
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Boolean] dm_permission Whether the command is available in DM.
+      # @param [Discorb::Permission] default_permission The default permission of the command.
       # @param [Proc] block Command block.
       #
       # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
@@ -38,12 +40,12 @@ module Discorb
       # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
       # @see file:docs/cli/setup.md CLI: setup
       #
-      def slash(command_name, description, options = {}, guild_ids: nil, &block)
+      def slash(command_name, description, options = {}, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
         command_name = { default: command_name } if command_name.is_a?(String)
         description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "")
+        command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "", dm_permission, default_permission)
         @commands << command
         @bottom_commands << command
         command
@@ -55,6 +57,8 @@ module Discorb
       # @param [String, Hash{Symbol => String}] command_name Command name.
       # @param [String, Hash{Symbol => String}] description Command description.
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Boolean] dm_permission Whether the command is available in DM.
+      # @param [Discorb::Permission] default_permission The default permission of the command.
       #
       # @yield Block to yield with the command.
       # @yieldparam [Discorb::ApplicationCommand::Command::GroupCommand] group Group command.
@@ -64,10 +68,10 @@ module Discorb
       # @see file:docs/application_command.md Application Commands
       # @see file:docs/cli/setup.md CLI: setup
       #
-      def slash_group(command_name, description, guild_ids: nil, &block)
+      def slash_group(command_name, description, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self)
+        command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self, dm_permission, default_permission)
         command.then(&block) if block_given?
         @commands << command
         command
@@ -78,6 +82,8 @@ module Discorb
       #
       # @param [String, Hash{Symbol => String}] command_name Command name.
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Boolean] dm_permission Whether the command is available in DM.
+      # @param [Discorb::Permission] default_permission The default permission of the command.
       # @param [Proc] block Command block.
       # @yield [interaction, message] Block to execute.
       # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
@@ -85,10 +91,10 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.
       #
-      def message_command(command_name, guild_ids: nil, &block)
+      def message_command(command_name, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
         command_name = { default: command_name } if command_name.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
-        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 3)
+        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 3, dm_permission, default_permission)
         @commands << command
         command
       end
@@ -98,6 +104,8 @@ module Discorb
       #
       # @param [String, Hash{Symbol => String}] command_name Command name.
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Boolean] dm_permission Whether the command is available in DM.
+      # @param [Discorb::Permission] default_permission The default permission of the command.
       # @param [Proc] block Command block.
       # @yield [interaction, user] Block to execute.
       # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
@@ -105,10 +113,10 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.
       #
-      def user_command(command_name, guild_ids: nil, &block)
+      def user_command(command_name, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
         command_name = { default: command_name } if command_name.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
-        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 2)
+        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 2, dm_permission, default_permission)
         @commands << command
         command
       end
@@ -172,6 +180,34 @@ module Discorb
             end
           end
           @logger.info "Successfully setup commands"
+        end
+      end
+
+      #
+      # Claer commands in specified guilds.
+      # @async
+      # @see Client#initialize
+      #
+      # @param [String] token Bot token.
+      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to clear.
+      #
+      # @note `token` parameter only required if you don't run client.
+      #
+      def clear_commands(token, guild_ids)
+        Async do
+          @token ||= token
+          @http = HTTP.new(self)
+          app_info = fetch_application.wait
+
+          guild_ids.each do |guild_id|
+            @http.request(
+              Route.new("/applications/#{app_info.id}/guilds/#{guild_id}/commands",
+                        "//applications/:application_id/guilds/:guild_id/commands",
+                        :put),
+              []
+            ).wait
+          end
+          sputs "Cleared commands for #{guild_ids.length} guilds." if ENV.fetch("DISCORB_CLI_FLAG", nil) == "setup"
         end
       end
     end

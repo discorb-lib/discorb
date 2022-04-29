@@ -30,4 +30,4 @@ rescue Exception => e # rubocop:disable Lint/RescueException
                                           color: Discorb::Color[:red])
 end
 
-client.run(ENV["discord_bot_token"])
+client.run(ENV.fetch("discord_bot_token", nil))

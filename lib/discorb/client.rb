@@ -509,6 +509,7 @@ module Discorb
       end
       guild_ids = false if guild_ids == ["global"]
       setup_commands(token, guild_ids: guild_ids).wait
+      clear_commands(token, ENV.fetch("DISCORB_SETUP_CLEAR_GUILDS", "").split(","))
       if ENV.fetch("DISCORB_SETUP_SCRIPT", nil) == "true"
         @events[:setup]&.each do |event|
           event.call

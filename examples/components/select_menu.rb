@@ -59,4 +59,4 @@ client.on :select_menu_select do |response|
   )
 end
 
-client.run(ENV["DISCORD_BOT_TOKEN"])
+client.run(ENV.fetch("DISCORD_BOT_TOKEN", nil))

@@ -41,4 +41,4 @@ client.slash({
   )
 end
 
-client.run(ENV["DISCORD_BOT_TOKEN"])
+client.run(ENV.fetch("DISCORD_BOT_TOKEN", nil))

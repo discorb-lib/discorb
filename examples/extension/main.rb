@@ -10,4 +10,4 @@ end
 
 client.load_extension(MessageExpander)
 
-client.run(ENV["DISCORD_BOT_TOKEN"])
+client.run(ENV.fetch("DISCORD_BOT_TOKEN", nil))

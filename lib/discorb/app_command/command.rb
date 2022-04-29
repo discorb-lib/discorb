@@ -17,6 +17,10 @@ module Discorb
       attr_reader :type
       # @return [Integer] The raw type of the command.
       attr_reader :type_raw
+      # @return [Discorb::Permission] The default permissions for this command.
+      attr_reader :default_permission
+      # @return [Boolean] Whether the command is enabled in DMs.
+      attr_reader :dm
 
       # @private
       # @return [{Integer => Symbol}] The mapping of raw types to types.
@@ -34,13 +38,17 @@ module Discorb
       # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
       # @param [Proc] block The block of the command.
       # @param [:chat_input, :user, :message] type The type of the command.
+      # @param [Boolean] dm_permission Whether the command is enabled in DMs.
+      # @param [Discorb::Permission] default_permission The default permission of the command.
       #
-      def initialize(name, guild_ids, block, type)
+      def initialize(name, guild_ids, block, type, dm_permission = nil, default_permission = nil)
         @name = name.is_a?(String) ? { "default" => name } : ApplicationCommand.modify_localization_hash(name)
         @guild_ids = guild_ids&.map(&:to_s)
         @block = block
         @type = Discorb::ApplicationCommand::Command::TYPES[type]
         @type_raw = type
+        @dm = dm_permission
+        @default_permission = default_permission
       end
 
       #
@@ -67,6 +75,8 @@ module Discorb
           name: @name["default"],
           name_localizations: @name.except("default"),
           type: @type_raw,
+          dm_permission: @dm,
+          default_member_permissions: @default_permission&.to_s,
         }
       end
 
@@ -90,9 +100,11 @@ module Discorb
         # @param [Proc] block The block of the command.
         # @param [:chat_input, :user, :message] type The type of the command.
         # @param [Discorb::ApplicationCommand::Command, nil] parent The parent command.
+        # @param [Boolean] dm_permission Whether the command is enabled in DMs.
+        # @param [Discorb::Permission] default_permission The default permission of the command.
         #
-        def initialize(name, description, options, guild_ids, block, type, parent)
-          super(name, guild_ids, block, type)
+        def initialize(name, description, options, guild_ids, block, type, parent, dm_permission, default_permission)
+          super(name, guild_ids, block, type, dm_permission, default_permission)
           @description = description.is_a?(String) ? { "default" => description } : ApplicationCommand.modify_localization_hash(description)
           @options = options
           @parent = parent
@@ -178,6 +190,8 @@ module Discorb
             description: @description["default"],
             description_localizations: @description.except("default"),
             options: options_payload,
+            dm_permission: @dm,
+            default_member_permissions: @default_permission&.value&.to_s,
           }
         end
       end
@@ -200,9 +214,11 @@ module Discorb
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [:chat_input, :user, :message] type The type of the command.
         # @param [Discorb::Client] client The client of the command.
+        # @param [Boolean] dm_permission Whether the command is enabled in DMs.
+        # @param [Discorb::Permission] default_permission The default permission of the command.
         #
-        def initialize(name, description, guild_ids, type, client)
-          super(name, guild_ids, block, type)
+        def initialize(name, description, guild_ids, type, client, dm_permission, default_permission)
+          super(name, guild_ids, block, type, dm_permission, default_permission)
           @description = description
           @commands = []
           @client = client
