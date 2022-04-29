@@ -20,7 +20,7 @@ module Discorb
       # @return [Discorb::Permission] The default permissions for this command.
       attr_reader :default_permission
       # @return [Boolean] Whether the command is enabled in DMs.
-      attr_reader :dm
+      attr_reader :dm_permission
 
       # @private
       # @return [{Integer => Symbol}] The mapping of raw types to types.
@@ -47,7 +47,7 @@ module Discorb
         @block = block
         @type = Discorb::ApplicationCommand::Command::TYPES[type]
         @type_raw = type
-        @dm = dm_permission
+        @dm_permission = dm_permission
         @default_permission = default_permission
       end
 
@@ -75,7 +75,7 @@ module Discorb
           name: @name["default"],
           name_localizations: @name.except("default"),
           type: @type_raw,
-          dm_permission: @dm,
+          dm_permission: @dm_permission,
           default_member_permissions: @default_permission&.to_s,
         }
       end
@@ -190,7 +190,7 @@ module Discorb
             description: @description["default"],
             description_localizations: @description.except("default"),
             options: options_payload,
-            dm_permission: @dm,
+            dm_permission: @dm_permission,
             default_member_permissions: @default_permission&.value&.to_s,
           }
         end
