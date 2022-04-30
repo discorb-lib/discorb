@@ -69,6 +69,8 @@ module Discorb
       # @see file:docs/cli/setup.md CLI: setup
       #
       def slash_group(command_name, description, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
+        command_name = { default: command_name } if command_name.is_a?(String)
+        description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
         command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self, dm_permission, default_permission)
