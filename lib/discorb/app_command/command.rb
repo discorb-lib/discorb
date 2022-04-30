@@ -247,7 +247,7 @@ module Discorb
         # @param (see Discorb::ApplicationCommand::Handler#slash)
         # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
         #
-        def slash(command_name, description, options = {}, dm_permission: true, default_permission: nil)
+        def slash(command_name, description, options = {}, dm_permission: true, default_permission: nil, &block)
           command = Discorb::ApplicationCommand::Command::SlashCommand.new(
             command_name,
             description,
@@ -255,7 +255,7 @@ module Discorb
             [],
             block,
             1,
-            @name,
+            self,
             dm_permission,
             default_permission
           )
@@ -366,7 +366,7 @@ module Discorb
         end
 
         def to_s
-          @parent + " " + @name
+          "#{@parent} #{@name}"
         end
 
         #
@@ -376,7 +376,7 @@ module Discorb
         #
         def slash(command_name, description, options = {}, &block)
           command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, [],
-                                                                           block, 1, @parent + " " + @name)
+                                                                           block, 1, self, nil, nil)
           @commands << command
           @client.bottom_commands << command
           command

@@ -66,7 +66,7 @@ module Discorb
           guild_ids,
           block,
           1,
-          "",
+          nil,
           dm_permission,
           default_permission
         )
