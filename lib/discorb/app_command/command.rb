@@ -290,7 +290,7 @@ module Discorb
         # @return [String] The command name.
         #
         def to_s
-          @name
+          @name["default"]
         end
 
         #
