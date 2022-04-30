@@ -209,8 +209,8 @@ module Discorb
         # Initialize a new group command.
         # @private
         #
-        # @param [String] name The name of the command.
-        # @param [String] description The description of the command.
+        # @param [String, Hash{Symbol => String}] name The name of the command.
+        # @param [String, Hash{Symbol => String}] description The description of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [:chat_input, :user, :message] type The type of the command.
         # @param [Discorb::Client] client The client of the command.
@@ -219,7 +219,7 @@ module Discorb
         #
         def initialize(name, description, guild_ids, type, client, dm_permission, default_permission)
           super(name, guild_ids, block, type, dm_permission, default_permission)
-          @description = description
+          @description = description.is_a?(String) ? { "default" => description } : ApplicationCommand.modify_localization_hash(description)
           @commands = []
           @client = client
         end
