@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rspec"
 require "discorb"
 require "async"
@@ -28,12 +29,12 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
     allow(http).to receive(:request) { |path, body, headers|
       body = nil if %i[get delete].include?(path.method)
       expect({
-        method: path.method,
-        path: path.url,
-        body: body,
-        files: {},
-        headers: headers,
-      }).to eq($next_request)
+               method: path.method,
+               path: path.url,
+               body: body,
+               files: {},
+               headers: headers,
+             }).to eq($next_request)
       Async do
         data = $next_response.call
         [Response.new(data[:code], data[:body]), data[:body]]
@@ -41,12 +42,12 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
     }
     allow(http).to receive(:multipart_request) { |path, body, files, headers|
       expect({
-        method: path.method,
-        path: path.url,
-        body: body,
-        files: files.to_h { |f| [f.name, f.read] },
-        headers: headers,
-      }).to eq($next_request)
+               method: path.method,
+               path: path.url,
+               body: body,
+               files: files.to_h { |f| [f.name, f.read] },
+               headers: headers,
+             }).to eq($next_request)
       Async do
         data = $next_response.call
         [Response.new(data[:code], data[:body]), data[:body]]
@@ -64,9 +65,9 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
     allow(client).to receive(:send_gateway) { |opcode, **payload|
       if $next_gateway_request
         expect({
-          opcode: opcode,
-          payload: payload,
-        }).to eq($next_gateway_request)
+                 opcode: opcode,
+                 payload: payload,
+               }).to eq($next_gateway_request)
       end
     }
     $next_gateway_request ||= {}

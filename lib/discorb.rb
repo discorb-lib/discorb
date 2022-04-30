@@ -9,7 +9,8 @@ module Discorb
   # @private
   #
   # @!macro [new] async
-  #   @note This is an asynchronous method, it will return a `Async::Task` object. Use `Async::Task#wait` to get the result.
+  #   @note This is an asynchronous method, it will return a `Async::Task` object.
+  #     Use `Async::Task#wait` to get the result.
   #
   # @!macro [new] client_cache
   #   @note This method returns an object from client cache. it will return `nil` if the object is not in cache.
@@ -19,7 +20,8 @@ module Discorb
   #   @note You must enable `GUILD_MEMBERS` intent to use this method.
   #
   # @!macro edit
-  #   @note The arguments of this method are defaultly set to `Discorb::Unset`. Specify value to set the value, if not don't specify or specify `Discorb::Unset`.
+  #   @note The arguments of this method are defaultly set to `Discorb::Unset`.
+  #     Specify value to set the value, if not don't specify or specify `Discorb::Unset`.
   #
   # @!macro http
   #   @note This method calls HTTP request.

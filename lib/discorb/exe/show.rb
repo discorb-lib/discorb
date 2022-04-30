@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # description: Show information of your environment.
 
 require "etc"

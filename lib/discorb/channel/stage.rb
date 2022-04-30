@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-module Discorb
 
+module Discorb
   #
   # Represents a stage channel.
   #
@@ -11,7 +11,8 @@ module Discorb
     attr_reader :user_limit
     #
     # @private
-    # @return [Discorb::Dictionary{Discorb::Snowflake => StageInstance}] The stage instances associated with the stage channel.
+    # @return [Discorb::Dictionary{Discorb::Snowflake => StageInstance}]
+    #   The stage instances associated with the stage channel.
     #
     attr_reader :stage_instances
 
@@ -47,14 +48,21 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited stage channel.
     #
-    def edit(name: Discorb::Unset, position: Discorb::Unset, bitrate: Discorb::Unset, rtc_region: Discorb::Unset, reason: nil)
+    def edit(
+      name: Discorb::Unset,
+      position: Discorb::Unset,
+      bitrate: Discorb::Unset,
+      rtc_region: Discorb::Unset,
+      reason: nil
+    )
       Async do
         payload = {}
         payload[:name] = name if name != Discorb::Unset
         payload[:position] = position if position != Discorb::Unset
         payload[:bitrate] = bitrate if bitrate != Discorb::Unset
         payload[:rtc_region] = rtc_region if rtc_region != Discorb::Unset
-        @client.http.request(Route.new("/channels/#{@id}", "//channels/:channel_id", :patch), payload, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{@id}", "//channels/:channel_id", :patch), payload,
+                             audit_log_reason: reason).wait
         self
       end
     end
@@ -73,7 +81,14 @@ module Discorb
     #
     def start(topic, public: false, reason: nil)
       Async do
-        _resp, data = @client.http.request(Route.new("/stage-instances", "//stage-instances", :post), { channel_id: @id, topic: topic, public: public ? 2 : 1 }, audit_log_reason: reason).wait
+        _resp, data = @client.http.request(
+          Route.new("/stage-instances", "//stage-instances", :post),
+          {
+            channel_id: @id,
+            topic: topic,
+            public: public ? 2 : 1,
+          }, audit_log_reason: reason,
+        ).wait
         StageInstance.new(@client, data)
       end
     end
@@ -87,7 +102,8 @@ module Discorb
     #
     def fetch_stage_instance
       Async do
-        _resp, data = @client.http.request(Route.new("/stage-instances/#{@id}", "//stage-instances/:stage_instance_id", :get)).wait
+        _resp, data = @client.http.request(Route.new("/stage-instances/#{@id}", "//stage-instances/:stage_instance_id",
+                                                     :get)).wait
       rescue Discorb::NotFoundError
         nil
       else

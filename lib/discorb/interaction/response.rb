@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Discorb
   #
   # Represents an interaction of Discord.
@@ -19,12 +20,18 @@ module Discorb
       #
       def defer_source(ephemeral: false)
         Async do
-          @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), {
-            type: 5,
-            data: {
-              flags: (ephemeral ? 1 << 6 : 0),
-            },
-          }).wait
+          @client.http.request(
+            Route.new(
+              "/interactions/#{@id}/#{@token}/callback",
+              "//interactions/:interaction_id/:token/callback",
+              :post
+            ), {
+              type: 5,
+              data: {
+                flags: (ephemeral ? 1 << 6 : 0),
+              },
+            }
+          ).wait
           @defered = true
         end
       end
@@ -42,27 +49,45 @@ module Discorb
       # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
-      # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message] The callback message.
+      # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message]
+      #   The callback message.
       #
-      def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
+      def post(
+        content = nil,
+        tts: false,
+        embed: nil,
+        embeds: nil,
+        allowed_mentions: nil,
+        components: nil,
+        ephemeral: false
+      )
         Async do
           payload = {}
           payload[:content] = content if content
           payload[:tts] = tts
           payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }
-          payload[:allowed_mentions] = allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
+          payload[:allowed_mentions] =
+            allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
           payload[:components] = Component.to_payload(components) if components
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
 
           ret = if @responded
-              _resp, data = @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}", "//webhooks/:webhook_id/:token", :post), payload).wait
+              _resp, data = @client.http.request(
+                Route.new("/webhooks/#{@application_id}/#{@token}", "//webhooks/:webhook_id/:token", :post), payload
+              ).wait
               webhook = Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}")
               Webhook::Message.new(webhook, data, @client)
             elsif @defered
-              @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original", "//webhooks/:webhook_id/:token/messages/@original", :patch), payload).wait
+              @client.http.request(
+                Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
+                          "//webhooks/:webhook_id/:token/messages/@original", :patch), payload
+              ).wait
               CallbackMessage.new(@client, payload, @application_id, @token)
             else
-              @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), { type: 4, data: payload }).wait
+              @client.http.request(
+                Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback",
+                          :post), { type: 4, data: payload }
+              ).wait
               CallbackMessage.new(@client, payload, @application_id, @token)
             end
           @responded = true
@@ -118,7 +143,10 @@ module Discorb
             payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
             files = [file] if file != Discorb::Unset
             files = [] if files == Discorb::Unset
-            @client.http.multipart_request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original", "//webhooks/:webhook_id/:token/messages/@original", :patch), payload, files, headers: headers).wait
+            @client.http.multipart_request(
+              Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
+                        "//webhooks/:webhook_id/:token/messages/@original", :patch), payload, files, headers: headers,
+            ).wait
           end
         end
 
@@ -133,7 +161,8 @@ module Discorb
         #
         def delete!
           Async do
-            @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original", "//webhooks/:webhook_id/:token/messages/@original", :delete)).wait
+            @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
+                                           "//webhooks/:webhook_id/:token/messages/@original", :delete)).wait
           end
         end
 
@@ -157,12 +186,18 @@ module Discorb
       #
       def defer_update(ephemeral: false)
         Async do
-          @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), {
-            type: 6,
-            data: {
-              flags: (ephemeral ? 1 << 6 : 0),
-            },
-          }).wait
+          @client.http.request(
+            Route.new(
+              "/interactions/#{@id}/#{@token}/callback",
+              "//interactions/:interaction_id/:token/callback",
+              :post
+            ), {
+              type: 6,
+              data: {
+                flags: (ephemeral ? 1 << 6 : 0),
+              },
+            }
+          ).wait
         end
       end
 
@@ -192,10 +227,14 @@ module Discorb
               embeds
             end
           payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
-          payload[:allowed_mentions] = allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
+          payload[:allowed_mentions] =
+            allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
           payload[:components] = Component.to_payload(components) if components
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
-          @client.http.request(Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post), { type: 7, data: payload }).wait
+          @client.http.request(
+            Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback",
+                      :post), { type: 7, data: payload }
+          ).wait
         end
       end
     end

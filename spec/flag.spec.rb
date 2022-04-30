@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "objspace"
 require_relative "./common"
 

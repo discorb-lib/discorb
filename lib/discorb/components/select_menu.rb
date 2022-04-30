@@ -37,7 +37,8 @@ module Discorb
     #
     # Converts the select menu to a hash.
     #
-    # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure Official Discord API docs
+    # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure
+    #   Official Discord API docs
     # @return [Hash] A hash representation of the select menu.
     #
     def to_hash
@@ -109,7 +110,8 @@ module Discorb
       #
       # Converts the option to a hash.
       #
-      # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure Official Discord API docs
+      # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
+      #   Official Discord API docs
       # @return [Hash] Hash representation of the option.
       #
       def to_hash

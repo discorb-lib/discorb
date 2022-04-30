@@ -152,6 +152,7 @@ module Discorb
     def major_param
       param_type = @key.split("/").find { |k| k.start_with?(":") }
       return "" unless param_type
+
       param = url.gsub(API_BASE_URL, "").split("/")[@key.split("/").index(param_type) - 1]
       %w[:channel_id :guild_id :webhook_id].include?(param_type) ? param : ""
     end

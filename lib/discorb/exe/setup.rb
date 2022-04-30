@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # description: Setup application commands.
 require "optparse"
 require "discorb/utils/colored_puts"
@@ -17,9 +18,21 @@ opt = OptionParser.new <<~BANNER
 
                                    script                     The script to setup.
                        BANNER
-opt.on("-g", "--guild ID", Array, "The guild ID to setup, use comma for setup commands in multiple guilds, or `global` for setup global commands.") { |v| options[:guilds] = v }
-opt.on("-c", "--clear-guild ID", Array, "The guild ID to clear command, use comma for clear commands in multiple guilds, or `global` for clear global commands.") { |v| options[:clear_guilds] = v }
-opt.on("-s", "--[no-]script", "Whether to run `:setup` event. This may be useful if setup script includes operation that shouldn't run twice. Default to true.") { |v| options[:script] = v }
+opt.on("-g", "--guild ID", Array,
+       "The guild ID to setup, use comma for setup commands in multiple guilds, " \
+       "or `global` for setup global commands.") do |v|
+  options[:guilds] = v
+end
+opt.on("-c", "--clear-guild ID", Array,
+       "The guild ID to clear command, use comma for clear commands in multiple guilds, " \
+       "or `global` for clear global commands.") do |v|
+  options[:clear_guilds] = v
+end
+opt.on("-s", "--[no-]script",
+       "Whether to run `:setup` event. " \
+       "This may be useful if setup script includes operation that shouldn't run twice. Default to true.") do |v|
+  options[:script] = v
+end
 opt.parse!(ARGV)
 
 script = ARGV[0]

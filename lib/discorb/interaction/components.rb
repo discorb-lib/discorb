@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-module Discorb
 
+module Discorb
   #
   # Represents a message component interaction.
   # @abstract
@@ -41,7 +41,10 @@ module Discorb
       #
       def make_interaction(client, data)
         nested_classes.each do |klass|
-          return klass.new(client, data) if !klass.component_type.nil? && klass.component_type == data[:data][:component_type]
+          if !klass.component_type.nil? && klass.component_type == data[:data][:component_type]
+            return klass.new(client,
+                             data)
+          end
         end
         client.logger.warn("Unknown component type #{data[:component_type]}, initialized Interaction")
         MessageComponentInteraction.new(client, data)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # description: Run a client.
 require "optparse"
 require "json"
@@ -9,12 +10,12 @@ require "discorb"
 ARGV.delete_at 0
 
 opt = OptionParser.new <<~BANNER
-                         This command will run a client.
+  This command will run a client.
 
-                         Usage: discorb run [options] [script]
+  Usage: discorb run [options] [script]
 
-                                   script                     The script to run. Defaults to 'main.rb'.
-                       BANNER
+            script                     The script to run. Defaults to 'main.rb'.
+BANNER
 options = {
   title: nil,
   setup: nil,
@@ -22,9 +23,14 @@ options = {
   bundler: :default,
 }
 opt.on("-s", "--setup", "Whether to setup application commands.") { |v| options[:setup] = v }
-opt.on("-e", "--env [ENV]", "The name of the environment variable to use for token, or just `-e` or `--env` for intractive prompt.") { |v| options[:token] = v }
+opt.on("-e", "--env [ENV]",
+       "The name of the environment variable to use for token, or just `-e` or `--env` for intractive prompt.") do |v|
+  options[:token] = v
+end
 opt.on("-t", "--title TITLE", "The title of process.") { |v| options[:title] = v }
-opt.on("-b", "--[no-]bundler", "Whether to use bundler. Default to true if Gemfile exists, otherwise false.") { |v| options[:bundler] = v }
+opt.on("-b", "--[no-]bundler", "Whether to use bundler. Default to true if Gemfile exists, otherwise false.") do |v|
+  options[:bundler] = v
+end
 opt.parse!(ARGV)
 
 script = ARGV[0]
@@ -38,6 +44,7 @@ if script.nil?
       break
     end
     break if dir == File.dirname(dir)
+
     dir = File.dirname(dir)
   end
   if File.dirname(script) != Dir.pwd

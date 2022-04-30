@@ -95,10 +95,10 @@ module Discorb
       @user_id = data[:user_id]
       unless guild.nil?
         @member = if data.key?(:member)
-            guild.members[data[:user_id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
-          else
-            guild.members[data[:user_id]]
-          end
+                    guild.members[data[:user_id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
+                  else
+                    guild.members[data[:user_id]]
+        end
       end
       @session_id = data[:session_id]
       @deaf = data[:deaf]
@@ -197,7 +197,8 @@ module Discorb
         payload[:topic] = topic if topic != Discorb::Unset
         payload[:privacy_level] = PRIVACY_LEVEL.key(privacy_level) if privacy_level != Discorb::Unset
         @client.http.request(
-          Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:channel_id", :patch), payload, audit_log_reason: reason,
+          Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:channel_id",
+                    :patch), payload, audit_log_reason: reason,
         ).wait
         self
       end
@@ -214,7 +215,10 @@ module Discorb
     #
     def delete!(reason: nil)
       Async do
-        @client.http.request(Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:stage_instance_id", :delete), {}, audit_log_reason: reason).wait
+        @client.http.request(
+          Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:stage_instance_id",
+                    :delete), {}, audit_log_reason: reason
+        ).wait
         self
       end
     end

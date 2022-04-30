@@ -81,7 +81,8 @@ module Discorb
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
     # @param [Boolean] fetch_member Whether to fetch member on ready. This may slow down the client. Default to `false`.
-    # @param [String] title The title of the process. `false` to default, `nil` to `discorb: User#0000`. Default to `nil`.
+    # @param [String] title
+    #  The title of the process. `false` to default of ruby, `nil` to `discorb: User#0000`. Default to `nil`.
     #
     def initialize(
       allowed_mentions: nil, intents: nil, message_caches: 1000,
@@ -284,7 +285,13 @@ module Discorb
     #
     def fetch_invite(code, with_count: true, with_expiration: true)
       Async do
-        _resp, data = @http.request(Route.new("/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}", "//invites/:code", :get)).wait
+        _resp, data = @http.request(
+          Route.new(
+            "/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}",
+            "//invites/:code",
+            :get
+          )
+        ).wait
         Invite.new(self, data, false)
       end
     end
@@ -395,6 +402,7 @@ module Discorb
       case ext
       when Class
         raise ArgumentError, "#{ext} is not a extension" unless ext < Discorb::Extension
+
         ins = ext.new(self, ...)
       when Discorb::Extension
         ins = ext
@@ -450,6 +458,7 @@ module Discorb
     def run(token = nil, shards: nil, shard_count: nil)
       token ||= ENV.fetch("DISCORB_CLI_TOKEN", nil)
       raise ArgumentError, "Token is not specified, and -e/--env is not specified" if token.nil?
+
       case ENV.fetch("DISCORB_CLI_FLAG", nil)
       when nil
         start_client(token, shards: shards, shard_count: shard_count)

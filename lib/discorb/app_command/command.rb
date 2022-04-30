@@ -93,8 +93,10 @@ module Discorb
         # Initialize a new slash command.
         # @private
         #
-        # @param [String, Hash{Symbol => String}] name The name of the command. The hash should have `default`, and language keys.
-        # @param [String, Hash{Symbol => String}] description The description of the command. The hash should have `default`, and language keys.
+        # @param [String, Hash{Symbol => String}] name The name of the command.
+        #   The hash should have `default`, and language keys.
+        # @param [String, Hash{Symbol => String}] description The description of the command.
+        #   The hash should have `default`, and language keys.
         # @param [Hash{String => Hash}] options The options of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [Proc] block The block of the command.
@@ -105,7 +107,13 @@ module Discorb
         #
         def initialize(name, description, options, guild_ids, block, type, parent, dm_permission, default_permission)
           super(name, guild_ids, block, type, dm_permission, default_permission)
-          @description = description.is_a?(String) ? { "default" => description } : ApplicationCommand.modify_localization_hash(description)
+          @description = if description.is_a?(String)
+              {
+                "default" => description,
+              }
+            else
+              ApplicationCommand.modify_localization_hash(description)
+            end
           @options = options
           @parent = parent
         end
@@ -200,7 +208,10 @@ module Discorb
       # Represents the command with subcommands.
       #
       class GroupCommand < Command
-        # @return [Array<Discorb::ApplicationCommand::Command::SlashCommand, Discorb::ApplicationCommand::Command::SubcommandGroup>] The subcommands of the command.
+        # @return [Array<
+        #     Discorb::ApplicationCommand::Command::SlashCommand,
+        #     Discorb::ApplicationCommand::Command::SubcommandGroup
+        #   >] The subcommands of the command.
         attr_reader :commands
         # @return [String] The description of the command.
         attr_reader :description
@@ -219,7 +230,13 @@ module Discorb
         #
         def initialize(name, description, guild_ids, type, client, dm_permission, default_permission)
           super(name, guild_ids, block, type, dm_permission, default_permission)
-          @description = description.is_a?(String) ? { "default" => description } : ApplicationCommand.modify_localization_hash(description)
+          @description = if description.is_a?(String)
+              {
+                "default" => description,
+              }
+            else
+              ApplicationCommand.modify_localization_hash(description)
+            end
           @commands = []
           @client = client
         end
@@ -230,8 +247,18 @@ module Discorb
         # @param (see Discorb::ApplicationCommand::Handler#slash)
         # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
         #
-        def slash(command_name, description, options = {}, &block)
-          command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, [], block, 1, @name)
+        def slash(command_name, description, options = {}, dm_permission: true, default_permission: nil)
+          command = Discorb::ApplicationCommand::Command::SlashCommand.new(
+            command_name,
+            description,
+            options,
+            [],
+            block,
+            1,
+            @name,
+            dm_permission,
+            default_permission
+          )
           @client.bottom_commands << command
           @commands << command
           command
@@ -348,7 +375,8 @@ module Discorb
         # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, &block)
-          command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, [], block, 1, @parent + " " + @name)
+          command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, [],
+                                                                           block, 1, @parent + " " + @name)
           @commands << command
           @client.bottom_commands << command
           command

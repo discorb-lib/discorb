@@ -114,6 +114,7 @@ module Discorb
 
     def permissions
       return Permission.new((1 << 38) - 1) if owner?
+
       roles.map(&:permissions).sum(Permission.new(0))
     end
 
@@ -158,7 +159,10 @@ module Discorb
     #
     def add_role(role, reason: nil)
       Async do
-        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", "//guilds/:guild_id/members/:user_id/roles/:role_id", :put), nil, audit_log_reason: reason).wait
+        @client.http.request(
+          Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}",
+                    "//guilds/:guild_id/members/:user_id/roles/:role_id", :put), nil, audit_log_reason: reason,
+        ).wait
       end
     end
 
@@ -173,7 +177,10 @@ module Discorb
     #
     def remove_role(role, reason: nil)
       Async do
-        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}", "//guilds/:guild_id/members/:user_id/roles/:role_id", :delete), {}, audit_log_reason: reason).wait
+        @client.http.request(
+          Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}",
+                    "//guilds/:guild_id/members/:user_id/roles/:role_id", :delete), {}, audit_log_reason: reason,
+        ).wait
       end
     end
 
@@ -194,7 +201,13 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def edit(
-      nick: Discorb::Unset, role: Discorb::Unset, mute: Discorb::Unset, deaf: Discorb::Unset, channel: Discorb::Unset, communication_disabled_until: Discorb::Unset, timeout_until: Discorb::Unset,
+      nick: Discorb::Unset,
+      role: Discorb::Unset,
+      mute: Discorb::Unset,
+      deaf: Discorb::Unset,
+      channel: Discorb::Unset,
+      communication_disabled_until: Discorb::Unset,
+      timeout_until: Discorb::Unset,
       reason: nil
     )
       Async do
@@ -204,9 +217,15 @@ module Discorb
         payload[:mute] = mute if mute != Discorb::Unset
         payload[:deaf] = deaf if deaf != Discorb::Unset
         communication_disabled_until = timeout_until if timeout_until != Discorb::Unset
-        payload[:communication_disabled_until] = communication_disabled_until&.iso8601 if communication_disabled_until != Discorb::Unset
+        if communication_disabled_until != Discorb::Unset
+          payload[:communication_disabled_until] =
+            communication_disabled_until&.iso8601
+        end
         payload[:channel_id] = channel&.id if channel != Discorb::Unset
-        @client.http.request(Route.new("/guilds/#{@guild_id}/members/#{@id}", "//guilds/:guild_id/members/:user_id", :patch), payload, audit_log_reason: reason).wait
+        @client.http.request(
+          Route.new("/guilds/#{@guild_id}/members/#{@id}", "//guilds/:guild_id/members/:user_id",
+                    :patch), payload, audit_log_reason: reason,
+        ).wait
       end
     end
 
@@ -265,6 +284,7 @@ module Discorb
     #
     def can_manage?(role)
       return true if owner?
+
       top_role = roles.max_by(&:position)
       top_role.position > role.position
     end

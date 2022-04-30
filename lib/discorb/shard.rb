@@ -41,7 +41,7 @@ module Discorb
         Thread.current.thread_variable_set("shard", self)
         if @index.positive?
           Thread.stop
-          sleep 5  # Somehow discord disconnects the shard without a little sleep.
+          sleep 5 # Somehow discord disconnects the shard without a little sleep.
         end
         client.send(:main_loop, id)
       end

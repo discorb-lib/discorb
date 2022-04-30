@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Discorb
   #
   # Represents a channel of Discord.
@@ -62,7 +63,10 @@ module Discorb
     #
     def self.make_channel(client, data, no_cache: false)
       descendants.each do |klass|
-        return klass.new(client, data, no_cache: no_cache) if !klass.channel_type.nil? && klass.channel_type == data[:type]
+        if !klass.channel_type.nil? && klass.channel_type == data[:type]
+          return klass.new(client, data,
+                           no_cache: no_cache)
+        end
       end
       client.logger.warn("Unknown channel type #{data[:type]}, initialized GuildChannel")
       GuildChannel.new(client, data)

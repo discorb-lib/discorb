@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Discorb
-
   #
   # Represents a modal interaction.
   #

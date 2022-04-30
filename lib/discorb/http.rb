@@ -40,7 +40,8 @@ module Discorb
       Async do |_task|
         @ratelimit_handler.wait(path)
         resp = if %i[post patch put].include? path.method
-            http.send(path.method, get_path(path), get_body(body), get_headers(headers, body, audit_log_reason), **kwargs)
+                 http.send(path.method, get_path(path), get_body(body), get_headers(headers, body, audit_log_reason),
+                           **kwargs)
           else
             http.send(path.method, get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
           end
@@ -69,18 +70,23 @@ module Discorb
     def multipart_request(path, body, files, headers: nil, audit_log_reason: nil, **kwargs)
       Async do |_task|
         @ratelimit_handler.wait(path)
-        req = Net::HTTP.const_get(path.method.to_s.capitalize).new(get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
+        req = Net::HTTP.const_get(path.method.to_s.capitalize).new(
+          get_path(path),
+          get_headers(headers, body, audit_log_reason),
+          **kwargs,
+        )
         data = [
           ["payload_json", get_body(body)],
         ]
         files&.each_with_index do |file, i|
           next if file.nil?
+
           if file.created_by == :discord
             request_io = StringIO.new(
               cdn_http.get(URI.parse(file.url).path, {
-                "Content-Type" => nil,
-                "User-Agent" => Discorb::USER_AGENT,
-              }).body
+                             "Content-Type" => nil,
+                             "User-Agent" => Discorb::USER_AGENT,
+                           }).body
             )
             data << ["files[#{i}]", request_io, { filename: file.filename, content_type: file.content_type }]
           else
@@ -125,7 +131,7 @@ module Discorb
 
     def get_headers(headers, body = "", audit_log_reason = nil)
       ret = if body.nil? || body == ""
-          { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}" }
+              { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}" }
         else
           { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}",
             "content-type" => "application/json", }
@@ -147,7 +153,7 @@ module Discorb
 
     def get_path(path)
       full_path = if path.url.start_with?("https://")
-          path.url
+                    path.url
         else
           API_BASE_URL + path.url
         end
@@ -160,12 +166,13 @@ module Discorb
         data = JSON.parse(resp.body, symbolize_names: true)
       rescue JSON::ParserError, TypeError
         data = if resp.body.nil? || resp.body.empty?
-            nil
+                 nil
           else
             resp.body
           end
       end
       raise CloudFlareBanError.new(resp, @client) if resp["Via"].nil? && resp.code == "429" && data.is_a?(String)
+
       data
     end
 

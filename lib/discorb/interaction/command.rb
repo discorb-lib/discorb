@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Discorb
   #
   # Represents a command interaction.
@@ -84,11 +85,19 @@ module Discorb
               when 6
                 members[option[:value]] || guild.members[option[:value]] || guild.fetch_member(option[:value]).wait
               when 7
-                guild.channels[option[:value]] || guild.fetch_channels.wait.find { |channel| channel.id == option[:value] }
+                guild.channels[option[:value]] || guild.fetch_channels.wait.find do |channel|
+                  channel.id == option[:value]
+                end
               when 8
                 guild.roles[option[:value]] || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
               when 9
-                members[option[:value]] || guild.members[option[:value]] || guild.roles[option[:value]] || guild.fetch_member(option[:value]).wait || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+                members[option[:value]] ||
+                guild.members[option[:value]] ||
+                guild.roles[option[:value]] ||
+                guild.fetch_member(option[:value]).wait ||
+                guild.fetch_roles.wait.find do |role|
+                  role.id == option[:value]
+                end
               when 11
                 attachments[option[:value]]
               end
@@ -112,7 +121,11 @@ module Discorb
 
       def _set_data(data)
         super
-        @target = guild.members[data[:target_id]] || Discorb::Member.new(@client, @guild_id, data[:resolved][:users][data[:target_id].to_sym], data[:resolved][:members][data[:target_id].to_sym])
+        @target = guild.members[data[:target_id]] || Discorb::Member.new(
+          @client, @guild_id,
+          data[:resolved][:users][data[:target_id].to_sym],
+          data[:resolved][:members][data[:target_id].to_sym]
+        )
         command = @client.commands.find { |c| c.name["default"] == data[:name] && c.type_raw == 2 }
         if command
           command.block.call(self, @target)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Discorb
   #
   # Represents a text channel.
@@ -58,10 +59,20 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited channel.
     #
-    def edit(name: Discorb::Unset, position: Discorb::Unset, category: Discorb::Unset, parent: Discorb::Unset,
-             topic: Discorb::Unset, nsfw: Discorb::Unset, announce: Discorb::Unset,
-             rate_limit_per_user: Discorb::Unset, slowmode: Discorb::Unset, default_auto_archive_duration: Discorb::Unset,
-             archive_in: Discorb::Unset, reason: nil)
+    def edit(
+      name: Discorb::Unset,
+      position: Discorb::Unset,
+      category: Discorb::Unset,
+      parent: Discorb::Unset,
+      topic: Discorb::Unset,
+      nsfw: Discorb::Unset,
+      announce: Discorb::Unset,
+      rate_limit_per_user: Discorb::Unset,
+      slowmode: Discorb::Unset,
+      default_auto_archive_duration: Discorb::Unset,
+      archive_in: Discorb::Unset,
+      reason: nil
+    )
       Async do
         payload = {}
         payload[:name] = name if name != Discorb::Unset
@@ -76,9 +87,13 @@ module Discorb
         payload[:parent_id] = parent&.id if parent != Discorb::Unset
 
         default_auto_archive_duration ||= archive_in
-        payload[:default_auto_archive_duration] = default_auto_archive_duration if default_auto_archive_duration != Discorb::Unset
+        if default_auto_archive_duration != Discorb::Unset
+          payload[:default_auto_archive_duration] =
+            default_auto_archive_duration
+        end
 
-        @client.http.request(Route.new("/channels/#{@id}", "//channels/:channel_id", :patch), payload, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{@id}", "//channels/:channel_id", :patch), payload,
+                             audit_log_reason: reason).wait
         self
       end
     end
@@ -99,7 +114,9 @@ module Discorb
         payload = {}
         payload[:name] = name
         payload[:avatar] = avatar.to_s if avatar
-        _resp, data = @client.http.request(Route.new("/channels/#{@id}/webhooks", "//channels/:channel_id/webhooks", :post), payload).wait
+        _resp, data = @client.http.request(
+          Route.new("/channels/#{@id}/webhooks", "//channels/:channel_id/webhooks", :post), payload
+        ).wait
         Webhook.from_data(@client, data)
       end
     end
@@ -112,7 +129,8 @@ module Discorb
     #
     def fetch_webhooks
       Async do
-        _resp, data = @client.http.request(Route.new("/channels/#{@id}/webhooks", "//channels/:channel_id/webhooks", :get)).wait
+        _resp, data = @client.http.request(Route.new("/channels/#{@id}/webhooks", "//channels/:channel_id/webhooks",
+                                                     :get)).wait
         data.map { |webhook| Webhook.new([@client, webhook]) }
       end
     end
@@ -140,7 +158,10 @@ module Discorb
 
         message_ids = messages.map { |m| Discorb::Utils.try(m, :id).to_s }
 
-        @client.http.request(Route.new("/channels/#{@id}/messages/bulk-delete", "//channels/:channel_id/messages/bulk-delete", :post), { messages: message_ids }).wait
+        @client.http.request(
+          Route.new("/channels/#{@id}/messages/bulk-delete", "//channels/:channel_id/messages/bulk-delete",
+                    :post), { messages: message_ids }
+        ).wait
       end
     end
 
@@ -158,7 +179,8 @@ module Discorb
     #
     def follow_from(target, reason: nil)
       Async do
-        @client.http.request(Route.new("/channels/#{target.id}/followers", "//channels/:channel_id/followers", :post), { webhook_channel_id: @id }, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{target.id}/followers", "//channels/:channel_id/followers", :post),
+                             { webhook_channel_id: @id }, audit_log_reason: reason).wait
       end
     end
 
@@ -176,7 +198,15 @@ module Discorb
     #
     # @return [Async::Task<Discorb::ThreadChannel>] The started thread.
     #
-    def start_thread(name, message: nil, auto_archive_duration: nil, public: true, rate_limit_per_user: nil, slowmode: nil, reason: nil)
+    def start_thread(
+      name,
+      message: nil,
+      auto_archive_duration: nil,
+      public: true,
+      rate_limit_per_user: nil,
+      slowmode: nil,
+      reason: nil
+    )
       auto_archive_duration ||= @default_auto_archive_duration
       auto_archive_duration_value = DEFAULT_AUTO_ARCHIVE_DURATION.key(auto_archive_duration)
       Async do
@@ -193,7 +223,8 @@ module Discorb
             ).wait
           else
             @client.http.request(
-              Route.new("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads", "//channels/:channel_id/messages/:message_id/threads", :post),
+              Route.new("/channels/#{@id}/messages/#{Utils.try(message, :id)}/threads",
+                        "//channels/:channel_id/messages/:message_id/threads", :post),
               {
                 name: name,
                 auto_archive_duration: auto_archive_duration_value,
@@ -215,7 +246,8 @@ module Discorb
     #
     def fetch_archived_public_threads
       Async do
-        _resp, data = @client.http.request(Route.new("/channels/#{@id}/threads/archived/public", "//channels/:channel_id/threads/archived/public", :get)).wait
+        _resp, data = @client.http.request(Route.new("/channels/#{@id}/threads/archived/public",
+                                                     "//channels/:channel_id/threads/archived/public", :get)).wait
         data.map { |thread| Channel.make_channel(@client, thread) }
       end
     end
@@ -228,7 +260,8 @@ module Discorb
     #
     def fetch_archived_private_threads
       Async do
-        _resp, data = @client.http.request(Route.new("/channels/#{@id}/threads/archived/private", "//channels/:channel_id/threads/archived/private", :get)).wait
+        _resp, data = @client.http.request(Route.new("/channels/#{@id}/threads/archived/private",
+                                                     "//channels/:channel_id/threads/archived/private", :get)).wait
         data.map { |thread| Channel.make_channel(@client, thread) }
       end
     end
@@ -248,7 +281,13 @@ module Discorb
           before = 0
           threads = []
           loop do
-            _resp, data = @client.http.request(Route.new("/channels/#{@id}/users/@me/threads/archived/private?before=#{before}", "//channels/:channel_id/users/@me/threads/archived/private", :get)).wait
+            _resp, data = @client.http.request(
+              Route.new(
+                "/channels/#{@id}/users/@me/threads/archived/private?before=#{before}",
+                "//channels/:channel_id/users/@me/threads/archived/private",
+                :get
+              )
+            ).wait
             threads += data[:threads].map { |thread| Channel.make_channel(@client, thread) }
             before = data[:threads][-1][:id]
 
@@ -256,7 +295,13 @@ module Discorb
           end
           threads
         else
-          _resp, data = @client.http.request(Route.new("/channels/#{@id}/users/@me/threads/archived/private?limit=#{limit}&before=#{before}", "//channels/:channel_id/users/@me/threads/archived/private", :get)).wait
+          _resp, data = @client.http.request(
+            Route.new(
+              "/channels/#{@id}/users/@me/threads/archived/private?limit=#{limit}&before=#{before}",
+              "//channels/:channel_id/users/@me/threads/archived/private",
+              :get
+            )
+          ).wait
           data.map { |thread| Channel.make_channel(@client, thread) }
         end
       end
@@ -292,7 +337,8 @@ module Discorb
     #
     def follow_to(target, reason: nil)
       Async do
-        @client.http.request(Route.new("/channels/#{@id}/followers", "//channels/:channel_id/followers", :post), { webhook_channel_id: target.id }, audit_log_reason: reason).wait
+        @client.http.request(Route.new("/channels/#{@id}/followers", "//channels/:channel_id/followers", :post),
+                             { webhook_channel_id: target.id }, audit_log_reason: reason).wait
       end
     end
   end

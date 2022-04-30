@@ -48,7 +48,8 @@ module Discorb
       return if (bucket[:remaining]).positive?
 
       time = bucket[:reset_at] - Time.now.to_f
-      @client.logger.info("rate limit for #{path.identifier} with #{path.major_param} reached, waiting #{time.round(4)} seconds")
+      @client.logger.info("rate limit for #{path.identifier} with #{path.major_param} reached, " \
+                          "waiting #{time.round(4)} seconds")
       sleep(time)
     end
 
@@ -59,8 +60,12 @@ module Discorb
     # @param [Net::HTTPResponse] resp The response.
     #
     def save(path, resp)
-      @global = Time.now.to_f + JSON.parse(resp.body, symbolize_names: true)[:retry_after] if resp["X-Ratelimit-Global"] == "true"
+      if resp["X-Ratelimit-Global"] == "true"
+        @global = Time.now.to_f + JSON.parse(resp.body,
+                                             symbolize_names: true)[:retry_after]
+      end
       return unless resp["X-RateLimit-Remaining"]
+
       @path_ratelimit_hash[path.identifier] = resp["X-Ratelimit-Bucket"]
       @path_ratelimit_bucket[resp["X-Ratelimit-Bucket"] + path.major_param] = {
         remaining: resp["X-RateLimit-Remaining"].to_i,

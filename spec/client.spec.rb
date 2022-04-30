@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative "./common"
 
 RSpec.describe Discorb::Client do
@@ -7,7 +8,7 @@ RSpec.describe Discorb::Client do
       expect_request(:get, "/guilds/863581274916913193") do
         {
           code: 200,
-          body: File.read("#{__dir__}/payloads/guild.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/payloads/guild.json", symbolize_names: true),
         }
       end
       client.fetch_guild("863581274916913193").wait
@@ -17,7 +18,7 @@ RSpec.describe Discorb::Client do
       expect_request(:get, "/channels/863581274916913196") do
         {
           code: 200,
-          body: File.read("#{__dir__}/payloads/channels/text_channel.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/payloads/channels/text_channel.json", symbolize_names: true),
         }
       end
       client.fetch_channel("863581274916913196").wait
@@ -27,7 +28,7 @@ RSpec.describe Discorb::Client do
       expect_request(:get, "/users/686547120534454315") do
         {
           code: 200,
-          body: File.read("#{__dir__}/payloads/users/user.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/payloads/users/user.json", symbolize_names: true),
         }
       end
       client.fetch_user("686547120534454315").wait
@@ -37,7 +38,7 @@ RSpec.describe Discorb::Client do
       expect_request(:get, "/invites/hCP6zq8Vpj?with_count=true&with_expiration=true") do
         {
           code: 200,
-          body: File.read("#{__dir__}/payloads/invite.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/payloads/invite.json", symbolize_names: true),
         }
       end
       client.fetch_invite("hCP6zq8Vpj").wait
@@ -47,7 +48,7 @@ RSpec.describe Discorb::Client do
       expect_request(:get, "/sticker-packs") do
         {
           code: 200,
-          body: File.read("#{__dir__}/payloads/sticker_packs.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/payloads/sticker_packs.json", symbolize_names: true),
         }
       end
       client.fetch_nitro_sticker_packs.wait
@@ -110,9 +111,9 @@ RSpec.describe Discorb::Client do
       allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
       allow(client).to receive(:send_gateway) { |opcode, **payload|
         expect({
-          opcode: opcode,
-          payload: payload,
-        }).to eq($next_gateway_request)
+                 opcode: opcode,
+                 payload: payload,
+               }).to eq($next_gateway_request)
       }
       class << client
         attr_accessor :next_gateway_request, :token

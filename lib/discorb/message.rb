@@ -259,8 +259,15 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(content = Discorb::Unset, embed: Discorb::Unset, embeds: Discorb::Unset, allowed_mentions: Discorb::Unset,
-                                       attachments: Discorb::Unset, components: Discorb::Unset, supress: Discorb::Unset)
+    def edit(
+      content = Discorb::Unset,
+      embed: Discorb::Unset,
+      embeds: Discorb::Unset,
+      allowed_mentions: Discorb::Unset,
+      attachments: Discorb::Unset,
+      components: Discorb::Unset,
+      supress: Discorb::Unset
+    )
       Async do
         channel.edit_message(@id, content, embed: embed, embeds: embeds, allowed_mentions: allowed_mentions,
                                            attachments: attachments, components: components, supress: supress).wait
@@ -333,7 +340,10 @@ module Discorb
     #
     def add_reaction(emoji)
       Async do
-        @client.http.request(Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me", :put), nil).wait
+        @client.http.request(
+          Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me",
+                    "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me", :put), nil
+        ).wait
       end
     end
 
@@ -349,7 +359,11 @@ module Discorb
     #
     def remove_reaction(emoji)
       Async do
-        @client.http.request(Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me", "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me", :delete)).wait
+        @client.http.request(
+          Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me",
+                    "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me",
+                    :delete)
+        ).wait
       end
     end
 
@@ -366,7 +380,17 @@ module Discorb
     #
     def remove_reaction_of(emoji, member)
       Async do
-        @client.http.request(Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{member.is_a?(Member) ? member.id : member}", "//channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id", :delete)).wait
+        @client.http.request(
+          Route.new(
+            "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{if member.is_a?(Member)
+              member.id
+            else
+              member
+            end}",
+            "//channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id",
+            :delete
+          )
+        ).wait
       end
     end
 
@@ -388,7 +412,13 @@ module Discorb
           after = 0
           users = []
           loop do
-            _resp, data = @client.http.request(Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=100&after=#{after}", "//channels/:channel_id/messages/:message_id/reactions/:emoji", :get)).wait
+            _resp, data = @client.http.request(
+              Route.new(
+                "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=100&after=#{after}",
+                "//channels/:channel_id/messages/:message_id/reactions/:emoji",
+                :get
+              )
+            ).wait
             break if data.empty?
 
             users += data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
@@ -399,7 +429,13 @@ module Discorb
           end
           next users
         else
-          _resp, data = @client.http.request(Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=#{limit}&after=#{after}", "//channels/:channel_id/messages/:message_id/reactions/:emoji", :get)).wait
+          _resp, data = @client.http.request(
+            Route.new(
+              "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=#{limit}&after=#{after}",
+              "//channels/:channel_id/messages/:message_id/reactions/:emoji",
+              :get
+            )
+          ).wait
           next data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
         end
       end

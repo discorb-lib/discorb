@@ -53,7 +53,8 @@ module Discorb
     #
     # Converts the button to a hash.
     #
-    # @see https://discord.com/developers/docs/interactions/message-components#button-object-button-structure Official Discord API docs
+    # @see https://discord.com/developers/docs/interactions/message-components#button-object-button-structure
+    #  Official Discord API docs
     # @return [Hash] A hash representation of the button.
     #
     def to_hash

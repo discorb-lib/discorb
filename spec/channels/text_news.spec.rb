@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+
 require_relative "../common"
 
 [Discorb::TextChannel, Discorb::NewsChannel].each do |channel_class|
   RSpec.describe channel_class do
     let(:channel) do
-      channel_class.new(client, JSON.load_file(__dir__ + "/../payloads/channels/text_channel.json", symbolize_names: true))
+      channel_class.new(client,
+                        JSON.load_file(__dir__ + "/../payloads/channels/text_channel.json", symbolize_names: true))
     end
 
     it "initializes successfully" do
@@ -27,7 +29,7 @@ require_relative "../common"
       ) do
         {
           code: 200,
-          body: File.read("#{__dir__}/../payloads/message.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/../payloads/message.json", symbolize_names: true),
         }
       end
       expect(channel.post("msg").wait).to be_a Discorb::Message
@@ -49,10 +51,11 @@ require_relative "../common"
       ) do
         {
           code: 200,
-          body: File.read("#{__dir__}/../payloads/invite.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/../payloads/invite.json", symbolize_names: true),
         }
       end
-      expect(channel.create_invite(max_age: 0, max_uses: 1, temporary: false, unique: false).wait).to be_a Discorb::Invite
+      expect(channel.create_invite(max_age: 0, max_uses: 1, temporary: false,
+                                   unique: false).wait).to be_a Discorb::Invite
     end
 
     it "creates new thread" do
@@ -71,7 +74,9 @@ require_relative "../common"
       ) do
         {
           code: 200,
-          body: File.read("#{__dir__}/../payloads/channels/thread_channel.json").then { JSON.parse(_1, symbolize_names: true) },
+          body: JSON.load_file("#{__dir__}/../payloads/channels/thread_channel.json",
+                               symbolize_names: true),
+
         }
       end
       expect(channel.create_thread("thread").wait).to be_a Discorb::ThreadChannel
@@ -94,7 +99,7 @@ require_relative "../common"
         ) do
           {
             code: 200,
-            body: File.read("#{__dir__}/../payloads/channels/thread_channel.json").then { JSON.parse(_1, symbolize_names: true) },
+            body: JSON.load_file("#{__dir__}/../payloads/channels/thread_channel.json", symbolize_names: true),
           }
         end
         expect(channel.create_thread("thread", auto_archive_duration: name).wait).to be_a Discorb::ThreadChannel

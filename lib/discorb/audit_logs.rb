@@ -23,7 +23,9 @@ module Discorb
       @guild = guild
       @webhooks = data[:webhooks].map { |webhook| Webhook.from_data(@client, webhook) }
       @users = data[:users].map { |user| client.users[user[:id]] || User.new(@client, user) }
-      @threads = data[:threads].map { |thread| client.channels[thread[:id]] || Channel.make_channel(@client, thread, no_cache: true) }
+      @threads = data[:threads].map do |thread|
+        client.channels[thread[:id]] || Channel.make_channel(@client, thread, no_cache: true)
+      end
       @entries = data[:audit_log_entries].map { |entry| AuditLog::Entry.new(@client, entry, guild.id) }
     end
 
@@ -106,7 +108,8 @@ module Discorb
       attr_reader :type
       # @return [Discorb::AuditLog::Entry::Changes] The changes in this entry.
       attr_reader :changes
-      # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message] The target of the entry.
+      # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message]
+      #   The target of the entry.
       attr_reader :target
       # @return [Hash{Symbol => Object}] The optional data for this entry.
       # @note You can use dot notation to access the data.

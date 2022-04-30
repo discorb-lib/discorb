@@ -65,7 +65,6 @@ module Discorb
   # Represents a default avatar.
   #
   class DefaultAvatar < DiscordModel
-
     # @!attribute [r] animated?
     #   @return [false] For compatibility with {Asset}, always `false`.
 

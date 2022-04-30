@@ -15,14 +15,19 @@ module Discorb
       # @param [String, Hash{Symbol => String}] description Command description.
       #   If hash is passed, it must be a pair of Language code and Command description, and `:default` key is required.
       #  You can use `_` instead of `-` in language code.
-      # @param [Hash{String => Hash{:description => String, :optional => Boolean, :type => Object}}] options Command options.
+      # @param [Hash{String => Hash{:description => String, :optional => Boolean, :type => Object}}] options
+      #  Command options.
       #   The key is the option name, the value is a hash with the following keys:
       #
       #   | Key | Type | Description |
       #   | --- | --- | --- |
-      #   | `:description` | `String` \| `Hash{Symbol => String}` | Description of the option. If hash is passed, it must be a pair of Language code and description, and `:default` key is required. You can use `_` instead of `-` in language code. |
-      #   | `:required` | Boolean(true | false) | Whether the argument is required. `optional` will be used if not specified. |
-      #   | `:optional` | Boolean(true | false) | Whether the argument is optional. `required` will be used if not specified. |
+      #   | `:description` | `String` \| `Hash{Symbol => String}` |
+      #     Description of the option. If hash is passed, it must be a pair of Language code and description,
+      #     and `:default` key is required. You can use `_` instead of `-` in language code. |
+      #   | `:required` | Boolean(true | false) |
+      #     Whether the argument is required. `optional` will be used if not specified. |
+      #   | `:optional` | Boolean(true | false) |
+      #     Whether the argument is optional. `required` will be used if not specified. |
       #   | `:type` | `Object` | Type of the option. |
       #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #   | `:default` | `Object` | Default value of the option. |
@@ -30,7 +35,8 @@ module Discorb
       #   | `:autocomplete` | `Proc` | Autocomplete function. |
       #   | `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |
       #
-      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Array<#to_s>, false, nil] guild_ids
+      #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Boolean] dm_permission Whether the command is available in DM.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       # @param [Proc] block Command block.
@@ -40,12 +46,30 @@ module Discorb
       # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
       # @see file:docs/cli/setup.md CLI: setup
       #
-      def slash(command_name, description, options = {}, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
+      def slash(
+        command_name,
+        description,
+        options = {},
+        guild_ids: nil,
+        dm_permission: true,
+        default_permission: nil,
+        &block
+      )
         command_name = { default: command_name } if command_name.is_a?(String)
         description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, guild_ids, block, 1, "", dm_permission, default_permission)
+        command = Discorb::ApplicationCommand::Command::SlashCommand.new(
+          command_name,
+          description,
+          options,
+          guild_ids,
+          block,
+          1,
+          "",
+          dm_permission,
+          default_permission
+        )
         @commands << command
         @bottom_commands << command
         command
@@ -56,7 +80,8 @@ module Discorb
       #
       # @param [String, Hash{Symbol => String}] command_name Command name.
       # @param [String, Hash{Symbol => String}] description Command description.
-      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Array<#to_s>, false, nil] guild_ids
+      #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Boolean] dm_permission Whether the command is available in DM.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       #
@@ -73,7 +98,8 @@ module Discorb
         description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil, self, dm_permission, default_permission)
+        command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil,
+                                                                         self, dm_permission, default_permission)
         command.then(&block) if block_given?
         @commands << command
         command
@@ -83,7 +109,8 @@ module Discorb
       # Add message context menu command.
       #
       # @param [String, Hash{Symbol => String}] command_name Command name.
-      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Array<#to_s>, false, nil] guild_ids
+      #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Boolean] dm_permission Whether the command is available in DM.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       # @param [Proc] block Command block.
@@ -96,7 +123,8 @@ module Discorb
       def message_command(command_name, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
         command_name = { default: command_name } if command_name.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
-        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 3, dm_permission, default_permission)
+        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 3, dm_permission,
+                                                           default_permission)
         @commands << command
         command
       end
@@ -105,7 +133,8 @@ module Discorb
       # Add user context menu command.
       #
       # @param [String, Hash{Symbol => String}] command_name Command name.
-      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
+      # @param [Array<#to_s>, false, nil] guild_ids
+      #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Boolean] dm_permission Whether the command is available in DM.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       # @param [Proc] block Command block.
@@ -118,7 +147,8 @@ module Discorb
       def user_command(command_name, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
         command_name = { default: command_name } if command_name.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
-        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 2, dm_permission, default_permission)
+        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 2, dm_permission,
+                                                           default_permission)
         @commands << command
         command
       end
@@ -129,7 +159,8 @@ module Discorb
       # @see Client#initialize
       #
       # @param [String] token Bot token.
-      # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to use as default. If `false` is given, it will be global command.
+      # @param [Array<#to_s>, false, nil] guild_ids
+      #  Guild IDs to use as default. If `false` is given, it will be global command.
       #
       # @note `token` parameter only required if you don't run client.
       #

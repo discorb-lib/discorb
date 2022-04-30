@@ -14,10 +14,13 @@ module Discorb
 
     def events
       return @events if @events
+
       ret = {}
       self.class.events.each do |event, handlers|
         ret[event] = handlers.map do |handler|
-          Discorb::EventHandler.new(proc { |*args, **kwargs| instance_exec(*args, **kwargs, &handler[2]) }, handler[0], handler[1])
+          Discorb::EventHandler.new(proc { |*args, **kwargs|
+                                      instance_exec(*args, **kwargs, &handler[2])
+                                    }, handler[0], handler[1])
         end
       end
       @events = ret

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Discorb
   #
   # Represents a user interaction with the bot.
@@ -53,7 +54,10 @@ module Discorb
       @type_id = self.class.interaction_type
       @guild_id = data[:guild_id] && Snowflake.new(data[:guild_id])
       @channel_id = data[:channel_id] && Snowflake.new(data[:channel_id])
-      @member = guild.members[data[:member][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member]) if data[:member]
+      if data[:member]
+        @member = guild.members[data[:member][:id]] || Member.new(@client, @guild_id, data[:member][:user],
+                                                                  data[:member])
+      end
       @user = @client.users[data[:user][:id]] || User.new(@client, data[:user]) if data[:user]
       @token = data[:token]
       @locale = data[:locale].to_s.gsub("-", "_").to_sym
@@ -97,7 +101,10 @@ module Discorb
       def make_interaction(client, data)
         interaction = nil
         descendants.each do |klass|
-          interaction = klass.make_interaction(client, data) if !klass.interaction_type.nil? && klass.interaction_type == data[:type]
+          if !klass.interaction_type.nil? && klass.interaction_type == data[:type]
+            interaction = klass.make_interaction(client,
+                                                 data)
+          end
         end
         if interaction.nil?
           client.logger.warn("Unknown interaction type #{data[:type]}, initialized Interaction")

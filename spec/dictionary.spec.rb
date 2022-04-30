@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative "./common"
 
 RSpec.describe Discorb::Dictionary do
@@ -57,10 +58,10 @@ RSpec.describe Discorb::Dictionary do
   describe "#to_h" do
     it "returns hash" do
       expect(dict.to_h).to eq({
-        "foo" => :bar,
-        "fizz" => :buzz,
-        "hoge" => :fuga,
-      })
+                                "foo" => :bar,
+                                "fizz" => :buzz,
+                                "hoge" => :fuga,
+                              })
     end
   end
 

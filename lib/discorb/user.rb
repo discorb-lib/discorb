@@ -95,7 +95,8 @@ module Discorb
       Async do
         next @dm_channel_id if @dm_channel_id
 
-        _resp, dm_channel = @client.http.request(Route.new("/users/@me/channels", "//users/@me/channels", :post), { recipient_id: @id }).wait
+        _resp, dm_channel = @client.http.request(Route.new("/users/@me/channels", "//users/@me/channels", :post),
+                                                 { recipient_id: @id }).wait
         @dm_channel_id = dm_channel[:id]
         @dm_channel_id
       end

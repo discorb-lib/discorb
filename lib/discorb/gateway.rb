@@ -96,7 +96,8 @@ module Discorb
 
         unless @guild.nil?
           @member = if data.key?(:member)
-              @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
+              @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user],
+                                                                      data[:member])
             else
               @guild.members[data[:user_id]]
             end
@@ -130,6 +131,7 @@ module Discorb
     class IntegrationDeleteEvent < GatewayEvent
       # @return [Discorb::Snowflake] The ID of the integration.
       attr_reader :id
+
       # @!attribute [r] guild
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild of the integration.
@@ -281,6 +283,7 @@ module Discorb
       attr_reader :guild
       # @return [Discorb::ScheduledEvent] The scheduled event.
       attr_reader :scheduled_event
+
       #
       # Initialize a new instance of the ScheduledEventUserEvent class.
       # @private
@@ -482,7 +485,14 @@ module Discorb
         @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
         @user_id = Snowflake.new(data[:user_id])
         @timestamp = Time.at(data[:timestamp])
-        @member = guild.members[@user_id] || Member.new(@client, @guild_id, @client.users[@user_id].instance_variable_get(:@data), data[:member]) if guild
+        if guild
+          @member = guild.members[@user_id] || Member.new(
+            @client,
+            @guild_id,
+            @client.users[@user_id].instance_variable_get(:@data),
+            data[:member]
+          )
+        end
       end
 
       def user
@@ -594,7 +604,8 @@ module Discorb
             _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
             gateway_url = gateway_response[:url]
             gateway_version = if @intents.to_h[:message_content].nil?
-                warn "message_content intent not set, using gateway version 9. You should specify `message_content` intent for preventing unexpected changes in the future."
+                warn "message_content intent not set, using gateway version 9. " \
+                     "You should specify `message_content` intent for preventing unexpected changes in the future."
                 9
               else
                 10
@@ -604,7 +615,11 @@ module Discorb
               alpn_protocols: Async::HTTP::Protocol::HTTP11.names,
             )
             begin
-              self.connection = Async::WebSocket::Client.connect(endpoint, headers: [["User-Agent", Discorb::USER_AGENT]], handler: RawConnection)
+              self.connection = Async::WebSocket::Client.connect(
+                endpoint,
+                headers: [["User-Agent", Discorb::USER_AGENT]],
+                handler: RawConnection,
+              )
               zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               buffer = +""
               begin
@@ -632,6 +647,7 @@ module Discorb
                      Errno::ECONNRESET,
                      IOError => e
                 next if @status == :closed
+
                 logger.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
                 connection.force_close
                 connect_gateway(true)
@@ -688,7 +704,8 @@ module Discorb
           con.write({ op: opcode, d: value }.to_json)
           con.flush
         end
-        logger.debug "Sent message to fd #{connection.io.fileno}: #{{ op: opcode, d: value }.to_json.gsub(@token, "[Token]")}"
+        logger.debug "Sent message to fd #{connection.io.fileno}: #{{ op: opcode, d: value }.to_json.gsub(@token,
+                                                                                                          "[Token]")}"
       end
 
       def handle_gateway(payload, reconnect)
@@ -762,7 +779,11 @@ module Discorb
       end
 
       def handle_event(event_name, data)
-        return logger.debug "Client isn't ready; event #{event_name} wasn't handled" if @wait_until_ready && !@ready && !%w[READY GUILD_CREATE].include?(event_name)
+        return logger.debug "Client isn't ready; event #{event_name} wasn't handled" if @wait_until_ready &&
+                                                                                        !@ready &&
+                                                                                        !%w[
+                                                                                          READY GUILD_CREATE
+                                                                                        ].include?(event_name)
 
         dispatch(:event_receive, event_name, data)
         logger.debug "Handling event #{event_name}"
@@ -829,7 +850,9 @@ module Discorb
           dispatch(:role_update, before, current)
         when "GUILD_ROLE_DELETE"
           return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return logger.warn "Unknown role id #{data[:role_id]}, ignoring" unless (role = guild.roles.delete(data[:role_id]))
+          unless (role = guild.roles.delete(data[:role_id]))
+            return logger.warn "Unknown role id #{data[:role_id]}, ignoring"
+          end
 
           dispatch(:role_delete, role)
         when "CHANNEL_CREATE"
@@ -874,7 +897,9 @@ module Discorb
           dispatch(:thread_delete, thread)
         when "THREAD_LIST_SYNC"
           data[:threads].each do |raw_thread|
-            thread = Channel.make_channel(self, raw_thread.merge({ member: raw_thread[:members].find { |m| m[:id] == raw_thread[:id] } }))
+            thread = Channel.make_channel(self, raw_thread.merge({ member: raw_thread[:members].find do |m|
+              m[:id] == raw_thread[:id]
+            end }))
             @channels[thread.id] = thread
           end
         when "THREAD_MEMBER_UPDATE"
@@ -908,15 +933,23 @@ module Discorb
           instance = StageInstance.new(self, data)
           dispatch(:stage_instance_create, instance)
         when "STAGE_INSTANCE_UPDATE"
-          return logger.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
-          return logger.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances[data[:id]])
+          unless (channel = @channels[data[:channel_id]])
+            return logger.warn "Unknown channel id #{data[:channel_id]} , ignoring"
+          end
+          unless (instance = channel.stage_instances[data[:id]])
+            return logger.warn "Unknown stage instance id #{data[:id]}, ignoring"
+          end
 
           old = StageInstance.new(self, instance.instance_variable_get(:@data), no_cache: true)
           current.send(:_set_data, data)
           dispatch(:stage_instance_update, old, current)
         when "STAGE_INSTANCE_DELETE"
-          return logger.warn "Unknown channel id #{data[:channel_id]} , ignoring" unless (channel = @channels[data[:channel_id]])
-          return logger.warn "Unknown stage instance id #{data[:id]}, ignoring" unless (instance = channel.stage_instances.delete(data[:id]))
+          unless (channel = @channels[data[:channel_id]])
+            return logger.warn "Unknown channel id #{data[:channel_id]} , ignoring"
+          end
+          unless (instance = channel.stage_instances.delete(data[:id]))
+            return logger.warn "Unknown stage instance id #{data[:id]}, ignoring"
+          end
 
           dispatch(:stage_instance_delete, instance)
         when "GUILD_MEMBER_ADD"
@@ -927,14 +960,18 @@ module Discorb
           dispatch(:member_add, nm)
         when "GUILD_MEMBER_UPDATE"
           return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return logger.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (nm = guild.members[data[:user][:id]])
+          unless (nm = guild.members[data[:user][:id]])
+            return logger.warn "Unknown member id #{data[:user][:id]}, ignoring"
+          end
 
           old = Member.new(self, data[:guild_id], data[:user], data.update({ no_cache: true }))
           nm.send(:_set_data, data[:user], data)
           dispatch(:member_update, old, nm)
         when "GUILD_MEMBER_REMOVE"
           return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring" unless (guild = @guilds[data[:guild_id]])
-          return logger.warn "Unknown member id #{data[:user][:id]}, ignoring" unless (member = guild.members.delete(data[:user][:id]))
+          unless (member = guild.members.delete(data[:user][:id]))
+            return logger.warn "Unknown member id #{data[:user][:id]}, ignoring"
+          end
 
           dispatch(:member_remove, member)
         when "GUILD_BAN_ADD"
@@ -1111,7 +1148,8 @@ module Discorb
         when "MESSAGE_DELETE"
           message.instance_variable_set(:@deleted, true) if (message = @messages[data[:id]])
 
-          dispatch(:message_delete_id, Snowflake.new(data[:id]), channels[data[:channel_id]], data[:guild_id] && guilds[data[:guild_id]])
+          dispatch(:message_delete_id, Snowflake.new(data[:id]), channels[data[:channel_id]],
+                   data[:guild_id] && guilds[data[:guild_id]])
           dispatch(:message_delete, message, channels[data[:channel_id]], data[:guild_id] && guilds[data[:guild_id]])
         when "MESSAGE_DELETE_BULK"
           messages = []
@@ -1158,7 +1196,9 @@ module Discorb
           dispatch(:reaction_remove_all, ReactionRemoveAllEvent.new(self, data))
         when "MESSAGE_REACTION_REMOVE_EMOJI"
           if (target_message = @messages[data[:message_id]]) &&
-             (target_reaction = target_message.reactions.find { |r| data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id] })
+             (target_reaction = target_message.reactions.find do |r|
+               data[:emoji][:id].nil? ? r.name == data[:emoji][:name] : r.id == data[:emoji][:id]
+             end)
             target_message.reactions.delete(target_reaction)
           end
           dispatch(:reaction_remove_emoji, ReactionRemoveEmojiEvent.new(self, data))
@@ -1184,7 +1224,9 @@ module Discorb
           dispatch(:scheduled_event_create, event)
         when "GUILD_SCHEDULED_EVENT_UPDATE"
           logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
-          logger.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
+          unless (event = guild.scheduled_events[data[:id]])
+            logger.warn("Unknown scheduled event id #{data[:id]}, ignoring")
+          end
           old = event.dup
           event.send(:_set_data, data)
           dispatch(:scheduled_event_update, old, event)
@@ -1200,7 +1242,9 @@ module Discorb
           end
         when "GUILD_SCHEDULED_EVENT_DELETE"
           logger.warn("Unknown guild id #{data[:guild_id]}, ignoring") unless (guild = @guilds[data[:guild_id]])
-          logger.warn("Unknown scheduled event id #{data[:id]}, ignoring") unless (event = guild.scheduled_events[data[:id]])
+          unless (event = guild.scheduled_events[data[:id]])
+            logger.warn("Unknown scheduled event id #{data[:id]}, ignoring")
+          end
           guild.scheduled_events.remove(data[:id])
           dispatch(:scheduled_event_delete, event)
           dispatch(:scheduled_event_cancel, event)
@@ -1287,7 +1331,11 @@ module Discorb
       end
 
       def io
-        @framer.instance_variable_get(:@stream).instance_variable_get(:@io).instance_variable_get(:@io).instance_variable_get(:@io)
+        @framer
+          .instance_variable_get(:@stream)
+          .instance_variable_get(:@io)
+          .instance_variable_get(:@io)
+          .instance_variable_get(:@io)
       end
 
       def parse(buffer)

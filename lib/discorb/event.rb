@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Discorb
   #
   # Represents an event in guild.
@@ -38,6 +39,7 @@ module Discorb
     class Metadata
       # @return [String, nil] The location of the event. Only present if the event is a external event.
       attr_reader :location
+
       # @!visibility private
       def initialize(data)
         @location = data[:location]
@@ -137,6 +139,7 @@ module Discorb
         payload = case type == Discorb::Unset ? @entity_type : type
           when :stage_instance
             raise ArgumentError, "channel must be provided for stage_instance events" unless channel
+
             {
               name: name,
               description: description,
@@ -149,6 +152,7 @@ module Discorb
             }.reject { |_, v| v == Discorb::Unset }
           when :voice
             raise ArgumentError, "channel must be provided for voice events" unless channel
+
             {
               name: name,
               description: description,
@@ -162,6 +166,7 @@ module Discorb
           when :external
             raise ArgumentError, "location must be provided for external events" unless location
             raise ArgumentError, "end_time must be provided for external events" unless end_time
+
             {
               name: name,
               description: description,
@@ -178,7 +183,13 @@ module Discorb
           else
             raise ArgumentError, "Invalid scheduled event type: #{type}"
           end
-        @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}", "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :patch), payload).wait
+        @client.http.request(
+          Route.new(
+            "/guilds/#{@guild_id}/scheduled-events/#{@id}",
+            "//guilds/:guild_id/scheduled-events/:scheduled_event_id",
+            :patch
+          ), payload
+        ).wait
       end
     end
 
@@ -215,7 +226,8 @@ module Discorb
     #
     def delete!
       Async do
-        @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}", "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :delete)).wait
+        @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}",
+                                       "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :delete)).wait
       end
     end
 
@@ -241,8 +253,15 @@ module Discorb
           after = 0
           res = []
           loop do
-            _resp, users = @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}/users?limit=100&after=#{after}&with_member=true", "//guilds/:guild_id/scheduled-events/:scheduled_event_id/users", :get)).wait
+            _resp, users = @client.http.request(
+              Route.new(
+                "/guilds/#{@guild_id}/scheduled-events/#{@id}/users?limit=100&after=#{after}&with_member=true",
+                "//guilds/:guild_id/scheduled-events/:scheduled_event_id/users",
+                :get
+              )
+            ).wait
             break if users.empty?
+
             res += users.map { |u| Member.new(@client, @guild_id, u[:user], u[:member]) }
             after = users.last[:user][:id]
           end
@@ -254,7 +273,13 @@ module Discorb
             after: Discorb::Utils.try(after, :id),
             with_member: with_member,
           }.filter { |_k, v| !v.nil? }.to_h
-          _resp, messages = @client.http.request(Route.new("/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}", "//channels/:channel_id/messages", :get)).wait
+          _resp, messages = @client.http.request(
+            Route.new(
+              "/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}",
+              "//channels/:channel_id/messages",
+              :get
+            )
+          ).wait
           messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
         end
       end

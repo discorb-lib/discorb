@@ -6,9 +6,30 @@ require:
 - rubocop-rake
 - rubocop-rspec
 
-Layout:
-  Enabled: false
+# Layout:
+#   Enabled: false
 Metrics:
+  Enabled: false
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Layout/IndentationWidth:
+  AllowedPatterns: ['if']
+
+Layout/HeredocIndentation:
+  Enabled: false
+
+Layout/ClosingHeredocIndentation:
+  Enabled: false
+
+Layout/CaseIndentation:
+  Enabled: false
+
+Layout/ElseAlignment:
+  Enabled: false
+
+Layout/EndAlignment:
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:  # Disabled for rufo
@@ -68,9 +89,6 @@ Lint/Debugger: # For /exe
 
 Style/GuardClause: # For make it extendable
   Enabled: false
-
-Layout/EndOfLine: # For git
-  EnforcedStyle: lf
 
 Lint/ScriptPermission: # For GitHub Actions
   Enabled: false

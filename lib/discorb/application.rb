@@ -29,6 +29,7 @@ module Discorb
     alias bot_require_code_grant? bot_require_code_grant
     # @return [Discorb::Application::Flag] The application's flags.
     attr_reader :flags
+
     #
     # Initializes a new instance of the Application class.
     # @private

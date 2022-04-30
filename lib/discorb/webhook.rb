@@ -66,22 +66,23 @@ module Discorb
     # @return [Async::Task<nil>] If `wait` is false.
     #
     def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
-                            file: nil, files: nil, username: nil, avatar_url: Discorb::Unset, wait: true)
+             file: nil, files: nil, username: nil, avatar_url: Discorb::Unset, wait: true)
       Async do
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
         tmp_embed = if embed
-            [embed]
-          elsif embeds
-            embeds
-          end
+                      [embed]
+                    elsif embeds
+                      embeds
+        end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = allowed_mentions&.to_hash
         payload[:username] = username if username
         payload[:avatar_url] = avatar_url if avatar_url != Discorb::Unset
         files = [file]
-        _resp, data = @http.multipart_request(Route.new("#{url}?wait=#{wait}", "//webhooks/:webhook_id/:token", :post), files, payload, headers: headers).wait
+        _resp, data = @http.multipart_request(Route.new("#{url}?wait=#{wait}", "//webhooks/:webhook_id/:token", :post),
+                                              files, payload, headers: headers).wait
         data && Webhook::Message.new(self, data)
       end
     end
@@ -157,7 +158,10 @@ module Discorb
         payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
         payload[:allowed_mentions] = allowed_mentions if allowed_mentions != Discorb::Unset
         files = [file] if file != Discorb::Unset
-        _resp, data = @http.multipart_request(Route.new("#{url}/messages/#{Utils.try(message, :id)}", "//webhooks/:webhook_id/:token/messages/:message_id", :patch), payload, files).wait
+        _resp, data = @http.multipart_request(
+          Route.new("#{url}/messages/#{Utils.try(message, :id)}", "//webhooks/:webhook_id/:token/messages/:message_id",
+                    :patch), payload, files
+        ).wait
         message.send(:_set_data, data)
         message
       end
@@ -173,9 +177,9 @@ module Discorb
     def delete_message!(message)
       Async do
         @http.request(Route.new(
-          "#{url}/messages/#{Utils.try(message, :id)}",
-          "//webhooks/:webhook_id/:token/messages/:message_id", :delete
-        )).wait
+                        "#{url}/messages/#{Utils.try(message, :id)}",
+                        "//webhooks/:webhook_id/:token/messages/:message_id", :delete
+                      )).wait
         message
       end
     end

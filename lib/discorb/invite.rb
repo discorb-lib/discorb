@@ -134,7 +134,10 @@ module Discorb
       end
       @inviter_data = data[:inviter]
       @target_type = TARGET_TYPES[data[:target_type]]
-      @target_user = @client.users[data[:target_user][:id]] || User.new(@client, data[:target_user]) if data[:target_user]
+      if data[:target_user]
+        @target_user = @client.users[data[:target_user][:id]] || User.new(@client,
+                                                                          data[:target_user])
+      end
       # @target_application = nil
 
       # @stage_instance = data[:stage_instance] && Invite::StageInstance.new(self, data[:stage_instance])

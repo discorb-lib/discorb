@@ -110,7 +110,7 @@ module Discorb
       # @return [Integer] the max value of the flag.
       #
       def max_value
-        2 ** @bits.values.max - 1
+        2**@bits.values.max - 1
       end
 
       #

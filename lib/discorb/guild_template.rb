@@ -64,7 +64,10 @@ module Discorb
         payload = {}
         payload[:name] = name if name
         payload[:description] = description if description != Discorb::Unset
-        @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code", :patch), payload).wait
+        @client.http.request(
+          Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code",
+                    :patch), payload
+        ).wait
       end
     end
 
@@ -78,7 +81,8 @@ module Discorb
     #
     def update
       Async do
-        _resp, data = @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code", :put)).wait
+        _resp, data = @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}",
+                                                     "//guilds/:guild_id/templates/:code", :put)).wait
         _set_data(data)
       end
     end
@@ -91,7 +95,8 @@ module Discorb
     #
     def delete!
       Async do
-        @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code", :delete)).wait
+        @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}",
+                                       "//guilds/:guild_id/templates/:code", :delete)).wait
       end
     end
 
@@ -109,7 +114,8 @@ module Discorb
       attr_reader :roles
       # @return [Discorb::SystemChannelFlag] The flag for the system channel.
       attr_reader :system_channel_flags
-      # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}] A dictionary of channels in the guild.
+      # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}]
+      #   A dictionary of channels in the guild.
       attr_reader :channels
       # @return [String] The description of the guild.
       attr_reader :description

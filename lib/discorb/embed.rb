@@ -44,8 +44,18 @@ module Discorb
     # @param [Discorb::Embed::Image, String] image The image of embed.
     # @param [Discorb::Embed::Thumbnail, String] thumbnail The thumbnail of embed.
     #
-    def initialize(title = nil, description = nil, color: nil, url: nil, timestamp: nil, author: nil,
-                                                   fields: nil, footer: nil, image: nil, thumbnail: nil)
+    def initialize(
+      title = nil,
+      description = nil,
+      color: nil,
+      url: nil,
+      timestamp: nil,
+      author: nil,
+      fields: nil,
+      footer: nil,
+      image: nil,
+      thumbnail: nil
+    )
       @title = title
       @description = description
       @url = url
@@ -161,7 +171,8 @@ module Discorb
       #
       # Convert author to hash.
       #
-      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure Offical Discord API Docs
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
+      #   Offical Discord API Docs
       # @return [Hash] Converted author.
       #
       def to_hash
@@ -193,7 +204,8 @@ module Discorb
       #
       # Convert footer to hash.
       #
-      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure Offical Discord API Docs
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
+      #   Offical Discord API Docs
       # @return [Hash] Converted footer.
       #
       def to_hash
@@ -231,7 +243,8 @@ module Discorb
       #
       # Convert field to hash.
       #
-      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure Offical Discord API Docs
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
+      #   Offical Discord API Docs
       # @return [Hash] Converted field.
       #
       def to_hash
@@ -279,7 +292,8 @@ module Discorb
       #
       # Convert image to hash for sending.
       #
-      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure Offical Discord API Docs
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure
+      #   Offical Discord API Docs
       # @return [Hash] Converted image.
       #
       def to_hash
@@ -323,7 +337,8 @@ module Discorb
       #
       # Convert thumbnail to hash for sending.
       #
-      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure Offical Discord API Docs
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure
+      #   Offical Discord API Docs
       # @return [Hash] Converted thumbnail.
       #
       def to_hash

@@ -1,10 +1,13 @@
 # frozen_string_literal: true
+
 require_relative "./common"
 
 RSpec.describe Discorb::Role do
   JSON.load_file(__dir__ + "/payloads/guild.json", symbolize_names: true)[:roles].each do |role_data|
     let(:data) { role_data }
-    let(:guild) { Discorb::Guild.new(client, JSON.load_file(__dir__ + "/payloads/guild.json", symbolize_names: true), false) }
+    let(:guild) do
+      Discorb::Guild.new(client, JSON.load_file(__dir__ + "/payloads/guild.json", symbolize_names: true), false)
+    end
     let(:role) { described_class.new(client, guild, data) }
     it "initializes successfully" do
       expect { role }.not_to raise_error

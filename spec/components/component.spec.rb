@@ -1,26 +1,27 @@
 # frozen_string_literal: true
+
 require "discorb"
 
 RSpec.describe Discorb::Component do
   it "creates action row" do
     expect(described_class.to_payload(
-      [Discorb::Button.new("label", :primary, custom_id: "id")]
-    )).to eq(
-      [
-        {
-          components: [
-            {
-              custom_id: "id",
-              disabled: false,
-              emoji: nil,
-              label: "label",
-              style: 1,
-              type: 2,
-            },
-          ],
-          type: 1,
-        },
-      ]
-    )
+             [Discorb::Button.new("label", :primary, custom_id: "id")]
+           )).to eq(
+             [
+               {
+                 components: [
+                   {
+                     custom_id: "id",
+                     disabled: false,
+                     emoji: nil,
+                     label: "label",
+                     style: 1,
+                     type: 2,
+                   },
+                 ],
+                 type: 1,
+               },
+             ]
+           )
   end
 end
