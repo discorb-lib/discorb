@@ -11,10 +11,9 @@ module Discorb
     attr_reader :application_id
     # @return [Symbol] The type of interaction.
     attr_reader :type
-    # @return [Discorb::Member] The member that created the interaction.
-    attr_reader :member
-    # @return [Discorb::User] The user that created the interaction.
+    # @return [Discorb::User, Discorb::Member] The user or member that created the interaction.
     attr_reader :user
+    alias member user
     # @return [Integer] The type of interaction.
     # @note This is always `1` for now.
     attr_reader :version
@@ -55,10 +54,11 @@ module Discorb
       @guild_id = data[:guild_id] && Snowflake.new(data[:guild_id])
       @channel_id = data[:channel_id] && Snowflake.new(data[:channel_id])
       if data[:member]
-        @member = guild.members[data[:member][:id]] || Member.new(@client, @guild_id, data[:member][:user],
-                                                                  data[:member])
+        @user = guild.members[data[:member][:id]] || Member.new(@client, @guild_id, data[:member][:user],
+                                                                data[:member])
+      elsif data[:user]
+        @user = @client.users[data[:user][:id]] || User.new(@client, data[:user])
       end
-      @user = @client.users[data[:user][:id]] || User.new(@client, data[:user]) if data[:user]
       @token = data[:token]
       @locale = data[:locale].to_s.gsub("-", "_").to_sym
       @guild_locale = data[:guild_locale].to_s.gsub("-", "_").to_sym
@@ -75,13 +75,6 @@ module Discorb
     def channel
       @client.channels[@channel_id]
     end
-
-    def target
-      @member || @user
-    end
-
-    alias fired_by target
-    alias from target
 
     def inspect
       "#<#{self.class} id=#{@id}>"
