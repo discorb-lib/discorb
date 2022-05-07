@@ -19,8 +19,8 @@ module Discorb
       self.class.events.each do |event, handlers|
         ret[event] = handlers.map do |handler|
           Discorb::EventHandler.new(proc { |*args, **kwargs|
-                                      instance_exec(*args, **kwargs, &handler[2])
-                                    }, handler[0], handler[1])
+            instance_exec(*args, **kwargs, &handler[2])
+          }, handler[0], handler[1])
         end
       end
       @events = ret
@@ -75,11 +75,11 @@ module Discorb
       # @return [Array<Discorb::ApplicationCommand::Command>] The commands of the extension.
       attr_reader :commands
       # @private
-      attr_reader :bottom_commands
+      attr_reader :callable_commands
 
       def self.extended(klass)
         klass.instance_variable_set(:@commands, [])
-        klass.instance_variable_set(:@bottom_commands, [])
+        klass.instance_variable_set(:@callable_commands, [])
         klass.instance_variable_set(:@events, {})
       end
     end

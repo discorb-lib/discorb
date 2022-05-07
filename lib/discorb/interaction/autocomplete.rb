@@ -15,7 +15,7 @@ module Discorb
       Sync do
         name, options = Discorb::CommandInteraction::ChatInputCommand.get_command_data(data)
 
-        unless (command = @client.bottom_commands.find { |c| c.to_s == name && c.type_raw == 1 })
+        unless (command = @client.callable_commands.find { |c| c.to_s == name && c.type_raw == 1 })
           @client.logger.warn "Unknown command name #{name}, ignoring"
           next
         end

@@ -71,7 +71,7 @@ module Discorb
           default_permission
         )
         @commands << command
-        @bottom_commands << command
+        @callable_commands << command
         command
       end
 
