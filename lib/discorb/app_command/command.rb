@@ -259,7 +259,7 @@ module Discorb
             dm_permission,
             default_permission
           )
-          @client.bottom_commands << command
+          @client.callable_commands << command
           @commands << command
           command
         end
@@ -380,7 +380,7 @@ module Discorb
             block, 1, self, nil, nil
           )
           @commands << command
-          @client.bottom_commands << command
+          @client.callable_commands << command
           command
         end
       end

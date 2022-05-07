@@ -54,7 +54,7 @@ module Discorb
     attr_reader :shards
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
-    attr_reader :bottom_commands
+    attr_reader :callable_commands
     # @private
     # @return [{String => Thread::Mutex}] A hash of mutexes.
     attr_reader :mutex
@@ -113,7 +113,7 @@ module Discorb
       @tasks = []
       @conditions = {}
       @commands = []
-      @bottom_commands = []
+      @callable_commands = []
       @status = :initialized
       @fetch_member = fetch_member
       @title = title
@@ -431,13 +431,13 @@ module Discorb
 
       cls = ins.class
       cls.loaded(self, ...) if cls.respond_to? :loaded
-      ins.class.bottom_commands.each do |cmd|
+      ins.class.callable_commands.each do |cmd|
         unless cmd.respond_to? :self_replaced
           cmd.define_singleton_method(:extension) { ins.class.name }
           cmd.replace_block(ins)
           cmd.block.define_singleton_method(:self_replaced) { true }
         end
-        @bottom_commands << cmd
+        @callable_commands << cmd
       end
       @extensions[ins.class.name] = ins
       ins
