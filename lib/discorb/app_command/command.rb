@@ -83,7 +83,7 @@ module Discorb
       #
       # Represents the slash command.
       #
-      class SlashCommand < Command
+      class ChatInputCommand < Command
         # @return [Hash{String => String}] The description of the command.
         attr_reader :description
         # @return [Hash{String => Hash}] The options of the command.
@@ -209,7 +209,7 @@ module Discorb
       #
       class GroupCommand < Command
         # @return [Array<
-        #     Discorb::ApplicationCommand::Command::SlashCommand,
+        #     Discorb::ApplicationCommand::Command::ChatInputCommand,
         #     Discorb::ApplicationCommand::Command::SubcommandGroup
         #   >] The subcommands of the command.
         attr_reader :commands
@@ -245,10 +245,10 @@ module Discorb
         # Add new subcommand.
         #
         # @param (see Discorb::ApplicationCommand::Handler#slash)
-        # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
+        # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, dm_permission: true, default_permission: nil, &block)
-          command = Discorb::ApplicationCommand::Command::SlashCommand.new(
+          command = Discorb::ApplicationCommand::Command::ChatInputCommand.new(
             command_name,
             description,
             options,
@@ -312,7 +312,7 @@ module Discorb
         #
         def to_hash
           options_payload = @commands.map do |command|
-            if command.is_a?(SlashCommand)
+            if command.is_a?(ChatInputCommand)
               {
                 name: command.name["default"],
                 name_localizations: command.name.except("default"),
@@ -347,7 +347,7 @@ module Discorb
       # Represents the subcommand group.
       #
       class SubcommandGroup < GroupCommand
-        # @return [Array<Discorb::ApplicationCommand::Command::SlashCommand>] The subcommands of the command.
+        # @return [Array<Discorb::ApplicationCommand::Command::ChatInputCommand>] The subcommands of the command.
         attr_reader :commands
 
         #
@@ -372,11 +372,13 @@ module Discorb
         #
         # Add new subcommand.
         # @param (see Discorb::ApplicationCommand::Handler#slash)
-        # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
+        # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, &block)
-          command = Discorb::ApplicationCommand::Command::SlashCommand.new(command_name, description, options, [],
-                                                                           block, 1, self, nil, nil)
+          command = Discorb::ApplicationCommand::Command::ChatInputCommand.new(
+            command_name, description, options, [],
+            block, 1, self, nil, nil
+          )
           @commands << command
           @client.bottom_commands << command
           command

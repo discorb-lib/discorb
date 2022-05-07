@@ -4519,7 +4519,7 @@ msgid "Command block."
 msgstr ""
 
 # @return [Discorb::ApplicationCommand::Command::GroupCommand]
-# @return [Discorb::ApplicationCommand::Command::SlashCommand]
+# @return [Discorb::ApplicationCommand::Command::ChatInputCommand]
 # @return [Discorb::ApplicationCommand::Command::SubcommandGroup]
 # @return [Discorb::ApplicationCommand::Command]
 #: ../lib/discorb/app_command.rb:40
@@ -4722,7 +4722,7 @@ msgstr ""
 msgid "a new instance of Command"
 msgstr ""
 
-# Discorb::ApplicationCommand::Command::SlashCommand
+# Discorb::ApplicationCommand::Command::ChatInputCommand
 #: ../lib/discorb/app_command.rb:194
 msgid "Represents the slash command."
 msgstr ""
@@ -4738,12 +4738,12 @@ msgstr ""
 msgid "The options of the command."
 msgstr ""
 
-# @return [SlashCommand]
+# @return [ChatInputCommand]
 #: ../lib/discorb/app_command.rb:203
-msgid "a new instance of SlashCommand"
+msgid "a new instance of ChatInputCommand"
 msgstr ""
 
-# Discorb::ApplicationCommand::Command::SlashCommand#to_s
+# Discorb::ApplicationCommand::Command::ChatInputCommand#to_s
 #: ../lib/discorb/app_command.rb:213
 msgid "Returns the commands name."
 msgstr ""
@@ -4753,8 +4753,8 @@ msgstr ""
 msgid "Represents the command with subcommands."
 msgstr ""
 
-# @return [Array<Discorb::ApplicationCommand::Command::SlashCommand, Discorb::ApplicationCommand::Command::SubcommandGroup>]
-# @return [Array<Discorb::ApplicationCommand::Command::SlashCommand>]
+# @return [Array<Discorb::ApplicationCommand::Command::ChatInputCommand, Discorb::ApplicationCommand::Command::SubcommandGroup>]
+# @return [Array<Discorb::ApplicationCommand::Command::ChatInputCommand>]
 #: ../lib/discorb/app_command.rb:275
 #: ../lib/discorb/app_command.rb:372
 msgid "The subcommands of the command."
@@ -4772,7 +4772,7 @@ msgstr ""
 msgid "Add new subcommand."
 msgstr ""
 
-# @return [Discorb::ApplicationCommand::Command::SlashCommand]
+# @return [Discorb::ApplicationCommand::Command::ChatInputCommand]
 #: ../lib/discorb/app_command.rb:294
 #: ../lib/discorb/app_command.rb:391
 msgid "The added subcommand."
@@ -12122,7 +12122,7 @@ msgstr ""
 msgid "Represents a command interaction."
 msgstr ""
 
-# Discorb::CommandInteraction::SlashCommand
+# Discorb::CommandInteraction::ChatInputCommand
 #: ../lib/discorb/interaction/command.rb:11
 msgid "Represents a slash command interaction."
 msgstr ""

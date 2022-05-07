@@ -13,7 +13,7 @@ module Discorb
     #
     # Represents a slash command interaction.
     #
-    class SlashCommand < CommandInteraction
+    class ChatInputCommand < CommandInteraction
       @command_type = 1
       @event_name = :slash_command
 
@@ -22,7 +22,7 @@ module Discorb
       def _set_data(data)
         super
 
-        name, options = SlashCommand.get_command_data(data)
+        name, options = ChatInputCommand.get_command_data(data)
 
         unless (command = @client.bottom_commands.find { |c| c.to_s == name && c.type_raw == 1 })
           @client.logger.warn "Unknown command name #{name}, ignoring"
@@ -30,7 +30,7 @@ module Discorb
         end
 
         option_map = command.options.to_h { |k, v| [k.to_s, v[:default]] }
-        SlashCommand.modify_option_map(option_map, options, guild, @members, @attachments)
+        ChatInputCommand.modify_option_map(option_map, options, guild, @members, @attachments)
 
         command.block.call(self, *command.options.map { |k, _v| option_map[k.to_s] })
       end

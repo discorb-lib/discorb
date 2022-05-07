@@ -13,7 +13,7 @@ module Discorb
     def _set_data(data)
       super
       Sync do
-        name, options = Discorb::CommandInteraction::SlashCommand.get_command_data(data)
+        name, options = Discorb::CommandInteraction::ChatInputCommand.get_command_data(data)
 
         unless (command = @client.bottom_commands.find { |c| c.to_s == name && c.type_raw == 1 })
           @client.logger.warn "Unknown command name #{name}, ignoring"
@@ -21,7 +21,7 @@ module Discorb
         end
 
         option_map = command.options.to_h { |k, v| [k.to_s, v[:default]] }
-        Discorb::CommandInteraction::SlashCommand.modify_option_map(option_map, options, guild, {}, {})
+        Discorb::CommandInteraction::ChatInputCommand.modify_option_map(option_map, options, guild, {}, {})
         focused_index = options.find_index { |o| o[:focused] }
         val = command.options.values.filter do |option|
           option[:type] != :attachment

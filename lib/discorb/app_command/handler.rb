@@ -41,7 +41,7 @@ module Discorb
       # @param [Discorb::Permission] default_permission The default permission of the command.
       # @param [Proc] block Command block.
       #
-      # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
+      # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] Command object.
       #
       # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
       # @see file:docs/cli/setup.md CLI: setup
@@ -59,7 +59,7 @@ module Discorb
         description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::SlashCommand.new(
+        command = Discorb::ApplicationCommand::Command::ChatInputCommand.new(
           command_name,
           description,
           options,

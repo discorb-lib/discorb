@@ -2220,7 +2220,7 @@ module Discorb
     # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
     # @param [Proc] block Command block.
     # 
-    # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
+    # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] Command object.
     # 
     # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
     # @see file:docs/cli/setup.md CLI: setup
@@ -2229,7 +2229,7 @@ module Discorb
                  String description,
                  ?::Hash[String, String | Integer | Float] options,
                  ?guild_ids: (::Array[untyped] | bool)?
-               ) -> Discorb::ApplicationCommand::Command::SlashCommand
+               ) -> Discorb::ApplicationCommand::Command::ChatInputCommand
 
     # 
     # Add new command with group.
@@ -6676,7 +6676,7 @@ module Discorb
 
       # 
       # Represents the slash command.
-      class SlashCommand < Discorb::ApplicationCommand::Command
+      class ChatInputCommand < Discorb::ApplicationCommand::Command
         TYPES: untyped
 
         # 
@@ -6707,8 +6707,8 @@ module Discorb
         # Add new subcommand.
         # 
         # @param (see Discorb::ApplicationCommand::Handler#slash)
-        # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
-        def slash: (String command_name, String description, ?::Hash[String, String | Integer | Float] options) -> Discorb::ApplicationCommand::Command::SlashCommand
+        # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
+        def slash: (String command_name, String description, ?::Hash[String, String | Integer | Float] options) -> Discorb::ApplicationCommand::Command::ChatInputCommand
 
         # 
         # Add new subcommand group.
@@ -6734,8 +6734,8 @@ module Discorb
         # Changes the self pointer to the given object.
         # 
         # Converts the object to a hash.
-        # @return [Array<Discorb::ApplicationCommand::Command::SlashCommand, Discorb::ApplicationCommand::Command::SubcommandGroup>] The subcommands of the command.
-        attr_reader commands: ::Array[(Discorb::ApplicationCommand::Command::SlashCommand | Discorb::ApplicationCommand::Command::SubcommandGroup)]
+        # @return [Array<Discorb::ApplicationCommand::Command::ChatInputCommand, Discorb::ApplicationCommand::Command::SubcommandGroup>] The subcommands of the command.
+        attr_reader commands: ::Array[(Discorb::ApplicationCommand::Command::ChatInputCommand | Discorb::ApplicationCommand::Command::SubcommandGroup)]
 
         # @return [String] The description of the command.
         attr_reader description: String
@@ -6751,11 +6751,11 @@ module Discorb
         # 
         # Add new subcommand.
         # @param (see Discorb::ApplicationCommand::Handler#slash)
-        # @return [Discorb::ApplicationCommand::Command::SlashCommand] The added subcommand.
-        def slash: (String command_name, String description, ?::Hash[String, String | Integer | Float] options) -> Discorb::ApplicationCommand::Command::SlashCommand
+        # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
+        def slash: (String command_name, String description, ?::Hash[String, String | Integer | Float] options) -> Discorb::ApplicationCommand::Command::ChatInputCommand
 
-        # @return [Array<Discorb::ApplicationCommand::Command::SlashCommand>] The subcommands of the command.
-        attr_reader commands: ::Array[Discorb::ApplicationCommand::Command::SlashCommand]
+        # @return [Array<Discorb::ApplicationCommand::Command::ChatInputCommand>] The subcommands of the command.
+        attr_reader commands: ::Array[Discorb::ApplicationCommand::Command::ChatInputCommand]
       end
     end
 
@@ -6785,7 +6785,7 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to set the command to. `false` to global command, `nil` to use default.
       # @param [Proc] block Command block.
       # 
-      # @return [Discorb::ApplicationCommand::Command::SlashCommand] Command object.
+      # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] Command object.
       # 
       # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
       # @see file:docs/cli/setup.md CLI: setup
@@ -6794,7 +6794,7 @@ module Discorb
                    String description,
                    ?::Hash[String, String | Integer | Float] options,
                    ?guild_ids: (::Array[untyped] | bool)?
-                 ) -> Discorb::ApplicationCommand::Command::SlashCommand
+                 ) -> Discorb::ApplicationCommand::Command::ChatInputCommand
 
       # 
       # Add new command with group.
@@ -6906,7 +6906,7 @@ module Discorb
 
     # 
     # Represents a slash command interaction.
-    class SlashCommand < Discorb::CommandInteraction      # 
+    class ChatInputCommand < Discorb::CommandInteraction      # 
       # Get command data from the given data.
       # 
       # Modify the option map with the given options.

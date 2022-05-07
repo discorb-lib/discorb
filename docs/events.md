@@ -525,7 +525,7 @@ Fires when a slash command is used.
 
 | Parameter  | Type  | Description |
 | ---------- | ----- | ----------- |
-| `interaction` | {Discorb::CommandInteraction::SlashCommand}| The created interaction. |
+| `interaction` | {Discorb::CommandInteraction::ChatInputCommand}| The created interaction. |
 
 #### `message_command(interaction)`
 
