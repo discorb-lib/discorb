@@ -175,8 +175,13 @@ module Discorb
                 r = {
                   name: k, value: v,
                 }
-                if value[:choice_localizations]
-                  r[:name_localizations] = value[:choice_localizations][k]
+                if choices_localizations = value[:choices_localizations].clone
+                  name_localizations = ApplicationCommand.modify_localization_hash(choices_localizations.delete(k) do
+                    warn "Missing localization for #{k}"
+                    {}
+                  end)
+                  r[:name_localizations] = name_localizations.except("default")
+                  r[:name] = name_localizations["default"]
                   r.delete(:name_localizations) if r[:name_localizations].nil?
                 end
                 r

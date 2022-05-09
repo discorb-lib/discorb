@@ -29,7 +29,9 @@ module Discorb
       #   | `:optional` | Boolean(true | false) |
       #     Whether the argument is optional. `required` will be used if not specified. |
       #   | `:type` | `Object` | Type of the option. |
-      #   | `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |
+      #   | `:choices` | `Hash{String => String, Integer, Float}` | Type of the option. |
+      #   | `:choices_localizations` | `Hash{String => Hash{Symbol => String}}` |
+      #      Localization of the choice. Key must be the name of a choice. |
       #   | `:default` | `Object` | Default value of the option. |
       #   | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
       #   | `:autocomplete` | `Proc` | Autocomplete function. |
