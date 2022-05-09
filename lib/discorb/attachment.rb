@@ -70,7 +70,7 @@ module Discorb
     def initialize_hash(data)
       @id = Snowflake.new(data[:id])
       @filename = data[:filename]
-      @content_type = data[:content_type]
+      @content_type = data[:content_type] || "application/octet-stream"
       @size = data[:size]
       @url = data[:url]
       @proxy_url = data[:proxy_url]
