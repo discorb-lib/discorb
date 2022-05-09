@@ -163,10 +163,10 @@ module Discorb
               required: value[:required].nil? ? !value[:optional] : value[:required],
             }
 
-            if @description.is_a?(String)
-              ret[:description] = ret[:description]
+            if value[:description].is_a?(String)
+              ret[:description] = value[:description]
             else
-              description = ApplicationCommand.modify_localization_hash(@description)
+              description = ApplicationCommand.modify_localization_hash(value[:description])
               ret[:description] = description["default"]
               ret[:description_localizations] = description.except("default")
             end
@@ -328,7 +328,9 @@ module Discorb
                 description: command.description["default"],
                 description_localizations: command.description.except("default"),
                 type: 2,
-                options: command.commands.map { |c| c.to_hash.merge(type: 1) },
+                options: command.commands.map do |c|
+                  c.to_hash.merge(type: 1).except(:dm_permission, :default_member_permissions)
+                end,
               }
             end
           end
@@ -338,6 +340,8 @@ module Discorb
             name_localizations: @name.except("default"),
             description: @description["default"],
             description_localizations: @description.except("default"),
+            dm_permission: @dm_permission,
+            default_member_permissions: @default_permission&.value&.to_s,
             options: options_payload,
           }
         end
@@ -359,7 +363,7 @@ module Discorb
         # @param [Discorb::ApplicationCommand::Command::GroupCommand] parent The parent command.
         # @param [Discorb::Client] client The client.
         def initialize(name, description, parent, client)
-          super(name, description, [], 1, client)
+          super(name, description, [], 1, client, nil, nil)
 
           @commands = []
           @parent = parent
