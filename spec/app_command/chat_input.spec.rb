@@ -393,4 +393,160 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       }
     )
   end
+
+  it "registers chat input command with autocomplete option" do
+    client.slash "test", "test command description",
+                 {
+                   "arg1" => {
+                     description: "test arg1 description",
+                     type: :str,
+                     autocomplete: proc { |_interaction, _arg1|
+                       {
+                         "choice 1" => "choice_1_value",
+                       }
+                     },
+                   },
+                 } do
+      # do nothing
+    end
+
+    expect(client.commands.length).to eq 1
+    expect(client.callable_commands.length).to eq 1
+    expect(client.commands.first.to_hash).to eq(
+      {
+        default_member_permissions: nil,
+        description: "test command description",
+        description_localizations: {},
+        dm_permission: true,
+        name: "test",
+        name_localizations: {},
+        options: [
+          {
+            description: "test arg1 description",
+            name: "arg1",
+            name_localizations: {},
+            required: true,
+            type: 3,
+            autocomplete: true,
+          },
+        ],
+      }
+    )
+  end
+
+  {
+    int: 4,
+    float: 10,
+  }.each do |type, value|
+    it "registers chat input command with #{type} option with max limit" do
+      client.slash "test", "test command description",
+                   {
+                     "arg1" => {
+                       description: "test arg1 description",
+                       type: type,
+                       range: ..10,
+                     },
+                   } do
+        # do nothing
+      end
+
+      expect(client.commands.length).to eq 1
+      expect(client.callable_commands.length).to eq 1
+      expect(client.commands.first.to_hash).to eq(
+        {
+          default_member_permissions: nil,
+          description: "test command description",
+          description_localizations: {},
+          dm_permission: true,
+          name: "test",
+          name_localizations: {},
+          options: [
+            {
+              description: "test arg1 description",
+              name: "arg1",
+              name_localizations: {},
+              required: true,
+              type: value,
+              min_value: nil,
+              max_value: 10,
+            },
+          ],
+        }
+      )
+    end
+
+    it "registers chat input command with #{type} option with min limit" do
+      client.slash "test", "test command description",
+                   {
+                     "arg1" => {
+                       description: "test arg1 description",
+                       type: type,
+                       range: 10..,
+                     },
+                   } do
+        # do nothing
+      end
+
+      expect(client.commands.length).to eq 1
+      expect(client.callable_commands.length).to eq 1
+      expect(client.commands.first.to_hash).to eq(
+        {
+          default_member_permissions: nil,
+          description: "test command description",
+          description_localizations: {},
+          dm_permission: true,
+          name: "test",
+          name_localizations: {},
+          options: [
+            {
+              description: "test arg1 description",
+              name: "arg1",
+              name_localizations: {},
+              required: true,
+              type: value,
+              min_value: 10,
+              max_value: nil,
+            },
+          ],
+        }
+      )
+    end
+
+    it "registers chat input command with #{type} option with max and min limit" do
+      client.slash "test", "test command description",
+                   {
+                     "arg1" => {
+                       description: "test arg1 description",
+                       type: type,
+                       range: 0..10,
+                     },
+                   } do
+        # do nothing
+      end
+
+      expect(client.commands.length).to eq 1
+      expect(client.callable_commands.length).to eq 1
+      expect(client.commands.first.to_hash).to eq(
+        {
+          default_member_permissions: nil,
+          description: "test command description",
+          description_localizations: {},
+          dm_permission: true,
+          name: "test",
+          name_localizations: {},
+          options: [
+            {
+              description: "test arg1 description",
+              name: "arg1",
+              name_localizations: {},
+              required: true,
+              type: value,
+              min_value: 0,
+              max_value: 10,
+            },
+          ],
+        }
+      )
+    end
+  end
 end
