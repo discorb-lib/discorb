@@ -549,4 +549,84 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       )
     end
   end
+
+  it "registers chat input command that is disabled in dm" do
+    client.slash "test", "test command description", dm_permission: false do
+      # do nothing
+    end
+
+    expect(client.commands.length).to eq 1
+    expect(client.callable_commands.length).to eq 1
+    expect(client.commands.first.to_hash).to eq(
+      {
+        default_member_permissions: nil,
+        description: "test command description",
+        description_localizations: {},
+        dm_permission: false,
+        name: "test",
+        name_localizations: {},
+        options: [],
+      }
+    )
+  end
+
+  it "registers chat input command that requires admin permissions" do
+    client.slash "test", "test command description",
+                 default_permission: Discorb::Permission.from_keys(:administrator) do
+      # do nothing
+    end
+
+    expect(client.commands.length).to eq 1
+    expect(client.callable_commands.length).to eq 1
+    expect(client.commands.first.to_hash).to eq(
+      {
+        default_member_permissions: "8",
+        description: "test command description",
+        description_localizations: {},
+        dm_permission: true,
+        name: "test",
+        name_localizations: {},
+        options: [],
+      }
+    )
+  end
+
+  it "registers group command that is disabled in dm" do
+    client.slash_group "test", "test command description", dm_permission: false do
+      # do nothing
+    end
+
+    expect(client.commands.length).to eq 1
+    expect(client.commands.first.to_hash).to eq(
+      {
+        default_member_permissions: nil,
+        description: "test command description",
+        description_localizations: {},
+        dm_permission: false,
+        name: "test",
+        name_localizations: {},
+        options: [],
+      }
+    )
+  end
+
+  it "registers group command that requires admin permissions" do
+    client.slash_group "test", "test command description",
+                       default_permission: Discorb::Permission.from_keys(:administrator) do
+      # do nothing
+    end
+
+    expect(client.commands.length).to eq 1
+    expect(client.commands.first.to_hash).to eq(
+      {
+        default_member_permissions: "8",
+        description: "test command description",
+        description_localizations: {},
+        dm_permission: true,
+        name: "test",
+        name_localizations: {},
+        options: [],
+      }
+    )
+  end
 end
