@@ -96,6 +96,10 @@ module Discorb
       self.class.new(~@value)
     end
 
+    def to_i
+      @value
+    end
+
     def inspect
       "#<#{self.class}: #{@value}>"
     end
@@ -110,7 +114,7 @@ module Discorb
       # @return [Integer] the max value of the flag.
       #
       def max_value
-        2**@bits.values.max - 1
+        2 ** @bits.values.max - 1
       end
 
       #

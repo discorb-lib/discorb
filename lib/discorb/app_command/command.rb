@@ -76,7 +76,7 @@ module Discorb
           name_localizations: @name.except("default"),
           type: @type_raw,
           dm_permission: @dm_permission,
-          default_member_permissions: @default_permission&.to_s,
+          default_member_permissions: @default_permission&.value&.to_s,
         }
       end
 
