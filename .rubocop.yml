@@ -48,6 +48,9 @@ Style/TrailingCommaInArguments:  # Disabled for rufo
 Style/StringLiteralsInInterpolation:  # Disabled for rufo
   Enabled: false
 
+Layout/SpaceAroundOperators:  # Changed for rufo
+  EnforcedStyleForExponentOperator: space
+
 Style/StringConcatenation:  # + looks better
   Enabled: false
 
