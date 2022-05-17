@@ -105,7 +105,7 @@ module Discorb
         payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles != Discorb::Unset
         @client.http.request(
           Route.new("/guilds/#{@guild.id}/emojis/#{@id}", "//guilds/:guild_id/emojis/:emoji_id",
-                    :patch), payload, audit_log_reason: reason
+                    :patch), payload, audit_log_reason: reason,
         )
         self
       end
@@ -125,7 +125,7 @@ module Discorb
       Async do
         @client.http.request(
           Route.new("/guilds/#{@guild.id}/emojis/#{@id}", "//guilds/:guild_id/emojis/:emoji_id",
-                    :delete), {}, audit_log_reason: reason
+                    :delete), {}, audit_log_reason: reason,
         ).wait
         @available = false
         self
@@ -236,10 +236,27 @@ module Discorb
       elsif EmojiTable::UNICODE_TO_DISCORD.key?(name)
         @name = EmojiTable::UNICODE_TO_DISCORD[name][0]
         @value = name
+      elsif EmojiTable::SKIN_TONES.any? { |t| name.include?(t) }
+        name2 = name.dup
+        EmojiTable::SKIN_TONES.each.with_index do |t, i|
+          next unless name2.include?(t)
+
+          @skin_tone = i
+          name2.sub!(t, "")
+          break
+        end
+        raise ArgumentError, "Invalid skin tone: #{tone}" unless @skin_tone
+
+        p name2.bytes.to_a.map { _1.to_s 16 }
+        @name = EmojiTable::UNICODE_TO_DISCORD[name2]
+        @value = name
       else
         raise ArgumentError, "No such emoji: #{name}"
       end
-      @value += EmojiTable::SKIN_TONES[tone] if tone.positive?
+      if tone.positive?
+        @value += EmojiTable::SKIN_TONES[tone - 1]
+        @skin_tone = tone
+      end
     end
 
     # @return [String] The unicode string of the emoji.
