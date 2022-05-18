@@ -247,7 +247,6 @@ module Discorb
         end
         raise ArgumentError, "Invalid skin tone: #{tone}" unless @skin_tone
 
-        p name2.bytes.to_a.map { _1.to_s 16 }
         @name = EmojiTable::UNICODE_TO_DISCORD[name2]
         @value = name
       else
