@@ -253,7 +253,12 @@ module Discorb
         raise ArgumentError, "No such emoji: #{name}"
       end
       if tone.positive?
-        @value += EmojiTable::SKIN_TONES[tone - 1]
+        unless @value = EmojiTable::DISCORD_TO_UNICODE["#{name}_tone#{tone}"]
+          raise ArgumentError,
+                "Invalid skin tone for emoji: #{name}"
+        end
+
+        @name = "#{name}_tone#{tone}"
         @skin_tone = tone
       end
     end

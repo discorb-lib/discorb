@@ -1,6 +1,8 @@
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
+  Exclude:
+    - lib/discorb/emoji_table.rb
 
 require:
 - rubocop-rake

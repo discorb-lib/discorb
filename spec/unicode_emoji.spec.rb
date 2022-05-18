@@ -24,5 +24,14 @@ RSpec.describe Discorb::UnicodeEmoji do
       parsed = described_class.new(emoji)
       expect(parsed.name).to eq("hand_splayed_tone#{i + 1}")
     end
+
+    it "returns #{emoji} from name and skin tone" do
+      emoji = described_class.new("hand_splayed", tone: i + 1)
+      expect(emoji.name).to eq("hand_splayed_tone#{i + 1}")
+    end
+  end
+
+  it "raises error because the emoji doesn't support skin tone" do
+    expect { described_class.new("grinning", tone: 1) }.to raise_error(ArgumentError)
   end
 end
