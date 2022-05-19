@@ -25,8 +25,25 @@ FILES = {
 
     client.run ENV["%<token>s"]  # Starts client
   RUBY
+  "main.rb_nc" => <<~'RUBY',
+    # frozen_string_literal: true
+
+    require "discorb"
+    require "dotenv/load"
+
+    client = Discorb::Client.new
+
+    client.once :standby do
+      puts "Logged in as #{client.user}"
+    end
+
+    client.run ENV["%<token>s"]
+  RUBY
   ".env" => <<~BASH,
     # Put your token after `%<token>s=`
+    %<token>s=
+  BASH
+  ".env_nc" => <<~BASH,
     %<token>s=
   BASH
   ".gitignore" => <<~GITIGNORE,
@@ -90,6 +107,41 @@ FILES = {
     # This gitignore is from github/gitignore.
     # https://github.com/github/gitignore/blob/master/Ruby.gitignore
   GITIGNORE
+  ".gitignore_nc" => <<~GITIGNORE,
+    *.gem
+    *.rbc
+    /.config
+    /coverage/
+    /InstalledFiles
+    /pkg/
+    /spec/reports/
+    /spec/examples.txt
+    /test/tmp/
+    /test/version_tmp/
+    /tmp/
+
+    .env
+
+    .byebug_history
+
+    .dat*
+    .repl_history
+    build/
+    *.bridgesupport
+    build-iPhoneOS/
+    build-iPhoneSimulator/
+
+    /.yardoc/
+    /_yardoc/
+    /doc/
+    /rdoc/
+
+    /.bundle/
+    /vendor/bundle
+    /lib/bundler/man/
+
+    .rvmrc
+  GITIGNORE
   "Gemfile" => <<~RUBY,
     # frozen_string_literal: true
 
@@ -140,8 +192,9 @@ FILES = {
 
 # @private
 def create_file(name)
-  content = format(FILES[name], token: $values[:token], name: $values[:name])
-  content.gsub!(/#.*$/, "") if !$values[:comment] && name == "main.rb"
+  template_name = name
+  template_name += "_nc" if !$values[:comment] && FILES.key?(name + "_nc")
+  content = format(FILES[template_name], token: $values[:token], name: $values[:name])
   File.write($path + "/#{name}", content, mode: "wb")
 end
 
@@ -197,7 +250,7 @@ $values = {
   token: "TOKEN",
   descs: false,
   name: nil,
-  comment: nil,
+  comment: true,
 }
 
 opt.on("--[no-]bundle", "Whether to use bundle. Default to true.") do |v|
@@ -212,6 +265,10 @@ opt.on("--[no-]descs", "Whether to put some file for description. Default to fal
   $values[:descs] = v
 end
 
+opt.on("--[no-]comment", "Whether to write comment in main.rb. Default to true.") do |v|
+  $values[:comment] = v
+end
+
 opt.on("-t NAME", "--token NAME", "The name of token environment variable. Default to TOKEN.") do |v|
   $values[:token] = v
 end
@@ -220,12 +277,8 @@ opt.on("-n NAME", "--name NAME", "The name of your project. Default to the direc
   $values[:name] = v
 end
 
-opt.on("-f", "--force", "Whether to force use directory. Default to false.") do |v|
+opt.on("--force", "-f", "Whether to force use directory. Default to false.") do |v|
   $values[:force] = v
-end
-
-opt.on("-c", "--[no]-command", "Whether to write comment in main.rb. Default to true.") do |v|
-  $values[:comment] = v
 end
 
 opt.parse!(ARGV)
