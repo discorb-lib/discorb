@@ -64,7 +64,6 @@ class MyExtension
 end
 ```
 
-
 ## Load extension
 
 Use {Discorb::Client#load_extension} to load extension.

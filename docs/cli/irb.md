@@ -6,7 +6,6 @@
 
 This command will start an interactive Ruby shell with connected client.
 
-
 ## Usage
 
 ```
@@ -16,6 +15,7 @@ discorb irb [options]
 ### Load a token
 
 discorb irb will load a token from...
+
 1. the `DISCORD_BOT_TOKEN` environment variable
 2. the `DISCORD_TOKEN` environment variable
 3. `token` file in the current directory(customizable with `-t` option)

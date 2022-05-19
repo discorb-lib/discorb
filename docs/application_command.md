@@ -13,12 +13,13 @@ From: [Discord API docs](https://discord.com/developers/docs/interactions/applic
 ## How do I register an application command?
 
 Write to your script:
+
 - {Discorb::ApplicationCommand::Handler.slash}, {Discorb::ApplicationCommand::Handler.slash_group} for slash commands,
 - {Discorb::ApplicationCommand::Handler.user_command} for user menu commands,
 - {Discorb::ApplicationCommand::Handler.message_command} for message menu commands.
 
 And then run `discorb setup` to register your application commands.
-{file:docs/cli/setup.md Learn more about `discorb setup`}. 
+{file:docs/cli/setup.md Learn more about `discorb setup`}.
 
 ### Note
 
@@ -43,13 +44,13 @@ client.run(ENV["DISCORD_BOT_TOKEN"])
 
 {Discorb::ApplicationCommand::Handler#slash} takes 5 arguments:
 
-| Argument | Description |
-|---------|-------------|
-| `command_name` | The name of the command. |
-| `description` | The description of the command. |
-| `options` | A hash of options. |
-| `guild_ids` | The ID of the guild to register the command in. |
-| `block` | A block that will be called when the command is invoked. |
+| Argument       | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `command_name` | The name of the command.                                 |
+| `description`  | The description of the command.                          |
+| `options`      | A hash of options.                                       |
+| `guild_ids`    | The ID of the guild to register the command in.          |
+| `block`        | A block that will be called when the command is invoked. |
 
 Block will be called with a {Discorb::Interaction} object and specified options.
 
@@ -64,18 +65,19 @@ In `options`, hash should be like this:
   }
 }
 ```
-| Key | Type | Description |
-| --- | --- | --- |
-| `:description` | `String` | Description of the option. |
-| `:required` | Boolean(true | false) | Whether the argument is required. `optional` will be used if not specified. |
-| `:optional` | Boolean(true | false) | Whether the argument is optional. `required` will be used if not specified. |
-| `:type` | `Object` | Type of the option. |
-| `:choices` | `Hash{String => String, Integer, Float}` | Choice of the option. |
+
+| Key                      | Type                                     | Description                                                                           |
+| ------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `:description`           | `String`                                 | Description of the option.                                                            |
+| `:required`              | Boolean(true                             | false)                                                                                | Whether the argument is required. `optional` will be used if not specified. |
+| `:optional`              | Boolean(true                             | false)                                                                                | Whether the argument is optional. `required` will be used if not specified. |
+| `:type`                  | `Object`                                 | Type of the option.                                                                   |
+| `:choices`               | `Hash{String => String, Integer, Float}` | Choice of the option.                                                                 |
 | `:choices_localizations` | `Hash{String => Hash{Symbol => String}}` | Localization of the choice. Key must be the name of a choice. (See below for example) |
-| `:default` | `Object` | Default value of the option. |
-| `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
-| `:autocomplete` | `Proc` | Autocomplete function. |
-| `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |
+| `:default`               | `Object`                                 | Default value of the option.                                                          |
+| `:channel_types`         | `Array<Class<Discorb::Channel>>`         | Type of the channel option.                                                           |
+| `:autocomplete`          | `Proc`                                   | Autocomplete function.                                                                |
+| `:range`                 | `Range`                                  | Range of the option. Only valid for numeric options. (`:int`, `:float`)               |
 
 `choices` should be unspecified if you don't want to use it.
 `choices` example:
@@ -104,15 +106,15 @@ The key will be displayed in the user menu, and the value will be used as the ar
 
 In `type`, You must use one of the following:
 
-| Name | Description | Aliases|
-| --- | --- | --- |
-| `:string` | String argument. | `:str` |
-| `:integer` | Integer argument. | `:int` |
-| `:float` | Float argument. | None |
-| `:boolean` | Boolean argument. | `:bool` |
-| `:user` | User argument. | `:member` |
-| `:channel` | Channel argument. | None |
-| `:role` | Role argument. | None |
+| Name       | Description       | Aliases   |
+| ---------- | ----------------- | --------- |
+| `:string`  | String argument.  | `:str`    |
+| `:integer` | Integer argument. | `:int`    |
+| `:float`   | Float argument.   | None      |
+| `:boolean` | Boolean argument. | `:bool`   |
+| `:user`    | User argument.    | `:member` |
+| `:channel` | Channel argument. | None      |
+| `:role`    | Role argument.    | None      |
 
 #### Group Slash Commands
 
@@ -278,21 +280,21 @@ client.user_command("hello") do |interaction, user|
   interaction.post("Hello, #{user.name}!")
 end
 ```
+
 {Discorb::ApplicationCommand::Handler.user_command} takes 3 arguments:
 
-| Parameter | Description |
-| --- | --- |
-| `command_name` | The name of the command. |
-| `guild_ids` | The ID of the guild to register the command in. |
-| `block` | A block that will be called when the command is invoked. |
+| Parameter      | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `command_name` | The name of the command.                                 |
+| `guild_ids`    | The ID of the guild to register the command in.          |
+| `block`        | A block that will be called when the command is invoked. |
 
 `block` will be called with two arguments:
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description             |
+| ------------- | ----------------------- |
 | `interaction` | The interaction object. |
-| `user` | The user object. |
-
+| `user`        | The user object.        |
 
 ### Register Message Context Menu Command
 
@@ -304,18 +306,18 @@ end
 
 {Discorb::ApplicationCommand::Handler.message_command} takes 3 arguments:
 
-| Parameter | Description |
-| --- | --- |
-| `command_name` | The name of the command. |
-| `guild_ids` | The ID of the guild to register the command in. |
-| `block` | A block that will be called when the command is invoked. |
+| Parameter      | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `command_name` | The name of the command.                                 |
+| `guild_ids`    | The ID of the guild to register the command in.          |
+| `block`        | A block that will be called when the command is invoked. |
 
 `block` will be called with two arguments:
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description             |
+| ------------- | ----------------------- |
 | `interaction` | The interaction object. |
-| `message` | The message object. |
+| `message`     | The message object.     |
 
 ### Localizing command
 

@@ -66,12 +66,13 @@ end
 ### Client events
 
 #### `event_receive(event_name, data)`
-Fires when an event is received.  
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event_name`| Symbol | The name of the event. |
-|`data`      | Hash   | The data of the event. |
+Fires when an event is received.
+
+| Parameter    | Type   | Description            |
+| ------------ | ------ | ---------------------- |
+| `event_name` | Symbol | The name of the event. |
+| `data`       | Hash   | The data of the event. |
 
 #### `ready()`
 
@@ -99,17 +100,17 @@ This is useful for setting up some dependencies, such as the database.
 
 Fires when a shard is standby.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`shard`     | {Discorb::Shard} | The shard that is standby. |
+| Parameter | Type             | Description                |
+| --------- | ---------------- | -------------------------- |
+| `shard`   | {Discorb::Shard} | The shard that is standby. |
 
 #### `shard_resumed(shard)`
 
 Fires when a shard is resumed connection.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`shard`     | {Discorb::Shard} | The shard that is standby. |
+| Parameter | Type             | Description                |
+| --------- | ---------------- | -------------------------- |
+| `shard`   | {Discorb::Shard} | The shard that is standby. |
 
 ### Guild events
 
@@ -117,69 +118,68 @@ Fires when a shard is resumed connection.
 
 Fires when client joins a guild.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild} | The guild that was joined. |
+| Parameter | Type             | Description                |
+| --------- | ---------------- | -------------------------- |
+| `guild`   | {Discorb::Guild} | The guild that was joined. |
 
 #### `guild_available(guild)`
 
 Fires when a guild becomes available.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild} | The guild that became available. |
+| Parameter | Type             | Description                      |
+| --------- | ---------------- | -------------------------------- |
+| `guild`   | {Discorb::Guild} | The guild that became available. |
 
 #### `guild_update(before, after)`
 
 Fires when client updates a guild.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`before`    | {Discorb::Guild} | The guild before the update. |
-|`after`     | {Discorb::Guild} | The guild after the update. |
+| Parameter | Type             | Description                  |
+| --------- | ---------------- | ---------------------------- |
+| `before`  | {Discorb::Guild} | The guild before the update. |
+| `after`   | {Discorb::Guild} | The guild after the update.  |
 
 #### `guild_leave(guild)`
 
 Fires when client leaves a guild.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild} | The guild that was left. |
+| Parameter | Type             | Description              |
+| --------- | ---------------- | ------------------------ |
+| `guild`   | {Discorb::Guild} | The guild that was left. |
 
 #### `guild_destroy(guild)`
 
 Fires when guild is destroyed.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild} | The guild that was destroyed. |
+| Parameter | Type             | Description                   |
+| --------- | ---------------- | ----------------------------- |
+| `guild`   | {Discorb::Guild} | The guild that was destroyed. |
 
 #### `guild_integrations_update(guild)`
 
 Fires when guild integrations are updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild} | The guild that integrations were updated for. |
+| Parameter | Type             | Description                                   |
+| --------- | ---------------- | --------------------------------------------- |
+| `guild`   | {Discorb::Guild} | The guild that integrations were updated for. |
 
 #### `guild_ban_add(guild, user)`
 
 Fires when a user is banned from a guild.
 
-
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild} | The guild that the user was banned from. |
-|`user`      | {Discorb::User}  | The user that was banned. |
+| Parameter | Type             | Description                              |
+| --------- | ---------------- | ---------------------------------------- |
+| `guild`   | {Discorb::Guild} | The guild that the user was banned from. |
+| `user`    | {Discorb::User}  | The user that was banned.                |
 
 #### `guild_ban_remove(guild, user)`
 
 Fires when a user is unbanned from a guild.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild} | The guild that the user was unbanned from. |
-|`user`      | {Discorb::User}  | The user that was unbanned. |
+| Parameter | Type             | Description                                |
+| --------- | ---------------- | ------------------------------------------ |
+| `guild`   | {Discorb::Guild} | The guild that the user was unbanned from. |
+| `user`    | {Discorb::User}  | The user that was unbanned.                |
 
 ### Channel events
 
@@ -187,88 +187,87 @@ Fires when a user is unbanned from a guild.
 
 Fires when a channel is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`channel`   | {Discorb::Channel} | The channel that was created. |
+| Parameter | Type               | Description                   |
+| --------- | ------------------ | ----------------------------- |
+| `channel` | {Discorb::Channel} | The channel that was created. |
 
 #### `channel_update(before, after)`
 
 Fires when a channel is updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`before`    | {Discorb::Channel} | The channel before the update. |
-|`after`     | {Discorb::Channel} | The channel after the update. |
+| Parameter | Type               | Description                    |
+| --------- | ------------------ | ------------------------------ |
+| `before`  | {Discorb::Channel} | The channel before the update. |
+| `after`   | {Discorb::Channel} | The channel after the update.  |
 
 #### `channel_delete(channel)`
 
 Fires when a channel is deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`channel`   | {Discorb::Channel} | The channel that was deleted. |
+| Parameter | Type               | Description                   |
+| --------- | ------------------ | ----------------------------- |
+| `channel` | {Discorb::Channel} | The channel that was deleted. |
 
 #### `webhooks_update(event)`
 
 Fires when a webhook is updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::WebhooksUpdateEvent} | The webhook update event. |
+| Parameter | Type                                    | Description               |
+| --------- | --------------------------------------- | ------------------------- |
+| `event`   | {Discorb::Gateway::WebhooksUpdateEvent} | The webhook update event. |
 
 #### `thread_new(thread)`
 
 Fires when a thread is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`thread`    | {Discorb::ThreadChannel} | The thread that was created. |
+| Parameter | Type                     | Description                  |
+| --------- | ------------------------ | ---------------------------- |
+| `thread`  | {Discorb::ThreadChannel} | The thread that was created. |
 
 #### `thread_join(thread)`
 
 Fires when client joins a thread.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`thread`    | {Discorb::ThreadChannel} | The thread that was joined. |
-
+| Parameter | Type                     | Description                 |
+| --------- | ------------------------ | --------------------------- |
+| `thread`  | {Discorb::ThreadChannel} | The thread that was joined. |
 
 #### `thread_delete(thread)`
 
 Fires when a thread is deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`thread`    | {Discorb::ThreadChannel} | The thread that was deleted. |
+| Parameter | Type                     | Description                  |
+| --------- | ------------------------ | ---------------------------- |
+| `thread`  | {Discorb::ThreadChannel} | The thread that was deleted. |
 
 #### `thread_update(before, after)`
 
 Fires when a thread is updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`before`    | {Discorb::ThreadChannel} | The thread before the update. |
-|`after`     | {Discorb::ThreadChannel} | The thread after the update. |
+| Parameter | Type                     | Description                   |
+| --------- | ------------------------ | ----------------------------- |
+| `before`  | {Discorb::ThreadChannel} | The thread before the update. |
+| `after`   | {Discorb::ThreadChannel} | The thread after the update.  |
 
 #### `thread_members_update(thread, added, removed)`
 
 Fires when a thread's members are updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`thread`    | {Discorb::ThreadChannel} | The thread that the members were updated for. |
-|`added`     | Array<{Discorb::ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were added to the thread. |
-|`removed`   | Array<{Discorb::ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were removed from the thread. |
+| Parameter | Type                                    | Description                                                                             |
+| --------- | --------------------------------------- | --------------------------------------------------------------------------------------- |
+| `thread`  | {Discorb::ThreadChannel}                | The thread that the members were updated for.                                           |
+| `added`   | Array<{Discorb::ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were added to the thread.     |
+| `removed` | Array<{Discorb::ThreadChannel::Member}> | An array of {Discorb::ThreadChannel::Member} objects that were removed from the thread. |
 
 #### `thread_member_update(before, after)`
 
 Fires when a thread member is updated.
 
-| Parameter | Type  | Description |
-| --------- | ----- | ----------- |
-|`thread`   | {Discorb::ThreadChannel} | The thread that the member was updated for. |
-|`before`   | {Discorb::ThreadChannel::Member} | The thread member before the update. |
-|`after`    | {Discorb::ThreadChannel::Member} | The thread member after the update. |
+| Parameter | Type                             | Description                                 |
+| --------- | -------------------------------- | ------------------------------------------- |
+| `thread`  | {Discorb::ThreadChannel}         | The thread that the member was updated for. |
+| `before`  | {Discorb::ThreadChannel::Member} | The thread member before the update.        |
+| `after`   | {Discorb::ThreadChannel::Member} | The thread member after the update.         |
 
 ### Integration events
 
@@ -276,26 +275,25 @@ Fires when a thread member is updated.
 
 Fires when a guild integration is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`integration`| {Discorb::Integration}| The created integration. |
+| Parameter     | Type                   | Description              |
+| ------------- | ---------------------- | ------------------------ |
+| `integration` | {Discorb::Integration} | The created integration. |
 
 #### `integration_update(after)`
 
 Fires when a guild integration is updated.
 
-
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`after`     | {Discorb::Integration}| The integration after the update. |
+| Parameter | Type                   | Description                       |
+| --------- | ---------------------- | --------------------------------- |
+| `after`   | {Discorb::Integration} | The integration after the update. |
 
 #### `integration_delete(integration)`
 
 Fires when a guild integration is deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`integration`| {Discorb::Integration}| The deleted integration. |
+| Parameter     | Type                   | Description              |
+| ------------- | ---------------------- | ------------------------ |
+| `integration` | {Discorb::Integration} | The deleted integration. |
 
 ### Message events
 
@@ -303,27 +301,27 @@ Fires when a guild integration is deleted.
 
 Fires when a message is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`message`   | {Discorb::Message}| The created message. |
+| Parameter | Type               | Description          |
+| --------- | ------------------ | -------------------- |
+| `message` | {Discorb::Message} | The created message. |
 
 #### `message_update(event)`
 
 Fires when a message is updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::MessageUpdateEvent}| The message after the update. |
+| Parameter | Type                                   | Description                   |
+| --------- | -------------------------------------- | ----------------------------- |
+| `event`   | {Discorb::Gateway::MessageUpdateEvent} | The message after the update. |
 
 #### `message_delete(message, channel, guild)`
 
 Fires when a message is deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`message`   | {Discorb::Message}| The deleted message. |
-|`channel`   | {Discorb::Channel}| The channel the message was deleted from. |
-|`guild`     | ?{Discorb::Guild} | The guild the message was deleted from. |
+| Parameter | Type               | Description                               |
+| --------- | ------------------ | ----------------------------------------- |
+| `message` | {Discorb::Message} | The deleted message.                      |
+| `channel` | {Discorb::Channel} | The channel the message was deleted from. |
+| `guild`   | ?{Discorb::Guild}  | The guild the message was deleted from.   |
 
 ##### Note
 
@@ -334,35 +332,35 @@ This will fire when cached messages are deleted.
 Fires when a message is deleted.
 Not like {file:#message_delete} this will fire even message is not cached.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`message_id`| {Discorb::Snowflake} | The deleted message ID. |
-|`channel`   | {Discorb::Channel}| The channel the message was deleted from. |
-|`guild`     | ?{Discorb::Guild} | The guild the message was deleted from. |
+| Parameter    | Type                 | Description                               |
+| ------------ | -------------------- | ----------------------------------------- |
+| `message_id` | {Discorb::Snowflake} | The deleted message ID.                   |
+| `channel`    | {Discorb::Channel}   | The channel the message was deleted from. |
+| `guild`      | ?{Discorb::Guild}    | The guild the message was deleted from.   |
 
 #### `message_delete_bulk(messages)`
 
 Fires when a bulk of messages are deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`messages`  | Array<{Discorb::Message}, {Discorb::Gateway::UnknownDeleteBulkMessage}> | The deleted messages. |
+| Parameter  | Type                                                                    | Description           |
+| ---------- | ----------------------------------------------------------------------- | --------------------- |
+| `messages` | Array<{Discorb::Message}, {Discorb::Gateway::UnknownDeleteBulkMessage}> | The deleted messages. |
 
 #### `message_pin_update(event)`
 
 Fires when a message is pinned or unpinned.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::MessagePinEvent}| The event object. |
+| Parameter | Type                                | Description       |
+| --------- | ----------------------------------- | ----------------- |
+| `event`   | {Discorb::Gateway::MessagePinEvent} | The event object. |
 
 #### `typing_start(event)`
 
 Fires when a user starts typing.
 
-| Parameter | Type  | Description |
-| --------- | ----- | ----------- |
-|`event`    | {Discorb::Gateway::TypingStartEvent}| The event object. |
+| Parameter | Type                                 | Description       |
+| --------- | ------------------------------------ | ----------------- |
+| `event`   | {Discorb::Gateway::TypingStartEvent} | The event object. |
 
 ### Reaction events
 
@@ -370,33 +368,33 @@ Fires when a user starts typing.
 
 Fires when a reaction is added to a message.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::ReactionEvent}| The event object. |
+| Parameter | Type                              | Description       |
+| --------- | --------------------------------- | ----------------- |
+| `event`   | {Discorb::Gateway::ReactionEvent} | The event object. |
 
 #### `reaction_remove(event)`
 
 Fires when someone removes a reaction from a message.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::ReactionEvent}| The event object. |
+| Parameter | Type                              | Description       |
+| --------- | --------------------------------- | ----------------- |
+| `event`   | {Discorb::Gateway::ReactionEvent} | The event object. |
 
 #### `reaction_remove_all(event)`
 
 Fires when all reactions are removed from a message.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::ReactionRemoveAllEvent}| The event object. |
+| Parameter | Type                                       | Description       |
+| --------- | ------------------------------------------ | ----------------- |
+| `event`   | {Discorb::Gateway::ReactionRemoveAllEvent} | The event object. |
 
 #### `reaction_remove_emoji(event)`
 
 Fires when a reaction is removed from a message.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`event`     | {Discorb::Gateway::ReactionRemoveEmojiEvent}| The event object. |
+| Parameter | Type                                         | Description       |
+| --------- | -------------------------------------------- | ----------------- |
+| `event`   | {Discorb::Gateway::ReactionRemoveEmojiEvent} | The event object. |
 
 ### Role events
 
@@ -404,26 +402,26 @@ Fires when a reaction is removed from a message.
 
 Fires when a role is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`role`      | {Discorb::Role}| The created role. |
+| Parameter | Type            | Description       |
+| --------- | --------------- | ----------------- |
+| `role`    | {Discorb::Role} | The created role. |
 
 #### `role_update(before, after)`
 
 Fires when a role is updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`before`    | {Discorb::Role}| The role before the update. |
-|`after`     | {Discorb::Role}| The role after the update. |
+| Parameter | Type            | Description                 |
+| --------- | --------------- | --------------------------- |
+| `before`  | {Discorb::Role} | The role before the update. |
+| `after`   | {Discorb::Role} | The role after the update.  |
 
 #### `role_remove(role)`
 
 Fires when a role is deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`role`      | {Discorb::Role}| The deleted role. |
+| Parameter | Type            | Description       |
+| --------- | --------------- | ----------------- |
+| `role`    | {Discorb::Role} | The deleted role. |
 
 ### Member events
 
@@ -435,26 +433,26 @@ These events require the `guild_members` intent.
 
 Fires when a member joins a guild.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`member`    | {Discorb::Member}| The member that joined. |
+| Parameter | Type              | Description             |
+| --------- | ----------------- | ----------------------- |
+| `member`  | {Discorb::Member} | The member that joined. |
 
 #### `member_update(before, after)`
 
 Fires when a member is updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`before`    | {Discorb::Member}| The member before the update. |
-|`after`     | {Discorb::Member}| The member after the update. |
+| Parameter | Type              | Description                   |
+| --------- | ----------------- | ----------------------------- |
+| `before`  | {Discorb::Member} | The member before the update. |
+| `after`   | {Discorb::Member} | The member after the update.  |
 
 #### `member_remove(member)`
 
 Fires when a member is removed from a guild.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`member`    | {Discorb::Member}| The member that left. |
+| Parameter | Type              | Description           |
+| --------- | ----------------- | --------------------- |
+| `member`  | {Discorb::Member} | The member that left. |
 
 ### Role events
 
@@ -462,26 +460,26 @@ Fires when a member is removed from a guild.
 
 Fires when a role is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`role`      | {Discorb::Role}| The created role. |
+| Parameter | Type            | Description       |
+| --------- | --------------- | ----------------- |
+| `role`    | {Discorb::Role} | The created role. |
 
 #### `role_update(before, after)`
 
 Fires when a role is updated.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`before`    | {Discorb::Role}| The role before the update. |
-|`after`     | {Discorb::Role}| The role after the update. |
+| Parameter | Type            | Description                 |
+| --------- | --------------- | --------------------------- |
+| `before`  | {Discorb::Role} | The role before the update. |
+| `after`   | {Discorb::Role} | The role after the update.  |
 
 #### `role_remove(role)`
 
 Fires when a role is deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`role`      | {Discorb::Role}| The deleted role. |
+| Parameter | Type            | Description       |
+| --------- | --------------- | ----------------- |
+| `role`    | {Discorb::Role} | The deleted role. |
 
 ### Invite events
 
@@ -489,17 +487,17 @@ Fires when a role is deleted.
 
 Fires when an invitation is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`invite`    | {Discorb::Invite}| The created invite. |
+| Parameter | Type              | Description         |
+| --------- | ----------------- | ------------------- |
+| `invite`  | {Discorb::Invite} | The created invite. |
 
 #### `invite_delete(invite)`
 
 Fires when an invitation is deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`invite`    | {Discorb::Invite}| The deleted invite. |
+| Parameter | Type              | Description         |
+| --------- | ----------------- | ------------------- |
+| `invite`  | {Discorb::Invite} | The deleted invite. |
 
 ### Interaction events
 
@@ -507,64 +505,64 @@ Fires when an invitation is deleted.
 
 Fires when an interaction is created. This will fire for all interactions.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `interaction` | {Discorb::Interaction}| The created interaction. |
+| Parameter     | Type                   | Description              |
+| ------------- | ---------------------- | ------------------------ |
+| `interaction` | {Discorb::Interaction} | The created interaction. |
 
 #### `application_command(interaction)`
 
 Fires when an application command is used.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `interaction` | {Discorb::CommandInteraction}| The created interaction. |
+| Parameter     | Type                          | Description              |
+| ------------- | ----------------------------- | ------------------------ |
+| `interaction` | {Discorb::CommandInteraction} | The created interaction. |
 
 #### `slash_command(interaction)`
 
 Fires when a slash command is used.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `interaction` | {Discorb::CommandInteraction::ChatInputCommand}| The created interaction. |
+| Parameter     | Type                                            | Description              |
+| ------------- | ----------------------------------------------- | ------------------------ |
+| `interaction` | {Discorb::CommandInteraction::ChatInputCommand} | The created interaction. |
 
 #### `message_command(interaction)`
 
 Fires when a message command is used.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `interaction` | {Discorb::CommandInteraction::MessageMenuCommand}| The created interaction. |
+| Parameter     | Type                                              | Description              |
+| ------------- | ------------------------------------------------- | ------------------------ |
+| `interaction` | {Discorb::CommandInteraction::MessageMenuCommand} | The created interaction. |
 
 #### `user_command(interaction)`
 
 Fires when a user command is used.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `interaction` | {Discorb::CommandInteraction::UserMenuCommand}| The created interaction. |
+| Parameter     | Type                                           | Description              |
+| ------------- | ---------------------------------------------- | ------------------------ |
+| `interaction` | {Discorb::CommandInteraction::UserMenuCommand} | The created interaction. |
 
 #### `button_click(interaction)`
 
 Fires when a button is clicked.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`interaction`| {Discorb::MessageComponentInteraction::Button}| The interaction object. |
+| Parameter     | Type                                           | Description             |
+| ------------- | ---------------------------------------------- | ----------------------- |
+| `interaction` | {Discorb::MessageComponentInteraction::Button} | The interaction object. |
 
 #### `select_menu_select(interaction)`
 
 Fires when a select menu is selected.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`interaction`| {Discorb::MessageComponentInteraction::SelectMenu}| The interaction object. |
+| Parameter     | Type                                               | Description             |
+| ------------- | -------------------------------------------------- | ----------------------- |
+| `interaction` | {Discorb::MessageComponentInteraction::SelectMenu} | The interaction object. |
 
 #### `form_submit(interaction)`
 
 Fires when a form is submitted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
+| Parameter     | Type                        | Description             |
+| ------------- | --------------------------- | ----------------------- |
 | `interaction` | {Discorb::ModalInteraction} | The interaction object. |
 
 #### `slash_command
@@ -579,42 +577,42 @@ Because it's big, it's documented in {file:docs/voice_events.md}.
 
 Fires when a scheduled event is created.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `event`    | {Discorb::ScheduledEvent}| The created scheduled event. |
+| Parameter | Type                      | Description                  |
+| --------- | ------------------------- | ---------------------------- |
+| `event`   | {Discorb::ScheduledEvent} | The created scheduled event. |
 
 #### `scheduled_event_cancel(event)`, `scheduled_event_delete(event)`
 
 Fires when a scheduled event is canceled or deleted.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `event`    | {Discorb::ScheduledEvent}| The deleted scheduled event. |
+| Parameter | Type                      | Description                  |
+| --------- | ------------------------- | ---------------------------- |
+| `event`   | {Discorb::ScheduledEvent} | The deleted scheduled event. |
 
 #### `scheduled_event_edit(before, after)`
 
 Fires when a scheduled event is edited.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `before`   | {Discorb::ScheduledEvent}| The scheduled event before the edit. |
-| `after`    | {Discorb::ScheduledEvent}| The scheduled event after the edit. |
+| Parameter | Type                      | Description                          |
+| --------- | ------------------------- | ------------------------------------ |
+| `before`  | {Discorb::ScheduledEvent} | The scheduled event before the edit. |
+| `after`   | {Discorb::ScheduledEvent} | The scheduled event after the edit.  |
 
 #### `scheduled_event_start(event)`
 
 Fires when a scheduled event is started.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `event`    | {Discorb::ScheduledEvent}| The scheduled event that started. |
+| Parameter | Type                      | Description                       |
+| --------- | ------------------------- | --------------------------------- |
+| `event`   | {Discorb::ScheduledEvent} | The scheduled event that started. |
 
 #### `scheduled_event_end(event)`
 
 Fires when a scheduled event is ended.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `event`    | {Discorb::ScheduledEvent}| The scheduled event that ended. |
+| Parameter | Type                      | Description                     |
+| --------- | ------------------------- | ------------------------------- |
+| `event`   | {Discorb::ScheduledEvent} | The scheduled event that ended. |
 
 ### Low-level events
 
@@ -622,31 +620,31 @@ Fires when a scheduled event is ended.
 
 Fires when `GUILD_CREATE` is received.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild}| The guild of the event. |
+| Parameter | Type             | Description             |
+| --------- | ---------------- | ----------------------- |
+| `guild`   | {Discorb::Guild} | The guild of the event. |
 
 #### `guild_delete(guild)`
 
 Fires when `GUILD_DELETE` is received.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`guild`     | {Discorb::Guild}| The guild of the event. |
+| Parameter | Type             | Description             |
+| --------- | ---------------- | ----------------------- |
+| `guild`   | {Discorb::Guild} | The guild of the event. |
 
 #### `thread_create(thread)`
 
 Fires when `THREAD_CREATE` is received.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-|`thread`    | {Discorb::ThreadChannel}| The thread of the event. |
+| Parameter | Type                     | Description              |
+| --------- | ------------------------ | ------------------------ |
+| `thread`  | {Discorb::ThreadChannel} | The thread of the event. |
 
 #### `scheduled_event_update(before, after)`
 
 Fires when `SCHEDULED_EVENT_UPDATE` is received.
 
-| Parameter  | Type  | Description |
-| ---------- | ----- | ----------- |
-| `before` | {Discorb::ScheduledEvent}| The scheduled event before the update. |
-|`after`     | {Discorb::ScheduledEvent}| The scheduled event after the update. |
+| Parameter | Type                      | Description                            |
+| --------- | ------------------------- | -------------------------------------- |
+| `before`  | {Discorb::ScheduledEvent} | The scheduled event before the update. |
+| `after`   | {Discorb::ScheduledEvent} | The scheduled event after the update.  |

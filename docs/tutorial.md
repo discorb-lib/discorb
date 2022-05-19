@@ -11,21 +11,21 @@ Let's get started!
 
 - Ruby 3.0.0+
 - Basic knowledge of ruby  
-    These documents will help you:
-    - [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
-    - [Ruby from other languages](https://www.ruby-lang.org/en/documentation/ruby-from-other-languages/)
-    - [Try ruby!](https://try.ruby-lang.org/)
+   These documents will help you:
+  - [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
+  - [Ruby from other languages](https://www.ruby-lang.org/en/documentation/ruby-from-other-languages/)
+  - [Try ruby!](https://try.ruby-lang.org/)
 
 ### Recommended
 
 - Good editor  
-    They are recommended:
-    - [VSCode](https://code.visualstudio.com/)
-    - [Atom](https://atom.io/)
-    - [Sublime Text](https://www.sublimetext.com/)
-    - [Brackets](https://brackets.io/)
-    - [Notepad++](https://notepad-plus-plus.org/)
-    - [Vim](https://www.vim.org/)
+   They are recommended:
+  - [VSCode](https://code.visualstudio.com/)
+  - [Atom](https://atom.io/)
+  - [Sublime Text](https://www.sublimetext.com/)
+  - [Brackets](https://brackets.io/)
+  - [Notepad++](https://notepad-plus-plus.org/)
+  - [Vim](https://www.vim.org/)
 - Git
 - Bundler
 
@@ -160,7 +160,7 @@ end
 
 Save your bot and restart it.
 
-You can see your bot's response by typing `hello` in your server...  
+You can see your bot's response by typing `hello` in your server...
 
 ![](./assets/07_hello_infinite.png)
 

@@ -36,7 +36,6 @@ message = channel.post("Hello world!").wait  # => Message
 message.pin
 ```
 
-
 ### How can I send DM to a user?
 
 Use {Discorb::User#post} method, {Discorb::User} includes {Discorb::Messageable}.

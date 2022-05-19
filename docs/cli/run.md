@@ -6,7 +6,6 @@
 
 This command will run a client.
 
-
 ## Usage
 
 ```
@@ -31,12 +30,12 @@ The title of the process.
 Specify the log level.
 Should be one of the following:
 
-* `none`
-* `debug`
-* `info`
-* `warn`
-* `error`
-* `fatal`
+- `none`
+- `debug`
+- `info`
+- `warn`
+- `error`
+- `fatal`
 
 #### `-f`, `--log-file`
 
@@ -47,6 +46,7 @@ You can use `stdout` to write to the standard output, and `stderr` to write to t
 
 Whether to colorize the log output.
 If not specified, the default will be:
+
 - `true` if the file to write logs to is `stdout` or `stderr`.
 - `false` otherwise.
 
