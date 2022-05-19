@@ -265,7 +265,7 @@ opt.on("--[no-]descs", "Whether to put some file for description. Default to fal
   $values[:descs] = v
 end
 
-opt.on("--[no-]comment", "Whether to write comment in main.rb. Default to true.") do |v|
+opt.on("--[no-]comment", "Whether to write comment. Default to true.") do |v|
   $values[:comment] = v
 end
 

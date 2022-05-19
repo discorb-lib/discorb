@@ -57,7 +57,3 @@ Whether to set up application commands.
 #### `-e`, `--env`
 
 The name of the environment variable to use for token, or just `-t` or `--token` for intractive prompt.
-
-#### `-b`, `--bundler`
-
-Whether to use bundler to load the script.

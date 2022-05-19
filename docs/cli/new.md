@@ -56,16 +56,21 @@ Default to TOKEN.
 Whether to overwrite an existing directory.
 Default to false.
 
+### `--[no-]comment`
+
+Whether to write comment in main.rb.
+Default to true.
+
 ## File structure
 
 The following files will be created:
 
-| File | Description |
-| ---- | ----------- |
-| `.env` | Environment variables. |
-| `main.rb` | Main script. |
-| `.gitignore` | Git ignore file. Won't be created if `--git` is false. |
-| `Gemfile` | Gemfile. Won't be created if `--bundle` is false. |
-| `Gemfile.lock` | Gemfile lock file. Won't be created if `--bundle` is false. |
-| `README.md` | Readme file. Won't be created if `--desc` is false. |
-| `.env.sample` | Sample environment variables. Won't be created if `--desc` is false. |
+| File           | Description                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| `.env`         | Environment variables.                                               |
+| `main.rb`      | Main script.                                                         |
+| `.gitignore`   | Git ignore file. Won't be created if `--git` is false.               |
+| `Gemfile`      | Gemfile. Won't be created if `--bundle` is false.                    |
+| `Gemfile.lock` | Gemfile lock file. Won't be created if `--bundle` is false.          |
+| `README.md`    | Readme file. Won't be created if `--desc` is false.                  |
+| `.env.sample`  | Sample environment variables. Won't be created if `--desc` is false. |
