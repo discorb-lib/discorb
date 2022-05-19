@@ -4,8 +4,6 @@
 require "optparse"
 require "discorb/utils/colored_puts"
 
-ARGV.delete_at 0
-
 options = {
   guilds: nil,
   script: true,

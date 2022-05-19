@@ -7,20 +7,17 @@ require "discorb/utils/colored_puts"
 require "io/console"
 require "discorb"
 
-ARGV.delete_at 0
-
 opt = OptionParser.new <<~BANNER
-  This command will run a client.
+                         This command will run a client.
 
-  Usage: discorb run [options] [script]
+                         Usage: discorb run [options] [script]
 
-            script                     The script to run. Defaults to 'main.rb'.
-BANNER
+                                   script                     The script to run. Defaults to 'main.rb'.
+                       BANNER
 options = {
   title: nil,
   setup: nil,
   token: false,
-  bundler: :default,
 }
 opt.on("-s", "--setup", "Whether to setup application commands.") { |v| options[:setup] = v }
 opt.on("-e", "--env [ENV]",
@@ -28,9 +25,6 @@ opt.on("-e", "--env [ENV]",
   options[:token] = v
 end
 opt.on("-t", "--title TITLE", "The title of process.") { |v| options[:title] = v }
-opt.on("-b", "--[no-]bundler", "Whether to use bundler. Default to true if Gemfile exists, otherwise false.") do |v|
-  options[:bundler] = v
-end
 opt.parse!(ARGV)
 
 script = ARGV[0]
@@ -65,25 +59,10 @@ elsif options[:token].nil? || options[:token] == "-"
   puts ""
 end
 
-if options[:bundler] == :default
-  dir = Dir.pwd.split("/")
-  options[:bundler] = false
-  dir.length.times.reverse_each do |i|
-    if File.exist? "#{dir[0..i].join("/")}/Gemfile"
-      options[:bundler] = true
-      break
-    end
-  end
-end
-
 ENV["DISCORB_CLI_TITLE"] = options[:title]
 
 if File.exist? script
-  if options[:bundler]
-    exec "bundle exec ruby #{script}"
-  else
-    exec "ruby #{script}"
-  end
+  exec "ruby #{script}"
 else
   eputs "Could not load script: \e[31m#{script}\e[91m"
 end

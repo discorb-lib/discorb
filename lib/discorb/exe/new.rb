@@ -12,10 +12,10 @@ $path = Dir.pwd
 # @private
 FILES = {
   "main.rb" => <<~'RUBY',
-    require "discorb"
-    require "dotenv"
+    # frozen_string_literal: true
 
-    Dotenv.load  # Loads .env file
+    require "discorb"
+    require "dotenv/load"  # Load environment variables from .env file.
 
     client = Discorb::Client.new  # Create client for connecting to Discord
 
@@ -99,6 +99,8 @@ FILES = {
 
     gem "discorb", "~> #{Discorb::VERSION}"
     gem "dotenv", "~> 2.7"
+
+    ruby "~> #{RUBY_VERSION.split(".")[0]}.#{RUBY_VERSION.split(".")[1]}"
   RUBY
   ".env.sample" => <<~BASH,
     %<token>s=
@@ -138,7 +140,9 @@ FILES = {
 
 # @private
 def create_file(name)
-  File.write($path + "/#{name}", format(FILES[name], token: $values[:token], name: $values[:name]), mode: "wb")
+  content = format(FILES[name], token: $values[:token], name: $values[:name])
+  content.gsub!(/#.*$/, "") if !$values[:comment] && name == "main.rb"
+  File.write($path + "/#{name}", content, mode: "wb")
 end
 
 # @private
@@ -154,7 +158,7 @@ def bundle_init
   iputs "Initializing bundle..."
   create_file("Gemfile")
   iputs "Installing gems..."
-  system "bundle install"
+  system({ "BUNDLE_GEMFILE" => nil }, "bundle install", chdir: $path)
   sputs "Installed gems.\n"
 end
 
@@ -162,9 +166,9 @@ end
 def git_init
   create_file(".gitignore")
   iputs "Initializing git repository..."
-  system "git init"
-  system "git add ."
-  system "git commit -m \"Initial commit\""
+  system "git init", chdir: $path
+  system "git add .", chdir: $path
+  system "git commit -m \"Initial commit\"", chdir: $path
   sputs "Initialized repository, use " \
         "\e[32mgit commit --amend -m '...'\e[92m" \
         " to change commit message of initial commit.\n"
@@ -179,12 +183,12 @@ def make_descs
 end
 
 opt = OptionParser.new <<~BANNER
-  A tool to make a new project.
+                         A tool to make a new project.
 
-  Usage: discorb new [options] [dir]
+                         Usage: discorb new [options] [dir]
 
-            dir                        The directory to make the files in.
-BANNER
+                                   dir                        The directory to make the files in.
+                       BANNER
 
 $values = {
   bundle: true,
@@ -193,6 +197,7 @@ $values = {
   token: "TOKEN",
   descs: false,
   name: nil,
+  comment: nil,
 }
 
 opt.on("--[no-]bundle", "Whether to use bundle. Default to true.") do |v|
@@ -219,12 +224,16 @@ opt.on("-f", "--force", "Whether to force use directory. Default to false.") do 
   $values[:force] = v
 end
 
-ARGV.delete_at(0)
+opt.on("-c", "--[no]-command", "Whether to write comment in main.rb. Default to true.") do |v|
+  $values[:comment] = v
+end
 
 opt.parse!(ARGV)
 
 if (dir = ARGV[0])
   $path += "/#{dir}"
+  $path = File.expand_path($path)
+  dir = File.basename($path)
   if Dir.exist?($path)
     if Dir.empty?($path)
       iputs "Found \e[30m#{dir}\e[90m and empty, using this directory."
@@ -239,6 +248,9 @@ if (dir = ARGV[0])
     iputs "Couldn't find \e[30m#{dir}\e[90m, created directory."
   end
   Dir.chdir($path)
+else
+  puts opt
+  abort
 end
 
 $values[:name] ||= Dir.pwd.split("/").last

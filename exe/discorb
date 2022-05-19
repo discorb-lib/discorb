@@ -1,32 +1,47 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
-script = ARGV[0]
+require "optparse"
 
-if script.nil?
-  puts "\e[94mThis is a tool for discorb. Currently these tools are available:\e[m"
-
-  discorb_path = $LOAD_PATH.find { |path| File.directory?(path + "/discorb") }
-  scripts = {}
+options = {
+  bundler: true,
+}
+discorb_paths = $LOAD_PATH.filter { |path| File.directory?(path + "/discorb") }
+scripts = {}
+discorb_paths.each do |discorb_path|
   Dir.glob(discorb_path + "/discorb/exe/*.rb") do |exe_script|
     name = File.basename(exe_script, ".rb")
     description = File.read(exe_script).match(/# description: (.+)/)&.[](1) || "No description"
     scripts[name] = description
   end
-  max_length = scripts.keys.map(&:length).max
-  scripts.sort.each do |name, description|
-    puts "\e[90m#{name.rjust(max_length)}\e[m - #{description}"
+end
+max_length = scripts.keys.map(&:length).max
+global = OptionParser.new do |opts|
+  opts.banner = "Usage: discorb [options] [subcommand [options]]"
+  opts.on("-b", "--[no-]bundler", "Whether to use bundler.") do |v|
+    options[:bundler] = v
   end
+  opts.separator ""
+  commands = +"Subcommands:\n"
+  commands << scripts.sort.map do |name, description|
+    "  #{name.rjust(max_length)} - #{description}"
+  end.join("\n")
+  commands << "\n\nYou can run `discorb [subcommand] --help` for more information."
+  opts.separator commands
+end
+global.order!(ARGV)
 
-  puts "\e[94m\nTo run a tool, type:\e[m\n" \
-       "\e[34m  discorb [script]\e[m"
-
-  exit 1
+if ARGV.empty?
+  puts global
+  abort
 end
 
+require "bundler/setup" if options[:bundler]
+
+command = ARGV.shift
+
 begin
-  require "discorb/exe/#{script}"
+  require "discorb/exe/#{command}"
 rescue LoadError
-  puts "\e[91mThis tool is not available: \e[90m#{script}\e[m"
-  exit 1
+  warn "Unknown subcommand: #{command}"
 end

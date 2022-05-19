@@ -10,13 +10,11 @@ require "optparse"
 intents_value = Discorb::Intents.all.value
 token_file = "token"
 
-ARGV.delete_at 0
-
 opt = OptionParser.new <<~BANNER
-  This command will start an interactive Ruby shell with connected client.
+                         This command will start an interactive Ruby shell with connected client.
 
-  Usage: discorb irb [options]
-BANNER
+                         Usage: discorb irb [options]
+                       BANNER
 opt.on("-i", "--intents", "intents to use, default to all") { |v| intents_value = v }
 opt.on("-t", "--token-file", "token file to load, default to \"token\"") { |v| token_file = v }
 opt.parse!(ARGV)
@@ -33,18 +31,18 @@ client.on :standby do
 
   def dirb_help
     puts <<~MESSAGE
-      \e[96mDiscord-IRB\e[m
-      This is a debug client for Discord.
-      \e[90mmessage\e[m to get latest message.
+           \e[96mDiscord-IRB\e[m
+           This is a debug client for Discord.
+           \e[90mmessage\e[m to get latest message.
 
-      \e[36mhttps://discorb-lib.github.io/#{Discorb::VERSION}/file.irb.html\e[m for more information.
-    MESSAGE
+           \e[36mhttps://discorb-lib.github.io/#{Discorb::VERSION}/file.irb.html\e[m for more information.
+         MESSAGE
   end
 
   puts <<~FIRST_MESSAGE
-    Running on \e[31mRuby #{RUBY_VERSION}\e[m, disco\e[31mrb #{Discorb::VERSION}\e[m
+         Running on \e[31mRuby #{RUBY_VERSION}\e[m, disco\e[31mrb #{Discorb::VERSION}\e[m
     Type \e[90mdirb_help\e[m to help.
-  FIRST_MESSAGE
+       FIRST_MESSAGE
 
   binding.irb
 
