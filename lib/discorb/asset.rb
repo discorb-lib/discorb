@@ -51,7 +51,7 @@ module Discorb
       case @target
       when User, Member, Webhook
         "avatars"
-      when Guild, IncomingWebhook::Guild
+      when Guild, Webhook::FollowerWebhook::Guild
         "icons"
       when Application, Integration::Application
         "app-icons"
