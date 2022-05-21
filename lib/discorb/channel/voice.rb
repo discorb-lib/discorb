@@ -17,6 +17,7 @@ module Discorb
     #   @return [Array<Discorb::VoiceState>] The voice states associated with the voice channel.
 
     include Connectable
+    include Messageable
 
     @channel_type = 2
     #
