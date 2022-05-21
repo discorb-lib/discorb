@@ -4,6 +4,20 @@
 
 # Changelog
 
+## v0.17
+
+### v0.17.0
+
+- Change!: Delete `Interaction#target` and `Interaction#fired_by`.
+- Change: `Interaction#user` and `Interaction#member` are same.
+- Add: Include Messageable in VoiceChannel
+- Add: Add `--[no-]bundler` option to `discorb` command.
+- Add: Add `--[no-]comment` option to `discorb new` command.
+- Fix PermissionOverwrite was initialized with string.
+- Fix emoji with different skin tones raises ArgumentError.
+- Fix `Asset#endpoint` raises NameError.
+- Fix `:error` event may call itself.
+
 ## v0.16
 
 ### v0.16.0
@@ -456,4 +470,3 @@ end
 ### v0.0.1
 
 - Initial release
-
