@@ -105,6 +105,7 @@ module Discorb
       # * `:thread_create`
       # * `:thread_update`
       # * `:thread_delete`
+      # * `:application_command_permission_update``
       attr_reader :type
       # @return [Discorb::AuditLog::Entry::Changes] The changes in this entry.
       attr_reader :changes
@@ -170,6 +171,7 @@ module Discorb
         110 => :thread_create,
         111 => :thread_update,
         112 => :thread_delete,
+        121 => :application_command_permission_update,
       }.freeze
 
       #
@@ -202,7 +204,7 @@ module Discorb
         @reason = data[:reason]
         data[:options]&.each do |option, value|
           define_singleton_method(option) { value }
-          if option.end_with?("_id")
+          if option.end_with?("_id") && CONVERTERS.key?(option.to_s.split("_")[0].to_sym)
             define_singleton_method(option.to_s.sub("_id", "")) do
               CONVERTERS[option.to_s.split("_")[0].to_sym]&.call(client, value, @guild_id)
             end
