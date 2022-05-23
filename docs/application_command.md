@@ -54,11 +54,14 @@ client.run(ENV["DISCORD_BOT_TOKEN"])
 
 Block will be called with a {Discorb::Interaction} object and specified options.
 
+#### Register options
+
+You can set hash to `options` argument.
 In `options`, hash should be like this:
 
 ```ruby
 {
-  "Name" => {
+  "name" => {
     type: :string,
     required: true,
     description: "The description of the command."
@@ -67,10 +70,11 @@ In `options`, hash should be like this:
 ```
 
 | Key                      | Type                                     | Description                                                                           |
-| ------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| ------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------- |
+| `:name_localizations`    | `Hash{Symbol => String}`                 | Localizations of option name.                                                         |
 | `:description`           | `String`                                 | Description of the option.                                                            |
-| `:required`              | Boolean(true                             | false)                                                                                | Whether the argument is required. `optional` will be used if not specified. |
-| `:optional`              | Boolean(true                             | false)                                                                                | Whether the argument is optional. `required` will be used if not specified. |
+| `:required`              | `Boolean(true\|false)`                   | Whether the argument is required. `optional` will be used if not specified.           |
+| `:optional`              | `Boolean(true\|false)`                   | Whether the argument is optional. `required` will be used if not specified.           |
 | `:type`                  | `Object`                                 | Type of the option.                                                                   |
 | `:choices`               | `Hash{String => String, Integer, Float}` | Choice of the option.                                                                 |
 | `:choices_localizations` | `Hash{String => Hash{Symbol => String}}` | Localization of the choice. Key must be the name of a choice. (See below for example) |
@@ -115,6 +119,19 @@ In `type`, You must use one of the following:
 | `:user`    | User argument.    | `:member` |
 | `:channel` | Channel argument. | None      |
 | `:role`    | Role argument.    | None      |
+
+The block will receive the options as arguments.
+
+```ruby
+client.slash("hello", "Bot greets", {
+  "name" => {
+    type: :string,
+    description: "Name"
+  }
+}) do |interaction, name|
+  interaction.post("Hello, #{name}!", ephemeral: true)
+end
+```
 
 #### Group Slash Commands
 

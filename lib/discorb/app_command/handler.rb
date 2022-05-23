@@ -21,6 +21,7 @@ module Discorb
       #
       #   | Key | Type | Description |
       #   | --- | --- | --- |
+      #   | `:name_localizations` | Hash{Symbol => String} | Localizations of option name. |
       #   | `:description` | `String` \| `Hash{Symbol => String}` |
       #     Description of the option. If hash is passed, it must be a pair of Language code and description,
       #     and `:default` key is required. You can use `_` instead of `-` in language code. |
