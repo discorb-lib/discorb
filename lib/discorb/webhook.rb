@@ -56,8 +56,8 @@ module Discorb
     # @param [Discorb::Embed] embed The embed to send.
     # @param [Array<Discorb::Embed>] embeds The embeds to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
-    # @param [Discorb::File] file The file to send.
-    # @param [Array<Discorb::File>] files The files to send.
+    # @param [Discorb::Attachment] attachment The attachment to send.
+    # @param [Array<Discorb::Attachment>] attachment The attachments to send.
     # @param [String] username The username of the message.
     # @param [String] avatar_url The avatar URL of the message.
     # @param [Boolean] wait Whether to wait for the message to be sent.
@@ -65,24 +65,34 @@ module Discorb
     # @return [Discorb::Webhook::Message] The message that was sent.
     # @return [Async::Task<nil>] If `wait` is false.
     #
-    def post(content = nil, tts: false, embed: nil, embeds: nil, allowed_mentions: nil,
-             file: nil, files: nil, username: nil, avatar_url: Discorb::Unset, wait: true)
+    def post(
+      content = nil,
+      tts: false,
+      embed: nil,
+      embeds: nil,
+      allowed_mentions: nil,
+      attachment: nil,
+      attachments: nil,
+      username: nil,
+      avatar_url: Discorb::Unset,
+      wait: true
+    )
       Async do
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
         tmp_embed = if embed
-                      [embed]
-                    elsif embeds
-                      embeds
-        end
+            [embed]
+          elsif embeds
+            embeds
+          end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = allowed_mentions&.to_hash
         payload[:username] = username if username
         payload[:avatar_url] = avatar_url if avatar_url != Discorb::Unset
-        files = [file]
+        attachments = [attachment] if attachment
         _resp, data = @http.multipart_request(Route.new("#{url}?wait=#{wait}", "//webhooks/:webhook_id/:token", :post),
-                                              files, payload, headers: headers).wait
+                                              attachments, payload, headers: headers).wait
         data && Webhook::Message.new(self, data)
       end
     end
@@ -137,8 +147,8 @@ module Discorb
     # @param [Discorb::Embed] embed The new embed of the message.
     # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
     # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
-    # @param [Discorb::File] file The file to send.
-    # @param [Array<Discorb::File>] files The files to send.
+    # @param [Discorb::Attachment] file The file to send.
+    # @param [Array<Discorb::Attachment>] files The files to send.
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
     #
     # @return [Async::Task<void>] The task.
@@ -176,10 +186,12 @@ module Discorb
     #
     def delete_message!(message)
       Async do
-        @http.request(Route.new(
-                        "#{url}/messages/#{Utils.try(message, :id)}",
-                        "//webhooks/:webhook_id/:token/messages/:message_id", :delete
-                      )).wait
+        @http.request(
+          Route.new(
+            "#{url}/messages/#{Utils.try(message, :id)}",
+            "//webhooks/:webhook_id/:token/messages/:message_id", :delete
+          )
+        ).wait
         message
       end
     end

@@ -61,3 +61,5 @@ tmp-doc
 doc
 *.zip
 **/*.po
+
+.gem_rbs_collection

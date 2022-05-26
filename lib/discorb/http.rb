@@ -57,7 +57,7 @@ module Discorb
     #
     # @param [Discorb::Route] path The path to the resource.
     # @param [String, Hash] body The body of the request.
-    # @param [Array<Discorb::File>] files The files to upload.
+    # @param [Array<Discorb::Attachment>] files The files to upload.
     # @param [Hash] headers The headers to send with the request.
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.

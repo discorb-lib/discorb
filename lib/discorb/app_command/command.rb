@@ -213,10 +213,7 @@ module Discorb
       # Represents the command with subcommands.
       #
       class GroupCommand < Command
-        # @return [Array<
-        #     Discorb::ApplicationCommand::Command::ChatInputCommand,
-        #     Discorb::ApplicationCommand::Command::SubcommandGroup
-        #   >] The subcommands of the command.
+        # @return [Array<Discorb::ApplicationCommand::Command>] The subcommands of the command.
         attr_reader :commands
         # @return [String] The description of the command.
         attr_reader :description

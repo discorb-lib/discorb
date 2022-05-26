@@ -1,0 +1,5 @@
+module Async
+  class Task[T]
+    def wait: () -> T
+  end
+end

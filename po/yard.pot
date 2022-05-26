@@ -2907,23 +2907,23 @@ msgid "### How can I send files?"
 msgstr ""
 
 #: ../docs/faq.md:65
-msgid "Use {Discorb::File} class."
+msgid "Use {Discorb::Attachment} class."
 msgstr ""
 
 #: ../docs/faq.md:67
 msgid "```ruby\n"
 "# Send a file\n"
-"message.channel.post file: Discorb::File.new(File.open(\"./README.md\"))"
+"message.channel.post file: Discorb::Attachment.new(File.open(\"./README.md\"))"
 msgstr ""
 
 #: ../docs/faq.md:71
 msgid "# Send some files with text\n"
-"message.channel.post \"File!\", files: [Discorb::File.new(File.open(\"./README.md\")), Discorb::File.new(File.open(\"./License.txt\"))]"
+"message.channel.post \"File!\", files: [Discorb::Attachment.new(File.open(\"./README.md\")), Discorb::Attachment.new(File.open(\"./License.txt\"))]"
 msgstr ""
 
 #: ../docs/faq.md:74
 msgid "# Send a string as a file\n"
-"message.channel.post file: Discorb::File.from_string(\"Hello world!\", \"hello.txt\")\n"
+"message.channel.post file: Discorb::Attachment.from_string(\"Hello world!\", \"hello.txt\")\n"
 "```"
 msgstr ""
 
@@ -9511,7 +9511,7 @@ msgstr ""
 msgid "a new instance of Attachment"
 msgstr ""
 
-# Discorb::File
+# Discorb::Attachment
 #: ../lib/discorb/file.rb:53
 msgid "Represents a file to send as an attachment."
 msgstr ""
@@ -9537,7 +9537,7 @@ msgstr ""
 msgid "The content type of the file. If not set, it is guessed from the filename."
 msgstr ""
 
-# Discorb::File#initialize
+# Discorb::Attachment#initialize
 #: ../lib/discorb/file.rb:64
 msgid "Creates a new file from IO."
 msgstr ""
@@ -9570,7 +9570,7 @@ msgstr ""
 msgid "tag|param|content_type"
 msgstr ""
 
-# Discorb::File.from_string
+# Discorb::Attachment.from_string
 #: ../lib/discorb/file.rb:79
 msgid "Creates a new file from a string."
 msgstr ""
@@ -11738,7 +11738,7 @@ msgstr ""
 msgid "A helper method to send multipart/form-data requests for creating messages."
 msgstr ""
 
-# @param [Array<Discorb::File>]
+# @param [Array<Discorb::Attachment>]
 #: ../lib/discorb/http.rb:154
 #: ../lib/discorb/interaction/response.rb:91
 #: ../lib/discorb/interaction/response.rb:115
@@ -11750,7 +11750,7 @@ msgstr ""
 msgid "tag|param|files"
 msgstr ""
 
-# @param [Array<Discorb::File>] files
+# @param [Array<Discorb::Attachment>] files
 #: ../lib/discorb/http.rb:154
 #: ../lib/discorb/interaction/response.rb:91
 #: ../lib/discorb/interaction/response.rb:115
@@ -12357,7 +12357,7 @@ msgstr ""
 msgid "tag|param|attachments"
 msgstr ""
 
-# @param [Discorb::File]
+# @param [Discorb::Attachment]
 #: ../lib/discorb/interaction/response.rb:91
 #: ../lib/discorb/interaction/response.rb:115
 #: ../lib/discorb/modules.rb:25
@@ -12375,7 +12375,7 @@ msgstr ""
 msgid "The new embeds of the message."
 msgstr ""
 
-# @param [Discorb::File] file
+# @param [Discorb::Attachment] file
 #: ../lib/discorb/interaction/response.rb:91
 #: ../lib/discorb/interaction/response.rb:115
 #: ../lib/discorb/modules.rb:25

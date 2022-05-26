@@ -124,8 +124,8 @@ module Discorb
         # @param [Discorb::Embed] embed The new embed of the message.
         # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
         # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
-        # @param [Discorb::File] file The file to send.
-        # @param [Array<Discorb::File>] files The files to send.
+        # @param [Discorb::Attachment] file The file to send.
+        # @param [Array<Discorb::Attachment>] files The files to send.
         #
         # @return [Async::Task<void>] The task.
         #

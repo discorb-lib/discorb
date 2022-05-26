@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
-
 module Discorb
   #
   # A table of emoji names and their unicode values.
   #
   module EmojiTable
+    # rubocop:disable Layout/LineLength
+
     # A hash of Discord's emoji names to their unicode characters.
     DISCORD_TO_UNICODE = {
       "grinning" => "\xf0\x9f\x98\x80",
@@ -8851,7 +8851,7 @@ module Discorb
       "\xf0\x9f\x8f\xbe",
       "\xf0\x9f\x8f\xbf",
     ].freeze
+
+    # rubocop:enable Layout/LineLength
   end
 end
-
-# rubocop:enable Layout/LineLength
