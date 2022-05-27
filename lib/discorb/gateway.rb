@@ -604,8 +604,11 @@ module Discorb
             _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
             gateway_url = gateway_response[:url]
             gateway_version = if @intents.to_h[:message_content].nil?
-                warn "message_content intent not set, using gateway version 9. " \
-                     "You should specify `message_content` intent for preventing unexpected changes in the future."
+                unless @message_content_intent_warned
+                  warn "message_content intent not set, using gateway version 9. " \
+                       "You should specify `message_content` intent for preventing unexpected changes in the future."
+                  @message_content_intent_warned = true
+                end
                 9
               else
                 10
