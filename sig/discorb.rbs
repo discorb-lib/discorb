@@ -1292,7 +1292,7 @@ module Discorb
     # @see Event#cancel
     # @see Event#complete
     def edit: (
-                ?_type: Symbol,
+                ?type: Symbol,
                 ?name: String,
                 ?description: String,
                 ?start_time: Time,
@@ -1472,7 +1472,7 @@ module Discorb
     #
     # @return [Async::Task<Discorb::ScheduledEvent>] The created event.
     def create_scheduled_event: (
-                                  Symbol _type,
+                                  Symbol type,
                                   String name,
                                   String description,
                                   Time start_time,
@@ -2279,7 +2279,7 @@ module Discorb
     #
     # @param [#read, String] source The IO source or path of the image.
     # @param [String] type The MIME type of the image.
-    def initialize: ((untyped | String) source, ?String? _type) -> void
+    def initialize: ((untyped | String) source, ?String? type) -> void
 
     #
     # Formats the image as a Discord style.
@@ -7492,7 +7492,7 @@ module Discorb
     # @param [String] name The name of the activity.
     # @param [:playing, :streaming, :listening, :watching, :competing] type The type of activity.
     # @param [String] url The URL of the activity.
-    def initialize: (String name, ?Symbol _type, ?String? url) -> void
+    def initialize: (String name, ?Symbol type, ?String? url) -> void
 
     #
     # Converts the activity to a hash.
@@ -7870,7 +7870,7 @@ module Discorb
                         (String | ::Hash[Symbol, String]) name,
                         ::Array[untyped] guild_ids,
                         Proc block,
-                        Symbol _type,
+                        Symbol type,
                         ?bool? dm_permission,
                         ?Discorb::Permission? default_permission
                       ) -> void
@@ -7880,7 +7880,7 @@ module Discorb
       # @private
       #
       # @param [Object] instance The object to change the self pointer to.
-      def replace_block: (Object _instance) -> untyped
+      def replace_block: (Object instance) -> untyped
 
       #
       # Converts the object to a hash.
@@ -7936,7 +7936,7 @@ module Discorb
                           ::Hash[String, ::Hash[untyped, untyped]] options,
                           ::Array[untyped] guild_ids,
                           Proc block,
-                          Symbol _type,
+                          Symbol type,
                           Discorb::ApplicationCommand::Command? parent,
                           bool dm_permission,
                           Discorb::Permission default_permission
@@ -7982,7 +7982,7 @@ module Discorb
                           (String | ::Hash[Symbol, String]) name,
                           (String | ::Hash[Symbol, String]) description,
                           ::Array[untyped] guild_ids,
-                          Symbol _type,
+                          Symbol type,
                           Discorb::Client client,
                           bool dm_permission,
                           Discorb::Permission default_permission
@@ -8026,7 +8026,7 @@ module Discorb
         # @private
         #
         # @param [Object] instance The object to change to.
-        def block_replace: (Object _instance) -> untyped
+        def block_replace: (Object instance) -> untyped
 
         #
         # Converts the object to a hash.
@@ -8649,7 +8649,7 @@ class Time
   # @param ["f", "F", "d", "D", "t", "T", "R"] type The format to use.
   #
   # @return [String] The formatted time.
-  def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? _type) -> String
+  def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? type) -> String
 end
 
 # @private
