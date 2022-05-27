@@ -6,6 +6,12 @@
 
 ## v0.17
 
+### v0.17.1
+
+- Add: Add valid rbs file.
+- Change: Message content intent warning will show only once.
+- Update: Update audit log events.
+
 ### v0.17.0
 
 - Change!: Delete `Interaction#target` and `Interaction#fired_by`.
