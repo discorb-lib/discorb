@@ -1,0 +1,85 @@
+module Discorb
+  #
+  # A class to handle http requests.
+  # @private
+  class HTTP
+    #
+    # Initializes the http client.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    def initialize: (Discorb::Client client) -> void
+
+    #
+    # Execute a request.
+    # @async
+    #
+    # @param [Discorb::Route] path The path to the resource.
+    # @param [String, Hash] body The body of the request. Defaults to an empty string.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    def request: (
+                   Discorb::Route path,
+                   ?(String | ::Hash[untyped, String]) body,
+                   ?audit_log_reason: String?,
+                   **::Hash[Symbol, String] kwargs
+                 ) -> Async::Task[[Net::HTTPResponse, (::Hash[Symbol, String] | nil)]]
+
+    #
+    # Execute a multipart request.
+    # @async
+    #
+    # @param [Discorb::Route] path The path to the resource.
+    # @param [String, Hash] body The body of the request.
+    # @param [Array<Discorb::Attachment>] files The files to upload.
+    # @param [Hash] headers The headers to send with the request.
+    # @param [String] audit_log_reason The audit log reason to send with the request.
+    # @param [Hash] kwargs The keyword arguments.
+    #
+    # @return [Async::Task<Array(Net::HTTPResponse, Hash)>] The response and as JSON.
+    # @return [Async::Task<Array(Net::HTTPResponse, nil)>] The response was 204.
+    #
+    # @raise [Discorb::HTTPError] The request was failed.
+    def multipart_request: (
+                             Discorb::Route path,
+                             (String | ::Hash[untyped, String]) body,
+                             ::Array[Discorb::Attachment] files,
+                             ?audit_log_reason: String?,
+                             **::Hash[Symbol, String] kwargs
+                           ) -> Async::Task[[Net::HTTPResponse, (::Hash[Symbol, String] | nil)]]
+
+    def inspect: () -> String
+
+    private
+
+    def handle_response: (
+                           Net::HTTPResponse resp,
+                           ::Hash[Symbol, String] data,
+                           String path,
+                           String body,
+                           ::Array[Discorb::Attachment]? files,
+                           String audit_log_reason,
+                           ::Hash[Symbol, String] kwargs
+                         ) -> [Net::HTTPResponse, (::Hash[Symbol, String] | nil)]
+
+    def get_headers: (?String body, ?String audit_log_reason) -> ::Hash[String, String]
+
+    def get_body: ((nil | String | ::Hash[untyped, String]) body) -> String
+
+    def get_path: (String path) -> String
+
+    def get_response_data: (Net::HTTPResponse resp) -> (::Hash[Symbol, String] | nil)
+
+    def http: () -> Net::HTTP
+
+    def cdn_http: () -> Net::HTTP
+
+    def recr_utf8: (O data) -> O
+  end
+end

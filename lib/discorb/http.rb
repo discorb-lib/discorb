@@ -27,7 +27,6 @@ module Discorb
     #
     # @param [Discorb::Route] path The path to the resource.
     # @param [String, Hash] body The body of the request. Defaults to an empty string.
-    # @param [Hash] headers The headers to send with the request.
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
@@ -36,18 +35,28 @@ module Discorb
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
-    def request(path, body = "", headers: nil, audit_log_reason: nil, **kwargs)
+    def request(path, body = "", audit_log_reason: nil, **kwargs)
       Async do |_task|
         @ratelimit_handler.wait(path)
         resp = if %i[post patch put].include? path.method
-                 http.send(path.method, get_path(path), get_body(body), get_headers(headers, body, audit_log_reason),
-                           **kwargs)
+            http.send(
+              path.method,
+              get_path(path),
+              get_body(body),
+              get_headers(body, audit_log_reason),
+              **kwargs,
+            )
           else
-            http.send(path.method, get_path(path), get_headers(headers, body, audit_log_reason), **kwargs)
+            http.send(
+              path.method,
+              get_path(path),
+              get_headers(body, audit_log_reason),
+              **kwargs,
+            )
           end
         data = get_response_data(resp)
         @ratelimit_handler.save(path, resp)
-        handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
+        handle_response(resp, data, path, body, nil, audit_log_reason, kwargs)
       end
     end
 
@@ -58,7 +67,6 @@ module Discorb
     # @param [Discorb::Route] path The path to the resource.
     # @param [String, Hash] body The body of the request.
     # @param [Array<Discorb::Attachment>] files The files to upload.
-    # @param [Hash] headers The headers to send with the request.
     # @param [String] audit_log_reason The audit log reason to send with the request.
     # @param [Hash] kwargs The keyword arguments.
     #
@@ -67,12 +75,12 @@ module Discorb
     #
     # @raise [Discorb::HTTPError] The request was failed.
     #
-    def multipart_request(path, body, files, headers: nil, audit_log_reason: nil, **kwargs)
+    def multipart_request(path, body, files, audit_log_reason: nil, **kwargs)
       Async do |_task|
         @ratelimit_handler.wait(path)
         req = Net::HTTP.const_get(path.method.to_s.capitalize).new(
           get_path(path),
-          get_headers(headers, body, audit_log_reason),
+          get_headers(body, audit_log_reason),
           **kwargs,
         )
         data = [
@@ -83,10 +91,13 @@ module Discorb
 
           if file.created_by == :discord
             request_io = StringIO.new(
-              cdn_http.get(URI.parse(file.url).path, {
-                             "Content-Type" => nil,
-                             "User-Agent" => Discorb::USER_AGENT,
-                           }).body
+              cdn_http.get(
+                URI.parse(file.url).path,
+                {
+                  "Content-Type" => nil,
+                  "User-Agent" => Discorb::USER_AGENT,
+                }
+              ).body
             )
             data << ["files[#{i}]", request_io, { filename: file.filename, content_type: file.content_type }]
           else
@@ -97,10 +108,11 @@ module Discorb
         session = Net::HTTP.new("discord.com", 443)
         session.use_ssl = true
         resp = session.request(req)
-        files&.then { _1.filter(&:will_close).each { |f| f.io.close } }
         data = get_response_data(resp)
         @ratelimit_handler.save(path, resp)
-        handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
+        response = handle_response(resp, data, path, body, files, audit_log_reason, kwargs)
+        files&.then { _1.filter(&:will_close).each { |f| f.io.close } }
+        response
       end
     end
 
@@ -110,12 +122,16 @@ module Discorb
 
     private
 
-    def handle_response(resp, data, path, body, headers, audit_log_reason, kwargs)
+    def handle_response(resp, data, path, body, files, audit_log_reason, kwargs)
       case resp.code
       when "429"
         @client.logger.info("Rate limit exceeded for #{path.method} #{path.url}, waiting #{data[:retry_after]} seconds")
         sleep(data[:retry_after])
-        request(path, body, headers: headers, audit_log_reason: audit_log_reason, **kwargs).wait
+        if files
+          multipart_request(path, body, files, audit_log_reason: audit_log_reason, **kwargs)
+        else
+          request(path, body, audit_log_reason: audit_log_reason, **kwargs).wait
+        end
       when "400"
         raise BadRequestError.new(resp, data)
       when "401"
@@ -129,14 +145,19 @@ module Discorb
       end
     end
 
-    def get_headers(headers, body = "", audit_log_reason = nil)
+    def get_headers(body = "", audit_log_reason = nil)
       ret = if body.nil? || body == ""
-              { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}" }
+          {
+            "User-Agent" => USER_AGENT,
+            "authorization" => "Bot #{@client.token}",
+          }
         else
-          { "User-Agent" => USER_AGENT, "authorization" => "Bot #{@client.token}",
-            "content-type" => "application/json", }
+          {
+            "User-Agent" => USER_AGENT,
+            "authorization" => "Bot #{@client.token}",
+            "content-type" => "application/json",
+          }
         end
-      ret.merge!(headers) if !headers.nil? && headers.length.positive?
       ret["X-Audit-Log-Reason"] = audit_log_reason unless audit_log_reason.nil?
       ret
     end
@@ -153,7 +174,7 @@ module Discorb
 
     def get_path(path)
       full_path = if path.url.start_with?("https://")
-                    path.url
+          path.url
         else
           API_BASE_URL + path.url
         end
@@ -166,7 +187,7 @@ module Discorb
         data = JSON.parse(resp.body, symbolize_names: true)
       rescue JSON::ParserError, TypeError
         data = if resp.body.nil? || resp.body.empty?
-                 nil
+            nil
           else
             resp.body
           end

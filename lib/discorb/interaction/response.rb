@@ -144,8 +144,13 @@ module Discorb
             files = [file] if file != Discorb::Unset
             files = [] if files == Discorb::Unset
             @client.http.multipart_request(
-              Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
-                        "//webhooks/:webhook_id/:token/messages/@original", :patch), payload, files, headers: headers,
+              Route.new(
+                "/webhooks/#{@application_id}/#{@token}/messages/@original",
+                "//webhooks/:webhook_id/:token/messages/@original",
+                :patch
+              ),
+              payload,
+              files,
             ).wait
           end
         end

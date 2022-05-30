@@ -91,8 +91,15 @@ module Discorb
         payload[:username] = username if username
         payload[:avatar_url] = avatar_url if avatar_url != Discorb::Unset
         attachments = [attachment] if attachment
-        _resp, data = @http.multipart_request(Route.new("#{url}?wait=#{wait}", "//webhooks/:webhook_id/:token", :post),
-                                              attachments, payload, headers: headers).wait
+        _resp, data = @http.multipart_request(
+          Route.new(
+            "#{url}?wait=#{wait}",
+            "//webhooks/:webhook_id/:token",
+            :post
+          ),
+          attachments,
+          payload
+        ).wait
         data && Webhook::Message.new(self, data)
       end
     end
