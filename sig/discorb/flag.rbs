@@ -1,0 +1,71 @@
+module Discorb
+  #
+  # Represents a flag.
+  # @abstract
+  class Flag
+    # Initialize the flag.
+    # @note This is usually called by the subclass.
+    #
+    # @param [Integer] value The value of the flag.
+    def initialize: (Integer value) -> void
+
+    #
+    # Union of two flags.
+    #
+    # @param [Discorb::Flag] other The other flag.
+    #
+    # @return [Discorb::Flag] The union of the two flags.
+    def |: (Discorb::Flag other) -> Discorb::Flag
+
+    #
+    # Subtraction of two flags.
+    #
+    # @param [Discorb::Flag] other The other flag.
+    #
+    # @return [Discorb::Flag] The subtraction of the two flags.
+    def -: (Discorb::Flag other) -> Discorb::Flag
+
+    #
+    # Intersection of two flags.
+    #
+    # @param [Discorb::Flag] other The other flag.
+    #
+    # @return [Discorb::Flag] The intersection of the two flags.
+    def &: (Discorb::Flag other) -> Discorb::Flag
+
+    #
+    # XOR of two flags.
+    #
+    # @param [Discorb::Flag] other The other flag.
+    #
+    # @return [Discorb::Flag] The XOR of the two flags.
+    def ^: (Discorb::Flag other) -> Discorb::Flag
+
+    #
+    # Negation of the flag.
+    #
+    # @return [Discorb::Flag] The negation of the flag.
+    def ~: () -> Discorb::Flag
+
+    def to_i: () -> Integer
+
+    def inspect: () -> String
+
+    #
+    # Max value of the flag.
+    #
+    # @return [Integer] the max value of the flag.
+    def self.max_value: () -> Integer
+
+    #
+    # Initialize a new flag with keys.
+    def self.from_keys: (*Symbol keys) -> Discorb::Flag
+
+    # @return [Hash{Symbol => Boolean}] the values of the flag.
+    attr_reader values: ::Hash[Symbol, bool]
+
+    # @return [Integer] the value of the flag.
+    attr_reader value: Integer
+  end
+
+end
