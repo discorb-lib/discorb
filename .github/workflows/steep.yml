@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
 jobs:
-  rubocop:
+  steep:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
