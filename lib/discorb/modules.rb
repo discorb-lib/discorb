@@ -265,10 +265,11 @@ module Discorb
               sleep(5)
             end
           end
-          yield
+          ret = yield
         ensure
           post_task.stop
         end
+        ret
       else
         Async do |_task|
           @client.http.request(Route.new("/channels/#{@id}/typing", "//channels/:channel_id/typing", :post), {})
