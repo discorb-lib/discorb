@@ -17,6 +17,9 @@ gem "async-rspec", "~> 1.16"
 gem "parallel_tests", "~> 3.8"
 gem "rspec", "~> 3.11"
 
+# Typecheck
+gem "steep", "~> 1.0"
+
 # Other development tools
 gem "lefthook", "~> 0.7.7"
 gem "rufo", "~> 0.13.0"

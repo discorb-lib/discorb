@@ -1,0 +1,19 @@
+name: Typecheck with steep
+on:
+  push:
+  pull_request:
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+      - name: Install gems
+        run: |
+          bundle install
+      - name: Run steep
+        run: |
+          steep check
