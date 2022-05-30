@@ -1,0 +1,141 @@
+module Discorb
+  #
+  # Represents a role in the guild.
+  class Role < Discorb::DiscordModel
+    include Comparable
+
+    #
+    # Initializes a new role.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Discorb::Guild] guild The guild the role belongs to.
+    # @param [Hash] data The data of the role.
+    def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+
+    def icon: () -> (Discorb::Asset | Discorb::Emoji | nil)
+
+    #
+    # Compares two roles by their position.
+    #
+    # @param [Discorb::Role] other The role to compare to.
+    #
+    # @return [Integer] -1 if the other role is higher, 0 if they are equal, 1 if the other role is lower.
+    def <=>: (Discorb::Role other) -> Integer
+
+    #
+    # Formats the role as a string.
+    #
+    # @return [String] The formatted string.
+    def to_s: () -> String
+
+    def mention: () -> String
+
+    def color?: () -> bool
+
+    def inspect: () -> String
+
+    #
+    # Moves the role to a new position.
+    # @async
+    #
+    # @param [Integer] position The new position.
+    # @param [String] reason The reason for moving the role.
+    #
+    # @return [Async::Task<void>] The task.
+    def move: (Integer position, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Edits the role.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The new name of the role.
+    # @param [Integer] position The new position of the role.
+    # @param [Discorb::Color] color The new color of the role.
+    # @param [Boolean] hoist Whether the role should be hoisted.
+    # @param [Boolean] mentionable Whether the role should be mentionable.
+    # @param [Discorb::Image, Discorb::UnicodeEmoji] icon The new icon or emoji of the role.
+    # @param [String] reason The reason for editing the role.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit: (
+                ?name: String,
+                ?position: Integer,
+                ?color: Discorb::Color,
+                ?hoist: bool,
+                ?mentionable: bool,
+                ?icon: (Discorb::Image | Discorb::UnicodeEmoji),
+                ?reason: String?
+              ) -> Async::Task[void]
+
+    #
+    # Deletes the role.
+    #
+    # @param [String] reason The reason for deleting the role.
+    #
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: String?) -> Async::Task[void]
+
+    def tag: () -> Discorb::Role::Tag
+
+    # @return [Discorb::Snowflake] The ID of the role.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the role.
+    attr_reader name: String
+
+    # @return [Discorb::Color] The color of the role.
+    attr_reader color: Discorb::Color
+
+    # @return [Discorb::Permission] The permissions of the role.
+    attr_reader permissions: Discorb::Permission
+
+    # @return [Integer] The position of the role.
+    attr_reader position: Integer
+
+    # @return [Discorb::Guild] The guild this role belongs to.
+    attr_reader guild: Discorb::Guild
+
+    # @return [Boolean] Whether the role is hoisted.
+    attr_reader hoist: bool
+
+    # @return [Boolean] Whether the role is managed.
+    attr_reader managed: bool
+
+    # @return [Boolean] Whether the role is a default role.
+    attr_reader mentionable: bool
+
+    # @return [Discorb::Asset, nil] The icon of the role.
+    attr_reader custom_icon: Discorb::Asset?
+
+    # @return [Discorb::Emoji, nil] The emoji of the role.
+    attr_reader emoji: Discorb::Emoji?
+
+    #
+    # Represents a tag of a role.
+    class Tag < Discorb::DiscordModel
+      #
+      # Initializes a new tag.
+      # @private
+      #
+      # @param [Hash] data The data of the tag.
+      def initialize: (json data) -> void
+
+      # @return [Discorb::Snowflake] The ID of the bot that owns the role.
+      attr_reader bot_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the integration.
+      attr_reader integration_id: Discorb::Snowflake
+
+      # @return [Boolean] Whether the tag is a premium subscriber role.
+      attr_reader premium_subscriber: bool
+
+      # @return [Boolean] Whether the role is a bot role.
+      attr_reader bot?: bool
+
+      # @return [Boolean] Whether the role is an integration role.
+      attr_reader integration?: bool
+    end
+  end
+end
