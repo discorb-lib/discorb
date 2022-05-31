@@ -165,7 +165,7 @@ module Discorb
     #     channel.post("Done!")
     #   end
     def typing: () -> Async::Task[void]
-              | () { () -> R} -> R
+              | [R] () { () -> R} -> R
 
     # @return [Boolean] Whether the user is verified.
     attr_reader verified: bool

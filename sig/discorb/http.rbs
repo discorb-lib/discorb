@@ -81,6 +81,6 @@ module Discorb
 
     def cdn_http: () -> Net::HTTP
 
-    def recr_utf8: (O data) -> O
+    def recr_utf8: [O] (O data) -> O
   end
 end

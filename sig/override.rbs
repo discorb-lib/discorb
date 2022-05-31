@@ -17,8 +17,3 @@ module Async
     def to_s: () -> untyped
   end
 end
-
-module Net
-  class HTTPResponse
-  end
-end
