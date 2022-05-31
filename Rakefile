@@ -232,106 +232,167 @@ namespace :document do
   end
 end
 
-desc "Generate rbs file using sord"
-task :rbs do
-  require "open3"
-  # rubocop: disable Layout/LineLength
-  type_errors = {
-    "SORD_ERROR_SymbolSymbolSymbolInteger" => "{ r: Integer, g: Integer, b: Integer}",
-    "SORD_ERROR_DiscorbRoleDiscorbMemberDiscorbPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
-    "SORD_ERROR_DiscorbRoleDiscorbMemberPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
-    "SORD_ERROR_f | SORD_ERROR_F | SORD_ERROR_d | SORD_ERROR_D | SORD_ERROR_t | SORD_ERROR_T | SORD_ERROR_R" => '"f" | "F" | "d" | "D" | "t" | "T" | "R"',
-    "SORD_ERROR_dark | SORD_ERROR_light" => '"dark" | "light"',
-    "SORD_ERROR_SymbolStringSymbolboolSymbolObject" => "String | Integer | Float",
-  }
-  # rubocop: enable Layout/LineLength
-  regenerate = ARGV.include?("--regenerate") || ARGV.include?("-r")
+desc "Generate rbs file"
+namespace :rbs do
+  desc "Generate Client#on and Client#once signature"
+  task :client_on do
+    client_rbs = File.read("sig/discorb/client.rbs")
+    event_document = File.read("./docs/events.md")
+    voice_event_document = File.read("./docs/voice_events.md")
+    event_reference = event_document.split("## Event reference")[1]
+    event_reference += voice_event_document.split("# Voice Events")[1]
+    event_reference.gsub!(/^### (.*)$/, "")
+    events = []
+    event_reference.split("#### `")[1..].each do |event|
+      header, content = event.split("`\n", 2)
+      name = header.split("(")[0]
+      description = content.split("| Parameter", 2)[0].strip
+      parameters = if content.include?("| Parameter")
+          content.scan(/\| `(.*?)` +\| (.*?) +\| (.*?) +\|/)
+        else
+          []
+        end
+      events << {
+        name: name,
+        description: description,
+        parameters: parameters.map { |p| { name: p[0], type: p[1], description: p[2] } },
+      }
+    end
+    event_sig = +""
+    events.each do |event|
+      args = []
+      event[:parameters].each do |parameter|
+        args << {
+          name: parameter[:name],
+          type: if parameter[:type].start_with?("?")
+            parameter[:type][1..]
+          else
+            parameter[:type]
+          end.tr("{}`", "").tr("<>", "[]").gsub(", ", " | "),
+        }
+      end
+      sig = args.map { |a| "#{a[:type]} #{a[:name]}" }.join(", ")
+      event_sig << <<~RBS
+        | (:#{event[:name]} event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (#{sig}) -> void } -> Discorb::EventHandler
+      RBS
+    end
+    event_sig.sub!("| ", "  ").rstrip!
+    res = client_rbs.gsub!(/\# marker: on\n(?:[\s\S]*?\n)?( +)\# endmarker: on\n/) do
+      indent = Regexp.last_match(1)
+      "# marker: on\n#{event_sig.gsub(/^/, "#{indent}      ")}\n#{indent}# endmarker: on\n"
+    end
+    raise "Failed to generate client.rbs" unless res
 
-  sh "sord gen sig/discorb.rbs --keep-original-comments --no-sord-comments" +
-     (regenerate ? " --regenerate" : " --no-regenerate")
-  base = File.read("sig/discorb.rbs")
-  base.gsub!(/\n +def _set_data: \(.+\) -> untyped\n\n/, "\n")
-  # base.gsub!(/(  )?( *)# @private.+?(?:\n\n(?=\1\2#)|(?=\n\2end))/sm, "")
-  base.gsub!(/untyped ([a-z_]*id)/, "_ToS \\1")
-  # #region rbs dictionary
-  base.gsub!(/  class Dictionary.+?end\n/ms, <<-RBS)
-  class Dictionary[K, V]
-    #
-    # Initialize a new Dictionary.
-    #
-    # @param [Hash] hash A hash of items to add to the dictionary.
-    # @param [Integer] limit The maximum number of items in the dictionary.
-    # @param [false, Proc] sort Whether to sort the items in the dictionary.
-    def initialize: (?::Hash[untyped, untyped] hash, ?limit: Integer?, ?sort: (bool | Proc)) -> void
+    res = client_rbs.gsub!(/\# marker: once\n(?:[\s\S]*?\n)?( +)\# endmarker: once\n/) do
+      indent = Regexp.last_match(1)
+      "# marker: once\n#{event_sig.gsub(/^/, "#{indent}        ")}\n#{indent}# endmarker: once\n"
+    end
+    raise "Failed to generate client.rbs" unless res
 
-    #
-    # Registers a new item in the dictionary.
-    #
-    # @param [#to_s] id The ID of the item.
-    # @param [Object] body The item to register.
-    #
-    # @return [self] The dictionary.
-    def register: (_ToS id, Object body) -> self
-
-    #
-    # Merges another dictionary into this one.
-    #
-    # @param [Discorb::Dictionary] other The dictionary to merge.
-    def merge: (Discorb::Dictionary other) -> untyped
-
-    #
-    # Removes an item from the dictionary.
-    #
-    # @param [#to_s] id The ID of the item to remove.
-    def remove: (_ToS id) -> untyped
-
-    #
-    # Get an item from the dictionary.
-    #
-    # @param [#to_s] id The ID of the item.
-    # @return [Object] The item.
-    # @return [nil] if the item was not found.
-    #
-    # @overload get(index)
-    #   @param [Integer] index The index of the item.
-    #
-    #   @return [Object] The item.
-    #   @return [nil] if the item is not found.
-    def get: (K id) -> V?
-
-    #
-    # Returns the values of the dictionary.
-    #
-    # @return [Array] The values of the dictionary.
-    def values: () -> ::Array[V]
-
-    #
-    # Checks if the dictionary has an ID.
-    #
-    # @param [#to_s] id The ID to check.
-    #
-    # @return [Boolean] `true` if the dictionary has the ID, `false` otherwise.
-    def has?: (_ToS id) -> bool
-
-    #
-    # Send a message to the array of values.
-    def method_missing: (untyped name) -> untyped
-
-    def respond_to_missing?: (untyped name, untyped args, untyped kwargs) -> bool
-
-    def inspect: () -> untyped
-
-    # @return [Integer] The maximum number of items in the dictionary.
-    attr_accessor limit: Integer
+    File.write("sig/discorb/client.rbs", client_rbs, mode: "wb")
   end
-  RBS
-  # #endregion
-  type_errors.each do |error, type|
-    base.gsub!(error, type)
+
+  desc "Generate rbs file using sord"
+  task :sord do
+    require "open3"
+    # rubocop: disable Layout/LineLength
+    type_errors = {
+      "SORD_ERROR_SymbolSymbolSymbolInteger" => "{ r: Integer, g: Integer, b: Integer}",
+      "SORD_ERROR_DiscorbRoleDiscorbMemberDiscorbPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
+      "SORD_ERROR_DiscorbRoleDiscorbMemberPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
+      "SORD_ERROR_f | SORD_ERROR_F | SORD_ERROR_d | SORD_ERROR_D | SORD_ERROR_t | SORD_ERROR_T | SORD_ERROR_R" => '"f" | "F" | "d" | "D" | "t" | "T" | "R"',
+      "SORD_ERROR_dark | SORD_ERROR_light" => '"dark" | "light"',
+      "SORD_ERROR_SymbolStringSymbolboolSymbolObject" => "String | Integer | Float",
+    }
+    # rubocop: enable Layout/LineLength
+    regenerate = ARGV.include?("--regenerate") || ARGV.include?("-r")
+
+    sh "sord gen sig/discorb.rbs --keep-original-comments --no-sord-comments" +
+       (regenerate ? " --regenerate" : " --no-regenerate")
+    base = File.read("sig/discorb.rbs")
+    base.gsub!(/\n +def _set_data: \(.+\) -> untyped\n\n/, "\n")
+    # base.gsub!(/(  )?( *)# @private.+?(?:\n\n(?=\1\2#)|(?=\n\2end))/sm, "")
+    base.gsub!(/untyped ([a-z_]*id)/, "_ToS \\1")
+    # #region rbs dictionary
+    base.gsub!(/  class Dictionary.+?end\n/ms, <<-RBS)
+    class Dictionary[K, V]
+      #
+      # Initialize a new Dictionary.
+      #
+      # @param [Hash] hash A hash of items to add to the dictionary.
+      # @param [Integer] limit The maximum number of items in the dictionary.
+      # @param [false, Proc] sort Whether to sort the items in the dictionary.
+      def initialize: (?::Hash[untyped, untyped] hash, ?limit: Integer?, ?sort: (bool | Proc)) -> void
+
+      #
+      # Registers a new item in the dictionary.
+      #
+      # @param [#to_s] id The ID of the item.
+      # @param [Object] body The item to register.
+      #
+      # @return [self] The dictionary.
+      def register: (_ToS id, Object body) -> self
+
+      #
+      # Merges another dictionary into this one.
+      #
+      # @param [Discorb::Dictionary] other The dictionary to merge.
+      def merge: (Discorb::Dictionary other) -> untyped
+
+      #
+      # Removes an item from the dictionary.
+      #
+      # @param [#to_s] id The ID of the item to remove.
+      def remove: (_ToS id) -> untyped
+
+      #
+      # Get an item from the dictionary.
+      #
+      # @param [#to_s] id The ID of the item.
+      # @return [Object] The item.
+      # @return [nil] if the item was not found.
+      #
+      # @overload get(index)
+      #   @param [Integer] index The index of the item.
+      #
+      #   @return [Object] The item.
+      #   @return [nil] if the item is not found.
+      def get: (K id) -> V?
+
+      #
+      # Returns the values of the dictionary.
+      #
+      # @return [Array] The values of the dictionary.
+      def values: () -> ::Array[V]
+
+      #
+      # Checks if the dictionary has an ID.
+      #
+      # @param [#to_s] id The ID to check.
+      #
+      # @return [Boolean] `true` if the dictionary has the ID, `false` otherwise.
+      def has?: (_ToS id) -> bool
+
+      #
+      # Send a message to the array of values.
+      def method_missing: (untyped name) -> untyped
+
+      def respond_to_missing?: (untyped name, untyped args, untyped kwargs) -> bool
+
+      def inspect: () -> untyped
+
+      # @return [Integer] The maximum number of items in the dictionary.
+      attr_accessor limit: Integer
+    end
+    RBS
+    # #endregion
+    type_errors.each do |error, type|
+      base.gsub!(error, type)
+    end
+    base.gsub!("end\n\n\nend", "end\n")
+    base.gsub!(/ +$/m, "")
+    File.write("sig/discorb.rbs", base)
   end
-  base.gsub!("end\n\n\nend", "end\n")
-  base.gsub!(/ +$/m, "")
-  File.write("sig/discorb.rbs", base)
 end
 
 task document: %i[document:yard document:replace]

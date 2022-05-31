@@ -71,8 +71,8 @@ Fires when an event is received.
 
 | Parameter    | Type   | Description            |
 | ------------ | ------ | ---------------------- |
-| `event_name` | Symbol | The name of the event. |
-| `data`       | Hash   | The data of the event. |
+| `event_name` | `Symbol` | The name of the event. |
+| `data`       | `Hash`   | The data of the event. |
 
 #### `ready()`
 
@@ -90,6 +90,12 @@ Fires when the client is resumed connection.
 
 Fires when an error occurs during an event.
 Defaults to printing the error to stderr, override to handle it yourself.
+
+| Parameter    | Type   | Description            |
+| ------------ | ------ | ---------------------- |
+| `event_name` | `Symbol` | The name of the event. |
+| `args`       | `Array<Object>` | The arguments of the event. |
+| `error`      | `Exception` | The error that occurred. |
 
 #### `setup()`
 
@@ -564,8 +570,6 @@ Fires when a form is submitted.
 | Parameter     | Type                        | Description             |
 | ------------- | --------------------------- | ----------------------- |
 | `interaction` | {Discorb::ModalInteraction} | The interaction object. |
-
-#### `slash_command
 
 ### Voice events
 
