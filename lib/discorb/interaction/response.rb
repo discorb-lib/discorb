@@ -9,6 +9,8 @@ module Discorb
     # A module for response with source.
     #
     module SourceResponder
+      # @type instance: Discorb::Interaction
+
       #
       # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
       #
@@ -46,6 +48,8 @@ module Discorb
       # @param [Discorb::Embed] embed The embed to send.
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+      # @param [Discorb::Attachment] attachment The attachment to send.
+      # @param [Array<Discorb::Attachment>] attachments The attachments to send. (max: 10)
       # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
@@ -58,6 +62,8 @@ module Discorb
         embed: nil,
         embeds: nil,
         allowed_mentions: nil,
+        attachment: nil,
+        attachments: nil,
         components: nil,
         ephemeral: false
       )
@@ -70,23 +76,48 @@ module Discorb
             allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
           payload[:components] = Component.to_payload(components) if components
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
+          attachments ||= attachment ? [attachment] : []
+
+          payload[:attachments] = attachments.map.with_index do |a, i|
+            {
+              id: i,
+              filename: a.filename,
+              description: a.description,
+            }
+          end
 
           ret = if @responded
-              _resp, data = @client.http.request(
-                Route.new("/webhooks/#{@application_id}/#{@token}", "//webhooks/:webhook_id/:token", :post), payload
+              _resp, data = @client.http.multipart_request(
+                Route.new(
+                  "/webhooks/#{@application_id}/#{@token}",
+                  "//webhooks/:webhook_id/:token",
+                  :post
+                ),
+                payload,
+                attachments
               ).wait
               webhook = Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}")
               Webhook::Message.new(webhook, data, @client)
             elsif @defered
-              @client.http.request(
-                Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
-                          "//webhooks/:webhook_id/:token/messages/@original", :patch), payload
+              @client.http.multipart_request(
+                Route.new(
+                  "/webhooks/#{@application_id}/#{@token}/messages/@original",
+                  "//webhooks/:webhook_id/:token/messages/@original",
+                  :patch
+                ),
+                payload,
+                attachments
               ).wait
               CallbackMessage.new(@client, payload, @application_id, @token)
             else
-              @client.http.request(
-                Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback",
-                          :post), { type: 4, data: payload }
+              @client.http.multipart_request(
+                Route.new(
+                  "/interactions/#{@id}/#{@token}/callback",
+                  "//interactions/:interaction_id/:token/callback",
+                  :post
+                ),
+                { type: 4, data: payload },
+                attachments
               ).wait
               CallbackMessage.new(@client, payload, @application_id, @token)
             end
@@ -181,6 +212,8 @@ module Discorb
     # A module for response with update.
     #
     module UpdateResponder
+      # @type instance: Discorb::Interaction
+
       #
       # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
       # @async
@@ -216,12 +249,24 @@ module Discorb
       # @param [Discorb::Embed] embed The embed to send.
       # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
       # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+      # @param [Discorb::Attachment] attachment The attachment to send.
+      # @param [Array<Discorb::Attachment>] attachments The attachments to send. (max: 10)
       # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
       # @param [Boolean] ephemeral Whether to make the response ephemeral.
       #
       # @return [Async::Task<void>] The task.
       #
-      def edit(content, tts: false, embed: nil, embeds: nil, allowed_mentions: nil, components: nil, ephemeral: false)
+      def edit(
+        content,
+        tts: false,
+        embed: nil,
+        embeds: nil,
+        allowed_mentions: nil,
+        attachment: nil,
+        attachments: nil,
+        components: nil,
+        ephemeral: false
+      )
         Async do
           payload = {}
           payload[:content] = content if content
@@ -236,7 +281,15 @@ module Discorb
             allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
           payload[:components] = Component.to_payload(components) if components
           payload[:flags] = (ephemeral ? 1 << 6 : 0)
-          @client.http.request(
+          attachments ||= [attachment] if attachment
+          payload[:attachments] = attachments.map.with_index do |a, i|
+            {
+              id: i,
+              filename: a.filename,
+              description: a.description,
+            }
+          end
+          @client.http.multipart_request(
             Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback",
                       :post), { type: 7, data: payload }
           ).wait
@@ -248,6 +301,8 @@ module Discorb
     # A module for response with modal.
     #
     module ModalResponder
+      # @type instance: Discorb::Interaction
+
       #
       # Response with `MODAL`(`9`).
       #

@@ -1,0 +1,63 @@
+module Discorb
+  #
+  # Represents an interaction of Discord.
+  class Interaction < Discorb::DiscordModel
+    @client: Discorb::Client
+
+    #
+    # Initialize a new interaction.
+    # @private
+    #
+    # @param [Discorb::Client] client The client this interaction belongs to.
+    # @param [Hash] data The data of the interaction.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+    def guild: () -> Discorb::Guild?
+
+    def channel: () -> Discorb::Channel
+
+    def inspect: () -> String
+
+    #
+    # Create a new Interaction instance from the data.
+    # @private
+    #
+    # @param [Discorb::Client] client The client this interaction belongs to.
+    # @param [Hash] data The data of the interaction.
+    def self.make_interaction: (Discorb::Client client, ::Hash[untyped, untyped] data) -> untyped
+
+    #
+    # Returns the descendants of the class.
+    # @private
+    def self.descendants: () -> Array[Class]
+
+    def _set_data: () -> untyped
+
+    # @return [Discorb::Snowflake] The ID of the interaction.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [Discorb::Snowflake] The ID of the application that created the interaction.
+    attr_reader application_id: Discorb::Snowflake
+
+    # @return [Symbol] The type of interaction.
+    attr_reader type: Symbol
+
+    # @return [Discorb::User, Discorb::Member] The user or member that created the interaction.
+    attr_reader user: (Discorb::User | Discorb::Member)
+
+    # @return [Integer] The type of interaction.
+    # @note This is always `1` for now.
+    attr_reader version: Integer
+
+    # @return [String] The token for the interaction.
+    attr_reader token: String
+
+    # @return [Symbol] The locale of the user that created the interaction.
+    # @note This modifies the language code, `-` will be replaced with `_`.
+    attr_reader locale: Symbol
+
+    # @return [Symbol] The locale of the guild that created the interaction.
+    # @note This modifies the language code, `-` will be replaced with `_`.
+    attr_reader guild_locale: Symbol
+  end
+end

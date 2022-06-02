@@ -1,0 +1,148 @@
+module Discorb
+  class Interaction < Discorb::DiscordModel
+    #
+    # A module for response with source.
+    module SourceResponder
+      #
+      # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
+      #
+      # @async
+      #
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      #
+      # @return [Async::Task<void>] The task.
+      def defer_source: (?ephemeral: bool) -> Async::Task[void]
+
+      #
+      # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
+      #
+      # @async
+      #
+      # @param [String] content The content of the response.
+      # @param [Boolean] tts Whether to send the message as text-to-speech.
+      # @param [Discorb::Embed] embed The embed to send.
+      # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+      # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+      # @param [Discorb::Attachment] attachment The attachment to send.
+      # @param [Array<Discorb::Attachment>] attachments The attachments to send. (max: 10)
+      # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      #
+      # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message]
+      #   The callback message.
+      def post: (
+                  ?String? content,
+                  ?tts: bool,
+                  ?embed: Discorb::Embed?,
+                  ?embeds: ::Array[Discorb::Embed]?,
+                  ?allowed_mentions: Discorb::AllowedMentions?,
+                  ?attachment: Discorb::Attachment?,
+                  ?attachments: ::Array[Discorb::Attachment]?,
+                  ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
+                  ?ephemeral: bool
+                ) -> (Discorb::Interaction::SourceResponder::CallbackMessage | Discorb::Webhook::Message)
+
+      #
+      # Represents of a callback message of interaction.
+      class CallbackMessage
+        #
+        # Initializes a new instance of CallbackMessage.
+        # @private
+        #
+        # @param [Client] client The client.
+        # @param [Hash] data The payload.
+        # @param [String] application_id The application ID.
+        # @param [String] token The token.
+        def initialize: (
+                          Client client,
+                          ::Hash[untyped, untyped] data,
+                          String application_id,
+                          String token
+                        ) -> void
+
+        #
+        # Edits the callback message.
+        # @async
+        # @macro edit
+        #
+        # @param [String] content The new content of the message.
+        # @param [Discorb::Embed] embed The new embed of the message.
+        # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
+        # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
+        # @param [Discorb::Attachment] file The file to send.
+        # @param [Array<Discorb::Attachment>] files The files to send.
+        #
+        # @return [Async::Task<void>] The task.
+        def edit: (
+                    ?String content,
+                    ?embed: Discorb::Embed,
+                    ?embeds: ::Array[Discorb::Embed],
+                    ?file: Discorb::Attachment,
+                    ?files: ::Array[Discorb::Attachment],
+                    ?attachments: ::Array[Discorb::Attachment]
+                  ) -> Async::Task[void]
+
+        #
+        # Deletes the callback message.
+        # @async
+        # @note This will fail if the message is ephemeral.
+        #
+        # @return [Async::Task<void>] The task.
+        def delete!: () -> Async::Task[void]
+
+        def inspect: () -> untyped
+      end
+    end
+
+    #
+    # A module for response with update.
+    module UpdateResponder
+      #
+      # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
+      # @async
+      #
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      #
+      # @return [Async::Task<void>] The task.
+      def defer_update: (?ephemeral: bool) -> Async::Task[void]
+
+      #
+      # Response with `UPDATE_MESSAGE`(`7`).
+      #
+      # @async
+      #
+      # @param [String] content The content of the response.
+      # @param [Boolean] tts Whether to send the message as text-to-speech.
+      # @param [Discorb::Embed] embed The embed to send.
+      # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+      # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+      # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+      # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      #
+      # @return [Async::Task<void>] The task.
+      def edit: (
+                  String content,
+                  ?tts: bool,
+                  ?embed: Discorb::Embed?,
+                  ?embeds: ::Array[Discorb::Embed]?,
+                  ?allowed_mentions: Discorb::AllowedMentions?,
+                  ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
+                  ?ephemeral: bool
+                ) -> Async::Task[void]
+    end
+
+    #
+    # A module for response with modal.
+    module ModalResponder
+      #
+      # Response with `MODAL`(`9`).
+      #
+      # @param [String] title The title of the modal.
+      # @param [String] custom_id The custom id of the modal.
+      # @param [Array<Discorb::TextInput>] components The text inputs to send.
+      #
+      # @return [Async::Task<void>] The task.
+      def show_modal: (String title, String custom_id, ::Array[Discorb::TextInput] components) -> Async::Task[void]
+    end
+  end
+end
