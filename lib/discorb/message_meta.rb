@@ -76,8 +76,6 @@ module Discorb
         }
       end
 
-      alias to_reference to_hash
-
       #
       # Initialize a new reference from a hash.
       #

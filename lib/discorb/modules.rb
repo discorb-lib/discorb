@@ -44,7 +44,7 @@ module Discorb
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] =
           allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
-        payload[:message_reference] = reference.to_reference if reference
+        payload[:message_reference] = reference.to_reference.to_hash if reference
         payload[:components] = Component.to_payload(components) if components
         attachments ||= attachment ? [attachment] : []
 

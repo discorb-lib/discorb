@@ -293,15 +293,17 @@ module Discorb
     #
     # @param [Boolean] fail_if_not_exists Whether to raise an error if the message does not exist.
     #
-    # @return [Hash] The reference object.
+    # @return [Discorb::Message::Reference] The reference object.
     #
     def to_reference(fail_if_not_exists: true)
-      {
-        message_id: @id,
-        channel_id: @channel_id,
-        guild_id: @guild_id,
-        fail_if_not_exists: fail_if_not_exists,
-      }
+      Reference.from_hash(
+        {
+          message_id: @id,
+          channel_id: @channel_id,
+          guild_id: @guild_id,
+          fail_if_not_exists: fail_if_not_exists,
+        }
+      )
     end
 
     def embed
