@@ -1,0 +1,17 @@
+module Discorb
+  #
+  # Represents a news channel (announcement channel).
+  class NewsChannel < Discorb::TextChannel
+    DEFAULT_AUTO_ARCHIVE_DURATION: untyped
+
+    #
+    # Follow the existing announcement channel from self.
+    # @async
+    #
+    # @param [Discorb::TextChannel] target The channel to follow to.
+    # @param [String] reason The reason of following the channel.
+    #
+    # @return [Async::Task<void>] The task.
+    def follow_to: (Discorb::TextChannel target, ?reason: String?) -> Async::Task[void]
+  end
+end

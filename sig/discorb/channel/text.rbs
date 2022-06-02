@@ -1,0 +1,148 @@
+module Discorb
+  #
+  # Represents a text channel.
+  class TextChannel < Discorb::GuildChannel
+    include Discorb::Messageable
+    DEFAULT_AUTO_ARCHIVE_DURATION: Hash[Integer, Symbol]
+
+    #
+    # Edits the channel.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Discorb::CategoryChannel, nil] category The parent of channel. Specify `nil` to remove the parent.
+    # @param [Discorb::CategoryChannel, nil] parent Alias of `category`.
+    # @param [String] topic The topic of the channel.
+    # @param [Boolean] nsfw Whether the channel is nsfw.
+    # @param [Boolean] announce Whether the channel is announce channel.
+    # @param [Integer] rate_limit_per_user The rate limit per user (Slowmode) in the channel.
+    # @param [Integer] slowmode Alias of `rate_limit_per_user`.
+    # @param [Integer] default_auto_archive_duration The default auto archive duration of the channel.
+    # @param [Integer] archive_in Alias of `default_auto_archive_duration`.
+    # @param [String] reason The reason of editing the channel.
+    #
+    # @return [Async::Task<self>] The edited channel.
+    def edit: (
+                ?name: String,
+                ?position: Integer,
+                ?category: Discorb::CategoryChannel?,
+                ?parent: Discorb::CategoryChannel?,
+                ?topic: String,
+                ?nsfw: bool,
+                ?announce: bool,
+                ?rate_limit_per_user: Integer,
+                ?slowmode: Integer,
+                ?default_auto_archive_duration: Integer,
+                ?archive_in: Integer,
+                ?reason: String?
+              ) -> Async::Task[self]
+
+    #
+    # Create webhook in the channel.
+    # @async
+    #
+    # @param [String] name The name of the webhook.
+    # @param [Discorb::Image] avatar The avatar of the webhook.
+    #
+    # @return [Async::Task<Discorb::Webhook::IncomingWebhook>] The created webhook.
+    def create_webhook: (String name, ?avatar: Discorb::Image?) -> Async::Task[Discorb::Webhook::IncomingWebhook]
+
+    #
+    # Fetch webhooks in the channel.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::Webhook>>] The webhooks in the channel.
+    def fetch_webhooks: () -> Async::Task[::Array[Discorb::Webhook]]
+
+    #
+    # Bulk delete messages in the channel.
+    # @async
+    #
+    # @param [Discorb::Message] messages The messages to delete.
+    # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
+    #
+    # @return [Async::Task<void>] The task.
+    def delete_messages!: (*Discorb::Message messages, ?force: bool) -> Async::Task[void]
+
+    #
+    # Follow the existing announcement channel.
+    # @async
+    #
+    # @param [Discorb::NewsChannel] target The channel to follow.
+    # @param [String] reason The reason of following the channel.
+    #
+    # @return [Async::Task<void>] The task.
+    def follow_from: (Discorb::NewsChannel target, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Start thread in the channel.
+    # @async
+    #
+    # @param [String] name The name of the thread.
+    # @param [Discorb::Message] message The message to start the thread.
+    # @param [:hour, :day, :three_days, :week] auto_archive_duration The duration of auto-archiving.
+    # @param [Boolean] public Whether the thread is public.
+    # @param [Integer] rate_limit_per_user The rate limit per user.
+    # @param [Integer] slowmode Alias of `rate_limit_per_user`.
+    # @param [String] reason The reason of starting the thread.
+    #
+    # @return [Async::Task<Discorb::ThreadChannel>] The started thread.
+    def start_thread: (
+                        String name,
+                        ?message: Discorb::Message?,
+                        ?auto_archive_duration: Symbol?,
+                        ?public: bool,
+                        ?rate_limit_per_user: Integer?,
+                        ?slowmode: Integer?,
+                        ?reason: String?
+                      ) -> Async::Task[Discorb::ThreadChannel]
+
+    #
+    # Fetch archived threads in the channel.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived threads in the channel.
+    def fetch_archived_public_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
+
+    #
+    # Fetch archived private threads in the channel.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived private threads in the channel.
+    def fetch_archived_private_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
+
+    #
+    # Fetch joined archived private threads in the channel.
+    # @async
+    #
+    # @param [Integer] limit The limit of threads to fetch.
+    # @param [Time] before <description>
+    #
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The joined archived private threads in the channel.
+    def fetch_joined_archived_private_threads: (?limit: Integer?, ?before: Time?) -> Async::Task[::Array[Discorb::ThreadChannel]]
+
+    # @return [String] The topic of the channel.
+    attr_reader topic: String
+
+    # @return [Boolean] Whether the channel is nsfw.
+    attr_reader nsfw: bool
+
+    # @return [Discorb::Snowflake] The id of the last message.
+    attr_reader last_message_id: Discorb::Snowflake
+
+    # @return [Integer] The rate limit per user (Slowmode) in the channel.
+    attr_reader rate_limit_per_user: Integer
+
+    # @return [Time] The time when the last pinned message was pinned.
+    attr_reader last_pin_timestamp: Time
+
+    # @return [Integer] The default value of duration of auto archive.
+    attr_reader default_auto_archive_duration: Integer
+
+    # @!attribute [r] threads
+    #   @return [Array<Discorb::ThreadChannel>] The threads in the channel.
+    attr_reader threads: untyped
+  end
+end

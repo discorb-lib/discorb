@@ -1,0 +1,73 @@
+module Discorb
+  #
+  # Represents a stage channel.
+  class StageChannel < Discorb::GuildChannel
+    include Discorb::Connectable
+
+    #
+    # Initialize a new stage channel.
+    # @private
+    def initialize: () -> void
+
+    def stage_instance: () -> untyped
+
+    #
+    # Edit the stage channel.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The name of the stage channel.
+    # @param [Integer] position The position of the stage channel.
+    # @param [Integer] bitrate The bitrate of the stage channel.
+    # @param [Symbol] rtc_region The region of the stage channel.
+    # @param [String] reason The reason of editing the stage channel.
+    #
+    # @return [Async::Task<self>] The edited stage channel.
+    def edit: (
+                ?name: String,
+                ?position: Integer,
+                ?bitrate: Integer,
+                ?rtc_region: Symbol,
+                ?reason: String?
+              ) -> Async::Task[self]
+
+    #
+    # Start a stage instance.
+    # @async
+    #
+    # @param [String] topic The topic of the stage instance.
+    # @param [Boolean] public Whether the stage instance is public or not.
+    # @param [String] reason The reason of starting the stage instance.
+    #
+    # @return [Async::Task<Discorb::StageInstance>] The started stage instance.
+    def start: (String topic, ?public: bool, ?reason: String?) -> Async::Task[Discorb::StageInstance]
+
+    #
+    # Fetch a current stage instance.
+    # @async
+    #
+    # @return [Async::Task<StageInstance>] The current stage instance.
+    # @return [Async::Task<nil>] If there is no current stage instance.
+    def fetch_stage_instance: () -> Async::Task[StageInstance]
+
+    def voice_states: () -> Array[Discorb::VoiceState]
+
+    def members: () -> Array[Discorb::Member]
+
+    def speakers: () -> Array[Discorb::Member]
+
+    def audiences: () -> Array[Discorb::Member]
+
+    # @return [Integer] The bitrate of the voice channel.
+    attr_reader bitrate: Integer
+
+    # @return [Integer] The user limit of the voice channel.
+    attr_reader user_limit: Integer
+
+    #
+    # @private
+    # @return [Discorb::Dictionary{Discorb::Snowflake => StageInstance}]
+    #   The stage instances associated with the stage channel.
+    attr_reader stage_instances: Discorb::Dictionary[Discorb::Snowflake, StageInstance]
+  end
+end

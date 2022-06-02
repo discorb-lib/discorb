@@ -1,0 +1,17 @@
+module Discorb
+  #
+  # Represents a category in a guild.
+  class CategoryChannel < Discorb::GuildChannel
+    include Discorb::ChannelContainer
+
+    def channels: () -> untyped
+
+    def create_text_channel: (*untyped args, **untyped kwargs) -> untyped
+
+    def create_voice_channel: (*untyped args, **untyped kwargs) -> untyped
+
+    def create_news_channel: (*untyped args, **untyped kwargs) -> untyped
+
+    def create_stage_channel: (*untyped args, **untyped kwargs) -> untyped
+  end
+end

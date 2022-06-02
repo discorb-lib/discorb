@@ -1,0 +1,14 @@
+module Discorb
+  #
+  # Represents a DM channel.
+  class DMChannel < Discorb::Channel
+    include Discorb::Messageable
+
+    #
+    # Returns the channel id to request.
+    # @private
+    #
+    # @return [Async::Task<Discorb::Snowflake>] A task that resolves to the channel id.
+    def channel_id: () -> Async::Task[Discorb::Snowflake]
+  end
+end

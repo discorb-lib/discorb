@@ -1,0 +1,177 @@
+module Discorb
+  #
+  # Represents a thread.
+  # @abstract
+  class ThreadChannel < Discorb::Channel
+    include Discorb::Messageable
+
+    #
+    # Initialize a new thread channel.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the thread channel.
+    # @param [Boolean] no_cache Whether to disable the cache.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data, ?no_cache: bool) -> void
+
+    #
+    # Edit the thread.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The name of the thread.
+    # @param [Boolean] archived Whether the thread is archived or not.
+    # @param [Integer] auto_archive_duration The auto archive duration in seconds.
+    # @param [Integer] archive_in Alias of `auto_archive_duration`.
+    # @param [Boolean] locked Whether the thread is locked or not.
+    # @param [String] reason The reason of editing the thread.
+    #
+    # @return [Async::Task<self>] The edited thread.
+    #
+    # @see #archive
+    # @see #lock
+    # @see #unarchive
+    # @see #unlock
+    def edit: (
+                ?name: String,
+                ?archived: bool,
+                ?auto_archive_duration: Integer,
+                ?archive_in: Integer,
+                ?locked: bool,
+                ?reason: String?
+              ) -> Async::Task[self]
+
+    #
+    # Helper method to archive the thread.
+    #
+    # @param [String] reason The reason of archiving the thread.
+    #
+    # @return [self] The archived thread.
+    def archive: (?reason: String?) -> self
+
+    #
+    # Helper method to lock the thread.
+    #
+    # @param [String] reason The reason of locking the thread.
+    #
+    # @return [self] The locked thread.
+    def lock: (?reason: String?) -> self
+
+    #
+    # Helper method to unarchive the thread.
+    #
+    # @param [String] reason The reason of unarchiving the thread.
+    #
+    # @return [self] The unarchived thread.
+    def unarchive: (?reason: String?) -> self
+
+    #
+    # Helper method to unlock the thread.
+    #
+    # @param [String] reason The reason of unlocking the thread.
+    #
+    # @return [self] The unlocked thread.
+    #
+    # @note This method won't unarchive the thread. Use {#unarchive} instead.
+    def unlock: (?reason: String?) -> self
+
+    def parent: () -> untyped
+
+    def me: () -> untyped
+
+    def joined?: () -> bool
+
+    def guild: () -> untyped
+
+    def owner: () -> untyped
+
+    def inspect: () -> untyped
+
+    #
+    # Add a member to the thread.
+    #
+    # @param [Discorb::Member, :me] member The member to add. If `:me` is given, the bot will be added.
+    #
+    # @return [Async::Task<void>] The task.
+    def add_member: (?(Discorb::Member | Symbol) member) -> Async::Task[void]
+
+    #
+    # Remove a member from the thread.
+    #
+    # @param [Discorb::Member, :me] member The member to remove. If `:me` is given, the bot will be removed.
+    #
+    # @return [Async::Task<void>] The task.
+    def remove_member: (?(Discorb::Member | Symbol) member) -> Async::Task[void]
+
+    #
+    # Fetch members in the thread.
+    #
+    # @return [Array<Discorb::ThreadChannel::Member>] The members in the thread.
+    def fetch_members: () -> ::Array[Discorb::ThreadChannel::Member]
+
+    # @return [Discorb::Snowflake] The ID of the channel.
+    # @note This ID is same as the starter message's ID
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the thread.
+    attr_reader name: String
+
+    # @return [Integer] The number of messages in the thread.
+    # @note This will stop counting at 50.
+    attr_reader message_count: Integer
+
+    # @return [Integer] The number of recipients in the thread.
+    # @note This will stop counting at 50.
+    attr_reader member_count: Integer
+
+    # @return [Integer] The rate limit per user (slowmode) in the thread.
+    attr_reader rate_limit_per_user: Integer
+
+    # @return [Array<Discorb::ThreadChannel::Member>] The members of the thread.
+    attr_reader members: ::Array[Discorb::ThreadChannel::Member]
+
+    # @return [Time] The time the thread was archived.
+    # @return [nil] If the thread is not archived.
+    attr_reader archived_timestamp: Time?
+
+    # @return [Integer] Auto archive duration in seconds.
+    attr_reader auto_archive_duration: Integer
+
+    # @return [Boolean] Whether the thread is archived or not.
+    attr_reader archived: bool
+
+    #
+    # Represents a thread in news channel(aka announcement channel).
+    class News < Discorb::ThreadChannel
+    end
+
+    #
+    # Represents a public thread in text channel.
+    class Public < Discorb::ThreadChannel
+    end
+
+    #
+    # Represents a private thread in text channel.
+    class Private < Discorb::ThreadChannel
+    end
+
+    #
+    # Represents a member in a thread.
+    class Member < Discorb::DiscordModel
+      def initialize: (Discorb::Client cilent, Discorb::json data) -> void
+
+      def thread: () -> Discorb::ThreadChannel
+
+      def member: () -> Discorb::Member
+
+      def id: () -> Discorb::Snowflake
+
+      def user: () -> Discorb::User
+
+      def inspect: () -> String
+
+      # Returns the value of attribute joined_at.
+      attr_reader joined_at: Time
+    end
+  end
+end
