@@ -234,8 +234,8 @@ end
 
 desc "Generate rbs file"
 namespace :rbs do
-  desc "Generate Client#on and Client#once signature"
-  task :client_on do
+  desc "Generate event signature"
+  task :event do
     client_rbs = File.read("sig/discorb/client.rbs")
     event_document = File.read("./docs/events.md")
     voice_event_document = File.read("./docs/voice_events.md")
@@ -259,6 +259,7 @@ namespace :rbs do
       }
     end
     event_sig = +""
+    event_lock_sig = +""
     events.each do |event|
       args = []
       event[:parameters].each do |parameter|
@@ -272,22 +273,35 @@ namespace :rbs do
         }
       end
       sig = args.map { |a| "#{a[:type]} #{a[:name]}" }.join(", ")
+      tuple_sig = args.map { |a| a[:type] }.join(", ")
+      tuple_sig = "[" + tuple_sig + "]" if args.length > 1
+      tuple_sig = "void" if args.length == 0
       event_sig << <<~RBS
         | (:#{event[:name]} event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (#{sig}) -> void } -> Discorb::EventHandler
       RBS
+      event_lock_sig << <<~RBS
+        | (:#{event[:name]} event, ?Integer? timeout) { (#{sig}) -> boolish } -> Async::Task[#{tuple_sig}]
+      RBS
     end
     event_sig.sub!("| ", "  ").rstrip!
+    event_lock_sig.sub!("| ", "  ").rstrip!
     res = client_rbs.gsub!(/\# marker: on\n(?:[\s\S]*?\n)?( +)\# endmarker: on\n/) do
       indent = Regexp.last_match(1)
       "# marker: on\n#{event_sig.gsub(/^/, "#{indent}      ")}\n#{indent}# endmarker: on\n"
     end
-    raise "Failed to generate client.rbs" unless res
+    raise "Failed to generate Client#on" unless res
 
     res = client_rbs.gsub!(/\# marker: once\n(?:[\s\S]*?\n)?( +)\# endmarker: once\n/) do
       indent = Regexp.last_match(1)
       "# marker: once\n#{event_sig.gsub(/^/, "#{indent}        ")}\n#{indent}# endmarker: once\n"
     end
-    raise "Failed to generate client.rbs" unless res
+    raise "Failed to generate Client#once" unless res
+
+    res = client_rbs.gsub!(/\# marker: event_lock\n(?:[\s\S]*?\n)?( +)\# endmarker: event_lock\n/) do
+      indent = Regexp.last_match(1)
+      "# marker: event_lock\n#{event_lock_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: event_lock\n"
+    end
+    raise "Failed to generate Client#event_lock" unless res
 
     File.write("sig/discorb/client.rbs", client_rbs, mode: "wb")
   end

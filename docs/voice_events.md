@@ -281,5 +281,5 @@ Fired when a user changes voice state.
 
 | Parameter | Type                  | Description                        |
 | --------- | --------------------- | ---------------------------------- |
-| before    | {Discorb::VoiceState} | The voice state before the update. |
-| after     | {Discorb::VoiceState} | The voice state after the update.  |
+| `before`  | {Discorb::VoiceState} | The voice state before the update. |
+| `after`   | {Discorb::VoiceState} | The voice state after the update.  |
