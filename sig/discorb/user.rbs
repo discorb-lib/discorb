@@ -188,6 +188,8 @@ module Discorb
     # @return [Boolean] Whether the user is a bot.
     attr_reader bot: bool
 
+    alias bot? bot
+
     # @return [Time] The time the user was created.
     attr_reader created_at: Time
 
