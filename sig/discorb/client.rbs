@@ -39,7 +39,7 @@ module Discorb
     #
     # @return [Discorb::EventHandler] The event.
     def on: # marker: on
-            (:event_receive event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Hash data) -> void } -> Discorb::EventHandler
+            (:event_receive event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Discorb::json data) -> void } -> Discorb::EventHandler
           | (:ready event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
           | (:standby event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
           | (:resumed event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
@@ -149,7 +149,7 @@ module Discorb
     #
     # @return [Discorb::EventHandler] The event.
     def once: # marker: once
-              (:event_receive event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Hash data) -> void } -> Discorb::EventHandler
+              (:event_receive event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Discorb::json data) -> void } -> Discorb::EventHandler
             | (:ready event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
             | (:standby event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
             | (:resumed event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
@@ -351,7 +351,7 @@ module Discorb
     #
     # @raise [Discorb::TimeoutError] If the event didn't occur in time.
     def event_lock: # marker: event_lock
-             (:event_receive event, ?Integer? timeout) { (Symbol event_name, Hash data) -> boolish } -> Async::Task[[Symbol, Hash]]
+             (:event_receive event, ?Integer? timeout) { (Symbol event_name, Discorb::json data) -> boolish } -> Async::Task[[Symbol, Discorb::json]]
            | (:ready event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
            | (:standby event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
            | (:resumed event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]

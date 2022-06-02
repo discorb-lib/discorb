@@ -269,13 +269,21 @@ namespace :rbs do
             parameter[:type][1..]
           else
             parameter[:type]
-          end.tr("{}`", "").tr("<>", "[]").gsub(", ", " | "),
+          end.tr("{}`", "").tr("<>", "[]").gsub(", ", " | ").then do |t|
+            if event[:name] == "event_receive"
+              case t
+              when "Hash"
+                next "Discorb::json"
+              end
+            end
+            t
+          end,
         }
       end
       sig = args.map { |a| "#{a[:type]} #{a[:name]}" }.join(", ")
       tuple_sig = args.map { |a| a[:type] }.join(", ")
       tuple_sig = "[" + tuple_sig + "]" if args.length > 1
-      tuple_sig = "void" if args.length == 0
+      tuple_sig = "void" if args.length.zero?
       event_sig << <<~RBS
         | (:#{event[:name]} event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (#{sig}) -> void } -> Discorb::EventHandler
       RBS
