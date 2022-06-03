@@ -1,0 +1,82 @@
+module Discorb
+  #
+  # Represents invite of discord.
+  class Invite < Discorb::DiscordModel
+    TARGET_TYPES: untyped
+
+    #
+    # Initialize a new invite.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of invite.
+    # @param [Boolean] gateway Whether the data is from gateway.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data, bool gateway) -> void
+
+    # Delete the invite.
+    # @async
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: untyped) -> Async::Task[void]
+
+    # @return [String] The code of invite.
+    attr_reader code: String
+
+    # @return [:voice, :stream, :guild] The type of invite.
+    attr_reader target_type: Symbol
+
+    # @return [User] The user of invite.
+    attr_reader target_user: User
+
+    # @return [Integer] The approximate number of online users of invite.
+    attr_reader approximate_presence_count: Integer
+
+    # @return [Integer] The approximate number of members of invite.
+    attr_reader approximate_member_count: Integer
+
+    # @return [Time] The time when invite expires.
+    # @return [nil] The invite never expires.
+    # @macro [new] nometa
+    #   @return [nil] The invite doesn't have metadata.
+    attr_reader expires_at: Time?
+
+    # @return [Integer] The number of uses of invite.
+    # @macro nometa
+    attr_reader uses: Integer?
+
+    # @return [Integer] The maximum number of uses of invite.
+    # @macro nometa
+    attr_reader max_uses: Integer?
+
+    # @return [Integer] Duration of invite in seconds.
+    # @macro nometa
+    attr_reader max_age: Integer?
+
+    # @return [Time] The time when invite was created.
+    # @macro nometa
+    attr_reader created_at: Time?
+
+    # Channel of the invite.
+    #
+    # @return [Discorb::Channel] Channel of invite.
+    # @macro client_cache
+    attr_reader channel: Discorb::Channel?
+
+    # Guild of the invite.
+    #
+    # @return [Discorb::Guild] Guild of invite.
+    # @macro client_cache
+    attr_reader guild: Discorb::Guild?
+
+    # Number of remaining uses of invite.
+    # @return [Integer] Number of remaining uses of invite.
+    attr_reader remain_uses: Integer
+
+    # Full url of invite.
+    # @return [String] Full url of invite.
+    attr_reader url: String
+
+    # Whether the invite is temporary.
+    # @return [Boolean]
+    attr_reader temporary?: bool
+  end
+end

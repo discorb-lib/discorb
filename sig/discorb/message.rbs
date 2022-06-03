@@ -119,12 +119,12 @@ module Discorb
     # Fetch reacted users of reaction.
     # @async
     #
-    # @param [Discorb::Emoji] emoji The emoji to fetch.
+    # @param [Discorb::Emoji, Discorb::PartialEmoji] emoji The emoji to fetch.
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #
     # @return [Async::Task<Array<Discorb::User>>] The users.
-    def fetch_reacted_users: (Discorb::Emoji emoji, ?limit: Integer?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
+    def fetch_reacted_users: ((Discorb::Emoji | Discorb::PartialEmoji) emoji, ?limit: Integer?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
 
     #
     # Pin the message.
@@ -164,13 +164,18 @@ module Discorb
 
     # @return [String] The content of the message.
     attr_reader content: String
+    alias to_s content
 
     # @return [Time] The time the message was created.
     attr_reader created_at: Time
+    alias timestamp created_at
+    alias sent_at created_at
 
     # @return [Time] The time the message was edited.
     # @return [nil] If the message was not edited.
     attr_reader updated_at: Time?
+    alias edited_at updated_at
+    alias edited_timestamp updated_at
 
     # @return [Array<Discorb::Attachment>] The attachments of the message.
     attr_reader attachments: ::Array[Discorb::Attachment]

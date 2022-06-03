@@ -1,0 +1,148 @@
+module Discorb
+  #
+  # Represents an event in guild.
+  class ScheduledEvent < Discorb::DiscordModel
+    PRIVACY_LEVEL: untyped
+    STATUS: untyped
+    ENTITY_TYPE: untyped
+
+    # @!visibility private
+    def initialize: (untyped client, untyped data) -> void
+
+    #
+    # Create a scheduled event for the guild.
+    # @async
+    #
+    # @param [:stage_instance, :voice, :external] type The type of event to create.
+    # @param [String] name The name of the event.
+    # @param [String] description The description of the event.
+    # @param [Time] start_time The start time of the event.
+    # @param [Time, nil] end_time The end time of the event. Defaults to `nil`.
+    # @param [Discorb::Channel, Discorb::Snowflake, nil] channel The channel to run the event in.
+    # @param [String, nil] location The location of the event. Defaults to `nil`.
+    # @param [:guild_only] privacy_level The privacy level of the event. This must be `:guild_only`.
+    # @param [:active, :completed, :canceled] status The status of the event.
+    #
+    # @return [Async::Task<Discorb::ScheduledEvent>] The event that was created.
+    #
+    # @see Event#start
+    # @see Event#cancel
+    # @see Event#complete
+    def edit: (
+                ?type: Symbol,
+                ?name: String,
+                ?description: String,
+                ?start_time: Time,
+                ?end_time: Time?,
+                ?privacy_level: Symbol,
+                ?location: String?,
+                ?channel: (Discorb::Channel | Discorb::Snowflake)?,
+                ?status: Symbol
+              ) -> Async::Task[Discorb::ScheduledEvent]
+
+    #
+    # Starts the event. Shortcut for `edit(status: :active)`.
+    def start: () -> untyped
+
+    #
+    # Completes the event. Shortcut for `edit(status: :completed)`.
+    def complete: () -> untyped
+
+    #
+    # Cancels the event. Shortcut for `edit(status: :canceled)`.
+    def cancel: () -> untyped
+
+    #
+    # Deletes the event.
+    # @async
+    #
+    # @return [Async::Task<void>] The task.
+    def delete!: () -> Async::Task[void]
+
+    #
+    # Fetches the event users.
+    # @async
+    #
+    # @note You can fetch all of members by not specifying a parameter.
+    #
+    # @param [Integer] limit The maximum number of users to fetch. Defaults to `100`.
+    # @param [#to_s] after The ID of the user to start fetching from. Defaults to `nil`.
+    # @param [#to_s] before The ID of the user to stop fetching at. Defaults to `nil`.
+    # @param [Boolean] with_member Whether to include the member object of the event. Defaults to `false`.
+    #   This should be used for manual fetching of members.
+    #
+    # @return [Async::Task<Array<Discorb::Member>>] The event users.
+    def fetch_users: (
+                       ?Integer? limit,
+                       ?before: untyped,
+                       ?after: untyped,
+                       ?with_member: bool
+                     ) -> Async::Task[::Array[Discorb::Member]]
+
+    # @return [Discorb::Snowflake] The ID of the event.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the event.
+    attr_reader name: String
+
+    # @return [String] The description of the event.
+    attr_reader description: String
+
+    # @return [Time] The time the event starts.
+    attr_reader scheduled_start_time: Time
+
+    # @return [Time] The time the event ends.
+    attr_reader scheduled_end_time: Time
+
+    # @return [:guild_only] The privacy level of the event.
+    attr_reader privacy_level: Symbol
+
+    # @return [:scheduled, :active, :completed, :canceled] The status of the event.
+    attr_reader status: Symbol
+
+    # @return [:stage_instance, :voice, :external] The type of the event.
+    attr_reader entity_type: Symbol
+
+    # @return [Discorb::Snowflake] The ID of the entity the event is for.
+    attr_reader entity_id: Discorb::Snowflake
+
+    # @return [Discorb::ScheduledEvent::Metadata] The metadata of the event.
+    attr_reader metadata: Discorb::ScheduledEvent::Metadata
+
+    # @return [Integer] The user count of the event.
+    attr_reader user_count: Integer
+
+    # @!attribute [r] guild
+    #   @return [Discorb::Guild, nil] The guild of the event.
+    # @!attribute [r] channel
+    #   @return [Discorb::Channel, nil] The channel of the event.
+    #     Only present if the event will do in stage instance or voice channel.
+    # @!attribute [r] creator
+    #   @return [Discorb::User] The user who created the event.#
+    # @!attribute [r] time
+    #   @return [Range<Time>] The time range of the event.
+    attr_reader guild: untyped
+
+    # @return [Discorb::Channel, nil] The channel of the event.
+    #   Only present if the event will do in stage instance or voice channel.
+    attr_reader channel: Discorb::Channel?
+
+    # @return [Discorb::User] The user who created the event.#
+    attr_reader creator: Discorb::User
+
+    # @return [Range<Time>] The time range of the event.
+    attr_reader time: ::Range[Time]
+
+    #
+    # Represents the metadata of the event.
+    class Metadata
+      # @!visibility private
+      def initialize: (untyped data) -> void
+
+      def inspect: () -> untyped
+
+      # @return [String, nil] The location of the event. Only present if the event is a external event.
+      attr_reader location: String?
+    end
+  end
+end

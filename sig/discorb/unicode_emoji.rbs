@@ -1,0 +1,49 @@
+module Discorb
+  #
+  # Represents a unicode emoji (default emoji) in discord.
+  class UnicodeEmoji < Discorb::Emoji
+    #
+    # Initialize a new unicode emoji.
+    #
+    # @param [String] name The name of the emoji.
+    # @param [Integer] tone The skin tone of the emoji.
+    def initialize: (String name, ?tone: Integer) -> void
+
+    # @return [String] The unicode string of the emoji.
+    def to_s: () -> String
+
+    #
+    # Format the emoji for URI.
+    #
+    # @return [String] the formatted emoji.
+    def to_uri: () -> String
+
+    def inspect: () -> untyped
+
+    #
+    # Converts the object to a hash.
+    # @private
+    #
+    # @return [Hash] The hash represents the object.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    # @return [String] The name of the emoji. (e.g. :grinning:)
+    attr_reader name: String
+
+    # @return [String] The unicode value of the emoji. (e.g. U+1F600)
+    attr_reader value: String
+
+    # @return [Integer] The skin tone of the emoji.
+    attr_reader skin_tone: Integer
+
+    def self.[]: (String name, ?tone: Integer) -> UnicodeEmoji
+  end
+
+  #
+  # A table of emoji names and their unicode values.
+  module EmojiTable
+    DISCORD_TO_UNICODE: Hash[String, String]
+    UNICODE_TO_DISCORD: Hash[String, Array[String]]
+    SKIN_TONES: Array[String]
+  end
+end

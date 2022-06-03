@@ -1,0 +1,25 @@
+module Discorb
+  #
+  # @abstract
+  # Represents a Discord component.
+  class Component
+    def inspect: () -> String
+
+    #
+    # Create a new component from hash data.
+    #
+    # @see https://discord.com/developers/docs/interactions/message-components Official Discord API documentation
+    # @param [Hash] data Hash data.
+    #
+    # @return [Component] A new component.
+    def self.from_hash: (Discorb::json data) -> Component
+
+    #
+    # Convert components to a hash.
+    #
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components Components.
+    #
+    # @return [Array<Hash>] Hash data.
+    def self.to_payload: ((::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]]) components) -> Discorb::json
+  end
+end

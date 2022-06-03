@@ -1,0 +1,55 @@
+module Discorb
+  #
+  # Represents a stage instance of a voice state.
+  class StageInstance < Discorb::DiscordModel
+    #
+    # Initialize a new instance of the StageInstance class.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the stage instance.
+    # @param [Boolean] no_cache Whether to disable caching.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data, ?no_cache: bool) -> void
+
+    def guild: () -> untyped
+
+    def channel: () -> untyped
+
+    def discoverable?: () -> bool
+
+    def public?: () -> bool
+
+    def guild_only?: () -> bool
+
+    def inspect: () -> untyped
+
+    #
+    # Edits the stage instance.
+    # @async
+    # @macro edit
+    #
+    # @param [String] topic The new topic of the stage instance.
+    # @param [:public, :guild_only] privacy_level The new privacy level of the stage instance.
+    # @param [String] reason The reason for editing the stage instance.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit: (?topic: String, ?privacy_level: Symbol, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Deletes the stage instance.
+    #
+    # @param [String] reason The reason for deleting the stage instance.
+    #
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: String?) -> Async::Task[void]
+
+    # @return [Discorb::Snowflake] The ID of the guild this voice state is for.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The topic of the stage instance.
+    attr_reader topic: String
+
+    # @return [:public, :guild_only] The privacy level of the stage instance.
+    attr_reader privacy_level: Symbol
+  end
+end

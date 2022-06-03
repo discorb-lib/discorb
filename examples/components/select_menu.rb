@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "discorb"
 
 client = Discorb::Client.new
@@ -41,7 +42,9 @@ client.on :message do |message|
   next if message.author.bot?
   next unless message.content == "!ruby"
 
-  options = SECTIONS.map.with_index { |section, i| Discorb::SelectMenu::Option.new("Page #{i + 1}", "sections:#{i}", description: section[0]) }
+  options = SECTIONS.map.with_index do |section, i|
+    Discorb::SelectMenu::Option.new("Page #{i + 1}", "sections:#{i}", description: section[0])
+  end
   message.channel.post(
     "Select a section", components: [Discorb::SelectMenu.new("sections", options)],
   )

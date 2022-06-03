@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "discorb"
 
 localizations = {
@@ -24,26 +25,28 @@ client.once :standby do
   puts "Logged in as #{client.user}"
 end
 
-client.user_command({
-  default: "info",
-  ja: "詳細",
-}) do |interaction|
+client.user_command(
+  {
+    default: "info",
+    ja: "詳細",
+  }
+) do |interaction, user|
   field_name = localizations[:info][:fields][interaction.locale] || localizations[:info][:fields][:en]
   interaction.post(
     embed: Discorb::Embed.new(
-      format((localizations[:info][:title][interaction.locale] || localizations[:info][:title][:en]), interaction.target.to_s_user),
+      format((localizations[:info][:title][interaction.locale] || localizations[:info][:title][:en]),
+             user.to_s),
       fields: [
-        Discorb::Embed::Field.new(field_name[0], interaction.target.to_s_user),
-        Discorb::Embed::Field.new(field_name[1], interaction.target.id),
+        Discorb::Embed::Field.new(field_name[0], user.to_s),
+        Discorb::Embed::Field.new(field_name[1], user.id),
         Discorb::Embed::Field.new(
           field_name[2],
-          (localizations[:info][:yn][interaction.locale] || localizations[:info][:yn][:en])[interaction.target.bot? ? 0 : 1]
+          (localizations[:info][:yn][locale] || localizations[:info][:yn][:en])[user.bot? ? 0 : 1]
         ),
-        Discorb::Embed::Field.new(field_name[3], interaction.target.joined_at.to_df("F")),
-        Discorb::Embed::Field.new(field_name[4], interaction.target.created_at.to_df("F")),
+        Discorb::Embed::Field.new(field_name[3], user.joined_at.to_df("F")),
+        Discorb::Embed::Field.new(field_name[4], user.created_at.to_df("F")),
       ],
-      thumbnail: interaction.target.avatar&.url,
-
+      thumbnail: user.avatar&.url,
     ), ephemeral: true,
   )
 end

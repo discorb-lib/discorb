@@ -1,0 +1,82 @@
+module Discorb
+  # Represents a custom emoji in discord.
+  class CustomEmoji < Discorb::Emoji
+    #
+    # Initialize a new custom emoji.
+    # @private
+    #
+    # @param [Discorb::Client] client The client that owns this emoji.
+    # @param [Discorb::Guild] guild The guild that owns this emoji.
+    # @param [Hash] data The data of the emoji.
+    def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+
+    #
+    # Format the emoji for sending.
+    #
+    # @return [String] the formatted emoji.
+    def to_s: () -> String
+
+    #
+    # Format the emoji for URI.
+    #
+    # @return [String] the formatted emoji.
+    def to_uri: () -> String
+
+    def inspect: () -> untyped
+
+    #
+    # Edit the emoji.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The new name of the emoji.
+    # @param [Array<Discorb::Role>] roles The new roles that can use this emoji.
+    # @param [String] reason The reason for editing the emoji.
+    #
+    # @return [Async::Task<self>] The edited emoji.
+    def edit: (?name: String, ?roles: ::Array[Discorb::Role], ?reason: String?) -> Async::Task[self]
+
+    #
+    # Delete the emoji.
+    # @async
+    #
+    # @param [String] reason The reason for deleting the emoji.
+    #
+    # @return [Async::Task<self>] The deleted emoji.
+    def delete!: (?reason: String?) -> Async::Task[self]
+
+    #
+    # Converts the object to a hash.
+    # @private
+    #
+    # @return [Hash] The hash represents the object.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    # @return [Discorb::Snowflake] The ID of the emoji.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the emoji.
+    attr_reader name: String
+
+    # @return [Array<Discorb::Role>] The roles that can use this emoji.
+    attr_reader roles: ::Array[Discorb::Role]
+
+    # @return [Discorb::User] The user that created this emoji.
+    attr_reader user: Discorb::User
+
+    # @return [Discorb::Guild] The guild that owns this emoji.
+    attr_reader guild: Discorb::Guild
+
+    # @return [Boolean] whether the emoji is managed by integration (ex: Twitch).
+    attr_reader managed: bool
+
+    # @return [Boolean] whether the emoji requires colons.
+    attr_reader require_colons: bool
+
+    # @return [Boolean] whether the emoji is available.
+    attr_reader available: bool
+
+    # @return [Boolean] whether or not this emoji is restricted to certain roles.
+    attr_reader roles?: bool
+  end
+end

@@ -1,0 +1,174 @@
+module Discorb
+  #
+  # Represents a guild template.
+  class GuildTemplate < Discorb::DiscordModel
+    #
+    # Initialize a new template.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data from Discord.
+    def initialize: (Discorb::Client client, Discorb::json data) -> void
+
+    #
+    # Edit the template.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The new name of the template.
+    # @param [String] description The new description of the template.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit: (?String? name, ?String description) -> Async::Task[void]
+
+    #
+    # Update the template.
+    # @async
+    #
+    # @return [Async::Task<void>] The task.
+    def update: () -> Async::Task[void]
+
+    #
+    # Delete the template.
+    # @async
+    #
+    # @return [Async::Task<void>] The task.
+    def delete!: () -> Async::Task[void]
+
+    # @return [String] The code of the template.
+    attr_reader code: String
+
+    # @return [String] The name of the template.
+    attr_reader name: String
+
+    # @return [String] The description of the template.
+    attr_reader description: String
+
+    # @return [Integer] The number of times this template has been used.
+    attr_reader usage_count: Integer
+
+    # @return [Discorb::User] The user who created this template.
+    attr_reader creator: Discorb::User
+
+    # @return [Time] The time this template was created.
+    attr_reader created_at: Time
+
+    # @return [Time] The time this template was last updated.
+    attr_reader updated_at: Time
+
+    # @return [Discorb::Snowflake] The ID of guild where the template was created.
+    attr_reader source_guild_id: Discorb::Snowflake
+
+    # @return [Discorb::GuildTemplate::TemplateGuild] The guild where the template was created.
+    attr_reader serialized_source_guild: Discorb::GuildTemplate::TemplateGuild
+
+    # @return [Boolean] Whether this template is dirty.
+    attr_reader is_dirty: bool
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild this template is based on.
+    # @return [nil] Client wasn't able to find the guild this template is based on.
+    attr_reader source_guild: Discorb::Guild?
+
+    #
+    # Represents a guild in guild template.
+    class TemplateGuild < Discorb::DiscordModel
+      #
+      # Initialize a new guild in guild template.
+      # @private
+      #
+      # @param [Hash] data The data from Discord.
+      def initialize: (::Hash[untyped, untyped] data) -> void
+
+      # @return [String] The name of the guild.
+      attr_reader name: String
+
+      # @return [Integer] The AFK timeout of the guild.
+      attr_reader afk_timeout: Integer
+
+      # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
+      attr_reader roles: Discorb::Dictionary[Discorb::Snowflake, Discorb::Role]
+
+      # @return [Discorb::SystemChannelFlag] The flag for the system channel.
+      attr_reader system_channel_flags: Discorb::SystemChannelFlag
+
+      # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}]
+      #   A dictionary of channels in the guild.
+      attr_reader channels: Discorb::Dictionary[Discorb::Snowflake, Discorb::GuildChannel]
+
+      # @return [String] The description of the guild.
+      attr_reader description: String
+
+      # @return [Symbol] The preffered language of the guild.
+      # @note This modifies the language code, `-` will be replaced with `_`.
+      attr_reader preferred_locale: Symbol
+
+      # @return [:none, :low, :medium, :high, :very_high] The verification level of the guild.
+      attr_reader verification_level: Symbol
+
+      # @return [:all_messages, :only_mentions] The default message notification level of the guild.
+      attr_reader default_message_notifications: Symbol
+
+      # @return [:disabled_in_text, :members_without_roles, :all_members] The explict content filter level of the guild.
+      attr_reader explicit_content_filter: Symbol
+
+      # @return [Boolean] Whether the guild enabled the widget.
+      attr_reader widget_enabled: bool
+
+      #
+      # Represents a role in guild template.
+      class Role < Discorb::DiscordModel
+        #
+        # Initialize a new role in guild template.
+        # @private
+        #
+        # @param [Hash] data The data from Discord.
+        def initialize: (::Hash[untyped, untyped] data) -> void
+
+        # @return [String] The name of the role.
+        attr_reader name: String
+
+        # @return [Discorb::Permission] The permissions of the role.
+        attr_reader permissions: Discorb::Permission
+
+        # @return [Discorb::Color] The color of the role.
+        attr_reader color: Discorb::Color
+      end
+
+      #
+      # Represents a channel in guild template.
+      class Channel < Discorb::DiscordModel
+        #
+        # Initialize a new channel in guild template.
+        # @private
+        #
+        # @param [Hash] data The data from Discord.
+        def initialize: (::Hash[untyped, untyped] data) -> void
+
+        # @return [String] The name of the channel.
+        attr_reader name: String
+
+        # @return [Integer] The position of the channel.
+        attr_reader position: Integer
+
+        # @return [String] The type of the channel.
+        attr_reader topic: String
+
+        # @return [Integer] The bitrate of the channel.
+        attr_reader bitrate: Integer
+
+        # @return [Integer] The user limit of the channel.
+        attr_reader user_limit: Integer
+
+        # @return [Boolean] Whether the channel is nsfw.
+        attr_reader nsfw: bool
+
+        # @return [Integer] The rate limit of the channel.
+        attr_reader rate_limit_per_user: Integer
+
+        # @return [Class] The class of the channel.
+        attr_reader type: Class
+      end
+    end
+  end
+end

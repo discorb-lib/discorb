@@ -1,0 +1,439 @@
+module Discorb
+  #
+  # A module for Discord Gateway.
+  # This module is internal use only.
+  module Gateway
+    #
+    # Represents an event.
+    # @abstract
+    class GatewayEvent
+      #
+      # Initializes a new instance of the GatewayEvent class.
+      # @private
+      #
+      # @param [Hash] data The data of the event.
+      def initialize: (::Hash[untyped, untyped] data) -> void
+
+      def inspect: () -> untyped
+    end
+
+    #
+    # Represents a reaction event.
+    class ReactionEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initializes a new instance of the ReactionEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # Fetch the message.
+      # If message is cached, it will be returned.
+      # @async
+      #
+      # @param [Boolean] force Whether to force fetching the message.
+      #
+      # @return [Async::Task<Discorb::Message>] The message.
+      def fetch_message: (?force: bool) -> Async::Task[Discorb::Message]
+
+      # @return [Hash] The raw data of the event.
+      attr_reader data: ::Hash[untyped, untyped]
+
+      # @return [Discorb::Snowflake] The ID of the user who reacted.
+      attr_reader user_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader channel_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader message_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader guild_id: Discorb::Snowflake
+
+      # @macro client_cache
+      # @return [Discorb::User] The user who reacted.
+      attr_reader user: Discorb::User?
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader guild: Discorb::Guild?
+
+      # @macro client_cache
+      # @return [Discorb::Message] The message the reaction was sent in.
+      attr_reader message: Discorb::Message?
+
+      # @macro client_cache
+      # @return [Discorb::Member] The member who reacted.
+      attr_reader member: Discorb::Member?
+
+      # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
+      attr_reader emoji: (Discorb::UnicodeEmoji | Discorb::PartialEmoji)
+
+      # @macro client_cache
+      # @return [Discorb::Member, Discorb::User] The user or member who reacted.
+      attr_reader fired_by: (Discorb::Member | Discorb::User)?
+    end
+
+    #
+    # Represents a `INTEGRATION_DELETE` event.
+    class IntegrationDeleteEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the IntegrationDeleteEvent class.
+      # @private
+      #
+      #
+      # @param [Hash] data The data of the event.
+      def initialize: (untyped _client, ::Hash[untyped, untyped] data) -> void
+
+      # @return [Discorb::Snowflake] The ID of the integration.
+      attr_reader id: Discorb::Snowflake
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild of the integration.
+      attr_reader guild: Discorb::Guild?
+
+      # @macro client_cache
+      # @return [Discorb::User] The user associated with the integration.
+      attr_reader user: Discorb::User?
+    end
+
+    #
+    # Represents a `MESSAGE_REACTION_REMOVE_ALL` event.
+    class ReactionRemoveAllEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the ReactionRemoveAllEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # Fetch the message.
+      # If message is cached, it will be returned.
+      # @async
+      #
+      # @param [Boolean] force Whether to force fetching the message.
+      #
+      # @return [Async::Task<Discorb::Message>] The message.
+      def fetch_message: (?force: bool) -> Async::Task[Discorb::Message]
+
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader channel_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader message_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader guild_id: Discorb::Snowflake
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader guild: Discorb::Guild?
+
+      # @macro client_cache
+      # @return [Discorb::Message] The message the reaction was sent in.
+      attr_reader message: Discorb::Message?
+    end
+
+    #
+    # Represents a `MESSAGE_REACTION_REMOVE_EMOJI` event.
+    class ReactionRemoveEmojiEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the ReactionRemoveEmojiEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # Fetch the message.
+      # If message is cached, it will be returned.
+      # @async
+      #
+      # @param [Boolean] force Whether to force fetching the message.
+      #
+      # @return [Async::Task<Discorb::Message>] The message.
+      def fetch_message: (?force: bool) -> Async::Task[Discorb::Message]
+
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader channel_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader message_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader guild_id: Discorb::Snowflake
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader guild: Discorb::Guild?
+
+      # @macro client_cache
+      # @return [Discorb::Message] The message the reaction was sent in.
+      attr_reader message: Discorb::Message?
+
+      # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
+      attr_reader emoji: (Discorb::UnicodeEmoji | Discorb::PartialEmoji)
+    end
+
+    #
+    # Represents a `GUILD_SCHEDULED_EVENT_USER_ADD` and `GUILD_SCHEDULED_EVENT_USER_REMOVE` event.
+    class ScheduledEventUserEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the ScheduledEventUserEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # @return [Discorb::User] The user that triggered the event.
+      attr_reader user: Discorb::User
+
+      # @return [Discorb::Guild] The guild the event was triggered in.
+      attr_reader guild: Discorb::Guild
+
+      # @return [Discorb::ScheduledEvent] The scheduled event.
+      attr_reader scheduled_event: Discorb::ScheduledEvent
+    end
+
+    #
+    # Represents a `MESSAGE_UPDATE` event.
+    class MessageUpdateEvent < Discorb::Gateway::GatewayEvent
+      # @!attribute [r] channel
+      #   @macro client_cache
+      #   @return [Discorb::Channel] The channel the message was sent in.
+      # @!attribute [r] guild
+      #   @macro client_cache
+      #   @return [Discorb::Guild] The guild the message was sent in.
+      def initialize: (
+                        untyped client,
+                        untyped data,
+                        untyped before,
+                        untyped after
+                      ) -> void
+
+      # Fetch the message.
+      # @async
+      #
+      # @return [Async::Task<Discorb::Message>] The message.
+      def fetch_message: () -> Async::Task[Discorb::Message]
+
+      # @return [Discorb::Message] The message before update.
+      attr_reader before: Discorb::Message
+
+      # @return [Discorb::Message] The message after update.
+      attr_reader after: Discorb::Message
+
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the channel the message was sent in.
+      attr_reader channel_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
+      attr_reader guild_id: Discorb::Snowflake
+
+      # @return [String] The new content of the message.
+      attr_reader content: String
+
+      # @return [Time] The time the message was edited.
+      attr_reader timestamp: Time
+
+      # @return [Boolean] Whether the message pings @everyone.
+      attr_reader mention_everyone: bool
+
+      # @macro client_cache
+      # @return [Array<Discorb::Role>] The roles mentioned in the message.
+      attr_reader mention_roles: ::Array[Discorb::Role]?
+
+      # @return [Array<Discorb::Attachment>] The attachments in the message.
+      attr_reader attachments: ::Array[Discorb::Attachment]
+
+      # @return [Array<Discorb::Embed>] The embeds in the message.
+      attr_reader embeds: ::Array[Discorb::Embed]
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader guild: Discorb::Guild?
+    end
+
+    #
+    # Represents a message but it has only ID.
+    class UnknownDeleteBulkMessage < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the UnknownDeleteBulkMessage class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, _ToS id, ::Hash[untyped, untyped] data) -> void
+
+      # @return [Discorb::Snowflake] The ID of the message.
+      attr_reader id: Discorb::Snowflake
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader guild: Discorb::Guild?
+    end
+
+    #
+    # Represents a `INVITE_DELETE` event.
+    class InviteDeleteEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the InviteDeleteEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # @return [String] The invite code.
+      attr_reader code: String
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the message was sent in.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the message was sent in.
+      attr_reader guild: Discorb::Guild?
+    end
+
+    #
+    # Represents a `TYPING_START` event.
+    class TypingStartEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the TypingStartEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # @return [Discorb::Snowflake] The ID of the channel the user is typing in.
+      attr_reader user_id: Discorb::Snowflake
+
+      # @macro client_cache
+      # @return [Discorb::Member] The member that is typing.
+      attr_reader member: Discorb::Member?
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel the user is typing in.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild the user is typing in.
+      attr_reader guild: Discorb::Guild?
+
+      # @macro client_cache
+      # @return [Discorb::User] The user that is typing.
+      attr_reader user: Discorb::User?
+
+      # @macro client_cache
+      # @return [Discorb::Member, Discorb::User] The member or user that started typing.
+      attr_reader fired_by: (Discorb::Member | Discorb::User)?
+    end
+
+    #
+    # Represents a message pin event.
+    class MessagePinEvent < Discorb::Gateway::GatewayEvent
+      # @!attribute [r] pinned?
+      #   @return [Boolean] Whether the message was pinned.
+      # @!attribute [r] unpinned?
+      #   @return [Boolean] Whether the message was unpinned.
+      def initialize: (untyped client, untyped data, untyped message) -> void
+
+      # @return [Discorb::Message] The message that was pinned.
+      attr_reader message: Discorb::Message
+
+      # @return [:pinned, :unpinned] The type of event.
+      attr_reader type: Symbol
+
+      # @return [Boolean] Whether the message was pinned.
+      attr_reader pinned?: bool
+
+      # @return [Boolean] Whether the message was unpinned.
+      attr_reader unpinned?: bool
+    end
+
+    #
+    # Represents a `WEBHOOKS_UPDATE` event.
+    class WebhooksUpdateEvent < Discorb::Gateway::GatewayEvent
+      #
+      # Initialize a new instance of the WebhooksUpdateEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel where the webhook was updated.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild where the webhook was updated.
+      attr_reader guild: Discorb::Guild?
+    end
+
+    #
+    # A module to handle gateway events.
+    module Handler
+      def connect_gateway: (untyped reconnect) -> untyped
+
+      def send_gateway: (untyped opcode, **untyped value) -> untyped
+
+      def handle_gateway: (untyped payload, untyped reconnect) -> untyped
+
+      def handle_heartbeat: () -> untyped
+
+      def handle_event: (untyped event_name, untyped data) -> untyped
+
+      def ready: () -> untyped
+    end
+
+    #
+    # A class for connecting websocket with raw bytes data.
+    # @private
+    class RawConnection
+      def initialize: () -> void
+
+      def inspect: () -> untyped
+
+      def closed?: () -> bool
+
+      def close: () -> untyped
+
+      def force_close: () -> untyped
+
+      def io: () -> untyped
+
+      def parse: (untyped buffer) -> untyped
+
+      def dump: (untyped object) -> untyped
+    end
+  end
+end

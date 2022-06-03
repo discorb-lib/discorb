@@ -1,0 +1,8 @@
+module Discorb
+  # @private
+  module Utils
+    def try: (untyped object, untyped message) -> untyped
+
+    def self.try: (untyped object, untyped message) -> untyped
+  end
+end

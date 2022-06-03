@@ -267,7 +267,7 @@ module Discorb
     # @param [Object] args The arguments to pass to the event.
     #
     # @return [Async::Task<void>] The task.
-    def dispatch: (Symbol event_name, *Object args) -> Async::Task[void]
+    def dispatch: (Symbol event_name, *untyped args) -> Async::Task[void]
 
     #
     # Fetch user from ID.
@@ -502,124 +502,6 @@ module Discorb
     public
 
     #
-    # Add new top-level command.
-    #
-    # @param [String, Hash{Symbol => String}] command_name Command name.
-    #  If hash is passed, it must be a pair of Language code and Command name, and `:default` key is required.
-    #  You can use `_` instead of `-` in language code.
-    # @param [String, Hash{Symbol => String}] description Command description.
-    #   If hash is passed, it must be a pair of Language code and Command description, and `:default` key is required.
-    #  You can use `_` instead of `-` in language code.
-    # @param [Hash{String => Hash{:description => String, :optional => Boolean, :type => Object}}] options
-    #  Command options.
-    #   The key is the option name, the value is a hash with the following keys:
-    #
-    #   | Key | Type | Description |
-    #   | --- | --- | --- |
-    #   | `:name_localizations` | Hash{Symbol => String} | Localizations of option name. |
-    #   | `:description` | `String` \| `Hash{Symbol => String}` |
-    #     Description of the option. If hash is passed, it must be a pair of Language code and description,
-    #     and `:default` key is required. You can use `_` instead of `-` in language code. |
-    #   | `:required` | Boolean(true | false) |
-    #     Whether the argument is required. `optional` will be used if not specified. |
-    #   | `:optional` | Boolean(true | false) |
-    #     Whether the argument is optional. `required` will be used if not specified. |
-    #   | `:type` | `Object` | Type of the option. |
-    #   | `:choices` | `Hash{String => String, Integer, Float}` | Type of the option. |
-    #   | `:choices_localizations` | `Hash{String => Hash{Symbol => String}}` |
-    #      Localization of the choice. Key must be the name of a choice. |
-    #   | `:default` | `Object` | Default value of the option. |
-    #   | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
-    #   | `:autocomplete` | `Proc` | Autocomplete function. |
-    #   | `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |
-    #
-    # @param [Array<#to_s>, false, nil] guild_ids
-    #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
-    # @param [Boolean] dm_permission Whether the command is available in DM.
-    # @param [Discorb::Permission] default_permission The default permission of the command.
-    # @param [Proc] block Command block.
-    #
-    # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] Command object.
-    #
-    # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
-    # @see file:docs/cli/setup.md CLI: setup
-    def slash: (
-                 (String | ::Hash[Symbol, String]) command_name,
-                 (String | ::Hash[Symbol, String]) description,
-                 ?::Hash[String, String | Integer | Float] options,
-                 ?guild_ids: (::Array[_ToS] | false)?,
-                 ?dm_permission: bool,
-                 ?default_permission: Discorb::Permission?
-               ) { (Discorb::CommandInteraction::ChatInputCommand, *untyped) -> void} -> Discorb::ApplicationCommand::Command::ChatInputCommand
-
-    #
-    # Add new command with group.
-    #
-    # @param [String, Hash{Symbol => String}] command_name Command name.
-    # @param [String, Hash{Symbol => String}] description Command description.
-    # @param [Array<#to_s>, false, nil] guild_ids
-    #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
-    # @param [Boolean] dm_permission Whether the command is available in DM.
-    # @param [Discorb::Permission] default_permission The default permission of the command.
-    #
-    # @yield Block to yield with the command.
-    # @yieldparam [Discorb::ApplicationCommand::Command::GroupCommand] group Group command.
-    #
-    # @return [Discorb::ApplicationCommand::Command::GroupCommand] Command object.
-    #
-    # @see file:docs/application_command.md Application Commands
-    # @see file:docs/cli/setup.md CLI: setup
-    def slash_group: (
-                       (String | ::Hash[Symbol, String]) command_name,
-                       (String | ::Hash[Symbol, String]) description,
-                       ?guild_ids: (::Array[_ToS] | bool)?,
-                       ?dm_permission: bool,
-                       ?default_permission: Discorb::Permission?
-                     ) ?{ (Discorb::ApplicationCommand::Command::GroupCommand group) -> void } -> Discorb::ApplicationCommand::Command::GroupCommand
-
-    #
-    # Add message context menu command.
-    #
-    # @param [String, Hash{Symbol => String}] command_name Command name.
-    # @param [Array<#to_s>, false, nil] guild_ids
-    #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
-    # @param [Boolean] dm_permission Whether the command is available in DM.
-    # @param [Discorb::Permission] default_permission The default permission of the command.
-    # @param [Proc] block Command block.
-    # @yield [interaction, message] Block to execute.
-    # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
-    # @yieldparam [Discorb::Message] message Message object.
-    #
-    # @return [Discorb::ApplicationCommand::Command] Command object.
-    def message_command: (
-                           (String | ::Hash[Symbol, String]) command_name,
-                           ?guild_ids: (::Array[_ToS] | false)?,
-                           ?dm_permission: bool,
-                           ?default_permission: Discorb::Permission?
-                         ) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
-
-    #
-    # Add user context menu command.
-    #
-    # @param [String, Hash{Symbol => String}] command_name Command name.
-    # @param [Array<#to_s>, false, nil] guild_ids
-    #  Guild IDs to set the command to. `false` to global command, `nil` to use default.
-    # @param [Boolean] dm_permission Whether the command is available in DM.
-    # @param [Discorb::Permission] default_permission The default permission of the command.
-    # @param [Proc] block Command block.
-    # @yield [interaction, user] Block to execute.
-    # @yieldparam [Discorb::CommandInteraction::UserMenuCommand] interaction Interaction object.
-    # @yieldparam [Discorb::User] user User object.
-    #
-    # @return [Discorb::ApplicationCommand::Command] Command object.
-    def user_command: (
-                        (String | ::Hash[Symbol, String]) command_name,
-                        ?guild_ids: (::Array[_ToS] | false)?,
-                        ?dm_permission: bool,
-                        ?default_permission: Discorb::Permission?
-                      ) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
-
-    #
     # Setup commands.
     # @async
     # @see Client#initialize
@@ -738,5 +620,20 @@ module Discorb
 
     # @return [Logger] The logger.
     attr_reader logger: Logger
+  end
+
+  #
+  # Represents a client user.
+  class ClientUser < Discorb::User
+    #
+    # Edit the client user.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The new username.
+    # @param [Discorb::Image] avatar The new avatar.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit: (?name: String, ?avatar: Discorb::Image) -> Async::Task[void]
   end
 end

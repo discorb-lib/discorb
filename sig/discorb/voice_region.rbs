@@ -1,0 +1,30 @@
+module Discorb
+  #
+  # Represents a voice region.
+  class VoiceRegion < Discorb::DiscordModel
+    #
+    # Initialize a new instance of the VoiceRegion class.
+    # @private
+    #
+    # @param [Hash] data The data of the voice region.
+    def initialize: (::Hash[untyped, untyped] data) -> void
+
+    # @return [Discorb::Snowflake] The ID of the voice region.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the voice region.
+    attr_reader name: String
+
+    # @return [Boolean] Whether the voice region is VIP.
+    attr_reader vip: bool
+
+    # @return [Boolean] Whether the voice region is optimal.
+    attr_reader optimal: bool
+
+    # @return [Boolean] Whether the voice region is deprecated.
+    attr_reader deprecated: bool
+
+    # @return [Boolean] Whether the voice region is custom.
+    attr_reader custom: bool
+  end
+end

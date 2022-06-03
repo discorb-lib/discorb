@@ -1,0 +1,114 @@
+module Discorb
+  #
+  # Represents a integration.
+  class Integration < Discorb::DiscordModel
+    EXPIRE_BEHAVIOR: untyped
+
+    #
+    # Initialize a new integration.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the welcome screen.
+    # @param [Discorb::Guild] guild The guild this integration is in.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data, _ToS guild_id) -> void
+
+    #
+    # Delete the integration.
+    # @async
+    #
+    # @param [String] reason The reason for deleting the integration.
+    #
+    # @return [Async::Task<void>] The task.
+    def delete!: (?reason: String?) -> Async::Task[void]
+
+    # @return [Discorb::Snowflake] The ID of the integration.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [Symbol] The type of integration.
+    attr_reader type: Symbol
+
+    # @return [Boolean] Whether the integration is enabled.
+    attr_reader enabled: bool
+
+    # @return [Boolean] Whether the integration is syncing.
+    attr_reader syncing: bool
+
+    # @return [Boolean] Whether the integration is enabled emoticons.
+    attr_reader enable_emoticons: bool
+
+    # @return [:remove_role, :kick] The behavior of the integration when it expires.
+    attr_reader expire_behavior: Symbol
+
+    # @return [Integer] The grace period of the integration.
+    attr_reader expire_grace_period: Integer
+
+    # @return [Discorb::User] The user for the integration.
+    attr_reader user: Discorb::User
+
+    # @return [Discorb::Integration::Account] The account for the integration.
+    attr_reader account: Discorb::Integration::Account
+
+    # @return [Integer] The number of subscribers for the integration.
+    attr_reader subscriber_count: Integer
+
+    # @return [Boolean] Whether the integration is revoked.
+    attr_reader revoked: bool
+
+    # @return [Discorb::Application] The application for the integration.
+    attr_reader application: Discorb::Application
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild this integration is in.
+    attr_reader guild: Discorb::Guild?
+
+    #
+    # Represents an account for an integration.
+    class Account < Discorb::DiscordModel
+      #
+      # Initialize a new account.
+      # @private
+      #
+      # @param [Hash] data The data from Discord.
+      def initialize: (::Hash[untyped, untyped] data) -> void
+
+      # @return [String] The ID of the account.
+      attr_reader id: String
+
+      # @return [String] The name of the account.
+      attr_reader name: String
+    end
+
+    #
+    # Represents an application for an integration.
+    class Application < Discorb::DiscordModel
+      #
+      # Initialize a new application.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The data from Discord.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # @return [Discorb::Snowflake] The ID of the application.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [String] The name of the application.
+      attr_reader name: String
+
+      # @return [Asset] The icon of the application.
+      # @return [nil] If the application has no icon.
+      attr_reader icon: Asset?
+
+      # @return [String] The description of the application.
+      attr_reader description: String
+
+      # @return [String] The summary of the application.
+      attr_reader summary: String
+
+      # @return [Discorb::User] The bot user associated with the application.
+      # @return [nil] If the application has no bot user.
+      attr_reader bot: Discorb::User?
+    end
+  end
+end

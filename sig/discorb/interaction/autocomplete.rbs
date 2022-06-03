@@ -1,0 +1,7 @@
+module Discorb
+  #
+  # Represents auto complete interaction.
+  class AutoComplete < Discorb::Interaction
+    def send_complete_result: (::Hash[String, String | Integer | Float] val) -> untyped
+  end
+end

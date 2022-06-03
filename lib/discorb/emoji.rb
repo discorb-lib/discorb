@@ -29,7 +29,7 @@ module Discorb
     attr_reader :roles
     # @return [Discorb::User] The user that created this emoji.
     attr_reader :user
-    # @return [Boolean] Whether the emoji requires colons.
+    # @return [Discorb::Guild] The guild that owns this emoji.
     attr_reader :guild
     # @return [Boolean] whether the emoji is managed by integration (ex: Twitch).
     attr_reader :managed

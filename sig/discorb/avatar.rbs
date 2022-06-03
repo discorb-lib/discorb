@@ -1,0 +1,26 @@
+module Discorb
+  #
+  # Represents a default avatar.
+  class DefaultAvatar < Discorb::DiscordModel
+    #
+    # Initialize a new instance of the DefaultAvatar class.
+    # @private
+    def initialize: (untyped discriminator) -> void
+
+    #
+    # Returns the URL of the avatar.
+    #
+    # @param [String] image_format The image format. This is compatible with {Asset#url}, will be ignored.
+    # @param [Integer] size The size of the image. This is compatible with {Asset#url}, will be ignored.
+    #
+    # @return [String] URL of the avatar.
+    #
+    # rubocop: disable Lint/UnusedMethodArgument
+    def url: (?image_format: String?, ?size: Integer) -> String
+
+    def inspect: () -> untyped
+
+    # @return [false] For compatibility with {Asset}, always `false`.
+    attr_reader animated?: bool
+  end
+end

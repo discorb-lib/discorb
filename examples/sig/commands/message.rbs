@@ -1,0 +1,5 @@
+class Object
+  def build_embed_from_message: (Discorb::Message message) -> Discorb::Embed
+
+  def bookmark_channel: (Discorb::Guild guild) -> Discorb::TextChannel?
+end

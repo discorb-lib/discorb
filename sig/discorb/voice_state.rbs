@@ -1,0 +1,71 @@
+module Discorb
+  #
+  # Represents a state of user in voice channel.
+  class VoiceState < Discorb::DiscordModel
+    #
+    # Initialize a new voice state.
+    # @private
+    #
+    # @param [Discorb::Client] client The client this voice state belongs to.
+    # @param [Hash] data The data of the voice state.
+    def initialize: (Discorb::Client client, Discorb::json data) -> void
+
+    # @return [Discorb::Member] The member associated with this voice state.
+    attr_reader member: Discorb::Member
+
+    # @return [Discorb::Snowflake] The ID of the guild this voice state is for.
+    attr_reader session_id: Discorb::Snowflake
+
+    # @return [Time] The time at which the user requested to speak.
+    attr_reader request_to_speak_timestamp: Time
+
+    # @return [Boolean] Whether the user is deafened.
+    attr_reader self_deaf: bool
+
+    alias self_deaf? self_deaf
+
+    # @return [Boolean] Whether the user is muted.
+    attr_reader self_mute: bool
+
+    alias self_mute? self_mute
+
+    # @return [Boolean] Whether the user is streaming.
+    attr_reader self_stream: bool
+
+    alias self_stream? self_stream
+
+    # @return [Boolean] Whether the user is video-enabled.
+    attr_reader self_video: bool
+
+    alias self_video? self_video
+
+    # @return [Boolean] Whether the user is suppressed. (Is at audience)
+    attr_reader suppress: bool
+
+    alias suppress? suppress
+
+    # @return [Boolean] Whether the user is deafened.
+    attr_reader deaf?: bool
+
+    # @return [Boolean] Whether the user is muted.
+    attr_reader mute?: bool
+
+    # @return [Boolean] Whether the user is deafened on the server.
+    attr_reader server_deaf?: bool
+
+    # @return [Boolean] Whether the user is muted on the server.
+    attr_reader server_mute?: bool
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild this voice state is for.
+    attr_reader guild: Discorb::Guild
+
+    # @macro client_cache
+    # @return [Discorb::Channel] The channel this voice state is for.
+    attr_reader channel: Discorb::Channel
+
+    # @macro client_cache
+    # @return [Discorb::User] The user this voice state is for.
+    attr_reader user: Discorb::User
+  end
+end

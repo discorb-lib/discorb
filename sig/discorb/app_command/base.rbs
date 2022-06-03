@@ -1,0 +1,236 @@
+module Discorb
+  #
+  # Handles application commands.
+  module ApplicationCommand
+    VALID_LOCALES: untyped
+
+    def modify_localization_hash: (untyped hash) -> untyped
+
+    def self.modify_localization_hash: (untyped hash) -> untyped
+
+    #
+    # Represents a application command.
+    # @abstract
+    class Command < Discorb::DiscordModel
+      TYPES: untyped
+
+      #
+      # Initialize a new command.
+      # @private
+      #
+      # @param [String, Hash{Symbol => String}] name The name of the command.
+      # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
+      # @param [Proc] block The block of the command.
+      # @param [:chat_input, :user, :message] type The type of the command.
+      # @param [Boolean] dm_permission Whether the command is enabled in DMs.
+      # @param [Discorb::Permission] default_permission The default permission of the command.
+      def initialize: (
+                        (String | ::Hash[Symbol, String]) name,
+                        ::Array[untyped] guild_ids,
+                        Proc block,
+                        Symbol type,
+                        ?bool? dm_permission,
+                        ?Discorb::Permission? default_permission
+                      ) -> void
+
+      #
+      # Changes the self pointer of block to the given object.
+      # @private
+      #
+      # @param [Object] instance The object to change the self pointer to.
+      def replace_block: (Object instance) -> untyped
+
+      #
+      # Converts the object to a hash.
+      # @private
+      #
+      # @return [Hash] The hash represents the object.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # @return [Hash{Symbol => String}] The name of the command.
+      attr_reader name: ::Hash[Symbol, String]
+
+      # @return [Array<#to_s>] The guild ids that the command is enabled in.
+      attr_reader guild_ids: ::Array[untyped]
+
+      # @return [Proc] The block of the command.
+      attr_reader block: Proc
+
+      # @return [:chat_input, :user, :message] The type of the command.
+      attr_reader type: Symbol
+
+      # @return [Integer] The raw type of the command.
+      attr_reader type_raw: Integer
+
+      # @return [Discorb::Permission] The default permissions for this command.
+      attr_reader default_permission: Discorb::Permission
+
+      # @return [Boolean] Whether the command is enabled in DMs.
+      attr_reader dm_permission: bool
+
+      #
+      # Represents the slash command.
+      class ChatInputCommand < Discorb::ApplicationCommand::Command
+        TYPES: untyped
+
+        #
+        # Initialize a new slash command.
+        # @private
+        #
+        # @param [String, Hash{Symbol => String}] name The name of the command.
+        #   The hash should have `default`, and language keys.
+        # @param [String, Hash{Symbol => String}] description The description of the command.
+        #   The hash should have `default`, and language keys.
+        # @param [Hash{String => Hash}] options The options of the command.
+        # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
+        # @param [Proc] block The block of the command.
+        # @param [:chat_input, :user, :message] type The type of the command.
+        # @param [Discorb::ApplicationCommand::Command, nil] parent The parent command.
+        # @param [Boolean] dm_permission Whether the command is enabled in DMs.
+        # @param [Discorb::Permission] default_permission The default permission of the command.
+        def initialize: (
+                          (String | ::Hash[Symbol, String]) name,
+                          (String | ::Hash[Symbol, String]) description,
+                          ::Hash[String, ::Hash[untyped, untyped]] options,
+                          ::Array[untyped] guild_ids,
+                          Proc block,
+                          Symbol type,
+                          Discorb::ApplicationCommand::Command? parent,
+                          bool dm_permission,
+                          Discorb::Permission default_permission
+                        ) -> void
+
+        #
+        # Returns the commands name.
+        #
+        # @return [String] The name of the command.
+        def to_s: () -> String
+
+        #
+        # Converts the object to a hash.
+        # @private
+        #
+        # @return [Hash] The hash represents the object.
+        def to_hash: () -> ::Hash[untyped, untyped]
+
+        # @return [Hash{String => String}] The description of the command.
+        attr_reader description: ::Hash[String, String]
+
+        # @return [Hash{String => Hash}] The options of the command.
+        attr_reader options: ::Hash[String, ::Hash[untyped, untyped]]
+      end
+
+      #
+      # Represents the command with subcommands.
+      class GroupCommand < Discorb::ApplicationCommand::Command
+        TYPES: untyped
+
+        #
+        # Initialize a new group command.
+        # @private
+        #
+        # @param [String, Hash{Symbol => String}] name The name of the command.
+        # @param [String, Hash{Symbol => String}] description The description of the command.
+        # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
+        # @param [:chat_input, :user, :message] type The type of the command.
+        # @param [Discorb::Client] client The client of the command.
+        # @param [Boolean] dm_permission Whether the command is enabled in DMs.
+        # @param [Discorb::Permission] default_permission The default permission of the command.
+        def initialize: (
+                          (String | ::Hash[Symbol, String]) name,
+                          (String | ::Hash[Symbol, String]) description,
+                          ::Array[untyped] guild_ids,
+                          Symbol type,
+                          Discorb::Client client,
+                          bool dm_permission,
+                          Discorb::Permission default_permission
+                        ) -> void
+
+        #
+        # Add new subcommand.
+        #
+        # @param (see Discorb::ApplicationCommand::Handler#slash)
+        # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
+        def slash: (
+                     (String | ::Hash[Symbol, String]) command_name,
+                     (String | ::Hash[Symbol, String]) description,
+                     ?::Hash[String, String | Integer | Float] options,
+                     ?dm_permission: bool,
+                     ?default_permission: Discorb::Permission?
+                   ) -> Discorb::ApplicationCommand::Command::ChatInputCommand
+
+        #
+        # Add new subcommand group.
+        #
+        # @param [String] command_name Group name.
+        # @param [String] description Group description.
+        #
+        # @yield Block to yield with the command.
+        # @yieldparam [Discorb::ApplicationCommand::Command::SubcommandGroup] group Group command.
+        #
+        # @return [Discorb::ApplicationCommand::Command::SubcommandGroup] Command object.
+        #
+        # @see file:docs/application_command.md Application Commands
+        def group: (String command_name, String description) ?{ (Discorb::ApplicationCommand::Command::SubcommandGroup group) -> void } -> Discorb::ApplicationCommand::Command::SubcommandGroup
+
+        #
+        # Returns the command name.
+        #
+        # @return [String] The command name.
+        def to_s: () -> String
+
+        #
+        # Changes the self pointer to the given object.
+        # @private
+        #
+        # @param [Object] instance The object to change to.
+        def block_replace: (Object instance) -> untyped
+
+        #
+        # Converts the object to a hash.
+        # @private
+        #
+        # @return [Hash] The hash represents the object.
+        def to_hash: () -> ::Hash[untyped, untyped]
+
+        # @return [Array<Discorb::ApplicationCommand::Command>] The subcommands of the command.
+        attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]
+
+        # @return [String] The description of the command.
+        attr_reader description: String
+      end
+
+      #
+      # Represents the subcommand group.
+      class SubcommandGroup < Discorb::ApplicationCommand::Command::GroupCommand
+        TYPES: untyped
+
+        #
+        # Initialize a new subcommand group.
+        # @private
+        #
+        # @param [String] name The name of the command.
+        # @param [String] description The description of the command.
+        # @param [Discorb::ApplicationCommand::Command::GroupCommand] parent The parent command.
+        # @param [Discorb::Client] client The client.
+        def initialize: (
+                          String name,
+                          String description,
+                          Discorb::ApplicationCommand::Command::GroupCommand parent,
+                          Discorb::Client client
+                        ) -> void
+
+        def to_s: () -> untyped
+
+        #
+        # Add new subcommand.
+        # @param (see Discorb::ApplicationCommand::Handler#slash)
+        # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
+        def slash: ((String | ::Hash[Symbol, String]) command_name, (String | ::Hash[Symbol, String]) description, ?::Hash[String, String | Integer | Float] options) -> Discorb::ApplicationCommand::Command::ChatInputCommand
+
+        # @return [Array<Discorb::ApplicationCommand::Command::ChatInputCommand>] The subcommands of the command.
+        attr_reader commands: ::Array[Discorb::ApplicationCommand::Command::ChatInputCommand]
+      end
+    end
+  end
+end

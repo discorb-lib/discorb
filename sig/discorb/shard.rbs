@@ -1,0 +1,62 @@
+module Discorb
+  #
+  # Represents a shard.
+  class Shard
+    #
+    # Initializes a new shard.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Integer] id The ID of the shard.
+    # @param [Integer] count The number of shards.
+    # @param [Integer] index The index of the shard.
+    def initialize: (
+                      Discorb::Client client,
+                      Integer id,
+                      Integer count,
+                      Integer index
+                    ) -> void
+
+    #
+    # Starts the shard.
+    #
+    # @return [void]
+    def start: () -> void
+
+    #
+    # Stops the shard.
+    #
+    # @return [void]
+    def close!: () -> void
+
+    def inspect: () -> untyped
+
+    # @return [Integer] The ID of the shard.
+    attr_reader id: Integer
+
+    # @return [Thread] The thread of the shard.
+    attr_reader thread: Thread
+
+    # @return [Logger] The logger of the shard.
+    attr_reader logger: Logger
+
+    # @private
+    # @return [Integer] The internal index of the shard.
+    attr_reader index: Integer
+
+    # @private
+    attr_accessor status: untyped
+
+    # @private
+    attr_accessor connection: untyped
+
+    # @private
+    attr_accessor session_id: untyped
+
+    # @private
+    attr_accessor next_shard: untyped
+
+    # @private
+    attr_accessor main_task: untyped
+  end
+end

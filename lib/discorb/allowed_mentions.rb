@@ -23,10 +23,10 @@ module Discorb
     # @param [Boolean] replied_user Whether to ping the user that sent the message to reply.
     #
     def initialize(everyone: nil, roles: nil, users: nil, replied_user: nil)
-      @everyone = everyone
+      @everyone = !everyone.nil?
       @roles = roles
       @users = users
-      @replied_user = replied_user
+      @replied_user = !!replied_user
     end
 
     def inspect

@@ -1,0 +1,56 @@
+module Discorb
+  #
+  # Represents Snowflake of Discord.
+  #
+  # @see https://discord.com/developers/docs/reference#snowflakes Official Discord API docs
+  class Snowflake < String
+    #
+    # Initialize new snowflake.
+    # @private
+    #
+    # @param [#to_s] value The value of the snowflake.
+    def initialize: (untyped value) -> void
+
+    #
+    # Compares snowflake with other object.
+    #
+    # @param [#to_s] other Object to compare with.
+    #
+    # @return [Boolean] True if snowflake is equal to other object.
+    def ==: (untyped other) -> bool
+
+    #
+    # Alias of {#==}.
+    def eql?: (untyped other) -> bool
+
+    # Return hash of snowflake.
+    def hash: () -> untyped
+
+    def inspect: () -> untyped
+
+    # Timestamp of snowflake.
+    #
+    # @return [Time] Timestamp of snowflake.
+    attr_reader timestamp: Time
+
+    # Worker ID of snowflake.
+    #
+    # @return [Integer] Worker ID of snowflake.
+    attr_reader worker_id: Integer
+
+    # Process ID of snowflake.
+    #
+    # @return [Integer] Process ID of snowflake.
+    attr_reader process_id: Integer
+
+    # Increment of snowflake.
+    #
+    # @return [Integer] Increment of snowflake.
+    attr_reader increment: Integer
+
+    # Alias of to_s.
+    #
+    # @return [String] The snowflake.
+    attr_reader id: String
+  end
+end

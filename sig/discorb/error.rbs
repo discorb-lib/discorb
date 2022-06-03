@@ -1,0 +1,73 @@
+module Discorb
+  #
+  # Error class for Discorb.
+  # @abstract
+  class DiscorbError < StandardError
+    def enumerate_errors: (untyped hash) -> untyped
+
+    def _recr_items: (untyped key, untyped item, untyped res) -> untyped
+  end
+
+  #
+  # Represents a HTTP error.
+  # @abstract
+  class HTTPError < Discorb::DiscorbError
+    #
+    # Initialize a new instance of the HTTPError class.
+    # @private
+    def initialize: (untyped resp, untyped data) -> void
+
+    # @return [String] the JSON response code.
+    # @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
+    attr_reader code: String
+
+    # @return [Net::HTTPResponse] the HTTP response.
+    attr_reader response: Net::HTTPResponse
+  end
+
+  #
+  # Represents a 400 error.
+  class BadRequestError < Discorb::HTTPError
+    #
+    # Initialize a new instance of the BadRequestError class.
+    # @private
+    def initialize: (untyped resp, untyped data) -> void
+  end
+
+  #
+  # Represents a 401 error.
+  class UnauthorizedError < Discorb::HTTPError
+  end
+
+  #
+  # Represents a 403 error.
+  class ForbiddenError < Discorb::HTTPError
+  end
+
+  #
+  # Represents a 404 error.
+  class NotFoundError < Discorb::HTTPError
+  end
+
+  #
+  # Represents a error because of a cloudflare ban.
+  class CloudFlareBanError < Discorb::HTTPError
+    def initialize: (untyped _resp, untyped client) -> void
+  end
+
+  #
+  # Represents a error in client-side.
+  class ClientError < Discorb::DiscorbError
+  end
+
+  #
+  # Represents a timeout error.
+  class TimeoutError < Discorb::DiscorbError
+  end
+
+  #
+  # Represents a warning.
+  class NotSupportedWarning < Discorb::DiscorbError
+    def initialize: (untyped message) -> void
+  end
+end

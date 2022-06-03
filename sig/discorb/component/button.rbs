@@ -1,0 +1,63 @@
+module Discorb
+  #
+  # Represents a button component.
+  class Button < Discorb::Component
+    STYLES: untyped
+
+    #
+    # Initialize a new button.
+    #
+    # @param [String] label The label of the button.
+    # @param [:primary, :secondary, :success, :danger, :link] style The style of the button.
+    # @param [Discorb::Emoji] emoji The emoji of the button.
+    # @param [String] custom_id The custom ID of the button.
+    # @param [String] url The URL of the button.
+    # @param [Boolean] disabled Whether the button is disabled.
+    def initialize: (
+                      String label,
+                      ?Symbol style,
+                      ?emoji: Discorb::Emoji?,
+                      ?custom_id: String?,
+                      ?url: String?,
+                      ?disabled: bool
+                    ) -> void
+
+    #
+    # Converts the button to a hash.
+    #
+    # @see https://discord.com/developers/docs/interactions/message-components#button-object-button-structure
+    #  Official Discord API docs
+    # @return [Hash] A hash representation of the button.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    def inspect: () -> untyped
+
+    #
+    # Creates a new button from a hash.
+    #
+    # @param [Hash] data The hash to create the button from.
+    #
+    # @return [Discorb::Button] The created button.
+    def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::Button
+
+    # @return [String] The label of the button.
+    attr_accessor label: String
+
+    # @return [:primary, :secondary, :success, :danger, :link] The style of the button.
+    attr_accessor style: Symbol
+
+    # @return [Discorb::Emoji] The emoji of the button.
+    attr_accessor emoji: Discorb::Emoji
+
+    # @return [String] The custom ID of the button.
+    #   Won't be used if the style is `:link`.
+    attr_accessor custom_id: String
+
+    # @return [String] The URL of the button.
+    #   Only used when the style is `:link`.
+    attr_accessor url: String
+
+    # @return [Boolean] Whether the button is disabled.
+    attr_accessor disabled: bool
+  end
+end

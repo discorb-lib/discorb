@@ -1,0 +1,279 @@
+module Discorb
+  #
+  # Represents an embed of discord.
+  class Embed
+    #
+    # Initialize a new Embed object.
+    #
+    # @param [String] title The title of embed.
+    # @param [String] description The description of embed.
+    # @param [Discorb::Color] color The color of embed.
+    # @param [String] url The url of embed.
+    # @param [Time] timestamp The timestamp of embed.
+    # @param [Discorb::Embed::Author] author The author field of embed.
+    # @param [Array<Discorb::Embed::Field>] fields The fields of embed.
+    # @param [Discorb::Embed::Footer] footer The footer of embed.
+    # @param [Discorb::Embed::Image, String] image The image of embed.
+    # @param [Discorb::Embed::Thumbnail, String] thumbnail The thumbnail of embed.
+    def initialize: (
+                      ?String? title,
+                      ?String? description,
+                      ?color: Discorb::Color?,
+                      ?url: String?,
+                      ?timestamp: Time?,
+                      ?author: Discorb::Embed::Author?,
+                      ?fields: ::Array[Discorb::Embed::Field]?,
+                      ?footer: Discorb::Embed::Footer?,
+                      ?image: (Discorb::Embed::Image | String)?,
+                      ?thumbnail: (Discorb::Embed::Thumbnail | String)?
+                    ) -> void
+
+    #
+    # Initialize embed from hash.
+    # @private
+    #
+    # @param [Hash] data The hash data to initialize embed.
+    def initialize_hash: (::Hash[untyped, untyped] data) -> untyped
+
+    def inspect: () -> untyped
+
+    #
+    # Convert embed to hash.
+    #
+    # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-structure Offical Discord API Docs
+    # @return [Hash] Converted embed.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    def self.from_hash: (untyped data) -> untyped
+
+    # @return [String, nil] The title of embed.
+    attr_accessor title: String?
+
+    # @return [String, nil] The description of embed.
+    attr_accessor description: String?
+
+    # @return [String, nil] The url of embed.
+    attr_accessor url: String?
+
+    # @return [Time, nil] The timestamp of embed.
+    attr_accessor timestamp: Time?
+
+    # @return [Discorb::Color, nil] The color of embed.
+    attr_accessor color: Discorb::Color?
+
+    # @return [Discorb::Embed::Author, nil] The author of embed.
+    attr_accessor author: Discorb::Embed::Author?
+
+    # @return [Array<Discorb::Embed::Field>] The fields of embed.
+    attr_accessor fields: ::Array[Discorb::Embed::Field]
+
+    # @return [Discorb::Embed::Footer, nil] The footer of embed.
+    attr_accessor footer: Discorb::Embed::Footer?
+
+    # @return [Symbol] The type of embed.
+    attr_reader type: Symbol
+
+    # @return [Discorb::Embed::Image] The image of embed.
+    attr_accessor image: Discorb::Embed::Image
+
+    # @return [Discorb::Embed::Thumbnail] The thumbnail of embed.
+    attr_accessor thumbnail: Discorb::Embed::Thumbnail
+
+    #
+    # Represents an entry in embed.
+    # @abstract
+    # @private
+    class Entry
+      def inspect: () -> untyped
+    end
+
+    #
+    # Represents an author of embed.
+    class Author < Discorb::Embed::Entry
+      #
+      # Initialize a new Author object.
+      #
+      # @param [String] name The name of author.
+      # @param [String] url The url of author.
+      # @param [String] icon The icon url of author.
+      def initialize: (String name, ?url: String?, ?icon: String?) -> void
+
+      #
+      # Convert author to hash.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
+      #   Offical Discord API Docs
+      # @return [Hash] Converted author.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # @return [String] The name of author.
+      attr_accessor name: String
+
+      # @return [String, nil] The url of author.
+      attr_accessor url: String?
+
+      # @return [String, nil] The icon url of author.
+      attr_accessor icon: String?
+    end
+
+    #
+    # Represemts a footer of embed.
+    class Footer < Discorb::Embed::Entry
+      #
+      # Initialize a new Footer object.
+      #
+      # @param [String] text The text of footer.
+      # @param [String] icon The icon url of footer.
+      def initialize: (String text, ?icon: String?) -> void
+
+      #
+      # Convert footer to hash.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
+      #   Offical Discord API Docs
+      # @return [Hash] Converted footer.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # Returns the value of attribute text.
+      attr_accessor text: untyped
+
+      # Returns the value of attribute icon.
+      attr_accessor icon: untyped
+    end
+
+    #
+    # Represents a field of embed.
+    class Field < Discorb::Embed::Entry
+      #
+      # Initialize a new Field object.
+      #
+      # @param [String] name The name of field.
+      # @param [String] value The value of field.
+      # @param [Boolean] inline Whether the field is inline.
+      def initialize: (String name, String value, ?inline: bool) -> void
+
+      #
+      # Convert field to hash.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
+      #   Offical Discord API Docs
+      # @return [Hash] Converted field.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # @return [String] The name of field.
+      attr_accessor name: String
+
+      # @return [String] The value of field.
+      attr_accessor value: String
+
+      # @return [Boolean] Whether the field is inline.
+      attr_accessor inline: bool
+    end
+
+    #
+    # Represents an image of embed.
+    class Image < Discorb::Embed::Entry
+      #
+      # Initialize a new Image object.
+      #
+      # @param [String] url URL of image.
+      def initialize: (String url) -> void
+
+      #
+      # Convert image to hash for sending.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure
+      #   Offical Discord API Docs
+      # @return [Hash] Converted image.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # @return [String] The url of image.
+      attr_accessor url: String
+
+      # @return [String] The proxy url of image.
+      # @return [nil] The Image object wasn't created from gateway.
+      attr_reader proxy_url: String?
+
+      # @return [Integer] The height of image.
+      # @return [nil] The Image object wasn't created from gateway.
+      attr_reader height: Integer?
+
+      # @return [Integer] The width of image.
+      # @return [nil] The Image object wasn't created from gateway.
+      attr_reader width: Integer?
+    end
+
+    #
+    # Represents a thumbnail of embed.
+    class Thumbnail < Discorb::Embed::Entry
+      #
+      # Initialize a new Thumbnail object.
+      #
+      # @param [String] url URL of thumbnail.
+      def initialize: (String url) -> void
+
+      #
+      # Convert thumbnail to hash for sending.
+      #
+      # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure
+      #   Offical Discord API Docs
+      # @return [Hash] Converted thumbnail.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      # @return [String] The url of thumbnail.
+      attr_accessor url: String
+
+      # @return [String] The proxy url of thumbnail.
+      # @return [nil] The Thumbnail object wasn't created from gateway.
+      attr_reader proxy_url: String?
+
+      # @return [Integer] The height of thumbnail.
+      # @return [nil] The Thumbnail object wasn't created from gateway.
+      attr_reader height: Integer?
+
+      # @return [Integer] The width of thumbnail.
+      # @return [nil] The Thumbnail object wasn't created from gateway.
+      attr_reader width: Integer?
+    end
+
+    #
+    # Represents a video of embed.
+    class Video < Discorb::Embed::Entry
+      #
+      # Initialize a new Video object.
+      # @private
+      #
+      # @param [Hash] data The data of video.
+      def initialize: (::Hash[untyped, untyped] data) -> void
+
+      # @return [String] The url of video.
+      attr_reader url: String
+
+      # @return [String] The proxy url of video.
+      attr_reader proxy_url: String
+
+      # @return [Integer] The height of video.
+      attr_reader height: Integer
+
+      # @return [Integer] The width of video.
+      attr_reader width: Integer
+    end
+
+    #
+    # Represents a provider of embed.
+    class Provider < Discorb::Embed::Entry
+      #
+      # Initialize a new Provider object.
+      # @private
+      #
+      # @param [Hash] data The data of provider.
+      def initialize: (::Hash[untyped, untyped] data) -> void
+
+      # @return [String] The name of provider.
+      attr_reader name: String
+
+      # @return [String] The url of provider.
+      attr_reader url: String
+    end
+  end
+end

@@ -1,0 +1,35 @@
+module Discorb
+  #
+  # Represents a partial custom emoji in discord.
+  class PartialEmoji < Discorb::DiscordModel
+    #
+    # Initialize a new partial custom emoji.
+    # @private
+    #
+    # @param [Hash] data The data of the emoji.
+    def initialize: (::Hash[untyped, untyped] data) -> void
+
+    #
+    # Format the emoji for URI.
+    #
+    # @return [String] the formatted emoji.
+    def to_uri: () -> String
+
+    def inspect: () -> untyped
+
+    #
+    # Format the emoji for sending.
+    #
+    # @return [String] the formatted emoji.
+    def to_s: () -> String
+
+    # @return [Discorb::Snowflake] The ID of the emoji.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the emoji.
+    attr_reader name: String
+
+    # @return [Boolean] Whether the emoji is deleted.
+    attr_reader deleted: bool
+  end
+end

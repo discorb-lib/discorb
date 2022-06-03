@@ -1,0 +1,23 @@
+module Discorb
+  #
+  # Represents an activity for Gateway Command.
+  class Activity
+    TYPES: untyped
+
+    #
+    # Initializes a new Activity.
+    #
+    # @param [String] name The name of the activity.
+    # @param [:playing, :streaming, :listening, :watching, :competing] type The type of activity.
+    # @param [String] url The URL of the activity.
+    def initialize: (String name, ?Symbol type, ?String? url) -> void
+
+    #
+    # Converts the activity to a hash.
+    #
+    # @return [Hash] A hash representation of the activity.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    def inspect: () -> untyped
+  end
+end

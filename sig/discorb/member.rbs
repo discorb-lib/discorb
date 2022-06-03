@@ -1,0 +1,184 @@
+module Discorb
+  #
+  # Represents a member of a guild.
+  class Member < Discorb::User
+    #
+    # Initialize a new instance of the member.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Discorb::Snowflake] guild_id The ID of the guild.
+    # @param [Hash] user_data The data of the user.
+    # @param [Hash] member_data The data of the member.
+    def initialize: (
+                      Discorb::Client client,
+                      Discorb::Snowflake guild_id,
+                      ::Hash[untyped, untyped] user_data,
+                      ::Hash[untyped, untyped] member_data
+                    ) -> void
+
+    #
+    # Format the member to `Username#Discriminator` style.
+    #
+    # @return [String] The formatted member.
+    def to_s: () -> String
+
+    def inspect: () -> untyped
+
+    #
+    # Add a role to the member.
+    # @async
+    #
+    # @param [Discorb::Role] role The role to add.
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
+    def add_role: (Discorb::Role role, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Remove a role to the member.
+    # @async
+    #
+    # @param [Discorb::Role] role The role to add.
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
+    def remove_role: (Discorb::Role role, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Edit the member.
+    # @async
+    # @macro edit
+    #
+    # @param [String] nick The nickname of the member.
+    # @param [Discorb::Role] role The roles of the member.
+    # @param [Boolean] mute Whether the member is muted.
+    # @param [Boolean] deaf Whether the member is deafened.
+    # @param [Discorb::StageChannel] channel The channel the member is moved to.
+    # @param [Time, nil] communication_disabled_until The time the member is timed out. Set to `nil` to end the timeout.
+    # @param [Time, nil] timeout_until Alias of `communication_disabled_until`.
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit: (
+                ?nick: String,
+                ?role: Discorb::Role,
+                ?mute: bool,
+                ?deaf: bool,
+                ?channel: Discorb::StageChannel,
+                ?communication_disabled_until: Time?,
+                ?timeout_until: Time?,
+                ?reason: String?
+              ) -> Async::Task[void]
+
+    #
+    # Timeout the member.
+    # @async
+    #
+    # @param [Time] time The time until the member is timeout.
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
+    def timeout: (Time time, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Kick the member.
+    # @async
+    #
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<void>] The task.
+    def kick: (?reason: String?) -> Async::Task[void]
+
+    #
+    # Ban the member.
+    # @async
+    #
+    # @param [Integer] delete_message_days The number of days to delete messages.
+    # @param [String] reason The reason for the action.
+    #
+    # @return [Async::Task<Discorb::Guild::Ban>] The ban.
+    def ban: (?delete_message_days: Integer, ?reason: String?) -> Async::Task[Discorb::Guild::Ban]
+
+    #
+    # Checks if the member can manage the given role.
+    #
+    # @param [Discorb::Role] role The role.
+    #
+    # @return [Boolean] `true` if the member can manage the role.
+    def can_manage?: (Discorb::Role role) -> bool
+
+    # @return [Time] The time the member boosted the guild.
+    attr_reader premium_since: Time
+
+    # @return [String] The nickname of the member.
+    # @return [nil] If the member has no nickname.
+    attr_reader nick: String?
+
+    # @return [Time] The time the member joined the guild.
+    attr_reader joined_at: Time
+
+    # @return [Discorb::Asset] The custom avatar of the member.
+    # @return [nil] If the member has no custom avatar.
+    attr_reader custom_avatar: Discorb::Asset?
+
+    # @return [Discorb::Asset] The display avatar of the member.
+    attr_reader display_avatar: Discorb::Asset
+
+    # @return [Boolean] Whether the member is muted.
+    attr_reader mute: bool
+
+    # @return [Boolean] Whether the member is deafened.
+    attr_reader deaf: bool
+
+    # @return [Boolean] Whether the member is pending (Not passed member screening).
+    attr_reader pending: bool
+
+    # @return [String] The display name of the member.
+    attr_reader name: String
+
+    # @return [String] The mention of the member.
+    attr_reader mention: String
+
+    # @return [Discorb::VoiceState] The voice state of the member.
+    attr_reader voice_state: Discorb::VoiceState
+
+    # @macro client_cache
+    # @return [Array<Discorb::Role>] The roles of the member.
+    attr_reader roles: ::Array[Discorb::Role]?
+
+    # @macro client_cache
+    # @return [Discorb::Guild] The guild the member is in.
+    attr_reader guild: Discorb::Guild?
+
+    # @macro client_cache
+    # @return [Discorb::Role] The hoisted role of the member.
+    # @return [nil] If the member has no hoisted role.
+    attr_reader hoisted_role: Discorb::Role?
+
+    # @return [Boolean] Whether the member has a hoisted role.
+    attr_reader hoisted?: bool
+
+    # @return [Discorb::Permission] The permissions of the member.
+    attr_reader permissions: Discorb::Permission
+
+    # @macro client_cache
+    # @return [Discorb::Presence] The presence of the member.
+    attr_reader presence: Discorb::Presence?
+
+    # @macro client_cache
+    # @return [Discorb::Activity] The activity of the member. It's from the {#presence}.
+    attr_reader activity: Discorb::Activity?
+
+    # @macro client_cache
+    # @return [Array<Discorb::Activity>] The activities of the member. It's from the {#presence}.
+    attr_reader activities: ::Array[Discorb::Activity]?
+
+    # @macro client_cache
+    # @return [Symbol] The status of the member. It's from the {#presence}.
+    attr_reader status: Symbol?
+
+    # @return [Boolean] Whether the member is the owner of the guild.
+    attr_reader owner?: bool
+  end
+end

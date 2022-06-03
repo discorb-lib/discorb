@@ -19,7 +19,7 @@ module Discorb
     attr_reader :created_at
     # @return [Time] The time this template was last updated.
     attr_reader :updated_at
-    # @return [Discorb::Guild] The guild where the template was created.
+    # @return [Discorb::Snowflake] The ID of guild where the template was created.
     attr_reader :source_guild_id
     # @return [Discorb::GuildTemplate::TemplateGuild] The guild where the template was created.
     attr_reader :serialized_source_guild

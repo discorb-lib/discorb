@@ -1,0 +1,27 @@
+module Discorb
+  #
+  # Represents a event handler.
+  # This class shouldn't be instantiated directly.
+  # Use {Client#on} instead.
+  class EventHandler
+    def initialize: (untyped block, _ToS id, untyped metadata) -> void
+
+    def inspect: () -> untyped
+
+    #
+    # Calls the block associated with the event.
+    def call: () -> untyped
+
+    # @return [Proc] the block to be called.
+    attr_reader block: Proc
+
+    # @return [Symbol] the event id.
+    attr_reader id: Symbol
+
+    # @return [Hash] the event metadata.
+    attr_reader metadata: ::Hash[untyped, untyped]
+
+    # @return [Boolean] whether the event is once or not.
+    attr_reader once: bool
+  end
+end

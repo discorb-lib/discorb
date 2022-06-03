@@ -1,0 +1,91 @@
+module Discorb
+  # Represents intents.
+  class Intents
+    INTENT_BITS: Hash[Symbol, Integer]
+
+    #
+    # Create new intents object with default (no members and presence) intents.
+    #
+    # @param guilds [Boolean] Whether guild related events are enabled.
+    # @param members [Boolean] Whether guild members related events are enabled.
+    # @param bans [Boolean] Whether guild ban related events are enabled.
+    # @param emojis [Boolean] Whether guild emojis related events are enabled.
+    # @param integrations [Boolean] Whether guild integration related events are enabled.
+    # @param webhooks [Boolean] Whether guild webhooks related events are enabled.
+    # @param invites [Boolean] Whether guild invite related events are enabled.
+    # @param voice_states [Boolean] Whether guild voice state related events are enabled.
+    # @param presences [Boolean] Whether guild presences related events are enabled.
+    # @param messages [Boolean] Whether guild messages related events are enabled.
+    # @param reactions [Boolean] Whether guild reaction related events are enabled.
+    # @param dm_messages [Boolean] Whether dm messages related events are enabled.
+    # @param dm_reactions [Boolean] Whether dm reactions related events are enabled.
+    # @param dm_typing [Boolean] Whether dm typing related events are enabled.
+    # @param message_content [Boolean] Whether message content will be sent with events.
+    # @param scheduled_events [Boolean] Whether events related scheduled events are enabled.
+    #
+    # @note You must enable privileged intents to use `members` and/or `presences` intents.
+    # @note Message Content Intent is not required to use `message_content` intents for now,
+    #   this will be required in September 1, 2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
+    #   You should specify `message_content` intent for preventing unexpected changes in the future.
+    def initialize: (
+                      ?guilds: bool,
+                      ?members: bool,
+                      ?bans: bool,
+                      ?emojis: bool,
+                      ?integrations: bool,
+                      ?webhooks: bool,
+                      ?invites: bool,
+                      ?voice_states: bool,
+                      ?presences: bool,
+                      ?messages: bool,
+                      ?reactions: bool,
+                      ?typing: untyped,
+                      ?dm_messages: bool,
+                      ?dm_reactions: bool,
+                      ?dm_typing: bool,
+                      ?message_content: bool?,
+                      ?scheduled_events: bool
+                    ) -> void
+
+    #
+    # Returns the value of the flag.
+    def method_missing: (untyped name, ?untyped args) -> untyped
+
+    def respond_to_missing?: (untyped name, untyped include_private) -> bool
+
+    # Returns value of the intent.
+    # @return [Integer] The value of the intent.
+    def value: () -> Integer
+
+    def inspect: () -> String
+
+    def to_h: () -> Hash[Symbol, bool]
+
+    # Create new intent object from raw value.
+    # @param value [Integer] The value of the intent.
+    def self.from_value: (Integer value) -> Intents
+
+    # Create new intent object with all intents.
+    def self.all: () -> Discorb::Intents
+
+    # Create new intent object with no intents.
+    def self.none: () -> Discorb::Intents
+
+    attr_accessor guilds: bool
+    attr_accessor members: bool
+    attr_accessor bans: bool
+    attr_accessor emojis: bool
+    attr_accessor integrations: bool
+    attr_accessor webhooks: bool
+    attr_accessor invites: bool
+    attr_accessor voice_states: bool
+    attr_accessor presences: bool
+    attr_accessor messages: bool
+    attr_accessor reactions: bool
+    attr_accessor dm_messages: bool
+    attr_accessor dm_reactions: bool
+    attr_accessor dm_typing: bool
+    attr_accessor message_content: bool
+    attr_accessor scheduled_events: bool
+  end
+end

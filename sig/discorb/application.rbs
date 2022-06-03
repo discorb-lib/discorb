@@ -1,0 +1,134 @@
+module Discorb
+  #
+  # Represents a Discord application.
+  class Application < Discorb::DiscordModel
+    #
+    # Initializes a new instance of the Application class.
+    # @private
+    #
+    # @param [Discorb::Client] client The client that instantiated the object.
+    # @param [Hash] data The data of the object.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+    def inspect: () -> untyped
+
+    # @return [Discorb::Snowflake] The application's ID.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The application's name.
+    attr_reader name: String
+
+    # @return [Discorb::Asset] The application's icon.
+    attr_reader icon: Discorb::Asset
+
+    # @return [String] The application's description.
+    attr_reader description: String
+
+    # @return [String] The application's summary.
+    attr_reader summary: String
+
+    # @return [String] The application's public key.
+    attr_reader verify_key: String
+
+    # @return [Discorb::User] The application's owner.
+    attr_reader owner: Discorb::User
+
+    # @return [Discorb::Application::Team] The application's team.
+    attr_reader team: Discorb::Application::Team
+
+    # @return [Boolean] Whether the application's bot is public.
+    attr_reader bot_public: bool
+
+    # @return [Boolean] Whether the application's bot requires a code grant.
+    attr_reader bot_require_code_grant: bool
+
+    # @return [Discorb::Application::Flag] The application's flags.
+    attr_reader flags: Discorb::Application::Flag
+
+    #
+    # Represents a flag for an application.
+    # ## Flag fields
+    #
+    # | Field|Value|
+    # |---|---|
+    # | `1 << 12` | `:gateway_presence` |
+    # | `1 << 13` | `:gateway_presence_limited` |
+    # | `1 << 14` | `:gateway_guild_members` |
+    # | `1 << 15` | `:gateway_guild_members_limited` |
+    # | `1 << 16` | `:verification_pending_guild_limit` |
+    # | `1 << 17` | `:embedded` |
+    # | `1 << 18` | `:gateway_message_content` |
+    # | `1 << 19` | `:gateway_message_content_limited` |
+    class Flag < Discorb::Flag
+    end
+
+    #
+    # Represents a team for an application.
+    class Team < Discorb::DiscordModel
+      #
+      # Initializes a new instance of the Team class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the object.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      #
+      # The team's owner.
+      #
+      # @return [Discorb::Application::Team::Member] The team's owner.
+      def owner: () -> Discorb::Application::Team::Member
+
+      def inspect: () -> untyped
+
+      # @return [Discorb::Snowflake] The team's ID.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [Discorb::Asset] The team's icon.
+      attr_reader icon: Discorb::Asset
+
+      # @return [String] The team's name.
+      attr_reader name: String
+
+      # @return [Discorb::Snowflake] The team's owner's ID.
+      attr_reader owner_user_id: Discorb::Snowflake
+
+      # @return [Discorb::Application::Team::Member] The team's member.
+      attr_reader members: Discorb::Application::Team::Member
+
+      #
+      # Represents a member of team.
+      class Member < Discorb::DiscordModel
+        MEMBERSHIP_STATE: untyped
+
+        def initialize: (untyped client, untyped team, untyped data) -> void
+
+        def inspect: () -> untyped
+
+        def ==: (untyped other) -> untyped
+
+        # @return [Discorb::User] The user.
+        attr_reader user: Discorb::User
+
+        # @return [Snowflake] The ID of member's team.
+        attr_reader team_id: Snowflake
+
+        # @return [:invited, :accepted] The member's membership state.
+        attr_reader membership_state: Symbol
+
+        # @return [Array<Symbol>] The permissions of the member.
+        # @note This always return `:*`.
+        attr_reader permissions: ::Array[Symbol]
+
+        # @return [Boolean] Whether the member is not joined to the team.
+        attr_reader pending?: bool
+
+        # @return [Boolean] Whether the member accepted joining the team.
+        attr_reader accepted?: bool
+
+        # @return [Boolean] Whether the member is the team's owner.
+        attr_reader owner?: bool
+      end
+    end
+  end
+end

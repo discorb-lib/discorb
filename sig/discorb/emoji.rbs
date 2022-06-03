@@ -1,0 +1,11 @@
+module Discorb
+  # Represents a Discord emoji.
+  # @abstract
+  class Emoji
+    def eql?: (untyped other) -> bool
+
+    def ==: (untyped other) -> untyped
+
+    def inspect: () -> untyped
+  end
+end

@@ -1,0 +1,13 @@
+module Discorb
+  #
+  # Represents a system channel flag.
+  # ## Flag fields
+  # |Field|Value|
+  # |-|-|
+  # |`1 << 0`|`:member_join`|
+  # |`1 << 1`|`:server_boost`|
+  # |`1 << 2`|`:setup_tips`|
+  # |`1 << 3`|`:join_stickers`|
+  class SystemChannelFlag < Discorb::Flag
+  end
+end

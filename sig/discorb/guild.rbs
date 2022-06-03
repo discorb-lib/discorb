@@ -1,0 +1,782 @@
+module Discorb
+  #
+  # Represents a guild in the Discord.
+  class Guild < Discorb::DiscordModel
+    include Discorb::ChannelContainer
+    MFA_LEVELS: untyped
+    NSFW_LEVELS: untyped
+    VERIFICATION_LEVELS: untyped
+    DEFAULT_MESSAGE_NOTIFICATIONS: untyped
+    EXPLICIT_CONTENT_FILTER: untyped
+
+    #
+    # Creates a new guild object.
+    # @private
+    #
+    # @param [Discorb::Client] client The client that owns this guild.
+    # @param [Hash] data The data of the guild.
+    # @param [Boolean] is_create_event Whether the guild is created by a `GUILD_CREATE` event.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data, bool is_create_event) -> void
+
+    def inspect: () -> untyped
+
+    #
+    # Leave the guild.
+    # @async
+    #
+    # @return [Async::Task<void>] The task.
+    def leave!: () -> Async::Task[void]
+
+    #
+    # Fetch scheduled events for the guild.
+    # @async
+    #
+    # @param [Boolean] with_user_count Whether to include the user count in the events.
+    #   Defaults to `true`.
+    #
+    # @return [Array<Discorb::ScheduledEvent>] The events for the guild.
+    def fetch_scheduled_events: (?with_user_count: bool) -> ::Array[Discorb::ScheduledEvent]
+
+    #
+    # Fetch the scheduled event by ID.
+    # @async
+    #
+    # @param [#to_s] id The ID of the scheduled event.
+    #
+    # @return [Async::Task<Discorb::ScheduledEvent>] The event with the given ID.
+    # @return [Async::Task<nil>] If no event with the given ID exists.
+    def fetch_scheduled_event: (_ToS id) -> Async::Task[Discorb::ScheduledEvent]
+
+    #
+    # Create a scheduled event for the guild.
+    # @async
+    #
+    # @param [:stage_instance, :voice, :external] type The type of event to create.
+    # @param [String] name The name of the event.
+    # @param [String] description The description of the event.
+    # @param [Time] start_time The start time of the event.
+    # @param [Time, nil] end_time The end time of the event. Defaults to `nil`.
+    # @param [Discorb::Channel, Discorb::Snowflake, nil] channel The channel to run the event in.
+    # @param [String, nil] location The location of the event. Defaults to `nil`.
+    # @param [:guild_only] privacy_level The privacy level of the event. This must be `:guild_only`.
+    #
+    # @return [Async::Task<Discorb::ScheduledEvent>] The created event.
+    def create_scheduled_event: (
+                                  Symbol type,
+                                  String name,
+                                  String description,
+                                  Time start_time,
+                                  ?Time? end_time,
+                                  ?privacy_level: Symbol,
+                                  ?location: String?,
+                                  ?channel: (Discorb::Channel | Discorb::Snowflake)?
+                                ) -> Async::Task[Discorb::ScheduledEvent]
+
+    #
+    # Fetch emoji list of the guild.
+    # @async
+    # @note This querys the API every time. We recommend using {#emojis} instead.
+    #
+    # @return [Async::Task<Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}>]
+    #   A dictionary of emoji in the guild.
+    def fetch_emoji_list: () -> Async::Task[Discorb::Dictionary[Discorb::Snowflake, Discorb::CustomEmoji]]
+
+    #
+    # Fetch emoji id of the guild.
+    # @async
+    # @note This querys the API every time. We recommend using {#emojis} instead.
+    #
+    # @param [#to_s] id The emoji id.
+    #
+    # @return [Async::Task<Discorb::CustomEmoji>] The emoji with the given id.
+    def fetch_emoji: (_ToS id) -> Async::Task[Discorb::CustomEmoji]
+
+    #
+    # Create a custom emoji.
+    # @async
+    #
+    # @param [#to_s] name The name of the emoji.
+    # @param [Discorb::Image] image The image of the emoji.
+    # @param [Array<Discorb::Role>] roles A list of roles to give the emoji.
+    #
+    # @return [Async::Task<Discorb::CustomEmoji>] The created emoji.
+    def create_emoji: (untyped name, Discorb::Image image, ?roles: ::Array[Discorb::Role]) -> Async::Task[Discorb::CustomEmoji]
+
+    #
+    # Fetch webhooks of the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::Webhook>>] A list of webhooks in the guild.
+    def fetch_webhooks: () -> Async::Task[::Array[Discorb::Webhook]]
+
+    #
+    # Fetch audit log of the guild.
+    # @async
+    #
+    # @return [Async::Task<Discorb::AuditLog>] The audit log of the guild.
+    def fetch_audit_log: () -> Async::Task[Discorb::AuditLog]
+
+    #
+    # Fetch channels of the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::Channel>>] A list of channels in the guild.
+    def fetch_channels: () -> Async::Task[::Array[Discorb::Channel]]
+
+    #
+    # Create a new text channel.
+    # @async
+    #
+    # @param [String] name The name of the channel.
+    # @param [String] topic The topic of the channel.
+    # @param [Integer] rate_limit_per_user The rate limit per user in the channel.
+    # @param [Integer] slowmode Alias for `rate_limit_per_user`.
+    # @param [Integer] position The position of the channel.
+    # @param [Boolean] nsfw Whether the channel is nsfw.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
+    #   A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Async::Task<Discorb::TextChannel>] The created text channel.
+    def create_text_channel: (
+                               String name,
+                               ?topic: String?,
+                               ?rate_limit_per_user: Integer?,
+                               ?slowmode: Integer?,
+                               ?position: Integer?,
+                               ?nsfw: bool?,
+                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
+                               ?parent: Discorb::CategoryChannel?,
+                               ?reason: String?
+                             ) -> Async::Task[Discorb::TextChannel]
+
+    #
+    # Create a new voice channel.
+    # @async
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] bitrate The bitrate of the channel.
+    # @param [Integer] user_limit The user limit of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
+    #   A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Async::Task<Discorb::VoiceChannel>] The created voice channel.
+    def create_voice_channel: (
+                                String name,
+                                ?bitrate: Integer,
+                                ?user_limit: Integer?,
+                                ?position: Integer?,
+                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
+                                ?parent: Discorb::CategoryChannel?,
+                                ?reason: String?
+                              ) -> Async::Task[Discorb::VoiceChannel]
+
+    # Create a new category channel.
+    # @async
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
+    #  A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Async::Task<Discorb::CategoryChannel>] The created category channel.
+    def create_category_channel: (
+                                   String name,
+                                   ?position: Integer?,
+                                   ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
+                                   ?parent: Discorb::CategoryChannel?,
+                                   ?reason: String?
+                                 ) -> Async::Task[Discorb::CategoryChannel]
+
+    #
+    # Create a new stage channel.
+    # @async
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] bitrate The bitrate of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
+    #   A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Async::Task<Discorb::StageChannel>] The created stage channel.
+    def create_stage_channel: (
+                                String name,
+                                ?bitrate: Integer,
+                                ?position: Integer?,
+                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
+                                ?parent: Discorb::CategoryChannel?,
+                                ?reason: String?
+                              ) -> Async::Task[Discorb::StageChannel]
+
+    #
+    # Create a new news channel.
+    # @async
+    #
+    # @param [String] name The name of the channel.
+    # @param [String] topic The topic of the channel.
+    # @param [Integer] rate_limit_per_user The rate limit per user in the channel.
+    # @param [Integer] slowmode Alias for `rate_limit_per_user`.
+    # @param [Integer] position The position of the channel.
+    # @param [Boolean] nsfw Whether the channel is nsfw.
+    # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
+    #   A list of permission overwrites.
+    # @param [Discorb::CategoryChannel] parent The parent of the channel.
+    # @param [String] reason The reason for creating the channel.
+    #
+    # @return [Async::Task<Discorb::NewsChannel>] The created news channel.
+    def create_news_channel: (
+                               String name,
+                               ?topic: String?,
+                               ?rate_limit_per_user: Integer?,
+                               ?slowmode: Integer?,
+                               ?position: Integer?,
+                               ?nsfw: bool?,
+                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
+                               ?parent: Discorb::CategoryChannel?,
+                               ?reason: String?
+                             ) -> Async::Task[Discorb::NewsChannel]
+
+    #
+    # Fetch a list of active threads in the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The list of threads.
+    def fetch_active_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
+
+    #
+    # Fetch a member in the guild.
+    # @async
+    #
+    # @param [#to_s] id The ID of the member to fetch.
+    #
+    # @return [Async::Task<Discorb::Member>] The member.
+    # @return [Async::Task<nil>] If the member is not found.
+    def fetch_member: (_ToS id) -> Async::Task[Discorb::Member]
+
+    # Fetch members in the guild.
+    # @async
+    # @macro members_intent
+    #
+    # @param [Integer] limit The maximum number of members to fetch, 0 for all.
+    # @param [Integer] after The ID of the member to start fetching after.
+    #
+    # @return [Async::Task<Array<Discorb::Member>>] The list of members.
+    def fetch_members: (?limit: Integer, ?after: Integer?) -> Async::Task[::Array[Discorb::Member]]
+
+    #
+    # Search for members by name in the guild.
+    # @async
+    #
+    # @param [String] name The name of the member to search for.
+    # @param [Integer] limit The maximum number of members to return.
+    #
+    # @return [Async::Task<Array<Discorb::Member>>] The list of members.
+    def fetch_members_named: (String name, ?limit: Integer) -> Async::Task[::Array[Discorb::Member]]
+
+    #
+    # Almost the same as {#fetch_members_named}, but returns a single member.
+    # @async
+    #
+    # @return [Async::Task<Discorb::Member>] The member.
+    # @return [Async::Task<nil>] If the member is not found.
+    def fetch_member_named: () -> Async::Task[Discorb::Member]
+
+    #
+    # Change nickname of client member.
+    # @async
+    #
+    # @param [String] nickname The nickname to set.
+    # @param [String] reason The reason for changing the nickname.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit_nickname: (String nickname, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Kick a member from the guild.
+    # @async
+    #
+    # @param [Discorb::Member] member The member to kick.
+    # @param [String] reason The reason for kicking the member.
+    #
+    # @return [Async::Task<void>] The task.
+    def kick_member: (Discorb::Member member, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Fetch a list of bans in the guild.
+    # @async
+    #
+    # @param [Integer] limit The number of bans to fetch.
+    # @param [Discorb::Snowflake] before The ID of the ban to fetch before.
+    # @param [Discorb::Snowflake] after The ID of the ban to fetch after.
+    # @param [Discorb::Snowflake] around The ID of the ban to fetch around.
+    #
+    # @return [Async::Task<Array<Discorb::Guild::Ban>>] The list of bans.
+    def fetch_bans: (
+                      ?Integer limit,
+                      ?before: Discorb::Snowflake?,
+                      ?after: Discorb::Snowflake?,
+                      ?around: Discorb::Snowflake?
+                    ) -> Async::Task[::Array[Discorb::Guild::Ban]]
+
+    #
+    # Fetch a ban in the guild.
+    # @async
+    #
+    # @param [Discorb::User] user The user to fetch.
+    #
+    # @return [Async::Task<Discorb::Guild::Ban>] The ban.
+    # @return [Async::Task<nil>] If the ban is not found.
+    def fetch_ban: (Discorb::User user) -> Async::Task[Discorb::Guild::Ban]
+
+    #
+    # Checks the user was banned from the guild.
+    # @async
+    #
+    # @param [Discorb::User] user The user to check.
+    #
+    # @return [Async::Task<Boolean>] Whether the user was banned.
+    def banned?: (Discorb::User user) -> Async::Task[bool]
+
+    #
+    # Ban a member from the guild.
+    # @async
+    #
+    # @param [Discorb::Member] member The member to ban.
+    # @param [Integer] delete_message_days The number of days to delete messages.
+    # @param [String] reason The reason for banning the member.
+    #
+    # @return [Async::Task<Discorb::Guild::Ban>] The ban.
+    def ban_member: (Discorb::Member member, ?delete_message_days: Integer, ?reason: String?) -> Async::Task[Discorb::Guild::Ban]
+
+    #
+    # Unban a user from the guild.
+    # @async
+    #
+    # @param [Discorb::User] user The user to unban.
+    # @param [String] reason The reason for unbanning the user.
+    #
+    # @return [Async::Task<void>] The task.
+    def unban_user: (Discorb::User user, ?reason: String?) -> Async::Task[void]
+
+    #
+    # Fetch a list of roles in the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::Role>>] The list of roles.
+    def fetch_roles: () -> Async::Task[::Array[Discorb::Role]]
+
+    #
+    # Create a role in the guild.
+    # @async
+    #
+    # @param [String] name The name of the role.
+    # @param [Discorb::Color] color The color of the role.
+    # @param [Boolean] hoist Whether the role should be hoisted.
+    # @param [Boolean] mentionable Whether the role should be mentionable.
+    # @param [String] reason The reason for creating the role.
+    #
+    # @return [Async::Task<Discorb::Role>] The role.
+    def create_role: (
+                       ?String? name,
+                       ?color: Discorb::Color?,
+                       ?hoist: bool?,
+                       ?mentionable: bool?,
+                       ?reason: String?
+                     ) -> Async::Task[Discorb::Role]
+
+    #
+    # Fetch how many members will be pruned.
+    # @async
+    #
+    # @param [Integer] days The number of days to prune.
+    # @param [Array<Discorb::Role>] roles The roles that include for pruning.
+    #
+    # @return [Async::Task<Integer>] The number of members that will be pruned.
+    def fetch_prune: (?Integer days, ?roles: ::Array[Discorb::Role]) -> Async::Task[Integer]
+
+    #
+    # Prune members from the guild.
+    # @async
+    #
+    # @param [Integer] days The number of days to prune.
+    # @param [Array<Discorb::Role>] roles The roles that include for pruning.
+    # @param [String] reason The reason for pruning.
+    #
+    # @return [Async::Task<Integer>] The number of members that were pruned.
+    def prune: (?Integer days, ?roles: ::Array[Discorb::Role], ?reason: String?) -> Async::Task[Integer]
+
+    #
+    # Fetch voice regions that are available in the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::VoiceRegion>>] The available voice regions.
+    def fetch_voice_regions: () -> Async::Task[::Array[Discorb::VoiceRegion]]
+
+    #
+    # Fetch invites in the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Invite>>] The invites.
+    def fetch_invites: () -> Async::Task[::Array[Invite]]
+
+    #
+    # Fetch integrations in the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::Integration>>] The integrations.
+    def fetch_integrations: () -> Async::Task[::Array[Discorb::Integration]]
+
+    #
+    # Fetch the widget of the guild.
+    # @async
+    #
+    # @return [Async::Task<Discorb::Guild::Widget>] The widget.
+    def fetch_widget: () -> Async::Task[Discorb::Guild::Widget]
+
+    #
+    # Fetch the vanity URL of the guild.
+    # @async
+    #
+    # @return [Async::Task<Discorb::Guild::VanityInvite>] The vanity URL.
+    def fetch_vanity_invite: () -> Async::Task[Discorb::Guild::VanityInvite]
+
+    #
+    # Fetch the welcome screen of the guild.
+    # @async
+    #
+    # @return [Async::Task<Discorb::WelcomeScreen>] The welcome screen.
+    def fetch_welcome_screen: () -> Async::Task[Discorb::WelcomeScreen]
+
+    #
+    # Fetch stickers in the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::Sticker::GuildSticker>>] The stickers.
+    def fetch_stickers: () -> Async::Task[::Array[Discorb::Sticker::GuildSticker]]
+
+    #
+    # Fetch the sticker by ID.
+    # @async
+    #
+    # @param [#to_s] id The ID of the sticker.
+    #
+    # @return [Async::Task<Discorb::Sticker::GuildSticker>] The sticker.
+    # @return [Async::Task<nil>] If the sticker does not exist.
+    def fetch_sticker: (_ToS id) -> Async::Task[Discorb::Sticker::GuildSticker]
+
+    #
+    # Fetch templates in the guild.
+    # @async
+    #
+    # @return [Async::Task<Discorb::GuildTemplate>] The templates.
+    def fetch_templates: () -> Async::Task[Discorb::GuildTemplate]
+
+    #
+    # Almost the same as {#fetch_templates}, but returns a single template.
+    #
+    # @return [Discorb::GuildTemplate] The template.
+    # @return [Async::Task<nil>] If the template does not exist.
+    def fetch_template: () -> Discorb::GuildTemplate
+
+    #
+    # Create a new template in the guild.
+    #
+    # @param [String] name The name of the template.
+    # @param [String] description The description of the template.
+    # @param [String] reason The reason for creating the template.
+    #
+    # @return [Async::Task<Discorb::GuildTemplate>] The template.
+    def create_template: (String name, ?String? description, ?reason: String?) -> Async::Task[Discorb::GuildTemplate]
+
+    #
+    # Returns a banner url from the guild's ID.
+    #
+    # @param [#to_s] guild_id The ID of the guild.
+    # @param [:shield, :banner1, :banner2, :banner3, :banner4] style The style of the banner.
+    #
+    # @return [String] The url of the banner.
+    def self.banner: (_ToS guild_id, ?style: Symbol) -> String
+
+    #
+    # Returns text channels.
+    #
+    # @return [Array<Discorb::TextChannel>] The text channels.
+    def text_channels: () -> ::Array[Discorb::TextChannel]
+
+    #
+    # Returns voice channels.
+    #
+    # @return [Array<Discorb::VoiceChannel>] The voice channels.
+    def voice_channels: () -> ::Array[Discorb::VoiceChannel]
+
+    #
+    # Returns news channels.
+    #
+    # @return [Array<Discorb::NewsChannel>] The news channels.
+    def news_channels: () -> ::Array[Discorb::NewsChannel]
+
+    #
+    # Returns stage channels.
+    #
+    # @return [Array<Discorb::StageChannel>] The stage channels.
+    def stage_channels: () -> ::Array[Discorb::StageChannel]
+
+    # @return [Discorb::Snowflake] ID of the guild.
+    attr_reader id: Discorb::Snowflake
+
+    # @return [String] The name of the guild.
+    attr_reader name: String
+
+    # @return [Discorb::Asset] The splash of the guild.
+    attr_reader splash: Discorb::Asset
+
+    # @return [Discorb::Asset] The discovery splash of the guild.
+    attr_reader discovery_splash: Discorb::Asset
+
+    # @return [Discorb::Snowflake] ID of the guild owner.
+    attr_reader owner_id: Discorb::Snowflake
+
+    # @return [Discorb::Permission] The bot's permission in the guild.
+    attr_reader permissions: Discorb::Permission
+
+    # @return [Integer] The AFK timeout of the guild.
+    attr_reader afk_timeout: Integer
+
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
+    attr_reader roles: Discorb::Dictionary[Discorb::Snowflake, Discorb::Role]
+
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::CustomEmoji}]
+    #   A dictionary of custom emojis in the guild.
+    attr_reader emojis: Discorb::Dictionary[Discorb::Snowflake, Discorb::CustomEmoji]
+
+    # @return [Array<Symbol>] features that are enabled in the guild.
+    # @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features Official Discord API docs
+    attr_reader features: ::Array[Symbol]
+
+    # @return [:none, :elevated] The MFA level of the guild.
+    attr_reader mfa_level: Symbol
+
+    # @return [Discorb::SystemChannelFlag] The flag for the system channel.
+    attr_reader system_channel_flags: Discorb::SystemChannelFlag
+
+    # @return [Time] Time that representing when bot has joined the guild.
+    attr_reader joined_at: Time
+
+    # @return [Boolean] Whether the guild is unavailable.
+    attr_reader unavailable: bool
+
+    # @return [Integer] The amount of members in the guild.
+    attr_reader member_count: Integer
+
+    # @return [Discorb::Asset] The icon of the guild.
+    attr_reader icon: Discorb::Asset
+
+    # @return [Discorb::Dictionary{Discorb::User => Discorb::VoiceState}] A dictionary of voice states in the guild.
+    attr_reader voice_states: Discorb::Dictionary[Discorb::User, Discorb::VoiceState]
+
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Member}] A dictionary of members in the guild.
+    # @macro members_intent
+    attr_reader members: Discorb::Dictionary[Discorb::Snowflake, Discorb::Member]
+
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::GuildChannel}] A dictionary of channels in the guild.
+    attr_reader channels: Discorb::Dictionary[Discorb::Snowflake, Discorb::GuildChannel]
+
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::ThreadChannel}] A dictionary of threads in the guild.
+    attr_reader threads: Discorb::Dictionary[Discorb::Snowflake, Discorb::ThreadChannel]
+
+    # @return [Discorb::Dictionary{Discorb::User => Discorb::Presence}] A dictionary of presence in the guild.
+    attr_reader presences: Discorb::Dictionary[Discorb::User, Discorb::Presence]
+
+    # @return [Integer] Number of online members in the guild.
+    attr_reader max_presences: Integer
+
+    # @return [String] The vanity invite URL for the guild.
+    # @return [nil] If the guild does not have a vanity invite URL.
+    attr_reader vanity_url_code: String?
+
+    # @return [String] The description of the guild.
+    attr_reader description: String
+
+    # @return [Discorb::Asset] The banner of the guild.
+    # @return [nil] If the guild does not have a banner.
+    attr_reader banner: Discorb::Asset?
+
+    # @return [Integer] The premium tier (Boost Level) of the guild.
+    attr_reader premium_tier: Integer
+
+    # @return [Integer] The amount of premium subscriptions (Server Boosts) the guild has.
+    attr_reader premium_subscription_count: Integer
+
+    # @return [Symbol] The preffered language of the guild.
+    # @note This modifies the language code, `-` will be replaced with `_`.
+    attr_reader preferred_locale: Symbol
+
+    # @return [Integer] The maximum amount of users in a video channel.
+    attr_reader max_video_channel_users: Integer
+
+    # @return [Integer] The approxmate amount of members in the guild.
+    attr_reader approximate_member_count: Integer
+
+    # @return [Integer] The approxmate amount of non-offline members in the guild.
+    attr_reader approximate_presence_count: Integer
+
+    # @return [Discorb::WelcomeScreen] The welcome screen of the guild.
+    attr_reader welcome_screen: Discorb::WelcomeScreen
+
+    # @return [:default, :explicit, :safe, :age_restricted] The nsfw level of the guild.
+    attr_reader nsfw_level: Symbol
+
+    # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::StageInstance}]
+    #   A dictionary of stage instances in the guild.
+    attr_reader stage_instances: Discorb::Dictionary[Discorb::Snowflake, Discorb::StageInstance]
+
+    # @return [:none, :low, :medium, :high, :very_high] The verification level of the guild.
+    attr_reader verification_level: Symbol
+
+    # @return [:all_messages, :only_mentions] The default message notification level of the guild.
+    attr_reader default_message_notifications: Symbol
+
+    # @return [:disabled_in_text, :members_without_roles, :all_members] The explict content filter level of the guild.
+    attr_reader explicit_content_filter: Symbol
+
+    # @return [Boolean] Whether the client is the owner of the guild.
+    attr_reader owner: bool
+
+    # @return [Boolean] Whether the guild is large.
+    attr_reader large: bool
+
+    # @return [Boolean] Whether the guild enabled the widget.
+    attr_reader widget_enabled: bool
+
+    # @return [Boolean] Whether the guild is available.
+    attr_reader available: bool
+
+    # @return [Dictionary{Discorb::Snowflake => Discorb::ScheduledEvent}] A dictionary of scheduled events in the guild.
+    attr_reader scheduled_events: Dictionary[Discorb::Snowflake, Discorb::ScheduledEvent]
+
+    # @return [Discorb::VoiceChannel] The AFK channel for this guild.
+    # @macro client_cache
+    attr_reader afk_channel: Discorb::VoiceChannel?
+
+    # @return [Discorb::TextChannel] The system message channel for this guild.
+    # @macro client_cache
+    attr_reader system_channel: Discorb::TextChannel?
+
+    # @return [Discorb::TextChannel] The rules channel for this guild.
+    # @macro client_cache
+    attr_reader rules_channel: Discorb::TextChannel?
+
+    # @return [Discorb::TextChannel] The public updates channel (`#moderator-only`) for this guild.
+    # @macro client_cache
+    attr_reader public_updates_channel: Discorb::TextChannel?
+
+    # @return [Discorb::Member] The client's member in the guild.
+    attr_reader me: Discorb::Member
+
+    #
+    # Represents a vanity invite.
+    class VanityInvite < Discorb::DiscordModel
+      #
+      # Initialize a new instance of the {VanityInvite} class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Discorb::Guild] guild The guild.
+      # @param [Hash] data The data of the invite.
+      def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+
+      # @return [String] The vanity invite code.
+      attr_reader code: String
+
+      # @return [Integer] The number of uses.
+      attr_reader uses: Integer
+
+      # @return [String] The vanity URL.
+      attr_reader url: String
+    end
+
+    #
+    # Represents a guild widget.
+    class Widget < Discorb::DiscordModel
+      #
+      # Initialize a new instance of the {Widget} class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Discorb::Snowflake] guild_id The guild ID.
+      # @param [Hash] data The data from Discord.
+      def initialize: (Discorb::Client client, Discorb::Snowflake guild_id, ::Hash[untyped, untyped] data) -> void
+
+      #
+      # Edit the widget.
+      # @async
+      # @macro edit
+      #
+      # @param [Boolean] enabled Whether the widget is enabled.
+      # @param [Discorb::GuildChannel] channel The channel.
+      # @param [String] reason The reason for editing the widget.
+      #
+      # @return [Async::Task<void>] The task.
+      def edit: (?enabled: bool?, ?channel: Discorb::GuildChannel?, ?reason: String?) -> Async::Task[void]
+
+      #
+      # Return iframe HTML of the widget.
+      #
+      # @param ["dark", "light"] theme The theme of the widget.
+      # @param [Integer] width The width of the widget.
+      # @param [Integer] height The height of the widget.
+      #
+      # @return [String] The iframe HTML.
+      def iframe: (?theme: ("dark" | "light"), ?width: Integer, ?height: Integer) -> String
+
+      # @return [Discorb::Snowflake] The guild ID.
+      attr_reader guild_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The channel ID.
+      attr_reader channel_id: Discorb::Snowflake
+
+      # @return [Boolean] Whether the widget is enabled.
+      attr_reader enabled: bool
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel.
+      attr_reader channel: Discorb::Channel?
+
+      # @macro client_cache
+      # @return [Discorb::Guild] The guild.
+      attr_reader guild: Discorb::Guild?
+
+      # @return [String] The JSON URL.
+      attr_reader json_url: String
+    end
+
+    #
+    # Represents a ban.
+    class Ban < Discorb::DiscordModel
+      #
+      # Initialize a new instance of the {Ban} class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Discorb::Guild] guild The guild.
+      # @param [Hash] data The data from Discord.
+      def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+
+      def inspect: () -> untyped
+
+      # @return [Discorb::User] The user.
+      attr_reader user: Discorb::User
+
+      # @return [String] The reason for the ban.
+      attr_reader reason: String
+    end
+  end
+end

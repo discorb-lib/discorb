@@ -1,0 +1,107 @@
+module Discorb
+  #
+  # Represents a select menu component.
+  class SelectMenu < Discorb::Component
+    #
+    # Initialize a new select menu.
+    #
+    # @param [String, Symbol] custom_id Custom ID of the select menu.
+    # @param [Array<Discorb::SelectMenu::Option>] options The options of the select menu.
+    # @param [String] placeholder The placeholder of the select menu.
+    # @param [Integer] min_values The minimum number of values.
+    # @param [Integer] max_values The maximum number of values.
+    def initialize: (
+                      (String | Symbol) custom_id,
+                      ::Array[Discorb::SelectMenu::Option] options,
+                      ?placeholder: String?,
+                      ?min_values: Integer,
+                      ?max_values: Integer
+                    ) -> void
+
+    #
+    # Converts the select menu to a hash.
+    #
+    # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure
+    #   Official Discord API docs
+    # @return [Hash] A hash representation of the select menu.
+    def to_hash: () -> ::Hash[untyped, untyped]
+
+    def inspect: () -> untyped
+
+    #
+    # Creates a new select menu from a hash.
+    #
+    # @param [Hash] data The hash to create the select menu from.
+    #
+    # @return [Discorb::SelectMenu] The created select menu.
+    def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::SelectMenu
+
+    # @return [String] The custom ID of the select menu.
+    attr_accessor custom_id: String
+
+    # @return [Array<SelectMenu::Option>] The options of the select menu.
+    attr_accessor options: ::Array[SelectMenu::Option]
+
+    # @return [Integer] The minimum number of values.
+    attr_accessor min_values: Integer
+
+    # @return [Integer] The maximum number of values.
+    attr_accessor max_values: Integer
+
+    # @return [Boolean] Whether the select menu is disabled.
+    attr_accessor disabled: bool
+
+    #
+    # Represents an option of a select menu.
+    class Option
+      #
+      # Initialize a new option.
+      #
+      # @param [String] label The label of the option.
+      # @param [String] value The value of the option.
+      # @param [String] description The description of the option.
+      # @param [Discorb::Emoji] emoji The emoji of the option.
+      # @param [Boolean] default Whether the option is default.
+      def initialize: (
+                        String label,
+                        String value,
+                        ?description: String?,
+                        ?emoji: Discorb::Emoji?,
+                        ?default: bool
+                      ) -> void
+
+      #
+      # Converts the option to a hash.
+      #
+      # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
+      #   Official Discord API docs
+      # @return [Hash] Hash representation of the option.
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      def inspect: () -> untyped
+
+      #
+      # Creates a new option from a hash.
+      #
+      # @param [Hash] data A hash representing the option.
+      #
+      # @return [Discorb::SelectMenu::Option] A new option.
+      def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::SelectMenu::Option
+
+      # @return [String] The label of the option.
+      attr_accessor label: String
+
+      # @return [String] The value of the option.
+      attr_accessor value: String
+
+      # @return [String] The description of the option.
+      attr_accessor description: String
+
+      # @return [Discorb::Emoji] The emoji of the option.
+      attr_accessor emoji: Discorb::Emoji
+
+      # @return [Boolean] Whether the option is default.
+      attr_accessor default: bool
+    end
+  end
+end

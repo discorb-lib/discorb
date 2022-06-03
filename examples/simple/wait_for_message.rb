@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "discorb"
 
 client = Discorb::Client.new
@@ -12,6 +13,8 @@ client.on :message do |message|
   next unless message.content == "!quiz"
 
   operator = %i[+ - *].sample
+  next unless operator
+
   num1 = rand(1..10)
   num2 = rand(1..10)
 

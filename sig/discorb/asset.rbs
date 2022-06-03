@@ -1,0 +1,32 @@
+module Discorb
+  #
+  # Represents a single asset.
+  class Asset < Discorb::DiscordModel
+    #
+    # Initialize a new instance of the Asset class.
+    # @private
+    #
+    # @param [Discorb::Client] client The client that instantiated the object.
+    # @param [Hash] data The data of the object.
+    def initialize: (untyped target, untyped hash, ?path: untyped) -> void
+
+    #
+    # URL of the asset.
+    #
+    # @param [String] image_format The image format.
+    # @param [Integer] size The size of the image.
+    #
+    # @return [String] URL of the asset.
+    def url: (?image_format: String?, ?size: Integer) -> String
+
+    def inspect: () -> untyped
+
+    def endpoint: () -> untyped
+
+    # @return [String] The hash of asset.
+    attr_reader hash: String
+
+    # @return [Boolean] Whether the asset is animated.
+    attr_reader animated?: bool
+  end
+end

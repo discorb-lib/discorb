@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+
 require "discorb"
 intents = Discorb::Intents.new
 intents.members = true
+
 client = Discorb::Client.new(intents: intents)
 
 def convert_role(guild, string)
@@ -15,6 +17,8 @@ client.once :standby do
 end
 
 client.on :reaction_add do |event|
+  next unless event.guild
+  next unless event.member
   next unless event.emoji.value.end_with?(0x0000fe0f.chr("utf-8") + 0x000020e3.chr("utf-8"))
   next if event.member.bot?
 
@@ -31,6 +35,7 @@ end
 
 client.on :reaction_remove do |event|
   next unless event.emoji.value.end_with?(0x0000fe0f.chr("utf-8") + 0x000020e3.chr("utf-8"))
+  next unless event.member
   next if event.member.bot?
 
   msg = event.fetch_message.wait
@@ -49,15 +54,21 @@ client.on :message do |message|
   next if message.author.bot?
 
   message.reply("Too many roles.") if message.content.split.length > 10
-  roles = message.content.delete_prefix("/rp ").split.map.with_index { |raw_role, index| [index, convert_role(message.guild, raw_role), raw_role] }
+  roles = message.content.delete_prefix("/rp ").split.map.with_index do |raw_role, index|
+    [index, convert_role(message.guild, raw_role), raw_role]
+  end
   if (convert_fails = roles.filter { |r| r[1].nil? }).length.positive?
     message.reply("#{convert_fails.map { |r| r[2] }.join(", ")} is not a role.")
     next
   end
-  rp_msg = message.channel.post(embed: Discorb::Embed.new(
-                                  "Role panel",
-                                  roles.map.with_index(1) { |r, index| "#{index}\ufe0f\u20e3#{r[1].mention}" }.join("\n")
-                                )).wait
+  rp_msg = message.channel.post(
+    embed: Discorb::Embed.new(
+      "Role panel",
+      roles.map.with_index(1) do |r, index|
+        "#{index}\ufe0f\u20e3#{r[1].mention}"
+      end.join("\n")
+    ),
+  ).wait
   1.upto(roles.length).each do |i|
     rp_msg.add_reaction(Discorb::UnicodeEmoji["#{i}\ufe0f\u20e3"]).wait
   end

@@ -1,0 +1,308 @@
+module Discorb
+  #
+  # Represents a webhook.
+  # @abstract
+  class Webhook
+    #
+    # Initializes a webhook.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the webhook.
+    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+    def inspect: () -> untyped
+
+    #
+    # Posts a message to the webhook.
+    # @async
+    #
+    # @param [String] content The content of the message.
+    # @param [Boolean] tts Whether the message should be sent as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Discorb::Attachment] attachment The attachment to send.
+    # @param [Array<Discorb::Attachment>] attachment The attachments to send.
+    # @param [String] username The username of the message.
+    # @param [String] avatar_url The avatar URL of the message.
+    # @param [Boolean] wait Whether to wait for the message to be sent.
+    #
+    # @return [Discorb::Webhook::Message] The message that was sent.
+    # @return [Async::Task<nil>] If `wait` is false.
+    def post: (
+                ?String? content,
+                ?tts: bool,
+                ?embed: Discorb::Embed?,
+                ?embeds: ::Array[Discorb::Embed]?,
+                ?allowed_mentions: Discorb::AllowedMentions?,
+                ?attachment: Discorb::Attachment?,
+                ?attachments: untyped,
+                ?username: String?,
+                ?avatar_url: String,
+                ?wait: bool
+              ) -> Discorb::Webhook::Message
+
+    #
+    # Edits the webhook.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The new name of the webhook.
+    # @param [Discorb::Image] avatar The new avatar of the webhook.
+    # @param [Discorb::GuildChannel] channel The new channel of the webhook.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit: (?name: String, ?avatar: Discorb::Image, ?channel: Discorb::GuildChannel) -> Async::Task[void]
+
+    #
+    # Deletes the webhook.
+    # @async
+    #
+    # @return [Async::Task<void>] The task.
+    def delete!: () -> Async::Task[void]
+
+    #
+    # Edits the webhook's message.
+    # @async
+    # @macro edit
+    #
+    # @param [Discorb::Webhook::Message] message The message to edit.
+    # @param [String] content The new content of the message.
+    # @param [Discorb::Embed] embed The new embed of the message.
+    # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
+    # @param [Discorb::Attachment] file The file to send.
+    # @param [Array<Discorb::Attachment>] files The files to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit_message: (
+                        Discorb::Webhook::Message message,
+                        ?String content,
+                        ?embed: Discorb::Embed,
+                        ?embeds: ::Array[Discorb::Embed],
+                        ?file: Discorb::Attachment,
+                        ?files: ::Array[Discorb::Attachment],
+                        ?attachments: ::Array[Discorb::Attachment],
+                        ?allowed_mentions: Discorb::AllowedMentions
+                      ) -> Async::Task[void]
+
+    #
+    # Deletes the webhook's message.
+    #
+    # @param [Discorb::Webhook::Message] message The message to delete.
+    #
+    # @return [Async::Task<void>] The task.
+    def delete_message!: (Discorb::Webhook::Message message) -> Async::Task[void]
+
+    #
+    # Creates URLWebhook.
+    #
+    # @param [String] url The URL of the webhook.
+    #
+    # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
+    def self.new: (String url) -> Discorb::Webhook::URLWebhook
+
+    #
+    # Creates Webhook with discord data.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data of the webhook.
+    #
+    # @return [Discorb::Webhook] The Webhook.
+    def self.from_data: (Discorb::Client client, ::Hash[untyped, untyped] data) -> Discorb::Webhook
+
+    def self.from_url: (untyped url) -> untyped
+
+    # @return [String] The name of the webhook.
+    attr_reader name: String
+
+    # @return [Discorb::Snowflake] The ID of the guild this webhook belongs to.
+    attr_reader guild_id: Discorb::Snowflake
+
+    # @return [Discorb::Snowflake] The ID of the channel this webhook belongs to.
+    attr_reader channel_id: Discorb::Snowflake
+
+    # @return [Discorb::User] The user that created this webhook.
+    attr_reader user: Discorb::User
+
+    # @return [Discorb::Asset] The avatar of the webhook.
+    attr_reader avatar: Discorb::Asset
+
+    # @return [Discorb::Snowflake] The application ID of the webhook.
+    # @return [nil] If the webhook is not an application webhook.
+    attr_reader application_id: Discorb::Snowflake?
+
+    # @return [String] The URL of the webhook.
+    attr_reader token: String
+
+    #
+    # Represents a webhook from URL.
+    class URLWebhook < Discorb::Webhook
+      #
+      # Initializes the webhook from URL.
+      #
+      # @param [String] url The URL of the webhook.
+      def initialize: (String url) -> void
+
+      # @return [String] The URL of the webhook.
+      attr_reader url: String
+    end
+
+    #
+    # Represents a bot created webhook.
+    class IncomingWebhook < Discorb::Webhook
+      #
+      # Initializes the incoming webhook.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [String] url The URL of the webhook.
+      def initialize: (Discorb::Client client, untyped data) -> void
+
+      # @return [String] The URL of the webhook.
+      attr_reader url: String
+    end
+
+    #
+    # Represents a webhook of channel following.
+    class FollowerWebhook < Discorb::Webhook
+      #
+      # Initializes the follower webhook.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The data of the follower webhook.
+      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+
+      # Represents a source guild of follower webhook.
+      # @return [Discorb::Guild, Discorb::Webhook::FollowerWebhook::Guild] The source guild of follower webhook.
+      attr_reader source_guild: (Discorb::Guild | Discorb::Webhook::FollowerWebhook::Guild)
+
+      # Represents a source channel of follower webhook.
+      # @return [Discorb::Channel, Discorb::Webhook::FollowerWebhook::Channel] The source channel of follower webhook.
+      attr_reader source_channel: (Discorb::Channel | Discorb::Webhook::FollowerWebhook::Channel)
+
+      #
+      # Represents a guild of follower webhook.
+      class Guild < Discorb::DiscordModel
+        #
+        # Initialize a new guild.
+        # @private
+        #
+        # @param [Hash] data The data of the guild.
+        def initialize: (::Hash[untyped, untyped] data) -> void
+
+        def inspect: () -> untyped
+
+        # @return [Discorb::Snowflake] The ID of the guild.
+        attr_reader id: Discorb::Snowflake
+
+        # @return [String] The name of the guild.
+        attr_reader name: String
+
+        # @return [Discorb::Asset] The icon of the guild.
+        attr_reader icon: Discorb::Asset
+      end
+
+      #
+      # Represents a channel of follower webhook.
+      class Channel < Discorb::DiscordModel
+        #
+        # Initialize a new channel.
+        # @private
+        #
+        # @param [Hash] data The data of the channel.
+        def initialize: (::Hash[untyped, untyped] data) -> void
+
+        def inspect: () -> untyped
+
+        # @return [Discorb::Snowflake] The ID of the channel.
+        attr_reader id: Discorb::Snowflake
+
+        # @return [String] The name of the channel.
+        attr_reader name: String
+      end
+    end
+
+    #
+    # Represents a webhook from oauth2.
+    class ApplicationWebhook < Discorb::Webhook
+    end
+
+    #
+    # Represents a webhook message.
+    class Message < Discorb::Message
+      MESSAGE_TYPE: untyped
+
+      #
+      # Initializes the message.
+      # @private
+      #
+      # @param [Discorb::Webhook] webhook The webhook.
+      # @param [Hash] data The data of the message.
+      # @param [Discorb::Client] client The client. This will be nil if it's created from {URLWebhook}.
+      def initialize: (Discorb::Webhook webhook, ::Hash[untyped, untyped] data, ?Discorb::Client? client) -> void
+
+      #
+      # Edits the message.
+      # @async
+      # @macro edit
+      #
+      # @param (see Webhook#edit_message)
+      #
+      # @return [Async::Task<void>] The task.
+      def edit: () -> Async::Task[void]
+
+      #
+      # Deletes the message.
+      # @async
+      #
+      # @return [Async::Task<void>] The task.
+      def delete!: () -> Async::Task[void]
+
+      # @return [Discorb::Snowflake] The ID of the channel.
+      attr_reader channel_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the guild.
+      attr_reader guild_id: Discorb::Snowflake
+
+      #
+      # Represents an author of webhook message.
+      class Author < Discorb::DiscordModel
+        #
+        # Initializes the author.
+        # @private
+        #
+        # @param [Hash] data The data of the author.
+        def initialize: (::Hash[untyped, untyped] data) -> void
+
+        #
+        # Format author with `Name#Discriminator` style.
+        #
+        # @return [String] Formatted author.
+        def to_s: () -> String
+
+        def inspect: () -> untyped
+
+        # @return [Boolean] Whether the author is a bot.
+        # @note This will be always `true`.
+        attr_reader bot: bool
+
+        # @return [Discorb::Snowflake] The ID of the author.
+        attr_reader id: Discorb::Snowflake
+
+        # @return [String] The name of the author.
+        attr_reader username: String
+
+        # @return [Discorb::Asset] The avatar of the author.
+        attr_reader avatar: Discorb::Asset
+
+        # @return [String] The discriminator of the author.
+        attr_reader discriminator: String
+      end
+    end
+  end
+end

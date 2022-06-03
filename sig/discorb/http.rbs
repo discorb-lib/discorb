@@ -27,7 +27,7 @@ module Discorb
     # @raise [Discorb::HTTPError] The request was failed.
     def request: (
                    Discorb::Route path,
-                   ?json body,
+                   ?(json | String) body,
                    ?audit_log_reason: String?,
                    **::Hash[Symbol, String] kwargs
                  ) -> Async::Task[[Net::HTTPResponse, json?]]
@@ -49,7 +49,7 @@ module Discorb
     # @raise [Discorb::HTTPError] The request was failed.
     def multipart_request: (
                              Discorb::Route path,
-                             json body,
+                             (json | String) body,
                              ::Array[Discorb::Attachment] files,
                              ?audit_log_reason: String?,
                              **::Hash[Symbol, String] kwargs
@@ -62,18 +62,18 @@ module Discorb
     def handle_response: (
                            Net::HTTPResponse resp,
                            json data,
-                           String path,
-                           String body,
+                           Discorb::Route path,
+                           (json | String) body,
                            ::Array[Discorb::Attachment]? files,
-                           String audit_log_reason,
-                           ::Hash[Symbol, String] kwargs
+                           String? audit_log_reason,
+                           ::Hash[Symbol, untyped] kwargs
                          ) -> [Net::HTTPResponse, json?]
 
-    def get_headers: (?String body, ?String audit_log_reason) -> ::Hash[String, String]
+    def get_headers: (?(String | json) body, ?String? audit_log_reason) -> ::Hash[String, String]
 
-    def get_body: ((nil | String | ::Hash[untyped, String]) body) -> String
+    def get_body: ((nil | String | json) body) -> String
 
-    def get_path: (String path) -> String
+    def get_path: (Discorb::Route path) -> String
 
     def get_response_data: (Net::HTTPResponse resp) -> json?
 
@@ -82,5 +82,56 @@ module Discorb
     def cdn_http: () -> Net::HTTP
 
     def recr_utf8: [O] (O data) -> O
+  end
+
+  #
+  # Represents an endpoint.
+  # @private
+  class Route
+    def initialize: (untyped url, untyped key, untyped method) -> void
+
+    def inspect: () -> untyped
+
+    def hash: () -> untyped
+
+    def identifier: () -> untyped
+
+    def major_param: () -> untyped
+
+    # Returns the value of attribute url.
+    attr_reader url: untyped
+
+    # Returns the value of attribute key.
+    attr_reader key: untyped
+
+    # Returns the value of attribute method.
+    attr_reader method: untyped
+  end
+
+  #
+  # Class to handle rate limiting.
+  # @private
+  class RatelimitHandler
+    #
+    # Initialize a rate limit handler.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    def initialize: (Discorb::Client client) -> void
+
+    def inspect: () -> untyped
+
+    #
+    # Wait for the rate limit to reset.
+    #
+    # @param [Discorb::Route] path The path.
+    def wait: (Discorb::Route path) -> untyped
+
+    #
+    # Save the rate limit.
+    #
+    # @param [String] path The path.
+    # @param [Net::HTTPResponse] resp The response.
+    def save: (String path, Net::HTTPResponse resp) -> untyped
   end
 end

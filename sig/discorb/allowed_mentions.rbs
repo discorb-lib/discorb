@@ -1,0 +1,44 @@
+module Discorb
+  #
+  # Represents a allowed mentions in a message.
+  class AllowedMentions
+    #
+    # Initializes a new instance of the AllowedMentions class.
+    #
+    # @param [Boolean] everyone Whether to allow @everyone or @here.
+    # @param [Boolean, Array<Discorb::Role>] roles The roles to allow, or false to disable.
+    # @param [Boolean, Array<Discorb::User>] users The users to allow, or false to disable.
+    # @param [Boolean] replied_user Whether to ping the user that sent the message to reply.
+    def initialize: (
+                      ?everyone: bool?,
+                      ?roles: (bool | ::Array[Discorb::Role])?,
+                      ?users: (bool | ::Array[Discorb::User])?,
+                      ?replied_user: bool?
+                    ) -> void
+
+    def inspect: () -> untyped
+
+    #
+    # Converts the object to a hash.
+    # @private
+    #
+    # @param [Discorb::AllowedMentions, nil] other The object to merge.
+    #
+    # @return [Hash] The hash.
+    def to_hash: (?Discorb::AllowedMentions? other) -> ::Hash[untyped, untyped]
+
+    def nil_merge: (*untyped args) -> untyped
+
+    # @return [Boolean] Whether to allow @everyone or @here.
+    attr_accessor everyone: bool?
+
+    # @return [Boolean, Array<Discorb::Role>] The roles to allow, or false to disable.
+    attr_accessor roles: (bool | ::Array[Discorb::Role])?
+
+    # @return [Boolean, Array<Discorb::User>] The users to allow, or false to disable.
+    attr_accessor users: (bool | ::Array[Discorb::User])?
+
+    # @return [Boolean] Whether to ping the user that sent the message to reply.
+    attr_accessor replied_user: bool?
+  end
+end

@@ -1,0 +1,33 @@
+module Discorb
+  #
+  # Represents a reaction to a message.
+  class Reaction < Discorb::DiscordModel
+    #
+    # Initialize a new reaction.
+    # @private
+    #
+    # @param [Discorb::Message] message The message that this reaction is on.
+    # @param [Hash] data The data of the reaction.
+    def initialize: (Discorb::Message message, ::Hash[untyped, untyped] data) -> void
+
+    #
+    # Fetch the user that reacted with this emoji.
+    #
+    # @param (see Message#fetch_reacted_users)
+    #
+    # @return [Async::Task<Array<Discorb::User>>] The users that reacted with this emoji.
+    def fetch_users: () -> Async::Task[::Array[Discorb::User]]
+
+    # @return [Integer] The number of users that have reacted with this emoji.
+    attr_reader count: Integer
+
+    # @return [Discorb::Emoji, Discorb::PartialEmoji] The emoji that was reacted with.
+    attr_reader emoji: Discorb::Emoji | Discorb::PartialEmoji
+
+    # @return [Discorb::Message] The message that this reaction is on.
+    attr_reader message: Discorb::Message
+
+    # @return [Boolean] Whether client user reacted with this emoji.
+    attr_reader me: bool
+  end
+end

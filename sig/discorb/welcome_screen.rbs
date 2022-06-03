@@ -1,0 +1,70 @@
+module Discorb
+  #
+  # Represents a welcome screen.
+  class WelcomeScreen < Discorb::DiscordModel
+    #
+    # Initializes the welcome screen.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Discorb::Guild] guild The guild the welcome screen belongs to.
+    # @param [Hash] data The data of the welcome screen.
+    def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+
+    # @return [String] The description of the welcome screen.
+    attr_reader description: String
+
+    # @return [Array<Discorb::WelcomeScreen::Channel>] The channels to display the welcome screen.
+    attr_reader channels: ::Array[Discorb::WelcomeScreen::Channel]
+
+    # @return [Discorb::Guild] The guild the welcome screen belongs to.
+    attr_reader guild: Discorb::Guild
+
+    #
+    # Represents a channel to display the welcome screen.
+    class Channel < Discorb::DiscordModel
+      #
+      # Initialize a new welcome screen channel.
+      #
+      # @param [Discorb::TextChannel] channel The channel to display the welcome screen.
+      # @param [String] description The channel's name.
+      # @param [Discorb::Emoji] emoji The emoji to display.
+      def initialize: (Discorb::TextChannel channel, String description, Discorb::Emoji emoji) -> void
+
+      #
+      # Converts the channel to a hash.
+      #
+      # @return [Hash] The hash.
+      # @see https://discord.com/developers/docs/resources/guild#welcome-screen-object
+      def to_hash: () -> ::Hash[untyped, untyped]
+
+      #
+      # Edits the welcome screen.
+      # @async
+      # @macro edit
+      #
+      # @param [Boolean] enabled Whether the welcome screen is enabled.
+      # @param [Array<Discorb::WelcomeScreen::Channel>] channels The channels to display the welcome screen.
+      # @param [String] description The description of the welcome screen.
+      # @param [String] reason The reason for editing the welcome screen.
+      #
+      # @return [Async::Task<void>] The task.
+      def edit: (
+                  ?enabled: bool,
+                  ?channels: ::Array[Discorb::WelcomeScreen::Channel],
+                  ?description: String,
+                  ?reason: String?
+                ) -> Async::Task[void]
+
+      # @return [String] The channel's name.
+      attr_reader description: String
+
+      # @return [Discorb::Emoji] The emoji to display.
+      attr_reader emoji: Discorb::Emoji
+
+      # @macro client_cache
+      # @return [Discorb::Channel] The channel to display the welcome screen.
+      attr_reader channel: Discorb::Channel?
+    end
+  end
+end

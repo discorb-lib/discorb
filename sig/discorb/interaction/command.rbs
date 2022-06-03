@@ -1,0 +1,108 @@
+module Discorb
+  #
+  # Represents a command interaction.
+  class CommandInteraction < Discorb::Interaction
+    include Discorb::Interaction::SourceResponder
+    include Discorb::Interaction::ModalResponder
+
+    #
+    # Creates a new CommandInteraction instance for the given data.
+    # @private
+    #
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The data for the command.
+    def self.make_interaction: (Discorb::Client client, ::Hash[untyped, untyped] data) -> untyped
+
+    #
+    # Returns the classes under this class.
+    # @private
+    def self.nested_classes: () -> untyped
+
+    #
+    # Response with `MODAL`(`9`).
+    #
+    # @param [String] title The title of the modal.
+    # @param [String] custom_id The custom id of the modal.
+    # @param [Array<Discorb::TextInput>] components The text inputs to send.
+    #
+    # @return [Async::Task<void>] The task.
+    def show_modal: (String title, String custom_id, ::Array[Discorb::TextInput] components) -> Async::Task[void]
+
+    #
+    # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
+    #
+    # @async
+    #
+    # @param [Boolean] ephemeral Whether to make the response ephemeral.
+    #
+    # @return [Async::Task<void>] The task.
+    def defer_source: (?ephemeral: bool) -> Async::Task[void]
+
+    #
+    # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
+    #
+    # @async
+    #
+    # @param [String] content The content of the response.
+    # @param [Boolean] tts Whether to send the message as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+    # @param [Boolean] ephemeral Whether to make the response ephemeral.
+    #
+    # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message]
+    #   The callback message.
+    def post: (
+                ?String? content,
+                ?tts: bool,
+                ?embed: Discorb::Embed?,
+                ?embeds: ::Array[Discorb::Embed]?,
+                ?allowed_mentions: Discorb::AllowedMentions?,
+                ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
+                ?ephemeral: bool
+              ) -> (Discorb::Interaction::SourceResponder::CallbackMessage | Discorb::Webhook::Message)
+
+    #
+    # Represents a slash command interaction.
+    class ChatInputCommand < Discorb::CommandInteraction
+      #
+      # Get command data from the given data.
+      # @private
+      #
+      # @param [Hash] data The data of the command.
+      def self.get_command_data: (::Hash[untyped, untyped] data) -> untyped
+
+      #
+      # Modify the option map with the given options.
+      # @private
+      #
+      # @param [Hash] option_map The option map to modify.
+      # @param [Array<Hash>] options The options for modifying.
+      # @param [Discorb::Guild] guild The guild where the command is executed.
+      # @param [{Discorb::Snowflake => Discorb::Member}] members The cached members of the guild.
+      # @param [{Integer => Discorb::Attachment}] attachments The cached attachments of the message.
+      def self.modify_option_map: (
+                                    ::Hash[untyped, untyped] option_map,
+                                    ::Array[::Hash[untyped, untyped]] options,
+                                    Discorb::Guild guild,
+                                    ::Hash[Discorb::Snowflake, Discorb::Member] members,
+                                    ::Hash[Integer, Discorb::Attachment] attachments
+                                  ) -> untyped
+    end
+
+    #
+    # Represents a user context menu interaction.
+    class UserMenuCommand < Discorb::CommandInteraction
+      # @return [Discorb::Member, Discorb::User] The target user.
+      attr_reader target: (Discorb::Member | Discorb::User)
+    end
+
+    #
+    # Represents a message context menu interaction.
+    class MessageMenuCommand < Discorb::CommandInteraction
+      # @return [Discorb::Message] The target message.
+      attr_reader target: Discorb::Message
+    end
+  end
+end

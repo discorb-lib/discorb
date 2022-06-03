@@ -512,7 +512,7 @@ module Discorb
     end
 
     def run_setup(token)
-      guild_ids = "global"
+      guild_ids = false
       if guilds = ENV.fetch("DISCORB_SETUP_GUILDS", nil)
         guild_ids = guilds.split(",")
       end
@@ -552,8 +552,9 @@ module Discorb
     end
 
     def session_id=(value)
-      if shard_id
-        @shards[shard_id].session_id = value
+      sid = shard_id
+      if sid
+        @shards[sid].session_id = value
       else
         @session_id = value
       end

@@ -1,0 +1,48 @@
+module Discorb
+  #
+  # Represents a modal interaction.
+  class ModalInteraction < Discorb::Interaction
+    include Discorb::Interaction::SourceResponder
+
+    #
+    # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
+    #
+    # @async
+    #
+    # @param [Boolean] ephemeral Whether to make the response ephemeral.
+    #
+    # @return [Async::Task<void>] The task.
+    def defer_source: (?ephemeral: bool) -> Async::Task[void]
+
+    #
+    # Response with `CHANNEL_MESSAGE_WITH_SOURCE`(`4`).
+    #
+    # @async
+    #
+    # @param [String] content The content of the response.
+    # @param [Boolean] tts Whether to send the message as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+    # @param [Boolean] ephemeral Whether to make the response ephemeral.
+    #
+    # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message]
+    #   The callback message.
+    def post: (
+                ?String? content,
+                ?tts: bool,
+                ?embed: Discorb::Embed?,
+                ?embeds: ::Array[Discorb::Embed]?,
+                ?allowed_mentions: Discorb::AllowedMentions?,
+                ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
+                ?ephemeral: bool
+              ) -> (Discorb::Interaction::SourceResponder::CallbackMessage | Discorb::Webhook::Message)
+
+    # @return [String] The custom id of the modal.
+    attr_reader custom_id: String
+
+    # @return [{String => String}] The contents of the modal.
+    attr_reader contents: ::Hash[String, String]
+  end
+end

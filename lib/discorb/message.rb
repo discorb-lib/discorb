@@ -402,7 +402,7 @@ module Discorb
     # Fetch reacted users of reaction.
     # @async
     #
-    # @param [Discorb::Emoji] emoji The emoji to fetch.
+    # @param [Discorb::Emoji, Discorb::PartialEmoji] emoji The emoji to fetch.
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #

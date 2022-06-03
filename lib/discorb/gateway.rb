@@ -588,6 +588,8 @@ module Discorb
     # A module to handle gateway events.
     #
     module Handler
+      # @type instance: Discorb::Client
+
       private
 
       def connect_gateway(reconnect)
@@ -1173,7 +1175,7 @@ module Discorb
               target_reaction.instance_variable_set(:@count, target_reaction.count + 1)
             else
               target_message.reactions << Reaction.new(
-                self,
+                target_message,
                 {
                   count: 1,
                   me: @user.id == data[:user_id],

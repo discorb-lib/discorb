@@ -1,0 +1,223 @@
+module Discorb
+  #
+  # Represents a Discord audit log.
+  class AuditLog < Discorb::DiscordModel
+    #
+    # Initializes a new instance of the AuditLog class.
+    # @private
+    def initialize: (untyped client, untyped data, untyped guild) -> void
+
+    def inspect: () -> untyped
+
+    #
+    # Gets an entry from entries.
+    #
+    # @param [Integer] index The index of the entry.
+    #
+    # @return [Discorb::AuditLog::Entry] The entry.
+    # @return [nil] If the index is out of range.
+    def []: (Integer index) -> Discorb::AuditLog::Entry
+
+    # @return [Array<Discorb::Webhook>] The webhooks in this audit log.
+    attr_reader webhooks: ::Array[Discorb::Webhook]
+
+    # @return [Array<Discorb::User>] The users in this audit log.
+    attr_reader users: ::Array[Discorb::User]
+
+    # @return [Array<Discorb::ThreadChannel>] The threads in this audit log.
+    attr_reader threads: ::Array[Discorb::ThreadChannel]
+
+    # @return [Array<Discorb::AuditLog::Entry>] The entries in this audit log.
+    attr_reader entries: ::Array[Discorb::AuditLog::Entry]
+
+    #
+    # Represents an entry in an audit log.
+    class Entry < Discorb::DiscordModel
+      EVENTS: untyped
+      CONVERTERS: untyped
+
+      #
+      # Initializes a new AuditLog entry.
+      # @private
+      def initialize: (untyped client, untyped data, _ToS guild_id) -> void
+
+      #
+      # Get a change with the given key.
+      #
+      # @param [Symbol] key The key to get.
+      #
+      # @return [Discorb::AuditLog::Entry::Change] The change with the given key.
+      # @return [nil] The change with the given key does not exist.
+      def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
+
+      def inspect: () -> untyped
+
+      # @return [Discorb::Snowflake] The ID of the entry.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the user who performed the action.
+      attr_reader user_id: Discorb::Snowflake
+
+      # @return [Discorb::Snowflake] The ID of the target of the action.
+      attr_reader target_id: Discorb::Snowflake
+
+      # @return [Symbol] The type of the entry.
+      # These symbols will be used:
+      #
+      # * `:guild_update`
+      # * `:channel_create`
+      # * `:channel_update`
+      # * `:channel_delete`
+      # * `:channel_overwrite_create`
+      # * `:channel_overwrite_update`
+      # * `:channel_overwrite_delete`
+      # * `:member_kick`
+      # * `:member_prune`
+      # * `:member_ban_add`
+      # * `:member_ban_remove`
+      # * `:member_update`
+      # * `:member_role_update`
+      # * `:member_move`
+      # * `:member_disconnect`
+      # * `:bot_add`
+      # * `:role_create`
+      # * `:role_update`
+      # * `:role_delete`
+      # * `:invite_create`
+      # * `:invite_update`
+      # * `:invite_delete`
+      # * `:webhook_create`
+      # * `:webhook_update`
+      # * `:webhook_delete`
+      # * `:emoji_create`
+      # * `:emoji_update`
+      # * `:emoji_delete`
+      # * `:message_delete`
+      # * `:message_bulk_delete`
+      # * `:message_pin`
+      # * `:message_unpin`
+      # * `:integration_create`
+      # * `:integration_update`
+      # * `:integration_delete`
+      # * `:stage_instance_create`
+      # * `:stage_instance_update`
+      # * `:stage_instance_delete`
+      # * `:sticker_create`
+      # * `:sticker_update`
+      # * `:sticker_delete`
+      # * `:guild_scheduled_event_create`
+      # * `:guild_scheduled_event_update`
+      # * `:guild_scheduled_event_delete`
+      # * `:thread_create`
+      # * `:thread_update`
+      # * `:thread_delete`
+      # * `:application_command_permission_update``
+      attr_reader type: Symbol
+
+      # @return [Discorb::AuditLog::Entry::Changes] The changes in this entry.
+      attr_reader changes: Discorb::AuditLog::Entry::Changes
+
+      # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message]
+      #   The target of the entry.
+      attr_reader target: (Discorb::Channel | Discorb::Role | Discorb::Member | Discorb::Guild | Discorb::Message)
+
+      # @return [Hash{Symbol => Object}] The optional data for this entry.
+      # @note You can use dot notation to access the data.
+      attr_reader options: ::Hash[Symbol, Object]
+
+      # @return [Discorb::User] The user who performed the action.
+      attr_reader user: Discorb::User
+
+      #
+      # Represents the changes in an audit log entry.
+      class Changes < Discorb::DiscordModel
+        #
+        # Initializes a new changes object.
+        # @private
+        #
+        # @param [Hash] data The data to initialize with.
+        def initialize: (::Hash[untyped, untyped] data) -> void
+
+        #
+        # Formats the changes into a string.
+        def inspect: () -> untyped
+
+        #
+        # Get keys of changes.
+        #
+        # @return [Array<Symbol>] The keys of the changes.
+        def keys: () -> ::Array[Symbol]
+
+        #
+        # Get a change with the given key.
+        #
+        # @param [Symbol] key The key to get.
+        #
+        # @return [Discorb::AuditLog::Entry::Change] The change with the given key.
+        # @return [nil] The change with the given key does not exist.
+        def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
+
+        # Returns the value of attribute data.
+        attr_reader data: untyped
+      end
+
+      #
+      # Represents a change in an audit log entry.
+      # @note This instance will try to call a method of {#new_value} if the method wasn't defined.
+      class Change < Discorb::DiscordModel
+        #
+        # Initializes a new change object.
+        # @private
+        def initialize: (untyped data) -> void
+
+        #
+        # Send a message to the new value.
+        def method_missing: (untyped method) -> untyped
+
+        #
+        # Format the change into a string.
+        #
+        # @return [String] The string representation of the change.
+        def inspect: () -> String
+
+        #
+        # Whether the change responds to the given method.
+        #
+        # @return [Boolean] Whether the change responds to the given method.
+        def respond_to_missing?: (untyped method, ?untyped include_private) -> bool
+
+        # @return [Symbol] The key of the change.
+        attr_reader key: Symbol
+
+        # @return [Object] The old value of the change.
+        attr_reader old_value: Object
+
+        # @return [Object] The new value of the change.
+        attr_reader new_value: Object
+      end
+    end
+
+    #
+    # Represents an integration in an audit log entry.
+    class Integration < Discorb::DiscordModel
+      #
+      # Initializes a new integration object.
+      # @private
+      def initialize: (untyped data) -> void
+
+      def inspect: () -> untyped
+
+      # @return [Discorb::Snowflake] The ID of the integration.
+      attr_reader id: Discorb::Snowflake
+
+      # @return [Symbol] The type of the integration.
+      attr_reader type: Symbol
+
+      # @return [String] The name of the integration.
+      attr_reader name: String
+
+      # @return [Discorb::Integration::Account] The account of the integration.
+      attr_reader account: Discorb::Integration::Account
+    end
+  end
+end

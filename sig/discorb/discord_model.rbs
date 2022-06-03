@@ -1,0 +1,15 @@
+module Discorb
+  #
+  # @abstract
+  # Represents Discord model.
+  class DiscordModel
+    def eql?: (untyped other) -> bool
+
+    def ==: (untyped other) -> untyped
+
+    def inspect: () -> untyped
+
+    # @private
+    def hash: () -> untyped
+  end
+end

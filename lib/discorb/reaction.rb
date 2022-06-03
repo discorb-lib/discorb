@@ -7,7 +7,7 @@ module Discorb
   class Reaction < DiscordModel
     # @return [Integer] The number of users that have reacted with this emoji.
     attr_reader :count
-    # @return [Discorb::Emoji] The emoji that was reacted with.
+    # @return [Discorb::Emoji, Discorb::PartialEmoji] The emoji that was reacted with.
     attr_reader :emoji
     # @return [Discorb::Message] The message that this reaction is on.
     attr_reader :message
@@ -33,7 +33,7 @@ module Discorb
     #
     # @param (see Message#fetch_reacted_users)
     #
-    # @return [Array<Discorb::User>] The users that reacted with this emoji.
+    # @return [Async::Task<Array<Discorb::User>>] The users that reacted with this emoji.
     #
     def fetch_users(...)
       message.fetch_reacted_users(@emoji, ...)

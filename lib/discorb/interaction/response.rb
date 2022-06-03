@@ -291,7 +291,7 @@ module Discorb
           end
           @client.http.multipart_request(
             Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback",
-                      :post), { type: 7, data: payload }
+                      :post), { type: 7, data: payload }, attachments
           ).wait
         end
       end
