@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "net/https"
+require "net/http"
 
 module Discorb
   #
@@ -128,7 +128,7 @@ module Discorb
         @client.logger.info("Rate limit exceeded for #{path.method} #{path.url}, waiting #{data[:retry_after]} seconds")
         sleep(data[:retry_after])
         if files
-          multipart_request(path, body, files, audit_log_reason: audit_log_reason, **kwargs)
+          multipart_request(path, body, files, audit_log_reason: audit_log_reason, **kwargs).wait
         else
           request(path, body, audit_log_reason: audit_log_reason, **kwargs).wait
         end
@@ -149,13 +149,15 @@ module Discorb
       ret = if body.nil? || body == ""
           {
             "User-Agent" => USER_AGENT,
-            "authorization" => "Bot #{@client.token}",
+            "Authorization" => "Bot #{@client.token}",
+            "Connection" => "Keep-Alive",
           }
         else
           {
             "User-Agent" => USER_AGENT,
-            "authorization" => "Bot #{@client.token}",
-            "content-type" => "application/json",
+            "Authorization" => "Bot #{@client.token}",
+            "Content-Type" => "application/json",
+            "Connection" => "Keep-Alive",
           }
         end
       ret["X-Audit-Log-Reason"] = audit_log_reason unless audit_log_reason.nil?
@@ -198,15 +200,23 @@ module Discorb
     end
 
     def http
-      https = Net::HTTP.new("discord.com", 443)
-      https.use_ssl = true
-      https
+      if @http.nil?
+        http = Net::HTTP.new("discord.com", 443)
+        http.use_ssl = true
+        http.start
+        @http = http
+      end
+      @http
     end
 
     def cdn_http
-      https = Net::HTTP.new("cdn.discordapp.com", 443)
-      https.use_ssl = true
-      https
+      if @cdn_http.nil?
+        http = Net::HTTP.new("cdn.discordapp.com", 443)
+        http.use_ssl = true
+        http.start
+        @cdn_http = http
+      end
+      @cdn_http
     end
 
     def recr_utf8(data)
