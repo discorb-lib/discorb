@@ -147,7 +147,7 @@ module Discorb
       @flag = User::Flag.new(data[:public_flags] | (data[:flags] || 0))
       @discriminator = data[:discriminator]
       @avatar = data[:avatar] ? Asset.new(self, data[:avatar]) : DefaultAvatar.new(data[:discriminator])
-      @bot = data[:bot]
+      @bot = data[:bot] || false
       @raw_data = data
       @client.users[@id] = self unless data[:no_cache]
       @created_at = @id.timestamp
