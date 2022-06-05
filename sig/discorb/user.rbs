@@ -44,8 +44,8 @@ module Discorb
     # @return [String] The user's discriminator.
     attr_reader discriminator: String
 
-    # @return [Discorb::Asset] The user's avatar.
-    attr_reader avatar: Discorb::Asset
+    # @return [Discorb::Asset, Discorb::DefaultAvatar] The user's avatar.
+    attr_reader avatar: Discorb::Asset | Discorb::DefaultAvatar
 
     # @return [Boolean] Whether the user is a bot.
     attr_reader bot: bool
