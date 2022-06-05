@@ -232,7 +232,7 @@ module Discorb
       Async do
         _resp, data = @client.http.request(Route.new("/channels/#{@id}/thread-members",
                                                      "//channels/:channel_id/thread-members", :get)).wait
-        data.map { |d| @members[d[:id]] = Member.new(@client, d) }
+        data.map { |d| @members[d[:id]] = Member.new(@client, d, @guild_id) }
       end
     end
 
@@ -267,11 +267,12 @@ module Discorb
     class Member < DiscordModel
       attr_reader :joined_at
 
-      def initialize(cilent, data)
-        @cilent = cilent
+      def initialize(client, data, guild_id)
+        @client = client
         @thread_id = data[:id]
         @user_id = data[:user_id]
         @joined_at = Time.iso8601(data[:join_timestamp])
+        @guild_id = guild_id
       end
 
       def thread
@@ -279,7 +280,7 @@ module Discorb
       end
 
       def member
-        thread && thread.members[@user_id]
+        @client.guilds[@guild_id].members[@user_id]
       end
 
       def id
@@ -287,7 +288,7 @@ module Discorb
       end
 
       def user
-        @cilent.users[@user_id]
+        @client.users[@user_id]
       end
 
       def inspect
@@ -312,8 +313,11 @@ module Discorb
       @message_count = data[:message_count]
       if data[:member]
         @members[@client.user.id] =
-          ThreadChannel::Member.new(@client,
-                                    data[:member].merge({ id: data[:id], user_id: @client.user.id }))
+          ThreadChannel::Member.new(
+            @client,
+            data[:member].merge({ id: data[:id], user_id: @client.user.id }),
+            @guild_id
+          )
       end
       @data.merge!(data)
     end

@@ -911,11 +911,11 @@ module Discorb
           return logger.warn "Unknown thread id #{data[:id]}, ignoring" unless (thread = @channels[data[:id]])
 
           if (member = thread.members[data[:id]])
-            old = ThreadChannel::Member.new(self, member.instance_variable_get(:@data))
+            old = ThreadChannel::Member.new(self, member.instance_variable_get(:@data), data[:guild_id])
             member.send(:_set_data, data)
           else
             old = nil
-            member = ThreadChannel::Member.new(self, data)
+            member = ThreadChannel::Member.new(self, data, data[:guild_id])
             thread.members[data[:user_id]] = member
           end
           dispatch(:thread_member_update, thread, old, member)
@@ -925,7 +925,7 @@ module Discorb
           thread.instance_variable_set(:@member_count, data[:member_count])
           members = []
           (data[:added_members] || []).each do |raw_member|
-            member = ThreadChannel::Member.new(self, raw_member)
+            member = ThreadChannel::Member.new(self, raw_member, data[:guild_id])
             thread.members[member.id] = member
             members << member
           end

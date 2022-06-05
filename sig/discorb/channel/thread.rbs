@@ -158,7 +158,7 @@ module Discorb
     #
     # Represents a member in a thread.
     class Member < Discorb::DiscordModel
-      def initialize: (Discorb::Client cilent, Discorb::json data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data, _ToS guild_id) -> void
 
       def thread: () -> Discorb::ThreadChannel
 
