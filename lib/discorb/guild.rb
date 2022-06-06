@@ -698,7 +698,7 @@ module Discorb
                                                        "//guilds/:guild_id/members", :get)).wait
           ret += data.map { |m| Member.new(@client, @id, m[:user], m) }
           after = data.last[:user][:id]
-          break if data.length != 1000
+          break if data.length != 100
         end
         ret
       end
