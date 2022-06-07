@@ -31,8 +31,8 @@ module Discorb
     # @return [String] The URL of the sticker.
     attr_reader description: String
 
-    # @return [Discorb::Sticker] The ID of the sticker pack.
-    attr_reader pack_id: Discorb::Sticker
+    # @return [Discorb::Snowflake] The ID of the sticker pack.
+    attr_reader pack_id: Discorb::Snowflake
 
     # @return [Integer] The sort value of the sticker.
     attr_reader sort_value: Integer
@@ -59,14 +59,14 @@ module Discorb
       #
       # @param [String] name The new name of the sticker.
       # @param [String] description The new description of the sticker.
-      # @param [Discorb::Emoji] tag The new tags of the sticker.
+      # @param [Discorb::emoji] tag The new tags of the sticker.
       # @param [String] reason The reason for the edit.
       #
       # @return [Async::Task<void>] The task.
       def edit: (
                   ?name: String,
                   ?description: String,
-                  ?tag: Discorb::Emoji,
+                  ?tag: Discorb::emoji,
                   ?reason: String
                 ) -> Async::Task[void]
 

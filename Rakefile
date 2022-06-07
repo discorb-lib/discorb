@@ -237,6 +237,7 @@ namespace :rbs do
   desc "Generate event signature"
   task :event do
     client_rbs = File.read("sig/discorb/client.rbs")
+    extension_rbs = File.read("sig/discorb/extension.rbs")
     event_document = File.read("./docs/events.md")
     voice_event_document = File.read("./docs/voice_events.md")
     event_reference = event_document.split("## Event reference")[1]
@@ -311,7 +312,20 @@ namespace :rbs do
     end
     raise "Failed to generate Client#event_lock" unless res
 
+    res = extension_rbs.gsub!(/\# marker: event\n(?:[\s\S]*?\n)?( +)\# endmarker: event\n/) do
+      indent = Regexp.last_match(1)
+      "# marker: event\n#{event_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: event\n"
+    end
+    raise "Failed to generate Extension.event" unless res
+
+    res = extension_rbs.gsub!(/\# marker: once_event\n(?:[\s\S]*?\n)?( +)\# endmarker: once_event\n/) do
+      indent = Regexp.last_match(1)
+      "# marker: once_event\n#{event_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: once_event\n"
+    end
+    raise "Failed to generate Extension.once_event" unless res
+
     File.write("sig/discorb/client.rbs", client_rbs, mode: "wb")
+    File.write("sig/discorb/extension.rbs", extension_rbs, mode: "wb")
   end
 
   desc "Generate rbs file using sord"

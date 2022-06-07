@@ -113,8 +113,8 @@ module Discorb
         @details = data[:details]
         @state = data[:state]
         @emoji = if data[:emoji]
-                   data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
-        end
+            data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
+          end
         @party = data[:party] && Party.new(data[:party])
         @assets = data[:assets] && Asset.new(data[:assets])
         @instance = data[:instance]
@@ -141,6 +141,8 @@ module Discorb
           "#{@emoji} #{@state}"
         when :competing
           "Competing in #{@name}"
+        else
+          raise "Unknown activity type: #{@type}"
         end
       end
 

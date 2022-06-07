@@ -103,7 +103,6 @@ module Discorb
     #
     # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
     def self.new: (String url) -> Discorb::Webhook::URLWebhook
-                | (Discorb::Client client, Discorb::json data) -> Discorb::Webhook::IncomingWebhook
 
     #
     # Creates Webhook with discord data.
@@ -299,7 +298,7 @@ module Discorb
         attr_reader username: String
 
         # @return [Discorb::Asset] The avatar of the author.
-        attr_reader avatar: Discorb::Asset
+        attr_reader avatar: Discorb::Asset | Discorb::DefaultAvatar
 
         # @return [String] The discriminator of the author.
         attr_reader discriminator: String

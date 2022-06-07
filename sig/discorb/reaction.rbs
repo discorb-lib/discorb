@@ -22,7 +22,7 @@ module Discorb
     attr_reader count: Integer
 
     # @return [Discorb::Emoji, Discorb::PartialEmoji] The emoji that was reacted with.
-    attr_reader emoji: Discorb::Emoji | Discorb::PartialEmoji
+    attr_reader emoji: Discorb::emoji
 
     # @return [Discorb::Message] The message that this reaction is on.
     attr_reader message: Discorb::Message

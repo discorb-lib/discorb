@@ -7,7 +7,7 @@ module Discorb
   class Message < DiscordModel
     # @return [Discorb::Snowflake] The ID of the message.
     attr_reader :id
-    # @return [Discorb::User, Discorb::Member] The user that sent the message.
+    # @return [Discorb::User, Discorb::Member, Webhook::Message::Author] The user that sent the message.
     attr_reader :author
     # @return [String] The content of the message.
     attr_reader :content
@@ -217,8 +217,8 @@ module Discorb
       end
       if role
         ret.gsub!(/<@&(\d+)>/) do |_match|
-          role = guild&.roles&.[]($1)
-          role ? "@#{role.name}" : "@Unknown Role"
+          r = guild&.roles&.[]($1)
+          r ? "@#{r.name}" : "@Unknown Role"
         end
       end
       if emoji

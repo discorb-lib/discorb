@@ -122,7 +122,7 @@ module Discorb
       Async do
         _resp, data = @client.http.request(Route.new("/channels/#{@id}/webhooks", "//channels/:channel_id/webhooks",
                                                      :get)).wait
-        data.map { |webhook| Webhook.new(@client, webhook) }
+        data.map { |webhook| Webhook.from_data(@client, webhook) }
       end
     end
 

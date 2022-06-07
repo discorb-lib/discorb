@@ -91,40 +91,40 @@ module Discorb
     # Add a reaction to the message.
     # @async
     #
-    # @param [Discorb::Emoji] emoji The emoji to react with.
+    # @param [Discorb::emoji] emoji The emoji to react with.
     #
     # @return [Async::Task<void>] The task.
-    def add_reaction: (Discorb::Emoji emoji) -> Async::Task[void]
+    def add_reaction: (Discorb::emoji emoji) -> Async::Task[void]
 
     #
     # Remove a reaction from the message.
     # @async
     #
-    # @param [Discorb::Emoji] emoji The emoji to remove.
+    # @param [Discorb::emoji] emoji The emoji to remove.
     #
     # @return [Async::Task<void>] The task.
-    def remove_reaction: (Discorb::Emoji emoji) -> Async::Task[void]
+    def remove_reaction: (Discorb::emoji emoji) -> Async::Task[void]
 
     #
     # Remove other member's reaction from the message.
     # @async
     #
-    # @param [Discorb::Emoji] emoji The emoji to remove.
+    # @param [Discorb::emoji] emoji The emoji to remove.
     # @param [Discorb::Member] member The member to remove the reaction from.
     #
     # @return [Async::Task<void>] The task.
-    def remove_reaction_of: (Discorb::Emoji emoji, Discorb::Member member) -> Async::Task[void]
+    def remove_reaction_of: (Discorb::emoji emoji, Discorb::Member member) -> Async::Task[void]
 
     #
     # Fetch reacted users of reaction.
     # @async
     #
-    # @param [Discorb::Emoji, Discorb::PartialEmoji] emoji The emoji to fetch.
+    # @param [Discorb::emoji, Discorb::PartialEmoji] emoji The emoji to fetch.
     # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #
     # @return [Async::Task<Array<Discorb::User>>] The users.
-    def fetch_reacted_users: ((Discorb::Emoji | Discorb::PartialEmoji) emoji, ?limit: Integer?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
+    def fetch_reacted_users: ((Discorb::emoji) emoji, ?limit: Integer?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
 
     #
     # Pin the message.
@@ -160,7 +160,7 @@ module Discorb
     attr_reader id: Discorb::Snowflake
 
     # @return [Discorb::User, Discorb::Member] The user that sent the message.
-    attr_reader author: (Discorb::User | Discorb::Member)
+    attr_reader author: (Discorb::User | Discorb::Member | Webhook::Message::Author)
 
     # @return [String] The content of the message.
     attr_reader content: String

@@ -13,5 +13,5 @@ informations = {
 }
 
 informations.each do |key, value|
-  puts "\e[90m#{key.rjust(informations.keys.map(&:size).max)}:\e[m #{value}"
+  puts "\e[90m#{key.rjust(informations.keys.map(&:length).max)}:\e[m #{value}"
 end

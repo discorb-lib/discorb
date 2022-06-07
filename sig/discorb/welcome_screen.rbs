@@ -28,8 +28,8 @@ module Discorb
       #
       # @param [Discorb::TextChannel] channel The channel to display the welcome screen.
       # @param [String] description The channel's name.
-      # @param [Discorb::Emoji] emoji The emoji to display.
-      def initialize: (Discorb::TextChannel channel, String description, Discorb::Emoji emoji) -> void
+      # @param [Discorb::emoji] emoji The emoji to display.
+      def initialize: (Discorb::TextChannel channel, String description, Discorb::emoji emoji) -> void
 
       #
       # Converts the channel to a hash.
@@ -59,8 +59,8 @@ module Discorb
       # @return [String] The channel's name.
       attr_reader description: String
 
-      # @return [Discorb::Emoji] The emoji to display.
-      attr_reader emoji: Discorb::Emoji
+      # @return [Discorb::emoji] The emoji to display.
+      attr_reader emoji: Discorb::emoji
 
       # @macro client_cache
       # @return [Discorb::Channel] The channel to display the welcome screen.

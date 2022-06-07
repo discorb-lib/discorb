@@ -13,7 +13,7 @@ module Discorb
     # @param [Hash] data The data of the role.
     def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
 
-    def icon: () -> (Discorb::Asset | Discorb::Emoji | nil)
+    def icon: () -> (Discorb::Asset | Discorb::emoji | nil)
 
     #
     # Compares two roles by their position.
@@ -21,7 +21,7 @@ module Discorb
     # @param [Discorb::Role] other The role to compare to.
     #
     # @return [Integer] -1 if the other role is higher, 0 if they are equal, 1 if the other role is lower.
-    def <=>: (Discorb::Role other) -> Integer
+    def <=>: (Discorb::Role other) -> Integer?
 
     #
     # Formats the role as a string.

@@ -4,7 +4,7 @@ module Discorb
   # This class shouldn't be instantiated directly.
   # Use {Client#on} instead.
   class EventHandler
-    def initialize: (untyped block, _ToS id, untyped metadata) -> void
+    def initialize: (untyped block, Symbol id, untyped metadata) -> void
 
     def inspect: () -> untyped
 

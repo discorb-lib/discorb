@@ -11,7 +11,7 @@ module Discorb
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
     # @return [Discorb::Member] The member associated with this voice state.
-    attr_reader member: Discorb::Member
+    attr_reader member: Discorb::Member?
 
     # @return [Discorb::Snowflake] The ID of the guild this voice state is for.
     attr_reader session_id: Discorb::Snowflake

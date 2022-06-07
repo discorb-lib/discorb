@@ -52,10 +52,10 @@ module Discorb
     #   @return [Discorb::Presence] The presence of the member.
     # @!attribute [r] activity
     #   @macro client_cache
-    #   @return [Discorb::Activity] The activity of the member. It's from the {#presence}.
+    #   @return [Discorb::Presence::Activity] The activity of the member. It's from the {#presence}.
     # @!attribute [r] activities
     #   @macro client_cache
-    #   @return [Array<Discorb::Activity>] The activities of the member. It's from the {#presence}.
+    #   @return [Array<Discorb::Presence::Activity>] The activities of the member. It's from the {#presence}.
     # @!attribute [r] status
     #   @macro client_cache
     #   @return [Symbol] The status of the member. It's from the {#presence}.

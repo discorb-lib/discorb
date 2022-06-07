@@ -17,7 +17,7 @@ module Discorb
     attr_reader :format
     # @return [String] The URL of the sticker.
     attr_reader :description
-    # @return [Discorb::Sticker] The ID of the sticker pack.
+    # @return [Discorb::Snowflake] The ID of the sticker pack.
     attr_reader :pack_id
     # @return [Integer] The sort value of the sticker.
     attr_reader :sort_value
@@ -87,7 +87,7 @@ module Discorb
           payload[:tags] = tag.name unless tag == Discorb::Unset
           @client.http.request(
             Route.new("/guilds/#{@guild_id}/stickers/#{@id}", "//guilds/:guild_id/stickers/:sticker_id",
-                      :patch), payload, audit_log_reason: reason
+                      :patch), payload, audit_log_reason: reason,
           ).wait
         end
       end
@@ -104,7 +104,7 @@ module Discorb
         Async do
           @client.http.request(
             Route.new("/guilds/#{@guild_id}/stickers/#{@id}", "//guilds/:guild_id/stickers/:sticker_id",
-                      :delete), {}, audit_log_reason: reason
+                      :delete), {}, audit_log_reason: reason,
           ).wait
         end
       end

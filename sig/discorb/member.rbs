@@ -167,12 +167,12 @@ module Discorb
     attr_reader presence: Discorb::Presence?
 
     # @macro client_cache
-    # @return [Discorb::Activity] The activity of the member. It's from the {#presence}.
-    attr_reader activity: Discorb::Activity?
+    # @return [Discorb::Presence::Activity] The activity of the member. It's from the {#presence}.
+    attr_reader activity: Discorb::Presence::Activity?
 
     # @macro client_cache
-    # @return [Array<Discorb::Activity>] The activities of the member. It's from the {#presence}.
-    attr_reader activities: ::Array[Discorb::Activity]?
+    # @return [Array<Discorb::Presence::Activity>] The activities of the member. It's from the {#presence}.
+    attr_reader activities: ::Array[Discorb::Presence::Activity]?
 
     # @macro client_cache
     # @return [Symbol] The status of the member. It's from the {#presence}.

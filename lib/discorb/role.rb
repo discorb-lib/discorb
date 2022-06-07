@@ -69,7 +69,7 @@ module Discorb
     # @return [Integer] -1 if the other role is higher, 0 if they are equal, 1 if the other role is lower.
     #
     def <=>(other)
-      return false unless other.is_a?(Role)
+      return nil unless other.is_a?(Role)
 
       @position <=> other.position
     end

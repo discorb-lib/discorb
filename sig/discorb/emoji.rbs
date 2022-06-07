@@ -1,4 +1,5 @@
 module Discorb
+  type emoji = Discorb::Emoji | Discorb::PartialEmoji
   # Represents a Discord emoji.
   # @abstract
   class Emoji

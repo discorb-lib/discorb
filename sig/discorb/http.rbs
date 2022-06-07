@@ -10,7 +10,7 @@ module Discorb
     # @private
     #
     # @param [Discorb::Client] client The client.
-    def initialize: (Discorb::Client client) -> void
+    def initialize: ((Discorb::Client | Discorb::Webhook) client) -> void
 
     #
     # Execute a request.

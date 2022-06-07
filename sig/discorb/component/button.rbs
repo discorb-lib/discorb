@@ -9,14 +9,14 @@ module Discorb
     #
     # @param [String] label The label of the button.
     # @param [:primary, :secondary, :success, :danger, :link] style The style of the button.
-    # @param [Discorb::Emoji] emoji The emoji of the button.
+    # @param [Discorb::emoji] emoji The emoji of the button.
     # @param [String] custom_id The custom ID of the button.
     # @param [String] url The URL of the button.
     # @param [Boolean] disabled Whether the button is disabled.
     def initialize: (
                       String label,
                       ?Symbol style,
-                      ?emoji: Discorb::Emoji?,
+                      ?emoji: Discorb::emoji?,
                       ?custom_id: String?,
                       ?url: String?,
                       ?disabled: bool
@@ -46,8 +46,8 @@ module Discorb
     # @return [:primary, :secondary, :success, :danger, :link] The style of the button.
     attr_accessor style: Symbol
 
-    # @return [Discorb::Emoji] The emoji of the button.
-    attr_accessor emoji: Discorb::Emoji?
+    # @return [Discorb::emoji] The emoji of the button.
+    attr_accessor emoji: Discorb::emoji?
 
     # @return [String] The custom ID of the button.
     #   Won't be used if the style is `:link`.

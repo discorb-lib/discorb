@@ -60,13 +60,13 @@ module Discorb
       # @param [String] label The label of the option.
       # @param [String] value The value of the option.
       # @param [String] description The description of the option.
-      # @param [Discorb::Emoji] emoji The emoji of the option.
+      # @param [Discorb::emoji] emoji The emoji of the option.
       # @param [Boolean] default Whether the option is default.
       def initialize: (
                         String label,
                         String value,
                         ?description: String?,
-                        ?emoji: Discorb::Emoji?,
+                        ?emoji: Discorb::emoji?,
                         ?default: bool
                       ) -> void
 
@@ -97,8 +97,8 @@ module Discorb
       # @return [String] The description of the option.
       attr_accessor description: String
 
-      # @return [Discorb::Emoji] The emoji of the option.
-      attr_accessor emoji: Discorb::Emoji
+      # @return [Discorb::emoji] The emoji of the option.
+      attr_accessor emoji: Discorb::emoji
 
       # @return [Boolean] Whether the option is default.
       attr_accessor default: bool

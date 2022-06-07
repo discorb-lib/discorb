@@ -73,7 +73,7 @@ module Discorb
       attr_reader state: String
 
       # @return [Discorb::Emoji] The emoji of the activity.
-      attr_reader emoji: Discorb::Emoji
+      attr_reader emoji: Discorb::emoji
 
       # @return [Discorb::Presence::Activity::Party] The party of the activity.
       # @return [nil] If the activity is not a party activity.
