@@ -22,15 +22,6 @@ module Discorb
 
     include Messageable
 
-    # @return [{Integer => Symbol}] The auto archive duration map.
-    # @private
-    DEFAULT_AUTO_ARCHIVE_DURATION = {
-      60 => :hour,
-      1440 => :day,
-      4320 => :three_days,
-      10080 => :week,
-    }.freeze
-
     @channel_type = 0
 
     # @!attribute [r] threads
@@ -131,7 +122,7 @@ module Discorb
       Async do
         _resp, data = @client.http.request(Route.new("/channels/#{@id}/webhooks", "//channels/:channel_id/webhooks",
                                                      :get)).wait
-        data.map { |webhook| Webhook.new([@client, webhook]) }
+        data.map { |webhook| Webhook.new(@client, webhook) }
       end
     end
 
@@ -146,7 +137,7 @@ module Discorb
     #
     def delete_messages!(*messages, force: false)
       Async do
-        messages = messages.first if messages.length == 1 && messages.first.is_a?(Array)
+        messages = messages.flatten
         unless force
           time = Time.now
           messages.delete_if do |message|
@@ -208,14 +199,13 @@ module Discorb
       reason: nil
     )
       auto_archive_duration ||= @default_auto_archive_duration
-      auto_archive_duration_value = DEFAULT_AUTO_ARCHIVE_DURATION.key(auto_archive_duration)
       Async do
         _resp, data = if message.nil?
             @client.http.request(
               Route.new("/channels/#{@id}/threads", "//channels/:channel_id/threads", :post),
               {
                 name: name,
-                auto_archive_duration: auto_archive_duration_value,
+                auto_archive_duration: auto_archive_duration,
                 type: public ? 11 : 10,
                 rate_limit_per_user: rate_limit_per_user || slowmode,
               },
@@ -227,7 +217,7 @@ module Discorb
                         "//channels/:channel_id/messages/:message_id/threads", :post),
               {
                 name: name,
-                auto_archive_duration: auto_archive_duration_value,
+                auto_archive_duration: auto_archive_duration,
               },
               audit_log_reason: reason,
             ).wait
@@ -315,7 +305,7 @@ module Discorb
       @last_message_id = data[:last_message_id]
       @rate_limit_per_user = data[:rate_limit_per_user]
       @last_pin_timestamp = data[:last_pin_timestamp] && Time.iso8601(data[:last_pin_timestamp])
-      @default_auto_archive_duration = DEFAULT_AUTO_ARCHIVE_DURATION[data[:default_auto_archive_duration]]
+      @default_auto_archive_duration = data[:default_auto_archive_duration]
       super
     end
   end

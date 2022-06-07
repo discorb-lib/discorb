@@ -3,8 +3,6 @@ module Discorb
   # Represents a text channel.
   class TextChannel < Discorb::GuildChannel
     include Discorb::Messageable
-    DEFAULT_AUTO_ARCHIVE_DURATION: Hash[Integer, Symbol]
-
     #
     # Edits the channel.
     # @async
@@ -65,6 +63,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     def delete_messages!: (*Discorb::Message messages, ?force: bool) -> Async::Task[void]
+                        | (*Array[Discorb::Message] messages, ?force: bool) -> Async::Task[void]
 
     #
     # Follow the existing announcement channel.
