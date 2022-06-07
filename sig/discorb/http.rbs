@@ -29,7 +29,7 @@ module Discorb
                    Discorb::Route path,
                    ?(json | String) body,
                    ?audit_log_reason: String?,
-                   **::Hash[Symbol, String] kwargs
+                   **String kwargs
                  ) -> Async::Task[[Net::HTTPResponse, json?]]
 
     #
@@ -52,7 +52,7 @@ module Discorb
                              (json | String) body,
                              ::Array[Discorb::Attachment] files,
                              ?audit_log_reason: String?,
-                             **::Hash[Symbol, String] kwargs
+                             **untyped kwargs
                            ) -> Async::Task[[Net::HTTPResponse, json?]]
 
     def inspect: () -> String
@@ -66,7 +66,7 @@ module Discorb
                            (json | String) body,
                            ::Array[Discorb::Attachment]? files,
                            String? audit_log_reason,
-                           ::Hash[Symbol, untyped] kwargs
+                           untyped kwargs
                          ) -> [Net::HTTPResponse, json?]
 
     def get_headers: (?(String | json) body, ?String? audit_log_reason) -> ::Hash[String, String]

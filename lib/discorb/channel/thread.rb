@@ -112,7 +112,7 @@ module Discorb
     #
     # @param [String] reason The reason of archiving the thread.
     #
-    # @return [self] The archived thread.
+    # @return [Async::Task<self>] The archived thread.
     #
     def archive(reason: nil)
       edit(archived: true, reason: reason)
@@ -123,7 +123,7 @@ module Discorb
     #
     # @param [String] reason The reason of locking the thread.
     #
-    # @return [self] The locked thread.
+    # @return [Async::Task<self>] The locked thread.
     #
     def lock(reason: nil)
       edit(archived: true, locked: true, reason: reason)
@@ -134,7 +134,7 @@ module Discorb
     #
     # @param [String] reason The reason of unarchiving the thread.
     #
-    # @return [self] The unarchived thread.
+    # @return [Async::Task<self>] The unarchived thread.
     #
     def unarchive(reason: nil)
       edit(archived: false, reason: reason)
@@ -145,7 +145,7 @@ module Discorb
     #
     # @param [String] reason The reason of unlocking the thread.
     #
-    # @return [self] The unlocked thread.
+    # @return [Async::Task<self>] The unlocked thread.
     #
     # @note This method won't unarchive the thread. Use {#unarchive} instead.
     #

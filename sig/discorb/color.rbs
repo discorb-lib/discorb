@@ -26,11 +26,16 @@ module Discorb
     # @return [Array(Integer, Integer, Integer)] A RGB array.
     def to_rgb: () -> [Integer, Integer, Integer]
 
+    alias to_a to_rgb
+    alias deconstruct to_rgb
+
     #
     # Convert a color to RGB hash.
     #
     # @return [Hash{:r, :g, :b => Integer}] A RGB hash.
     def to_rgb_hash: () -> { r: Integer, g: Integer, b: Integer}
+
+    alias deconstruct_keys to_rgb_hash
 
     #
     # Converts a color to a `#000000` string.

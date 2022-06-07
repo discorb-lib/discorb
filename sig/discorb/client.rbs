@@ -39,108 +39,108 @@ module Discorb
     #
     # @return [Discorb::EventHandler] The event.
     def on: # marker: on
-            (:event_receive event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Discorb::json data) -> void } -> Discorb::EventHandler
-          | (:ready event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:standby event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:resumed event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:error event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Array[Object] args, Exception error) -> void } -> Discorb::EventHandler
-          | (:setup event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:shard_standby event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
-          | (:shard_resumed event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
-          | (:guild_join event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:guild_available event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:guild_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild before, Discorb::Guild after) -> void } -> Discorb::EventHandler
-          | (:guild_leave event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:guild_destroy event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:guild_integrations_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:guild_ban_add event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
-          | (:guild_ban_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
-          | (:channel_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
-          | (:channel_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Channel before, Discorb::Channel after) -> void } -> Discorb::EventHandler
-          | (:channel_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
-          | (:webhooks_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::WebhooksUpdateEvent event) -> void } -> Discorb::EventHandler
-          | (:thread_new event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-          | (:thread_join event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-          | (:thread_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-          | (:thread_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel before, Discorb::ThreadChannel after) -> void } -> Discorb::EventHandler
-          | (:thread_members_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread, Array[Discorb::ThreadChannel::Member] added, Array[Discorb::ThreadChannel::Member] removed) -> void } -> Discorb::EventHandler
-          | (:thread_member_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread, Discorb::ThreadChannel::Member before, Discorb::ThreadChannel::Member after) -> void } -> Discorb::EventHandler
-          | (:integration_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
-          | (:integration_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Integration after) -> void } -> Discorb::EventHandler
-          | (:integration_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
-          | (:message event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Message message) -> void } -> Discorb::EventHandler
-          | (:message_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::MessageUpdateEvent event) -> void } -> Discorb::EventHandler
-          | (:message_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Message message, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:message_delete_id event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Snowflake message_id, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:message_delete_bulk event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage] messages) -> void } -> Discorb::EventHandler
-          | (:message_pin_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::MessagePinEvent event) -> void } -> Discorb::EventHandler
-          | (:typing_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::TypingStartEvent event) -> void } -> Discorb::EventHandler
-          | (:reaction_add event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
-          | (:reaction_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
-          | (:reaction_remove_all event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionRemoveAllEvent event) -> void } -> Discorb::EventHandler
-          | (:reaction_remove_emoji event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionRemoveEmojiEvent event) -> void } -> Discorb::EventHandler
-          | (:role_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-          | (:role_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
-          | (:role_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-          | (:member_add event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
-          | (:member_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Member before, Discorb::Member after) -> void } -> Discorb::EventHandler
-          | (:member_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
-          | (:role_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-          | (:role_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
-          | (:role_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-          | (:invite_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
-          | (:invite_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
-          | (:interaction_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Interaction interaction) -> void } -> Discorb::EventHandler
-          | (:application_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction interaction) -> void } -> Discorb::EventHandler
-          | (:slash_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction::ChatInputCommand interaction) -> void } -> Discorb::EventHandler
-          | (:message_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction::MessageMenuCommand interaction) -> void } -> Discorb::EventHandler
-          | (:user_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction::UserMenuCommand interaction) -> void } -> Discorb::EventHandler
-          | (:button_click event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::MessageComponentInteraction::Button interaction) -> void } -> Discorb::EventHandler
-          | (:select_menu_select event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void } -> Discorb::EventHandler
-          | (:form_submit event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ModalInteraction interaction) -> void } -> Discorb::EventHandler
-          | (:scheduled_event_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-          | (:scheduled_event_cancel event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-          | (:scheduled_event_edit event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
-          | (:scheduled_event_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-          | (:scheduled_event_end event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-          | (:guild_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:guild_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-          | (:thread_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-          | (:scheduled_event_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
-          | (:voice_channel_connect event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:voice_channel_disconnect event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:voice_channel_move event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:voice_channel_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-          | (:voice_mute_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_mute_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_mute_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:voice_server_mute_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_server_mute_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_server_mute_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:voice_self_mute_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_self_mute_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_self_mute_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:voice_deaf_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_deaf_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_deaf_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:voice_server_deaf_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_server_deaf_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_server_deaf_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:voice_self_deaf_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_self_deaf_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_self_deaf_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:voice_stream_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_stream_end event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_stream_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:voice_video_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_video_end event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-          | (:voice_video_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-          | (:stage_instance_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
-          | (:stage_instance_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
-          | (:stage_instance_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::StageInstance before, Discorb::StageInstance after) -> void } -> Discorb::EventHandler
-          | (:voice_state_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            (:event_receive event_name, ?id: Symbol?, **untyped metadata) { (Symbol event_name, Discorb::json data) -> void } -> Discorb::EventHandler
+          | (:ready event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:standby event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:resumed event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:error event_name, ?id: Symbol?, **untyped metadata) { (Symbol event_name, Array[Object] args, Exception error) -> void } -> Discorb::EventHandler
+          | (:setup event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:shard_standby event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
+          | (:shard_resumed event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
+          | (:guild_join event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:guild_available event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:guild_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild before, Discorb::Guild after) -> void } -> Discorb::EventHandler
+          | (:guild_leave event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:guild_destroy event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:guild_integrations_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:guild_ban_add event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
+          | (:guild_ban_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
+          | (:channel_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
+          | (:channel_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Channel before, Discorb::Channel after) -> void } -> Discorb::EventHandler
+          | (:channel_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
+          | (:webhooks_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::WebhooksUpdateEvent event) -> void } -> Discorb::EventHandler
+          | (:thread_new event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+          | (:thread_join event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+          | (:thread_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+          | (:thread_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel before, Discorb::ThreadChannel after) -> void } -> Discorb::EventHandler
+          | (:thread_members_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread, Array[Discorb::ThreadChannel::Member] added, Array[Discorb::ThreadChannel::Member] removed) -> void } -> Discorb::EventHandler
+          | (:thread_member_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread, Discorb::ThreadChannel::Member before, Discorb::ThreadChannel::Member after) -> void } -> Discorb::EventHandler
+          | (:integration_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
+          | (:integration_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Integration after) -> void } -> Discorb::EventHandler
+          | (:integration_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
+          | (:message event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Message message) -> void } -> Discorb::EventHandler
+          | (:message_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::MessageUpdateEvent event) -> void } -> Discorb::EventHandler
+          | (:message_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Message message, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:message_delete_id event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Snowflake message_id, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:message_delete_bulk event_name, ?id: Symbol?, **untyped metadata) { (Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage] messages) -> void } -> Discorb::EventHandler
+          | (:message_pin_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::MessagePinEvent event) -> void } -> Discorb::EventHandler
+          | (:typing_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::TypingStartEvent event) -> void } -> Discorb::EventHandler
+          | (:reaction_add event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
+          | (:reaction_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
+          | (:reaction_remove_all event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionRemoveAllEvent event) -> void } -> Discorb::EventHandler
+          | (:reaction_remove_emoji event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionRemoveEmojiEvent event) -> void } -> Discorb::EventHandler
+          | (:role_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+          | (:role_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
+          | (:role_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+          | (:member_add event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
+          | (:member_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Member before, Discorb::Member after) -> void } -> Discorb::EventHandler
+          | (:member_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
+          | (:role_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+          | (:role_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
+          | (:role_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+          | (:invite_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
+          | (:invite_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
+          | (:interaction_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Interaction interaction) -> void } -> Discorb::EventHandler
+          | (:application_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction interaction) -> void } -> Discorb::EventHandler
+          | (:slash_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction::ChatInputCommand interaction) -> void } -> Discorb::EventHandler
+          | (:message_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction::MessageMenuCommand interaction) -> void } -> Discorb::EventHandler
+          | (:user_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction::UserMenuCommand interaction) -> void } -> Discorb::EventHandler
+          | (:button_click event_name, ?id: Symbol?, **untyped metadata) { (Discorb::MessageComponentInteraction::Button interaction) -> void } -> Discorb::EventHandler
+          | (:select_menu_select event_name, ?id: Symbol?, **untyped metadata) { (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void } -> Discorb::EventHandler
+          | (:form_submit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ModalInteraction interaction) -> void } -> Discorb::EventHandler
+          | (:scheduled_event_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+          | (:scheduled_event_cancel event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+          | (:scheduled_event_edit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
+          | (:scheduled_event_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+          | (:scheduled_event_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+          | (:guild_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:guild_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+          | (:thread_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+          | (:scheduled_event_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
+          | (:voice_channel_connect event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:voice_channel_disconnect event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:voice_channel_move event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:voice_channel_update event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+          | (:voice_mute_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_mute_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_mute_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:voice_server_mute_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_server_mute_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_server_mute_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:voice_self_mute_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_self_mute_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_self_mute_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:voice_deaf_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_deaf_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_deaf_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:voice_server_deaf_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_server_deaf_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_server_deaf_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:voice_self_deaf_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_self_deaf_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_self_deaf_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:voice_stream_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_stream_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_stream_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:voice_video_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_video_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+          | (:voice_video_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+          | (:stage_instance_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
+          | (:stage_instance_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
+          | (:stage_instance_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::StageInstance before, Discorb::StageInstance after) -> void } -> Discorb::EventHandler
+          | (:voice_state_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
     # endmarker: on
-          | (Symbol event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (*untyped) -> void } -> Discorb::EventHandler
+          | (Symbol event_name, ?id: Symbol?, **untyped metadata) { (*untyped) -> void } -> Discorb::EventHandler
 
     #
     # Almost same as {#on}, but only triggers the event once.
@@ -149,108 +149,108 @@ module Discorb
     #
     # @return [Discorb::EventHandler] The event.
     def once: # marker: once
-              (:event_receive event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Discorb::json data) -> void } -> Discorb::EventHandler
-            | (:ready event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:standby event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:resumed event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:error event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Symbol event_name, Array[Object] args, Exception error) -> void } -> Discorb::EventHandler
-            | (:setup event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:shard_standby event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
-            | (:shard_resumed event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
-            | (:guild_join event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:guild_available event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:guild_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild before, Discorb::Guild after) -> void } -> Discorb::EventHandler
-            | (:guild_leave event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:guild_destroy event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:guild_integrations_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:guild_ban_add event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
-            | (:guild_ban_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
-            | (:channel_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
-            | (:channel_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Channel before, Discorb::Channel after) -> void } -> Discorb::EventHandler
-            | (:channel_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
-            | (:webhooks_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::WebhooksUpdateEvent event) -> void } -> Discorb::EventHandler
-            | (:thread_new event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-            | (:thread_join event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-            | (:thread_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-            | (:thread_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel before, Discorb::ThreadChannel after) -> void } -> Discorb::EventHandler
-            | (:thread_members_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread, Array[Discorb::ThreadChannel::Member] added, Array[Discorb::ThreadChannel::Member] removed) -> void } -> Discorb::EventHandler
-            | (:thread_member_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread, Discorb::ThreadChannel::Member before, Discorb::ThreadChannel::Member after) -> void } -> Discorb::EventHandler
-            | (:integration_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
-            | (:integration_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Integration after) -> void } -> Discorb::EventHandler
-            | (:integration_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
-            | (:message event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Message message) -> void } -> Discorb::EventHandler
-            | (:message_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::MessageUpdateEvent event) -> void } -> Discorb::EventHandler
-            | (:message_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Message message, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:message_delete_id event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Snowflake message_id, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:message_delete_bulk event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage] messages) -> void } -> Discorb::EventHandler
-            | (:message_pin_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::MessagePinEvent event) -> void } -> Discorb::EventHandler
-            | (:typing_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::TypingStartEvent event) -> void } -> Discorb::EventHandler
-            | (:reaction_add event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
-            | (:reaction_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
-            | (:reaction_remove_all event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionRemoveAllEvent event) -> void } -> Discorb::EventHandler
-            | (:reaction_remove_emoji event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Gateway::ReactionRemoveEmojiEvent event) -> void } -> Discorb::EventHandler
-            | (:role_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-            | (:role_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
-            | (:role_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-            | (:member_add event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
-            | (:member_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Member before, Discorb::Member after) -> void } -> Discorb::EventHandler
-            | (:member_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
-            | (:role_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-            | (:role_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
-            | (:role_remove event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
-            | (:invite_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
-            | (:invite_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
-            | (:interaction_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Interaction interaction) -> void } -> Discorb::EventHandler
-            | (:application_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction interaction) -> void } -> Discorb::EventHandler
-            | (:slash_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction::ChatInputCommand interaction) -> void } -> Discorb::EventHandler
-            | (:message_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction::MessageMenuCommand interaction) -> void } -> Discorb::EventHandler
-            | (:user_command event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::CommandInteraction::UserMenuCommand interaction) -> void } -> Discorb::EventHandler
-            | (:button_click event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::MessageComponentInteraction::Button interaction) -> void } -> Discorb::EventHandler
-            | (:select_menu_select event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void } -> Discorb::EventHandler
-            | (:form_submit event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ModalInteraction interaction) -> void } -> Discorb::EventHandler
-            | (:scheduled_event_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-            | (:scheduled_event_cancel event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-            | (:scheduled_event_edit event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
-            | (:scheduled_event_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-            | (:scheduled_event_end event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
-            | (:guild_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:guild_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
-            | (:thread_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
-            | (:scheduled_event_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
-            | (:voice_channel_connect event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:voice_channel_disconnect event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:voice_channel_move event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:voice_channel_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { () -> void } -> Discorb::EventHandler
-            | (:voice_mute_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_mute_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_mute_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:voice_server_mute_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_server_mute_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_server_mute_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:voice_self_mute_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_self_mute_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_self_mute_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:voice_deaf_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_deaf_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_deaf_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:voice_server_deaf_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_server_deaf_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_server_deaf_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:voice_self_deaf_enable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_self_deaf_disable event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_self_deaf_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:voice_stream_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_stream_end event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_stream_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:voice_video_start event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_video_end event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
-            | (:voice_video_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
-            | (:stage_instance_create event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
-            | (:stage_instance_delete event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
-            | (:stage_instance_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::StageInstance before, Discorb::StageInstance after) -> void } -> Discorb::EventHandler
-            | (:voice_state_update event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+              (:event_receive event_name, ?id: Symbol?, **untyped metadata) { (Symbol event_name, Discorb::json data) -> void } -> Discorb::EventHandler
+            | (:ready event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:standby event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:resumed event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:error event_name, ?id: Symbol?, **untyped metadata) { (Symbol event_name, Array[Object] args, Exception error) -> void } -> Discorb::EventHandler
+            | (:setup event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:shard_standby event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
+            | (:shard_resumed event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Shard shard) -> void } -> Discorb::EventHandler
+            | (:guild_join event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:guild_available event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:guild_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild before, Discorb::Guild after) -> void } -> Discorb::EventHandler
+            | (:guild_leave event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:guild_destroy event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:guild_integrations_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:guild_ban_add event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
+            | (:guild_ban_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild, Discorb::User user) -> void } -> Discorb::EventHandler
+            | (:channel_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
+            | (:channel_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Channel before, Discorb::Channel after) -> void } -> Discorb::EventHandler
+            | (:channel_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Channel channel) -> void } -> Discorb::EventHandler
+            | (:webhooks_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::WebhooksUpdateEvent event) -> void } -> Discorb::EventHandler
+            | (:thread_new event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+            | (:thread_join event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+            | (:thread_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+            | (:thread_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel before, Discorb::ThreadChannel after) -> void } -> Discorb::EventHandler
+            | (:thread_members_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread, Array[Discorb::ThreadChannel::Member] added, Array[Discorb::ThreadChannel::Member] removed) -> void } -> Discorb::EventHandler
+            | (:thread_member_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread, Discorb::ThreadChannel::Member before, Discorb::ThreadChannel::Member after) -> void } -> Discorb::EventHandler
+            | (:integration_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
+            | (:integration_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Integration after) -> void } -> Discorb::EventHandler
+            | (:integration_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Integration integration) -> void } -> Discorb::EventHandler
+            | (:message event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Message message) -> void } -> Discorb::EventHandler
+            | (:message_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::MessageUpdateEvent event) -> void } -> Discorb::EventHandler
+            | (:message_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Message message, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:message_delete_id event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Snowflake message_id, Discorb::Channel channel, Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:message_delete_bulk event_name, ?id: Symbol?, **untyped metadata) { (Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage] messages) -> void } -> Discorb::EventHandler
+            | (:message_pin_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::MessagePinEvent event) -> void } -> Discorb::EventHandler
+            | (:typing_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::TypingStartEvent event) -> void } -> Discorb::EventHandler
+            | (:reaction_add event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
+            | (:reaction_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionEvent event) -> void } -> Discorb::EventHandler
+            | (:reaction_remove_all event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionRemoveAllEvent event) -> void } -> Discorb::EventHandler
+            | (:reaction_remove_emoji event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::ReactionRemoveEmojiEvent event) -> void } -> Discorb::EventHandler
+            | (:role_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+            | (:role_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
+            | (:role_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+            | (:member_add event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
+            | (:member_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Member before, Discorb::Member after) -> void } -> Discorb::EventHandler
+            | (:member_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Member member) -> void } -> Discorb::EventHandler
+            | (:role_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+            | (:role_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role before, Discorb::Role after) -> void } -> Discorb::EventHandler
+            | (:role_remove event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Role role) -> void } -> Discorb::EventHandler
+            | (:invite_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
+            | (:invite_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Invite invite) -> void } -> Discorb::EventHandler
+            | (:interaction_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Interaction interaction) -> void } -> Discorb::EventHandler
+            | (:application_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction interaction) -> void } -> Discorb::EventHandler
+            | (:slash_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction::ChatInputCommand interaction) -> void } -> Discorb::EventHandler
+            | (:message_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction::MessageMenuCommand interaction) -> void } -> Discorb::EventHandler
+            | (:user_command event_name, ?id: Symbol?, **untyped metadata) { (Discorb::CommandInteraction::UserMenuCommand interaction) -> void } -> Discorb::EventHandler
+            | (:button_click event_name, ?id: Symbol?, **untyped metadata) { (Discorb::MessageComponentInteraction::Button interaction) -> void } -> Discorb::EventHandler
+            | (:select_menu_select event_name, ?id: Symbol?, **untyped metadata) { (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void } -> Discorb::EventHandler
+            | (:form_submit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ModalInteraction interaction) -> void } -> Discorb::EventHandler
+            | (:scheduled_event_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+            | (:scheduled_event_cancel event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+            | (:scheduled_event_edit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
+            | (:scheduled_event_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+            | (:scheduled_event_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+            | (:guild_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:guild_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
+            | (:thread_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
+            | (:scheduled_event_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
+            | (:voice_channel_connect event_name, ?id: Symbol?, **::untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:voice_channel_disconnect event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:voice_channel_move event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:voice_channel_update event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:voice_mute_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_mute_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_mute_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:voice_server_mute_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_server_mute_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_server_mute_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:voice_self_mute_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_self_mute_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_self_mute_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:voice_deaf_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_deaf_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_deaf_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:voice_server_deaf_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_server_deaf_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_server_deaf_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:voice_self_deaf_enable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_self_deaf_disable event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_self_deaf_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:voice_stream_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_stream_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_stream_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:voice_video_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_video_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState state) -> void } -> Discorb::EventHandler
+            | (:voice_video_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
+            | (:stage_instance_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
+            | (:stage_instance_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::StageInstance instance) -> void } -> Discorb::EventHandler
+            | (:stage_instance_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::StageInstance before, Discorb::StageInstance after) -> void } -> Discorb::EventHandler
+            | (:voice_state_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::VoiceState before, Discorb::VoiceState after) -> void } -> Discorb::EventHandler
     # endmarker: once
-            | (Symbol event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (*untyped) -> void } -> Discorb::EventHandler
+            | (Symbol event_name, ?id: Symbol?, **untyped metadata) { (*untyped) -> void } -> Discorb::EventHandler
 
     #
     # Remove event by ID.
@@ -564,7 +564,7 @@ module Discorb
     attr_reader allowed_mentions: Discorb::AllowedMentions
 
     # @return [Discorb::ClientUser] The client user.
-    attr_reader user: Discorb::ClientUser
+    attr_reader user: Discorb::ClientUser?
 
     # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Guild}] A dictionary of guilds.
     attr_reader guilds: Discorb::Dictionary[Discorb::Snowflake, Discorb::Guild]
@@ -600,7 +600,7 @@ module Discorb
 
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
-    attr_reader callable_commands: ::Hash[Discorb::Snowflake, Discorb::ApplicationCommand::Command]
+    attr_reader callable_commands: ::Array[Discorb::ApplicationCommand::Command]
 
     # @private
     # @return [{String => Thread::Mutex}] A hash of mutexes.

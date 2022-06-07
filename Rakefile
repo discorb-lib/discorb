@@ -285,7 +285,7 @@ namespace :rbs do
       tuple_sig = "[" + tuple_sig + "]" if args.length > 1
       tuple_sig = "void" if args.length.zero?
       event_sig << <<~RBS
-        | (:#{event[:name]} event_name, ?id: Symbol?, **::Hash[Symbol, untyped] metadata) { (#{sig}) -> void } -> Discorb::EventHandler
+        | (:#{event[:name]} event_name, ?id: Symbol?, **untyped metadata) { (#{sig}) -> void } -> Discorb::EventHandler
       RBS
       event_lock_sig << <<~RBS
         | (:#{event[:name]} event, ?Integer? timeout) { (#{sig}) -> boolish } -> Async::Task[#{tuple_sig}]

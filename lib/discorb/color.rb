@@ -85,7 +85,11 @@ module Discorb
     # @return [Hash{:r, :g, :b => Integer}] A RGB hash.
     #
     def to_rgb_hash
-      [@value / (256 * 256), @value / 256 % 256, @value % 256]
+      {
+        r: @value / (256 * 256),
+        g: @value / 256 % 256,
+        b: @value % 256,
+      }
     end
 
     alias deconstruct_keys to_rgb_hash

@@ -19,6 +19,8 @@ module Discorb
     # @return [self] The dictionary.
     def register: (_ToS id, Object body) -> self
 
+    alias []= register
+
     #
     # Merges another dictionary into this one.
     #
@@ -43,7 +45,8 @@ module Discorb
     #
     #   @return [Object] The item.
     #   @return [nil] if the item is not found.
-    def get: (K id) -> V?
+    def get: (_ToS id) -> V?
+           | (Integer index) -> V?
 
     alias [] get
 
@@ -70,6 +73,6 @@ module Discorb
     def inspect: () -> untyped
 
     # @return [Integer] The maximum number of items in the dictionary.
-    attr_accessor limit: Integer
+    attr_accessor limit: Integer?
   end
 end

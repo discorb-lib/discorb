@@ -37,7 +37,7 @@ module Discorb
     def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::SelectMenu
 
     # @return [String] The custom ID of the select menu.
-    attr_accessor custom_id: String
+    attr_accessor custom_id: String | Symbol
 
     # @return [Array<SelectMenu::Option>] The options of the select menu.
     attr_accessor options: ::Array[SelectMenu::Option]

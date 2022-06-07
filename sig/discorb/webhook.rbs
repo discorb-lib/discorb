@@ -9,7 +9,7 @@ module Discorb
     #
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data of the webhook.
-    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::json data) -> void
 
     def inspect: () -> untyped
 
@@ -103,6 +103,7 @@ module Discorb
     #
     # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
     def self.new: (String url) -> Discorb::Webhook::URLWebhook
+                | (Discorb::Client client, Discorb::json data) -> Discorb::Webhook::IncomingWebhook
 
     #
     # Creates Webhook with discord data.

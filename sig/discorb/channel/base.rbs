@@ -60,7 +60,7 @@ module Discorb
     # @param [Discorb::GuildChannel] other The channel to compare.
     #
     # @return [-1, 0, 1] -1 if the channel is at lower than the other, 1 if the channel is at highter than the other.
-    def <=>: (Discorb::GuildChannel other) -> Integer
+    def <=>: (Discorb::GuildChannel other) -> Integer?
 
     #
     # Checks if the channel is same as another.
@@ -119,7 +119,7 @@ module Discorb
     # @param [{Symbol => Boolean}] perms The permission overwrites to replace.
     #
     # @return [Async::Task<void>] The task.
-    def set_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?, **::Hash[Symbol, bool] perms) -> Async::Task[void]
+    def set_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?, **bool perms) -> Async::Task[void]
 
     #
     # Delete the channel's permission overwrite.

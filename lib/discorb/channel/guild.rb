@@ -34,7 +34,7 @@ module Discorb
     # @return [-1, 0, 1] -1 if the channel is at lower than the other, 1 if the channel is at highter than the other.
     #
     def <=>(other)
-      return 0 unless other.respond_to?(:position)
+      return nil unless other.respond_to?(:position)
 
       @position <=> other.position
     end
@@ -114,6 +114,7 @@ module Discorb
     #
     def move(position, lock_permissions: false, parent: Discorb::Unset, reason: nil)
       Async do
+        # @type var payload: Hash[Symbol, untyped]
         payload = {
           position: position,
         }

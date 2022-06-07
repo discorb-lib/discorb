@@ -109,7 +109,7 @@ module Discorb
       attr_reader :type
       # @return [Discorb::AuditLog::Entry::Changes] The changes in this entry.
       attr_reader :changes
-      # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message]
+      # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message, Discorb::Snowflake]
       #   The target of the entry.
       attr_reader :target
       # @return [Hash{Symbol => Object}] The optional data for this entry.

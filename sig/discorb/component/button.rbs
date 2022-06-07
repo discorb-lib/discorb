@@ -47,17 +47,19 @@ module Discorb
     attr_accessor style: Symbol
 
     # @return [Discorb::Emoji] The emoji of the button.
-    attr_accessor emoji: Discorb::Emoji
+    attr_accessor emoji: Discorb::Emoji?
 
     # @return [String] The custom ID of the button.
     #   Won't be used if the style is `:link`.
-    attr_accessor custom_id: String
+    attr_accessor custom_id: String?
 
     # @return [String] The URL of the button.
     #   Only used when the style is `:link`.
-    attr_accessor url: String
+    attr_accessor url: String?
 
     # @return [Boolean] Whether the button is disabled.
     attr_accessor disabled: bool
+
+    alias disabled? disabled
   end
 end

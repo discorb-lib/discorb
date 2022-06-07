@@ -13,6 +13,8 @@ target :lib do
   configure_code_diagnostics do |config|
     config[D::Ruby::UnsupportedSyntax] = nil
     config[D::Ruby::UnexpectedSuper] = nil
+    config[D::Ruby::UnexpectedPositionalArgument] = nil
+    config[D::Ruby::InsufficientPositionalArguments] = nil
   end
 end
 

@@ -119,7 +119,7 @@ module Discorb
 
       # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message]
       #   The target of the entry.
-      attr_reader target: (Discorb::Channel | Discorb::Role | Discorb::Member | Discorb::Guild | Discorb::Message)
+      attr_reader target: (Discorb::Channel | Discorb::Role | Discorb::Member | Discorb::Guild | Discorb::Message | Discorb::Snowflake)
 
       # @return [Hash{Symbol => Object}] The optional data for this entry.
       # @note You can use dot notation to access the data.

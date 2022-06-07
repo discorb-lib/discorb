@@ -74,10 +74,10 @@ module Discorb
     attr_reader type: Symbol
 
     # @return [Discorb::Embed::Image] The image of embed.
-    attr_accessor image: Discorb::Embed::Image
+    attr_accessor image: Discorb::Embed::Image?
 
     # @return [Discorb::Embed::Thumbnail] The thumbnail of embed.
-    attr_accessor thumbnail: Discorb::Embed::Thumbnail
+    attr_accessor thumbnail: Discorb::Embed::Thumbnail?
 
     #
     # Represents an entry in embed.

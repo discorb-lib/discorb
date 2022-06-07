@@ -2,7 +2,7 @@
 
 require "discorb"
 
-client = Discorb::Client.new(log: Logger.new($stdout))
+client = Discorb::Client.new(logger: Logger.new($stderr))
 
 client.once :standby do
   puts "Logged in as #{client.user}"

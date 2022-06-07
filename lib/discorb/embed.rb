@@ -66,7 +66,7 @@ module Discorb
       @footer = footer
       @image = image && (image.is_a?(String) ? Image.new(image) : image)
       @thumbnail = thumbnail && (thumbnail.is_a?(String) ? Thumbnail.new(thumbnail) : thumbnail)
-      @type = "rich"
+      @type = :rich
     end
 
     #
@@ -113,6 +113,7 @@ module Discorb
     # @return [Hash] Converted embed.
     #
     def to_hash
+      # @type var ret: Hash[untyped, untyped]
       ret = { type: "rich" }
       ret[:title] = @title if @title
       ret[:description] = @description if @description

@@ -34,7 +34,7 @@ module Discorb
       @cache[id.to_s] = body
       @cache = @cache.sort_by(&@sort).to_h if @sort
       @cache.delete(@cache.keys[0]) if !@limit.nil? && @cache.size > @limit
-      body
+      self
     end
 
     #

@@ -261,33 +261,34 @@ module Discorb
     # @async
     #
     # @param [Integer] limit The limit of threads to fetch.
-    # @param [Time] before <description>
+    # @param [Time] before The time before which the threads are created.
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The joined archived private threads in the channel.
     #
     def fetch_joined_archived_private_threads(limit: nil, before: nil)
       Async do
         if limit.nil?
-          before = 0
+          before = Time.now
           threads = []
           loop do
             _resp, data = @client.http.request(
               Route.new(
-                "/channels/#{@id}/users/@me/threads/archived/private?before=#{before}",
+                "/channels/#{@id}/users/@me/threads/archived/private?before=#{before.iso8601}",
                 "//channels/:channel_id/users/@me/threads/archived/private",
                 :get
               )
             ).wait
             threads += data[:threads].map { |thread| Channel.make_channel(@client, thread) }
-            before = data[:threads][-1][:id]
 
             break unless data[:has_more]
+
+            before = Snowflake.new(data[:threads][-1][:id]).timestamp
           end
           threads
         else
           _resp, data = @client.http.request(
             Route.new(
-              "/channels/#{@id}/users/@me/threads/archived/private?limit=#{limit}&before=#{before}",
+              "/channels/#{@id}/users/@me/threads/archived/private?limit=#{limit}&before=#{before.iso8601}",
               "//channels/:channel_id/users/@me/threads/archived/private",
               :get
             )
