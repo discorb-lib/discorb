@@ -217,7 +217,7 @@ module Discorb
             | (:guild_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
             | (:thread_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
             | (:scheduled_event_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
-            | (:voice_channel_connect event_name, ?id: Symbol?, **::untyped metadata) { () -> void } -> Discorb::EventHandler
+            | (:voice_channel_connect event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
             | (:voice_channel_disconnect event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
             | (:voice_channel_move event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
             | (:voice_channel_update event_name, ?id: Symbol?, **untyped metadata) { () -> void } -> Discorb::EventHandler
