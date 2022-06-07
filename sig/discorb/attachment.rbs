@@ -56,7 +56,7 @@ module Discorb
     attr_reader content_type: String
 
     # @return [String] The attachment description.
-    attr_reader description: String
+    attr_reader description: String?
 
     # @return [Discorb::Snowflake] The attachment id.
     attr_reader id: Discorb::Snowflake
