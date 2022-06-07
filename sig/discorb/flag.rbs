@@ -15,7 +15,7 @@ module Discorb
     # @param [Discorb::Flag] other The other flag.
     #
     # @return [Discorb::Flag] The union of the two flags.
-    def |: (Discorb::Flag other) -> Discorb::Flag
+    def |: (instance other) -> instance
 
     #
     # Subtraction of two flags.
@@ -23,7 +23,7 @@ module Discorb
     # @param [Discorb::Flag] other The other flag.
     #
     # @return [Discorb::Flag] The subtraction of the two flags.
-    def -: (Discorb::Flag other) -> Discorb::Flag
+    def -: (instance other) -> instance
 
     #
     # Intersection of two flags.
@@ -31,7 +31,7 @@ module Discorb
     # @param [Discorb::Flag] other The other flag.
     #
     # @return [Discorb::Flag] The intersection of the two flags.
-    def &: (Discorb::Flag other) -> Discorb::Flag
+    def &: (instance other) -> instance
 
     #
     # XOR of two flags.
@@ -39,13 +39,13 @@ module Discorb
     # @param [Discorb::Flag] other The other flag.
     #
     # @return [Discorb::Flag] The XOR of the two flags.
-    def ^: (Discorb::Flag other) -> Discorb::Flag
+    def ^: (instance other) -> instance
 
     #
     # Negation of the flag.
     #
     # @return [Discorb::Flag] The negation of the flag.
-    def ~: () -> Discorb::Flag
+    def ~: () -> instance
 
     def to_i: () -> Integer
 
@@ -59,7 +59,7 @@ module Discorb
 
     #
     # Initialize a new flag with keys.
-    def self.from_keys: (*Symbol keys) -> Discorb::Flag
+    def self.from_keys: (*Symbol keys) -> instance
 
     # @return [Hash{Symbol => Boolean}] the values of the flag.
     attr_reader values: ::Hash[Symbol, bool]
