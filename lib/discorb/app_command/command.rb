@@ -7,7 +7,7 @@ module Discorb
     # @abstract
     #
     class Command < DiscordModel
-      # @return [Hash{Symbol => String}] The name of the command.
+      # @return [Hash{String => String}] The name of the command.
       attr_reader :name
       # @return [Array<#to_s>] The guild ids that the command is enabled in.
       attr_reader :guild_ids
@@ -35,13 +35,13 @@ module Discorb
       # @private
       #
       # @param [String, Hash{Symbol => String}] name The name of the command.
-      # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
+      # @param [Array<#to_s>, false, nil] guild_ids The guild ids that the command is enabled in.
       # @param [Proc] block The block of the command.
-      # @param [:chat_input, :user, :message] type The type of the command.
+      # @param [Integer] type The type of the command.
       # @param [Boolean] dm_permission Whether the command is enabled in DMs.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       #
-      def initialize(name, guild_ids, block, type, dm_permission = nil, default_permission = nil)
+      def initialize(name, guild_ids, block, type, dm_permission = true, default_permission = nil) # rubocop:disable Style/OptionalBooleanParameter
         @name = name.is_a?(String) ? { "default" => name } : ApplicationCommand.modify_localization_hash(name)
         @guild_ids = guild_ids&.map(&:to_s)
         @block = block
@@ -100,7 +100,7 @@ module Discorb
         # @param [Hash{String => Hash}] options The options of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [Proc] block The block of the command.
-        # @param [:chat_input, :user, :message] type The type of the command.
+        # @param [Integer] type The type of the command.
         # @param [Discorb::ApplicationCommand::Command, nil] parent The parent command.
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
@@ -215,7 +215,7 @@ module Discorb
       class GroupCommand < Command
         # @return [Array<Discorb::ApplicationCommand::Command>] The subcommands of the command.
         attr_reader :commands
-        # @return [String] The description of the command.
+        # @return [Hash{String => String}] The description of the command.
         attr_reader :description
 
         #
@@ -225,13 +225,12 @@ module Discorb
         # @param [String, Hash{Symbol => String}] name The name of the command.
         # @param [String, Hash{Symbol => String}] description The description of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
-        # @param [:chat_input, :user, :message] type The type of the command.
         # @param [Discorb::Client] client The client of the command.
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
         #
-        def initialize(name, description, guild_ids, type, client, dm_permission, default_permission)
-          super(name, guild_ids, block, type, dm_permission, default_permission)
+        def initialize(name, description, guild_ids, client, dm_permission, default_permission)
+          super(name, guild_ids, block, 1, dm_permission, default_permission)
           @description = if description.is_a?(String)
               {
                 "default" => description,
@@ -279,9 +278,9 @@ module Discorb
         #
         # @see file:docs/application_command.md Application Commands
         #
-        def group(command_name, description, &block)
-          command = Discorb::ApplicationCommand::Command::SubcommandGroup.new(command_name, description, @name, @client)
-          command.then(&block) if block_given?
+        def group(command_name, description)
+          command = Discorb::ApplicationCommand::Command::SubcommandGroup.new(command_name, description, self, @client)
+          yield command if block_given?
           @commands << command
           command
         end
@@ -365,7 +364,7 @@ module Discorb
         # @param [Discorb::ApplicationCommand::Command::GroupCommand] parent The parent command.
         # @param [Discorb::Client] client The client.
         def initialize(name, description, parent, client)
-          super(name, description, [], 1, client, nil, nil)
+          super(name, description, [], client, nil, nil)
 
           @commands = []
           @parent = parent

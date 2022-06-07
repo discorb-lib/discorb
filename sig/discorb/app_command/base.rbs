@@ -3,32 +3,57 @@ module Discorb
   # Handles application commands.
   module ApplicationCommand
     VALID_LOCALES: untyped
+    type option = {
+      name_localizations: Hash[Symbol | String, String]?,
+      description: localizable?,
+      required: bool?,
+      optional: bool?,
+      default: untyped?,
+      type: (
+          singleton(String) | :string | :str
+        | singleton(Integer) | :integer | :int
+        | singleton(TrueClass) | singleton(FalseClass) | :boolean | :bool
+        | singleton(Discorb::User) | singleton(Discorb::Member) | :user | :member
+        | singleton(Discorb::Channel) | :channel
+        | singleton(Discorb::Role) | :role
+        | :mentionable
+        | singleton(Float) | :float
+        | :attachment
+      )?,
+      choices: Hash[String, String | Integer | Float]?,
+      choices_localizations: Hash[String, Hash[Symbol | String, String]]?,
+      default: untyped?,
+      channel_types: Array[Class]?,
+      autocomplete: (^(Discorb::CommandInteraction) -> Hash[String, String])?,
+      range: Range[Integer | Float]?
+    }
+    type options = ::Hash[String, option]
+    type localizable = String | Hash[Symbol | String, String]
+    type guild_ids = Array[_ToS] | false | nil
 
-    def modify_localization_hash: (untyped hash) -> untyped
-
-    def self.modify_localization_hash: (untyped hash) -> untyped
+    def self?.modify_localization_hash: (Hash[Symbol | String, String] hash) -> Hash[String, String]
 
     #
     # Represents a application command.
     # @abstract
     class Command < Discorb::DiscordModel
-      TYPES: untyped
+      TYPES: Hash[Integer, Symbol]
 
       #
       # Initialize a new command.
       # @private
       #
       # @param [String, Hash{Symbol => String}] name The name of the command.
-      # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
+      # @param [Array<#to_s>, false, nil] guild_ids The guild ids that the command is enabled in.
       # @param [Proc] block The block of the command.
-      # @param [:chat_input, :user, :message] type The type of the command.
+      # @param [Integer] type The type of the command.
       # @param [Boolean] dm_permission Whether the command is enabled in DMs.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       def initialize: (
-                        (String | ::Hash[Symbol, String]) name,
-                        ::Array[untyped] guild_ids,
+                        Discorb::ApplicationCommand::localizable name,
+                        Discorb::ApplicationCommand::guild_ids guild_ids,
                         Proc block,
-                        Symbol type,
+                        Integer type,
                         ?bool? dm_permission,
                         ?Discorb::Permission? default_permission
                       ) -> void
@@ -47,14 +72,14 @@ module Discorb
       # @return [Hash] The hash represents the object.
       def to_hash: () -> ::Hash[untyped, untyped]
 
-      # @return [Hash{Symbol => String}] The name of the command.
-      attr_reader name: ::Hash[Symbol, String]
+      # @return [Hash{String => String}] The name of the command.
+      attr_reader name: ::Hash[String, String]
 
       # @return [Array<#to_s>] The guild ids that the command is enabled in.
-      attr_reader guild_ids: ::Array[untyped]
+      attr_reader guild_ids: Discorb::ApplicationCommand::guild_ids
 
       # @return [Proc] The block of the command.
-      attr_reader block: Proc
+      attr_reader block: ^(Discorb::Interaction, *untyped) -> untyped | Proc
 
       # @return [:chat_input, :user, :message] The type of the command.
       attr_reader type: Symbol
@@ -63,16 +88,14 @@ module Discorb
       attr_reader type_raw: Integer
 
       # @return [Discorb::Permission] The default permissions for this command.
-      attr_reader default_permission: Discorb::Permission
+      attr_reader default_permission: Discorb::Permission?
 
       # @return [Boolean] Whether the command is enabled in DMs.
-      attr_reader dm_permission: bool
+      attr_reader dm_permission: bool?
 
       #
       # Represents the slash command.
       class ChatInputCommand < Discorb::ApplicationCommand::Command
-        TYPES: untyped
-
         #
         # Initialize a new slash command.
         # @private
@@ -84,20 +107,20 @@ module Discorb
         # @param [Hash{String => Hash}] options The options of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [Proc] block The block of the command.
-        # @param [:chat_input, :user, :message] type The type of the command.
+        # @param [Integer] type The type of the command.
         # @param [Discorb::ApplicationCommand::Command, nil] parent The parent command.
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
         def initialize: (
-                          (String | ::Hash[Symbol, String]) name,
-                          (String | ::Hash[Symbol, String]) description,
-                          ::Hash[String, ::Hash[untyped, untyped]] options,
-                          ::Array[untyped] guild_ids,
+                          Discorb::ApplicationCommand::localizable name,
+                          Discorb::ApplicationCommand::localizable description,
+                          Discorb::ApplicationCommand::options options,
+                          Discorb::ApplicationCommand::guild_ids guild_ids,
                           Proc block,
-                          Symbol type,
+                          Integer type,
                           Discorb::ApplicationCommand::Command? parent,
-                          bool dm_permission,
-                          Discorb::Permission default_permission
+                          bool? dm_permission,
+                          Discorb::Permission? default_permission
                         ) -> void
 
         #
@@ -123,8 +146,6 @@ module Discorb
       #
       # Represents the command with subcommands.
       class GroupCommand < Discorb::ApplicationCommand::Command
-        TYPES: untyped
-
         #
         # Initialize a new group command.
         # @private
@@ -132,18 +153,16 @@ module Discorb
         # @param [String, Hash{Symbol => String}] name The name of the command.
         # @param [String, Hash{Symbol => String}] description The description of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
-        # @param [:chat_input, :user, :message] type The type of the command.
         # @param [Discorb::Client] client The client of the command.
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
         def initialize: (
-                          (String | ::Hash[Symbol, String]) name,
-                          (String | ::Hash[Symbol, String]) description,
-                          ::Array[untyped] guild_ids,
-                          Symbol type,
+                          Discorb::ApplicationCommand::localizable name,
+                          Discorb::ApplicationCommand::localizable description,
+                          Discorb::ApplicationCommand::guild_ids guild_ids,
                           Discorb::Client client,
-                          bool dm_permission,
-                          Discorb::Permission default_permission
+                          bool? dm_permission,
+                          Discorb::Permission? default_permission
                         ) -> void
 
         #
@@ -154,10 +173,11 @@ module Discorb
         def slash: (
                      (String | ::Hash[Symbol, String]) command_name,
                      (String | ::Hash[Symbol, String]) description,
-                     ?::Hash[String, String | Integer | Float] options,
+                     ?Discorb::ApplicationCommand::options options,
                      ?dm_permission: bool,
                      ?default_permission: Discorb::Permission?
-                   ) -> Discorb::ApplicationCommand::Command::ChatInputCommand
+                   ) { (Discorb::CommandInteraction::ChatInputCommand, *untyped) -> void }
+                  -> Discorb::ApplicationCommand::Command::ChatInputCommand
 
         #
         # Add new subcommand group.
@@ -197,14 +217,12 @@ module Discorb
         attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]
 
         # @return [String] The description of the command.
-        attr_reader description: String
+        attr_reader description: ::Hash[String, String]
       end
 
       #
       # Represents the subcommand group.
       class SubcommandGroup < Discorb::ApplicationCommand::Command::GroupCommand
-        TYPES: untyped
-
         #
         # Initialize a new subcommand group.
         # @private
@@ -226,10 +244,15 @@ module Discorb
         # Add new subcommand.
         # @param (see Discorb::ApplicationCommand::Handler#slash)
         # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
-        def slash: ((String | ::Hash[Symbol, String]) command_name, (String | ::Hash[Symbol, String]) description, ?::Hash[String, String | Integer | Float] options) -> Discorb::ApplicationCommand::Command::ChatInputCommand
+        def slash: (
+                     Discorb::ApplicationCommand::localizable command_name,
+                     Discorb::ApplicationCommand::localizable description,
+                     ?Discorb::ApplicationCommand::options options
+                   ) { (Discorb::CommandInteraction::ChatInputCommand, *untyped) -> void }
+                     -> Discorb::ApplicationCommand::Command::ChatInputCommand
 
         # @return [Array<Discorb::ApplicationCommand::Command::ChatInputCommand>] The subcommands of the command.
-        attr_reader commands: ::Array[Discorb::ApplicationCommand::Command::ChatInputCommand]
+        attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]
       end
     end
   end

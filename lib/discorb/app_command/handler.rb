@@ -6,6 +6,8 @@ module Discorb
     # Module to handle application commands.
     #
     module Handler
+      # @type instance: Discorb::Client
+
       #
       # Add new top-level command.
       #
@@ -96,14 +98,20 @@ module Discorb
       # @see file:docs/application_command.md Application Commands
       # @see file:docs/cli/setup.md CLI: setup
       #
-      def slash_group(command_name, description, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
+      def slash_group(command_name, description, guild_ids: nil, dm_permission: true, default_permission: nil)
         command_name = { default: command_name } if command_name.is_a?(String)
         description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::GroupCommand.new(command_name, description, guild_ids, nil,
-                                                                         self, dm_permission, default_permission)
-        command.then(&block) if block_given?
+        command = Discorb::ApplicationCommand::Command::GroupCommand.new(
+          command_name,
+          description,
+          guild_ids,
+          self,
+          dm_permission,
+          default_permission
+        )
+        yield command if block_given?
         @commands << command
         command
       end
@@ -126,8 +134,14 @@ module Discorb
       def message_command(command_name, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
         command_name = { default: command_name } if command_name.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
-        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 3, dm_permission,
-                                                           default_permission)
+        command = Discorb::ApplicationCommand::Command.new(
+          command_name,
+          guild_ids,
+          block,
+          3,
+          dm_permission,
+          default_permission
+        )
         @commands << command
         command
       end
