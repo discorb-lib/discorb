@@ -614,9 +614,9 @@ module Discorb
     # @return [nil] If client has no shard.
     attr_reader shard: Discorb::Shard?
 
-    # @return [Discorb::Shard] The current shard ID. This is implemented with Thread variables.
+    # @return [Integer] The current shard ID. This is implemented with Thread variables.
     # @return [nil] If client has no shard.
-    attr_reader shard_id: Discorb::Shard?
+    attr_reader shard_id: Integer?
 
     # @return [Logger] The logger.
     attr_reader logger: Logger

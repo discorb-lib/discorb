@@ -129,7 +129,7 @@ module Discorb
         @client.logger.info("Rate limit exceeded for #{path.method} #{path.url}, waiting #{data[:retry_after]} seconds")
         sleep(data[:retry_after])
         if files
-          multipart_request(path, body, files, audit_log_reason: audit_log_reason, **kwargs)
+          multipart_request(path, body, files, audit_log_reason: audit_log_reason, **kwargs).wait
         else
           request(path, body, audit_log_reason: audit_log_reason, **kwargs).wait
         end

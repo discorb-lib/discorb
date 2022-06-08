@@ -66,7 +66,7 @@ module Discorb
     #   @return [Discorb::Shard] The current shard. This is implemented with Thread variables.
     #   @return [nil] If client has no shard.
     # @!attribute [r] shard_id
-    #   @return [Discorb::Shard] The current shard ID. This is implemented with Thread variables.
+    #   @return [Integer] The current shard ID. This is implemented with Thread variables.
     #   @return [nil] If client has no shard.
     # @!attribute [r] logger
     #   @return [Logger] The logger.
@@ -475,7 +475,7 @@ module Discorb
     #
     def close!
       if @shards.any?
-        @shards.each(&:close!)
+        @shards.each_value(&:close!)
       else
         @connection.send_close
       end
@@ -512,6 +512,7 @@ module Discorb
     end
 
     def run_setup(token)
+      # @type var guild_ids: Array[String] | false
       guild_ids = false
       if guilds = ENV.fetch("DISCORB_SETUP_GUILDS", nil)
         guild_ids = guilds.split(",")
