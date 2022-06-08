@@ -98,7 +98,7 @@ module Discorb
                              ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
                              ?dm_permission: bool,
                              ?default_permission: Discorb::Permission?
-                           ) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
+                           ) { (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
 
       #
       # Add user context menu command.

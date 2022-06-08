@@ -52,7 +52,7 @@ module Discorb
       def initialize: (
                         Discorb::ApplicationCommand::localizable name,
                         Discorb::ApplicationCommand::guild_ids guild_ids,
-                        Proc block,
+                        ^(Discorb::Interaction, *untyped) -> untyped block,
                         Integer type,
                         ?bool? dm_permission,
                         ?Discorb::Permission? default_permission
@@ -79,7 +79,7 @@ module Discorb
       attr_reader guild_ids: Discorb::ApplicationCommand::guild_ids
 
       # @return [Proc] The block of the command.
-      attr_reader block: ^(Discorb::Interaction, *untyped) -> untyped | Proc
+      attr_reader block: ^(Discorb::Interaction, *untyped) -> untyped
 
       # @return [:chat_input, :user, :message] The type of the command.
       attr_reader type: Symbol
@@ -116,7 +116,7 @@ module Discorb
                           Discorb::ApplicationCommand::localizable description,
                           Discorb::ApplicationCommand::options options,
                           Discorb::ApplicationCommand::guild_ids guild_ids,
-                          Proc block,
+                          ^(Discorb::CommandInteraction::ChatInputCommand, *untyped) -> untyped block,
                           Integer type,
                           Discorb::ApplicationCommand::Command? parent,
                           bool? dm_permission,

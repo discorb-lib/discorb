@@ -109,9 +109,9 @@ module Discorb
         session = Net::HTTP.new("discord.com", 443)
         session.use_ssl = true
         resp = session.request(req)
-        data = get_response_data(resp)
+        resp_data = get_response_data(resp)
         @ratelimit_handler.save(path, resp)
-        response = handle_response(resp, data, path, body, files, audit_log_reason, kwargs)
+        response = handle_response(resp, resp_data, path, body, files, audit_log_reason, kwargs)
         files&.then { _1.filter(&:will_close).each { |f| f.io.close } }
         response
       end

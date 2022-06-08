@@ -13,7 +13,7 @@ module Discorb
     def call: () -> untyped
 
     # @return [Proc] the block to be called.
-    attr_reader block: Proc
+    attr_reader block: ^(*untyped) -> void
 
     # @return [Symbol] the event id.
     attr_reader id: Symbol?

@@ -38,7 +38,7 @@ module Discorb
       def fetch_message: (?force: bool) -> Async::Task[Discorb::Message]
 
       # @return [Hash] The raw data of the event.
-      attr_reader data: ::Hash[untyped, untyped]
+      attr_reader data: Discorb::json
 
       # @return [Discorb::Snowflake] The ID of the user who reacted.
       attr_reader user_id: Discorb::Snowflake
