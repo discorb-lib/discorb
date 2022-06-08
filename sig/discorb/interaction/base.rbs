@@ -31,7 +31,7 @@ module Discorb
     # @private
     def self.descendants: () -> Array[Class]
 
-    def _set_data: (*) -> untyped
+    def _set_data: (*untyped) -> untyped
 
     # @return [Discorb::Snowflake] The ID of the interaction.
     attr_reader id: Discorb::Snowflake
