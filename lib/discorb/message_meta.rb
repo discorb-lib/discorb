@@ -139,7 +139,8 @@ module Discorb
       def initialize(client, data)
         @id = Snowflake.new(data[:id])
         @name = data[:name]
-        @type = Discorb::Interaction.descendants.find { |c| c.interaction_type == data[:type] }
+        @type = (Discorb::Interaction.descendants.find { |c| c.interaction_type == data[:type] } or
+                 raise "Unknown interaction type: #{data[:type]}")
         @user = client.users[data[:user][:id]] || User.new(client, data[:user])
       end
 

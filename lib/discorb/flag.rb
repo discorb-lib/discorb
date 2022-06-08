@@ -29,7 +29,7 @@ module Discorb
     #
     # Returns the value of the flag.
     #
-    def method_missing(name, args = nil)
+    def method_missing(name, *_args, **_kwargs)
       if @values.key?(name.to_s.delete_suffix("?").to_sym)
         @values[name.to_s.delete_suffix("?").to_sym]
       else

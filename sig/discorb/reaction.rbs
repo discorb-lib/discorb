@@ -8,7 +8,7 @@ module Discorb
     #
     # @param [Discorb::Message] message The message that this reaction is on.
     # @param [Hash] data The data of the reaction.
-    def initialize: (Discorb::Message message, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Message message, Discorb::json data) -> void
 
     #
     # Fetch the user that reacted with this emoji.

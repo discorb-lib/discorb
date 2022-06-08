@@ -10,7 +10,7 @@ module Discorb
     #
     # @param [Discorb::Client] client The client this interaction belongs to.
     # @param [Hash] data The data of the interaction.
-    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::json data) -> void
 
     def guild: () -> Discorb::Guild?
 
@@ -24,14 +24,14 @@ module Discorb
     #
     # @param [Discorb::Client] client The client this interaction belongs to.
     # @param [Hash] data The data of the interaction.
-    def self.make_interaction: (Discorb::Client client, ::Hash[untyped, untyped] data) -> untyped
+    def self.make_interaction: (Discorb::Client client, Discorb::json data) -> untyped
 
     #
     # Returns the descendants of the class.
     # @private
     def self.descendants: () -> Array[Class]
 
-    def _set_data: (*untyped) -> untyped
+    def _set_data: (untyped) -> untyped
 
     # @return [Discorb::Snowflake] The ID of the interaction.
     attr_reader id: Discorb::Snowflake

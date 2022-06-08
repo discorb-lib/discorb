@@ -55,7 +55,7 @@ module Discorb
     # Max value of the flag.
     #
     # @return [Integer] the max value of the flag.
-    def self.max_value: () -> Integer
+    def self.max_value: () -> (Integer | Numeric)
 
     #
     # Initialize a new flag with keys.

@@ -11,7 +11,7 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data of the welcome screen.
     # @param [Discorb::Guild] guild The guild this integration is in.
-    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data, _ToS guild_id) -> void
+    def initialize: (Discorb::Client client, Discorb::json data, _ToS guild_id) -> void
 
     #
     # Delete the integration.
@@ -70,7 +70,7 @@ module Discorb
       # @private
       #
       # @param [Hash] data The data from Discord.
-      def initialize: (::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::json data) -> void
 
       # @return [String] The ID of the account.
       attr_reader id: String
@@ -88,7 +88,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client.
       # @param [Hash] data The data from Discord.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # @return [Discorb::Snowflake] The ID of the application.
       attr_reader id: Discorb::Snowflake

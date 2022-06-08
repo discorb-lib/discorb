@@ -261,6 +261,7 @@ namespace :rbs do
     end
     event_sig = +""
     event_lock_sig = +""
+    extension_sig = +""
     events.each do |event|
       args = []
       event[:parameters].each do |parameter|
@@ -291,9 +292,13 @@ namespace :rbs do
       event_lock_sig << <<~RBS
         | (:#{event[:name]} event, ?Integer? timeout) { (#{sig}) -> boolish } -> Async::Task[#{tuple_sig}]
       RBS
+      extension_sig << <<~RBS
+        | (:#{event[:name]} event_name, ?id: Symbol?, **untyped metadata) { (#{sig}) -> void } -> void
+      RBS
     end
     event_sig.sub!("| ", "  ").rstrip!
     event_lock_sig.sub!("| ", "  ").rstrip!
+    extension_sig.sub!("| ", "  ").rstrip!
     res = client_rbs.gsub!(/\# marker: on\n(?:[\s\S]*?\n)?( +)\# endmarker: on\n/) do
       indent = Regexp.last_match(1)
       "# marker: on\n#{event_sig.gsub(/^/, "#{indent}      ")}\n#{indent}# endmarker: on\n"
@@ -314,13 +319,13 @@ namespace :rbs do
 
     res = extension_rbs.gsub!(/\# marker: event\n(?:[\s\S]*?\n)?( +)\# endmarker: event\n/) do
       indent = Regexp.last_match(1)
-      "# marker: event\n#{event_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: event\n"
+      "# marker: event\n#{extension_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: event\n"
     end
     raise "Failed to generate Extension.event" unless res
 
     res = extension_rbs.gsub!(/\# marker: once_event\n(?:[\s\S]*?\n)?( +)\# endmarker: once_event\n/) do
       indent = Regexp.last_match(1)
-      "# marker: once_event\n#{event_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: once_event\n"
+      "# marker: once_event\n#{extension_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: once_event\n"
     end
     raise "Failed to generate Extension.once_event" unless res
 

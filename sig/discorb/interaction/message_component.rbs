@@ -13,7 +13,7 @@ module Discorb
     #
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data.
-    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::json data) -> void
 
     #
     # Create a MessageComponentInteraction instance for the given data.

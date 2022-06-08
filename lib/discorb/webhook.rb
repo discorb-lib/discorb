@@ -214,11 +214,12 @@ module Discorb
       # Initializes the webhook from URL.
       #
       # @param [String] url The URL of the webhook.
+      # @param [Discorb::Client] client The client to associate with the webhook.
       #
-      def initialize(url)
+      def initialize(url, client: nil)
         @url = url
         @token = ""
-        @http = Discorb::HTTP.new(self)
+        @http = Discorb::HTTP.new(client || Discorb::Client.new)
       end
     end
 
@@ -414,50 +415,7 @@ module Discorb
       #
       # Represents an author of webhook message.
       #
-      class Author < DiscordModel
-        # @return [Boolean] Whether the author is a bot.
-        # @note This will be always `true`.
-        attr_reader :bot
-        alias bot? bot
-        # @return [Discorb::Snowflake] The ID of the author.
-        attr_reader :id
-        # @return [String] The name of the author.
-        attr_reader :username
-        alias name username
-        # @return [Discorb::Asset] The avatar of the author.
-        attr_reader :avatar
-        # @return [String] The discriminator of the author.
-        attr_reader :discriminator
-
-        #
-        # Initializes the author.
-        # @private
-        #
-        # @param [Hash] data The data of the author.
-        #
-        def initialize(data)
-          @data = data
-          @bot = data[:bot]
-          @id = Snowflake.new(data[:id])
-          @username = data[:username]
-          @avatar = data[:avatar] ? Asset.new(self, data[:avatar]) : DefaultAvatar.new(data[:discriminator])
-          @discriminator = data[:discriminator]
-        end
-
-        #
-        # Format author with `Name#Discriminator` style.
-        #
-        # @return [String] Formatted author.
-        #
-        def to_s
-          "#{@username}##{@discriminator}"
-        end
-
-        alias to_s_user to_s
-
-        def inspect
-          "#<#{self.class.name} #{self}>"
-        end
+      class Author < Discorb::Member
       end
     end
 
@@ -466,12 +424,13 @@ module Discorb
       # Creates URLWebhook.
       #
       # @param [String] url The URL of the webhook.
+      # @param [Discorb::Client] client The client to associate with the webhook.
       #
       # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
       #
-      def new(url)
+      def new(url, client: nil)
         if self == Webhook
-          URLWebhook.new(url)
+          URLWebhook.new(url, client: client)
         else
           super
         end

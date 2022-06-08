@@ -34,7 +34,7 @@ module Discorb
     # @param [Hash] data The hash to create the select menu from.
     #
     # @return [Discorb::SelectMenu] The created select menu.
-    def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::SelectMenu
+    def self.from_hash: (Discorb::json data) -> Discorb::SelectMenu
 
     # @return [String] The custom ID of the select menu.
     attr_accessor custom_id: String | Symbol
@@ -86,7 +86,7 @@ module Discorb
       # @param [Hash] data A hash representing the option.
       #
       # @return [Discorb::SelectMenu::Option] A new option.
-      def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::SelectMenu::Option
+      def self.from_hash: (Discorb::json data) -> Discorb::SelectMenu::Option
 
       # @return [String] The label of the option.
       attr_accessor label: String
@@ -95,10 +95,10 @@ module Discorb
       attr_accessor value: String
 
       # @return [String] The description of the option.
-      attr_accessor description: String
+      attr_accessor description: String?
 
       # @return [Discorb::emoji] The emoji of the option.
-      attr_accessor emoji: Discorb::emoji
+      attr_accessor emoji: Discorb::emoji?
 
       # @return [Boolean] Whether the option is default.
       attr_accessor default: bool

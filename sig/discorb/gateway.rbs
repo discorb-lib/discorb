@@ -12,7 +12,7 @@ module Discorb
       # @private
       #
       # @param [Hash] data The data of the event.
-      def initialize: (::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::json data) -> void
 
       def inspect: () -> untyped
     end
@@ -26,7 +26,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # Fetch the message.
       # If message is cached, it will be returned.
@@ -89,7 +89,7 @@ module Discorb
       #
       #
       # @param [Hash] data The data of the event.
-      def initialize: (untyped _client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (untyped _client, Discorb::json data) -> void
 
       # @return [Discorb::Snowflake] The ID of the integration.
       attr_reader id: Discorb::Snowflake
@@ -112,7 +112,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # Fetch the message.
       # If message is cached, it will be returned.
@@ -154,7 +154,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # Fetch the message.
       # If message is cached, it will be returned.
@@ -199,7 +199,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # @return [Discorb::User] The user that triggered the event.
       attr_reader user: Discorb::User
@@ -285,7 +285,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, _ToS id, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, _ToS id, Discorb::json data) -> void
 
       # @return [Discorb::Snowflake] The ID of the message.
       attr_reader id: Discorb::Snowflake
@@ -308,7 +308,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # @return [String] The invite code.
       attr_reader code: String
@@ -331,7 +331,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # @return [Discorb::Snowflake] The ID of the channel the user is typing in.
       attr_reader user_id: Discorb::Snowflake
@@ -388,7 +388,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # @macro client_cache
       # @return [Discorb::Channel] The channel where the webhook was updated.
@@ -418,9 +418,7 @@ module Discorb
     #
     # A class for connecting websocket with raw bytes data.
     # @private
-    class RawConnection
-      def initialize: () -> void
-
+    class RawConnection < Async::WebSocket::Connection
       def inspect: () -> untyped
 
       def closed?: () -> bool

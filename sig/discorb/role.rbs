@@ -11,7 +11,7 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Discorb::Guild] guild The guild the role belongs to.
     # @param [Hash] data The data of the role.
-    def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
 
     def icon: () -> (Discorb::Asset | Discorb::emoji | nil)
 

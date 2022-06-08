@@ -136,7 +136,7 @@ module Discorb
         # @private
         #
         # @param [Hash] data The data to initialize with.
-        def initialize: (::Hash[untyped, untyped] data) -> void
+        def initialize: (Discorb::json data) -> void
 
         #
         # Formats the changes into a string.

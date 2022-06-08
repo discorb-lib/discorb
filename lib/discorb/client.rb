@@ -571,13 +571,13 @@ module Discorb
       if shards.nil?
         main_loop(nil)
       else
-        @shards = shards.map.with_index do |shard, i|
-          Shard.new(self, shard, shard_count, i)
+        @shards = shards.to_h.with_index do |shard, i|
+          [shard, Shard.new(self, shard, shard_count, i)]
         end
-        @shards[..-1].each_with_index do |shard, i|
-          shard.next_shard = @shards[i + 1]
+        @shards.values[..-1].each_with_index do |shard, i|
+          shard.next_shard = @shards.values[i + 1]
         end
-        @shards.each { |s| s.thread.join }
+        @shards.each_value { |s| s.thread.join }
       end
     end
 

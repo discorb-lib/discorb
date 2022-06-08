@@ -8,7 +8,7 @@ module Discorb
     #
     # @param [Discorb::Client] client The client that instantiated the object.
     # @param [Hash] data The data of the object.
-    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::json data) -> void
 
     def inspect: () -> untyped
 
@@ -71,7 +71,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the object.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       #
       # The team's owner.

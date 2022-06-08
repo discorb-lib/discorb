@@ -33,7 +33,7 @@ module Discorb
     # @private
     #
     # @param [Hash] data The hash data to initialize embed.
-    def initialize_hash: (::Hash[untyped, untyped] data) -> untyped
+    def initialize_hash: (Discorb::json data) -> untyped
 
     def inspect: () -> untyped
 
@@ -244,7 +244,7 @@ module Discorb
       # @private
       #
       # @param [Hash] data The data of video.
-      def initialize: (::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::json data) -> void
 
       # @return [String] The url of video.
       attr_reader url: String
@@ -267,7 +267,7 @@ module Discorb
       # @private
       #
       # @param [Hash] data The data of provider.
-      def initialize: (::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::json data) -> void
 
       # @return [String] The name of provider.
       attr_reader name: String

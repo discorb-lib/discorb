@@ -83,6 +83,7 @@ module Discorb
           get_headers(body, audit_log_reason),
           **kwargs,
         )
+        # @type var data: Array[untyped]
         data = [
           ["payload_json", get_body(body)],
         ]
@@ -92,7 +93,7 @@ module Discorb
           if file.created_by == :discord
             request_io = StringIO.new(
               cdn_http.get(
-                URI.parse(file.url).path,
+                (URI.parse(file.url).path || raise("Could not parse url")),
                 {
                   "Content-Type" => nil,
                   "User-Agent" => Discorb::USER_AGENT,
@@ -187,7 +188,7 @@ module Discorb
         data = JSON.parse(resp.body, symbolize_names: true)
       rescue JSON::ParserError, TypeError
         data = if resp.body.nil? || resp.body.empty?
-            nil
+            {}
           else
             resp.body
           end

@@ -10,7 +10,7 @@ module Discorb
     # @private
     #
     # @param [Discorb::Client] client The client.
-    def initialize: ((Discorb::Client | Discorb::Webhook) client) -> void
+    def initialize: (Discorb::Client client) -> void
 
     #
     # Execute a request.
@@ -30,7 +30,7 @@ module Discorb
                    ?(json | String) body,
                    ?audit_log_reason: String?,
                    **String kwargs
-                 ) -> Async::Task[[Net::HTTPResponse, json?]]
+                 ) -> Async::Task[[Net::HTTPResponse, json]]
 
     #
     # Execute a multipart request.
@@ -53,7 +53,7 @@ module Discorb
                              ::Array[Discorb::Attachment] files,
                              ?audit_log_reason: String?,
                              **untyped kwargs
-                           ) -> Async::Task[[Net::HTTPResponse, json?]]
+                           ) -> Async::Task[[Net::HTTPResponse, json]]
 
     def inspect: () -> String
 
@@ -67,7 +67,7 @@ module Discorb
                            ::Array[Discorb::Attachment]? files,
                            String? audit_log_reason,
                            untyped kwargs
-                         ) -> [Net::HTTPResponse, json?]
+                         ) -> [Net::HTTPResponse, json]
 
     def get_headers: (?(String | json) body, ?String? audit_log_reason) -> ::Hash[String, String]
 

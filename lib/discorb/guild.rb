@@ -226,9 +226,6 @@ module Discorb
             :get
           )
         ).wait
-      rescue Discorb::NotFoundError
-        return nil
-      else
         ScheduledEvent.new(@client, event)
       end
     end
@@ -343,9 +340,16 @@ module Discorb
     # @return [Async::Task<Discorb::CustomEmoji>] The emoji with the given id.
     #
     def fetch_emoji(id)
-      _resp, data = @client.http.request(Route.new("/guilds/#{@id}/emojis/#{id}",
-                                                   "//guilds/:guild_id/emojis/:emoji_id", :get)).wait
-      @emojis[e[:id]] = CustomEmoji.new(@client, self, data)
+      Async do
+        _resp, data = @client.http.request(
+          Route.new(
+            "/guilds/#{@id}/emojis/#{id}",
+            "//guilds/:guild_id/emojis/:emoji_id",
+            :get
+          )
+        ).wait
+        @emojis[e[:id]] = CustomEmoji.new(@client, self, data)
+      end
     end
 
     #
@@ -359,13 +363,17 @@ module Discorb
     # @return [Async::Task<Discorb::CustomEmoji>] The created emoji.
     #
     def create_emoji(name, image, roles: [])
-      _resp, data = @client.http.request(Route.new("/guilds/#{@id}/emojis", "//guilds/:guild_id/emojis", :post),
-                                         {
-                                           name: name,
-                                           image: image.to_s,
-                                           roles: roles.map { |r| Discorb::Utils.try(r, :id) },
-                                         }).wait
-      @emojis[data[:id]] = CustomEmoji.new(@client, self, data)
+      Async do
+        _resp, data = @client.http.request(
+          Route.new("/guilds/#{@id}/emojis", "//guilds/:guild_id/emojis", :post),
+          {
+            name: name,
+            image: image.to_s,
+            roles: roles.map { |r| Discorb::Utils.try(r, :id) },
+          }
+        ).wait
+        @emojis[data[:id]] = CustomEmoji.new(@client, self, data)
+      end
     end
 
     #
@@ -1339,7 +1347,7 @@ module Discorb
       @nsfw_level = NSFW_LEVELS[data[:nsfw_level]]
       return unless is_create_event
 
-      @stickers = data[:stickers].nil? ? [] : data[:stickers].map { |s| Sticker::GuildSticker.new(self, s) }
+      @stickers = data[:stickers].nil? ? [] : data[:stickers].map { |s| Sticker::GuildSticker.new(@client, s) }
       @joined_at = Time.iso8601(data[:joined_at])
       @large = data[:large]
       @member_count = data[:member_count]
@@ -1407,7 +1415,24 @@ module Discorb
       @client = client
       @description = data[:description]
       @guild = guild
-      @channels = data[:channels].map { |c| WelcomeScreen::Channel.new(client, c, nil) }
+      @channels = data[:channels].map do |c|
+        WelcomeScreen::Channel.new(
+          client.channels[c[:channel_id]],
+          c,
+          c[:emoji_name] &&
+          if c[:emoji_id]
+            (client.emojis[c[:emoji_id]] ||
+             Discorb::PartialEmoji.new(
+               {
+                 name: c[:emoji_name],
+                 id: c[:emoji_id],
+               }
+             ))
+          else
+            Discorb::UnicodeEmoji.new(c[:emoji_name])
+          end
+        )
+      end
     end
 
     #

@@ -303,7 +303,7 @@ module Discorb
       @deaf = member_data[:deaf]
       @custom_avatar = member_data[:avatar] && Asset.new(self, member_data[:avatar])
       super(user_data)
-      @display_avatar = @avatar || @custom_avatar
+      @display_avatar = @custom_avatar || @avatar
       @client.guilds[@guild_id].members[@id] = self unless @guild_id.nil? || @client.guilds[@guild_id].nil?
       @_member_data.update(member_data)
     end

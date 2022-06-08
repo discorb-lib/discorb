@@ -8,7 +8,7 @@ module Discorb
     # @param [Discorb::Client] client The client that owns this emoji.
     # @param [Discorb::Guild] guild The guild that owns this emoji.
     # @param [Hash] data The data of the emoji.
-    def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
 
     #
     # Format the emoji for sending.

@@ -247,7 +247,7 @@ module Discorb
         end
         raise ArgumentError, "Invalid skin tone: #{tone}" unless @skin_tone
 
-        @name = EmojiTable::UNICODE_TO_DISCORD[name2]
+        @name = EmojiTable::UNICODE_TO_DISCORD[name2].first
         @value = name
       else
         raise ArgumentError, "No such emoji: #{name}"

@@ -7,7 +7,7 @@ module Discorb
     # @private
     #
     # @param [Hash] data The data of the voice region.
-    def initialize: (::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::json data) -> void
 
     # @return [Discorb::Snowflake] The ID of the voice region.
     attr_reader id: Discorb::Snowflake

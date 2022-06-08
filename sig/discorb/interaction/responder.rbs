@@ -55,7 +55,7 @@ module Discorb
         # @param [String] token The token.
         def initialize: (
                           Client client,
-                          ::Hash[untyped, untyped] data,
+                          Discorb::json data,
                           String application_id,
                           String token
                         ) -> void
@@ -126,6 +126,8 @@ module Discorb
                   ?embed: Discorb::Embed?,
                   ?embeds: ::Array[Discorb::Embed]?,
                   ?allowed_mentions: Discorb::AllowedMentions?,
+                  ?attachment: Discorb::Attachment?,
+                  ?attachments: ::Array[Discorb::Attachment]?,
                   ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
                   ?ephemeral: bool
                 ) -> Async::Task[void]

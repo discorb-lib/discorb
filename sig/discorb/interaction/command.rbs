@@ -11,7 +11,7 @@ module Discorb
     #
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data for the command.
-    def self.make_interaction: (Discorb::Client client, ::Hash[untyped, untyped] data) -> untyped
+    def self.make_interaction: (Discorb::Client client, Discorb::json data) -> untyped
 
     #
     # Returns the classes under this class.
@@ -26,7 +26,7 @@ module Discorb
       # @private
       #
       # @param [Hash] data The data of the command.
-      def self.get_command_data: (::Hash[untyped, untyped] data) -> untyped
+      def self.get_command_data: (Discorb::json data) -> untyped
 
       #
       # Modify the option map with the given options.
@@ -40,7 +40,7 @@ module Discorb
       def self.modify_option_map: (
                                     ::Hash[untyped, untyped] option_map,
                                     ::Array[::Hash[untyped, untyped]] options,
-                                    Discorb::Guild guild,
+                                    Discorb::Guild? guild,
                                     ::Hash[Discorb::Snowflake, Discorb::Member] members,
                                     ::Hash[Integer, Discorb::Attachment] attachments
                                   ) -> untyped

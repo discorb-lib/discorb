@@ -102,7 +102,7 @@ module Discorb
     # @param [String] url The URL of the webhook.
     #
     # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
-    def self.new: (String url) -> Discorb::Webhook::URLWebhook
+    def self.new: (String url, ?client: Discorb::Client?) -> Discorb::Webhook::URLWebhook
 
     #
     # Creates Webhook with discord data.
@@ -112,7 +112,7 @@ module Discorb
     # @param [Hash] data The data of the webhook.
     #
     # @return [Discorb::Webhook] The Webhook.
-    def self.from_data: (Discorb::Client client, ::Hash[untyped, untyped] data) -> Discorb::Webhook
+    def self.from_data: (Discorb::Client client, Discorb::json data) -> Discorb::Webhook
 
     def self.from_url: (untyped url) -> untyped
 
@@ -145,7 +145,7 @@ module Discorb
       # Initializes the webhook from URL.
       #
       # @param [String] url The URL of the webhook.
-      def initialize: (String url) -> void
+      def initialize: (String url, ?client: Discorb::Client?) -> void
 
       # @return [String] The URL of the webhook.
       attr_reader url: String
@@ -175,7 +175,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client.
       # @param [Hash] data The data of the follower webhook.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # Represents a source guild of follower webhook.
       # @return [Discorb::Guild, Discorb::Webhook::FollowerWebhook::Guild] The source guild of follower webhook.
@@ -193,7 +193,7 @@ module Discorb
         # @private
         #
         # @param [Hash] data The data of the guild.
-        def initialize: (::Hash[untyped, untyped] data) -> void
+        def initialize: (Discorb::json data) -> void
 
         def inspect: () -> untyped
 
@@ -215,7 +215,7 @@ module Discorb
         # @private
         #
         # @param [Hash] data The data of the channel.
-        def initialize: (::Hash[untyped, untyped] data) -> void
+        def initialize: (Discorb::json data) -> void
 
         def inspect: () -> untyped
 
@@ -244,7 +244,7 @@ module Discorb
       # @param [Discorb::Webhook] webhook The webhook.
       # @param [Hash] data The data of the message.
       # @param [Discorb::Client] client The client. This will be nil if it's created from {URLWebhook}.
-      def initialize: (Discorb::Webhook webhook, ::Hash[untyped, untyped] data, ?Discorb::Client? client) -> void
+      def initialize: (Discorb::Webhook webhook, Discorb::json data, ?Discorb::Client? client) -> void
 
       #
       # Edits the message.
@@ -271,13 +271,13 @@ module Discorb
 
       #
       # Represents an author of webhook message.
-      class Author < Discorb::DiscordModel
+      class Author < Discorb::Member
         #
         # Initializes the author.
         # @private
         #
         # @param [Hash] data The data of the author.
-        def initialize: (::Hash[untyped, untyped] data) -> void
+        def initialize: (Discorb::json data) -> void
 
         #
         # Format author with `Name#Discriminator` style.
@@ -290,6 +290,7 @@ module Discorb
         # @return [Boolean] Whether the author is a bot.
         # @note This will be always `true`.
         attr_reader bot: bool
+        alias bot? bot
 
         # @return [Discorb::Snowflake] The ID of the author.
         attr_reader id: Discorb::Snowflake

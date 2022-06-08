@@ -4,7 +4,7 @@ module Discorb
   # This class shouldn't be instantiated directly.
   # Use {Client#on} instead.
   class EventHandler
-    def initialize: (untyped block, Symbol id, untyped metadata) -> void
+    def initialize: (untyped block, Symbol? id, untyped metadata) -> void
 
     def inspect: () -> untyped
 
@@ -16,7 +16,7 @@ module Discorb
     attr_reader block: Proc
 
     # @return [Symbol] the event id.
-    attr_reader id: Symbol
+    attr_reader id: Symbol?
 
     # @return [Hash] the event metadata.
     attr_reader metadata: ::Hash[untyped, untyped]

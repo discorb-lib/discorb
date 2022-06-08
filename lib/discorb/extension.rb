@@ -45,8 +45,6 @@ module Discorb
       # @param [Symbol] id The id of the event. Used to delete the event.
       # @param [Hash] metadata Other metadata.
       #
-      # @return [Discorb::EventHandler] The event.
-      #
       def event(event_name, id: nil, **metadata, &block)
         raise ArgumentError, "Event name must be a symbol" unless event_name.is_a?(Symbol)
         raise ArgumentError, "block must be given" unless block_given?
@@ -63,8 +61,6 @@ module Discorb
       # @param [Symbol] id The id of the event. Used to delete the event.
       # @param [Hash] metadata Other metadata.
       # @param [Proc] block The block to execute when the event is triggered.
-      #
-      # @return [Discorb::EventHandler] The event.
       #
       def once_event(event_name, id: nil, **metadata, &block)
         event(event_name, id: id, once: true, **metadata, &block)

@@ -38,7 +38,7 @@ module Discorb
     # @param [Hash] data The hash to create the button from.
     #
     # @return [Discorb::Button] The created button.
-    def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::Button
+    def self.from_hash: (Discorb::json data) -> Discorb::Button
 
     # @return [String] The label of the button.
     attr_accessor label: String

@@ -395,7 +395,7 @@ module Discorb
       #
       def initialize(client, id, data)
         @client = client
-        @id = id
+        @id = Snowflake.new(id)
         @data = data
         @channel_id = Snowflake.new(data[:channel_id])
         @guild_id = Snowflake.new(data[:guild_id]) if data.key?(:guild_id)
@@ -546,7 +546,7 @@ module Discorb
       end
 
       def unpinned?
-        @type = :unpinned
+        @type == :unpinned
       end
     end
 

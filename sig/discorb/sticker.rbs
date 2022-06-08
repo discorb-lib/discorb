@@ -11,7 +11,7 @@ module Discorb
     #
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The sticker data.
-    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::json data) -> void
 
     # @return [Discorb::Snowflake] The ID of the sticker.
     attr_reader id: Discorb::Snowflake
@@ -92,7 +92,7 @@ module Discorb
       #
       # @param [Discorb::Client] client The client.
       # @param [Hash] data The sticker pack data.
-      def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # @return [Discorb::Snowflake] The ID of the sticker pack.
       attr_reader id: Discorb::Snowflake

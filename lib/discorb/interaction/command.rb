@@ -83,21 +83,25 @@ module Discorb
               when 3, 4, 5, 10
                 option[:value]
               when 6
-                members[option[:value]] || guild.members[option[:value]] || guild.fetch_member(option[:value]).wait
+                members[option[:value]] || guild && (guild.members[option[:value]] ||
+                                                     guild.fetch_member(option[:value]).wait)
               when 7
-                guild.channels[option[:value]] || guild.fetch_channels.wait.find do |channel|
-                  channel.id == option[:value]
+                if guild
+                  guild.channels[option[:value]] || guild.fetch_channels.wait.find do |channel|
+                    channel.id == option[:value]
+                  end
                 end
               when 8
-                guild.roles[option[:value]] || guild.fetch_roles.wait.find { |role| role.id == option[:value] }
+                guild && (guild.roles[option[:value]] ||
+                          guild.fetch_roles.wait.find { |role| role.id == option[:value] })
               when 9
                 members[option[:value]] ||
-                guild.members[option[:value]] ||
-                guild.roles[option[:value]] ||
-                guild.fetch_member(option[:value]).wait ||
-                guild.fetch_roles.wait.find do |role|
-                  role.id == option[:value]
-                end
+                guild && (guild.members[option[:value]] ||
+                          guild.roles[option[:value]] ||
+                          guild.fetch_member(option[:value]).wait ||
+                          guild.fetch_roles.wait.find do |role|
+                            role.id == option[:value]
+                          end)
               when 11
                 attachments[option[:value]]
               end

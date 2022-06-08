@@ -120,7 +120,7 @@ module Discorb
     end
 
     def speakers
-      voice_states.filter { |state| !state.suppress? }.map(&:member)
+      voice_states.reject(&:suppress?).map(&:member)
     end
 
     def audiences

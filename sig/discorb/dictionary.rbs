@@ -45,8 +45,8 @@ module Discorb
     #
     #   @return [Object] The item.
     #   @return [nil] if the item is not found.
-    def get: (_ToS id) -> V?
-           | (Integer index) -> V?
+    def get: (_ToS id) -> V
+           | (Integer index) -> V
 
     alias [] get
 

@@ -16,7 +16,7 @@ module Discorb
     # @param [Discorb::Client] client The client that owns this guild.
     # @param [Hash] data The data of the guild.
     # @param [Boolean] is_create_event Whether the guild is created by a `GUILD_CREATE` event.
-    def initialize: (Discorb::Client client, ::Hash[untyped, untyped] data, bool is_create_event) -> void
+    def initialize: (Discorb::Client client, Discorb::json data, bool is_create_event) -> void
 
     def inspect: () -> untyped
 
@@ -629,7 +629,7 @@ module Discorb
     attr_reader approximate_presence_count: Integer
 
     # @return [Discorb::WelcomeScreen] The welcome screen of the guild.
-    attr_reader welcome_screen: Discorb::WelcomeScreen
+    attr_reader welcome_screen: Discorb::WelcomeScreen?
 
     # @return [:default, :explicit, :safe, :age_restricted] The nsfw level of the guild.
     attr_reader nsfw_level: Symbol
@@ -691,7 +691,7 @@ module Discorb
       # @param [Discorb::Client] client The client.
       # @param [Discorb::Guild] guild The guild.
       # @param [Hash] data The data of the invite.
-      def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
 
       # @return [String] The vanity invite code.
       attr_reader code: String
@@ -713,7 +713,7 @@ module Discorb
       # @param [Discorb::Client] client The client.
       # @param [Discorb::Snowflake] guild_id The guild ID.
       # @param [Hash] data The data from Discord.
-      def initialize: (Discorb::Client client, Discorb::Snowflake guild_id, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::Snowflake guild_id, Discorb::json data) -> void
 
       #
       # Edit the widget.
@@ -768,7 +768,7 @@ module Discorb
       # @param [Discorb::Client] client The client.
       # @param [Discorb::Guild] guild The guild.
       # @param [Hash] data The data from Discord.
-      def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+      def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
 
       def inspect: () -> untyped
 

@@ -40,7 +40,7 @@ module Discorb
     # @param [Hash] data The hash to create the text input from.
     #
     # @return [Discorb::TextInput] The created text input.
-    def self.from_hash: (::Hash[untyped, untyped] data) -> Discorb::TextInput
+    def self.from_hash: (Discorb::json data) -> Discorb::TextInput
 
     # @return [String] The label of the text input.
     attr_accessor label: String

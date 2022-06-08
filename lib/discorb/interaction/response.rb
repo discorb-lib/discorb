@@ -323,7 +323,7 @@ module Discorb
 
     private
 
-    def _set_data(*)
+    def _set_data(_)
       nil
     end
   end

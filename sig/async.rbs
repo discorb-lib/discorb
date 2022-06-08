@@ -2,4 +2,10 @@ module Async
   class Task[T]
     def wait: () -> T
   end
+
+  module WebSocket
+    class Connection
+      def initialize: (untyped, ?untyped, response: untyped, **untyped) -> void
+    end
+  end
 end

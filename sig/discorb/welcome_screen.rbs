@@ -9,7 +9,7 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Discorb::Guild] guild The guild the welcome screen belongs to.
     # @param [Hash] data The data of the welcome screen.
-    def initialize: (Discorb::Client client, Discorb::Guild guild, ::Hash[untyped, untyped] data) -> void
+    def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
 
     # @return [String] The description of the welcome screen.
     attr_reader description: String
