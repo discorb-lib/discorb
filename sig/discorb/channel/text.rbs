@@ -32,7 +32,7 @@ module Discorb
                 ?announce: bool,
                 ?rate_limit_per_user: Integer,
                 ?slowmode: Integer,
-                ?default_auto_archive_duration: Integer,
+                ?default_auto_archive_duration: 60 | 1440 | 4320 | 10080,
                 ?archive_in: Integer,
                 ?reason: String?
               ) -> Async::Task[self]
@@ -138,7 +138,7 @@ module Discorb
     attr_reader last_pin_timestamp: Time
 
     # @return [Integer] The default value of duration of auto archive.
-    attr_reader default_auto_archive_duration: Integer
+    attr_reader default_auto_archive_duration: 60 | 1440 | 4320 | 10080
 
     # @!attribute [r] threads
     #   @return [Array<Discorb::ThreadChannel>] The threads in the channel.
