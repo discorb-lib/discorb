@@ -26,7 +26,7 @@ module Discorb
       @everyone = !everyone.nil?
       @roles = roles
       @users = users
-      @replied_user = !!replied_user
+      @replied_user = replied_user
     end
 
     def inspect
