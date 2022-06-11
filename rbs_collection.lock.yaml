@@ -6,12 +6,16 @@ sources:
   repo_dir: gems
 path: ".gem_rbs_collection"
 gems:
+- name: net-http
+  version: '0'
+  source:
+    type: stdlib
 - name: activesupport
   version: '6.0'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 8e1f19e0c8768b6bac2815fe65a3310298ba400e
+    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: ast
@@ -19,7 +23,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 8e1f19e0c8768b6bac2815fe65a3310298ba400e
+    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: date
@@ -35,7 +39,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 8e1f19e0c8768b6bac2815fe65a3310298ba400e
+    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: listen
@@ -43,7 +47,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 8e1f19e0c8768b6bac2815fe65a3310298ba400e
+    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: parallel
@@ -51,7 +55,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 8e1f19e0c8768b6bac2815fe65a3310298ba400e
+    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: prime
@@ -63,7 +67,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 8e1f19e0c8768b6bac2815fe65a3310298ba400e
+    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: singleton
@@ -75,6 +79,10 @@ gems:
   source:
     type: stdlib
 - name: uri
+  version: '0'
+  source:
+    type: stdlib
+- name: timeout
   version: '0'
   source:
     type: stdlib
