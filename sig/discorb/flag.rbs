@@ -59,7 +59,7 @@ module Discorb
 
     #
     # Initialize a new flag with keys.
-    def self.from_keys: (*Symbol keys) -> instance
+    def self.from_keys: (*Symbol keys) -> untyped
 
     # @return [Hash{Symbol => Boolean}] the values of the flag.
     attr_reader values: ::Hash[Symbol, bool]
