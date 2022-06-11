@@ -35,7 +35,7 @@ module Discorb
     #
     # @param [String] title The title of embed.
     # @param [String] description The description of embed.
-    # @param [Discorb::Color] color The color of embed.
+    # @param [Discorb::Color, Integer] color The color of embed.
     # @param [String] url The url of embed.
     # @param [Time] timestamp The timestamp of embed.
     # @param [Discorb::Embed::Author] author The author field of embed.
@@ -60,7 +60,7 @@ module Discorb
       @description = description
       @url = url
       @timestamp = timestamp
-      @color = color
+      @color = color && (color.is_a?(Color) ? color : Color.new(color))
       @author = author
       @fields = fields || []
       @footer = footer

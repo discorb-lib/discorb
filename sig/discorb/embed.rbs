@@ -7,7 +7,7 @@ module Discorb
     #
     # @param [String] title The title of embed.
     # @param [String] description The description of embed.
-    # @param [Discorb::Color] color The color of embed.
+    # @param [Discorb::Color, Integer] color The color of embed.
     # @param [String] url The url of embed.
     # @param [Time] timestamp The timestamp of embed.
     # @param [Discorb::Embed::Author] author The author field of embed.
@@ -18,7 +18,7 @@ module Discorb
     def initialize: (
                       ?String? title,
                       ?String? description,
-                      ?color: Discorb::Color?,
+                      ?color: (Discorb::Color | Integer)?,
                       ?url: String?,
                       ?timestamp: Time?,
                       ?author: Discorb::Embed::Author?,
