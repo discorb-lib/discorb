@@ -160,7 +160,7 @@ module Discorb
     attr_reader id: Discorb::Snowflake
 
     # @return [Discorb::User, Discorb::Member] The user that sent the message.
-    attr_reader author: (Discorb::User | Discorb::Member | Webhook::Message::Author)
+    attr_reader author: (Discorb::User | Discorb::Member | Discorb::Webhook::Message::Author)
 
     # @return [String] The content of the message.
     attr_reader content: String

@@ -271,7 +271,7 @@ module Discorb
 
       #
       # Represents an author of webhook message.
-      class Author < Discorb::Member
+      class Author < Discorb::DiscordModel
         #
         # Initializes the author.
         # @private

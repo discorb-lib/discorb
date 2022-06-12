@@ -415,7 +415,50 @@ module Discorb
       #
       # Represents an author of webhook message.
       #
-      class Author < Discorb::Member
+      class Author < DiscordModel
+        # @return [Boolean] Whether the author is a bot.
+        # @note This will be always `true`.
+        attr_reader :bot
+        alias bot? bot
+        # @return [Discorb::Snowflake] The ID of the author.
+        attr_reader :id
+        # @return [String] The name of the author.
+        attr_reader :username
+        alias name username
+        # @return [Discorb::Asset] The avatar of the author.
+        attr_reader :avatar
+        # @return [String] The discriminator of the author.
+        attr_reader :discriminator
+
+        #
+        # Initializes the author.
+        # @private
+        #
+        # @param [Hash] data The data of the author.
+        #
+        def initialize(data)
+          @data = data
+          @bot = data[:bot]
+          @id = Snowflake.new(data[:id])
+          @username = data[:username]
+          @avatar = data[:avatar] ? Asset.new(self, data[:avatar]) : DefaultAvatar.new(data[:discriminator])
+          @discriminator = data[:discriminator]
+        end
+
+        #
+        # Format author with `Name#Discriminator` style.
+        #
+        # @return [String] Formatted author.
+        #
+        def to_s
+          "#{@username}##{@discriminator}"
+        end
+
+        alias to_s_user to_s
+
+        def inspect
+          "#<#{self.class.name} #{self}>"
+        end
       end
     end
 
