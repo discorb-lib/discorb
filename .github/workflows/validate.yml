@@ -1,0 +1,19 @@
+name: Validate rbs
+on:
+  - push
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+      - name: Install collection
+        run: |
+          rbs collection install
+      - name: Validate
+        run: |
+          rbs -I sig validate
+
