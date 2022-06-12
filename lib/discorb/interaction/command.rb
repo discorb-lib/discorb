@@ -75,7 +75,7 @@ module Discorb
         # @param [Array<Hash>] options The options for modifying.
         # @param [Discorb::Guild] guild The guild where the command is executed.
         # @param [{Discorb::Snowflake => Discorb::Member}] members The cached members of the guild.
-        # @param [{Integer => Discorb::Attachment}] attachments The cached attachments of the message.
+        # @param [{Numeric => Discorb::Attachment}] attachments The cached attachments of the message.
         def modify_option_map(option_map, options, guild, members, attachments)
           options ||= []
           options.each do |option|

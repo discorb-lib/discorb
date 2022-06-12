@@ -10,7 +10,7 @@ module Discorb
     # @param [Hash] data The data of the presence.
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     # @return [:online, :idle, :dnd, :offline] The status of the user.
     attr_reader status: Symbol
@@ -124,11 +124,11 @@ module Discorb
         # @return [String] The id of the party.
         attr_reader id: String
 
-        # @return [Integer] The current size of the party.
-        attr_reader current_size: Integer
+        # @return [Numeric] The current size of the party.
+        attr_reader current_size: Numeric
 
-        # @return [Integer] The max size of the party.
-        attr_reader max_size: Integer
+        # @return [Numeric] The max size of the party.
+        attr_reader max_size: Numeric
       end
 
       #

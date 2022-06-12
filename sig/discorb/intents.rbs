@@ -1,7 +1,7 @@
 module Discorb
   # Represents intents.
   class Intents
-    INTENT_BITS: Hash[Symbol, Integer]
+    INTENT_BITS: Hash[Symbol, Numeric]
 
     #
     # Create new intents object with default (no members and presence) intents.
@@ -39,7 +39,7 @@ module Discorb
                       ?presences: bool,
                       ?messages: bool,
                       ?reactions: bool,
-                      ?typing: untyped,
+                      ?typing: bool,
                       ?dm_messages: bool,
                       ?dm_reactions: bool,
                       ?dm_typing: bool,
@@ -54,16 +54,16 @@ module Discorb
     def respond_to_missing?: (untyped name, untyped include_private) -> bool
 
     # Returns value of the intent.
-    # @return [Integer] The value of the intent.
-    def value: () -> Integer
+    # @return [Numeric] The value of the intent.
+    def value: () -> Numeric
 
     def inspect: () -> String
 
     def to_h: () -> Hash[Symbol, bool]
 
     # Create new intent object from raw value.
-    # @param value [Integer] The value of the intent.
-    def self.from_value: (Integer value) -> Intents
+    # @param value [Numeric] The value of the intent.
+    def self.from_value: (Numeric value) -> Intents
 
     # Create new intent object with all intents.
     def self.all: () -> Discorb::Intents

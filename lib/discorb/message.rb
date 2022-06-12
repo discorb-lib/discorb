@@ -86,7 +86,7 @@ module Discorb
     attr_reader :pinned
     alias pinned? pinned
     # @private
-    # @return [{Integer => Symbol}] The mapping of message type.
+    # @return [{Numeric => Symbol}] The mapping of message type.
     MESSAGE_TYPE = {
       0 => :default,
       1 => :recipient_add,
@@ -403,7 +403,7 @@ module Discorb
     # @async
     #
     # @param [Discorb::Emoji, Discorb::PartialEmoji] emoji The emoji to fetch.
-    # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
+    # @param [Numeric, nil] limit The maximum number of users to fetch. `nil` for no limit.
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #
     # @return [Async::Task<Array<Discorb::User>>] The users.

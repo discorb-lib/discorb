@@ -9,9 +9,9 @@ module Discorb
     def create_text_channel: (
                                String name,
                                ?topic: String?,
-                               ?rate_limit_per_user: Integer?,
-                               ?slowmode: Integer?,
-                               ?position: Integer?,
+                               ?rate_limit_per_user: Numeric?,
+                               ?slowmode: Numeric?,
+                               ?position: Numeric?,
                                ?nsfw: bool?,
                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                ?parent: Discorb::CategoryChannel?,
@@ -20,9 +20,9 @@ module Discorb
 
     def create_voice_channel: (
                                 String name,
-                                ?bitrate: Integer,
-                                ?user_limit: Integer?,
-                                ?position: Integer?,
+                                ?bitrate: Numeric,
+                                ?user_limit: Numeric?,
+                                ?position: Numeric?,
                                 ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                 ?parent: Discorb::CategoryChannel?,
                                 ?reason: String?
@@ -31,9 +31,9 @@ module Discorb
     def create_news_channel: (
                                String name,
                                ?topic: String?,
-                               ?rate_limit_per_user: Integer?,
-                               ?slowmode: Integer?,
-                               ?position: Integer?,
+                               ?rate_limit_per_user: Numeric?,
+                               ?slowmode: Numeric?,
+                               ?position: Numeric?,
                                ?nsfw: bool?,
                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                ?parent: Discorb::CategoryChannel?,
@@ -42,8 +42,8 @@ module Discorb
 
     def create_stage_channel: (
                                 String name,
-                                ?bitrate: Integer,
-                                ?position: Integer?,
+                                ?bitrate: Numeric,
+                                ?position: Numeric?,
                                 ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
                                 ?parent: Discorb::CategoryChannel?,
                                 ?reason: String?

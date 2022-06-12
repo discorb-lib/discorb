@@ -220,14 +220,14 @@ module Discorb
     attr_reader :name
     # @return [String] The unicode value of the emoji. (e.g. U+1F600)
     attr_reader :value
-    # @return [Integer] The skin tone of the emoji.
+    # @return [Numeric] The skin tone of the emoji.
     attr_reader :skin_tone
 
     #
     # Initialize a new unicode emoji.
     #
     # @param [String] name The name of the emoji.
-    # @param [Integer] tone The skin tone of the emoji.
+    # @param [Numeric] tone The skin tone of the emoji.
     #
     def initialize(name, tone: 0)
       if EmojiTable::DISCORD_TO_UNICODE.key?(name)

@@ -5,7 +5,7 @@ module Discorb
   Colour: singleton(Discorb::Color)
   API_BASE_URL: String
   VERSION: String
-  VERSION_ARRAY: Array[Integer]
+  VERSION_ARRAY: Array[Numeric]
   USER_AGENT: String
   Unset: untyped
 end

@@ -18,16 +18,16 @@ module Discorb
     attr_reader :description
     # @return [Discorb::Snowflake] The attachment id.
     attr_reader :id
-    # @return [Integer] The attachment size in bytes.
+    # @return [Numeric] The attachment size in bytes.
     attr_reader :size
     # @return [String] The attachment url.
     attr_reader :url
     # @return [String] The attachment proxy url.
     attr_reader :proxy_url
-    # @return [Integer] The image height.
+    # @return [Numeric] The image height.
     # @return [nil] If the attachment is not an image.
     attr_reader :height
-    # @return [Integer] The image width.
+    # @return [Numeric] The image width.
     # @return [nil] If the attachment is not an image.
     attr_reader :width
     # @return [:client, :discord] The attachment was created by.

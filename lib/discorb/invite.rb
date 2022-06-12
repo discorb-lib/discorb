@@ -14,10 +14,10 @@ module Discorb
     # @return [User] The user of invite.
     attr_reader :target_user
 
-    # @return [Integer] The approximate number of online users of invite.
+    # @return [Numeric] The approximate number of online users of invite.
     attr_reader :approximate_presence_count
 
-    # @return [Integer] The approximate number of members of invite.
+    # @return [Numeric] The approximate number of members of invite.
     attr_reader :approximate_member_count
 
     # @return [Time] The time when invite expires.
@@ -26,15 +26,15 @@ module Discorb
     #   @return [nil] The invite doesn't have metadata.
     attr_reader :expires_at
 
-    # @return [Integer] The number of uses of invite.
+    # @return [Numeric] The number of uses of invite.
     # @macro nometa
     attr_reader :uses
 
-    # @return [Integer] The maximum number of uses of invite.
+    # @return [Numeric] The maximum number of uses of invite.
     # @macro nometa
     attr_reader :max_uses
 
-    # @return [Integer] Duration of invite in seconds.
+    # @return [Numeric] Duration of invite in seconds.
     # @macro nometa
     attr_reader :max_age
 
@@ -56,7 +56,7 @@ module Discorb
     #
     # @!attribute [r] remain_uses
     #   Number of remaining uses of invite.
-    #   @return [Integer] Number of remaining uses of invite.
+    #   @return [Numeric] Number of remaining uses of invite.
     #
     # @!attribute [r] url
     #   Full url of invite.
@@ -67,7 +67,7 @@ module Discorb
     #   @return [Boolean]
 
     # @private
-    # @return [{Integer => Symbol}] The mapping of target types.
+    # @return [{Numeric => Symbol}] The mapping of target types.
     TARGET_TYPES = {
       nil => :voice,
       1 => :stream,

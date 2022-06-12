@@ -7,7 +7,7 @@ module Discorb
     #
     # @param [String] title The title of embed.
     # @param [String] description The description of embed.
-    # @param [Discorb::Color, Integer] color The color of embed.
+    # @param [Discorb::Color, Numeric] color The color of embed.
     # @param [String] url The url of embed.
     # @param [Time] timestamp The timestamp of embed.
     # @param [Discorb::Embed::Author] author The author field of embed.
@@ -18,7 +18,7 @@ module Discorb
     def initialize: (
                       ?String? title,
                       ?String? description,
-                      ?color: (Discorb::Color | Integer)?,
+                      ?color: (Discorb::Color | Numeric)?,
                       ?url: String?,
                       ?timestamp: Time?,
                       ?author: Discorb::Embed::Author?,
@@ -35,14 +35,14 @@ module Discorb
     # @param [Hash] data The hash data to initialize embed.
     def initialize_hash: (Discorb::json data) -> untyped
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Convert embed to hash.
     #
     # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-structure Offical Discord API Docs
     # @return [Hash] Converted embed.
-    def to_hash: () -> ::Hash[untyped, untyped]
+    def to_hash: () -> Discorb::json
 
     def self.from_hash: (untyped data) -> untyped
 
@@ -84,7 +84,7 @@ module Discorb
     # @abstract
     # @private
     class Entry
-      def inspect: () -> untyped
+      def inspect: () -> String
     end
 
     #
@@ -104,7 +104,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted author.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       # @return [String] The name of author.
       attr_accessor name: String
@@ -132,7 +132,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted footer.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       # Returns the value of attribute text.
       attr_accessor text: untyped
@@ -158,7 +158,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted field.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       # @return [String] The name of field.
       attr_accessor name: String
@@ -185,7 +185,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted image.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       # @return [String] The url of image.
       attr_accessor url: String
@@ -194,13 +194,13 @@ module Discorb
       # @return [nil] The Image object wasn't created from gateway.
       attr_reader proxy_url: String?
 
-      # @return [Integer] The height of image.
+      # @return [Numeric] The height of image.
       # @return [nil] The Image object wasn't created from gateway.
-      attr_reader height: Integer?
+      attr_reader height: Numeric?
 
-      # @return [Integer] The width of image.
+      # @return [Numeric] The width of image.
       # @return [nil] The Image object wasn't created from gateway.
-      attr_reader width: Integer?
+      attr_reader width: Numeric?
     end
 
     #
@@ -218,7 +218,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted thumbnail.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       # @return [String] The url of thumbnail.
       attr_accessor url: String
@@ -227,13 +227,13 @@ module Discorb
       # @return [nil] The Thumbnail object wasn't created from gateway.
       attr_reader proxy_url: String?
 
-      # @return [Integer] The height of thumbnail.
+      # @return [Numeric] The height of thumbnail.
       # @return [nil] The Thumbnail object wasn't created from gateway.
-      attr_reader height: Integer?
+      attr_reader height: Numeric?
 
-      # @return [Integer] The width of thumbnail.
+      # @return [Numeric] The width of thumbnail.
       # @return [nil] The Thumbnail object wasn't created from gateway.
-      attr_reader width: Integer?
+      attr_reader width: Numeric?
     end
 
     #
@@ -252,11 +252,11 @@ module Discorb
       # @return [String] The proxy url of video.
       attr_reader proxy_url: String
 
-      # @return [Integer] The height of video.
-      attr_reader height: Integer
+      # @return [Numeric] The height of video.
+      attr_reader height: Numeric
 
-      # @return [Integer] The width of video.
-      attr_reader width: Integer
+      # @return [Numeric] The width of video.
+      attr_reader width: Numeric
     end
 
     #

@@ -15,7 +15,7 @@ module Discorb
       attr_reader :block
       # @return [:chat_input, :user, :message] The type of the command.
       attr_reader :type
-      # @return [Integer] The raw type of the command.
+      # @return [Numeric] The raw type of the command.
       attr_reader :type_raw
       # @return [Discorb::Permission] The default permissions for this command.
       attr_reader :default_permission
@@ -23,7 +23,7 @@ module Discorb
       attr_reader :dm_permission
 
       # @private
-      # @return [{Integer => Symbol}] The mapping of raw types to types.
+      # @return [{Numeric => Symbol}] The mapping of raw types to types.
       TYPES = {
         1 => :chat_input,
         2 => :user,
@@ -37,7 +37,7 @@ module Discorb
       # @param [String, Hash{Symbol => String}] name The name of the command.
       # @param [Array<#to_s>, false, nil] guild_ids The guild ids that the command is enabled in.
       # @param [Proc] block The block of the command.
-      # @param [Integer] type The type of the command.
+      # @param [Numeric] type The type of the command.
       # @param [Boolean] dm_permission Whether the command is enabled in DMs.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       #
@@ -100,7 +100,7 @@ module Discorb
         # @param [Hash{String => Hash}] options The options of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [Proc] block The block of the command.
-        # @param [Integer] type The type of the command.
+        # @param [Numeric] type The type of the command.
         # @param [Discorb::ApplicationCommand::Command, nil] parent The parent command.
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
@@ -139,7 +139,7 @@ module Discorb
               type: case value[:type]
               when String, :string, :str
                 3
-              when Integer, :integer, :int
+              when Numeric, :integer, :int
                 4
               when TrueClass, FalseClass, :boolean, :bool
                 5

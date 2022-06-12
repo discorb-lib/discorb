@@ -21,7 +21,7 @@ module Discorb
 
     def guild_only?: () -> bool
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Edits the stage instance.

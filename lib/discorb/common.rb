@@ -5,7 +5,7 @@ module Discorb
   API_BASE_URL = "https://discord.com/api/v10"
   # @return [String] The version of discorb.
   VERSION = "0.17.1"
-  # @return [Array<Integer>] The version array of discorb.
+  # @return [Array<Numeric>] The version array of discorb.
   VERSION_ARRAY = VERSION.split(".").map(&:to_i).freeze
   # @return [String] The user agent for the bot.
   USER_AGENT = "DiscordBot (https://discorb-lib.github.io #{VERSION}) Ruby/#{RUBY_VERSION}".freeze
@@ -61,16 +61,16 @@ module Discorb
     # @!attribute [r] worker_id
     #   Worker ID of snowflake.
     #
-    #   @return [Integer] Worker ID of snowflake.
+    #   @return [Numeric] Worker ID of snowflake.
     #
     # @!attribute [r] process_id
     #   Process ID of snowflake.
     #
-    #   @return [Integer] Process ID of snowflake.
+    #   @return [Numeric] Process ID of snowflake.
     # @!attribute [r] increment
     #   Increment of snowflake.
     #
-    #   @return [Integer] Increment of snowflake.
+    #   @return [Numeric] Increment of snowflake.
     # @!attribute [r] id
     #   Alias of to_s.
     #

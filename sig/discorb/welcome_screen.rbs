@@ -36,7 +36,7 @@ module Discorb
       #
       # @return [Hash] The hash.
       # @see https://discord.com/developers/docs/resources/guild#welcome-screen-object
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       #
       # Edits the welcome screen.

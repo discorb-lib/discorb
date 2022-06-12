@@ -13,8 +13,8 @@ module Discorb
     def initialize: (
                       Discorb::Client client,
                       Discorb::Snowflake guild_id,
-                      ::Hash[untyped, untyped] user_data,
-                      ::Hash[untyped, untyped] member_data
+                      Discorb::json user_data,
+                      Discorb::json member_data
                     ) -> void
 
     #
@@ -23,7 +23,7 @@ module Discorb
     # @return [String] The formatted member.
     def to_s: () -> String
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Add a role to the member.
@@ -94,11 +94,11 @@ module Discorb
     # Ban the member.
     # @async
     #
-    # @param [Integer] delete_message_days The number of days to delete messages.
+    # @param [Numeric] delete_message_days The number of days to delete messages.
     # @param [String] reason The reason for the action.
     #
     # @return [Async::Task<Discorb::Guild::Ban>] The ban.
-    def ban: (?delete_message_days: Integer, ?reason: String?) -> Async::Task[Discorb::Guild::Ban]
+    def ban: (?delete_message_days: Numeric, ?reason: String?) -> Async::Task[Discorb::Guild::Ban]
 
     #
     # Checks if the member can manage the given role.

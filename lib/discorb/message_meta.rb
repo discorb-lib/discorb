@@ -159,7 +159,7 @@ module Discorb
       attr_reader :type
 
       # @private
-      # @return [{Integer => Symbol}] The mapping of activity type.
+      # @return [{Numeric => Symbol}] The mapping of activity type.
       TYPES = {
         1 => :join,
         2 => :spectate,

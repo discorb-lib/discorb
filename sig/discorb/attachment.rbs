@@ -24,7 +24,7 @@ module Discorb
     # @private
     def initialize_hash: (untyped data) -> untyped
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Creates a new file from a hash.
@@ -61,8 +61,8 @@ module Discorb
     # @return [Discorb::Snowflake] The attachment id.
     attr_reader id: Discorb::Snowflake
 
-    # @return [Integer] The attachment size in bytes.
-    attr_reader size: Integer
+    # @return [Numeric] The attachment size in bytes.
+    attr_reader size: Numeric
 
     # @return [String] The attachment url.
     attr_reader url: String
@@ -70,13 +70,13 @@ module Discorb
     # @return [String] The attachment proxy url.
     attr_reader proxy_url: String
 
-    # @return [Integer] The image height.
+    # @return [Numeric] The image height.
     # @return [nil] If the attachment is not an image.
-    attr_reader height: Integer?
+    attr_reader height: Numeric?
 
-    # @return [Integer] The image width.
+    # @return [Numeric] The image width.
     # @return [nil] If the attachment is not an image.
-    attr_reader width: Integer?
+    attr_reader width: Numeric?
 
     # @return [:client, :discord] The attachment was created by.
     attr_reader created_by: :client | :discord

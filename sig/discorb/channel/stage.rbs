@@ -17,16 +17,16 @@ module Discorb
     # @macro edit
     #
     # @param [String] name The name of the stage channel.
-    # @param [Integer] position The position of the stage channel.
-    # @param [Integer] bitrate The bitrate of the stage channel.
+    # @param [Numeric] position The position of the stage channel.
+    # @param [Numeric] bitrate The bitrate of the stage channel.
     # @param [Symbol] rtc_region The region of the stage channel.
     # @param [String] reason The reason of editing the stage channel.
     #
     # @return [Async::Task<self>] The edited stage channel.
     def edit: (
                 ?name: String,
-                ?position: Integer,
-                ?bitrate: Integer,
+                ?position: Numeric,
+                ?bitrate: Numeric,
                 ?rtc_region: Symbol,
                 ?reason: String?
               ) -> Async::Task[self]
@@ -58,11 +58,11 @@ module Discorb
 
     def audiences: () -> Array[Discorb::Member]
 
-    # @return [Integer] The bitrate of the voice channel.
-    attr_reader bitrate: Integer
+    # @return [Numeric] The bitrate of the voice channel.
+    attr_reader bitrate: Numeric
 
-    # @return [Integer] The user limit of the voice channel.
-    attr_reader user_limit: Integer
+    # @return [Numeric] The user limit of the voice channel.
+    attr_reader user_limit: Numeric
 
     #
     # @private

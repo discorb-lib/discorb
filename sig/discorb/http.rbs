@@ -1,5 +1,5 @@
 module Discorb
-  type json = ::Hash[Symbol, json] | ::Array[json] | ::String | ::Symbol | ::Numeric | bool | nil
+  type json = ::Hash[Symbol | String, json] | ::Array[json] | ::String | ::Symbol | ::Numeric | bool | nil
 
   #
   # A class to handle http requests.
@@ -90,7 +90,7 @@ module Discorb
   class Route
     def initialize: (untyped url, untyped key, untyped method) -> void
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     def hash: () -> untyped
 
@@ -119,7 +119,7 @@ module Discorb
     # @param [Discorb::Client] client The client.
     def initialize: (Discorb::Client client) -> void
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Wait for the rate limit to reset.

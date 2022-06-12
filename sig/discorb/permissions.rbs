@@ -51,25 +51,25 @@ module Discorb
     # Initializes a new PermissionOverwrite.
     # @private
     #
-    # @param allow [Integer] The allowed permissions.
-    # @param deny [Integer] The denied permissions.
-    def initialize: (Integer allow, Integer deny) -> void
+    # @param allow [Numeric] The allowed permissions.
+    # @param deny [Numeric] The denied permissions.
+    def initialize: (Numeric allow, Numeric deny) -> void
 
-    def allow: () -> untyped
+    def allow: () -> Discorb::Permission
 
-    def deny: () -> untyped
+    def deny: () -> Discorb::Permission
 
-    def allow_value: () -> untyped
+    def allow_value: () -> Numeric
 
-    def deny_value: () -> untyped
+    def deny_value: () -> Numeric
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Converts the permission overwrite to a hash.
     #
     # @return [Hash] The permission overwrite as a hash.
-    def to_hash: () -> ::Hash[untyped, untyped]
+    def to_hash: () -> Hash[Symbol, bool]
 
     #
     # Union of the permission overwrites.
@@ -106,6 +106,6 @@ module Discorb
     # @param [Hash] hash The hash to initialize the permission overwrite from.
     #
     # @return [Discorb::PermissionOverwrite] The permission overwrite.
-    def self.from_hash: (::Hash[untyped, untyped] hash) -> Discorb::PermissionOverwrite
+    def self.from_hash: (::Hash[Symbol, bool] hash) -> Discorb::PermissionOverwrite
   end
 end

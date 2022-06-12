@@ -2,7 +2,7 @@ module Discorb
   #
   # Represents a integration.
   class Integration < Discorb::DiscordModel
-    EXPIRE_BEHAVIOR: untyped
+    EXPIRE_BEHAVIOR: Hash[Numeric, Symbol]
 
     #
     # Initialize a new integration.
@@ -40,8 +40,8 @@ module Discorb
     # @return [:remove_role, :kick] The behavior of the integration when it expires.
     attr_reader expire_behavior: Symbol
 
-    # @return [Integer] The grace period of the integration.
-    attr_reader expire_grace_period: Integer
+    # @return [Numeric] The grace period of the integration.
+    attr_reader expire_grace_period: Numeric
 
     # @return [Discorb::User] The user for the integration.
     attr_reader user: Discorb::User
@@ -49,8 +49,8 @@ module Discorb
     # @return [Discorb::Integration::Account] The account for the integration.
     attr_reader account: Discorb::Integration::Account
 
-    # @return [Integer] The number of subscribers for the integration.
-    attr_reader subscriber_count: Integer
+    # @return [Numeric] The number of subscribers for the integration.
+    attr_reader subscriber_count: Numeric
 
     # @return [Boolean] Whether the integration is revoked.
     attr_reader revoked: bool

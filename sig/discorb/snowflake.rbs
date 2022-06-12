@@ -26,7 +26,7 @@ module Discorb
     # Return hash of snowflake.
     def hash: () -> untyped
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     # Timestamp of snowflake.
     #
@@ -35,18 +35,18 @@ module Discorb
 
     # Worker ID of snowflake.
     #
-    # @return [Integer] Worker ID of snowflake.
-    attr_reader worker_id: Integer
+    # @return [Numeric] Worker ID of snowflake.
+    attr_reader worker_id: Numeric
 
     # Process ID of snowflake.
     #
-    # @return [Integer] Process ID of snowflake.
-    attr_reader process_id: Integer
+    # @return [Numeric] Process ID of snowflake.
+    attr_reader process_id: Numeric
 
     # Increment of snowflake.
     #
-    # @return [Integer] Increment of snowflake.
-    attr_reader increment: Integer
+    # @return [Numeric] Increment of snowflake.
+    attr_reader increment: Numeric
 
     # Alias of to_s.
     #

@@ -1009,7 +1009,7 @@ msgid "```ruby\n"
 "| `:required` | Whether the argument is required. `optional` will be used if not specified. |\n"
 "| `:optional` | Whether the argument is optional. `required` will be used if not specified. |\n"
 "| `:type` | `Object` | Type of the option. |\n"
-"| `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |\n"
+"| `:choice` | `Hash{String => String, Numeric, Float}` | Type of the option. |\n"
 "| `:default` | `Object` | Default value of the option. |\n"
 "| `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |\n"
 "| `:autocomplete` | `Proc` | Autocomplete function. |\n"
@@ -1057,7 +1057,7 @@ msgstr ""
 msgid "| Name | Description | Aliases|\n"
 "| --- | --- | --- |\n"
 "| `:string` | String argument. | `:str` |\n"
-"| `:integer` | Integer argument. | `:int` |\n"
+"| `:integer` | Numeric argument. | `:int` |\n"
 "| `:float` | Float argument. | None |\n"
 "| `:boolean` | Boolean argument. | `:bool` |\n"
 "| `:user` | User argument. | `:member` |\n"
@@ -4496,7 +4496,7 @@ msgid "Command options.\n"
 "| `:required` | Whether the argument is required. `optional` will be used if not specified. |\n"
 "| `:optional` | Whether the argument is optional. `required` will be used if not specified. |\n"
 "| `:type` | `Object` | Type of the option. |\n"
-"| `:choice` | `Hash{String => String, Integer, Float}` | Type of the option. |\n"
+"| `:choice` | `Hash{String => String, Numeric, Float}` | Type of the option. |\n"
 "| `:default` | `Object` | Default value of the option. |\n"
 "| `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |\n"
 "| `:autocomplete` | `Proc` | Autocomplete function. |\n"
@@ -4707,7 +4707,7 @@ msgstr ""
 msgid "The type of the command."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/app_command.rb:155
 msgid "The raw type of the command."
 msgstr ""
@@ -5030,12 +5030,12 @@ msgstr ""
 msgid "tag|param|image_format"
 msgstr ""
 
-# @param [Integer] size
+# @param [Numeric] size
 #: ../lib/discorb/asset.rb:33
 msgid "The size of the image."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/asset.rb:33
 #: ../lib/discorb/asset.rb:83
 msgid "tag|param|size"
@@ -5072,7 +5072,7 @@ msgstr ""
 msgid "URL of the avatar."
 msgstr ""
 
-# @param [Integer] size
+# @param [Numeric] size
 #: ../lib/discorb/asset.rb:83
 msgid "The size of the image. This is compatible with {Asset#url}, will be ignored."
 msgstr ""
@@ -5112,7 +5112,7 @@ msgstr ""
 msgid "Gets an entry from entries."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/audit_logs.rb:35
 #: ../lib/discorb/dictionary.rb:67
 #: ../lib/discorb/dictionary.rb:115
@@ -5124,7 +5124,7 @@ msgstr ""
 msgid "The entry."
 msgstr ""
 
-# @param [Integer] index
+# @param [Numeric] index
 #: ../lib/discorb/audit_logs.rb:35
 msgid "The index of the entry."
 msgstr ""
@@ -5459,7 +5459,7 @@ msgstr ""
 msgid "Represents a channel in guild."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:93
 msgid "The position of the channel as integer."
 msgstr ""
@@ -5628,7 +5628,7 @@ msgstr ""
 msgid "The reason of moving the channel."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:199
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
@@ -5662,7 +5662,7 @@ msgstr ""
 msgid "tag|param|parent"
 msgstr ""
 
-# @param [Integer] position
+# @param [Numeric] position
 #: ../lib/discorb/channel.rb:199
 msgid "The position to move the channel."
 msgstr ""
@@ -5713,8 +5713,8 @@ msgstr ""
 msgid "The id of the last message."
 msgstr ""
 
-# @param [Integer] rate_limit_per_user
-# @return [Integer]
+# @param [Numeric] rate_limit_per_user
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:239
 #: ../lib/discorb/channel.rb:240
 #: ../lib/discorb/channel.rb:278
@@ -5745,8 +5745,8 @@ msgstr ""
 msgid "Edits the channel."
 msgstr ""
 
-# @param [Integer] position
-# @return [Integer]
+# @param [Numeric] position
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 #: ../lib/discorb/guild.rb:403
@@ -5759,7 +5759,7 @@ msgstr ""
 msgid "The position of the channel."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 #: ../lib/discorb/channel.rb:500
@@ -5860,7 +5860,7 @@ msgstr ""
 msgid "Whether the channel is announce channel."
 msgstr ""
 
-# @param [Integer] slowmode
+# @param [Numeric] slowmode
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 #: ../lib/discorb/channel.rb:500
@@ -5868,7 +5868,7 @@ msgstr ""
 msgid "Alias of `rate_limit_per_user`."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 #: ../lib/discorb/channel.rb:500
@@ -5878,26 +5878,26 @@ msgstr ""
 msgid "tag|param|rate_limit_per_user"
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 msgid "tag|param|default_auto_archive_duration"
 msgstr ""
 
-# @param [Integer] default_auto_archive_duration
+# @param [Numeric] default_auto_archive_duration
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 msgid "The default auto archive duration of the channel."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 #: ../lib/discorb/channel.rb:828
 msgid "tag|param|archive_in"
 msgstr ""
 
-# @param [Integer] archive_in
+# @param [Numeric] archive_in
 #: ../lib/discorb/channel.rb:278
 #: ../lib/discorb/channel.rb:303
 msgid "Alias of `default_auto_archive_duration`."
@@ -6104,17 +6104,17 @@ msgstr ""
 msgid "Create an invite in the channel."
 msgstr ""
 
-# @param [Integer] max_age
+# @param [Numeric] max_age
 #: ../lib/discorb/channel.rb:445
 msgid "The max age of the invite."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:445
 msgid "tag|param|max_uses"
 msgstr ""
 
-# @param [Integer] max_uses
+# @param [Numeric] max_uses
 #: ../lib/discorb/channel.rb:445
 msgid "The max uses of the invite."
 msgstr ""
@@ -6124,7 +6124,7 @@ msgstr ""
 msgid "tag|param|temporary"
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:445
 msgid "tag|param|max_age"
 msgstr ""
@@ -6194,7 +6194,7 @@ msgstr ""
 msgid "Whether the thread is public."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:500
 #: ../lib/discorb/channel.rb:521
 #: ../lib/discorb/channel.rb:828
@@ -6208,7 +6208,7 @@ msgstr ""
 msgid "tag|param|public"
 msgstr ""
 
-# @param [Integer] auto_archive_duration
+# @param [Numeric] auto_archive_duration
 #: ../lib/discorb/channel.rb:500
 #: ../lib/discorb/channel.rb:521
 msgid "The duration of auto-archiving."
@@ -6232,7 +6232,7 @@ msgstr ""
 msgid "The started thread."
 msgstr ""
 
-# @param [Integer] rate_limit_per_user
+# @param [Numeric] rate_limit_per_user
 #: ../lib/discorb/channel.rb:500
 #: ../lib/discorb/channel.rb:521
 msgid "The rate limit per user."
@@ -6304,8 +6304,8 @@ msgstr ""
 msgid "<description>"
 msgstr ""
 
-# @param [Integer, nil]
-# @param [Integer]
+# @param [Numeric, nil]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:561
 #: ../lib/discorb/dictionary.rb:15
 #: ../lib/discorb/event.rb:223
@@ -6318,7 +6318,7 @@ msgstr ""
 msgid "tag|param|limit"
 msgstr ""
 
-# @param [Integer] limit
+# @param [Numeric] limit
 #: ../lib/discorb/channel.rb:561
 msgid "The limit of threads to fetch."
 msgstr ""
@@ -6338,8 +6338,8 @@ msgstr ""
 msgid "Represents a voice channel."
 msgstr ""
 
-# @param [Integer] bitrate
-# @return [Integer]
+# @param [Numeric] bitrate
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:607
 #: ../lib/discorb/channel.rb:630
 #: ../lib/discorb/channel.rb:644
@@ -6352,8 +6352,8 @@ msgstr ""
 msgid "If the user limit is not set."
 msgstr ""
 
-# @param [Integer] user_limit
-# @return [Integer]
+# @param [Numeric] user_limit
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:610
 #: ../lib/discorb/channel.rb:630
 #: ../lib/discorb/channel.rb:644
@@ -6388,7 +6388,7 @@ msgstr ""
 msgid "The name of the voice channel."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:630
 #: ../lib/discorb/channel.rb:644
 #: ../lib/discorb/channel.rb:698
@@ -6398,14 +6398,14 @@ msgstr ""
 msgid "tag|param|bitrate"
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/channel.rb:630
 #: ../lib/discorb/channel.rb:644
 #: ../lib/discorb/guild.rb:448
 msgid "tag|param|user_limit"
 msgstr ""
 
-# @param [Integer] position
+# @param [Numeric] position
 #: ../lib/discorb/channel.rb:630
 #: ../lib/discorb/channel.rb:644
 msgid "The position of the voice channel."
@@ -6435,7 +6435,7 @@ msgstr ""
 msgid "Edit the stage channel."
 msgstr ""
 
-# @param [Integer] position
+# @param [Numeric] position
 #: ../lib/discorb/channel.rb:698
 #: ../lib/discorb/channel.rb:710
 msgid "The position of the stage channel."
@@ -6459,7 +6459,7 @@ msgstr ""
 msgid "The name of the stage channel."
 msgstr ""
 
-# @param [Integer] bitrate
+# @param [Numeric] bitrate
 #: ../lib/discorb/channel.rb:698
 #: ../lib/discorb/channel.rb:710
 msgid "The bitrate of the stage channel."
@@ -6523,7 +6523,7 @@ msgstr ""
 msgid "This ID is same as the starter message's ID"
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:771
 msgid "The number of messages in the thread."
 msgstr ""
@@ -6535,13 +6535,13 @@ msgstr ""
 msgid "This will stop counting at 50."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:774
 #: ../lib/discorb/channel.rb:775
 msgid "The number of recipients in the thread."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:777
 #: ../lib/discorb/channel.rb:778
 msgid "The rate limit per user (slowmode) in the thread."
@@ -6564,7 +6564,7 @@ msgstr ""
 msgid "If the thread is not archived."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/channel.rb:786
 #: ../lib/discorb/channel.rb:787
 msgid "Auto archive duration in seconds."
@@ -6588,7 +6588,7 @@ msgstr ""
 msgid "Edit the thread."
 msgstr ""
 
-# @param [Integer] archive_in
+# @param [Numeric] archive_in
 #: ../lib/discorb/channel.rb:828
 msgid "Alias of `auto_archive_duration`."
 msgstr ""
@@ -6598,7 +6598,7 @@ msgstr ""
 msgid "tag|param|locked"
 msgstr ""
 
-# @param [Integer] auto_archive_duration
+# @param [Numeric] auto_archive_duration
 #: ../lib/discorb/channel.rb:828
 msgid "The auto archive duration in seconds."
 msgstr ""
@@ -6750,7 +6750,7 @@ msgstr ""
 msgid "The http client."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/client.rb:23
 msgid "The heartbeat interval."
 msgstr ""
@@ -6761,7 +6761,7 @@ msgstr ""
 msgid "If not connected to the gateway."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/client.rb:26
 msgid "The API version of the Discord gateway."
 msgstr ""
@@ -6829,7 +6829,7 @@ msgstr ""
 msgid "The status of the client."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/client.rb:54
 msgid "The session ID of connection."
 msgstr ""
@@ -6850,12 +6850,12 @@ msgstr ""
 msgid "tag|param|title"
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/client.rb:73
 msgid "tag|param|message_caches"
 msgstr ""
 
-# @param [Integer] message_caches
+# @param [Numeric] message_caches
 #: ../lib/discorb/client.rb:73
 msgid "The number of messages to cache."
 msgstr ""
@@ -7232,13 +7232,13 @@ msgstr ""
 msgid "Method to wait for a event."
 msgstr ""
 
-# @param [Integer] timeout
+# @param [Numeric] timeout
 #: ../lib/discorb/client.rb:346
 #: ../lib/discorb/client.rb:366
 msgid "The timeout in seconds."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/client.rb:346
 #: ../lib/discorb/client.rb:366
 msgid "tag|param|timeout"
@@ -7315,7 +7315,7 @@ msgid "the value to set the attribute value to."
 msgstr ""
 
 # @param
-# @param [Integer]
+# @param [Numeric]
 # @param [String]
 #: ../lib/discorb/color.rb:8
 #: ../lib/discorb/color.rb:48
@@ -7340,7 +7340,7 @@ msgstr ""
 
 # Discorb::Color#initialize
 #: ../lib/discorb/color.rb:44
-msgid "Create a color from a Integer."
+msgid "Create a color from a Numeric."
 msgstr ""
 
 # @return [Color]
@@ -7348,8 +7348,8 @@ msgstr ""
 msgid "a new instance of Color"
 msgstr ""
 
-# @param [Integer] value
-# @return [Integer]
+# @param [Numeric] value
+# @return [Numeric]
 #: ../lib/discorb/color.rb:48
 #: ../lib/discorb/color.rb:57
 msgid "A color value."
@@ -7357,7 +7357,7 @@ msgstr ""
 
 # Discorb::Color#to_i
 #: ../lib/discorb/color.rb:53
-msgid "Integerize a color."
+msgid "Numericize a color."
 msgstr ""
 
 # Discorb::Color#to_hex
@@ -7379,7 +7379,7 @@ msgstr ""
 msgid "Convert a color to RGB array."
 msgstr ""
 
-# @return [Array(Integer, Integer, Integer)]
+# @return [Array(Numeric, Numeric, Numeric)]
 #: ../lib/discorb/color.rb:75
 #: ../lib/discorb/color.rb:79
 #: ../lib/discorb/color.rb:80
@@ -7393,7 +7393,7 @@ msgstr ""
 msgid "Convert a color to RGB hash."
 msgstr ""
 
-# @return [Hash{:r, :g, :b => Integer}]
+# @return [Hash{:r, :g, :b => Numeric}]
 #: ../lib/discorb/color.rb:87
 #: ../lib/discorb/color.rb:91
 msgid "A RGB hash."
@@ -7436,32 +7436,32 @@ msgstr ""
 msgid "Create a color from a RGB array."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/color.rb:126
 msgid "tag|param|red"
 msgstr ""
 
-# @param [Integer] red
+# @param [Numeric] red
 #: ../lib/discorb/color.rb:126
 msgid "A red value."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/color.rb:126
 msgid "tag|param|green"
 msgstr ""
 
-# @param [Integer] green
+# @param [Numeric] green
 #: ../lib/discorb/color.rb:126
 msgid "A green value."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/color.rb:126
 msgid "tag|param|blue"
 msgstr ""
 
-# @param [Integer] blue
+# @param [Numeric] blue
 #: ../lib/discorb/color.rb:126
 msgid "A blue value."
 msgstr ""
@@ -7618,7 +7618,7 @@ msgstr ""
 msgid "The snowflake."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 # Discorb::Snowflake#process_id
 #: ../lib/discorb/common.rb:49
 #: ../lib/discorb/common.rb:50
@@ -7627,7 +7627,7 @@ msgstr ""
 msgid "Process ID of snowflake."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 # Discorb::Snowflake#worker_id
 #: ../lib/discorb/common.rb:49
 #: ../lib/discorb/common.rb:50
@@ -7636,7 +7636,7 @@ msgstr ""
 msgid "Worker ID of snowflake."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 # Discorb::Snowflake#increment
 #: ../lib/discorb/common.rb:49
 #: ../lib/discorb/common.rb:50
@@ -7890,15 +7890,15 @@ msgstr ""
 msgid "The options of the select menu."
 msgstr ""
 
-# @param [Integer] min_values
-# @return [Integer]
+# @param [Numeric] min_values
+# @return [Numeric]
 #: ../lib/discorb/components.rb:187
 #: ../lib/discorb/components.rb:203
 msgid "The minimum number of values."
 msgstr ""
 
-# @param [Integer] max_values
-# @return [Integer]
+# @param [Numeric] max_values
+# @return [Numeric]
 #: ../lib/discorb/components.rb:189
 #: ../lib/discorb/components.rb:203
 msgid "The maximum number of values."
@@ -7930,7 +7930,7 @@ msgstr ""
 msgid "The placeholder of the select menu."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/components.rb:203
 msgid "tag|param|min_values"
 msgstr ""
@@ -7940,7 +7940,7 @@ msgstr ""
 msgid "a new instance of SelectMenu"
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/components.rb:203
 msgid "tag|param|max_values"
 msgstr ""
@@ -8045,8 +8045,8 @@ msgstr ""
 msgid "A hash representing the option."
 msgstr ""
 
-# @param [Integer] limit
-# @return [Integer]
+# @param [Numeric] limit
+# @return [Numeric]
 #: ../lib/discorb/dictionary.rb:6
 #: ../lib/discorb/dictionary.rb:15
 msgid "The maximum number of items in the dictionary."
@@ -8153,7 +8153,7 @@ msgstr ""
 msgid "tag|overload|get"
 msgstr ""
 
-# @param [Integer] index
+# @param [Numeric] index
 #: ../lib/discorb/dictionary.rb:67
 #: ../lib/discorb/dictionary.rb:115
 msgid "The index of the item."
@@ -8573,12 +8573,12 @@ msgstr ""
 msgid "The proxy url of image."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/embed.rb:234
 msgid "The height of image."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/embed.rb:237
 msgid "The width of image."
 msgstr ""
@@ -8636,12 +8636,12 @@ msgstr ""
 msgid "The Thumbnail object wasn't created from gateway."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/embed.rb:278
 msgid "The height of thumbnail."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/embed.rb:281
 msgid "The width of thumbnail."
 msgstr ""
@@ -8691,12 +8691,12 @@ msgstr ""
 msgid "The proxy url of video."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/embed.rb:320
 msgid "The height of video."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/embed.rb:322
 msgid "The width of video."
 msgstr ""
@@ -8912,7 +8912,7 @@ msgstr ""
 msgid "The unicode value of the emoji. (e.g. U+1F600)"
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/emoji.rb:194
 msgid "The skin tone of the emoji."
 msgstr ""
@@ -9093,7 +9093,7 @@ msgstr ""
 msgid "The ID of the entity the event is for."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/event.rb:63
 msgid "The user count of the event."
 msgstr ""
@@ -9302,7 +9302,7 @@ msgstr ""
 # @param [#to_s]
 # @param [Discorb::Snowflake, nil]
 # @param [Discorb::Snowflake]
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/event.rb:223
 #: ../lib/discorb/event.rb:250
 #: ../lib/discorb/guild.rb:641
@@ -9324,7 +9324,7 @@ msgstr ""
 msgid "The ID of the user to start fetching from. Defaults to `nil`."
 msgstr ""
 
-# @param [Integer] limit
+# @param [Numeric] limit
 #: ../lib/discorb/event.rb:223
 #: ../lib/discorb/event.rb:250
 msgid "The maximum number of users to fetch. Defaults to `100`."
@@ -9469,7 +9469,7 @@ msgstr ""
 msgid "The attachment content type."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/file.rb:20
 msgid "The attachment size in bytes."
 msgstr ""
@@ -9490,12 +9490,12 @@ msgstr ""
 msgid "If the attachment is not an image."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/file.rb:27
 msgid "The image height."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/file.rb:30
 msgid "The image width."
 msgstr ""
@@ -9606,7 +9606,7 @@ msgstr ""
 msgid "the values of the flag."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/flag.rb:13
 msgid "the value of the flag."
 msgstr ""
@@ -9621,7 +9621,7 @@ msgstr ""
 msgid "a new instance of Flag"
 msgstr ""
 
-# @param [Integer] value
+# @param [Numeric] value
 #: ../lib/discorb/flag.rb:21
 msgid "The value of the flag."
 msgstr ""
@@ -9702,7 +9702,7 @@ msgstr ""
 msgid "The negation of the flag."
 msgstr ""
 
-# @return [Hash{Integer => Symbol}]
+# @return [Hash{Numeric => Symbol}]
 #: ../lib/discorb/flag.rb:105
 msgid "the bits of the flag."
 msgstr ""
@@ -9712,7 +9712,7 @@ msgstr ""
 msgid "Max value of the flag."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/flag.rb:112
 msgid "the max value of the flag."
 msgstr ""
@@ -10206,7 +10206,7 @@ msgstr ""
 msgid "The bot's permission in the guild."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:21
 #: ../lib/discorb/guild_template.rb:98
 msgid "The AFK timeout of the guild."
@@ -10254,7 +10254,7 @@ msgstr ""
 msgid "Whether the guild is unavailable."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:38
 msgid "The amount of members in the guild."
 msgstr ""
@@ -10291,7 +10291,7 @@ msgstr ""
 msgid "A dictionary of presence in the guild."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:53
 msgid "Number of online members in the guild."
 msgstr ""
@@ -10322,12 +10322,12 @@ msgstr ""
 msgid "If the guild does not have a banner."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:63
 msgid "The premium tier (Boost Level) of the guild."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:65
 msgid "The amount of premium subscriptions (Server Boosts) the guild has."
 msgstr ""
@@ -10344,17 +10344,17 @@ msgstr ""
 msgid "This modifies the language code, `-` will be replaced with `_`."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:70
 msgid "The maximum amount of users in a video channel."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:72
 msgid "The approxmate amount of members in the guild."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:74
 msgid "The approxmate amount of non-offline members in the guild."
 msgstr ""
@@ -10571,13 +10571,13 @@ msgstr ""
 msgid "Create a new text channel."
 msgstr ""
 
-# @param [Integer] rate_limit_per_user
+# @param [Numeric] rate_limit_per_user
 #: ../lib/discorb/guild.rb:403
 #: ../lib/discorb/guild.rb:568
 msgid "The rate limit per user in the channel."
 msgstr ""
 
-# @param [Integer] slowmode
+# @param [Numeric] slowmode
 #: ../lib/discorb/guild.rb:403
 #: ../lib/discorb/guild.rb:568
 msgid "Alias for `rate_limit_per_user`."
@@ -10633,8 +10633,8 @@ msgstr ""
 msgid "Create a new voice channel."
 msgstr ""
 
-# @param [Integer] user_limit
-# @return [Integer]
+# @param [Numeric] user_limit
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:448
 #: ../lib/discorb/guild_template.rb:169
 msgid "The user limit of the channel."
@@ -10645,8 +10645,8 @@ msgstr ""
 msgid "The created voice channel."
 msgstr ""
 
-# @param [Integer] bitrate
-# @return [Integer]
+# @param [Numeric] bitrate
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:448
 #: ../lib/discorb/guild.rb:527
 #: ../lib/discorb/guild_template.rb:167
@@ -10723,7 +10723,7 @@ msgstr ""
 msgid "Fetch members in the guild."
 msgstr ""
 
-# @param [Integer] limit
+# @param [Numeric] limit
 #: ../lib/discorb/guild.rb:641
 #: ../lib/discorb/guild.rb:662
 msgid "The maximum number of members to fetch, 0 for all."
@@ -10736,7 +10736,7 @@ msgstr ""
 msgid "The list of members."
 msgstr ""
 
-# @param [Integer] after
+# @param [Numeric] after
 #: ../lib/discorb/guild.rb:641
 #: ../lib/discorb/guild.rb:662
 msgid "The ID of the member to start fetching after."
@@ -10747,7 +10747,7 @@ msgstr ""
 msgid "Search for members by name in the guild."
 msgstr ""
 
-# @param [Integer] limit
+# @param [Numeric] limit
 #: ../lib/discorb/guild.rb:674
 msgid "The maximum number of members to return."
 msgstr ""
@@ -10876,13 +10876,13 @@ msgstr ""
 msgid "Ban a member from the guild."
 msgstr ""
 
-# @param [Integer] delete_message_days
+# @param [Numeric] delete_message_days
 #: ../lib/discorb/guild.rb:785
 #: ../lib/discorb/member.rb:218
 msgid "The number of days to delete messages."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/guild.rb:785
 #: ../lib/discorb/member.rb:218
 msgid "tag|param|delete_message_days"
@@ -10987,13 +10987,13 @@ msgstr ""
 msgid "Fetch how many members will be pruned."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/guild.rb:859
 #: ../lib/discorb/guild.rb:882
 msgid "tag|param|days"
 msgstr ""
 
-# @return [Async::Task<Integer>]
+# @return [Async::Task<Numeric>]
 #: ../lib/discorb/guild.rb:859
 msgid "The number of members that will be pruned."
 msgstr ""
@@ -11004,7 +11004,7 @@ msgstr ""
 msgid "The roles that include for pruning."
 msgstr ""
 
-# @param [Integer] days
+# @param [Numeric] days
 #: ../lib/discorb/guild.rb:859
 #: ../lib/discorb/guild.rb:882
 msgid "The number of days to prune."
@@ -11020,7 +11020,7 @@ msgstr ""
 msgid "The reason for pruning."
 msgstr ""
 
-# @return [Async::Task<Integer>]
+# @return [Async::Task<Numeric>]
 #: ../lib/discorb/guild.rb:882
 msgid "The number of members that were pruned."
 msgstr ""
@@ -11181,7 +11181,7 @@ msgstr ""
 msgid "The vanity invite code."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild.rb:1060
 msgid "The number of uses."
 msgstr ""
@@ -11258,17 +11258,17 @@ msgstr ""
 msgid "Return iframe HTML of the widget."
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/guild.rb:1146
 msgid "tag|param|width"
 msgstr ""
 
-# @param [Integer]
+# @param [Numeric]
 #: ../lib/discorb/guild.rb:1146
 msgid "tag|param|height"
 msgstr ""
 
-# @param [Integer] height
+# @param [Numeric] height
 #: ../lib/discorb/guild.rb:1146
 msgid "The height of the widget."
 msgstr ""
@@ -11278,7 +11278,7 @@ msgstr ""
 msgid "tag|param|theme"
 msgstr ""
 
-# @param [Integer] width
+# @param [Numeric] width
 #: ../lib/discorb/guild.rb:1146
 msgid "The width of the widget."
 msgstr ""
@@ -11461,7 +11461,7 @@ msgstr ""
 msgid "The code of the template."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild_template.rb:15
 msgid "The number of times this template has been used."
 msgstr ""
@@ -11580,7 +11580,7 @@ msgstr ""
 msgid "The type of the channel."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/guild_template.rb:173
 msgid "The rate limit of the channel."
 msgstr ""
@@ -11845,7 +11845,7 @@ msgstr ""
 msgid "The behavior of the integration when it expires."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/integration.rb:24
 msgid "The grace period of the integration."
 msgstr ""
@@ -11860,7 +11860,7 @@ msgstr ""
 msgid "The account for the integration."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/integration.rb:30
 msgid "The number of subscribers for the integration."
 msgstr ""
@@ -12079,8 +12079,8 @@ msgstr ""
 msgid "Returns value of the intent."
 msgstr ""
 
-# @param [Integer] value
-# @return [Integer]
+# @param [Numeric] value
+# @return [Numeric]
 #: ../lib/discorb/intents.rb:103
 #: ../lib/discorb/intents.rb:122
 msgid "The value of the intent."
@@ -12429,7 +12429,7 @@ msgid "The ID of the application that created the interaction."
 msgstr ""
 
 # @return [Class]
-# @return [Integer]
+# @return [Numeric]
 # @return [Symbol]
 #: ../lib/discorb/interaction/root.rb:11
 #: ../lib/discorb/interaction/root.rb:18
@@ -12483,12 +12483,12 @@ msgstr ""
 msgid "The user of invite."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/invite.rb:18
 msgid "The approximate number of online users of invite."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/invite.rb:21
 msgid "The approximate number of members of invite."
 msgstr ""
@@ -12512,17 +12512,17 @@ msgstr ""
 msgid "The invite doesn't have metadata."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/invite.rb:31
 msgid "The number of uses of invite."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/invite.rb:35
 msgid "The maximum number of uses of invite."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/invite.rb:39
 msgid "Duration of invite in seconds."
 msgstr ""
@@ -13275,7 +13275,7 @@ msgstr ""
 msgid "The emoji to fetch."
 msgstr ""
 
-# @param [Integer, nil] limit
+# @param [Numeric, nil] limit
 #: ../lib/discorb/message.rb:423
 msgid "The maximum number of users to fetch. `nil` for no limit."
 msgstr ""
@@ -13544,7 +13544,7 @@ msgstr ""
 msgid "The ID of the message to fetch after."
 msgstr ""
 
-# @param [Integer] limit
+# @param [Numeric] limit
 #: ../lib/discorb/modules.rb:132
 msgid "The number of messages to fetch."
 msgstr ""
@@ -13917,13 +13917,13 @@ msgstr ""
 msgid "The id of the party."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/presence.rb:154
 #: ../lib/discorb/presence.rb:169
 msgid "The max size of the party."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/presence.rb:154
 #: ../lib/discorb/presence.rb:165
 msgid "The current size of the party."
@@ -14105,7 +14105,7 @@ msgstr ""
 msgid "Represents a reaction to a message."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/reaction.rb:9
 msgid "The number of users that have reacted with this emoji."
 msgstr ""
@@ -14137,7 +14137,7 @@ msgstr ""
 msgid "The ID of the role."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/role.rb:17
 msgid "The position of the role."
 msgstr ""
@@ -14180,7 +14180,7 @@ msgstr ""
 msgid "Compares two roles by their position."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/role.rb:64
 msgid "-1 if the other role is higher, 0 if they are equal, 1 if the other role is lower."
 msgstr ""
@@ -14205,7 +14205,7 @@ msgstr ""
 msgid "Moves the role to a new position."
 msgstr ""
 
-# @param [Integer] position
+# @param [Numeric] position
 #: ../lib/discorb/role.rb:99
 msgid "The new position."
 msgstr ""
@@ -14228,7 +14228,7 @@ msgstr ""
 msgid "The new color of the role."
 msgstr ""
 
-# @param [Integer] position
+# @param [Numeric] position
 #: ../lib/discorb/role.rb:119
 #: ../lib/discorb/role.rb:138
 msgid "The new position of the role."
@@ -14335,7 +14335,7 @@ msgstr ""
 msgid "The ID of the sticker pack."
 msgstr ""
 
-# @return [Integer]
+# @return [Numeric]
 #: ../lib/discorb/sticker.rb:23
 msgid "The sort value of the sticker."
 msgstr ""

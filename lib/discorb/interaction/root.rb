@@ -14,7 +14,7 @@ module Discorb
     # @return [Discorb::User, Discorb::Member] The user or member that created the interaction.
     attr_reader :user
     alias member user
-    # @return [Integer] The type of interaction.
+    # @return [Numeric] The type of interaction.
     # @note This is always `1` for now.
     attr_reader :version
     # @return [String] The token for the interaction.

@@ -5,7 +5,7 @@ module Discorb
   # Represents a reaction to a message.
   #
   class Reaction < DiscordModel
-    # @return [Integer] The number of users that have reacted with this emoji.
+    # @return [Numeric] The number of users that have reacted with this emoji.
     attr_reader :count
     # @return [Discorb::Emoji, Discorb::PartialEmoji] The emoji that was reacted with.
     attr_reader :emoji

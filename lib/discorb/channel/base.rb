@@ -12,7 +12,7 @@ module Discorb
     attr_reader :name
 
     # @!attribute [r] type
-    #   @return [Integer] The type of the channel as integer.
+    #   @return [Numeric] The type of the channel as integer.
 
     @channel_type = nil
     @subclasses = []
@@ -75,7 +75,7 @@ module Discorb
     class << self
       #
       # @private
-      # @return [Integer] The type of the channel.
+      # @return [Numeric] The type of the channel.
       #
       attr_reader :channel_type
     end

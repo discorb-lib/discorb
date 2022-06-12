@@ -3,16 +3,16 @@ module Discorb
   # Represents RGB color.
   class Color
     #
-    # Create a color from a Integer.
+    # Create a color from a Numeric.
     #
-    # @param [Integer] value A color value.
-    def initialize: (Integer value) -> void
+    # @param [Numeric] value A color value.
+    def initialize: (Numeric value) -> void
 
     #
-    # Integerize a color.
+    # Numericize a color.
     #
-    # @return [Integer] A color value.
-    def to_i: () -> Integer
+    # @return [Numeric] A color value.
+    def to_i: () -> Numeric
 
     #
     # Convert a color to a hexadecimal value.
@@ -23,8 +23,8 @@ module Discorb
     #
     # Convert a color to RGB array.
     #
-    # @return [Array(Integer, Integer, Integer)] A RGB array.
-    def to_rgb: () -> [Integer, Integer, Integer]
+    # @return [Array(Numeric, Numeric, Numeric)] A RGB array.
+    def to_rgb: () -> [Numeric, Numeric, Numeric]
 
     alias to_a to_rgb
     alias deconstruct to_rgb
@@ -32,8 +32,8 @@ module Discorb
     #
     # Convert a color to RGB hash.
     #
-    # @return [Hash{:r, :g, :b => Integer}] A RGB hash.
-    def to_rgb_hash: () -> { r: Integer, g: Integer, b: Integer}
+    # @return [Hash{:r, :g, :b => Numeric}] A RGB hash.
+    def to_rgb_hash: () -> { r: Numeric, g: Numeric, b: Numeric}
 
     alias deconstruct_keys to_rgb_hash
 
@@ -43,7 +43,7 @@ module Discorb
     # @return [String] Converted string.
     def to_s: () -> String
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Create a color from a hexadecimal string.
@@ -56,12 +56,12 @@ module Discorb
     #
     # Create a color from a RGB array.
     #
-    # @param [Integer] red A red value.
-    # @param [Integer] green A green value.
-    # @param [Integer] blue A blue value.
+    # @param [Numeric] red A red value.
+    # @param [Numeric] green A green value.
+    # @param [Numeric] blue A blue value.
     #
     # @return [Discorb::Color] A color object.
-    def self.from_rgb: (Integer red, Integer green, Integer blue) -> Discorb::Color
+    def self.from_rgb: (Numeric red, Numeric green, Numeric blue) -> Discorb::Color
 
     #
     # Create a color from a Discord's color.

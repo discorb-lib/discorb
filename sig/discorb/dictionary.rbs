@@ -6,9 +6,9 @@ module Discorb
     # Initialize a new Dictionary.
     #
     # @param [Hash] hash A hash of items to add to the dictionary.
-    # @param [Integer] limit The maximum number of items in the dictionary.
+    # @param [Numeric] limit The maximum number of items in the dictionary.
     # @param [false, Proc] sort Whether to sort the items in the dictionary.
-    def initialize: (?::Hash[untyped, untyped] hash, ?limit: Integer?, ?sort: (bool | Proc)) -> void
+    def initialize: (?::Hash[untyped, untyped] hash, ?limit: Numeric?, ?sort: (bool | Proc)) -> void
 
     #
     # Registers a new item in the dictionary.
@@ -41,12 +41,12 @@ module Discorb
     # @return [nil] if the item was not found.
     #
     # @overload get(index)
-    #   @param [Integer] index The index of the item.
+    #   @param [Numeric] index The index of the item.
     #
     #   @return [Object] The item.
     #   @return [nil] if the item is not found.
     def get: (_ToS id) -> V
-           | (Integer index) -> V
+           | (Numeric index) -> V
 
     alias [] get
 
@@ -70,9 +70,9 @@ module Discorb
 
     def respond_to_missing?: (untyped name, untyped args, untyped kwargs) -> bool
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
-    # @return [Integer] The maximum number of items in the dictionary.
-    attr_accessor limit: Integer?
+    # @return [Numeric] The maximum number of items in the dictionary.
+    attr_accessor limit: Numeric?
   end
 end

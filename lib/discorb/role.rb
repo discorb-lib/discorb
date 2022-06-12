@@ -13,7 +13,7 @@ module Discorb
     attr_reader :color
     # @return [Discorb::Permission] The permissions of the role.
     attr_reader :permissions
-    # @return [Integer] The position of the role.
+    # @return [Numeric] The position of the role.
     attr_reader :position
     # @return [Discorb::Guild] The guild this role belongs to.
     attr_reader :guild
@@ -66,7 +66,7 @@ module Discorb
     #
     # @param [Discorb::Role] other The role to compare to.
     #
-    # @return [Integer] -1 if the other role is higher, 0 if they are equal, 1 if the other role is lower.
+    # @return [Numeric] -1 if the other role is higher, 0 if they are equal, 1 if the other role is lower.
     #
     def <=>(other)
       return nil unless other.is_a?(Role)
@@ -99,7 +99,7 @@ module Discorb
     # Moves the role to a new position.
     # @async
     #
-    # @param [Integer] position The new position.
+    # @param [Numeric] position The new position.
     # @param [String] reason The reason for moving the role.
     #
     # @return [Async::Task<void>] The task.
@@ -117,7 +117,7 @@ module Discorb
     # @macro edit
     #
     # @param [String] name The new name of the role.
-    # @param [Integer] position The new position of the role.
+    # @param [Numeric] position The new position of the role.
     # @param [Discorb::Color] color The new color of the role.
     # @param [Boolean] hoist Whether the role should be hoisted.
     # @param [Boolean] mentionable Whether the role should be mentionable.

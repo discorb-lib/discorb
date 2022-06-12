@@ -11,14 +11,14 @@ module Discorb
     attr_reader :id
     # @return [String] The name of the thread.
     attr_reader :name
-    # @return [Integer] The number of messages in the thread.
+    # @return [Numeric] The number of messages in the thread.
     # @note This will stop counting at 50.
     attr_reader :message_count
-    # @return [Integer] The number of recipients in the thread.
+    # @return [Numeric] The number of recipients in the thread.
     # @note This will stop counting at 50.
     attr_reader :member_count
     alias recipient_count member_count
-    # @return [Integer] The rate limit per user (slowmode) in the thread.
+    # @return [Numeric] The rate limit per user (slowmode) in the thread.
     attr_reader :rate_limit_per_user
     alias slowmode rate_limit_per_user
     # @return [Array<Discorb::ThreadChannel::Member>] The members of the thread.
@@ -27,7 +27,7 @@ module Discorb
     # @return [nil] If the thread is not archived.
     attr_reader :archived_timestamp
     alias archived_at archived_timestamp
-    # @return [Integer] Auto archive duration in seconds.
+    # @return [Numeric] Auto archive duration in seconds.
     attr_reader :auto_archive_duration
     alias archive_in auto_archive_duration
     # @return [Boolean] Whether the thread is archived or not.
@@ -74,8 +74,8 @@ module Discorb
     #
     # @param [String] name The name of the thread.
     # @param [Boolean] archived Whether the thread is archived or not.
-    # @param [Integer] auto_archive_duration The auto archive duration in seconds.
-    # @param [Integer] archive_in Alias of `auto_archive_duration`.
+    # @param [Numeric] auto_archive_duration The auto archive duration in seconds.
+    # @param [Numeric] archive_in Alias of `auto_archive_duration`.
     # @param [Boolean] locked Whether the thread is locked or not.
     # @param [String] reason The reason of editing the thread.
     #

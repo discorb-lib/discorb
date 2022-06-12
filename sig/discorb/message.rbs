@@ -3,7 +3,7 @@ module Discorb
   #
   # Represents a message in Discord.
   class Message < Discorb::DiscordModel
-    MESSAGE_TYPE: Hash[Integer, Symbol]
+    MESSAGE_TYPE: Hash[Numeric, Symbol]
 
     #
     # Initialize a new message.
@@ -120,11 +120,11 @@ module Discorb
     # @async
     #
     # @param [Discorb::emoji, Discorb::PartialEmoji] emoji The emoji to fetch.
-    # @param [Integer, nil] limit The maximum number of users to fetch. `nil` for no limit.
+    # @param [Numeric, nil] limit The maximum number of users to fetch. `nil` for no limit.
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #
     # @return [Async::Task<Array<Discorb::User>>] The users.
-    def fetch_reacted_users: ((Discorb::emoji) emoji, ?limit: Integer?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
+    def fetch_reacted_users: ((Discorb::emoji) emoji, ?limit: Numeric?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
 
     #
     # Pin the message.
@@ -348,7 +348,7 @@ module Discorb
       # Convert the reference to a hash.
       #
       # @return [Hash] The hash.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       #
       # Initialize a new reference from a hash.

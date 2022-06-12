@@ -19,9 +19,9 @@ module Discorb
     attr_reader :application
     # @return [Discorb::HTTP] The http client.
     attr_reader :http
-    # @return [Integer] The heartbeat interval.
+    # @return [Numeric] The heartbeat interval.
     attr_reader :heartbeat_interval
-    # @return [Integer] The API version of the Discord gateway.
+    # @return [Numeric] The API version of the Discord gateway.
     # @return [nil] If not connected to the gateway.
     attr_reader :api_version
     # @return [String] The token of the client.
@@ -50,7 +50,7 @@ module Discorb
     attr_reader :status
     # @return [Hash{String => Discorb::Extension}] The loaded extensions.
     attr_reader :extensions
-    # @return [Hash{Integer => Discorb::Shard}] The shards of the client.
+    # @return [Hash{Numeric => Discorb::Shard}] The shards of the client.
     attr_reader :shards
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
@@ -66,7 +66,7 @@ module Discorb
     #   @return [Discorb::Shard] The current shard. This is implemented with Thread variables.
     #   @return [nil] If client has no shard.
     # @!attribute [r] shard_id
-    #   @return [Integer] The current shard ID. This is implemented with Thread variables.
+    #   @return [Numeric] The current shard ID. This is implemented with Thread variables.
     #   @return [nil] If client has no shard.
     # @!attribute [r] logger
     #   @return [Logger] The logger.
@@ -76,7 +76,7 @@ module Discorb
     #
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions that the client is using.
     # @param [Discorb::Intents] intents The intents that the client is currently using.
-    # @param [Integer] message_caches The number of messages to cache.
+    # @param [Numeric] message_caches The number of messages to cache.
     # @param [Logger] logger The IO object to use for logging.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
@@ -359,7 +359,7 @@ module Discorb
     # @async
     #
     # @param [Symbol] event The name of the event.
-    # @param [Integer] timeout The timeout in seconds.
+    # @param [Numeric] timeout The timeout in seconds.
     # @param [Proc] check The check to use.
     #
     # @return [Async::Task<Object>] The result of the event.

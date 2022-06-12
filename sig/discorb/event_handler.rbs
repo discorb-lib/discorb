@@ -6,7 +6,7 @@ module Discorb
   class EventHandler
     def initialize: (untyped block, Symbol? id, untyped metadata) -> void
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Calls the block associated with the event.

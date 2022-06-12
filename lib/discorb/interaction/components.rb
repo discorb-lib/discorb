@@ -32,7 +32,7 @@ module Discorb
 
     class << self
       # @private
-      # @return [Integer] The component type.
+      # @return [Numeric] The component type.
       attr_reader :component_type
 
       #

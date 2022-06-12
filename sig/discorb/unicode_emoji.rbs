@@ -6,8 +6,8 @@ module Discorb
     # Initialize a new unicode emoji.
     #
     # @param [String] name The name of the emoji.
-    # @param [Integer] tone The skin tone of the emoji.
-    def initialize: (String name, ?tone: Integer) -> void
+    # @param [Numeric] tone The skin tone of the emoji.
+    def initialize: (String name, ?tone: Numeric) -> void
 
     # @return [String] The unicode string of the emoji.
     def to_s: () -> String
@@ -18,14 +18,14 @@ module Discorb
     # @return [String] the formatted emoji.
     def to_uri: () -> String
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Converts the object to a hash.
     # @private
     #
     # @return [Hash] The hash represents the object.
-    def to_hash: () -> ::Hash[untyped, untyped]
+    def to_hash: () -> Discorb::json
 
     # @return [String] The name of the emoji. (e.g. :grinning:)
     attr_reader name: String
@@ -33,10 +33,10 @@ module Discorb
     # @return [String] The unicode value of the emoji. (e.g. U+1F600)
     attr_reader value: String
 
-    # @return [Integer] The skin tone of the emoji.
-    attr_reader skin_tone: Integer
+    # @return [Numeric] The skin tone of the emoji.
+    attr_reader skin_tone: Numeric
 
-    def self.[]: (String name, ?tone: Integer) -> UnicodeEmoji
+    def self.[]: (String name, ?tone: Numeric) -> UnicodeEmoji
   end
 
   #

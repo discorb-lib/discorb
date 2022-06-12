@@ -22,7 +22,7 @@ module Discorb
     # @return [String] the formatted emoji.
     def to_uri: () -> String
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Edit the emoji.
@@ -50,7 +50,7 @@ module Discorb
     # @private
     #
     # @return [Hash] The hash represents the object.
-    def to_hash: () -> ::Hash[untyped, untyped]
+    def to_hash: () -> Discorb::json
 
     # @return [Discorb::Snowflake] The ID of the emoji.
     attr_reader id: Discorb::Snowflake

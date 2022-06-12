@@ -15,7 +15,7 @@ module Discorb
     # @return [String] the formatted emoji.
     def to_uri: () -> String
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Format the emoji for sending.

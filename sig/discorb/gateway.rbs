@@ -14,7 +14,7 @@ module Discorb
       # @param [Hash] data The data of the event.
       def initialize: (Discorb::json data) -> void
 
-      def inspect: () -> untyped
+      def inspect: () -> String
     end
 
     #
@@ -419,7 +419,7 @@ module Discorb
     # A class for connecting websocket with raw bytes data.
     # @private
     class RawConnection < Async::WebSocket::Connection
-      def inspect: () -> untyped
+      def inspect: () -> String
 
       def closed?: () -> bool
 

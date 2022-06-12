@@ -11,7 +11,7 @@ module Discorb
       default: untyped?,
       type: (
           singleton(String) | :string | :str
-        | singleton(Integer) | :integer | :int
+        | singleton(Numeric) | :integer | :int
         | singleton(TrueClass) | singleton(FalseClass) | :boolean | :bool
         | singleton(Discorb::User) | singleton(Discorb::Member) | :user | :member
         | singleton(Discorb::Channel) | :channel
@@ -20,12 +20,12 @@ module Discorb
         | singleton(Float) | :float
         | :attachment
       )?,
-      choices: Hash[String, String | Integer | Float]?,
+      choices: Hash[String, String | Numeric | Float]?,
       choices_localizations: Hash[String, Hash[Symbol | String, String]]?,
       default: untyped?,
       channel_types: Array[Class]?,
       autocomplete: (^(Discorb::CommandInteraction) -> Hash[String, String])?,
-      range: Range[Integer | Float]?
+      range: Range[Numeric | Float]?
     }
     type options = ::Hash[String, option]
     type localizable = String | Hash[Symbol | String, String]
@@ -37,7 +37,7 @@ module Discorb
     # Represents a application command.
     # @abstract
     class Command < Discorb::DiscordModel
-      TYPES: Hash[Integer, Symbol]
+      TYPES: Hash[Numeric, Symbol]
 
       #
       # Initialize a new command.
@@ -46,14 +46,14 @@ module Discorb
       # @param [String, Hash{Symbol => String}] name The name of the command.
       # @param [Array<#to_s>, false, nil] guild_ids The guild ids that the command is enabled in.
       # @param [Proc] block The block of the command.
-      # @param [Integer] type The type of the command.
+      # @param [Numeric] type The type of the command.
       # @param [Boolean] dm_permission Whether the command is enabled in DMs.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       def initialize: (
                         Discorb::ApplicationCommand::localizable name,
                         Discorb::ApplicationCommand::guild_ids guild_ids,
                         ^(Discorb::Interaction, *untyped) -> untyped block,
-                        Integer type,
+                        Numeric type,
                         ?bool? dm_permission,
                         ?Discorb::Permission? default_permission
                       ) -> void
@@ -70,7 +70,7 @@ module Discorb
       # @private
       #
       # @return [Hash] The hash represents the object.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
       # @return [Hash{String => String}] The name of the command.
       attr_reader name: ::Hash[String, String]
@@ -84,8 +84,8 @@ module Discorb
       # @return [:chat_input, :user, :message] The type of the command.
       attr_reader type: Symbol
 
-      # @return [Integer] The raw type of the command.
-      attr_reader type_raw: Integer
+      # @return [Numeric] The raw type of the command.
+      attr_reader type_raw: Numeric
 
       # @return [Discorb::Permission] The default permissions for this command.
       attr_reader default_permission: Discorb::Permission?
@@ -107,7 +107,7 @@ module Discorb
         # @param [Hash{String => Hash}] options The options of the command.
         # @param [Array<#to_s>] guild_ids The guild ids that the command is enabled in.
         # @param [Proc] block The block of the command.
-        # @param [Integer] type The type of the command.
+        # @param [Numeric] type The type of the command.
         # @param [Discorb::ApplicationCommand::Command, nil] parent The parent command.
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
@@ -117,7 +117,7 @@ module Discorb
                           Discorb::ApplicationCommand::options options,
                           Discorb::ApplicationCommand::guild_ids guild_ids,
                           ^(Discorb::CommandInteraction::ChatInputCommand, *untyped) -> untyped block,
-                          Integer type,
+                          Numeric type,
                           Discorb::ApplicationCommand::Command? parent,
                           bool? dm_permission,
                           Discorb::Permission? default_permission
@@ -134,7 +134,7 @@ module Discorb
         # @private
         #
         # @return [Hash] The hash represents the object.
-        def to_hash: () -> ::Hash[untyped, untyped]
+        def to_hash: () -> Discorb::json
 
         # @return [Hash{String => String}] The description of the command.
         attr_reader description: ::Hash[String, String]
@@ -211,7 +211,7 @@ module Discorb
         # @private
         #
         # @return [Hash] The hash represents the object.
-        def to_hash: () -> ::Hash[untyped, untyped]
+        def to_hash: () -> Discorb::json
 
         # @return [Array<Discorb::ApplicationCommand::Command>] The subcommands of the command.
         attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]

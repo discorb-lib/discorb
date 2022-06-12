@@ -8,14 +8,14 @@ module Discorb
     # @param [String, Symbol] custom_id Custom ID of the select menu.
     # @param [Array<Discorb::SelectMenu::Option>] options The options of the select menu.
     # @param [String] placeholder The placeholder of the select menu.
-    # @param [Integer] min_values The minimum number of values.
-    # @param [Integer] max_values The maximum number of values.
+    # @param [Numeric] min_values The minimum number of values.
+    # @param [Numeric] max_values The maximum number of values.
     def initialize: (
                       (String | Symbol) custom_id,
                       ::Array[Discorb::SelectMenu::Option] options,
                       ?placeholder: String?,
-                      ?min_values: Integer,
-                      ?max_values: Integer
+                      ?min_values: Numeric,
+                      ?max_values: Numeric
                     ) -> void
 
     #
@@ -24,9 +24,9 @@ module Discorb
     # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure
     #   Official Discord API docs
     # @return [Hash] A hash representation of the select menu.
-    def to_hash: () -> ::Hash[untyped, untyped]
+    def to_hash: () -> Discorb::json
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Creates a new select menu from a hash.
@@ -42,11 +42,11 @@ module Discorb
     # @return [Array<SelectMenu::Option>] The options of the select menu.
     attr_accessor options: ::Array[SelectMenu::Option]
 
-    # @return [Integer] The minimum number of values.
-    attr_accessor min_values: Integer
+    # @return [Numeric] The minimum number of values.
+    attr_accessor min_values: Numeric
 
-    # @return [Integer] The maximum number of values.
-    attr_accessor max_values: Integer
+    # @return [Numeric] The maximum number of values.
+    attr_accessor max_values: Numeric
 
     # @return [Boolean] Whether the select menu is disabled.
     attr_accessor disabled: bool
@@ -76,9 +76,9 @@ module Discorb
       # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
       #   Official Discord API docs
       # @return [Hash] Hash representation of the option.
-      def to_hash: () -> ::Hash[untyped, untyped]
+      def to_hash: () -> Discorb::json
 
-      def inspect: () -> untyped
+      def inspect: () -> String
 
       #
       # Creates a new option from a hash.

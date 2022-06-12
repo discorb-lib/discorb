@@ -45,9 +45,9 @@ module Discorb
     # @return [Discorb::User, Discorb::Member] The user or member that created the interaction.
     attr_reader user: (Discorb::User | Discorb::Member)
 
-    # @return [Integer] The type of interaction.
+    # @return [Numeric] The type of interaction.
     # @note This is always `1` for now.
-    attr_reader version: Integer
+    attr_reader version: Numeric
 
     # @return [String] The token for the interaction.
     attr_reader token: String

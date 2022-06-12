@@ -16,7 +16,7 @@ module Discorb
                       ?replied_user: bool?
                     ) -> void
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Converts the object to a hash.

@@ -11,7 +11,7 @@ module Discorb
     #
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions that the client is using.
     # @param [Discorb::Intents] intents The intents that the client is currently using.
-    # @param [Integer] message_caches The number of messages to cache.
+    # @param [Numeric] message_caches The number of messages to cache.
     # @param [Logger] logger The IO object to use for logging.
     # @param [:debug, :info, :warn, :error, :critical] log_level The log level.
     # @param [Boolean] wait_until_ready Whether to delay event dispatch until ready.
@@ -21,7 +21,7 @@ module Discorb
     def initialize: (
                       ?allowed_mentions: Discorb::AllowedMentions?,
                       ?intents: Discorb::Intents?,
-                      ?message_caches: Integer,
+                      ?message_caches: Numeric,
                       ?logger: Logger?,
                       ?wait_until_ready: bool,
                       ?fetch_member: bool,
@@ -344,115 +344,115 @@ module Discorb
     # @async
     #
     # @param [Symbol] event The name of the event.
-    # @param [Integer] timeout The timeout in seconds.
+    # @param [Numeric] timeout The timeout in seconds.
     # @param [Proc] check The check to use.
     #
     # @return [Async::Task<Object>] The result of the event.
     #
     # @raise [Discorb::TimeoutError] If the event didn't occur in time.
     def event_lock: # marker: event_lock
-             (:event_receive event, ?Integer? timeout) { (Symbol event_name, Discorb::json data) -> boolish } -> Async::Task[[Symbol, Discorb::json]]
-           | (:ready event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:standby event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:resumed event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:error event, ?Integer? timeout) { (Symbol event_name, Array[Object] args, Exception error) -> boolish } -> Async::Task[[Symbol, Array[Object], Exception]]
-           | (:setup event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:shard_standby event, ?Integer? timeout) { (Discorb::Shard shard) -> boolish } -> Async::Task[Discorb::Shard]
-           | (:shard_resumed event, ?Integer? timeout) { (Discorb::Shard shard) -> boolish } -> Async::Task[Discorb::Shard]
-           | (:guild_join event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
-           | (:guild_available event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
-           | (:guild_update event, ?Integer? timeout) { (Discorb::Guild before, Discorb::Guild after) -> boolish } -> Async::Task[[Discorb::Guild, Discorb::Guild]]
-           | (:guild_leave event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
-           | (:guild_destroy event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
-           | (:guild_integrations_update event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
-           | (:guild_ban_add event, ?Integer? timeout) { (Discorb::Guild guild, Discorb::User user) -> boolish } -> Async::Task[[Discorb::Guild, Discorb::User]]
-           | (:guild_ban_remove event, ?Integer? timeout) { (Discorb::Guild guild, Discorb::User user) -> boolish } -> Async::Task[[Discorb::Guild, Discorb::User]]
-           | (:channel_create event, ?Integer? timeout) { (Discorb::Channel channel) -> boolish } -> Async::Task[Discorb::Channel]
-           | (:channel_update event, ?Integer? timeout) { (Discorb::Channel before, Discorb::Channel after) -> boolish } -> Async::Task[[Discorb::Channel, Discorb::Channel]]
-           | (:channel_delete event, ?Integer? timeout) { (Discorb::Channel channel) -> boolish } -> Async::Task[Discorb::Channel]
-           | (:webhooks_update event, ?Integer? timeout) { (Discorb::Gateway::WebhooksUpdateEvent event) -> boolish } -> Async::Task[Discorb::Gateway::WebhooksUpdateEvent]
-           | (:thread_new event, ?Integer? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
-           | (:thread_join event, ?Integer? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
-           | (:thread_delete event, ?Integer? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
-           | (:thread_update event, ?Integer? timeout) { (Discorb::ThreadChannel before, Discorb::ThreadChannel after) -> boolish } -> Async::Task[[Discorb::ThreadChannel, Discorb::ThreadChannel]]
-           | (:thread_members_update event, ?Integer? timeout) { (Discorb::ThreadChannel thread, Array[Discorb::ThreadChannel::Member] added, Array[Discorb::ThreadChannel::Member] removed) -> boolish } -> Async::Task[[Discorb::ThreadChannel, Array[Discorb::ThreadChannel::Member], Array[Discorb::ThreadChannel::Member]]]
-           | (:thread_member_update event, ?Integer? timeout) { (Discorb::ThreadChannel thread, Discorb::ThreadChannel::Member before, Discorb::ThreadChannel::Member after) -> boolish } -> Async::Task[[Discorb::ThreadChannel, Discorb::ThreadChannel::Member, Discorb::ThreadChannel::Member]]
-           | (:integration_create event, ?Integer? timeout) { (Discorb::Integration integration) -> boolish } -> Async::Task[Discorb::Integration]
-           | (:integration_update event, ?Integer? timeout) { (Discorb::Integration after) -> boolish } -> Async::Task[Discorb::Integration]
-           | (:integration_delete event, ?Integer? timeout) { (Discorb::Integration integration) -> boolish } -> Async::Task[Discorb::Integration]
-           | (:message event, ?Integer? timeout) { (Discorb::Message message) -> boolish } -> Async::Task[Discorb::Message]
-           | (:message_update event, ?Integer? timeout) { (Discorb::Gateway::MessageUpdateEvent event) -> boolish } -> Async::Task[Discorb::Gateway::MessageUpdateEvent]
-           | (:message_delete event, ?Integer? timeout) { (Discorb::Message message, Discorb::Channel channel, Discorb::Guild guild) -> boolish } -> Async::Task[[Discorb::Message, Discorb::Channel, Discorb::Guild]]
-           | (:message_delete_id event, ?Integer? timeout) { (Discorb::Snowflake message_id, Discorb::Channel channel, Discorb::Guild guild) -> boolish } -> Async::Task[[Discorb::Snowflake, Discorb::Channel, Discorb::Guild]]
-           | (:message_delete_bulk event, ?Integer? timeout) { (Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage] messages) -> boolish } -> Async::Task[Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage]]
-           | (:message_pin_update event, ?Integer? timeout) { (Discorb::Gateway::MessagePinEvent event) -> boolish } -> Async::Task[Discorb::Gateway::MessagePinEvent]
-           | (:typing_start event, ?Integer? timeout) { (Discorb::Gateway::TypingStartEvent event) -> boolish } -> Async::Task[Discorb::Gateway::TypingStartEvent]
-           | (:reaction_add event, ?Integer? timeout) { (Discorb::Gateway::ReactionEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionEvent]
-           | (:reaction_remove event, ?Integer? timeout) { (Discorb::Gateway::ReactionEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionEvent]
-           | (:reaction_remove_all event, ?Integer? timeout) { (Discorb::Gateway::ReactionRemoveAllEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionRemoveAllEvent]
-           | (:reaction_remove_emoji event, ?Integer? timeout) { (Discorb::Gateway::ReactionRemoveEmojiEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionRemoveEmojiEvent]
-           | (:role_create event, ?Integer? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
-           | (:role_update event, ?Integer? timeout) { (Discorb::Role before, Discorb::Role after) -> boolish } -> Async::Task[[Discorb::Role, Discorb::Role]]
-           | (:role_remove event, ?Integer? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
-           | (:member_add event, ?Integer? timeout) { (Discorb::Member member) -> boolish } -> Async::Task[Discorb::Member]
-           | (:member_update event, ?Integer? timeout) { (Discorb::Member before, Discorb::Member after) -> boolish } -> Async::Task[[Discorb::Member, Discorb::Member]]
-           | (:member_remove event, ?Integer? timeout) { (Discorb::Member member) -> boolish } -> Async::Task[Discorb::Member]
-           | (:role_create event, ?Integer? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
-           | (:role_update event, ?Integer? timeout) { (Discorb::Role before, Discorb::Role after) -> boolish } -> Async::Task[[Discorb::Role, Discorb::Role]]
-           | (:role_remove event, ?Integer? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
-           | (:invite_create event, ?Integer? timeout) { (Discorb::Invite invite) -> boolish } -> Async::Task[Discorb::Invite]
-           | (:invite_delete event, ?Integer? timeout) { (Discorb::Invite invite) -> boolish } -> Async::Task[Discorb::Invite]
-           | (:interaction_create event, ?Integer? timeout) { (Discorb::Interaction interaction) -> boolish } -> Async::Task[Discorb::Interaction]
-           | (:application_command event, ?Integer? timeout) { (Discorb::CommandInteraction interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction]
-           | (:slash_command event, ?Integer? timeout) { (Discorb::CommandInteraction::ChatInputCommand interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction::ChatInputCommand]
-           | (:message_command event, ?Integer? timeout) { (Discorb::CommandInteraction::MessageMenuCommand interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction::MessageMenuCommand]
-           | (:user_command event, ?Integer? timeout) { (Discorb::CommandInteraction::UserMenuCommand interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction::UserMenuCommand]
-           | (:button_click event, ?Integer? timeout) { (Discorb::MessageComponentInteraction::Button interaction) -> boolish } -> Async::Task[Discorb::MessageComponentInteraction::Button]
-           | (:select_menu_select event, ?Integer? timeout) { (Discorb::MessageComponentInteraction::SelectMenu interaction) -> boolish } -> Async::Task[Discorb::MessageComponentInteraction::SelectMenu]
-           | (:form_submit event, ?Integer? timeout) { (Discorb::ModalInteraction interaction) -> boolish } -> Async::Task[Discorb::ModalInteraction]
-           | (:scheduled_event_create event, ?Integer? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
-           | (:scheduled_event_cancel event, ?Integer? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
-           | (:scheduled_event_edit event, ?Integer? timeout) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> boolish } -> Async::Task[[Discorb::ScheduledEvent, Discorb::ScheduledEvent]]
-           | (:scheduled_event_start event, ?Integer? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
-           | (:scheduled_event_end event, ?Integer? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
-           | (:guild_create event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
-           | (:guild_delete event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
-           | (:thread_create event, ?Integer? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
-           | (:scheduled_event_update event, ?Integer? timeout) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> boolish } -> Async::Task[[Discorb::ScheduledEvent, Discorb::ScheduledEvent]]
-           | (:voice_channel_connect event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:voice_channel_disconnect event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:voice_channel_move event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:voice_channel_update event, ?Integer? timeout) { () -> boolish } -> Async::Task[void]
-           | (:voice_mute_disable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_mute_enable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_mute_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:voice_server_mute_enable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_server_mute_disable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_server_mute_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:voice_self_mute_enable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_self_mute_disable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_self_mute_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:voice_deaf_enable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_deaf_disable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_deaf_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:voice_server_deaf_enable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_server_deaf_disable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_server_deaf_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:voice_self_deaf_enable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_self_deaf_disable event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_self_deaf_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:voice_stream_start event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_stream_end event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_stream_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:voice_video_start event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_video_end event, ?Integer? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
-           | (:voice_video_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
-           | (:stage_instance_create event, ?Integer? timeout) { (Discorb::StageInstance instance) -> boolish } -> Async::Task[Discorb::StageInstance]
-           | (:stage_instance_delete event, ?Integer? timeout) { (Discorb::StageInstance instance) -> boolish } -> Async::Task[Discorb::StageInstance]
-           | (:stage_instance_update event, ?Integer? timeout) { (Discorb::StageInstance before, Discorb::StageInstance after) -> boolish } -> Async::Task[[Discorb::StageInstance, Discorb::StageInstance]]
-           | (:voice_state_update event, ?Integer? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+             (:event_receive event, ?Numeric? timeout) { (Symbol event_name, Discorb::json data) -> boolish } -> Async::Task[[Symbol, Discorb::json]]
+           | (:ready event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:standby event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:resumed event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:error event, ?Numeric? timeout) { (Symbol event_name, Array[Object] args, Exception error) -> boolish } -> Async::Task[[Symbol, Array[Object], Exception]]
+           | (:setup event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:shard_standby event, ?Numeric? timeout) { (Discorb::Shard shard) -> boolish } -> Async::Task[Discorb::Shard]
+           | (:shard_resumed event, ?Numeric? timeout) { (Discorb::Shard shard) -> boolish } -> Async::Task[Discorb::Shard]
+           | (:guild_join event, ?Numeric? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
+           | (:guild_available event, ?Numeric? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
+           | (:guild_update event, ?Numeric? timeout) { (Discorb::Guild before, Discorb::Guild after) -> boolish } -> Async::Task[[Discorb::Guild, Discorb::Guild]]
+           | (:guild_leave event, ?Numeric? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
+           | (:guild_destroy event, ?Numeric? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
+           | (:guild_integrations_update event, ?Numeric? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
+           | (:guild_ban_add event, ?Numeric? timeout) { (Discorb::Guild guild, Discorb::User user) -> boolish } -> Async::Task[[Discorb::Guild, Discorb::User]]
+           | (:guild_ban_remove event, ?Numeric? timeout) { (Discorb::Guild guild, Discorb::User user) -> boolish } -> Async::Task[[Discorb::Guild, Discorb::User]]
+           | (:channel_create event, ?Numeric? timeout) { (Discorb::Channel channel) -> boolish } -> Async::Task[Discorb::Channel]
+           | (:channel_update event, ?Numeric? timeout) { (Discorb::Channel before, Discorb::Channel after) -> boolish } -> Async::Task[[Discorb::Channel, Discorb::Channel]]
+           | (:channel_delete event, ?Numeric? timeout) { (Discorb::Channel channel) -> boolish } -> Async::Task[Discorb::Channel]
+           | (:webhooks_update event, ?Numeric? timeout) { (Discorb::Gateway::WebhooksUpdateEvent event) -> boolish } -> Async::Task[Discorb::Gateway::WebhooksUpdateEvent]
+           | (:thread_new event, ?Numeric? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
+           | (:thread_join event, ?Numeric? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
+           | (:thread_delete event, ?Numeric? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
+           | (:thread_update event, ?Numeric? timeout) { (Discorb::ThreadChannel before, Discorb::ThreadChannel after) -> boolish } -> Async::Task[[Discorb::ThreadChannel, Discorb::ThreadChannel]]
+           | (:thread_members_update event, ?Numeric? timeout) { (Discorb::ThreadChannel thread, Array[Discorb::ThreadChannel::Member] added, Array[Discorb::ThreadChannel::Member] removed) -> boolish } -> Async::Task[[Discorb::ThreadChannel, Array[Discorb::ThreadChannel::Member], Array[Discorb::ThreadChannel::Member]]]
+           | (:thread_member_update event, ?Numeric? timeout) { (Discorb::ThreadChannel thread, Discorb::ThreadChannel::Member before, Discorb::ThreadChannel::Member after) -> boolish } -> Async::Task[[Discorb::ThreadChannel, Discorb::ThreadChannel::Member, Discorb::ThreadChannel::Member]]
+           | (:integration_create event, ?Numeric? timeout) { (Discorb::Integration integration) -> boolish } -> Async::Task[Discorb::Integration]
+           | (:integration_update event, ?Numeric? timeout) { (Discorb::Integration after) -> boolish } -> Async::Task[Discorb::Integration]
+           | (:integration_delete event, ?Numeric? timeout) { (Discorb::Integration integration) -> boolish } -> Async::Task[Discorb::Integration]
+           | (:message event, ?Numeric? timeout) { (Discorb::Message message) -> boolish } -> Async::Task[Discorb::Message]
+           | (:message_update event, ?Numeric? timeout) { (Discorb::Gateway::MessageUpdateEvent event) -> boolish } -> Async::Task[Discorb::Gateway::MessageUpdateEvent]
+           | (:message_delete event, ?Numeric? timeout) { (Discorb::Message message, Discorb::Channel channel, Discorb::Guild guild) -> boolish } -> Async::Task[[Discorb::Message, Discorb::Channel, Discorb::Guild]]
+           | (:message_delete_id event, ?Numeric? timeout) { (Discorb::Snowflake message_id, Discorb::Channel channel, Discorb::Guild guild) -> boolish } -> Async::Task[[Discorb::Snowflake, Discorb::Channel, Discorb::Guild]]
+           | (:message_delete_bulk event, ?Numeric? timeout) { (Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage] messages) -> boolish } -> Async::Task[Array[Discorb::Message | Discorb::Gateway::UnknownDeleteBulkMessage]]
+           | (:message_pin_update event, ?Numeric? timeout) { (Discorb::Gateway::MessagePinEvent event) -> boolish } -> Async::Task[Discorb::Gateway::MessagePinEvent]
+           | (:typing_start event, ?Numeric? timeout) { (Discorb::Gateway::TypingStartEvent event) -> boolish } -> Async::Task[Discorb::Gateway::TypingStartEvent]
+           | (:reaction_add event, ?Numeric? timeout) { (Discorb::Gateway::ReactionEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionEvent]
+           | (:reaction_remove event, ?Numeric? timeout) { (Discorb::Gateway::ReactionEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionEvent]
+           | (:reaction_remove_all event, ?Numeric? timeout) { (Discorb::Gateway::ReactionRemoveAllEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionRemoveAllEvent]
+           | (:reaction_remove_emoji event, ?Numeric? timeout) { (Discorb::Gateway::ReactionRemoveEmojiEvent event) -> boolish } -> Async::Task[Discorb::Gateway::ReactionRemoveEmojiEvent]
+           | (:role_create event, ?Numeric? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
+           | (:role_update event, ?Numeric? timeout) { (Discorb::Role before, Discorb::Role after) -> boolish } -> Async::Task[[Discorb::Role, Discorb::Role]]
+           | (:role_remove event, ?Numeric? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
+           | (:member_add event, ?Numeric? timeout) { (Discorb::Member member) -> boolish } -> Async::Task[Discorb::Member]
+           | (:member_update event, ?Numeric? timeout) { (Discorb::Member before, Discorb::Member after) -> boolish } -> Async::Task[[Discorb::Member, Discorb::Member]]
+           | (:member_remove event, ?Numeric? timeout) { (Discorb::Member member) -> boolish } -> Async::Task[Discorb::Member]
+           | (:role_create event, ?Numeric? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
+           | (:role_update event, ?Numeric? timeout) { (Discorb::Role before, Discorb::Role after) -> boolish } -> Async::Task[[Discorb::Role, Discorb::Role]]
+           | (:role_remove event, ?Numeric? timeout) { (Discorb::Role role) -> boolish } -> Async::Task[Discorb::Role]
+           | (:invite_create event, ?Numeric? timeout) { (Discorb::Invite invite) -> boolish } -> Async::Task[Discorb::Invite]
+           | (:invite_delete event, ?Numeric? timeout) { (Discorb::Invite invite) -> boolish } -> Async::Task[Discorb::Invite]
+           | (:interaction_create event, ?Numeric? timeout) { (Discorb::Interaction interaction) -> boolish } -> Async::Task[Discorb::Interaction]
+           | (:application_command event, ?Numeric? timeout) { (Discorb::CommandInteraction interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction]
+           | (:slash_command event, ?Numeric? timeout) { (Discorb::CommandInteraction::ChatInputCommand interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction::ChatInputCommand]
+           | (:message_command event, ?Numeric? timeout) { (Discorb::CommandInteraction::MessageMenuCommand interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction::MessageMenuCommand]
+           | (:user_command event, ?Numeric? timeout) { (Discorb::CommandInteraction::UserMenuCommand interaction) -> boolish } -> Async::Task[Discorb::CommandInteraction::UserMenuCommand]
+           | (:button_click event, ?Numeric? timeout) { (Discorb::MessageComponentInteraction::Button interaction) -> boolish } -> Async::Task[Discorb::MessageComponentInteraction::Button]
+           | (:select_menu_select event, ?Numeric? timeout) { (Discorb::MessageComponentInteraction::SelectMenu interaction) -> boolish } -> Async::Task[Discorb::MessageComponentInteraction::SelectMenu]
+           | (:form_submit event, ?Numeric? timeout) { (Discorb::ModalInteraction interaction) -> boolish } -> Async::Task[Discorb::ModalInteraction]
+           | (:scheduled_event_create event, ?Numeric? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
+           | (:scheduled_event_cancel event, ?Numeric? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
+           | (:scheduled_event_edit event, ?Numeric? timeout) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> boolish } -> Async::Task[[Discorb::ScheduledEvent, Discorb::ScheduledEvent]]
+           | (:scheduled_event_start event, ?Numeric? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
+           | (:scheduled_event_end event, ?Numeric? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
+           | (:guild_create event, ?Numeric? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
+           | (:guild_delete event, ?Numeric? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
+           | (:thread_create event, ?Numeric? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
+           | (:scheduled_event_update event, ?Numeric? timeout) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> boolish } -> Async::Task[[Discorb::ScheduledEvent, Discorb::ScheduledEvent]]
+           | (:voice_channel_connect event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:voice_channel_disconnect event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:voice_channel_move event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:voice_channel_update event, ?Numeric? timeout) { () -> boolish } -> Async::Task[void]
+           | (:voice_mute_disable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_mute_enable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_mute_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:voice_server_mute_enable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_server_mute_disable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_server_mute_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:voice_self_mute_enable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_self_mute_disable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_self_mute_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:voice_deaf_enable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_deaf_disable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_deaf_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:voice_server_deaf_enable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_server_deaf_disable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_server_deaf_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:voice_self_deaf_enable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_self_deaf_disable event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_self_deaf_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:voice_stream_start event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_stream_end event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_stream_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:voice_video_start event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_video_end event, ?Numeric? timeout) { (Discorb::VoiceState state) -> boolish } -> Async::Task[Discorb::VoiceState]
+           | (:voice_video_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
+           | (:stage_instance_create event, ?Numeric? timeout) { (Discorb::StageInstance instance) -> boolish } -> Async::Task[Discorb::StageInstance]
+           | (:stage_instance_delete event, ?Numeric? timeout) { (Discorb::StageInstance instance) -> boolish } -> Async::Task[Discorb::StageInstance]
+           | (:stage_instance_update event, ?Numeric? timeout) { (Discorb::StageInstance before, Discorb::StageInstance after) -> boolish } -> Async::Task[[Discorb::StageInstance, Discorb::StageInstance]]
+           | (:voice_state_update event, ?Numeric? timeout) { (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
     # endmarker: event_lock
-            | (Symbol event, ?Integer? timeout) { (*untyped) -> boolish } -> Async::Task[untyped]
+            | (Symbol event, ?Numeric? timeout) { (*untyped) -> boolish } -> Async::Task[untyped]
 
     def inspect: () -> String
 
@@ -550,12 +550,12 @@ module Discorb
     # @return [Discorb::HTTP] The http client.
     attr_reader http: Discorb::HTTP
 
-    # @return [Integer] The heartbeat interval.
-    attr_reader heartbeat_interval: Integer
+    # @return [Numeric] The heartbeat interval.
+    attr_reader heartbeat_interval: Numeric
 
-    # @return [Integer] The API version of the Discord gateway.
+    # @return [Numeric] The API version of the Discord gateway.
     # @return [nil] If not connected to the gateway.
-    attr_reader api_version: Integer?
+    attr_reader api_version: Numeric?
 
     # @return [String] The token of the client.
     attr_reader token: String
@@ -595,8 +595,8 @@ module Discorb
     # @return [Hash{String => Discorb::Extension}] The loaded extensions.
     attr_reader extensions: ::Hash[String, Discorb::Extension]
 
-    # @return [Hash{Integer => Discorb::Shard}] The shards of the client.
-    attr_reader shards: ::Hash[Integer, Discorb::Shard]
+    # @return [Hash{Numeric => Discorb::Shard}] The shards of the client.
+    attr_reader shards: ::Hash[Numeric, Discorb::Shard]
 
     # @private
     # @return [Hash{Discorb::Snowflake => Discorb::ApplicationCommand::Command}] The commands on the top level.
@@ -614,9 +614,9 @@ module Discorb
     # @return [nil] If client has no shard.
     attr_reader shard: Discorb::Shard?
 
-    # @return [Integer] The current shard ID. This is implemented with Thread variables.
+    # @return [Numeric] The current shard ID. This is implemented with Thread variables.
     # @return [nil] If client has no shard.
-    attr_reader shard_id: Integer?
+    attr_reader shard_id: Numeric?
 
     # @return [Logger] The logger.
     attr_reader logger: Logger

@@ -16,8 +16,8 @@ module Discorb
     # Converts the activity to a hash.
     #
     # @return [Hash] A hash representation of the activity.
-    def to_hash: () -> ::Hash[untyped, untyped]
+    def to_hash: () -> Discorb::json
 
-    def inspect: () -> untyped
+    def inspect: () -> String
   end
 end

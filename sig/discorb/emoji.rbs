@@ -7,6 +7,6 @@ module Discorb
 
     def ==: (untyped other) -> untyped
 
-    def inspect: () -> untyped
+    def inspect: () -> String
   end
 end

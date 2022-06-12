@@ -90,7 +90,7 @@ module Discorb
         # @return [Async::Task<void>] The task.
         def delete!: () -> Async::Task[void]
 
-        def inspect: () -> untyped
+        def inspect: () -> String
       end
     end
 

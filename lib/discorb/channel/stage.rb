@@ -5,9 +5,9 @@ module Discorb
   # Represents a stage channel.
   #
   class StageChannel < GuildChannel
-    # @return [Integer] The bitrate of the voice channel.
+    # @return [Numeric] The bitrate of the voice channel.
     attr_reader :bitrate
-    # @return [Integer] The user limit of the voice channel.
+    # @return [Numeric] The user limit of the voice channel.
     attr_reader :user_limit
     #
     # @private
@@ -41,8 +41,8 @@ module Discorb
     # @macro edit
     #
     # @param [String] name The name of the stage channel.
-    # @param [Integer] position The position of the stage channel.
-    # @param [Integer] bitrate The bitrate of the stage channel.
+    # @param [Numeric] position The position of the stage channel.
+    # @param [Numeric] bitrate The bitrate of the stage channel.
     # @param [Symbol] rtc_region The region of the stage channel.
     # @param [String] reason The reason of editing the stage channel.
     #

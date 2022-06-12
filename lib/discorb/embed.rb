@@ -35,7 +35,7 @@ module Discorb
     #
     # @param [String] title The title of embed.
     # @param [String] description The description of embed.
-    # @param [Discorb::Color, Integer] color The color of embed.
+    # @param [Discorb::Color, Numeric] color The color of embed.
     # @param [String] url The url of embed.
     # @param [Time] timestamp The timestamp of embed.
     # @param [Discorb::Embed::Author] author The author field of embed.
@@ -266,10 +266,10 @@ module Discorb
       # @return [String] The proxy url of image.
       # @return [nil] The Image object wasn't created from gateway.
       attr_reader :proxy_url
-      # @return [Integer] The height of image.
+      # @return [Numeric] The height of image.
       # @return [nil] The Image object wasn't created from gateway.
       attr_reader :height
-      # @return [Integer] The width of image.
+      # @return [Numeric] The width of image.
       # @return [nil] The Image object wasn't created from gateway.
       attr_reader :width
 
@@ -311,10 +311,10 @@ module Discorb
       # @return [String] The proxy url of thumbnail.
       # @return [nil] The Thumbnail object wasn't created from gateway.
       attr_reader :proxy_url
-      # @return [Integer] The height of thumbnail.
+      # @return [Numeric] The height of thumbnail.
       # @return [nil] The Thumbnail object wasn't created from gateway.
       attr_reader :height
-      # @return [Integer] The width of thumbnail.
+      # @return [Numeric] The width of thumbnail.
       # @return [nil] The Thumbnail object wasn't created from gateway.
       attr_reader :width
 
@@ -355,9 +355,9 @@ module Discorb
       attr_reader :url
       # @return [String] The proxy url of video.
       attr_reader :proxy_url
-      # @return [Integer] The height of video.
+      # @return [Numeric] The height of video.
       attr_reader :height
-      # @return [Integer] The width of video.
+      # @return [Numeric] The width of video.
       attr_reader :width
 
       #

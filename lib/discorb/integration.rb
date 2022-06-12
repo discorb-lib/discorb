@@ -20,13 +20,13 @@ module Discorb
     alias enable_emoticons? enable_emoticons
     # @return [:remove_role, :kick] The behavior of the integration when it expires.
     attr_reader :expire_behavior
-    # @return [Integer] The grace period of the integration.
+    # @return [Numeric] The grace period of the integration.
     attr_reader :expire_grace_period
     # @return [Discorb::User] The user for the integration.
     attr_reader :user
     # @return [Discorb::Integration::Account] The account for the integration.
     attr_reader :account
-    # @return [Integer] The number of subscribers for the integration.
+    # @return [Numeric] The number of subscribers for the integration.
     attr_reader :subscriber_count
     # @return [Boolean] Whether the integration is revoked.
     attr_reader :revoked
@@ -39,7 +39,7 @@ module Discorb
     #   @return [Discorb::Guild] The guild this integration is in.
 
     # @private
-    # @return [{Integer => String}] The map of the expire behavior.
+    # @return [{Numeric => String}] The map of the expire behavior.
     EXPIRE_BEHAVIOR = {
       0 => :remove_role,
       1 => :kick,

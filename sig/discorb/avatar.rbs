@@ -11,14 +11,14 @@ module Discorb
     # Returns the URL of the avatar.
     #
     # @param [String] image_format The image format. This is compatible with {Asset#url}, will be ignored.
-    # @param [Integer] size The size of the image. This is compatible with {Asset#url}, will be ignored.
+    # @param [Numeric] size The size of the image. This is compatible with {Asset#url}, will be ignored.
     #
     # @return [String] URL of the avatar.
     #
     # rubocop: disable Lint/UnusedMethodArgument
-    def url: (?image_format: String?, ?size: Integer) -> String
+    def url: (?image_format: String?, ?size: Numeric) -> String
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     # @return [false] For compatibility with {Asset}, always `false`.
     attr_reader animated?: bool

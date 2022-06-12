@@ -264,7 +264,7 @@ module Discorb
     # Ban the member.
     # @async
     #
-    # @param [Integer] delete_message_days The number of days to delete messages.
+    # @param [Numeric] delete_message_days The number of days to delete messages.
     # @param [String] reason The reason for the action.
     #
     # @return [Async::Task<Discorb::Guild::Ban>] The ban.

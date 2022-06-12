@@ -9,7 +9,7 @@ module Discorb
     # @return [Hash{Symbol => Boolean}] the values of the flag.
     attr_reader :values
     alias to_h values
-    # @return [Integer] the value of the flag.
+    # @return [Numeric] the value of the flag.
     attr_reader :value
 
     @bits = {}
@@ -17,11 +17,11 @@ module Discorb
     # Initialize the flag.
     # @note This is usually called by the subclass.
     #
-    # @param [Integer] value The value of the flag.
+    # @param [Numeric] value The value of the flag.
     def initialize(value)
       @value = value
       @values = {}
-      self.class.bits.each_with_index do |(bn, bv), _i|
+      self.class.bits.each do |bn, bv|
         @values[bn] = value & (1 << bv) != 0
       end
     end
@@ -105,13 +105,13 @@ module Discorb
     end
 
     class << self
-      # @return [Hash{Integer => Symbol}] the bits of the flag.
+      # @return [Hash{Numeric => Symbol}] the bits of the flag.
       attr_reader :bits
 
       #
       # Max value of the flag.
       #
-      # @return [Integer] the max value of the flag.
+      # @return [Numeric] the max value of the flag.
       #
       def max_value
         2 ** @bits.values.max - 1

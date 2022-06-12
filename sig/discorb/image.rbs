@@ -15,6 +15,6 @@ module Discorb
     # @return [String] The image as a Discord style.
     def to_s: () -> String
 
-    def inspect: () -> untyped
+    def inspect: () -> String
   end
 end

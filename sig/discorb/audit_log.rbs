@@ -7,16 +7,16 @@ module Discorb
     # @private
     def initialize: (untyped client, untyped data, untyped guild) -> void
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Gets an entry from entries.
     #
-    # @param [Integer] index The index of the entry.
+    # @param [Numeric] index The index of the entry.
     #
     # @return [Discorb::AuditLog::Entry] The entry.
     # @return [nil] If the index is out of range.
-    def []: (Integer index) -> Discorb::AuditLog::Entry
+    def []: (Numeric index) -> Discorb::AuditLog::Entry
 
     # @return [Array<Discorb::Webhook>] The webhooks in this audit log.
     attr_reader webhooks: ::Array[Discorb::Webhook]
@@ -50,7 +50,7 @@ module Discorb
       # @return [nil] The change with the given key does not exist.
       def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
 
-      def inspect: () -> untyped
+      def inspect: () -> String
 
       # @return [Discorb::Snowflake] The ID of the entry.
       attr_reader id: Discorb::Snowflake
@@ -140,7 +140,7 @@ module Discorb
 
         #
         # Formats the changes into a string.
-        def inspect: () -> untyped
+        def inspect: () -> String
 
         #
         # Get keys of changes.
@@ -205,7 +205,7 @@ module Discorb
       # @private
       def initialize: (untyped data) -> void
 
-      def inspect: () -> untyped
+      def inspect: () -> String
 
       # @return [Discorb::Snowflake] The ID of the integration.
       attr_reader id: Discorb::Snowflake

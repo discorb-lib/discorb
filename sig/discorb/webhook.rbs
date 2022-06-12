@@ -11,7 +11,7 @@ module Discorb
     # @param [Hash] data The data of the webhook.
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     #
     # Posts a message to the webhook.
@@ -195,7 +195,7 @@ module Discorb
         # @param [Hash] data The data of the guild.
         def initialize: (Discorb::json data) -> void
 
-        def inspect: () -> untyped
+        def inspect: () -> String
 
         # @return [Discorb::Snowflake] The ID of the guild.
         attr_reader id: Discorb::Snowflake
@@ -217,7 +217,7 @@ module Discorb
         # @param [Hash] data The data of the channel.
         def initialize: (Discorb::json data) -> void
 
-        def inspect: () -> untyped
+        def inspect: () -> String
 
         # @return [Discorb::Snowflake] The ID of the channel.
         attr_reader id: Discorb::Snowflake
@@ -285,7 +285,7 @@ module Discorb
         # @return [String] Formatted author.
         def to_s: () -> String
 
-        def inspect: () -> untyped
+        def inspect: () -> String
 
         # @return [Boolean] Whether the author is a bot.
         # @note This will be always `true`.

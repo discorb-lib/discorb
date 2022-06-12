@@ -6,7 +6,7 @@ module Discorb
   # @abstract
   #
   class GuildChannel < Channel
-    # @return [Integer] The position of the channel as integer.
+    # @return [Numeric] The position of the channel as integer.
     attr_reader :position
     # @return [Hash{Discorb::Role, Discorb::Member => PermissionOverwrite}] The permission overwrites of the channel.
     attr_reader :permission_overwrites
@@ -105,7 +105,7 @@ module Discorb
     # Moves the channel to another position.
     # @async
     #
-    # @param [Integer] position The position to move the channel.
+    # @param [Numeric] position The position to move the channel.
     # @param [Boolean] lock_permissions Whether to lock the permissions of the channel.
     # @param [Discorb::CategoryChannel] parent The parent of channel.
     # @param [String] reason The reason of moving the channel.
@@ -200,8 +200,8 @@ module Discorb
     # Create an invite in the channel.
     # @async
     #
-    # @param [Integer] max_age The max age of the invite.
-    # @param [Integer] max_uses The max uses of the invite.
+    # @param [Numeric] max_age The max age of the invite.
+    # @param [Numeric] max_uses The max uses of the invite.
     # @param [Boolean] temporary Whether the invite is temporary.
     # @param [Boolean] unique Whether the invite is unique.
     #   @note if it's `false` it may return existing invite.

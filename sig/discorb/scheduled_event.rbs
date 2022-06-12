@@ -65,7 +65,7 @@ module Discorb
     #
     # @note You can fetch all of members by not specifying a parameter.
     #
-    # @param [Integer] limit The maximum number of users to fetch. Defaults to `100`.
+    # @param [Numeric] limit The maximum number of users to fetch. Defaults to `100`.
     # @param [#to_s] after The ID of the user to start fetching from. Defaults to `nil`.
     # @param [#to_s] before The ID of the user to stop fetching at. Defaults to `nil`.
     # @param [Boolean] with_member Whether to include the member object of the event. Defaults to `false`.
@@ -73,7 +73,7 @@ module Discorb
     #
     # @return [Async::Task<Array<Discorb::Member>>] The event users.
     def fetch_users: (
-                       ?Integer? limit,
+                       ?Numeric? limit,
                        ?before: untyped,
                        ?after: untyped,
                        ?with_member: bool
@@ -109,8 +109,8 @@ module Discorb
     # @return [Discorb::ScheduledEvent::Metadata] The metadata of the event.
     attr_reader metadata: Discorb::ScheduledEvent::Metadata
 
-    # @return [Integer] The user count of the event.
-    attr_reader user_count: Integer
+    # @return [Numeric] The user count of the event.
+    attr_reader user_count: Numeric
 
     # @!attribute [r] guild
     #   @return [Discorb::Guild, nil] The guild of the event.
@@ -139,7 +139,7 @@ module Discorb
       # @!visibility private
       def initialize: (untyped data) -> void
 
-      def inspect: () -> untyped
+      def inspect: () -> String
 
       # @return [String, nil] The location of the event. Only present if the event is a external event.
       attr_reader location: String?

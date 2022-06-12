@@ -5,9 +5,9 @@ module Discorb
   # Represents a voice channel.
   #
   class VoiceChannel < GuildChannel
-    # @return [Integer] The bitrate of the voice channel.
+    # @return [Numeric] The bitrate of the voice channel.
     attr_reader :bitrate
-    # @return [Integer] The user limit of the voice channel.
+    # @return [Numeric] The user limit of the voice channel.
     # @return [nil] If the user limit is not set.
     attr_reader :user_limit
 
@@ -26,9 +26,9 @@ module Discorb
     # @macro edit
     #
     # @param [String] name The name of the voice channel.
-    # @param [Integer] position The position of the voice channel.
-    # @param [Integer] bitrate The bitrate of the voice channel.
-    # @param [Integer] user_limit The user limit of the voice channel.
+    # @param [Numeric] position The position of the voice channel.
+    # @param [Numeric] bitrate The bitrate of the voice channel.
+    # @param [Numeric] user_limit The user limit of the voice channel.
     # @param [Symbol] rtc_region The region of the voice channel.
     # @param [String] reason The reason of editing the voice channel.
     #
