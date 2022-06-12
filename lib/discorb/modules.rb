@@ -169,7 +169,7 @@ module Discorb
     # Fetch a message history.
     # @async
     #
-    # @param [Numeric] limit The number of messages to fetch.
+    # @param [Integer] limit The number of messages to fetch.
     # @param [Discorb::Snowflake] before The ID of the message to fetch before.
     # @param [Discorb::Snowflake] after The ID of the message to fetch after.
     # @param [Discorb::Snowflake] around The ID of the message to fetch around.

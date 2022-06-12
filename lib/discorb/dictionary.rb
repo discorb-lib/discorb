@@ -5,14 +5,14 @@ module Discorb
   # Extended hash class. This is used for storing pair of ID and object.
   #
   class Dictionary
-    # @return [Numeric] The maximum number of items in the dictionary.
+    # @return [Integer] The maximum number of items in the dictionary.
     attr_accessor :limit
 
     #
     # Initialize a new Dictionary.
     #
     # @param [Hash] hash A hash of items to add to the dictionary.
-    # @param [Numeric] limit The maximum number of items in the dictionary.
+    # @param [Integer] limit The maximum number of items in the dictionary.
     # @param [false, Proc] sort Whether to sort the items in the dictionary.
     #
     def initialize(hash = {}, limit: nil, sort: false)
@@ -65,14 +65,14 @@ module Discorb
     # @return [nil] if the item was not found.
     #
     # @overload get(index)
-    #   @param [Numeric] index The index of the item.
+    #   @param [Integer] index The index of the item.
     #
     #   @return [Object] The item.
     #   @return [nil] if the item is not found.
     #
     def get(id)
       res = @cache[id.to_s]
-      if res.nil? && id.is_a?(Numeric) && id < @cache.length
+      if res.nil? && id.is_a?(Integer) && id < @cache.length
         @cache.values[id]
       else
         res

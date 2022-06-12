@@ -87,7 +87,7 @@ module Discorb
       attr_reader :flags
 
       # @private
-      # @return [{Numeric => Symbol}] The mapping of activity types.
+      # @return [{Integer => Symbol}] The mapping of activity types.
       ACTIVITY_TYPES = {
         0 => :game,
         1 => :streaming,
@@ -175,9 +175,9 @@ module Discorb
         attr_reader :id
 
         # @!attribute [r] current_size
-        #   @return [Numeric] The current size of the party.
+        #   @return [Integer] The current size of the party.
         # @!attribute [r] max_size
-        #   @return [Numeric] The max size of the party.
+        #   @return [Integer] The max size of the party.
 
         #
         # Initialize the party.

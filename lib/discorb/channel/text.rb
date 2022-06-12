@@ -11,13 +11,13 @@ module Discorb
     attr_reader :nsfw
     # @return [Discorb::Snowflake] The id of the last message.
     attr_reader :last_message_id
-    # @return [Numeric] The rate limit per user (Slowmode) in the channel.
+    # @return [Integer] The rate limit per user (Slowmode) in the channel.
     attr_reader :rate_limit_per_user
     alias slowmode rate_limit_per_user
     # @return [Time] The time when the last pinned message was pinned.
     attr_reader :last_pin_timestamp
     alias last_pinned_at last_pin_timestamp
-    # @return [Numeric] The default value of duration of auto archive.
+    # @return [Integer] The default value of duration of auto archive.
     attr_reader :default_auto_archive_duration
 
     include Messageable
@@ -36,16 +36,16 @@ module Discorb
     # @macro edit
     #
     # @param [String] name The name of the channel.
-    # @param [Numeric] position The position of the channel.
+    # @param [Integer] position The position of the channel.
     # @param [Discorb::CategoryChannel, nil] category The parent of channel. Specify `nil` to remove the parent.
     # @param [Discorb::CategoryChannel, nil] parent Alias of `category`.
     # @param [String] topic The topic of the channel.
     # @param [Boolean] nsfw Whether the channel is nsfw.
     # @param [Boolean] announce Whether the channel is announce channel.
-    # @param [Numeric] rate_limit_per_user The rate limit per user (Slowmode) in the channel.
-    # @param [Numeric] slowmode Alias of `rate_limit_per_user`.
-    # @param [Numeric] default_auto_archive_duration The default auto archive duration of the channel.
-    # @param [Numeric] archive_in Alias of `default_auto_archive_duration`.
+    # @param [Integer] rate_limit_per_user The rate limit per user (Slowmode) in the channel.
+    # @param [Integer] slowmode Alias of `rate_limit_per_user`.
+    # @param [Integer] default_auto_archive_duration The default auto archive duration of the channel.
+    # @param [Integer] archive_in Alias of `default_auto_archive_duration`.
     # @param [String] reason The reason of editing the channel.
     #
     # @return [Async::Task<self>] The edited channel.
@@ -183,8 +183,8 @@ module Discorb
     # @param [Discorb::Message] message The message to start the thread.
     # @param [:hour, :day, :three_days, :week] auto_archive_duration The duration of auto-archiving.
     # @param [Boolean] public Whether the thread is public.
-    # @param [Numeric] rate_limit_per_user The rate limit per user.
-    # @param [Numeric] slowmode Alias of `rate_limit_per_user`.
+    # @param [Integer] rate_limit_per_user The rate limit per user.
+    # @param [Integer] slowmode Alias of `rate_limit_per_user`.
     # @param [String] reason The reason of starting the thread.
     #
     # @return [Async::Task<Discorb::ThreadChannel>] The started thread.
@@ -260,7 +260,7 @@ module Discorb
     # Fetch joined archived private threads in the channel.
     # @async
     #
-    # @param [Numeric] limit The limit of threads to fetch.
+    # @param [Integer] limit The limit of threads to fetch.
     # @param [Time] before The time before which the threads are created.
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The joined archived private threads in the channel.

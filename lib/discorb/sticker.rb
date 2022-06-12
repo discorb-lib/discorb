@@ -19,7 +19,7 @@ module Discorb
     attr_reader :description
     # @return [Discorb::Snowflake] The ID of the sticker pack.
     attr_reader :pack_id
-    # @return [Numeric] The sort value of the sticker.
+    # @return [Integer] The sort value of the sticker.
     attr_reader :sort_value
     # @return [Discorb::Snowflake] The ID of the guild the sticker is in.
     attr_reader :guild_id
@@ -30,14 +30,14 @@ module Discorb
     alias available? available
 
     # @private
-    # @return [{Numeric => Symbol}] The mapping of sticker types.
+    # @return [{Integer => Symbol}] The mapping of sticker types.
     STICKER_TYPE = {
       1 => :official,
       2 => :guild,
     }.freeze
 
     # @private
-    # @return [{Numeric => Symbol}] The mapping of sticker format.
+    # @return [{Integer => Symbol}] The mapping of sticker format.
     STICKER_FORMAT = {
       1 => :png,
       2 => :apng,

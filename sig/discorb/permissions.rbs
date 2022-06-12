@@ -51,17 +51,17 @@ module Discorb
     # Initializes a new PermissionOverwrite.
     # @private
     #
-    # @param allow [Numeric] The allowed permissions.
-    # @param deny [Numeric] The denied permissions.
-    def initialize: (Numeric allow, Numeric deny) -> void
+    # @param allow [Integer] The allowed permissions.
+    # @param deny [Integer] The denied permissions.
+    def initialize: (Integer allow, Integer deny) -> void
 
     def allow: () -> Discorb::Permission
 
     def deny: () -> Discorb::Permission
 
-    def allow_value: () -> Numeric
+    def allow_value: () -> Integer
 
-    def deny_value: () -> Numeric
+    def deny_value: () -> Integer
 
     def inspect: () -> String
 

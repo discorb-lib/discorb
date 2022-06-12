@@ -44,8 +44,8 @@ module Discorb
     # @return [String] The description of the template.
     attr_reader description: String
 
-    # @return [Numeric] The number of times this template has been used.
-    attr_reader usage_count: Numeric
+    # @return [Integer] The number of times this template has been used.
+    attr_reader usage_count: Integer
 
     # @return [Discorb::User] The user who created this template.
     attr_reader creator: Discorb::User
@@ -83,8 +83,8 @@ module Discorb
       # @return [String] The name of the guild.
       attr_reader name: String
 
-      # @return [Numeric] The AFK timeout of the guild.
-      attr_reader afk_timeout: Numeric
+      # @return [Integer] The AFK timeout of the guild.
+      attr_reader afk_timeout: Integer
 
       # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
       attr_reader roles: Discorb::Dictionary[Discorb::Snowflake, Discorb::Role]
@@ -148,23 +148,23 @@ module Discorb
         # @return [String] The name of the channel.
         attr_reader name: String
 
-        # @return [Numeric] The position of the channel.
-        attr_reader position: Numeric
+        # @return [Integer] The position of the channel.
+        attr_reader position: Integer
 
         # @return [String] The type of the channel.
         attr_reader topic: String
 
-        # @return [Numeric] The bitrate of the channel.
-        attr_reader bitrate: Numeric
+        # @return [Integer] The bitrate of the channel.
+        attr_reader bitrate: Integer
 
-        # @return [Numeric] The user limit of the channel.
-        attr_reader user_limit: Numeric
+        # @return [Integer] The user limit of the channel.
+        attr_reader user_limit: Integer
 
         # @return [Boolean] Whether the channel is nsfw.
         attr_reader nsfw: bool
 
-        # @return [Numeric] The rate limit of the channel.
-        attr_reader rate_limit_per_user: Numeric
+        # @return [Integer] The rate limit of the channel.
+        attr_reader rate_limit_per_user: Integer
 
         # @return [Class] The class of the channel.
         attr_reader type: Class

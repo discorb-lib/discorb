@@ -4,7 +4,7 @@ module Discorb
   # Represents intents.
   class Intents
     # @private
-    # @return [{Symbol => Numeric}] The mapping of intent names to bit values.
+    # @return [{Symbol => Integer}] The mapping of intent names to bit values.
     INTENT_BITS = {
       guilds: 1 << 0,
       members: 1 << 1,
@@ -108,7 +108,7 @@ module Discorb
     end
 
     # Returns value of the intent.
-    # @return [Numeric] The value of the intent.
+    # @return [Integer] The value of the intent.
     def value
       res = 0
       INTENT_BITS.each do |intent, bit|
@@ -127,7 +127,7 @@ module Discorb
 
     class << self
       # Create new intent object from raw value.
-      # @param value [Numeric] The value of the intent.
+      # @param value [Integer] The value of the intent.
       def from_value(value)
         raw_value = {}
         INTENT_BITS.each do |intent, bit|

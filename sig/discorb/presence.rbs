@@ -124,11 +124,11 @@ module Discorb
         # @return [String] The id of the party.
         attr_reader id: String
 
-        # @return [Numeric] The current size of the party.
-        attr_reader current_size: Numeric
+        # @return [Integer] The current size of the party.
+        attr_reader current_size: Integer
 
-        # @return [Numeric] The max size of the party.
-        attr_reader max_size: Numeric
+        # @return [Integer] The max size of the party.
+        attr_reader max_size: Integer
       end
 
       #

@@ -7,7 +7,7 @@ module Discorb
     #
     # @param [String] title The title of embed.
     # @param [String] description The description of embed.
-    # @param [Discorb::Color, Numeric] color The color of embed.
+    # @param [Discorb::Color, Integer] color The color of embed.
     # @param [String] url The url of embed.
     # @param [Time] timestamp The timestamp of embed.
     # @param [Discorb::Embed::Author] author The author field of embed.
@@ -18,7 +18,7 @@ module Discorb
     def initialize: (
                       ?String? title,
                       ?String? description,
-                      ?color: (Discorb::Color | Numeric)?,
+                      ?color: (Discorb::Color | Integer)?,
                       ?url: String?,
                       ?timestamp: Time?,
                       ?author: Discorb::Embed::Author?,
@@ -194,13 +194,13 @@ module Discorb
       # @return [nil] The Image object wasn't created from gateway.
       attr_reader proxy_url: String?
 
-      # @return [Numeric] The height of image.
+      # @return [Integer] The height of image.
       # @return [nil] The Image object wasn't created from gateway.
-      attr_reader height: Numeric?
+      attr_reader height: Integer?
 
-      # @return [Numeric] The width of image.
+      # @return [Integer] The width of image.
       # @return [nil] The Image object wasn't created from gateway.
-      attr_reader width: Numeric?
+      attr_reader width: Integer?
     end
 
     #
@@ -227,13 +227,13 @@ module Discorb
       # @return [nil] The Thumbnail object wasn't created from gateway.
       attr_reader proxy_url: String?
 
-      # @return [Numeric] The height of thumbnail.
+      # @return [Integer] The height of thumbnail.
       # @return [nil] The Thumbnail object wasn't created from gateway.
-      attr_reader height: Numeric?
+      attr_reader height: Integer?
 
-      # @return [Numeric] The width of thumbnail.
+      # @return [Integer] The width of thumbnail.
       # @return [nil] The Thumbnail object wasn't created from gateway.
-      attr_reader width: Numeric?
+      attr_reader width: Integer?
     end
 
     #
@@ -252,11 +252,11 @@ module Discorb
       # @return [String] The proxy url of video.
       attr_reader proxy_url: String
 
-      # @return [Numeric] The height of video.
-      attr_reader height: Numeric
+      # @return [Integer] The height of video.
+      attr_reader height: Integer
 
-      # @return [Numeric] The width of video.
-      attr_reader width: Numeric
+      # @return [Integer] The width of video.
+      attr_reader width: Integer
     end
 
     #

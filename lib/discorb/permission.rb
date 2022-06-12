@@ -94,9 +94,9 @@ module Discorb
     # @!attribute [r] deny
     #   @return [Discorb::Permission] The denied permissions.
     # @!attribute [r] allow_value
-    #   @return [Numeric] The allowed permissions as an integer.
+    #   @return [Integer] The allowed permissions as an integer.
     # @!attribute [r] deny_value
-    #   @return [Numeric] The denied permissions as an integer.
+    #   @return [Integer] The denied permissions as an integer.
 
     @raw_bits = {
       create_instant_invite: 0,
@@ -142,8 +142,8 @@ module Discorb
     # Initializes a new PermissionOverwrite.
     # @private
     #
-    # @param allow [Numeric] The allowed permissions.
-    # @param deny [Numeric] The denied permissions.
+    # @param allow [Integer] The allowed permissions.
+    # @param deny [Integer] The denied permissions.
     #
     def initialize(allow, deny)
       @allow = allow

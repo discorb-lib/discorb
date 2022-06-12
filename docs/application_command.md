@@ -76,7 +76,7 @@ In `options`, hash should be like this:
 | `:required`              | `Boolean(true\|false)`                   | Whether the argument is required. `optional` will be used if not specified.           |
 | `:optional`              | `Boolean(true\|false)`                   | Whether the argument is optional. `required` will be used if not specified.           |
 | `:type`                  | `Object`                                 | Type of the option.                                                                   |
-| `:choices`               | `Hash{String => String, Numeric, Float}` | Choice of the option.                                                                 |
+| `:choices`               | `Hash{String => String, Integer, Float}` | Choice of the option.                                                                 |
 | `:choices_localizations` | `Hash{String => Hash{Symbol => String}}` | Localization of the choice. Key must be the name of a choice. (See below for example) |
 | `:default`               | `Object`                                 | Default value of the option.                                                          |
 | `:channel_types`         | `Array<Class<Discorb::Channel>>`         | Type of the channel option.                                                           |
@@ -113,7 +113,7 @@ In `type`, You must use one of the following:
 | Name       | Description       | Aliases   |
 | ---------- | ----------------- | --------- |
 | `:string`  | String argument.  | `:str`    |
-| `:integer` | Numeric argument. | `:int`    |
+| `:integer` | Integer argument. | `:int`    |
 | `:float`   | Float argument.   | None      |
 | `:boolean` | Boolean argument. | `:bool`   |
 | `:user`    | User argument.    | `:member` |

@@ -7,14 +7,14 @@ module Discorb
     # @private
     #
     # @param [Discorb::Client] client The client.
-    # @param [Numeric] id The ID of the shard.
-    # @param [Numeric] count The number of shards.
-    # @param [Numeric] index The index of the shard.
+    # @param [Integer] id The ID of the shard.
+    # @param [Integer] count The number of shards.
+    # @param [Integer] index The index of the shard.
     def initialize: (
                       Discorb::Client client,
-                      Numeric id,
-                      Numeric count,
-                      Numeric index
+                      Integer id,
+                      Integer count,
+                      Integer index
                     ) -> void
 
     #
@@ -31,8 +31,8 @@ module Discorb
 
     def inspect: () -> String
 
-    # @return [Numeric] The ID of the shard.
-    attr_reader id: Numeric
+    # @return [Integer] The ID of the shard.
+    attr_reader id: Integer
 
     # @return [Thread] The thread of the shard.
     attr_reader thread: Thread
@@ -41,8 +41,8 @@ module Discorb
     attr_reader logger: Logger
 
     # @private
-    # @return [Numeric] The internal index of the shard.
-    attr_reader index: Numeric
+    # @return [Integer] The internal index of the shard.
+    attr_reader index: Integer
 
     # @private
     attr_accessor status: untyped

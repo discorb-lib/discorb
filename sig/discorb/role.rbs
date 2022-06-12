@@ -20,8 +20,8 @@ module Discorb
     #
     # @param [Discorb::Role] other The role to compare to.
     #
-    # @return [Numeric] -1 if the other role is higher, 0 if they are equal, 1 if the other role is lower.
-    def <=>: (Discorb::Role other) -> Numeric?
+    # @return [Integer] -1 if the other role is higher, 0 if they are equal, 1 if the other role is lower.
+    def <=>: (Discorb::Role other) -> Integer?
 
     #
     # Formats the role as a string.
@@ -39,11 +39,11 @@ module Discorb
     # Moves the role to a new position.
     # @async
     #
-    # @param [Numeric] position The new position.
+    # @param [Integer] position The new position.
     # @param [String] reason The reason for moving the role.
     #
     # @return [Async::Task<void>] The task.
-    def move: (Numeric position, ?reason: String?) -> Async::Task[void]
+    def move: (Integer position, ?reason: String?) -> Async::Task[void]
 
     #
     # Edits the role.
@@ -51,7 +51,7 @@ module Discorb
     # @macro edit
     #
     # @param [String] name The new name of the role.
-    # @param [Numeric] position The new position of the role.
+    # @param [Integer] position The new position of the role.
     # @param [Discorb::Color] color The new color of the role.
     # @param [Boolean] hoist Whether the role should be hoisted.
     # @param [Boolean] mentionable Whether the role should be mentionable.
@@ -61,7 +61,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     def edit: (
                 ?name: String,
-                ?position: Numeric,
+                ?position: Integer,
                 ?color: Discorb::Color,
                 ?hoist: bool,
                 ?mentionable: bool,
@@ -91,8 +91,8 @@ module Discorb
     # @return [Discorb::Permission] The permissions of the role.
     attr_reader permissions: Discorb::Permission
 
-    # @return [Numeric] The position of the role.
-    attr_reader position: Numeric
+    # @return [Integer] The position of the role.
+    attr_reader position: Integer
 
     # @return [Discorb::Guild] The guild this role belongs to.
     attr_reader guild: Discorb::Guild

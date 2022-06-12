@@ -11,7 +11,7 @@ module Discorb
     attr_reader :name
     # @return [String] The description of the template.
     attr_reader :description
-    # @return [Numeric] The number of times this template has been used.
+    # @return [Integer] The number of times this template has been used.
     attr_reader :usage_count
     # @return [Discorb::User] The user who created this template.
     attr_reader :creator
@@ -108,7 +108,7 @@ module Discorb
     class TemplateGuild < DiscordModel
       # @return [String] The name of the guild.
       attr_reader :name
-      # @return [Numeric] The AFK timeout of the guild.
+      # @return [Integer] The AFK timeout of the guild.
       attr_reader :afk_timeout
       # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
       attr_reader :roles
@@ -184,17 +184,17 @@ module Discorb
       class Channel < DiscordModel
         # @return [String] The name of the channel.
         attr_reader :name
-        # @return [Numeric] The position of the channel.
+        # @return [Integer] The position of the channel.
         attr_reader :position
         # @return [String] The type of the channel.
         attr_reader :topic
-        # @return [Numeric] The bitrate of the channel.
+        # @return [Integer] The bitrate of the channel.
         attr_reader :bitrate
-        # @return [Numeric] The user limit of the channel.
+        # @return [Integer] The user limit of the channel.
         attr_reader :user_limit
         # @return [Boolean] Whether the channel is nsfw.
         attr_reader :nsfw
-        # @return [Numeric] The rate limit of the channel.
+        # @return [Integer] The rate limit of the channel.
         attr_reader :rate_limit_per_user
         # @return [Class] The class of the channel.
         attr_reader :type

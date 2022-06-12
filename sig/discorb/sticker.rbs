@@ -34,8 +34,8 @@ module Discorb
     # @return [Discorb::Snowflake] The ID of the sticker pack.
     attr_reader pack_id: Discorb::Snowflake
 
-    # @return [Numeric] The sort value of the sticker.
-    attr_reader sort_value: Numeric
+    # @return [Integer] The sort value of the sticker.
+    attr_reader sort_value: Integer
 
     # @return [Discorb::Snowflake] The ID of the guild the sticker is in.
     attr_reader guild_id: Discorb::Snowflake

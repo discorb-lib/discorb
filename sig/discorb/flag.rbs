@@ -6,8 +6,8 @@ module Discorb
     # Initialize the flag.
     # @note This is usually called by the subclass.
     #
-    # @param [Numeric] value The value of the flag.
-    def initialize: (Numeric value) -> void
+    # @param [Integer] value The value of the flag.
+    def initialize: (Integer value) -> void
 
     #
     # Union of two flags.
@@ -47,27 +47,27 @@ module Discorb
     # @return [Discorb::Flag] The negation of the flag.
     def ~: () -> instance
 
-    def to_i: () -> Numeric
+    def to_i: () -> Integer
 
     def inspect: () -> String
 
     #
     # Max value of the flag.
     #
-    # @return [Numeric] the max value of the flag.
-    def self.max_value: () -> (Numeric | Numeric)
+    # @return [Integer] the max value of the flag.
+    def self.max_value: () -> (Integer | Numeric)
 
     #
     # Initialize a new flag with keys.
     def self.from_keys: (*Symbol keys) -> untyped
 
-    attr_reader self.bits: Hash[Symbol, Numeric]
+    attr_reader self.bits: Hash[Symbol, Integer]
 
     # @return [Hash{Symbol => Boolean}] the values of the flag.
     attr_reader values: ::Hash[Symbol, bool]
 
-    # @return [Numeric] the value of the flag.
-    attr_reader value: Numeric
+    # @return [Integer] the value of the flag.
+    attr_reader value: Integer
   end
 
 end

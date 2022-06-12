@@ -35,18 +35,18 @@ module Discorb
 
     # Worker ID of snowflake.
     #
-    # @return [Numeric] Worker ID of snowflake.
-    attr_reader worker_id: Numeric
+    # @return [Integer] Worker ID of snowflake.
+    attr_reader worker_id: Integer
 
     # Process ID of snowflake.
     #
-    # @return [Numeric] Process ID of snowflake.
-    attr_reader process_id: Numeric
+    # @return [Integer] Process ID of snowflake.
+    attr_reader process_id: Integer
 
     # Increment of snowflake.
     #
-    # @return [Numeric] Increment of snowflake.
-    attr_reader increment: Numeric
+    # @return [Integer] Increment of snowflake.
+    attr_reader increment: Integer
 
     # Alias of to_s.
     #

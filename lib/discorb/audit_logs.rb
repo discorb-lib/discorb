@@ -36,7 +36,7 @@ module Discorb
     #
     # Gets an entry from entries.
     #
-    # @param [Numeric] index The index of the entry.
+    # @param [Integer] index The index of the entry.
     #
     # @return [Discorb::AuditLog::Entry] The entry.
     # @return [nil] If the index is out of range.
@@ -120,7 +120,7 @@ module Discorb
       #   @return [Discorb::User] The user who performed the action.
 
       #
-      # @return [{Numeric => Symbol}] The map of events to their respective changes.
+      # @return [{Integer => Symbol}] The map of events to their respective changes.
       # @private
       #
       EVENTS = {

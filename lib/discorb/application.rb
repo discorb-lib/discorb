@@ -156,7 +156,7 @@ module Discorb
         #   @return [Boolean] Whether the member is the team's owner.
 
         # @private
-        # @return [{Numeric => Symbol}] The permission map.
+        # @return [{Integer => Symbol}] The permission map.
         MEMBERSHIP_STATE = {
           1 => :invited,
           2 => :accepted,

@@ -12,11 +12,11 @@ module Discorb
     #
     # Gets an entry from entries.
     #
-    # @param [Numeric] index The index of the entry.
+    # @param [Integer] index The index of the entry.
     #
     # @return [Discorb::AuditLog::Entry] The entry.
     # @return [nil] If the index is out of range.
-    def []: (Numeric index) -> Discorb::AuditLog::Entry
+    def []: (Integer index) -> Discorb::AuditLog::Entry
 
     # @return [Array<Discorb::Webhook>] The webhooks in this audit log.
     attr_reader webhooks: ::Array[Discorb::Webhook]

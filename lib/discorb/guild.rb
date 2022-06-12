@@ -17,7 +17,7 @@ module Discorb
     attr_reader :owner_id
     # @return [Discorb::Permission] The bot's permission in the guild.
     attr_reader :permissions
-    # @return [Numeric] The AFK timeout of the guild.
+    # @return [Integer] The AFK timeout of the guild.
     attr_reader :afk_timeout
     # @return [Discorb::Dictionary{Discorb::Snowflake => Discorb::Role}] A dictionary of roles in the guild.
     attr_reader :roles
@@ -35,7 +35,7 @@ module Discorb
     attr_reader :joined_at
     # @return [Boolean] Whether the guild is unavailable.
     attr_reader :unavailable
-    # @return [Numeric] The amount of members in the guild.
+    # @return [Integer] The amount of members in the guild.
     attr_reader :member_count
     # @return [Discorb::Asset] The icon of the guild.
     attr_reader :icon
@@ -50,7 +50,7 @@ module Discorb
     attr_reader :threads
     # @return [Discorb::Dictionary{Discorb::User => Discorb::Presence}] A dictionary of presence in the guild.
     attr_reader :presences
-    # @return [Numeric] Number of online members in the guild.
+    # @return [Integer] Number of online members in the guild.
     attr_reader :max_presences
     # @return [String] The vanity invite URL for the guild.
     # @return [nil] If the guild does not have a vanity invite URL.
@@ -60,18 +60,18 @@ module Discorb
     # @return [Discorb::Asset] The banner of the guild.
     # @return [nil] If the guild does not have a banner.
     attr_reader :banner
-    # @return [Numeric] The premium tier (Boost Level) of the guild.
+    # @return [Integer] The premium tier (Boost Level) of the guild.
     attr_reader :premium_tier
-    # @return [Numeric] The amount of premium subscriptions (Server Boosts) the guild has.
+    # @return [Integer] The amount of premium subscriptions (Server Boosts) the guild has.
     attr_reader :premium_subscription_count
     # @return [Symbol] The preffered language of the guild.
     # @note This modifies the language code, `-` will be replaced with `_`.
     attr_reader :preferred_locale
-    # @return [Numeric] The maximum amount of users in a video channel.
+    # @return [Integer] The maximum amount of users in a video channel.
     attr_reader :max_video_channel_users
-    # @return [Numeric] The approxmate amount of members in the guild.
+    # @return [Integer] The approxmate amount of members in the guild.
     attr_reader :approximate_member_count
-    # @return [Numeric] The approxmate amount of non-offline members in the guild.
+    # @return [Integer] The approxmate amount of non-offline members in the guild.
     attr_reader :approximate_presence_count
     # @return [Discorb::WelcomeScreen] The welcome screen of the guild.
     attr_reader :welcome_screen
@@ -424,9 +424,9 @@ module Discorb
     #
     # @param [String] name The name of the channel.
     # @param [String] topic The topic of the channel.
-    # @param [Numeric] rate_limit_per_user The rate limit per user in the channel.
-    # @param [Numeric] slowmode Alias for `rate_limit_per_user`.
-    # @param [Numeric] position The position of the channel.
+    # @param [Integer] rate_limit_per_user The rate limit per user in the channel.
+    # @param [Integer] slowmode Alias for `rate_limit_per_user`.
+    # @param [Integer] position The position of the channel.
     # @param [Boolean] nsfw Whether the channel is nsfw.
     # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
     #   A list of permission overwrites.
@@ -477,9 +477,9 @@ module Discorb
     # @async
     #
     # @param [String] name The name of the channel.
-    # @param [Numeric] bitrate The bitrate of the channel.
-    # @param [Numeric] user_limit The user limit of the channel.
-    # @param [Numeric] position The position of the channel.
+    # @param [Integer] bitrate The bitrate of the channel.
+    # @param [Integer] user_limit The user limit of the channel.
+    # @param [Integer] position The position of the channel.
     # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
     #   A list of permission overwrites.
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
@@ -518,7 +518,7 @@ module Discorb
     # @async
     #
     # @param [String] name The name of the channel.
-    # @param [Numeric] position The position of the channel.
+    # @param [Integer] position The position of the channel.
     # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
     #  A list of permission overwrites.
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
@@ -555,8 +555,8 @@ module Discorb
     # @async
     #
     # @param [String] name The name of the channel.
-    # @param [Numeric] bitrate The bitrate of the channel.
-    # @param [Numeric] position The position of the channel.
+    # @param [Integer] bitrate The bitrate of the channel.
+    # @param [Integer] position The position of the channel.
     # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
     #   A list of permission overwrites.
     # @param [Discorb::CategoryChannel] parent The parent of the channel.
@@ -593,9 +593,9 @@ module Discorb
     #
     # @param [String] name The name of the channel.
     # @param [String] topic The topic of the channel.
-    # @param [Numeric] rate_limit_per_user The rate limit per user in the channel.
-    # @param [Numeric] slowmode Alias for `rate_limit_per_user`.
-    # @param [Numeric] position The position of the channel.
+    # @param [Integer] rate_limit_per_user The rate limit per user in the channel.
+    # @param [Integer] slowmode Alias for `rate_limit_per_user`.
+    # @param [Integer] position The position of the channel.
     # @param [Boolean] nsfw Whether the channel is nsfw.
     # @param [Hash{Discorb::Role, Discorb::Member => Discorb::PermissionOverwrite}] permission_overwrites
     #   A list of permission overwrites.
@@ -678,8 +678,8 @@ module Discorb
     # @async
     # @macro members_intent
     #
-    # @param [Numeric] limit The maximum number of members to fetch, 0 for all.
-    # @param [Numeric] after The ID of the member to start fetching after.
+    # @param [Integer] limit The maximum number of members to fetch, 0 for all.
+    # @param [Integer] after The ID of the member to start fetching after.
     #
     # @return [Async::Task<Array<Discorb::Member>>] The list of members.
     #
@@ -719,7 +719,7 @@ module Discorb
     # @async
     #
     # @param [String] name The name of the member to search for.
-    # @param [Numeric] limit The maximum number of members to return.
+    # @param [Integer] limit The maximum number of members to return.
     #
     # @return [Async::Task<Array<Discorb::Member>>] The list of members.
     #
@@ -796,7 +796,7 @@ module Discorb
     # Fetch a list of bans in the guild.
     # @async
     #
-    # @param [Numeric] limit The number of bans to fetch.
+    # @param [Integer] limit The number of bans to fetch.
     # @param [Discorb::Snowflake] before The ID of the ban to fetch before.
     # @param [Discorb::Snowflake] after The ID of the ban to fetch after.
     # @param [Discorb::Snowflake] around The ID of the ban to fetch around.
@@ -856,7 +856,7 @@ module Discorb
     # @async
     #
     # @param [Discorb::Member] member The member to ban.
-    # @param [Numeric] delete_message_days The number of days to delete messages.
+    # @param [Integer] delete_message_days The number of days to delete messages.
     # @param [String] reason The reason for banning the member.
     #
     # @return [Async::Task<Discorb::Guild::Ban>] The ban.
@@ -934,10 +934,10 @@ module Discorb
     # Fetch how many members will be pruned.
     # @async
     #
-    # @param [Numeric] days The number of days to prune.
+    # @param [Integer] days The number of days to prune.
     # @param [Array<Discorb::Role>] roles The roles that include for pruning.
     #
-    # @return [Async::Task<Numeric>] The number of members that will be pruned.
+    # @return [Async::Task<Integer>] The number of members that will be pruned.
     #
     def fetch_prune(days = 7, roles: [])
       Async do
@@ -956,11 +956,11 @@ module Discorb
     # Prune members from the guild.
     # @async
     #
-    # @param [Numeric] days The number of days to prune.
+    # @param [Integer] days The number of days to prune.
     # @param [Array<Discorb::Role>] roles The roles that include for pruning.
     # @param [String] reason The reason for pruning.
     #
-    # @return [Async::Task<Numeric>] The number of members that were pruned.
+    # @return [Async::Task<Integer>] The number of members that were pruned.
     #
     def prune(days = 7, roles: [], reason: nil)
       Async do
@@ -1136,7 +1136,7 @@ module Discorb
     class VanityInvite < DiscordModel
       # @return [String] The vanity invite code.
       attr_reader :code
-      # @return [Numeric] The number of uses.
+      # @return [Integer] The number of uses.
       attr_reader :uses
 
       # @!attribute [r] url
@@ -1234,8 +1234,8 @@ module Discorb
       # Return iframe HTML of the widget.
       #
       # @param ["dark", "light"] theme The theme of the widget.
-      # @param [Numeric] width The width of the widget.
-      # @param [Numeric] height The height of the widget.
+      # @param [Integer] width The width of the widget.
+      # @param [Integer] height The height of the widget.
       #
       # @return [String] The iframe HTML.
       #

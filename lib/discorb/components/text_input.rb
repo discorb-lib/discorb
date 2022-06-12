@@ -17,9 +17,9 @@ module Discorb
     attr_accessor :custom_id
     # @return [:short, :paragraph] The style of the text input.
     attr_accessor :style
-    # @return [Numeric, nil] The minimum length of the text input.
+    # @return [Integer, nil] The minimum length of the text input.
     attr_accessor :min_length
-    # @return [Numeric, nil] The maximum length of the text input.
+    # @return [Integer, nil] The maximum length of the text input.
     attr_accessor :max_length
     # @return [Boolean] Whether the text input is required.
     attr_accessor :required
@@ -34,8 +34,8 @@ module Discorb
     # @param [String] label The label of the text input.
     # @param [String] custom_id The custom id of the text input.
     # @param [:short, :paragraph] style The style of the text input.
-    # @param [Numeric, nil] min_length The minimum length of the text input.
-    # @param [Numeric, nil] max_length The maximum length of the text input.
+    # @param [Integer, nil] min_length The minimum length of the text input.
+    # @param [Integer, nil] max_length The maximum length of the text input.
     # @param [Boolean] required Whether the text input is required.
     # @param [String, nil] value The prefilled value of the text input.
     # @param [String, nil] placeholder The placeholder of the text input.

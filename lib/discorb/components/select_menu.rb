@@ -9,9 +9,9 @@ module Discorb
     attr_accessor :custom_id
     # @return [Array<SelectMenu::Option>] The options of the select menu.
     attr_accessor :options
-    # @return [Numeric] The minimum number of values.
+    # @return [Integer] The minimum number of values.
     attr_accessor :min_values
-    # @return [Numeric] The maximum number of values.
+    # @return [Integer] The maximum number of values.
     attr_accessor :max_values
     # @return [Boolean] Whether the select menu is disabled.
     attr_accessor :disabled
@@ -23,8 +23,8 @@ module Discorb
     # @param [String, Symbol] custom_id Custom ID of the select menu.
     # @param [Array<Discorb::SelectMenu::Option>] options The options of the select menu.
     # @param [String] placeholder The placeholder of the select menu.
-    # @param [Numeric] min_values The minimum number of values.
-    # @param [Numeric] max_values The maximum number of values.
+    # @param [Integer] min_values The minimum number of values.
+    # @param [Integer] max_values The maximum number of values.
     #
     def initialize(custom_id, options, placeholder: nil, min_values: 1, max_values: 1)
       @custom_id = custom_id

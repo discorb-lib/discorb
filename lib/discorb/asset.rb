@@ -32,7 +32,7 @@ module Discorb
     # URL of the asset.
     #
     # @param [String] image_format The image format.
-    # @param [Numeric] size The size of the image.
+    # @param [Integer] size The size of the image.
     #
     # @return [String] URL of the asset.
     #
@@ -84,7 +84,7 @@ module Discorb
     # Returns the URL of the avatar.
     #
     # @param [String] image_format The image format. This is compatible with {Asset#url}, will be ignored.
-    # @param [Numeric] size The size of the image. This is compatible with {Asset#url}, will be ignored.
+    # @param [Integer] size The size of the image. This is compatible with {Asset#url}, will be ignored.
     #
     # @return [String] URL of the avatar.
     #

@@ -21,8 +21,8 @@ module Discorb
     #
     # @param [String] name The name of the thread.
     # @param [Boolean] archived Whether the thread is archived or not.
-    # @param [Numeric] auto_archive_duration The auto archive duration in seconds.
-    # @param [Numeric] archive_in Alias of `auto_archive_duration`.
+    # @param [Integer] auto_archive_duration The auto archive duration in seconds.
+    # @param [Integer] archive_in Alias of `auto_archive_duration`.
     # @param [Boolean] locked Whether the thread is locked or not.
     # @param [String] reason The reason of editing the thread.
     #
@@ -35,8 +35,8 @@ module Discorb
     def edit: (
                 ?name: String,
                 ?archived: bool,
-                ?auto_archive_duration: Numeric,
-                ?archive_in: Numeric,
+                ?auto_archive_duration: Integer,
+                ?archive_in: Integer,
                 ?locked: bool,
                 ?reason: String?
               ) -> Async::Task[self]
@@ -116,16 +116,16 @@ module Discorb
     # @return [String] The name of the thread.
     attr_reader name: String
 
-    # @return [Numeric] The number of messages in the thread.
+    # @return [Integer] The number of messages in the thread.
     # @note This will stop counting at 50.
-    attr_reader message_count: Numeric
+    attr_reader message_count: Integer
 
-    # @return [Numeric] The number of recipients in the thread.
+    # @return [Integer] The number of recipients in the thread.
     # @note This will stop counting at 50.
-    attr_reader member_count: Numeric
+    attr_reader member_count: Integer
 
-    # @return [Numeric] The rate limit per user (slowmode) in the thread.
-    attr_reader rate_limit_per_user: Numeric
+    # @return [Integer] The rate limit per user (slowmode) in the thread.
+    attr_reader rate_limit_per_user: Integer
 
     # @return [Array<Discorb::ThreadChannel::Member>] The members of the thread.
     attr_reader members: ::Array[Discorb::ThreadChannel::Member]
@@ -134,8 +134,8 @@ module Discorb
     # @return [nil] If the thread is not archived.
     attr_reader archived_timestamp: Time?
 
-    # @return [Numeric] Auto archive duration in seconds.
-    attr_reader auto_archive_duration: Numeric
+    # @return [Integer] Auto archive duration in seconds.
+    attr_reader auto_archive_duration: Integer
 
     # @return [Boolean] Whether the thread is archived or not.
     attr_reader archived: bool

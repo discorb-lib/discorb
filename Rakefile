@@ -290,7 +290,7 @@ namespace :rbs do
         | (:#{event[:name]} event_name, ?id: Symbol?, **untyped metadata) { (#{sig}) -> void } -> Discorb::EventHandler
       RBS
       event_lock_sig << <<~RBS
-        | (:#{event[:name]} event, ?Numeric? timeout) { (#{sig}) -> boolish } -> Async::Task[#{tuple_sig}]
+        | (:#{event[:name]} event, ?Integer? timeout) { (#{sig}) -> boolish } -> Async::Task[#{tuple_sig}]
       RBS
       extension_sig << <<~RBS
         | (:#{event[:name]} event_name, ?id: Symbol?, **untyped metadata) { (#{sig}) -> void } -> void
@@ -338,12 +338,12 @@ namespace :rbs do
     require "open3"
     # rubocop: disable Layout/LineLength
     type_errors = {
-      "SORD_ERROR_SymbolSymbolSymbolNumeric" => "{ r: Numeric, g: Numeric, b: Numeric}",
+      "SORD_ERROR_SymbolSymbolSymbolInteger" => "{ r: Integer, g: Integer, b: Integer}",
       "SORD_ERROR_DiscorbRoleDiscorbMemberDiscorbPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
       "SORD_ERROR_DiscorbRoleDiscorbMemberPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
       "SORD_ERROR_f | SORD_ERROR_F | SORD_ERROR_d | SORD_ERROR_D | SORD_ERROR_t | SORD_ERROR_T | SORD_ERROR_R" => '"f" | "F" | "d" | "D" | "t" | "T" | "R"',
       "SORD_ERROR_dark | SORD_ERROR_light" => '"dark" | "light"',
-      "SORD_ERROR_SymbolStringSymbolboolSymbolObject" => "String | Numeric | Float",
+      "SORD_ERROR_SymbolStringSymbolboolSymbolObject" => "String | Integer | Float",
     }
     # rubocop: enable Layout/LineLength
     regenerate = ARGV.include?("--regenerate") || ARGV.include?("-r")
@@ -361,9 +361,9 @@ namespace :rbs do
       # Initialize a new Dictionary.
       #
       # @param [Hash] hash A hash of items to add to the dictionary.
-      # @param [Numeric] limit The maximum number of items in the dictionary.
+      # @param [Integer] limit The maximum number of items in the dictionary.
       # @param [false, Proc] sort Whether to sort the items in the dictionary.
-      def initialize: (?::Hash[untyped, untyped] hash, ?limit: Numeric?, ?sort: (bool | Proc)) -> void
+      def initialize: (?::Hash[untyped, untyped] hash, ?limit: Integer?, ?sort: (bool | Proc)) -> void
 
       #
       # Registers a new item in the dictionary.
@@ -394,7 +394,7 @@ namespace :rbs do
       # @return [nil] if the item was not found.
       #
       # @overload get(index)
-      #   @param [Numeric] index The index of the item.
+      #   @param [Integer] index The index of the item.
       #
       #   @return [Object] The item.
       #   @return [nil] if the item is not found.
@@ -422,8 +422,8 @@ namespace :rbs do
 
       def inspect: () -> String
 
-      # @return [Numeric] The maximum number of items in the dictionary.
-      attr_accessor limit: Numeric
+      # @return [Integer] The maximum number of items in the dictionary.
+      attr_accessor limit: Integer
     end
     RBS
     # #endregion

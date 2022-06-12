@@ -6,12 +6,12 @@ module Discorb
   #
   class ScheduledEvent < DiscordModel
     # @private
-    # @return [{Numeric => Symbol}] The mapping of privacy level.
+    # @return [{Integer => Symbol}] The mapping of privacy level.
     PRIVACY_LEVEL = {
       2 => :guild_only,
     }.freeze
     # @private
-    # @return [{Numeric => Symbol}] The mapping of status.
+    # @return [{Integer => Symbol}] The mapping of status.
     STATUS = {
       1 => :scheduled,
       2 => :active,
@@ -19,7 +19,7 @@ module Discorb
       4 => :canceled,
     }.freeze
     # @private
-    # @return [{Numeric => Symbol}] The mapping of entity_type.
+    # @return [{Integer => Symbol}] The mapping of entity_type.
     ENTITY_TYPE = {
       1 => :stage_instance,
       2 => :voice,
@@ -75,7 +75,7 @@ module Discorb
     attr_reader :entity_id
     # @return [Discorb::ScheduledEvent::Metadata] The metadata of the event.
     attr_reader :metadata
-    # @return [Numeric] The user count of the event.
+    # @return [Integer] The user count of the event.
     attr_reader :user_count
 
     # @!attribute [r] guild
@@ -239,7 +239,7 @@ module Discorb
     #
     # @note You can fetch all of members by not specifying a parameter.
     #
-    # @param [Numeric] limit The maximum number of users to fetch. Defaults to `100`.
+    # @param [Integer] limit The maximum number of users to fetch. Defaults to `100`.
     # @param [#to_s] after The ID of the user to start fetching from. Defaults to `nil`.
     # @param [#to_s] before The ID of the user to stop fetching at. Defaults to `nil`.
     # @param [Boolean] with_member Whether to include the member object of the event. Defaults to `false`.

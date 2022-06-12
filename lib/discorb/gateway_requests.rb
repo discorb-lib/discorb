@@ -6,7 +6,7 @@ module Discorb
   #
   class Activity
     # @private
-    # @return [{Symbol => Numeric}] The mapping of activity types.
+    # @return [{Symbol => Integer}] The mapping of activity types.
     TYPES = {
       playing: 0,
       streaming: 1,

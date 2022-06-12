@@ -32,7 +32,7 @@ module Discorb
       #   | `:optional` | Boolean(true | false) |
       #     Whether the argument is optional. `required` will be used if not specified. |
       #   | `:type` | `Object` | Type of the option. |
-      #   | `:choices` | `Hash{String => String, Numeric, Float}` | Type of the option. |
+      #   | `:choices` | `Hash{String => String, Integer, Float}` | Type of the option. |
       #   | `:choices_localizations` | `Hash{String => Hash{Symbol => String}}` |
       #      Localization of the choice. Key must be the name of a choice. |
       #   | `:default` | `Object` | Default value of the option. |

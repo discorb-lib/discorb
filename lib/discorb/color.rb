@@ -41,18 +41,18 @@ module Discorb
     }.freeze
 
     #
-    # Create a color from a Numeric.
+    # Create a color from a Integer.
     #
-    # @param [Numeric] value A color value.
+    # @param [Integer] value A color value.
     #
     def initialize(value)
       @value = value
     end
 
     #
-    # Numericize a color.
+    # Integerize a color.
     #
-    # @return [Numeric] A color value.
+    # @return [Integer] A color value.
     #
     def to_i
       @value
@@ -70,7 +70,7 @@ module Discorb
     #
     # Convert a color to RGB array.
     #
-    # @return [Array(Numeric, Numeric, Numeric)] A RGB array.
+    # @return [Array(Integer, Integer, Integer)] A RGB array.
     #
     def to_rgb
       [@value / (256 * 256), @value / 256 % 256, @value % 256]
@@ -82,7 +82,7 @@ module Discorb
     #
     # Convert a color to RGB hash.
     #
-    # @return [Hash{:r, :g, :b => Numeric}] A RGB hash.
+    # @return [Hash{:r, :g, :b => Integer}] A RGB hash.
     #
     def to_rgb_hash
       {
@@ -121,9 +121,9 @@ module Discorb
     #
     # Create a color from a RGB array.
     #
-    # @param [Numeric] red A red value.
-    # @param [Numeric] green A green value.
-    # @param [Numeric] blue A blue value.
+    # @param [Integer] red A red value.
+    # @param [Integer] green A green value.
+    # @param [Integer] blue A blue value.
     #
     # @return [Discorb::Color] A color object.
     #

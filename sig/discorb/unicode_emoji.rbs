@@ -6,8 +6,8 @@ module Discorb
     # Initialize a new unicode emoji.
     #
     # @param [String] name The name of the emoji.
-    # @param [Numeric] tone The skin tone of the emoji.
-    def initialize: (String name, ?tone: Numeric) -> void
+    # @param [Integer] tone The skin tone of the emoji.
+    def initialize: (String name, ?tone: Integer) -> void
 
     # @return [String] The unicode string of the emoji.
     def to_s: () -> String
@@ -33,10 +33,10 @@ module Discorb
     # @return [String] The unicode value of the emoji. (e.g. U+1F600)
     attr_reader value: String
 
-    # @return [Numeric] The skin tone of the emoji.
-    attr_reader skin_tone: Numeric
+    # @return [Integer] The skin tone of the emoji.
+    attr_reader skin_tone: Integer
 
-    def self.[]: (String name, ?tone: Numeric) -> UnicodeEmoji
+    def self.[]: (String name, ?tone: Integer) -> UnicodeEmoji
   end
 
   #

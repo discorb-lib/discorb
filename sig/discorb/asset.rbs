@@ -14,10 +14,10 @@ module Discorb
     # URL of the asset.
     #
     # @param [String] image_format The image format.
-    # @param [Numeric] size The size of the image.
+    # @param [Integer] size The size of the image.
     #
     # @return [String] URL of the asset.
-    def url: (?image_format: String?, ?size: Numeric) -> String
+    def url: (?image_format: String?, ?size: Integer) -> String
 
     def inspect: () -> String
 

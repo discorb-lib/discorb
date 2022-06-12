@@ -22,7 +22,7 @@ module Discorb
     alias disabled? disabled
 
     # @private
-    # @return [{Symbol => Numeric}] The mapping of button styles.
+    # @return [{Symbol => Integer}] The mapping of button styles.
     STYLES = {
       primary: 1,
       secondary: 2,

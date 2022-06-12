@@ -5,14 +5,14 @@ module Discorb
   # Represents a shard.
   #
   class Shard
-    # @return [Numeric] The ID of the shard.
+    # @return [Integer] The ID of the shard.
     attr_reader :id
     # @return [Thread] The thread of the shard.
     attr_reader :thread
     # @return [Logger] The logger of the shard.
     attr_reader :logger
     # @private
-    # @return [Numeric] The internal index of the shard.
+    # @return [Integer] The internal index of the shard.
     attr_reader :index
     # @private
     attr_accessor :status, :connection, :session_id, :next_shard, :main_task
@@ -22,9 +22,9 @@ module Discorb
     # @private
     #
     # @param [Discorb::Client] client The client.
-    # @param [Numeric] id The ID of the shard.
-    # @param [Numeric] count The number of shards.
-    # @param [Numeric] index The index of the shard.
+    # @param [Integer] id The ID of the shard.
+    # @param [Integer] count The number of shards.
+    # @param [Integer] index The index of the shard.
     #
     def initialize(client, id, count, index)
       @client = client
