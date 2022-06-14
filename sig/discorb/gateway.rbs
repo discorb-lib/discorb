@@ -53,10 +53,6 @@ module Discorb
       attr_reader guild_id: Discorb::Snowflake
 
       # @macro client_cache
-      # @return [Discorb::User] The user who reacted.
-      attr_reader user: Discorb::User?
-
-      # @macro client_cache
       # @return [Discorb::Channel] The channel the message was sent in.
       attr_reader channel: Discorb::Channel?
 
@@ -68,16 +64,13 @@ module Discorb
       # @return [Discorb::Message] The message the reaction was sent in.
       attr_reader message: Discorb::Message?
 
-      # @macro client_cache
-      # @return [Discorb::Member] The member who reacted.
-      attr_reader member: Discorb::Member?
-
       # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
       attr_reader emoji: (Discorb::UnicodeEmoji | Discorb::PartialEmoji)
 
       # @macro client_cache
-      # @return [Discorb::Member, Discorb::User] The user or member who reacted.
-      attr_reader fired_by: (Discorb::Member | Discorb::User)?
+      # @return [Discorb::User, Discorb::Member] The user that is typing.
+      attr_reader user: Discorb::Member | Discorb::User
+      alias member user
     end
 
     #
@@ -337,10 +330,6 @@ module Discorb
       attr_reader user_id: Discorb::Snowflake
 
       # @macro client_cache
-      # @return [Discorb::Member] The member that is typing.
-      attr_reader member: Discorb::Member?
-
-      # @macro client_cache
       # @return [Discorb::Channel] The channel the user is typing in.
       attr_reader channel: Discorb::Channel?
 
@@ -349,12 +338,9 @@ module Discorb
       attr_reader guild: Discorb::Guild?
 
       # @macro client_cache
-      # @return [Discorb::User] The user that is typing.
-      attr_reader user: Discorb::User?
-
-      # @macro client_cache
-      # @return [Discorb::Member, Discorb::User] The member or user that started typing.
-      attr_reader fired_by: (Discorb::Member | Discorb::User)?
+      # @return [Discorb::User, Discorb::Member] The user that is typing.
+      attr_reader user: Discorb::Member | Discorb::User
+      alias member user
     end
 
     #

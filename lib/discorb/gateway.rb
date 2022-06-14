@@ -48,8 +48,9 @@ module Discorb
       # @return [Discorb::Snowflake] The ID of the guild the message was sent in.
       attr_reader :guild_id
       # @macro client_cache
-      # @return [Discorb::User] The user who reacted.
+      # @return [Discorb::User, Discorb::Member] The user who reacted.
       attr_reader :user
+      alias member user
       # @macro client_cache
       # @return [Discorb::Channel] The channel the message was sent in.
       attr_reader :channel
@@ -59,17 +60,8 @@ module Discorb
       # @macro client_cache
       # @return [Discorb::Message] The message the reaction was sent in.
       attr_reader :message
-      # @macro client_cache
-      # @return [Discorb::Member] The member who reacted.
-      attr_reader :member
       # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
       attr_reader :emoji
-      # @macro client_cache
-      # @return [Discorb::Member, Discorb::User] The user or member who reacted.
-      attr_reader :fired_by
-
-      alias reactor fired_by
-      alias from fired_by
 
       #
       # Initializes a new instance of the ReactionEvent class.
@@ -92,18 +84,16 @@ module Discorb
         @guild = client.guilds[data[:guild_id]]
         @channel = client.channels[data[:channel_id]] unless @guild.nil?
 
-        @user = client.users[data[:user_id]] if data.key?(:user_id)
+        @user = client.users[data[:user_id]]
 
         unless @guild.nil?
-          @member = if data.key?(:member)
+          @user = if data.key?(:member)
               @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user],
                                                                       data[:member])
             else
               @guild.members[data[:user_id]]
-            end
+            end || @user
         end
-
-        @fired_by = @member || @user || @client.users[data[:user_id]]
 
         @message = client.messages[data[:message_id]]
         @emoji = data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
@@ -454,9 +444,6 @@ module Discorb
     class TypingStartEvent < GatewayEvent
       # @return [Discorb::Snowflake] The ID of the channel the user is typing in.
       attr_reader :user_id
-      # @macro client_cache
-      # @return [Discorb::Member] The member that is typing.
-      attr_reader :member
 
       # @!attribute [r] channel
       #   @macro client_cache
@@ -466,10 +453,7 @@ module Discorb
       #   @return [Discorb::Guild] The guild the user is typing in.
       # @!attribute [r] user
       #   @macro client_cache
-      #   @return [Discorb::User] The user that is typing.
-      # @!attribute [r] fired_by
-      #   @macro client_cache
-      #   @return [Discorb::Member, Discorb::User] The member or user that started typing.
+      #   @return [Discorb::User, Discorb::Member] The user that is typing.
 
       #
       # Initialize a new instance of the TypingStartEvent class.
@@ -496,8 +480,9 @@ module Discorb
       end
 
       def user
-        @client.users[@user_id]
+        @member || guild&.members&.[](@user_id) || @client.users[@user_id]
       end
+      alias member user
 
       def channel
         @client.channels[@channel_id]
@@ -506,12 +491,6 @@ module Discorb
       def guild
         @client.guilds[@guild_id]
       end
-
-      def fired_by
-        @member || user
-      end
-
-      alias from fired_by
     end
 
     #
