@@ -40,8 +40,8 @@ require "bundler/setup" if options[:bundler]
 
 command = ARGV.shift
 
-begin
-  require "discorb/exe/#{command}"
-rescue LoadError
+unless $LOAD_PATH.resolve_feature_path("discorb/exe/#{command}.rb")
   warn "Unknown subcommand: #{command}"
+  abort
 end
+require "discorb/exe/#{command}"
