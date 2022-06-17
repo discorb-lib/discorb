@@ -5,17 +5,23 @@ module Discorb
   # Represents a rule of auto moderation.
   #
   class AutoModRule < DiscordModel
+    # @return [Hash{Integer => Symbol}] The mapping of trigger types.
+    # @private
     TRIGGER_TYPES = {
       1 => :keyword,
       2 => :harmful_link,
       3 => :spam,
       4 => :keyword_preset,
     }.freeze
+    # @return [Hash{Integer => Symbol}] The mapping of preset types.
+    # @private
     PRESET_TYPES = {
       1 => :profanity,
       2 => :sexual_content,
       3 => :slurs,
     }.freeze
+    # @return [Hash{Integer => Symbol}] The mapping of event types.
+    # @private
     EVENT_TYPES = {
       1 => :message_send,
     }.freeze
@@ -113,6 +119,8 @@ module Discorb
     # Represents the action of auto moderation.
     #
     class Action < DiscordModel
+      # @return [Hash{Integer => Symbol}] The mapping of action types.
+      # @private
       ACTION_TYPES = {
         1 => :block_message,
         2 => :send_alert_message,
@@ -138,7 +146,8 @@ module Discorb
       end
 
       # @!attribute [r]
-      #   @return [Discorb::Channel] The channel that the action is sent to.
+      #   @return [Discorb::Channel] The channel that the alert message is sent to.
+      #   @note This is only available if the action type is `:send_alert_message`.
       def channel
         @client.channels[@channel_id]
       end
