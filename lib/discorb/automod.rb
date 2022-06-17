@@ -95,6 +95,77 @@ module Discorb
       @exempt_channels_id.map { |id| guild.channels[id] }
     end
 
+    #
+    # Edit the rule.
+    # @async
+    # @edit
+    #
+    # @param [String] name The name of the rule.
+    # @param [Symbol] event_type The event type of the rule. See {Discorb::AutoModRule::EVENT_TYPES}.
+    # @param [Array<Discorb::AutoModRule::Action>] actions The actions of the rule.
+    # @param [Boolean] enabled Whether the rule is enabled or not.
+    # @param [Array<Discorb::Role>] exempt_roles The roles that are exempt from the rule.
+    # @param [Array<Discorb::Channel>] exempt_channels The channels that are exempt from the rule.
+    # @param [Array<String>] keyword_filter The keywords to filter.
+    # @param [Symbol] presets The preset of the rule. See {Discorb::AutoModRule::PRESET_TYPES}.
+    # @param [String] reason The reason for creating the rule.
+    #
+    # @return [Async::Task<void>] The task.
+    #
+    def edit(
+      name: Discorb::Unset,
+      event_type: Discorb::Unset,
+      actions: Discorb::Unset,
+      enabled: Discorb::Unset,
+      exempt_roles: Discorb::Unset,
+      exempt_channels: Discorb::Unset,
+      keyword_filter: Discorb::Unset,
+      presets: Discorb::Unset,
+      reason: nil
+    )
+      payload = {
+        metadata: {},
+      }
+      payload[:name] = name unless name == Discorb::Unset
+      payload[:event_type] = EVENT_TYPES.key(event_type) unless event_type == Discorb::Unset
+      payload[:actions] = actions unless actions == Discorb::Unset
+      payload[:enabled] = enabled unless enabled == Discorb::Unset
+      payload[:exempt_roles] = exempt_roles.map(&:id) unless exempt_roles == Discorb::Unset
+      payload[:exempt_channels] = exempt_channels.map(&:id) unless exempt_channels == Discorb::Unset
+      payload[:metadata][:keyword_filter] = keyword_filter unless keyword_filter == Discorb::Unset
+      payload[:metadata][:presets] = PRESET_TYPES.key(presets) unless presets == Discorb::Unset
+
+      @client.http.request(
+        Route.new(
+          "/guilds/#{@guild_id}/automod/rules/#{@id}",
+          "//guilds/:guild_id/automod/rules/:id",
+          :patch
+        ),
+        payload,
+        audit_log_reason: reason,
+      )
+    end
+
+    #
+    # Delete the rule.
+    #
+    # @param [String] reason The reason for deleting the rule.
+    #
+    # @return [Async::Task<void>] The task.
+    #
+    def delete!(reason: nil)
+      Async do
+        @client.http.request(
+          Route.new(
+            "/guilds/#{@guild_id}/automod/rules/#{@id}",
+            "//guilds/:guild_id/automod/rules/:id",
+            :delete
+          ),
+          audit_log_reason: reason,
+        )
+      end
+    end
+
     # @private
     def _set_data(data)
       @id = Snowflake.new(data[:id])
@@ -138,9 +209,41 @@ module Discorb
       # @private
       #
       # @param [Discorb::Client] client The client.
+      # @param [Symbol] type The type of the action.
+      # @param [Integer] duration_seconds The duration of the timeout.
+      #   This is only available if the action type is `:timeout`.
+      # @param [Discorb::Channel] channel The channel that the alert message is sent to.
+      #   This is only available if the action type is `:send_alert_message`.
+      #
+      def initialize(type, duration_seconds: nil, channel: nil)
+        @type = type
+        @duration_seconds = duration_seconds
+        @channel = channel
+      end
+
+      #
+      # Convert the action to hash.
+      #
+      # @return [Hash] The action hash.
+      #
+      def to_hash
+        {
+          type: @type,
+          metadata: {
+            channel_id: @channel&.id,
+            duration_seconds: @duration_seconds,
+          },
+        }
+      end
+
+      #
+      # Initialize a new action from hash.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
       # @param [Hash] data The action data.
       #
-      def initialize(client, data)
+      def initialize_hash(client, data)
         @client = client
         _set_data(data)
       end
@@ -157,6 +260,10 @@ module Discorb
         @type = ACTION_TYPES[data[:type]]
         @channel_id = data[:metadata][:channel_id]
         @duration_seconds = data[:metadata][:duration_seconds]
+      end
+
+      def self.from_hash(client, data)
+        allocate.tap { |action| action.initialize_hash(client, data) }
       end
     end
   end
