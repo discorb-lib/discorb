@@ -113,6 +113,42 @@ module Discorb
     # Represents the action of auto moderation.
     #
     class Action < DiscordModel
+      ACTION_TYPES = {
+        1 => :block_message,
+        2 => :send_alert_message,
+        3 => :timeout,
+      }.freeze
+
+      # @return [Symbol] Returns the type of the action.
+      attr_reader :type
+      # @return [Integer] The duration of the timeout.
+      # @note This is only available if the action type is `:timeout`.
+      attr_reader :duration_seconds
+
+      #
+      # Initialize a new action.
+      # @private
+      #
+      # @param [Discorb::Client] client The client.
+      # @param [Hash] data The action data.
+      #
+      def initialize(client, data)
+        @client = client
+        _set_data(data)
+      end
+
+      # @!attribute [r]
+      #   @return [Discorb::Channel] The channel that the action is sent to.
+      def channel
+        @client.channels[@channel_id]
+      end
+
+      # @private
+      def _set_data(data)
+        @type = ACTION_TYPES[data[:type]]
+        @channel_id = data[:metadata][:channel_id]
+        @duration_seconds = data[:metadata][:duration_seconds]
+      end
     end
   end
 end
