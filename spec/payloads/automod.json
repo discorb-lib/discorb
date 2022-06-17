@@ -1,0 +1,24 @@
+{
+  "id": "969707018069872670",
+  "guild_id": "863581274916913193",
+  "name": "Keyword Filter 1",
+  "creator_id": "863585556054147092",
+  "trigger_type": 1,
+  "event_type": 1,
+  "actions": [
+    {
+      "type": 1,
+      "metadata": {}
+    },
+    {
+      "type": 2,
+      "metadata": { "channel_id": "863581274916913196" }
+    }
+  ],
+  "trigger_metadata": {
+    "keyword_filter": ["cat*", "*dog", "*ana*", "i like javascript"]
+  },
+  "enabled": true,
+  "exempt_roles": ["863590041393823774"],
+  "exempt_channels": ["863581274916913196"]
+}

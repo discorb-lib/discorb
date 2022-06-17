@@ -46,7 +46,7 @@ end
 require_order = %w[common flag dictionary error rate_limit http intents emoji_table modules] +
                 %w[channel/container message_meta allowed_mentions] +
                 %w[user member guild emoji channel embed message] +
-                %w[application audit_logs color components event event_handler] +
+                %w[application audit_logs color components event event_handler automod] +
                 %w[attachment guild_template image integration interaction invite permission] +
                 %w[presence reaction role sticker utils voice_state webhook] +
                 %w[gateway_requests gateway app_command] +
