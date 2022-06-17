@@ -220,11 +220,7 @@ def git_init
   create_file(".gitignore")
   iputs "Initializing git repository..."
   system "git init", chdir: $path
-  system "git add .", chdir: $path
-  system "git commit -m \"Initial commit\"", chdir: $path
-  sputs "Initialized repository, use " \
-        "\e[32mgit commit --amend -m '...'\e[92m" \
-        " to change commit message of initial commit.\n"
+  sputs "Initialized repository.\n"
 end
 
 # @private
