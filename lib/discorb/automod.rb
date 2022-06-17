@@ -11,7 +11,7 @@ module Discorb
       3 => :spam,
       4 => :keyword_preset,
     }.freeze
-    KEYWORD_FILTERS = {
+    PRESET_TYPES = {
       1 => :profanity,
       2 => :sexual_content,
       3 => :slurs,
@@ -20,15 +20,73 @@ module Discorb
       1 => :message_send,
     }.freeze
 
+    # @return [Discorb::Snowflake] The ID of the rule.
+    attr_reader :id
+    # @return [String] The name of the rule.
+    attr_reader :name
+    # @return [Boolean] Whether the rule is enabled.
+    attr_reader :enabled
+    alias enabled? enabled
+    # @return [Array<Discorb::AutoModRule::Action>] The actions of the rule.
+    attr_reader :actions
+    # @return [Array<String>] The keywords that the rule is triggered by.
+    # @note This is only available if the trigger type is `:keyword`.
+    attr_reader :keyword_filter
+
     #
     # Initialize a new auto mod.
+    # @private
     #
-    # @param [<Type>] client <description>
-    # @param [<Type>] data <description>
+    # @param [Discorb::Client] client The client.
+    # @param [Hash] data The auto mod data.
     #
     def initialize(client, data)
       @client = client
       _set_data(data)
+    end
+
+    # @!attribute [r]
+    #   @return [Symbol] Returns the type of the preset.
+    #   @note This is only available if the trigger type is `:keyword_preset`.
+    def preset_type
+      PRESET_TYPES[@presets_raw]
+    end
+
+    # @!attribute [r]
+    #   @return [Symbol] Returns the type of the trigger.
+    def trigger_type
+      TRIGGER_TYPES[@trigger_type_raw]
+    end
+
+    # @!attribute [r]
+    #   @return [Symbol] Returns the type of the event.
+    def event_type
+      EVENT_TYPES[@event_type_raw]
+    end
+
+    # @!attribute [r]
+    #   @macro client_cache
+    #   @return [Discorb::Member] The member who created the rule.
+    def creator
+      guild.members[@creator_id]
+    end
+
+    # @!attribute [r]
+    #   @return [Discorb::Guild] The guild that the rule is in.
+    def guild
+      @client.guilds[@guild_id]
+    end
+
+    # @!attribute [r]
+    #   @return [Array<Discorb::Role>] The roles that the rule is exempt from.
+    def exempt_roles
+      @exempt_roles_id.map { |id| guild.roles[id] }
+    end
+
+    # @!attribute [r]
+    #   @return [Array<Discorb::Channel>] The channels that the rule is exempt from.
+    def exempt_channels
+      @exempt_channels_id.map { |id| guild.channels[id] }
     end
 
     # @private
