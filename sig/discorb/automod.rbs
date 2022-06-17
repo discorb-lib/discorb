@@ -41,6 +41,44 @@ module Discorb
 
     def exempt_channels: () -> Array[Discorb::Channel]
 
+    #
+    # Edit the rule.
+    # @async
+    # @edit
+    #
+    # @param [String] name The name of the rule.
+    # @param [Symbol] event_type The event type of the rule. See {Discorb::AutoModRule::EVENT_TYPES}.
+    # @param [Array<Discorb::AutoModRule::Action>] actions The actions of the rule.
+    # @param [Boolean] enabled Whether the rule is enabled or not.
+    # @param [Array<Discorb::Role>] exempt_roles The roles that are exempt from the rule.
+    # @param [Array<Discorb::Channel>] exempt_channels The channels that are exempt from the rule.
+    # @param [Array<String>] keyword_filter The keywords to filter.
+    # @param [Symbol] presets The preset of the rule. See {Discorb::AutoModRule::PRESET_TYPES}.
+    # @param [String] reason The reason for creating the rule.
+    #
+    # @return [Async::Task<void>] The task.
+    #
+    def edit: (
+      ?name: String,
+      ?event_type: :send_message,
+      ?actions: Array[Discorb::AutoModRule::Action],
+      ?enabled: bool,
+      ?exempt_roles: Array[Discorb::Role],
+      ?exempt_channels: Array[Discorb::Channel],
+      ?keyword_filter: Array[String]?,
+      ?presets: :profanity | :sexual_content | :slurs,
+      ?reason: nil
+    ) -> Async::Task[void]
+
+    #
+    # Delete the rule.
+    #
+    # @param [String] reason The reason for deleting the rule.
+    #
+    # @return [Async::Task<void>] The task.
+    #
+    def delete!: (?reason: nil) -> Async::Task[void]
+
     class Action < Discorb::DiscordModel
       # @return [Hash{Integer => Symbol}] The mapping of action types.
       # @private

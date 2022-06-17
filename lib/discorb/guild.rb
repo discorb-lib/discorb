@@ -1172,9 +1172,9 @@ module Discorb
     # @async
     #
     # @param [String] name The name of the rule.
-    # @param [Symbol] event_type The event type of the rule. See {Discorb::AutoModRule::EVENT_TYPES}.
     # @param [Symbol] trigger_type The trigger type of the rule. See {Discorb::AutoModRule::TRIGGER_TYPES}.
     # @param [Array<Discorb::AutoModRule::Action>] actions The actions of the rule.
+    # @param [Symbol] event_type The event type of the rule. See {Discorb::AutoModRule::EVENT_TYPES}.
     # @param [Boolean] enabled Whether the rule is enabled or not.
     # @param [Array<Discorb::Role>] exempt_roles The roles that are exempt from the rule.
     # @param [Array<Discorb::Channel>] exempt_channels The channels that are exempt from the rule.
@@ -1186,9 +1186,9 @@ module Discorb
     #
     def create_automod_rule(
       name,
-      event_type,
       trigger_type,
       actions,
+      event_type = :send_message,
       enabled: false,
       exempt_roles: [],
       exempt_channels: [],
