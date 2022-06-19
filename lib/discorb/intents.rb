@@ -23,6 +23,8 @@ module Discorb
       dm_typing: 1 << 14,
       message_content: 1 << 15,
       scheduled_events: 1 << 16,
+      automod_configuration: 1 << 20,
+      automod_execution: 1 << 21,
     }.freeze
 
     #
@@ -44,29 +46,34 @@ module Discorb
     # @param dm_typing [Boolean] Whether dm typing related events are enabled.
     # @param message_content [Boolean] Whether message content will be sent with events.
     # @param scheduled_events [Boolean] Whether events related scheduled events are enabled.
-    #
+    # @param automod_configuration [Boolean] Whether automod configuration related events are enabled.
+    # @param automod_execution [Boolean] Whether automod execution related events are enabled.
     # @note You must enable privileged intents to use `members` and/or `presences` intents.
     # @note Message Content Intent is not required to use `message_content` intents for now,
     #   this will be required in September 1, 2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
     #   You should specify `message_content` intent for preventing unexpected changes in the future.
     #
-    def initialize(guilds: true,
-                   members: false,
-                   bans: true,
-                   emojis: true,
-                   integrations: true,
-                   webhooks: true,
-                   invites: true,
-                   voice_states: true,
-                   presences: false,
-                   messages: true,
-                   reactions: true,
-                   typing: true,
-                   dm_messages: true,
-                   dm_reactions: true,
-                   dm_typing: true,
-                   message_content: nil,
-                   scheduled_events: true)
+    def initialize(
+      guilds: true,
+      members: false,
+      bans: true,
+      emojis: true,
+      integrations: true,
+      webhooks: true,
+      invites: true,
+      voice_states: true,
+      presences: false,
+      messages: true,
+      reactions: true,
+      typing: true,
+      dm_messages: true,
+      dm_reactions: true,
+      dm_typing: true,
+      message_content: nil,
+      scheduled_events: true,
+      automod_configuration: true,
+      automod_execution: true
+    )
       @raw_value = {
         guilds: guilds,
         members: members,
@@ -85,6 +92,8 @@ module Discorb
         dm_typing: dm_typing,
         message_content: message_content,
         scheduled_events: scheduled_events,
+        automod_configuration: automod_configuration,
+        automod_execution: automod_execution,
       }
     end
 
