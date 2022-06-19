@@ -386,6 +386,62 @@ module Discorb
     end
 
     #
+    # Represents a `AUTO_MODERATION_ACTION_EXECUTION` event.
+    #
+    class AutoModerationActionExecutionEvent < GatewayEvent
+      # @return [Discorb::Snowflake] The id of the rule.
+      attr_reader rule_id: Discorb::Snowflake
+
+      # @return [Symbol] The type of action that was executed.
+      attr_reader rule_trigger_type: Discorb::AutoModRule::trigger_type
+
+      # @return [Discorb::Snowflake] The id of the message that triggered the action.
+      # @return [nil] If the message was deleted.
+      attr_reader message_id: Discorb::Snowflake?
+
+      # @return [Discorb::Snowflake] The id of the system message that was sent.
+      # @return [nil] If the system message channel was not set.
+      attr_reader alert_system_message_id: Discorb::Snowflake?
+
+      # @return [String] The content of the message that was sent.
+      attr_reader content: String
+
+      # @return [String] The keyword that triggered the action.
+      # @return [nil] If the action was not triggered by a keyword.
+      attr_reader matched_keyword: String?
+
+      # @return [String] The content that triggered the action.
+      # @return [nil] If the action was not triggered by a keyword.
+      attr_reader matched_content: String?
+
+      # @return [Discorb::AutoModRule::Action] The action that was executed.
+      attr_reader action: Discorb::AutoModRule::Action
+
+      #
+      # Initialize a new instance of the AutoModerationActionExecutionEvent class.
+      # @private
+      #
+      # @param [Discorb::Client] client The client that instantiated the object.
+      # @param [Hash] data The data of the event.
+      #
+      def initialize: (Discorb::Client client, Discorb::json data) -> void
+
+      # @!attribute [r] guild
+      #   @return [Discorb::Guild] The guild where the rule was executed.
+      def guild: () -> Discorb::Guild
+
+      # @!attribute [r] channel
+      #   @return [Discorb::Channel] The channel where the rule was executed.
+      def channel: () -> Discorb::Channel
+
+      # @!attribute [r] member
+      #   @return [Discorb::Member] The member that triggered the action.
+      def member: () -> Discorb::Member
+
+      alias user member
+    end
+
+    #
     # A module to handle gateway events.
     module Handler
       def connect_gateway: (untyped reconnect) -> untyped

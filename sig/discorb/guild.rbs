@@ -548,9 +548,9 @@ module Discorb
     #
     def create_automod_rule: (
       String name,
-      (:keyword | :harmful_link | :spam | :keyword_preset) trigger_type,
+      Discorb::AutoModRule::trigger_type trigger_type,
       Array[Discorb::AutoModRule::Action] actions,
-      ?:send_message event_type
+      ?:send_message event_type,
       ?enabled: bool,
       ?exempt_roles: Array[Discorb::Role],
       ?exempt_channels: Array[Discorb::Channel],
