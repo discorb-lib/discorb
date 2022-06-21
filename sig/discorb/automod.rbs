@@ -4,7 +4,7 @@ module Discorb
 
     # @return [Hash{Integer => Symbol}] The mapping of trigger types.
     # @private
-    TRIGGER_TYPES: Hash[Integer, Symbol]
+    TRIGGER_TYPES: Hash[Integer, trigger_type]
     # @return [Hash{Integer => Symbol}] The mapping of preset types.
     # @private
     PRESET_TYPES: Hash[Integer, Symbol]
