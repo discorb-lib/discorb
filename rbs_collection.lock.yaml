@@ -10,26 +10,18 @@ gems:
   version: '0'
   source:
     type: stdlib
-- name: activesupport
-  version: '6.0'
+- name: logger
+  version: '0'
   source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
+    type: stdlib
 - name: ast
   version: '2.4'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
+    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
-- name: date
-  version: '0'
-  source:
-    type: stdlib
 - name: forwardable
   version: '0'
   source:
@@ -39,7 +31,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
+    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: listen
@@ -47,15 +39,19 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
+    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: minitest
+  version: '0'
+  source:
+    type: stdlib
 - name: parallel
   version: '1.20'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
+    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: prime
@@ -67,14 +63,10 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 6f9f54a753a78c505e63e7f31a48b3f71f1b510d
+    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: singleton
-  version: '0'
-  source:
-    type: stdlib
-- name: time
   version: '0'
   source:
     type: stdlib
@@ -90,15 +82,7 @@ gems:
   version: '0'
   source:
     type: stdlib
-- name: logger
-  version: '0'
-  source:
-    type: stdlib
 - name: mutex_m
-  version: '0'
-  source:
-    type: stdlib
-- name: pathname
   version: '0'
   source:
     type: stdlib

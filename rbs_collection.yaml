@@ -16,3 +16,6 @@ gems:
   - name: discorb
     ignore: true
   - name: net-http
+  - name: logger
+  - name: activesupport
+    ignore: true
