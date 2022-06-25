@@ -12,5 +12,3 @@ jobs:
           ruby-version: 3.0.0
       - name: rubocop
         uses: reviewdog/action-rubocop@v2
-        with:
-          rubocop_version: 1.25
