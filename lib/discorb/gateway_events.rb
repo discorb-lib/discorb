@@ -78,8 +78,13 @@ module Discorb
 
         unless @guild.nil?
           @user = if data.key?(:member)
-            @guild.members[data[:member][:user][:id]] || Member.new(@client, @guild_id, data[:member][:user],
-                                                                    data[:member])
+            @guild.members[data[:member][:user][:id]] ||
+              Member.new(
+                @client,
+                @guild_id,
+                data[:member][:user],
+                data[:member]
+              )
           else
             @guild.members[data[:user_id]]
           end || @user
