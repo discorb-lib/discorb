@@ -529,6 +529,36 @@ module Discorb
     # @return [Array<Discorb::StageChannel>] The stage channels.
     def stage_channels: () -> ::Array[Discorb::StageChannel]
 
+    #
+    # Create a new automod rule in the guild.
+    # @async
+    #
+    # @param [String] name The name of the rule.
+    # @param [Symbol] trigger_type The trigger type of the rule. See {Discorb::AutoModRule::TRIGGER_TYPES}.
+    # @param [Array<Discorb::AutoModRule::Action>] actions The actions of the rule.
+    # @param [Symbol] event_type The event type of the rule. See {Discorb::AutoModRule::EVENT_TYPES}.
+    # @param [Boolean] enabled Whether the rule is enabled or not.
+    # @param [Array<Discorb::Role>] exempt_roles The roles that are exempt from the rule.
+    # @param [Array<Discorb::Channel>] exempt_channels The channels that are exempt from the rule.
+    # @param [Array<String>] keyword_filter The keywords to filter.
+    # @param [Symbol] presets The preset of the rule. See {Discorb::AutoModRule::PRESET_TYPES}.
+    # @param [String] reason The reason for creating the rule.
+    #
+    # @return [Async::Task<Discorb::AutoModRule>] The automod rule.
+    #
+    def create_automod_rule: (
+      String name,
+      Discorb::AutoModRule::trigger_type trigger_type,
+      Array[Discorb::AutoModRule::Action] actions,
+      ?:send_message event_type,
+      ?enabled: bool,
+      ?exempt_roles: Array[Discorb::Role],
+      ?exempt_channels: Array[Discorb::Channel],
+      ?keyword_filter: Array[String]?,
+      ?presets: :profanity | :sexual_content | :slurs,
+      ?reason: nil
+    ) -> Async::Task[void]
+
     # @return [Discorb::Snowflake] ID of the guild.
     attr_reader id: Discorb::Snowflake
 

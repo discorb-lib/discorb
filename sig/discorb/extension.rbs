@@ -90,6 +90,10 @@ module Discorb
              | (:scheduled_event_edit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> void
              | (:scheduled_event_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> void
              | (:scheduled_event_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> void
+             | (:auto_moderation_rule_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> void
+             | (:auto_moderation_rule_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> void
+             | (:auto_moderation_rule_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> void
+             | (:auto_moderation_action_execution event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::AutoModerationActionExecutionEvent event) -> void } -> void
              | (:guild_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> void
              | (:guild_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> void
              | (:thread_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> void
@@ -203,6 +207,10 @@ module Discorb
              | (:scheduled_event_edit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> void
              | (:scheduled_event_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> void
              | (:scheduled_event_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> void
+             | (:auto_moderation_rule_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> void
+             | (:auto_moderation_rule_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> void
+             | (:auto_moderation_rule_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> void
+             | (:auto_moderation_action_execution event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::AutoModerationActionExecutionEvent event) -> void } -> void
              | (:guild_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> void
              | (:guild_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> void
              | (:thread_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> void

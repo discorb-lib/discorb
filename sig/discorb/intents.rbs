@@ -22,6 +22,8 @@ module Discorb
     # @param dm_typing [Boolean] Whether dm typing related events are enabled.
     # @param message_content [Boolean] Whether message content will be sent with events.
     # @param scheduled_events [Boolean] Whether events related scheduled events are enabled.
+    # @param automod_configuration [Boolean] Whether automod configuration related events are enabled.
+    # @param automod_execution [Boolean] Whether automod execution related events are enabled.
     #
     # @note You must enable privileged intents to use `members` and/or `presences` intents.
     # @note Message Content Intent is not required to use `message_content` intents for now,
@@ -44,7 +46,9 @@ module Discorb
                       ?dm_reactions: bool,
                       ?dm_typing: bool,
                       ?message_content: bool?,
-                      ?scheduled_events: bool
+                      ?scheduled_events: bool,
+                      automod_configuration: bool,
+                      automod_execution: bool
                     ) -> void
 
     #
@@ -87,5 +91,7 @@ module Discorb
     attr_accessor dm_typing: bool
     attr_accessor message_content: bool
     attr_accessor scheduled_events: bool
+    attr_accessor automod_configuration: bool
+    attr_accessor automod_execution: bool
   end
 end

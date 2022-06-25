@@ -1131,6 +1131,100 @@ module Discorb
     end
 
     #
+    # Fetch the automod rules in the guild.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::AutoModRule>>] The automod rules.
+    #
+    def fetch_automod_rules
+      Async do
+        _resp, data = @client.http.request(
+          Route.new("/guilds/#{@id}/auto-moderation/rules", "//guilds/:guild_id/auto-moderation/rules", :get)
+        )
+        data.map { |d| AutoModRule.new(@client, d) }
+      end
+    end
+
+    alias fetch_automod_rule_list fetch_automod_rules
+
+    #
+    # Fetch the automod rule by ID.
+    #
+    # @param [#to_s] id The ID of the automod rule.
+    #
+    # @return [Async::Task<Array<Discord::AutoModRule>>] The automod rule.
+    #
+    def fetch_automod_rule(id)
+      Async do
+        _resp, data = @client.http.request(
+          Route.new(
+            "/guilds/#{@id}/auto-moderation/rules/#{id}",
+            "//guilds/:guild_id/auto-moderation/rules/:rule_id",
+            :get
+          )
+        ).wait
+        AutoModRule.new(@client, data)
+      end
+    end
+
+    #
+    # Create a new automod rule in the guild.
+    # @async
+    #
+    # @param [String] name The name of the rule.
+    # @param [Symbol] trigger_type The trigger type of the rule. See {Discorb::AutoModRule::TRIGGER_TYPES}.
+    # @param [Array<Discorb::AutoModRule::Action>] actions The actions of the rule.
+    # @param [Symbol] event_type The event type of the rule. See {Discorb::AutoModRule::EVENT_TYPES}.
+    # @param [Boolean] enabled Whether the rule is enabled or not.
+    # @param [Array<Discorb::Role>] exempt_roles The roles that are exempt from the rule.
+    # @param [Array<Discorb::Channel>] exempt_channels The channels that are exempt from the rule.
+    # @param [Array<String>] keyword_filter The keywords to filter.
+    # @param [Symbol] presets The preset of the rule. See {Discorb::AutoModRule::PRESET_TYPES}.
+    # @param [String] reason The reason for creating the rule.
+    #
+    # @return [Async::Task<Discorb::AutoModRule>] The automod rule.
+    #
+    def create_automod_rule(
+      name,
+      trigger_type,
+      actions,
+      event_type = :send_message,
+      enabled: false,
+      exempt_roles: [],
+      exempt_channels: [],
+      keyword_filter: nil,
+      presets: nil,
+      reason: nil
+    )
+      Async do
+        payload = {
+          name: name,
+          event_type: Discorb::AutoModRule::EVENT_TYPES.key(event_type),
+          trigger_type: Discorb::AutoModRule::TRIGGER_TYPES.key(trigger_type),
+          metadata: {
+            keyword_filter: keyword_filter,
+            presets: Discorb::AutoModRule::PRESET_TYPES.key(presets),
+          },
+          actions: actions.map(&:to_hash),
+          enabled: enabled,
+          exempt_roles: exempt_roles.map(&:id),
+          exempt_channels: exempt_channels.map(&:id),
+        }
+
+        _resp, data = @client.http.request(
+          Route.new(
+            "/guilds/#{@id}/auto-moderation/rules",
+            "//guilds/:guild_id/auto-moderation/rules",
+            :post
+          ),
+          payload,
+          audit_log_reason: reason
+        )
+        Discorb::AutoModRule.new(@client, data)
+      end
+    end
+
+    #
     # Represents a vanity invite.
     #
     class VanityInvite < DiscordModel

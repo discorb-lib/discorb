@@ -103,6 +103,10 @@ module Discorb
           | (:scheduled_event_edit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
           | (:scheduled_event_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
           | (:scheduled_event_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+          | (:auto_moderation_rule_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> Discorb::EventHandler
+          | (:auto_moderation_rule_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> Discorb::EventHandler
+          | (:auto_moderation_rule_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> Discorb::EventHandler
+          | (:auto_moderation_action_execution event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::AutoModerationActionExecutionEvent event) -> void } -> Discorb::EventHandler
           | (:guild_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
           | (:guild_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
           | (:thread_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
@@ -213,6 +217,10 @@ module Discorb
             | (:scheduled_event_edit event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> void } -> Discorb::EventHandler
             | (:scheduled_event_start event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
             | (:scheduled_event_end event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ScheduledEvent event) -> void } -> Discorb::EventHandler
+            | (:auto_moderation_rule_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> Discorb::EventHandler
+            | (:auto_moderation_rule_update event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> Discorb::EventHandler
+            | (:auto_moderation_rule_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::AutoModRule rule) -> void } -> Discorb::EventHandler
+            | (:auto_moderation_action_execution event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Gateway::AutoModerationActionExecutionEvent event) -> void } -> Discorb::EventHandler
             | (:guild_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
             | (:guild_delete event_name, ?id: Symbol?, **untyped metadata) { (Discorb::Guild guild) -> void } -> Discorb::EventHandler
             | (:thread_create event_name, ?id: Symbol?, **untyped metadata) { (Discorb::ThreadChannel thread) -> void } -> Discorb::EventHandler
@@ -415,6 +423,10 @@ module Discorb
            | (:scheduled_event_edit event, ?Integer? timeout) { (Discorb::ScheduledEvent before, Discorb::ScheduledEvent after) -> boolish } -> Async::Task[[Discorb::ScheduledEvent, Discorb::ScheduledEvent]]
            | (:scheduled_event_start event, ?Integer? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
            | (:scheduled_event_end event, ?Integer? timeout) { (Discorb::ScheduledEvent event) -> boolish } -> Async::Task[Discorb::ScheduledEvent]
+           | (:auto_moderation_rule_create event, ?Integer? timeout) { (Discorb::AutoModRule rule) -> boolish } -> Async::Task[Discorb::AutoModRule]
+           | (:auto_moderation_rule_update event, ?Integer? timeout) { (Discorb::AutoModRule rule) -> boolish } -> Async::Task[Discorb::AutoModRule]
+           | (:auto_moderation_rule_delete event, ?Integer? timeout) { (Discorb::AutoModRule rule) -> boolish } -> Async::Task[Discorb::AutoModRule]
+           | (:auto_moderation_action_execution event, ?Integer? timeout) { (Discorb::Gateway::AutoModerationActionExecutionEvent event) -> boolish } -> Async::Task[Discorb::Gateway::AutoModerationActionExecutionEvent]
            | (:guild_create event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
            | (:guild_delete event, ?Integer? timeout) { (Discorb::Guild guild) -> boolish } -> Async::Task[Discorb::Guild]
            | (:thread_create event, ?Integer? timeout) { (Discorb::ThreadChannel thread) -> boolish } -> Async::Task[Discorb::ThreadChannel]
