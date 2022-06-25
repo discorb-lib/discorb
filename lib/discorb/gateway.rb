@@ -689,6 +689,12 @@ module Discorb
           dispatch(:scheduled_event_user_remove, ScheduledEventUserEvent.new(self, data))
         when "AUTO_MODERATION_ACTION_EXECUTION"
           dispatch(:auto_moderation_action_execution, AutoModerationActionExecutionEvent.new(self, data))
+        when "AUTO_MODERATION_RULE_CREATE"
+          dispatch(:auto_moderation_rule_create, AutoModRule.new(self, data))
+        when "AUTO_MODERATION_RULE_UPDATE"
+          dispatch(:auto_moderation_rule_update, AutoModRule.new(self, data))
+        when "AUTO_MODERATION_RULE_DELETE"
+          dispatch(:auto_moderation_rule_delete, AutoModRule.new(self, data))
         else
           if respond_to?("event_" + event_name.downcase)
             __send__("event_" + event_name.downcase, data)
