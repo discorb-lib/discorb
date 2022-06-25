@@ -53,10 +53,11 @@ module Discorb
                 headers: [["User-Agent", Discorb::USER_AGENT]],
                 handler: RawConnection,
               )
+              con = self.connection
               zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               buffer = +""
               begin
-                while (message = connection.read)
+                while (message = con.read)
                   buffer << message
                   if message.end_with?((+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT"))
                     begin
@@ -82,7 +83,7 @@ module Discorb
                 next if @status == :closed
 
                 logger.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
-                connection.force_close
+                con.force_close
                 connect_gateway(true)
                 next
               end
@@ -93,7 +94,7 @@ module Discorb
                 raise ClientError.new("Authentication failed"), cause: nil
               when 4009
                 logger.info "Session timed out, reconnecting."
-                connection.force_close
+                con.force_close
                 connect_gateway(true)
                 next
               when 4014
@@ -108,19 +109,19 @@ module Discorb
                                                  ERROR
               when 1001
                 logger.info "Gateway closed with code 1001, reconnecting."
-                connection.force_close
+                con.force_close
                 connect_gateway(true)
                 next
               else
                 logger.error "Discord WebSocket closed with code #{e.code}."
                 logger.debug "#{e.message}"
-                connection.force_close
+                con.force_close
                 connect_gateway(false)
                 next
               end
             rescue StandardError => e
               logger.error "Discord WebSocket error: #{e.full_message}"
-              connection.force_close
+              con.force_close
               connect_gateway(false)
               next
             end
