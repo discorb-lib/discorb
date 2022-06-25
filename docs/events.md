@@ -69,8 +69,8 @@ end
 
 Fires when an event is received.
 
-| Parameter    | Type   | Description            |
-| ------------ | ------ | ---------------------- |
+| Parameter    | Type     | Description            |
+| ------------ | -------- | ---------------------- |
 | `event_name` | `Symbol` | The name of the event. |
 | `data`       | `Hash`   | The data of the event. |
 
@@ -91,11 +91,11 @@ Fires when the client is resumed connection.
 Fires when an error occurs during an event.
 Defaults to printing the error to stderr, override to handle it yourself.
 
-| Parameter    | Type   | Description            |
-| ------------ | ------ | ---------------------- |
-| `event_name` | `Symbol` | The name of the event. |
+| Parameter    | Type            | Description                 |
+| ------------ | --------------- | --------------------------- |
+| `event_name` | `Symbol`        | The name of the event.      |
 | `args`       | `Array<Object>` | The arguments of the event. |
-| `error`      | `Exception` | The error that occurred. |
+| `error`      | `Exception`     | The error that occurred.    |
 
 #### `setup()`
 
@@ -617,6 +617,38 @@ Fires when a scheduled event is ended.
 | Parameter | Type                      | Description                     |
 | --------- | ------------------------- | ------------------------------- |
 | `event`   | {Discorb::ScheduledEvent} | The scheduled event that ended. |
+
+### Automod events
+
+#### `auto_moderation_rule_create(rule)`
+
+Fires when an auto moderation rule is created.
+
+| Parameter | Type                   | Description                       |
+| --------- | ---------------------- | --------------------------------- |
+| `rule`    | {Discorb::AutoModRule} | The created auto moderation rule. |
+
+#### `auto_moderation_rule_update(rule)`
+
+Fires when an auto moderation rule is updated.
+
+| Parameter | Type                   | Description                       |
+| --------- | ---------------------- | --------------------------------- |
+| `rule`    | {Discorb::AutoModRule} | The updated auto moderation rule. |
+
+#### `auto_moderation_rule_delete(rule)`
+
+Fires when an auto moderation rule is deleted.
+
+| Parameter | Type                   | Description                       |
+| --------- | ---------------------- | --------------------------------- |
+| `rule`    | {Discorb::AutoModRule} | The deleted auto moderation rule. |
+
+#### `auto_moderation_action_execution(event)`
+
+| Parameter | Type                                                   | Description                |
+| --------- | ------------------------------------------------------ | -------------------------- |
+| `event`   | {Discorb::Gateway::AutoModerationActionExecutionEvent} | The auto moderation event. |
 
 ### Low-level events
 
