@@ -99,7 +99,8 @@ end
 client.run(ENV["DISCORD_BOT_TOKEN"])
 ```
 
-Note you must run `discorb setup` before using slash commands.
+> **Note**
+> You must run `discorb setup` before using slash commands.
 
 ## Contributing
 
