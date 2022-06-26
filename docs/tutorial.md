@@ -21,6 +21,7 @@ Let's get started!
 - Good editor  
    They are recommended:
   - [VSCode](https://code.visualstudio.com/)
+  - [RubyMine](https://www.jetbrains.com/ruby/)
   - [Sublime Text](https://www.sublimetext.com/)
   - [Brackets](https://brackets.io/)
   - [Notepad++](https://notepad-plus-plus.org/)
