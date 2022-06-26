@@ -4,6 +4,16 @@
 
 # Changelog
 
+## v0.18
+
+### v0.18.0
+
+- Change!: `XXX#fired_by` is now `XXX#user` or `XXX#member`.
+- Change!: `Message#to_reference` returns `Message::Reference`.
+- Change!: `TextChannel#default_auto_archive_duration` is now Integer.
+- Add: Support AutoMod.
+- Change: `discorb new` doesn't do initial commit.
+
 ## v0.17
 
 ### v0.17.1
