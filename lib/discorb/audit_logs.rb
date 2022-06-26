@@ -172,6 +172,10 @@ module Discorb
         111 => :thread_update,
         112 => :thread_delete,
         121 => :application_command_permission_update,
+        140 => :automod_rule_create,
+        141 => :automod_rule_update,
+        142 => :automod_rule_delete,
+        143 => :automod_block_message,
       }.freeze
 
       #
@@ -197,7 +201,7 @@ module Discorb
         @id = Snowflake.new(data[:id])
         @user_id = Snowflake.new(data[:user_id])
         @target_id = Snowflake.new(data[:target_id])
-        @type = EVENTS[data[:action_type]]
+        @type = EVENTS[data[:action_type]] || :unknown
         @target = CONVERTERS[@type.to_s.split("_")[0].to_sym]&.call(client, @target_id, @gui)
         @target ||= Snowflake.new(data[:target_id])
         @changes = data[:changes] && Changes.new(data[:changes])
