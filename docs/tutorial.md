@@ -21,7 +21,6 @@ Let's get started!
 - Good editor  
    They are recommended:
   - [VSCode](https://code.visualstudio.com/)
-  - [Atom](https://atom.io/)
   - [Sublime Text](https://www.sublimetext.com/)
   - [Brackets](https://brackets.io/)
   - [Notepad++](https://notepad-plus-plus.org/)
