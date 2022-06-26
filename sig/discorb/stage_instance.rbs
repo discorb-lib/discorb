@@ -9,19 +9,23 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data of the stage instance.
     # @param [Boolean] no_cache Whether to disable caching.
-    def initialize: (Discorb::Client client, Discorb::json data, ?no_cache: bool) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::json data,
+      ?no_cache: bool
+    ) -> void
 
-    def guild: () -> untyped
+    def guild: -> untyped
 
-    def channel: () -> untyped
+    def channel: -> untyped
 
-    def discoverable?: () -> bool
+    def discoverable?: -> bool
 
-    def public?: () -> bool
+    def public?: -> bool
 
-    def guild_only?: () -> bool
+    def guild_only?: -> bool
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Edits the stage instance.
@@ -33,7 +37,11 @@ module Discorb
     # @param [String] reason The reason for editing the stage instance.
     #
     # @return [Async::Task<void>] The task.
-    def edit: (?topic: String, ?privacy_level: Symbol, ?reason: String?) -> Async::Task[void]
+    def edit: (
+      ?topic: String,
+      ?privacy_level: Symbol,
+      ?reason: String?
+    ) -> Async::Task[void]
 
     #
     # Deletes the stage instance.

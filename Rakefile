@@ -434,6 +434,16 @@ namespace :rbs do
     base.gsub!(/ +$/m, "")
     File.write("sig/discorb.rbs", base)
   end
+
+  desc "Lint rbs with stree"
+  task :lint do
+    sh "stree check --plugins=rbs sig/**/*.rbs"
+  end
+
+  desc "Autofix rbs with stree"
+  task "lint:fix" do
+    sh "stree write --plugins=rbs sig/**/*.rbs"
+  end
 end
 
 task document: %i[document:yard document:replace]

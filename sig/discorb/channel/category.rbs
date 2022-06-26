@@ -4,49 +4,53 @@ module Discorb
   class CategoryChannel < Discorb::GuildChannel
     include Discorb::ChannelContainer
 
-    def channels: () -> Array[Discorb::GuildChannel]
+    def channels: -> Array[Discorb::GuildChannel]
 
     def create_text_channel: (
-                               String name,
-                               ?topic: String?,
-                               ?rate_limit_per_user: Integer?,
-                               ?slowmode: Integer?,
-                               ?position: Integer?,
-                               ?nsfw: bool?,
-                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
-                               ?parent: Discorb::CategoryChannel?,
-                               ?reason: String?
-                             ) -> Async::Task[Discorb::TextChannel]
+      String name,
+      ?topic: String?,
+      ?rate_limit_per_user: Integer?,
+      ?slowmode: Integer?,
+      ?position: Integer?,
+      ?nsfw: bool?,
+      ?permission_overwrites: Hash[(Discorb::Role
+      | Discorb::Member), Discorb::PermissionOverwrite]?,
+      ?parent: Discorb::CategoryChannel?,
+      ?reason: String?
+    ) -> Async::Task[Discorb::TextChannel]
 
     def create_voice_channel: (
-                                String name,
-                                ?bitrate: Integer,
-                                ?user_limit: Integer?,
-                                ?position: Integer?,
-                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
-                                ?parent: Discorb::CategoryChannel?,
-                                ?reason: String?
-                              ) -> Async::Task[Discorb::VoiceChannel]
+      String name,
+      ?bitrate: Integer,
+      ?user_limit: Integer?,
+      ?position: Integer?,
+      ?permission_overwrites: Hash[(Discorb::Role
+      | Discorb::Member), Discorb::PermissionOverwrite]?,
+      ?parent: Discorb::CategoryChannel?,
+      ?reason: String?
+    ) -> Async::Task[Discorb::VoiceChannel]
 
     def create_news_channel: (
-                               String name,
-                               ?topic: String?,
-                               ?rate_limit_per_user: Integer?,
-                               ?slowmode: Integer?,
-                               ?position: Integer?,
-                               ?nsfw: bool?,
-                               ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
-                               ?parent: Discorb::CategoryChannel?,
-                               ?reason: String?
-                             ) -> Async::Task[Discorb::NewsChannel]
+      String name,
+      ?topic: String?,
+      ?rate_limit_per_user: Integer?,
+      ?slowmode: Integer?,
+      ?position: Integer?,
+      ?nsfw: bool?,
+      ?permission_overwrites: Hash[(Discorb::Role
+      | Discorb::Member), Discorb::PermissionOverwrite]?,
+      ?parent: Discorb::CategoryChannel?,
+      ?reason: String?
+    ) -> Async::Task[Discorb::NewsChannel]
 
     def create_stage_channel: (
-                                String name,
-                                ?bitrate: Integer,
-                                ?position: Integer?,
-                                ?permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]?,
-                                ?parent: Discorb::CategoryChannel?,
-                                ?reason: String?
-                              ) -> Async::Task[Discorb::StageChannel]
+      String name,
+      ?bitrate: Integer,
+      ?position: Integer?,
+      ?permission_overwrites: Hash[(Discorb::Role
+      | Discorb::Member), Discorb::PermissionOverwrite]?,
+      ?parent: Discorb::CategoryChannel?,
+      ?reason: String?
+    ) -> Async::Task[Discorb::StageChannel]
   end
 end

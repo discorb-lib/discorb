@@ -3,6 +3,7 @@ module Discorb
   # Represents a text channel.
   class TextChannel < Discorb::GuildChannel
     include Discorb::Messageable
+
     #
     # Edits the channel.
     # @async
@@ -23,19 +24,19 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited channel.
     def edit: (
-                ?name: String,
-                ?position: Integer,
-                ?category: Discorb::CategoryChannel?,
-                ?parent: Discorb::CategoryChannel?,
-                ?topic: String,
-                ?nsfw: bool,
-                ?announce: bool,
-                ?rate_limit_per_user: Integer,
-                ?slowmode: Integer,
-                ?default_auto_archive_duration: 60 | 1440 | 4320 | 10080,
-                ?archive_in: Integer,
-                ?reason: String?
-              ) -> Async::Task[self]
+      ?name: String,
+      ?position: Integer,
+      ?category: Discorb::CategoryChannel?,
+      ?parent: Discorb::CategoryChannel?,
+      ?topic: String,
+      ?nsfw: bool,
+      ?announce: bool,
+      ?rate_limit_per_user: Integer,
+      ?slowmode: Integer,
+      ?default_auto_archive_duration: 60 | 1440 | 4320 | 10080,
+      ?archive_in: Integer,
+      ?reason: String?
+    ) -> Async::Task[self]
 
     #
     # Create webhook in the channel.
@@ -45,14 +46,17 @@ module Discorb
     # @param [Discorb::Image] avatar The avatar of the webhook.
     #
     # @return [Async::Task<Discorb::Webhook::IncomingWebhook>] The created webhook.
-    def create_webhook: (String name, ?avatar: Discorb::Image?) -> Async::Task[Discorb::Webhook::IncomingWebhook]
+    def create_webhook: (
+      String name,
+      ?avatar: Discorb::Image?
+    ) -> Async::Task[Discorb::Webhook::IncomingWebhook]
 
     #
     # Fetch webhooks in the channel.
     # @async
     #
     # @return [Async::Task<Array<Discorb::Webhook>>] The webhooks in the channel.
-    def fetch_webhooks: () -> Async::Task[::Array[Discorb::Webhook]]
+    def fetch_webhooks: -> Async::Task[::Array[Discorb::Webhook]]
 
     #
     # Bulk delete messages in the channel.
@@ -62,8 +66,9 @@ module Discorb
     # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
     #
     # @return [Async::Task<void>] The task.
-    def delete_messages!: (*Discorb::Message messages, ?force: bool) -> Async::Task[void]
-                        | (*Array[Discorb::Message] messages, ?force: bool) -> Async::Task[void]
+    def delete_messages!:
+      (*Discorb::Message messages, ?force: bool) -> Async::Task[void]
+      | (*Array[Discorb::Message] messages, ?force: bool) -> Async::Task[void]
 
     #
     # Follow the existing announcement channel.
@@ -73,7 +78,10 @@ module Discorb
     # @param [String] reason The reason of following the channel.
     #
     # @return [Async::Task<void>] The task.
-    def follow_from: (Discorb::NewsChannel target, ?reason: String?) -> Async::Task[void]
+    def follow_from: (
+      Discorb::NewsChannel target,
+      ?reason: String?
+    ) -> Async::Task[void]
 
     #
     # Start thread in the channel.
@@ -89,28 +97,28 @@ module Discorb
     #
     # @return [Async::Task<Discorb::ThreadChannel>] The started thread.
     def start_thread: (
-                        String name,
-                        ?message: Discorb::Message?,
-                        ?auto_archive_duration: Symbol?,
-                        ?public: bool,
-                        ?rate_limit_per_user: Integer?,
-                        ?slowmode: Integer?,
-                        ?reason: String?
-                      ) -> Async::Task[Discorb::ThreadChannel]
+      String name,
+      ?message: Discorb::Message?,
+      ?auto_archive_duration: Symbol?,
+      ?public: bool,
+      ?rate_limit_per_user: Integer?,
+      ?slowmode: Integer?,
+      ?reason: String?
+    ) -> Async::Task[Discorb::ThreadChannel]
 
     #
     # Fetch archived threads in the channel.
     # @async
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived threads in the channel.
-    def fetch_archived_public_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
+    def fetch_archived_public_threads: -> Async::Task[::Array[Discorb::ThreadChannel]]
 
     #
     # Fetch archived private threads in the channel.
     # @async
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived private threads in the channel.
-    def fetch_archived_private_threads: () -> Async::Task[::Array[Discorb::ThreadChannel]]
+    def fetch_archived_private_threads: -> Async::Task[::Array[Discorb::ThreadChannel]]
 
     #
     # Fetch joined archived private threads in the channel.
@@ -120,7 +128,10 @@ module Discorb
     # @param [Time] before <description>
     #
     # @return [Async::Task<Array<Discorb::ThreadChannel>>] The joined archived private threads in the channel.
-    def fetch_joined_archived_private_threads: (?limit: Integer?, ?before: Time?) -> Async::Task[::Array[Discorb::ThreadChannel]]
+    def fetch_joined_archived_private_threads: (
+      ?limit: Integer?,
+      ?before: Time?
+    ) -> Async::Task[::Array[Discorb::ThreadChannel]]
 
     # @return [String] The topic of the channel.
     attr_reader topic: String

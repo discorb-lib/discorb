@@ -11,9 +11,13 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Discorb::Guild] guild The guild the role belongs to.
     # @param [Hash] data The data of the role.
-    def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::Guild guild,
+      Discorb::json data
+    ) -> void
 
-    def icon: () -> (Discorb::Asset | Discorb::emoji | nil)
+    def icon: -> (Discorb::Asset | Discorb::emoji | nil)
 
     #
     # Compares two roles by their position.
@@ -27,13 +31,13 @@ module Discorb
     # Formats the role as a string.
     #
     # @return [String] The formatted string.
-    def to_s: () -> String
+    def to_s: -> String
 
-    def mention: () -> String
+    def mention: -> String
 
-    def color?: () -> bool
+    def color?: -> bool
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Moves the role to a new position.
@@ -60,14 +64,14 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     def edit: (
-                ?name: String,
-                ?position: Integer,
-                ?color: Discorb::Color,
-                ?hoist: bool,
-                ?mentionable: bool,
-                ?icon: (Discorb::Image | Discorb::UnicodeEmoji),
-                ?reason: String?
-              ) -> Async::Task[void]
+      ?name: String,
+      ?position: Integer,
+      ?color: Discorb::Color,
+      ?hoist: bool,
+      ?mentionable: bool,
+      ?icon: Discorb::Image | Discorb::UnicodeEmoji,
+      ?reason: String?
+    ) -> Async::Task[void]
 
     #
     # Deletes the role.
@@ -77,7 +81,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     def delete!: (?reason: String?) -> Async::Task[void]
 
-    def tag: () -> Discorb::Role::Tag
+    def tag: -> Discorb::Role::Tag
 
     # @return [Discorb::Snowflake] The ID of the role.
     attr_reader id: Discorb::Snowflake

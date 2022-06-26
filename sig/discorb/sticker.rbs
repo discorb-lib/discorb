@@ -64,11 +64,11 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       def edit: (
-                  ?name: String,
-                  ?description: String,
-                  ?tag: Discorb::emoji,
-                  ?reason: String
-                ) -> Async::Task[void]
+        ?name: String,
+        ?description: String,
+        ?tag: Discorb::emoji,
+        ?reason: String
+      ) -> Async::Task[void]
 
       #
       # Deletes the sticker.

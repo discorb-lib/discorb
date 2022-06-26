@@ -23,7 +23,7 @@ module Discorb
     #
     # Returns the classes under this class.
     # @private
-    def self.nested_classes: () -> untyped
+    def self.nested_classes: -> untyped
 
     #
     # Response with `MODAL`(`9`).
@@ -33,7 +33,11 @@ module Discorb
     # @param [Array<Discorb::TextInput>] components The text inputs to send.
     #
     # @return [Async::Task<void>] The task.
-    def show_modal: (String title, String custom_id, ::Array[Discorb::TextInput] components) -> Async::Task[void]
+    def show_modal: (
+      String title,
+      String custom_id,
+      ::Array[Discorb::TextInput] components
+    ) -> Async::Task[void]
 
     #
     # Response with `DEFERRED_UPDATE_MESSAGE`(`6`).
@@ -59,14 +63,15 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     def edit: (
-                String content,
-                ?tts: bool,
-                ?embed: Discorb::Embed?,
-                ?embeds: ::Array[Discorb::Embed]?,
-                ?allowed_mentions: Discorb::AllowedMentions?,
-                ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
-                ?ephemeral: bool
-              ) -> Async::Task[void]
+      String content,
+      ?tts: bool,
+      ?embed: Discorb::Embed?,
+      ?embeds: ::Array[Discorb::Embed]?,
+      ?allowed_mentions: Discorb::AllowedMentions?,
+      ?components: (::Array[Discorb::Component]
+      | ::Array[::Array[Discorb::Component]])?,
+      ?ephemeral: bool
+    ) -> Async::Task[void]
 
     #
     # Response with `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`(`5`).
@@ -94,14 +99,16 @@ module Discorb
     # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message]
     #   The callback message.
     def post: (
-                ?String? content,
-                ?tts: bool,
-                ?embed: Discorb::Embed?,
-                ?embeds: ::Array[Discorb::Embed]?,
-                ?allowed_mentions: Discorb::AllowedMentions?,
-                ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
-                ?ephemeral: bool
-              ) -> (Discorb::Interaction::SourceResponder::CallbackMessage | Discorb::Webhook::Message)
+      ?String? content,
+      ?tts: bool,
+      ?embed: Discorb::Embed?,
+      ?embeds: ::Array[Discorb::Embed]?,
+      ?allowed_mentions: Discorb::AllowedMentions?,
+      ?components: (::Array[Discorb::Component]
+      | ::Array[::Array[Discorb::Component]])?,
+      ?ephemeral: bool
+    ) -> (Discorb::Interaction::SourceResponder::CallbackMessage
+    | Discorb::Webhook::Message)
 
     # @return [String] The content of the response.
     attr_reader custom_id: String

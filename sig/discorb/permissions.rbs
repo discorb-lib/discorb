@@ -55,21 +55,21 @@ module Discorb
     # @param deny [Integer] The denied permissions.
     def initialize: (Integer allow, Integer deny) -> void
 
-    def allow: () -> Discorb::Permission
+    def allow: -> Discorb::Permission
 
-    def deny: () -> Discorb::Permission
+    def deny: -> Discorb::Permission
 
-    def allow_value: () -> Integer
+    def allow_value: -> Integer
 
-    def deny_value: () -> Integer
+    def deny_value: -> Integer
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Converts the permission overwrite to a hash.
     #
     # @return [Hash] The permission overwrite as a hash.
-    def to_hash: () -> Hash[Symbol, bool]
+    def to_hash: -> Hash[Symbol, bool]
 
     #
     # Union of the permission overwrites.
@@ -92,11 +92,11 @@ module Discorb
     #
     # @param [Symbol] key The field to set.
     # @param [Boolean] bool The value to set.
-    def []=: (Symbol key, bool bool) -> untyped
+    def []=: (Symbol key, bool `bool`) -> untyped
 
     #
     # Returns the value of the flag.
-    def method_missing: (untyped method, ?untyped bool) -> untyped
+    def method_missing: (untyped method, ?untyped `bool`) -> untyped
 
     def respond_to_missing?: (untyped method, untyped _arg) -> bool
 
@@ -106,6 +106,8 @@ module Discorb
     # @param [Hash] hash The hash to initialize the permission overwrite from.
     #
     # @return [Discorb::PermissionOverwrite] The permission overwrite.
-    def self.from_hash: (::Hash[Symbol, bool] hash) -> Discorb::PermissionOverwrite
+    def self.from_hash: (
+      ::Hash[Symbol, bool] hash
+    ) -> Discorb::PermissionOverwrite
   end
 end

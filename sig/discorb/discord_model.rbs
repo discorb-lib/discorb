@@ -7,9 +7,9 @@ module Discorb
 
     def ==: (untyped other) -> untyped
 
-    def inspect: () -> String
+    def inspect: -> String
 
     # @private
-    def hash: () -> untyped
+    def hash: -> untyped
   end
 end

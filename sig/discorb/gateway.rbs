@@ -14,7 +14,7 @@ module Discorb
       # @param [Hash] data The data of the event.
       def initialize: (Discorb::json data) -> void
 
-      def inspect: () -> String
+      def inspect: -> String
     end
 
     #
@@ -65,7 +65,7 @@ module Discorb
       attr_reader message: Discorb::Message?
 
       # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
-      attr_reader emoji: (Discorb::UnicodeEmoji | Discorb::PartialEmoji)
+      attr_reader emoji: Discorb::UnicodeEmoji | Discorb::PartialEmoji
 
       # @macro client_cache
       # @return [Discorb::User, Discorb::Member] The user that is typing.
@@ -180,7 +180,7 @@ module Discorb
       attr_reader message: Discorb::Message?
 
       # @return [Discorb::UnicodeEmoji, Discorb::PartialEmoji] The emoji that was reacted with.
-      attr_reader emoji: (Discorb::UnicodeEmoji | Discorb::PartialEmoji)
+      attr_reader emoji: Discorb::UnicodeEmoji | Discorb::PartialEmoji
     end
 
     #
@@ -214,17 +214,17 @@ module Discorb
       #   @macro client_cache
       #   @return [Discorb::Guild] The guild the message was sent in.
       def initialize: (
-                        untyped client,
-                        untyped data,
-                        untyped before,
-                        untyped after
-                      ) -> void
+        untyped client,
+        untyped data,
+        untyped before,
+        untyped after
+      ) -> void
 
       # Fetch the message.
       # @async
       #
       # @return [Async::Task<Discorb::Message>] The message.
-      def fetch_message: () -> Async::Task[Discorb::Message]
+      def fetch_message: -> Async::Task[Discorb::Message]
 
       # @return [Discorb::Message] The message before update.
       attr_reader before: Discorb::Message
@@ -278,7 +278,11 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      def initialize: (Discorb::Client client, _ToS id, Discorb::json data) -> void
+      def initialize: (
+        Discorb::Client client,
+        _ToS id,
+        Discorb::json data
+      ) -> void
 
       # @return [Discorb::Snowflake] The ID of the message.
       attr_reader id: Discorb::Snowflake
@@ -387,7 +391,6 @@ module Discorb
 
     #
     # Represents a `AUTO_MODERATION_ACTION_EXECUTION` event.
-    #
     class AutoModerationActionExecutionEvent < GatewayEvent
       # @return [Discorb::Snowflake] The id of the rule.
       attr_reader rule_id: Discorb::Snowflake
@@ -423,20 +426,19 @@ module Discorb
       #
       # @param [Discorb::Client] client The client that instantiated the object.
       # @param [Hash] data The data of the event.
-      #
       def initialize: (Discorb::Client client, Discorb::json data) -> void
 
       # @!attribute [r] guild
       #   @return [Discorb::Guild] The guild where the rule was executed.
-      def guild: () -> Discorb::Guild
+      def guild: -> Discorb::Guild
 
       # @!attribute [r] channel
       #   @return [Discorb::Channel] The channel where the rule was executed.
-      def channel: () -> Discorb::Channel
+      def channel: -> Discorb::Channel
 
       # @!attribute [r] member
       #   @return [Discorb::Member] The member that triggered the action.
-      def member: () -> Discorb::Member
+      def member: -> Discorb::Member
 
       alias user member
     end
@@ -450,26 +452,26 @@ module Discorb
 
       def handle_gateway: (untyped payload, untyped reconnect) -> untyped
 
-      def handle_heartbeat: () -> untyped
+      def handle_heartbeat: -> untyped
 
       def handle_event: (untyped event_name, untyped data) -> untyped
 
-      def ready: () -> untyped
+      def ready: -> untyped
     end
 
     #
     # A class for connecting websocket with raw bytes data.
     # @private
     class RawConnection < Async::WebSocket::Connection
-      def inspect: () -> String
+      def inspect: -> String
 
-      def closed?: () -> bool
+      def closed?: -> bool
 
-      def close: () -> untyped
+      def close: -> untyped
 
-      def force_close: () -> untyped
+      def force_close: -> untyped
 
-      def io: () -> untyped
+      def io: -> untyped
 
       def parse: (untyped buffer) -> untyped
 

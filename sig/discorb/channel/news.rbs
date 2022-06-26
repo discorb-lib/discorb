@@ -12,6 +12,9 @@ module Discorb
     # @param [String] reason The reason of following the channel.
     #
     # @return [Async::Task<void>] The task.
-    def follow_to: (Discorb::TextChannel target, ?reason: String?) -> Async::Task[void]
+    def follow_to: (
+      Discorb::TextChannel target,
+      ?reason: String?
+    ) -> Async::Task[void]
   end
 end

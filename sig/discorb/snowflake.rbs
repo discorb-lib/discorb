@@ -24,9 +24,9 @@ module Discorb
     def eql?: (untyped other) -> bool
 
     # Return hash of snowflake.
-    def hash: () -> untyped
+    def hash: -> untyped
 
-    def inspect: () -> String
+    def inspect: -> String
 
     # Timestamp of snowflake.
     #

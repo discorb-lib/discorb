@@ -30,14 +30,16 @@ module Discorb
     # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message]
     #   The callback message.
     def post: (
-                ?String? content,
-                ?tts: bool,
-                ?embed: Discorb::Embed?,
-                ?embeds: ::Array[Discorb::Embed]?,
-                ?allowed_mentions: Discorb::AllowedMentions?,
-                ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
-                ?ephemeral: bool
-              ) -> (Discorb::Interaction::SourceResponder::CallbackMessage | Discorb::Webhook::Message)
+      ?String? content,
+      ?tts: bool,
+      ?embed: Discorb::Embed?,
+      ?embeds: ::Array[Discorb::Embed]?,
+      ?allowed_mentions: Discorb::AllowedMentions?,
+      ?components: (::Array[Discorb::Component]
+      | ::Array[::Array[Discorb::Component]])?,
+      ?ephemeral: bool
+    ) -> (Discorb::Interaction::SourceResponder::CallbackMessage
+    | Discorb::Webhook::Message)
 
     # @return [String] The custom id of the modal.
     attr_reader custom_id: String

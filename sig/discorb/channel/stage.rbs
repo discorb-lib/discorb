@@ -7,9 +7,9 @@ module Discorb
     #
     # Initialize a new stage channel.
     # @private
-    def initialize: () -> void
+    def initialize: -> void
 
-    def stage_instance: () -> untyped
+    def stage_instance: -> untyped
 
     #
     # Edit the stage channel.
@@ -24,12 +24,12 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited stage channel.
     def edit: (
-                ?name: String,
-                ?position: Integer,
-                ?bitrate: Integer,
-                ?rtc_region: Symbol,
-                ?reason: String?
-              ) -> Async::Task[self]
+      ?name: String,
+      ?position: Integer,
+      ?bitrate: Integer,
+      ?rtc_region: Symbol,
+      ?reason: String?
+    ) -> Async::Task[self]
 
     #
     # Start a stage instance.
@@ -40,7 +40,11 @@ module Discorb
     # @param [String] reason The reason of starting the stage instance.
     #
     # @return [Async::Task<Discorb::StageInstance>] The started stage instance.
-    def start: (String topic, ?public: bool, ?reason: String?) -> Async::Task[Discorb::StageInstance]
+    def start: (
+      String topic,
+      ?public: bool,
+      ?reason: String?
+    ) -> Async::Task[Discorb::StageInstance]
 
     #
     # Fetch a current stage instance.
@@ -48,15 +52,15 @@ module Discorb
     #
     # @return [Async::Task<StageInstance>] The current stage instance.
     # @return [Async::Task<nil>] If there is no current stage instance.
-    def fetch_stage_instance: () -> Async::Task[StageInstance]
+    def fetch_stage_instance: -> Async::Task[StageInstance]
 
-    def voice_states: () -> Array[Discorb::VoiceState]
+    def voice_states: -> Array[Discorb::VoiceState]
 
-    def members: () -> Array[Discorb::Member]
+    def members: -> Array[Discorb::Member]
 
-    def speakers: () -> Array[Discorb::Member]
+    def speakers: -> Array[Discorb::Member]
 
-    def audiences: () -> Array[Discorb::Member]
+    def audiences: -> Array[Discorb::Member]
 
     # @return [Integer] The bitrate of the voice channel.
     attr_reader bitrate: Integer

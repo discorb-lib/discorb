@@ -29,35 +29,35 @@ module Discorb
     # @see Event#cancel
     # @see Event#complete
     def edit: (
-                ?type: Symbol,
-                ?name: String,
-                ?description: String,
-                ?start_time: Time,
-                ?end_time: Time?,
-                ?privacy_level: Symbol,
-                ?location: String?,
-                ?channel: (Discorb::Channel | Discorb::Snowflake)?,
-                ?status: Symbol
-              ) -> Async::Task[Discorb::ScheduledEvent]
+      ?type: Symbol,
+      ?name: String,
+      ?description: String,
+      ?start_time: Time,
+      ?end_time: Time?,
+      ?privacy_level: Symbol,
+      ?location: String?,
+      ?channel: (Discorb::Channel | Discorb::Snowflake)?,
+      ?status: Symbol
+    ) -> Async::Task[Discorb::ScheduledEvent]
 
     #
     # Starts the event. Shortcut for `edit(status: :active)`.
-    def start: () -> untyped
+    def start: -> untyped
 
     #
     # Completes the event. Shortcut for `edit(status: :completed)`.
-    def complete: () -> untyped
+    def complete: -> untyped
 
     #
     # Cancels the event. Shortcut for `edit(status: :canceled)`.
-    def cancel: () -> untyped
+    def cancel: -> untyped
 
     #
     # Deletes the event.
     # @async
     #
     # @return [Async::Task<void>] The task.
-    def delete!: () -> Async::Task[void]
+    def delete!: -> Async::Task[void]
 
     #
     # Fetches the event users.
@@ -73,11 +73,11 @@ module Discorb
     #
     # @return [Async::Task<Array<Discorb::Member>>] The event users.
     def fetch_users: (
-                       ?Integer? limit,
-                       ?before: untyped,
-                       ?after: untyped,
-                       ?with_member: bool
-                     ) -> Async::Task[::Array[Discorb::Member]]
+      ?Integer? limit,
+      ?before: untyped,
+      ?after: untyped,
+      ?with_member: bool
+    ) -> Async::Task[::Array[Discorb::Member]]
 
     # @return [Discorb::Snowflake] The ID of the event.
     attr_reader id: Discorb::Snowflake
@@ -139,7 +139,7 @@ module Discorb
       # @!visibility private
       def initialize: (untyped data) -> void
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # @return [String, nil] The location of the event. Only present if the event is a external event.
       attr_reader location: String?

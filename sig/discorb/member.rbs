@@ -11,19 +11,19 @@ module Discorb
     # @param [Hash] user_data The data of the user.
     # @param [Hash] member_data The data of the member.
     def initialize: (
-                      Discorb::Client client,
-                      Discorb::Snowflake guild_id,
-                      Discorb::json user_data,
-                      Discorb::json member_data
-                    ) -> void
+      Discorb::Client client,
+      Discorb::Snowflake guild_id,
+      Discorb::json user_data,
+      Discorb::json member_data
+    ) -> void
 
     #
     # Format the member to `Username#Discriminator` style.
     #
     # @return [String] The formatted member.
-    def to_s: () -> String
+    def to_s: -> String
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Add a role to the member.
@@ -61,15 +61,15 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     def edit: (
-                ?nick: String,
-                ?role: Discorb::Role,
-                ?mute: bool,
-                ?deaf: bool,
-                ?channel: Discorb::StageChannel,
-                ?communication_disabled_until: Time?,
-                ?timeout_until: Time?,
-                ?reason: String?
-              ) -> Async::Task[void]
+      ?nick: String,
+      ?role: Discorb::Role,
+      ?mute: bool,
+      ?deaf: bool,
+      ?channel: Discorb::StageChannel,
+      ?communication_disabled_until: Time?,
+      ?timeout_until: Time?,
+      ?reason: String?
+    ) -> Async::Task[void]
 
     #
     # Timeout the member.
@@ -98,7 +98,10 @@ module Discorb
     # @param [String] reason The reason for the action.
     #
     # @return [Async::Task<Discorb::Guild::Ban>] The ban.
-    def ban: (?delete_message_days: Integer, ?reason: String?) -> Async::Task[Discorb::Guild::Ban]
+    def ban: (
+      ?delete_message_days: Integer,
+      ?reason: String?
+    ) -> Async::Task[Discorb::Guild::Ban]
 
     #
     # Checks if the member can manage the given role.

@@ -11,25 +11,25 @@ module Discorb
     # @param [Integer] count The number of shards.
     # @param [Integer] index The index of the shard.
     def initialize: (
-                      Discorb::Client client,
-                      Integer id,
-                      Integer count,
-                      Integer index
-                    ) -> void
+      Discorb::Client client,
+      Integer id,
+      Integer count,
+      Integer index
+    ) -> void
 
     #
     # Starts the shard.
     #
     # @return [void]
-    def start: () -> void
+    def start: -> void
 
     #
     # Stops the shard.
     #
     # @return [void]
-    def close!: () -> void
+    def close!: -> void
 
-    def inspect: () -> String
+    def inspect: -> String
 
     # @return [Integer] The ID of the shard.
     attr_reader id: Integer

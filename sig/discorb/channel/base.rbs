@@ -16,12 +16,12 @@ module Discorb
     # @return [Boolean] True if the channel is other channel.
     def ==: (Discorb::Channel other) -> bool
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Returns the descendants of the Channel class.
     # @private
-    def self.descendants: () -> untyped
+    def self.descendants: -> untyped
 
     #
     # Creates a new instance of the Channel class or instance of its descendants.
@@ -30,16 +30,20 @@ module Discorb
     # @param [Discorb::Client] client The client that instantiated the object.
     # @param [Hash] data The data of the object.
     # @param [Boolean] no_cache Whether to disable cache the object.
-    def self.make_channel: (Discorb::Client client, Discorb::json data, ?no_cache: bool) -> untyped
+    def self.make_channel: (
+      Discorb::Client client,
+      Discorb::json data,
+      ?no_cache: bool
+    ) -> untyped
 
-    def type: () -> String
+    def `type`: -> String
 
     #
     # Returns the channel id to request.
     # @private
     #
     # @return [Async::Task<Discorb::Snowflake>] A task that resolves to the channel id.
-    def channel_id: () -> Async::Task[Discorb::Snowflake]
+    def channel_id: -> Async::Task[Discorb::Snowflake]
 
     # @return [Discorb::Snowflake] The ID of the channel.
     attr_reader id: Discorb::Snowflake
@@ -74,15 +78,15 @@ module Discorb
     # Stringifies the channel.
     #
     # @return [String] The name of the channel with `#`.
-    def to_s: () -> String
+    def to_s: -> String
 
-    def mention: () -> String
+    def mention: -> String
 
-    def parent: () -> Discorb::CategoryChannel?
+    def parent: -> Discorb::CategoryChannel?
 
-    def guild: () -> Discorb::Guild
+    def guild: -> Discorb::Guild
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Deletes the channel.
@@ -104,11 +108,11 @@ module Discorb
     #
     # @return [Async::Task<self>] The moved channel.
     def move: (
-                Integer position,
-                ?lock_permissions: bool,
-                ?parent: Discorb::CategoryChannel,
-                ?reason: String?
-              ) -> Async::Task[self]
+      Integer position,
+      ?lock_permissions: bool,
+      ?parent: Discorb::CategoryChannel,
+      ?reason: String?
+    ) -> Async::Task[self]
 
     #
     # Set the channel's permission overwrite.
@@ -119,7 +123,11 @@ module Discorb
     # @param [{Symbol => Boolean}] perms The permission overwrites to replace.
     #
     # @return [Async::Task<void>] The task.
-    def set_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?, **bool perms) -> Async::Task[void]
+    def set_permissions: (
+      Discorb::Role | Discorb::Member target,
+      ?reason: String?,
+      **bool perms
+    ) -> Async::Task[void]
 
     #
     # Delete the channel's permission overwrite.
@@ -129,14 +137,17 @@ module Discorb
     # @param [String] reason The reason of deleting the overwrite.
     #
     # @return [Async::Task<void>] The task.
-    def delete_permissions: ((Discorb::Role | Discorb::Member) target, ?reason: String?) -> Async::Task[void]
+    def delete_permissions: (
+      Discorb::Role | Discorb::Member target,
+      ?reason: String?
+    ) -> Async::Task[void]
 
     #
     # Fetch the channel's invites.
     # @async
     #
     # @return [Async::Task<Array<Discorb::Invite>>] The invites in the channel.
-    def fetch_invites: () -> Async::Task[::Array[Discorb::Invite]]
+    def fetch_invites: -> Async::Task[::Array[Discorb::Invite]]
 
     #
     # Create an invite in the channel.
@@ -151,17 +162,18 @@ module Discorb
     #
     # @return [Async::Task<Invite>] The created invite.
     def create_invite: (
-                         ?max_age: Integer?,
-                         ?max_uses: Integer?,
-                         ?temporary: bool,
-                         ?unique: bool,
-                         ?reason: String?
-                       ) -> Async::Task[Invite]
+      ?max_age: Integer?,
+      ?max_uses: Integer?,
+      ?temporary: bool,
+      ?unique: bool,
+      ?reason: String?
+    ) -> Async::Task[Invite]
 
     # @return [Integer] The position of the channel as integer.
     attr_reader position: Integer
 
     # @return [Hash{Discorb::Role, Discorb::Member => PermissionOverwrite}] The permission overwrites of the channel.
-    attr_reader permission_overwrites: Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]
+    attr_reader permission_overwrites: Hash[Discorb::Role
+    | Discorb::Member, Discorb::PermissionOverwrite]
   end
 end

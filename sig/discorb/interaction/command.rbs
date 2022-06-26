@@ -11,12 +11,15 @@ module Discorb
     #
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data for the command.
-    def self.make_interaction: (Discorb::Client client, Discorb::json data) -> untyped
+    def self.make_interaction: (
+      Discorb::Client client,
+      Discorb::json data
+    ) -> untyped
 
     #
     # Returns the classes under this class.
     # @private
-    def self.nested_classes: () -> untyped
+    def self.nested_classes: -> untyped
 
     #
     # Represents a slash command interaction.
@@ -38,19 +41,19 @@ module Discorb
       # @param [{Discorb::Snowflake => Discorb::Member}] members The cached members of the guild.
       # @param [{Integer => Discorb::Attachment}] attachments The cached attachments of the message.
       def self.modify_option_map: (
-                                    ::Hash[untyped, untyped] option_map,
-                                    ::Array[::Hash[untyped, untyped]] options,
-                                    Discorb::Guild? guild,
-                                    ::Hash[Discorb::Snowflake, Discorb::Member] members,
-                                    ::Hash[Integer, Discorb::Attachment] attachments
-                                  ) -> untyped
+        ::Hash[untyped, untyped] option_map,
+        ::Array[::Hash[untyped, untyped]] options,
+        Discorb::Guild? guild,
+        ::Hash[Discorb::Snowflake, Discorb::Member] members,
+        ::Hash[Integer, Discorb::Attachment] attachments
+      ) -> untyped
     end
 
     #
     # Represents a user context menu interaction.
     class UserMenuCommand < Discorb::CommandInteraction
       # @return [Discorb::Member, Discorb::User] The target user.
-      attr_reader target: (Discorb::Member | Discorb::User)
+      attr_reader target: Discorb::Member | Discorb::User
     end
 
     #

@@ -9,7 +9,11 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Discorb::Guild] guild The guild the welcome screen belongs to.
     # @param [Hash] data The data of the welcome screen.
-    def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::Guild guild,
+      Discorb::json data
+    ) -> void
 
     # @return [String] The description of the welcome screen.
     attr_reader description: String
@@ -29,14 +33,18 @@ module Discorb
       # @param [Discorb::TextChannel] channel The channel to display the welcome screen.
       # @param [String] description The channel's name.
       # @param [Discorb::emoji] emoji The emoji to display.
-      def initialize: (Discorb::TextChannel channel, String description, Discorb::emoji emoji) -> void
+      def initialize: (
+        Discorb::TextChannel channel,
+        String description,
+        Discorb::emoji emoji
+      ) -> void
 
       #
       # Converts the channel to a hash.
       #
       # @return [Hash] The hash.
       # @see https://discord.com/developers/docs/resources/guild#welcome-screen-object
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
       #
       # Edits the welcome screen.
@@ -50,11 +58,11 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       def edit: (
-                  ?enabled: bool,
-                  ?channels: ::Array[Discorb::WelcomeScreen::Channel],
-                  ?description: String,
-                  ?reason: String?
-                ) -> Async::Task[void]
+        ?enabled: bool,
+        ?channels: ::Array[Discorb::WelcomeScreen::Channel],
+        ?description: String,
+        ?reason: String?
+      ) -> Async::Task[void]
 
       # @return [String] The channel's name.
       attr_reader description: String

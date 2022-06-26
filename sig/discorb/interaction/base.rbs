@@ -12,11 +12,11 @@ module Discorb
     # @param [Hash] data The data of the interaction.
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
-    def guild: () -> Discorb::Guild?
+    def guild: -> Discorb::Guild?
 
-    def channel: () -> Discorb::Channel
+    def channel: -> Discorb::Channel
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Create a new Interaction instance from the data.
@@ -24,12 +24,15 @@ module Discorb
     #
     # @param [Discorb::Client] client The client this interaction belongs to.
     # @param [Hash] data The data of the interaction.
-    def self.make_interaction: (Discorb::Client client, Discorb::json data) -> untyped
+    def self.make_interaction: (
+      Discorb::Client client,
+      Discorb::json data
+    ) -> untyped
 
     #
     # Returns the descendants of the class.
     # @private
-    def self.descendants: () -> Array[Class]
+    def self.descendants: -> Array[Class]
 
     def _set_data: (untyped) -> untyped
 
@@ -43,7 +46,7 @@ module Discorb
     attr_reader type: Symbol
 
     # @return [Discorb::User, Discorb::Member] The user or member that created the interaction.
-    attr_reader user: (Discorb::User | Discorb::Member)
+    attr_reader user: Discorb::User | Discorb::Member
 
     # @return [Integer] The type of interaction.
     # @note This is always `1` for now.

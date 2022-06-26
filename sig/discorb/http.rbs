@@ -1,5 +1,12 @@
 module Discorb
-  type json = ::Hash[Symbol | String, json] | ::Array[json] | ::String | ::Symbol | ::Numeric | bool | nil
+  type json =
+    ::Hash[Symbol | String, json]
+    | ::Array[json]
+    | ::String
+    | ::Symbol
+    | ::Numeric
+    | bool
+    | nil
 
   #
   # A class to handle http requests.
@@ -26,11 +33,11 @@ module Discorb
     #
     # @raise [Discorb::HTTPError] The request was failed.
     def request: (
-                   Discorb::Route path,
-                   ?(json | String) body,
-                   ?audit_log_reason: String?,
-                   **String kwargs
-                 ) -> Async::Task[[Net::HTTPResponse, json]]
+      Discorb::Route path,
+      ?json | String body,
+      ?audit_log_reason: String?,
+      **String kwargs
+    ) -> Async::Task[[Net::HTTPResponse, json]]
 
     #
     # Execute a multipart request.
@@ -48,38 +55,41 @@ module Discorb
     #
     # @raise [Discorb::HTTPError] The request was failed.
     def multipart_request: (
-                             Discorb::Route path,
-                             (json | String) body,
-                             ::Array[Discorb::Attachment] files,
-                             ?audit_log_reason: String?,
-                             **untyped kwargs
-                           ) -> Async::Task[[Net::HTTPResponse, json]]
+      Discorb::Route path,
+      json | String body,
+      ::Array[Discorb::Attachment] files,
+      ?audit_log_reason: String?,
+      **untyped kwargs
+    ) -> Async::Task[[Net::HTTPResponse, json]]
 
-    def inspect: () -> String
+    def inspect: -> String
 
     private
 
     def handle_response: (
-                           Net::HTTPResponse resp,
-                           json data,
-                           Discorb::Route path,
-                           (json | String) body,
-                           ::Array[Discorb::Attachment]? files,
-                           String? audit_log_reason,
-                           untyped kwargs
-                         ) -> [Net::HTTPResponse, json]
+      Net::HTTPResponse resp,
+      json data,
+      Discorb::Route path,
+      json | String body,
+      ::Array[Discorb::Attachment]? files,
+      String? audit_log_reason,
+      untyped kwargs
+    ) -> [Net::HTTPResponse, json]
 
-    def get_headers: (?(String | json) body, ?String? audit_log_reason) -> ::Hash[String, String]
+    def get_headers: (
+      ?String | json body,
+      ?String? audit_log_reason
+    ) -> ::Hash[String, String]
 
-    def get_body: ((nil | String | json) body) -> String
+    def get_body: (nil | String | json body) -> String
 
     def get_path: (Discorb::Route path) -> String
 
     def get_response_data: (Net::HTTPResponse resp) -> json?
 
-    def http: () -> Net::HTTP
+    def http: -> Net::HTTP
 
-    def cdn_http: () -> Net::HTTP
+    def cdn_http: -> Net::HTTP
 
     def recr_utf8: [O] (O data) -> O
   end
@@ -90,13 +100,13 @@ module Discorb
   class Route
     def initialize: (untyped url, untyped key, untyped method) -> void
 
-    def inspect: () -> String
+    def inspect: -> String
 
-    def hash: () -> untyped
+    def hash: -> untyped
 
-    def identifier: () -> untyped
+    def identifier: -> untyped
 
-    def major_param: () -> untyped
+    def major_param: -> untyped
 
     # Returns the value of attribute url.
     attr_reader url: untyped
@@ -119,7 +129,7 @@ module Discorb
     # @param [Discorb::Client] client The client.
     def initialize: (Discorb::Client client) -> void
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Wait for the rate limit to reset.

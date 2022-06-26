@@ -30,26 +30,26 @@ module Discorb
     #   this will be required in September 1, 2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
     #   You should specify `message_content` intent for preventing unexpected changes in the future.
     def initialize: (
-                      ?guilds: bool,
-                      ?members: bool,
-                      ?bans: bool,
-                      ?emojis: bool,
-                      ?integrations: bool,
-                      ?webhooks: bool,
-                      ?invites: bool,
-                      ?voice_states: bool,
-                      ?presences: bool,
-                      ?messages: bool,
-                      ?reactions: bool,
-                      ?typing: bool,
-                      ?dm_messages: bool,
-                      ?dm_reactions: bool,
-                      ?dm_typing: bool,
-                      ?message_content: bool?,
-                      ?scheduled_events: bool,
-                      automod_configuration: bool,
-                      automod_execution: bool
-                    ) -> void
+      automod_configuration: bool,
+      automod_execution: bool,
+      ?guilds: bool,
+      ?members: bool,
+      ?bans: bool,
+      ?emojis: bool,
+      ?integrations: bool,
+      ?webhooks: bool,
+      ?invites: bool,
+      ?voice_states: bool,
+      ?presences: bool,
+      ?messages: bool,
+      ?reactions: bool,
+      ?typing: bool,
+      ?dm_messages: bool,
+      ?dm_reactions: bool,
+      ?dm_typing: bool,
+      ?message_content: bool?,
+      ?scheduled_events: bool
+    ) -> void
 
     #
     # Returns the value of the flag.
@@ -59,21 +59,21 @@ module Discorb
 
     # Returns value of the intent.
     # @return [Integer] The value of the intent.
-    def value: () -> Integer
+    def value: -> Integer
 
-    def inspect: () -> String
+    def inspect: -> String
 
-    def to_h: () -> Hash[Symbol, bool]
+    def to_h: -> Hash[Symbol, bool]
 
     # Create new intent object from raw value.
     # @param value [Integer] The value of the intent.
     def self.from_value: (Integer value) -> Intents
 
     # Create new intent object with all intents.
-    def self.all: () -> Discorb::Intents
+    def self.all: -> Discorb::Intents
 
     # Create new intent object with no intents.
-    def self.none: () -> Discorb::Intents
+    def self.none: -> Discorb::Intents
 
     attr_accessor guilds: bool
     attr_accessor members: bool

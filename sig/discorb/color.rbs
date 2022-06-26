@@ -12,19 +12,19 @@ module Discorb
     # Integerize a color.
     #
     # @return [Integer] A color value.
-    def to_i: () -> Integer
+    def to_i: -> Integer
 
     #
     # Convert a color to a hexadecimal value.
     #
     # @return [String] A hexadecimal value.
-    def to_hex: () -> String
+    def to_hex: -> String
 
     #
     # Convert a color to RGB array.
     #
     # @return [Array(Integer, Integer, Integer)] A RGB array.
-    def to_rgb: () -> [Integer, Integer, Integer]
+    def to_rgb: -> [Integer, Integer, Integer]
 
     alias to_a to_rgb
     alias deconstruct to_rgb
@@ -33,7 +33,7 @@ module Discorb
     # Convert a color to RGB hash.
     #
     # @return [Hash{:r, :g, :b => Integer}] A RGB hash.
-    def to_rgb_hash: () -> { r: Integer, g: Integer, b: Integer}
+    def to_rgb_hash: -> { r: Integer, g: Integer, b: Integer }
 
     alias deconstruct_keys to_rgb_hash
 
@@ -41,9 +41,9 @@ module Discorb
     # Converts a color to a `#000000` string.
     #
     # @return [String] Converted string.
-    def to_s: () -> String
+    def to_s: -> String
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Create a color from a hexadecimal string.
@@ -61,7 +61,11 @@ module Discorb
     # @param [Integer] blue A blue value.
     #
     # @return [Discorb::Color] A color object.
-    def self.from_rgb: (Integer red, Integer green, Integer blue) -> Discorb::Color
+    def self.from_rgb: (
+      Integer red,
+      Integer green,
+      Integer blue
+    ) -> Discorb::Color
 
     #
     # Create a color from a Discord's color.

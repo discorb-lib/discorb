@@ -10,13 +10,13 @@ module Discorb
     # @param [Boolean, Array<Discorb::User>] users The users to allow, or false to disable.
     # @param [Boolean] replied_user Whether to ping the user that sent the message to reply.
     def initialize: (
-                      ?everyone: bool?,
-                      ?roles: (bool | ::Array[Discorb::Role])?,
-                      ?users: (bool | ::Array[Discorb::User])?,
-                      ?replied_user: bool?
-                    ) -> void
+      ?everyone: bool?,
+      ?roles: (bool | ::Array[Discorb::Role])?,
+      ?users: (bool | ::Array[Discorb::User])?,
+      ?replied_user: bool?
+    ) -> void
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Converts the object to a hash.

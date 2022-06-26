@@ -1,6 +1,6 @@
 module Async
   class Task[T]
-    def wait: () -> T
+    def wait: -> T
   end
 
   module WebSocket

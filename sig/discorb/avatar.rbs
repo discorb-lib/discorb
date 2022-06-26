@@ -18,7 +18,7 @@ module Discorb
     # rubocop: disable Lint/UnusedMethodArgument
     def url: (?image_format: String?, ?size: Integer) -> String
 
-    def inspect: () -> String
+    def inspect: -> String
 
     # @return [false] For compatibility with {Asset}, always `false`.
     attr_reader animated?: bool

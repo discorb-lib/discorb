@@ -3,7 +3,7 @@ module Discorb
   # @abstract
   # Represents a Discord component.
   class Component
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Create a new component from hash data.
@@ -20,6 +20,9 @@ module Discorb
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components Components.
     #
     # @return [Array<Hash>] Hash data.
-    def self.to_payload: ((::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]]) components) -> Discorb::json
+    def self.to_payload: (
+      ::Array[Discorb::Component]
+      | ::Array[::Array[Discorb::Component]] components
+    ) -> Discorb::json
   end
 end

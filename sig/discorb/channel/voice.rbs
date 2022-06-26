@@ -19,17 +19,17 @@ module Discorb
     #
     # @return [Async::Task<self>] The edited voice channel.
     def edit: (
-                ?name: String,
-                ?position: Integer,
-                ?bitrate: Integer,
-                ?user_limit: Integer,
-                ?rtc_region: Symbol,
-                ?reason: String?
-              ) -> Async::Task[self]
+      ?name: String,
+      ?position: Integer,
+      ?bitrate: Integer,
+      ?user_limit: Integer,
+      ?rtc_region: Symbol,
+      ?reason: String?
+    ) -> Async::Task[self]
 
-    def voice_states: () -> Array[Discorb::VoiceState]
+    def voice_states: -> Array[Discorb::VoiceState]
 
-    def members: () -> Array[Discorb::Member]
+    def members: -> Array[Discorb::Member]
 
     # @return [Integer] The bitrate of the voice channel.
     attr_reader bitrate: Integer

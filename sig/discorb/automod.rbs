@@ -6,43 +6,49 @@ module Discorb
     # @return [Hash{Integer => Symbol}] The mapping of trigger types.
     # @private
     TRIGGER_TYPES: Hash[Integer, trigger_type]
+
     # @return [Hash{Integer => Symbol}] The mapping of preset types.
     # @private
     PRESET_TYPES: Hash[Integer, preset_type]
+
     # @return [Hash{Integer => Symbol}] The mapping of event types.
     # @private
     EVENT_TYPES: Hash[Integer, :message_send]
 
     # @return [Discorb::Snowflake] The ID of the rule.
     attr_reader id: Discorb::Snowflake
+
     # @return [String] The name of the rule.
     attr_reader name: String
+
     # @return [Boolean] Whether the rule is enabled.
     attr_reader enabled: bool
     alias enabled? enabled
+
     # @return [Array<Discorb::AutoModRule::Action>] The actions of the rule.
     attr_reader actions: Array[Discorb::AutoModRule::Action]
+
     # @return [Array<String>] The keywords that the rule is triggered by.
     # @note This is only available if the trigger type is `:keyword`.
     attr_reader keyword_filter: Array[String]?
 
     # @return [Symbol] Returns the type of the preset.
     # @note This is only available if the trigger type is `:keyword_preset`.
-    def preset_type: () -> preset_type
+    def preset_type: -> preset_type
 
     # @return [Symbol] Returns the type of the trigger.
-    def trigger_type: () -> trigger_type
+    def trigger_type: -> trigger_type
 
     # @return [Symbol] Returns the type of the event.
-    def event_type: () -> :message_send
+    def event_type: -> :message_send
 
-    def creator: () -> Discorb::Member
+    def creator: -> Discorb::Member
 
-    def guild: () -> Discorb::Guild
+    def guild: -> Discorb::Guild
 
-    def exempt_roles: () -> Array[Discorb::Role]
+    def exempt_roles: -> Array[Discorb::Role]
 
-    def exempt_channels: () -> Array[Discorb::Channel]
+    def exempt_channels: -> Array[Discorb::Channel]
 
     #
     # Edit the rule.
@@ -60,7 +66,6 @@ module Discorb
     # @param [String] reason The reason for creating the rule.
     #
     # @return [Async::Task<void>] The task.
-    #
     def edit: (
       ?name: String,
       ?event_type: :send_message,
@@ -79,7 +84,6 @@ module Discorb
     # @param [String] reason The reason for deleting the rule.
     #
     # @return [Async::Task<void>] The task.
-    #
     def delete!: (?reason: nil) -> Async::Task[void]
 
     class Action < Discorb::DiscordModel
@@ -89,13 +93,14 @@ module Discorb
 
       # @return [Symbol] Returns the type of the action.
       attr_reader type: :ban | :kick | :mute | :warn
+
       # @return [Integer] The duration of the timeout.
       # @note This is only available if the action type is `:timeout`.
       attr_reader duration_seconds: Integer?
 
       # @return [Discorb::Channel] The channel that the alert message is sent to.
       # @note This is only available if the action type is `:send_alert_message`.
-      def channel: () -> Discorb::Channel
+      def channel: -> Discorb::Channel
     end
   end
 end

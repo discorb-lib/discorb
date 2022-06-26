@@ -7,14 +7,14 @@ module Discorb
     #
     # @param [#read, String] source The IO source or path of the image.
     # @param [String] type The MIME type of the image.
-    def initialize: ((untyped | String) source, ?String? type) -> void
+    def initialize: (untyped | String source, ?String? `type`) -> void
 
     #
     # Formats the image as a Discord style.
     #
     # @return [String] The image as a Discord style.
-    def to_s: () -> String
+    def to_s: -> String
 
-    def inspect: () -> String
+    def inspect: -> String
   end
 end

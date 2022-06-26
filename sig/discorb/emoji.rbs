@@ -1,5 +1,6 @@
 module Discorb
   type emoji = Discorb::Emoji | Discorb::PartialEmoji
+
   # Represents a Discord emoji.
   # @abstract
   class Emoji
@@ -7,6 +8,6 @@ module Discorb
 
     def ==: (untyped other) -> untyped
 
-    def inspect: () -> String
+    def inspect: -> String
   end
 end

@@ -45,17 +45,17 @@ module Discorb
     # Negation of the flag.
     #
     # @return [Discorb::Flag] The negation of the flag.
-    def ~: () -> instance
+    def ~: -> instance
 
-    def to_i: () -> Integer
+    def to_i: -> Integer
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Max value of the flag.
     #
     # @return [Integer] the max value of the flag.
-    def self.max_value: () -> (Integer | Numeric)
+    def self.max_value: -> (Integer | Numeric)
 
     #
     # Initialize a new flag with keys.
@@ -69,5 +69,4 @@ module Discorb
     # @return [Integer] the value of the flag.
     attr_reader value: Integer
   end
-
 end

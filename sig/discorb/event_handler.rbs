@@ -6,11 +6,11 @@ module Discorb
   class EventHandler
     def initialize: (untyped block, Symbol? id, untyped metadata) -> void
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Calls the block associated with the event.
-    def call: () -> untyped
+    def call: -> untyped
 
     # @return [Proc] the block to be called.
     attr_reader block: ^(*untyped) -> void

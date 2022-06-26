@@ -16,17 +16,17 @@ module Discorb
     # @param [Discorb::Embed::Image, String] image The image of embed.
     # @param [Discorb::Embed::Thumbnail, String] thumbnail The thumbnail of embed.
     def initialize: (
-                      ?String? title,
-                      ?String? description,
-                      ?color: (Discorb::Color | Integer)?,
-                      ?url: String?,
-                      ?timestamp: Time?,
-                      ?author: Discorb::Embed::Author?,
-                      ?fields: ::Array[Discorb::Embed::Field]?,
-                      ?footer: Discorb::Embed::Footer?,
-                      ?image: (Discorb::Embed::Image | String)?,
-                      ?thumbnail: (Discorb::Embed::Thumbnail | String)?
-                    ) -> void
+      ?String? title,
+      ?String? description,
+      ?color: (Discorb::Color | Integer)?,
+      ?url: String?,
+      ?timestamp: Time?,
+      ?author: Discorb::Embed::Author?,
+      ?fields: ::Array[Discorb::Embed::Field]?,
+      ?footer: Discorb::Embed::Footer?,
+      ?image: (Discorb::Embed::Image | String)?,
+      ?thumbnail: (Discorb::Embed::Thumbnail | String)?
+    ) -> void
 
     #
     # Initialize embed from hash.
@@ -35,14 +35,14 @@ module Discorb
     # @param [Hash] data The hash data to initialize embed.
     def initialize_hash: (Discorb::json data) -> untyped
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Convert embed to hash.
     #
     # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-structure Offical Discord API Docs
     # @return [Hash] Converted embed.
-    def to_hash: () -> Discorb::json
+    def to_hash: -> Discorb::json
 
     def self.from_hash: (untyped data) -> untyped
 
@@ -84,7 +84,7 @@ module Discorb
     # @abstract
     # @private
     class Entry
-      def inspect: () -> String
+      def inspect: -> String
     end
 
     #
@@ -104,7 +104,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted author.
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
       # @return [String] The name of author.
       attr_accessor name: String
@@ -132,7 +132,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted footer.
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
       # Returns the value of attribute text.
       attr_accessor text: untyped
@@ -158,7 +158,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted field.
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
       # @return [String] The name of field.
       attr_accessor name: String
@@ -185,7 +185,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted image.
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
       # @return [String] The url of image.
       attr_accessor url: String
@@ -218,7 +218,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure
       #   Offical Discord API Docs
       # @return [Hash] Converted thumbnail.
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
       # @return [String] The url of thumbnail.
       attr_accessor url: String

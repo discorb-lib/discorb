@@ -16,7 +16,7 @@ module Discorb
     # @param (see Message#fetch_reacted_users)
     #
     # @return [Async::Task<Array<Discorb::User>>] The users that reacted with this emoji.
-    def fetch_users: () -> Async::Task[::Array[Discorb::User]]
+    def fetch_users: -> Async::Task[::Array[Discorb::User]]
 
     # @return [Integer] The number of users that have reacted with this emoji.
     attr_reader count: Integer

@@ -11,12 +11,12 @@ module Discorb
     # @param [Integer] min_values The minimum number of values.
     # @param [Integer] max_values The maximum number of values.
     def initialize: (
-                      (String | Symbol) custom_id,
-                      ::Array[Discorb::SelectMenu::Option] options,
-                      ?placeholder: String?,
-                      ?min_values: Integer,
-                      ?max_values: Integer
-                    ) -> void
+      String | Symbol custom_id,
+      ::Array[Discorb::SelectMenu::Option] options,
+      ?placeholder: String?,
+      ?min_values: Integer,
+      ?max_values: Integer
+    ) -> void
 
     #
     # Converts the select menu to a hash.
@@ -24,9 +24,9 @@ module Discorb
     # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure
     #   Official Discord API docs
     # @return [Hash] A hash representation of the select menu.
-    def to_hash: () -> Discorb::json
+    def to_hash: -> Discorb::json
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Creates a new select menu from a hash.
@@ -63,12 +63,12 @@ module Discorb
       # @param [Discorb::emoji] emoji The emoji of the option.
       # @param [Boolean] default Whether the option is default.
       def initialize: (
-                        String label,
-                        String value,
-                        ?description: String?,
-                        ?emoji: Discorb::emoji?,
-                        ?default: bool
-                      ) -> void
+        String label,
+        String value,
+        ?description: String?,
+        ?emoji: Discorb::emoji?,
+        ?default: bool
+      ) -> void
 
       #
       # Converts the option to a hash.
@@ -76,9 +76,9 @@ module Discorb
       # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
       #   Official Discord API docs
       # @return [Hash] Hash representation of the option.
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
-      def inspect: () -> String
+      def inspect: -> String
 
       #
       # Creates a new option from a hash.

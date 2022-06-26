@@ -46,13 +46,18 @@ module Discorb
       # @see file:docs/application_command.md#register-slash-command Application Comamnds: Register Slash Command
       # @see file:docs/cli/setup.md CLI: setup
       def slash: (
-                   Discorb::ApplicationCommand::localizable command_name,
-                   Discorb::ApplicationCommand::localizable description,
-                   ?Discorb::ApplicationCommand::options options,
-                   ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
-                   ?dm_permission: bool,
-                   ?default_permission: Discorb::Permission?
-                 ) { (Discorb::CommandInteraction::ChatInputCommand interaction, *untyped) -> void } -> Discorb::ApplicationCommand::Command::ChatInputCommand
+        Discorb::ApplicationCommand::localizable command_name,
+        Discorb::ApplicationCommand::localizable description,
+        ?Discorb::ApplicationCommand::options options,
+        ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
+        ?dm_permission: bool,
+        ?default_permission: Discorb::Permission?
+      ) {
+        (
+          Discorb::CommandInteraction::ChatInputCommand interaction,
+          *untyped
+        ) -> void
+      } -> Discorb::ApplicationCommand::Command::ChatInputCommand
 
       #
       # Add new command with group.
@@ -72,12 +77,14 @@ module Discorb
       # @see file:docs/application_command.md Application Commands
       # @see file:docs/cli/setup.md CLI: setup
       def slash_group: (
-                         Discorb::ApplicationCommand::localizable command_name,
-                         Discorb::ApplicationCommand::localizable description,
-                         ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
-                         ?dm_permission: bool,
-                         ?default_permission: Discorb::Permission?
-                       ) ?{ (Discorb::ApplicationCommand::Command::GroupCommand group) -> void } -> Discorb::ApplicationCommand::Command::GroupCommand
+        Discorb::ApplicationCommand::localizable command_name,
+        Discorb::ApplicationCommand::localizable description,
+        ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
+        ?dm_permission: bool,
+        ?default_permission: Discorb::Permission?
+      ) ?{
+        (Discorb::ApplicationCommand::Command::GroupCommand group) -> void
+      } -> Discorb::ApplicationCommand::Command::GroupCommand
 
       #
       # Add message context menu command.
@@ -94,11 +101,16 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.
       def message_command: (
-                             Discorb::ApplicationCommand::localizable command_name,
-                             ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
-                             ?dm_permission: bool,
-                             ?default_permission: Discorb::Permission?
-                           ) { (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::Message message) -> void } -> Discorb::ApplicationCommand::Command
+        Discorb::ApplicationCommand::localizable command_name,
+        ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
+        ?dm_permission: bool,
+        ?default_permission: Discorb::Permission?
+      ) {
+        (
+          Discorb::CommandInteraction::UserMenuCommand interaction,
+          Discorb::Message message
+        ) -> void
+      } -> Discorb::ApplicationCommand::Command
 
       #
       # Add user context menu command.
@@ -115,11 +127,16 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.
       def user_command: (
-                          Discorb::ApplicationCommand::localizable command_name,
-                          ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
-                          ?dm_permission: bool,
-                          ?default_permission: Discorb::Permission?
-                        ) ?{ (Discorb::CommandInteraction::UserMenuCommand interaction, Discorb::User user) -> void } -> Discorb::ApplicationCommand::Command
+        Discorb::ApplicationCommand::localizable command_name,
+        ?guild_ids: Discorb::ApplicationCommand::guild_ids?,
+        ?dm_permission: bool,
+        ?default_permission: Discorb::Permission?
+      ) ?{
+        (
+          Discorb::CommandInteraction::UserMenuCommand interaction,
+          Discorb::User user
+        ) -> void
+      } -> Discorb::ApplicationCommand::Command
 
       #
       # Setup commands.
@@ -131,7 +148,10 @@ module Discorb
       #  Guild IDs to use as default. If `false` is given, it will be global command.
       #
       # @note `token` parameter only required if you don't run client.
-      def setup_commands: (?String? token, ?guild_ids: Discorb::ApplicationCommand::guild_ids?) -> untyped
+      def setup_commands: (
+        ?String? token,
+        ?guild_ids: Discorb::ApplicationCommand::guild_ids?
+      ) -> untyped
 
       #
       # Claer commands in specified guilds.
@@ -142,7 +162,10 @@ module Discorb
       # @param [Array<#to_s>, false, nil] guild_ids Guild IDs to clear.
       #
       # @note `token` parameter only required if you don't run client.
-      def clear_commands: (String token, Discorb::ApplicationCommand::guild_ids guild_ids) -> untyped
+      def clear_commands: (
+        String token,
+        Discorb::ApplicationCommand::guild_ids guild_ids
+      ) -> untyped
     end
   end
 end

@@ -31,16 +31,18 @@ module Discorb
       # @return [Discorb::Interaction::SourceResponder::CallbackMessage, Discorb::Webhook::Message]
       #   The callback message.
       def post: (
-                  ?String? content,
-                  ?tts: bool,
-                  ?embed: Discorb::Embed?,
-                  ?embeds: ::Array[Discorb::Embed]?,
-                  ?allowed_mentions: Discorb::AllowedMentions?,
-                  ?attachment: Discorb::Attachment?,
-                  ?attachments: ::Array[Discorb::Attachment]?,
-                  ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
-                  ?ephemeral: bool
-                ) -> (Discorb::Interaction::SourceResponder::CallbackMessage | Discorb::Webhook::Message)
+        ?String? content,
+        ?tts: bool,
+        ?embed: Discorb::Embed?,
+        ?embeds: ::Array[Discorb::Embed]?,
+        ?allowed_mentions: Discorb::AllowedMentions?,
+        ?attachment: Discorb::Attachment?,
+        ?attachments: ::Array[Discorb::Attachment]?,
+        ?components: (::Array[Discorb::Component]
+        | ::Array[::Array[Discorb::Component]])?,
+        ?ephemeral: bool
+      ) -> (Discorb::Interaction::SourceResponder::CallbackMessage
+      | Discorb::Webhook::Message)
 
       #
       # Represents of a callback message of interaction.
@@ -54,11 +56,11 @@ module Discorb
         # @param [String] application_id The application ID.
         # @param [String] token The token.
         def initialize: (
-                          Client client,
-                          Discorb::json data,
-                          String application_id,
-                          String token
-                        ) -> void
+          Client client,
+          Discorb::json data,
+          String application_id,
+          String token
+        ) -> void
 
         #
         # Edits the callback message.
@@ -74,13 +76,13 @@ module Discorb
         #
         # @return [Async::Task<void>] The task.
         def edit: (
-                    ?String content,
-                    ?embed: Discorb::Embed,
-                    ?embeds: ::Array[Discorb::Embed],
-                    ?file: Discorb::Attachment,
-                    ?files: ::Array[Discorb::Attachment],
-                    ?attachments: ::Array[Discorb::Attachment]
-                  ) -> Async::Task[void]
+          ?String content,
+          ?embed: Discorb::Embed,
+          ?embeds: ::Array[Discorb::Embed],
+          ?file: Discorb::Attachment,
+          ?files: ::Array[Discorb::Attachment],
+          ?attachments: ::Array[Discorb::Attachment]
+        ) -> Async::Task[void]
 
         #
         # Deletes the callback message.
@@ -88,9 +90,9 @@ module Discorb
         # @note This will fail if the message is ephemeral.
         #
         # @return [Async::Task<void>] The task.
-        def delete!: () -> Async::Task[void]
+        def delete!: -> Async::Task[void]
 
-        def inspect: () -> String
+        def inspect: -> String
       end
     end
 
@@ -121,16 +123,17 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       def edit: (
-                  String content,
-                  ?tts: bool,
-                  ?embed: Discorb::Embed?,
-                  ?embeds: ::Array[Discorb::Embed]?,
-                  ?allowed_mentions: Discorb::AllowedMentions?,
-                  ?attachment: Discorb::Attachment?,
-                  ?attachments: ::Array[Discorb::Attachment]?,
-                  ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]])?,
-                  ?ephemeral: bool
-                ) -> Async::Task[void]
+        String content,
+        ?tts: bool,
+        ?embed: Discorb::Embed?,
+        ?embeds: ::Array[Discorb::Embed]?,
+        ?allowed_mentions: Discorb::AllowedMentions?,
+        ?attachment: Discorb::Attachment?,
+        ?attachments: ::Array[Discorb::Attachment]?,
+        ?components: (::Array[Discorb::Component]
+        | ::Array[::Array[Discorb::Component]])?,
+        ?ephemeral: bool
+      ) -> Async::Task[void]
     end
 
     #
@@ -144,7 +147,11 @@ module Discorb
       # @param [Array<Discorb::TextInput>] components The text inputs to send.
       #
       # @return [Async::Task<void>] The task.
-      def show_modal: (String title, String custom_id, ::Array[Discorb::TextInput] components) -> Async::Task[void]
+      def show_modal: (
+        String title,
+        String custom_id,
+        ::Array[Discorb::TextInput] components
+      ) -> Async::Task[void]
     end
   end
 end

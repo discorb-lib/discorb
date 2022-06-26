@@ -6,14 +6,14 @@ class Time
   # @param ["f", "F", "d", "D", "t", "T", "R"] type The format to use.
   #
   # @return [String] The formatted time.
-  def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? type) -> String
+  def to_df: (?("f" | "F" | "d" | "D" | "t" | "T" | "R")? `type`) -> String
 end
 
 # @private
 module Async
   class Node
-    def description: () -> untyped
+    def description: -> untyped
 
-    def to_s: () -> untyped
+    def to_s: -> untyped
   end
 end

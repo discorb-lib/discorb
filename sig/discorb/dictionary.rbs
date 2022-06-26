@@ -8,7 +8,11 @@ module Discorb
     # @param [Hash] hash A hash of items to add to the dictionary.
     # @param [Integer] limit The maximum number of items in the dictionary.
     # @param [false, Proc] sort Whether to sort the items in the dictionary.
-    def initialize: (?::Hash[untyped, untyped] hash, ?limit: Integer?, ?sort: (bool | Proc)) -> void
+    def initialize: (
+      ?::Hash[untyped, untyped] hash,
+      ?limit: Integer?,
+      ?sort: bool | Proc
+    ) -> void
 
     #
     # Registers a new item in the dictionary.
@@ -45,8 +49,7 @@ module Discorb
     #
     #   @return [Object] The item.
     #   @return [nil] if the item is not found.
-    def get: (_ToS id) -> V
-           | (Integer index) -> V
+    def get: (_ToS id) -> V | (Integer index) -> V
 
     alias [] get
 
@@ -54,7 +57,7 @@ module Discorb
     # Returns the values of the dictionary.
     #
     # @return [Array] The values of the dictionary.
-    def values: () -> ::Array[V]
+    def values: -> ::Array[V]
 
     #
     # Checks if the dictionary has an ID.
@@ -68,9 +71,13 @@ module Discorb
     # Send a message to the array of values.
     def method_missing: (untyped name) -> untyped
 
-    def respond_to_missing?: (untyped name, untyped args, untyped kwargs) -> bool
+    def respond_to_missing?: (
+      untyped name,
+      untyped args,
+      untyped kwargs
+    ) -> bool
 
-    def inspect: () -> String
+    def inspect: -> String
 
     # @return [Integer] The maximum number of items in the dictionary.
     attr_accessor limit: Integer?

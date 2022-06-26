@@ -12,7 +12,11 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data of the thread channel.
     # @param [Boolean] no_cache Whether to disable the cache.
-    def initialize: (Discorb::Client client, Discorb::json data, ?no_cache: bool) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::json data,
+      ?no_cache: bool
+    ) -> void
 
     #
     # Edit the thread.
@@ -33,13 +37,13 @@ module Discorb
     # @see #unarchive
     # @see #unlock
     def edit: (
-                ?name: String,
-                ?archived: bool,
-                ?auto_archive_duration: Integer,
-                ?archive_in: Integer,
-                ?locked: bool,
-                ?reason: String?
-              ) -> Async::Task[self]
+      ?name: String,
+      ?archived: bool,
+      ?auto_archive_duration: Integer,
+      ?archive_in: Integer,
+      ?locked: bool,
+      ?reason: String?
+    ) -> Async::Task[self]
 
     #
     # Helper method to archive the thread.
@@ -75,17 +79,17 @@ module Discorb
     # @note This method won't unarchive the thread. Use {#unarchive} instead.
     def unlock: (?reason: String?) -> Async::Task[self]
 
-    def parent: () -> untyped
+    def parent: -> untyped
 
-    def me: () -> untyped
+    def me: -> untyped
 
-    def joined?: () -> bool
+    def joined?: -> bool
 
-    def guild: () -> untyped
+    def guild: -> untyped
 
-    def owner: () -> untyped
+    def owner: -> untyped
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Add a member to the thread.
@@ -93,7 +97,7 @@ module Discorb
     # @param [Discorb::Member, :me] member The member to add. If `:me` is given, the bot will be added.
     #
     # @return [Async::Task<void>] The task.
-    def add_member: (?(Discorb::Member | Symbol) member) -> Async::Task[void]
+    def add_member: (?Discorb::Member | Symbol member) -> Async::Task[void]
 
     #
     # Remove a member from the thread.
@@ -101,13 +105,13 @@ module Discorb
     # @param [Discorb::Member, :me] member The member to remove. If `:me` is given, the bot will be removed.
     #
     # @return [Async::Task<void>] The task.
-    def remove_member: (?(Discorb::Member | Symbol) member) -> Async::Task[void]
+    def remove_member: (?Discorb::Member | Symbol member) -> Async::Task[void]
 
     #
     # Fetch members in the thread.
     #
     # @return [Array<Discorb::ThreadChannel::Member>] The members in the thread.
-    def fetch_members: () -> ::Array[Discorb::ThreadChannel::Member]
+    def fetch_members: -> ::Array[Discorb::ThreadChannel::Member]
 
     # @return [Discorb::Snowflake] The ID of the channel.
     # @note This ID is same as the starter message's ID
@@ -158,17 +162,21 @@ module Discorb
     #
     # Represents a member in a thread.
     class Member < Discorb::DiscordModel
-      def initialize: (Discorb::Client client, Discorb::json data, _ToS guild_id) -> void
+      def initialize: (
+        Discorb::Client client,
+        Discorb::json data,
+        _ToS guild_id
+      ) -> void
 
-      def thread: () -> Discorb::ThreadChannel
+      def thread: -> Discorb::ThreadChannel
 
-      def member: () -> Discorb::Member
+      def member: -> Discorb::Member
 
-      def id: () -> Discorb::Snowflake
+      def id: -> Discorb::Snowflake
 
-      def user: () -> Discorb::User
+      def user: -> Discorb::User
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # Returns the value of attribute joined_at.
       attr_reader joined_at: Time

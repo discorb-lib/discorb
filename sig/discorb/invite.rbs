@@ -11,7 +11,11 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data of invite.
     # @param [Boolean] gateway Whether the data is from gateway.
-    def initialize: (Discorb::Client client, Discorb::json data, bool gateway) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::json data,
+      bool gateway
+    ) -> void
 
     # Delete the invite.
     # @async

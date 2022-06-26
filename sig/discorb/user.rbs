@@ -16,9 +16,9 @@ module Discorb
     # Format the user as `Username#Discriminator` style.
     #
     # @return [String] The formatted username.
-    def to_s: () -> String
+    def to_s: -> String
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Whether the user is a owner of the client.

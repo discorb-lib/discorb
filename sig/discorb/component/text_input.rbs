@@ -16,15 +16,15 @@ module Discorb
     # @param [String, nil] value The prefilled value of the text input.
     # @param [String, nil] placeholder The placeholder of the text input.
     def initialize: (
-                      String label,
-                      String custom_id,
-                      Symbol style,
-                      ?min_length: Integer?,
-                      ?max_length: Integer?,
-                      ?required: bool,
-                      ?value: String?,
-                      ?placeholder: String?
-                    ) -> void
+      String label,
+      String custom_id,
+      Symbol style,
+      ?min_length: Integer?,
+      ?max_length: Integer?,
+      ?required: bool,
+      ?value: String?,
+      ?placeholder: String?
+    ) -> void
 
     #
     # Converts the select menu to a hash.
@@ -32,7 +32,7 @@ module Discorb
     # @see https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure
     #   Official Discord API docs
     # @return [Hash] A hash representation of the text input.
-    def to_hash: () -> Discorb::json
+    def to_hash: -> Discorb::json
 
     #
     # Creates a new text input from a hash.

@@ -10,14 +10,14 @@ module Discorb
     # @param [String] name The name of the activity.
     # @param [:playing, :streaming, :listening, :watching, :competing] type The type of activity.
     # @param [String] url The URL of the activity.
-    def initialize: (String name, ?Symbol type, ?String? url) -> void
+    def initialize: (String name, ?Symbol `type`, ?String? url) -> void
 
     #
     # Converts the activity to a hash.
     #
     # @return [Hash] A hash representation of the activity.
-    def to_hash: () -> Discorb::json
+    def to_hash: -> Discorb::json
 
-    def inspect: () -> String
+    def inspect: -> String
   end
 end

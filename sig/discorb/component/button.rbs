@@ -14,13 +14,13 @@ module Discorb
     # @param [String] url The URL of the button.
     # @param [Boolean] disabled Whether the button is disabled.
     def initialize: (
-                      String label,
-                      ?Symbol style,
-                      ?emoji: Discorb::emoji?,
-                      ?custom_id: String?,
-                      ?url: String?,
-                      ?disabled: bool
-                    ) -> void
+      String label,
+      ?Symbol style,
+      ?emoji: Discorb::emoji?,
+      ?custom_id: String?,
+      ?url: String?,
+      ?disabled: bool
+    ) -> void
 
     #
     # Converts the button to a hash.
@@ -28,9 +28,9 @@ module Discorb
     # @see https://discord.com/developers/docs/interactions/message-components#button-object-button-structure
     #  Official Discord API docs
     # @return [Hash] A hash representation of the button.
-    def to_hash: () -> Discorb::json
+    def to_hash: -> Discorb::json
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Creates a new button from a hash.

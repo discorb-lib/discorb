@@ -1,5 +1,4 @@
 module Discorb
-
   #
   # Represents a message in Discord.
   class Message < Discorb::DiscordModel
@@ -12,7 +11,11 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data of the welcome screen.
     # @param [Boolean] no_cache Whether to disable caching.
-    def initialize: (Discorb::Client client, Discorb::json data, ?no_cache: bool) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::json data,
+      ?no_cache: bool
+    ) -> void
 
     #
     # Removes the mentions from the message.
@@ -26,13 +29,13 @@ module Discorb
     #
     # @return [String] The cleaned content of the message.
     def clean_content: (
-                         ?user: bool,
-                         ?channel: bool,
-                         ?role: bool,
-                         ?emoji: bool,
-                         ?everyone: bool,
-                         ?codeblock: bool
-                       ) -> String
+      ?user: bool,
+      ?channel: bool,
+      ?role: bool,
+      ?emoji: bool,
+      ?everyone: bool,
+      ?codeblock: bool
+    ) -> String
 
     #
     # Edit the message.
@@ -48,14 +51,15 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     def edit: (
-                ?String content,
-                ?embed: Discorb::Embed,
-                ?embeds: ::Array[Discorb::Embed],
-                ?allowed_mentions: Discorb::AllowedMentions,
-                ?attachments: ::Array[Discorb::Attachment],
-                ?components: (::Array[Discorb::Component] | ::Array[::Array[Discorb::Component]]),
-                ?supress: bool
-              ) -> Async::Task[void]
+      ?String content,
+      ?embed: Discorb::Embed,
+      ?embeds: ::Array[Discorb::Embed],
+      ?allowed_mentions: Discorb::AllowedMentions,
+      ?attachments: ::Array[Discorb::Attachment],
+      ?components: ::Array[Discorb::Component]
+      | ::Array[::Array[Discorb::Component]],
+      ?supress: bool
+    ) -> Async::Task[void]
 
     #
     # Delete the message.
@@ -78,14 +82,17 @@ module Discorb
     # @async
     # @param (see #post)
     # @return [Async::Task<Discorb::Message>] The message.
-    def reply: (*untyped args, **untyped kwargs) -> Async::Task[Discorb::Message]
+    def reply: (
+      *untyped args,
+      **untyped kwargs
+    ) -> Async::Task[Discorb::Message]
 
     #
     # Publish the message.
     # @async
     #
     # @return [Async::Task<void>] The task.
-    def publish: () -> Async::Task[void]
+    def publish: -> Async::Task[void]
 
     #
     # Add a reaction to the message.
@@ -113,7 +120,10 @@ module Discorb
     # @param [Discorb::Member] member The member to remove the reaction from.
     #
     # @return [Async::Task<void>] The task.
-    def remove_reaction_of: (Discorb::emoji emoji, Discorb::Member member) -> Async::Task[void]
+    def remove_reaction_of: (
+      Discorb::emoji emoji,
+      Discorb::Member member
+    ) -> Async::Task[void]
 
     #
     # Fetch reacted users of reaction.
@@ -124,7 +134,11 @@ module Discorb
     # @param [Discorb::Snowflake, nil] after The ID of the user to start fetching from.
     #
     # @return [Async::Task<Array<Discorb::User>>] The users.
-    def fetch_reacted_users: ((Discorb::emoji) emoji, ?limit: Integer?, ?after: Discorb::Snowflake?) -> Async::Task[::Array[Discorb::User]]
+    def fetch_reacted_users: (
+      Discorb::emoji emoji,
+      ?limit: Integer?,
+      ?after: Discorb::Snowflake?
+    ) -> Async::Task[::Array[Discorb::User]]
 
     #
     # Pin the message.
@@ -151,16 +165,21 @@ module Discorb
     # @param (see Discorb::Channel#start_thread)
     #
     # @return [Async::Task<Discorb::ThreadChannel>] <description>
-    def start_thread: (*untyped args, **untyped kwargs) -> Async::Task[Discorb::ThreadChannel]
+    def start_thread: (
+      *untyped args,
+      **untyped kwargs
+    ) -> Async::Task[Discorb::ThreadChannel]
 
     # Meta
-    def inspect: () -> String
+    def inspect: -> String
 
     # @return [Discorb::Snowflake] The ID of the message.
     attr_reader id: Discorb::Snowflake
 
     # @return [Discorb::User, Discorb::Member] The user that sent the message.
-    attr_reader author: (Discorb::User | Discorb::Member | Discorb::Webhook::Message::Author)
+    attr_reader author: Discorb::User
+    | Discorb::Member
+    | Discorb::Webhook::Message::Author
 
     # @return [String] The content of the message.
     attr_reader content: String
@@ -256,7 +275,7 @@ module Discorb
 
     # @macro client_cache
     # @return [Discorb::Channel] The channel the message was sent in.
-    attr_reader channel: (Discorb::Channel & Discorb::Messageable)
+    attr_reader channel: Discorb::Channel & Discorb::Messageable
 
     # @macro client_cache
     # @return [Discorb::Guild] The guild the message was sent in.
@@ -338,17 +357,17 @@ module Discorb
       # @param [Discorb::Snowflake] message_id The message ID.
       # @param [Boolean] fail_if_not_exists Whether fail the request if the message is not found.
       def initialize: (
-                        Discorb::Snowflake guild_id,
-                        Discorb::Snowflake channel_id,
-                        Discorb::Snowflake message_id,
-                        ?fail_if_not_exists: bool
-                      ) -> void
+        Discorb::Snowflake guild_id,
+        Discorb::Snowflake channel_id,
+        Discorb::Snowflake message_id,
+        ?fail_if_not_exists: bool
+      ) -> void
 
       #
       # Convert the reference to a hash.
       #
       # @return [Hash] The hash.
-      def to_hash: () -> Discorb::json
+      def to_hash: -> Discorb::json
 
       #
       # Initialize a new reference from a hash.
@@ -359,7 +378,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#message-reference-object
       def self.from_hash: (Discorb::json data) -> Discorb::Message::Reference
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # @return [Discorb::Snowflake] The guild ID.
       attr_accessor guild_id: Discorb::Snowflake
@@ -379,7 +398,7 @@ module Discorb
     class Sticker
       def initialize: (untyped data) -> void
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # @return [Discorb::Snowflake] The sticker ID.
       attr_reader id: Discorb::Snowflake
@@ -402,7 +421,7 @@ module Discorb
       # @param [Hash] data The interaction data.
       def initialize: (Discorb::Client client, Discorb::json data) -> void
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # @return [Discorb::Snowflake] The interaction ID.
       attr_reader id: Discorb::Snowflake
@@ -430,7 +449,7 @@ module Discorb
       # @param [Hash] data The activity data.
       def initialize: (Discorb::json data) -> void
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # @return [String] The name of activity.
       attr_reader name: String

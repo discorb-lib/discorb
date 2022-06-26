@@ -8,21 +8,25 @@ module Discorb
     # @param [Discorb::Client] client The client that owns this emoji.
     # @param [Discorb::Guild] guild The guild that owns this emoji.
     # @param [Hash] data The data of the emoji.
-    def initialize: (Discorb::Client client, Discorb::Guild guild, Discorb::json data) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::Guild guild,
+      Discorb::json data
+    ) -> void
 
     #
     # Format the emoji for sending.
     #
     # @return [String] the formatted emoji.
-    def to_s: () -> String
+    def to_s: -> String
 
     #
     # Format the emoji for URI.
     #
     # @return [String] the formatted emoji.
-    def to_uri: () -> String
+    def to_uri: -> String
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Edit the emoji.
@@ -34,7 +38,11 @@ module Discorb
     # @param [String] reason The reason for editing the emoji.
     #
     # @return [Async::Task<self>] The edited emoji.
-    def edit: (?name: String, ?roles: ::Array[Discorb::Role], ?reason: String?) -> Async::Task[self]
+    def edit: (
+      ?name: String,
+      ?roles: ::Array[Discorb::Role],
+      ?reason: String?
+    ) -> Async::Task[self]
 
     #
     # Delete the emoji.
@@ -50,7 +58,7 @@ module Discorb
     # @private
     #
     # @return [Hash] The hash represents the object.
-    def to_hash: () -> Discorb::json
+    def to_hash: -> Discorb::json
 
     # @return [Discorb::Snowflake] The ID of the emoji.
     attr_reader id: Discorb::Snowflake

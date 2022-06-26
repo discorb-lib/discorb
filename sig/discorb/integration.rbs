@@ -11,7 +11,11 @@ module Discorb
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The data of the welcome screen.
     # @param [Discorb::Guild] guild The guild this integration is in.
-    def initialize: (Discorb::Client client, Discorb::json data, _ToS guild_id) -> void
+    def initialize: (
+      Discorb::Client client,
+      Discorb::json data,
+      _ToS guild_id
+    ) -> void
 
     #
     # Delete the integration.

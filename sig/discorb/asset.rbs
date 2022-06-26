@@ -19,9 +19,9 @@ module Discorb
     # @return [String] URL of the asset.
     def url: (?image_format: String?, ?size: Integer) -> String
 
-    def inspect: () -> String
+    def inspect: -> String
 
-    def endpoint: () -> untyped
+    def endpoint: -> untyped
 
     # @return [String] The hash of asset.
     attr_reader hash: String

@@ -12,19 +12,19 @@ module Discorb
     #   If failed to guess, it is set to `application/octet-stream`.
     # @param [Boolean] will_close Whether the IO will be closed after the attachment is sent.
     def initialize: (
-                      (untyped | String) source,
-                      ?String? filename,
-                      ?description: String?,
-                      ?content_type: String?,
-                      ?will_close: bool
-                    ) -> void
+      untyped | String source,
+      ?String? filename,
+      ?description: String?,
+      ?content_type: String?,
+      ?will_close: bool
+    ) -> void
 
     #
     # Initializes the object from a hash.
     # @private
     def initialize_hash: (untyped data) -> untyped
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Creates a new file from a hash.
@@ -40,11 +40,11 @@ module Discorb
     #
     # @return [Discorb::Attachment] The new file.
     def self.from_string: (
-                            String string,
-                            ?String? filename,
-                            ?content_type: String?,
-                            ?description: untyped
-                          ) -> Discorb::Attachment
+      String string,
+      ?String? filename,
+      ?content_type: String?,
+      ?description: untyped
+    ) -> Discorb::Attachment
 
     # @return [#read] The file content.
     attr_reader io: untyped

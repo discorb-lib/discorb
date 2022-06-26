@@ -3,6 +3,6 @@ module Discorb
   # Module for connecting to a voice channel.
   # This will be discord-voice gem.
   module Connectable
-    def connect: () -> untyped
+    def connect: -> untyped
   end
 end

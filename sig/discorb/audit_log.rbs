@@ -7,7 +7,7 @@ module Discorb
     # @private
     def initialize: (untyped client, untyped data, untyped guild) -> void
 
-    def inspect: () -> String
+    def inspect: -> String
 
     #
     # Gets an entry from entries.
@@ -50,7 +50,7 @@ module Discorb
       # @return [nil] The change with the given key does not exist.
       def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # @return [Discorb::Snowflake] The ID of the entry.
       attr_reader id: Discorb::Snowflake
@@ -119,7 +119,12 @@ module Discorb
 
       # @return [Discorb::Channel, Discorb::Role, Discorb::Member, Discorb::Guild, Discorb::Message]
       #   The target of the entry.
-      attr_reader target: (Discorb::Channel | Discorb::Role | Discorb::Member | Discorb::Guild | Discorb::Message | Discorb::Snowflake)
+      attr_reader target: Discorb::Channel
+      | Discorb::Role
+      | Discorb::Member
+      | Discorb::Guild
+      | Discorb::Message
+      | Discorb::Snowflake
 
       # @return [Hash{Symbol => Object}] The optional data for this entry.
       # @note You can use dot notation to access the data.
@@ -140,13 +145,13 @@ module Discorb
 
         #
         # Formats the changes into a string.
-        def inspect: () -> String
+        def inspect: -> String
 
         #
         # Get keys of changes.
         #
         # @return [Array<Symbol>] The keys of the changes.
-        def keys: () -> ::Array[Symbol]
+        def keys: -> ::Array[Symbol]
 
         #
         # Get a change with the given key.
@@ -178,13 +183,16 @@ module Discorb
         # Format the change into a string.
         #
         # @return [String] The string representation of the change.
-        def inspect: () -> String
+        def inspect: -> String
 
         #
         # Whether the change responds to the given method.
         #
         # @return [Boolean] Whether the change responds to the given method.
-        def respond_to_missing?: (untyped method, ?untyped include_private) -> bool
+        def respond_to_missing?: (
+          untyped method,
+          ?untyped include_private
+        ) -> bool
 
         # @return [Symbol] The key of the change.
         attr_reader key: Symbol
@@ -205,7 +213,7 @@ module Discorb
       # @private
       def initialize: (untyped data) -> void
 
-      def inspect: () -> String
+      def inspect: -> String
 
       # @return [Discorb::Snowflake] The ID of the integration.
       attr_reader id: Discorb::Snowflake
