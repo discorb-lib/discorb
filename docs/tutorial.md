@@ -98,10 +98,10 @@ You will get other files if you specify `--git`.
 Open `main.rb`, you will see the following code:
 
 ```ruby
-require "discorb"
-require "dotenv"
+# frozen_string_literal: true
 
-Dotenv.load  # Loads .env file
+require "discorb"
+require "dotenv/load"  # Load environment variables from .env file.
 
 client = Discorb::Client.new  # Create client for connecting to Discord
 
@@ -115,10 +115,10 @@ client.run ENV["TOKEN"]  # Starts client
 Open `.env`, you will see:
 
 ```
-TOKEN=Y0urB0tT0k3nHer3.Th1sT0ken.W0ntWorkB3c4useItH4sM34n1ng
+TOKEN=
 ```
 
-Replace `Y0urB0tT0k3nHer3.Th1sT0ken.W0ntWorkB3c4useItH4sM34n1ng` with your bot token.
+Put your token after `TOKEN=`.
 Remember to keep this file secret!
 
 Open terminal and type:
@@ -194,4 +194,4 @@ You did it! Your bot won't respond to bot's messages anymore.
 This is the end of tutorial.
 
 To learn more, check out the [documentation](https://discorb-lib.github.io/).
-You can also check out [Examples](docs/examples).
+You can also check out [Examples](https://github.com/discorb-lib/discorb/tree/main/examples).
