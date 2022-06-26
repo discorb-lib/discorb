@@ -344,6 +344,14 @@ module Discorb
     # |`1 << 6`|`:ephemeral`|
     # |`1 << 7`|`:loading`|
     class Flag < Discorb::Flag
+      attr_accessor crossposted: bool
+      attr_accessor crosspost: bool
+      attr_accessor supress_embeds: bool
+      attr_accessor source_message_deleted: bool
+      attr_accessor urgent: bool
+      attr_accessor has_thread: bool
+      attr_accessor ephemeral: bool
+      attr_accessor loading: bool
     end
 
     #

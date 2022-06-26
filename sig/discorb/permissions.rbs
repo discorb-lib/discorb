@@ -42,6 +42,42 @@ module Discorb
   # |`1 << 35`|`:use_public_threads`|
   # |`1 << 36`|`:use_private_threads`|
   class Permission < Discorb::Flag
+    attr_accessor create_instant_invite: bool
+    attr_accessor kick_members: bool
+    attr_accessor ban_members: bool
+    attr_accessor administrator: bool
+    attr_accessor manage_channels: bool
+    attr_accessor manage_guild: bool
+    attr_accessor add_reactions: bool
+    attr_accessor view_audit_log: bool
+    attr_accessor priority_speaker: bool
+    attr_accessor stream: bool
+    attr_accessor view_channel: bool
+    attr_accessor send_messages: bool
+    attr_accessor send_tts_messages: bool
+    attr_accessor manage_messages: bool
+    attr_accessor embed_links: bool
+    attr_accessor attach_files: bool
+    attr_accessor read_message_history: bool
+    attr_accessor mention_everyone: bool
+    attr_accessor use_external_emojis: bool
+    attr_accessor view_guild_insights: bool
+    attr_accessor connect: bool
+    attr_accessor speak: bool
+    attr_accessor mute_members: bool
+    attr_accessor deafen_members: bool
+    attr_accessor move_members: bool
+    attr_accessor use_vad: bool
+    attr_accessor change_nickname: bool
+    attr_accessor manage_nicknames: bool
+    attr_accessor manage_roles: bool
+    attr_accessor manage_webhooks: bool
+    attr_accessor manage_emojis: bool
+    attr_accessor use_slash_commands: bool
+    attr_accessor request_to_speak: bool
+    attr_accessor manage_threads: bool
+    attr_accessor use_public_threads: bool
+    attr_accessor use_private_threads: bool
   end
 
   #

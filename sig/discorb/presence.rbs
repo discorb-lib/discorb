@@ -159,6 +159,12 @@ module Discorb
       # |`1 << 4`|`:sync`|
       # |`1 << 5`|`:play`|
       class Flag < Discorb::Flag
+        attr_accessor instance: bool
+        attr_accessor join: bool
+        attr_accessor spectate: bool
+        attr_accessor join_request: bool
+        attr_accessor sync: bool
+        attr_accessor play: bool
       end
 
       #

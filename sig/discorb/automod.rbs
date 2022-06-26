@@ -56,7 +56,6 @@ module Discorb
     #
     # @param [Discorb::Client] client The client.
     # @param [Hash] data The auto mod data.
-    #
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
     #
@@ -106,6 +105,7 @@ module Discorb
       # @return [Integer] The duration of the timeout.
       # @note This is only available if the action type is `:timeout`.
       attr_reader duration_seconds: Integer?
+
       #
       # Initialize a new action.
       #
@@ -114,8 +114,11 @@ module Discorb
       #   This is only available if the action type is `:timeout`.
       # @param [Discorb::Channel] channel The channel that the alert message is sent to.
       #   This is only available if the action type is `:send_alert_message`.
-      #
-      def initialize: (Symbol type, ?duration_seconds: Integer?, ?channel: Discorb::Channel?) -> void
+      def initialize: (
+        Symbol `type`,
+        ?duration_seconds: Integer?,
+        ?channel: Discorb::Channel?
+      ) -> void
 
       # @return [Discorb::Channel] The channel that the alert message is sent to.
       # @note This is only available if the action type is `:send_alert_message`.

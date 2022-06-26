@@ -9,5 +9,9 @@ module Discorb
   # |`1 << 2`|`:setup_tips`|
   # |`1 << 3`|`:join_stickers`|
   class SystemChannelFlag < Discorb::Flag
+    attr_accessor member_join: bool
+    attr_accessor server_boost: bool
+    attr_accessor setup_tips: bool
+    attr_accessor join_stickers: bool
   end
 end
