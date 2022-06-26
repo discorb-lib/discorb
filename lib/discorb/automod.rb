@@ -123,6 +123,7 @@ module Discorb
       presets: Discorb::Unset,
       reason: nil
     )
+      # @type var payload: Hash[Symbol, untyped]
       payload = {
         metadata: {},
       }
@@ -174,7 +175,7 @@ module Discorb
       @creator_id = data[:creator_id]
       @trigger_type_raw = data[:trigger_type]
       @event_type_raw = data[:event_type]
-      @actions = data[:actions].map { |action| Action.new(@client, action) }
+      @actions = data[:actions].map { |action| Action.from_hash(@client, action) }
       case trigger_type
       when :keyword
         @keyword_filter = data[:trigger_metadata][:keyword_filter]
@@ -206,9 +207,7 @@ module Discorb
 
       #
       # Initialize a new action.
-      # @private
       #
-      # @param [Discorb::Client] client The client.
       # @param [Symbol] type The type of the action.
       # @param [Integer] duration_seconds The duration of the timeout.
       #   This is only available if the action type is `:timeout`.
