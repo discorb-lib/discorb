@@ -62,5 +62,8 @@ module Discorb
     # @return [Symbol] The locale of the guild that created the interaction.
     # @note This modifies the language code, `-` will be replaced with `_`.
     attr_reader guild_locale: Symbol
+
+    # @return [Discorb::Permission] The permissions of the bot.
+    attr_reader app_permissions: Discorb::Permission
   end
 end

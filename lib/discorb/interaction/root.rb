@@ -25,6 +25,8 @@ module Discorb
     # @return [Symbol] The locale of the guild that created the interaction.
     # @note This modifies the language code, `-` will be replaced with `_`.
     attr_reader :guild_locale
+    # @return [Discorb::Permission] The permissions of the bot.
+    attr_reader :app_permissions
 
     # @!attribute [r] guild
     #   @macro client_cache
@@ -62,6 +64,7 @@ module Discorb
       @token = data[:token]
       @locale = data[:locale].to_s.gsub("-", "_").to_sym
       @guild_locale = data[:guild_locale].to_s.gsub("-", "_").to_sym
+      @app_permissions = data[:app_permissions] && Permission.new(data[:app_permissions].to_i)
       @version = data[:version]
       @defered = false
       @responded = false
