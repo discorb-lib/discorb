@@ -6,6 +6,12 @@
 
 ## v0.18
 
+### v0.18.1
+
+- Add: Support `:length` option for `:string` type.
+- Add: Add `Interaction#app_permissions`
+- Fix: Fix typing of `:autocomplete` option.
+
 ### v0.18.0
 
 - Change!: `XXX#fired_by` is now `XXX#user` or `XXX#member`.
