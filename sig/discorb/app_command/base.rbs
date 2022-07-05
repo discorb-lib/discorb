@@ -35,7 +35,7 @@ module Discorb
         choices: Hash[String, (String | Integer | Float)]?,
         choices_localizations: Hash[String, Hash[(Symbol | String), String]]?,
         channel_types: Array[Class]?,
-        autocomplete: ^(Discorb::CommandInteraction) -> Hash[String, String]?,
+        autocomplete: (^(Discorb::CommandInteraction) -> Hash[String, String])?,
         range: Range[(Integer | Float)]?
       }
     type options = ::Hash[String, option]
