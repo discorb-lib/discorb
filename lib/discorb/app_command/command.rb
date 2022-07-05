@@ -195,6 +195,10 @@ module Discorb
               ret[:min_value] = value[:range].begin
               ret[:max_value] = value[:range].end
             end
+            if value[:length]
+              ret[:min_length] = value[:length].begin
+              ret[:max_length] = value[:length].end
+            end
             ret
           end
           {

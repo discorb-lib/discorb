@@ -39,6 +39,7 @@ module Discorb
       #   | `:channel_types` | `Array<Class<Discorb::Channel>>` | Type of the channel option. |
       #   | `:autocomplete` | `Proc` | Autocomplete function. |
       #   | `:range` | `Range` | Range of the option. Only valid for numeric options. (`:int`, `:float`) |
+      #   | `:length` | `Range` | Range of length of the option. Only valid for `:string`. |
       #
       # @param [Array<#to_s>, false, nil] guild_ids
       #  Guild IDs to set the command to. `false` to global command, `nil` to use default.

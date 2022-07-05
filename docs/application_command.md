@@ -82,6 +82,7 @@ In `options`, hash should be like this:
 | `:channel_types`         | `Array<Class<Discorb::Channel>>`         | Type of the channel option.                                                           |
 | `:autocomplete`          | `Proc`                                   | Autocomplete function.                                                                |
 | `:range`                 | `Range`                                  | Range of the option. Only valid for numeric options. (`:int`, `:float`)               |
+| `:length`                | `Range`                                  | Range of length of the option. Only valid for `:string`.                              |
 
 `choices` should be unspecified if you don't want to use it.
 `choices` example:
