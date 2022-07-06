@@ -566,28 +566,28 @@ module Discorb
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState state) -> void
       } -> Discorb::EventHandler
       | (
         :voice_channel_disconnect event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState state) -> void
       } -> Discorb::EventHandler
       | (
         :voice_channel_move event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState before, Discorb::VoiceState after) -> void
       } -> Discorb::EventHandler
       | (
         :voice_channel_update event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState before, Discorb::VoiceState after) -> void
       } -> Discorb::EventHandler
       | (
         :voice_mute_disable event_name,
@@ -1328,28 +1328,28 @@ module Discorb
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState state) -> void
       } -> Discorb::EventHandler
       | (
         :voice_channel_disconnect event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState state) -> void
       } -> Discorb::EventHandler
       | (
         :voice_channel_move event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState before, Discorb::VoiceState after) -> void
       } -> Discorb::EventHandler
       | (
         :voice_channel_update event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
-        -> void
+        (Discorb::VoiceState before, Discorb::VoiceState after) -> void
       } -> Discorb::EventHandler
       | (
         :voice_mute_disable event_name,
@@ -2105,26 +2105,26 @@ module Discorb
         :voice_channel_connect event,
         ?Integer? timeout
       ) {
-        -> boolish
-      } -> Async::Task[void]
+        (Discorb::VoiceState state) -> boolish
+      } -> Async::Task[Discorb::VoiceState]
       | (
         :voice_channel_disconnect event,
         ?Integer? timeout
       ) {
-        -> boolish
-      } -> Async::Task[void]
+        (Discorb::VoiceState state) -> boolish
+      } -> Async::Task[Discorb::VoiceState]
       | (
         :voice_channel_move event,
         ?Integer? timeout
       ) {
-        -> boolish
-      } -> Async::Task[void]
+        (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish
+      } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
       | (
         :voice_channel_update event,
         ?Integer? timeout
       ) {
-        -> boolish
-      } -> Async::Task[void]
+        (Discorb::VoiceState before, Discorb::VoiceState after) -> boolish
+      } -> Async::Task[[Discorb::VoiceState, Discorb::VoiceState]]
       | (
         :voice_mute_disable event,
         ?Integer? timeout

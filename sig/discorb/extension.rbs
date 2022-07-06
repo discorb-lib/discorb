@@ -560,28 +560,28 @@ module Discorb
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState state) -> void
         } -> void
         | (
           :voice_channel_disconnect event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState state) -> void
         } -> void
         | (
           :voice_channel_move event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState before, Discorb::VoiceState after) -> void
         } -> void
         | (
           :voice_channel_update event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState before, Discorb::VoiceState after) -> void
         } -> void
         | (
           :voice_mute_disable event_name,
@@ -1331,28 +1331,28 @@ module Discorb
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState state) -> void
         } -> void
         | (
           :voice_channel_disconnect event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState state) -> void
         } -> void
         | (
           :voice_channel_move event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState before, Discorb::VoiceState after) -> void
         } -> void
         | (
           :voice_channel_update event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
-          -> void
+          (Discorb::VoiceState before, Discorb::VoiceState after) -> void
         } -> void
         | (
           :voice_mute_disable event_name,

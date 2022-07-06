@@ -12,7 +12,7 @@ Fires when someone joins a voice channel.
 
 | Parameter | Type                  | Description                              |
 | --------- | --------------------- | ---------------------------------------- |
-| state     | {Discorb::VoiceState} | The voice state of the user that joined. |
+| `state`   | {Discorb::VoiceState} | The voice state of the user that joined. |
 
 #### `voice_channel_disconnect(state)`
 
@@ -20,7 +20,7 @@ Fires when someone leaves a voice channel.
 
 | Parameter | Type                  | Description                            |
 | --------- | --------------------- | -------------------------------------- |
-| state     | {Discorb::VoiceState} | The voice state of the user that left. |
+| `state`   | {Discorb::VoiceState} | The voice state of the user that left. |
 
 #### `voice_channel_move(before, after)`
 
@@ -28,8 +28,8 @@ Fires when someone moves to a different voice channel.
 
 | Parameter | Type                  | Description                                  |
 | --------- | --------------------- | -------------------------------------------- |
-| before    | {Discorb::VoiceState} | The voice state of the user before the move. |
-| after     | {Discorb::VoiceState} | The voice state of the user after the move.  |
+| `before`  | {Discorb::VoiceState} | The voice state of the user before the move. |
+| `after`   | {Discorb::VoiceState} | The voice state of the user after the move.  |
 
 #### `voice_channel_update(before, after)`
 
@@ -37,8 +37,8 @@ Fires when a voice channel is connected, disconnected, or updated.
 
 | Parameter | Type                  | Description                        |
 | --------- | --------------------- | ---------------------------------- |
-| before    | {Discorb::VoiceState} | The voice state before the update. |
-| after     | {Discorb::VoiceState} | The voice state after the update.  |
+| `before`  | {Discorb::VoiceState} | The voice state before the update. |
+| `after`   | {Discorb::VoiceState} | The voice state after the update.  |
 
 ### Mute Events
 
