@@ -563,9 +563,9 @@ Fires when a select menu is selected.
 | ------------- | -------------------------------------------------- | ----------------------- |
 | `interaction` | {Discorb::MessageComponentInteraction::SelectMenu} | The interaction object. |
 
-#### `form_submit(interaction)`
+#### `modal_submit(interaction)`
 
-Fires when a form is submitted.
+Fires when a modal is submitted.
 
 | Parameter     | Type                        | Description             |
 | ------------- | --------------------------- | ----------------------- |

@@ -236,6 +236,7 @@ desc "Generate rbs file"
 namespace :rbs do
   desc "Generate event signature"
   task :event do
+    require "syntax_tree/rbs"
     client_rbs = File.read("sig/discorb/client.rbs")
     extension_rbs = File.read("sig/discorb/extension.rbs")
     event_document = File.read("./docs/events.md")
@@ -296,41 +297,35 @@ namespace :rbs do
         | (:#{event[:name]} event_name, ?id: Symbol?, **untyped metadata) { (#{sig}) -> void } -> void
       RBS
     end
+    event_sig << <<~RBS
+      | (Symbol event_name, ?id: Symbol?, **untyped metadata) { (*untyped) -> void } -> Discorb::EventHandler
+    RBS
+    event_lock_sig << <<~RBS
+      | (Symbol event, ?Integer? timeout) { (*untyped) -> boolish } -> Async::Task[untyped]
+    RBS
+    extension_sig << <<~RBS
+      | (Symbol event_name, ?id: Symbol?, **untyped metadata) { (*untyped) -> void } -> void
+    RBS
     event_sig.sub!("| ", "  ").rstrip!
     event_lock_sig.sub!("| ", "  ").rstrip!
     extension_sig.sub!("| ", "  ").rstrip!
-    res = client_rbs.gsub!(/\# marker: on\n(?:[\s\S]*?\n)?( +)\# endmarker: on\n/) do
-      indent = Regexp.last_match(1)
-      "# marker: on\n#{event_sig.gsub(/^/, "#{indent}      ")}\n#{indent}# endmarker: on\n"
-    end
+    res = client_rbs.gsub!(/(?<=def on:\n)(?:[\s\S]*?)(?=\n\n)/, event_sig)
     raise "Failed to generate Client#on" unless res
 
-    res = client_rbs.gsub!(/\# marker: once\n(?:[\s\S]*?\n)?( +)\# endmarker: once\n/) do
-      indent = Regexp.last_match(1)
-      "# marker: once\n#{event_sig.gsub(/^/, "#{indent}        ")}\n#{indent}# endmarker: once\n"
-    end
+    res = client_rbs.gsub!(/(?<=def once:\n)(?:[\s\S]*?)(?=\n\n)/, event_sig)
     raise "Failed to generate Client#once" unless res
 
-    res = client_rbs.gsub!(/\# marker: event_lock\n(?:[\s\S]*?\n)?( +)\# endmarker: event_lock\n/) do
-      indent = Regexp.last_match(1)
-      "# marker: event_lock\n#{event_lock_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: event_lock\n"
-    end
+    res = client_rbs.gsub!(/(?<=def event_lock:\n)(?:[\s\S]*?)(?=\n\n)/, event_lock_sig)
     raise "Failed to generate Client#event_lock" unless res
 
-    res = extension_rbs.gsub!(/\# marker: event\n(?:[\s\S]*?\n)?( +)\# endmarker: event\n/) do
-      indent = Regexp.last_match(1)
-      "# marker: event\n#{extension_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: event\n"
-    end
+    res = extension_rbs.gsub!(/(?<=def event:\n)(?:[\s\S]*?)(?=\n\n)/, extension_sig)
     raise "Failed to generate Extension.event" unless res
 
-    res = extension_rbs.gsub!(/\# marker: once_event\n(?:[\s\S]*?\n)?( +)\# endmarker: once_event\n/) do
-      indent = Regexp.last_match(1)
-      "# marker: once_event\n#{extension_sig.gsub(/^/, "#{indent}       ")}\n#{indent}# endmarker: once_event\n"
-    end
+    res = extension_rbs.gsub!(/(?<=def once_event:\n)(?:[\s\S]*?)(?=\n\n)/, extension_sig)
     raise "Failed to generate Extension.once_event" unless res
 
-    File.write("sig/discorb/client.rbs", client_rbs, mode: "wb")
-    File.write("sig/discorb/extension.rbs", extension_rbs, mode: "wb")
+    File.write("sig/discorb/client.rbs", SyntaxTree::RBS.format(client_rbs), mode: "wb")
+    File.write("sig/discorb/extension.rbs", SyntaxTree::RBS.format(extension_rbs), mode: "wb")
   end
 
   desc "Generate rbs file using sord"

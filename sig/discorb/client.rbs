@@ -464,7 +464,7 @@ module Discorb
         (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void
       } -> Discorb::EventHandler
       | (
-        :form_submit event_name,
+        :modal_submit event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
@@ -1226,7 +1226,7 @@ module Discorb
         (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void
       } -> Discorb::EventHandler
       | (
-        :form_submit event_name,
+        :modal_submit event_name,
         ?id: Symbol?,
         **untyped metadata
       ) {
@@ -2012,7 +2012,7 @@ module Discorb
         ) -> boolish
       } -> Async::Task[Discorb::MessageComponentInteraction::SelectMenu]
       | (
-        :form_submit event,
+        :modal_submit event,
         ?Integer? timeout
       ) {
         (Discorb::ModalInteraction interaction) -> boolish

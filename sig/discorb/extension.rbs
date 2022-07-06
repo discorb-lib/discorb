@@ -452,7 +452,7 @@ module Discorb
           (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void
         } -> void
         | (
-          :form_submit event_name,
+          :modal_submit event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
@@ -1223,7 +1223,7 @@ module Discorb
           (Discorb::MessageComponentInteraction::SelectMenu interaction) -> void
         } -> void
         | (
-          :form_submit event_name,
+          :modal_submit event_name,
           ?id: Symbol?,
           **untyped metadata
         ) {
