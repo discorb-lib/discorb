@@ -313,11 +313,17 @@ module Discorb
       # @return [Async::Task<void>] The task.
       #
       def show_modal(title, custom_id, components)
-        payload = { title: title, custom_id: custom_id, components: Component.to_payload(components) }
-        @client.http.request(
-          Route.new("/interactions/#{@id}/#{@token}/callback", "//interactions/:interaction_id/:token/callback", :post),
-          { type: 9, data: payload }
-        ).wait
+        Async do
+          payload = { title: title, custom_id: custom_id, components: Component.to_payload(components) }
+          @client.http.request(
+            Route.new(
+              "/interactions/#{@id}/#{@token}/callback",
+              "//interactions/:interaction_id/:token/callback",
+              :post
+            ),
+            { type: 9, data: payload }
+          ).wait
+        end
       end
     end
 
