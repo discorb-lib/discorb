@@ -308,7 +308,7 @@ module Discorb
     #
     # @return [Async::Task<Discorb::Member>] The member.
     # @return [Async::Task<nil>] If the member is not found.
-    def fetch_member_named: -> Async::Task[Discorb::Member]
+    def fetch_member_named:(      String name) -> Async::Task[Discorb::Member]
 
     #
     # Change nickname of client member.

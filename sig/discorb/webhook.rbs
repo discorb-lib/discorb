@@ -272,7 +272,15 @@ module Discorb
       # @param (see Webhook#edit_message)
       #
       # @return [Async::Task<void>] The task.
-      def edit: -> Async::Task[void]
+      def edit: (
+            ?String content,
+      ?embed: Discorb::Embed,
+      ?embeds: ::Array[Discorb::Embed],
+      ?file: Discorb::Attachment,
+      ?files: ::Array[Discorb::Attachment],
+      ?attachments: ::Array[Discorb::Attachment],
+      ?allowed_mentions: Discorb::AllowedMentions
+      ) -> Async::Task[void]
 
       #
       # Deletes the message.

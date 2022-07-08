@@ -10,7 +10,7 @@ module Discorb
 
     #
     # Calls the block associated with the event.
-    def call: -> untyped
+    def call: (*untyped, **untyped) ?{ (*untyped) -> untyped } -> untyped
 
     # @return [Proc] the block to be called.
     attr_reader block: ^(*untyped) -> void

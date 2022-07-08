@@ -34,4 +34,4 @@ group :docs, optional: true do
 end
 
 gem "syntax_tree", "~> 2.8"
-gem "syntax_tree-rbs", "~> 0.4.0"
+gem "syntax_tree-rbs", "~> 0.5.0"
