@@ -273,13 +273,13 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       def edit: (
-            ?String content,
-      ?embed: Discorb::Embed,
-      ?embeds: ::Array[Discorb::Embed],
-      ?file: Discorb::Attachment,
-      ?files: ::Array[Discorb::Attachment],
-      ?attachments: ::Array[Discorb::Attachment],
-      ?allowed_mentions: Discorb::AllowedMentions
+        ?String content,
+        ?embed: Discorb::Embed,
+        ?embeds: ::Array[Discorb::Embed],
+        ?file: Discorb::Attachment,
+        ?files: ::Array[Discorb::Attachment],
+        ?attachments: ::Array[Discorb::Attachment],
+        ?allowed_mentions: Discorb::AllowedMentions
       ) -> Async::Task[void]
 
       #
