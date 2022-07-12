@@ -72,7 +72,7 @@ module Discorb
     # @param [String] reason The reason for deleting the message.
     #
     # @return [Async::Task<void>] The task.
-    def delete_message!: (
+    def delete_message: (
       _ToS message_id,
       ?reason: String?
     ) -> Async::Task[void]

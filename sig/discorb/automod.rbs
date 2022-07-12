@@ -92,7 +92,7 @@ module Discorb
     # @param [String] reason The reason for deleting the rule.
     #
     # @return [Async::Task<void>] The task.
-    def delete!: (?reason: nil) -> Async::Task[void]
+    def delete: (?reason: nil) -> Async::Task[void]
 
     class Action < Discorb::DiscordModel
       # @return [Hash{Integer => Symbol}] The mapping of action types.

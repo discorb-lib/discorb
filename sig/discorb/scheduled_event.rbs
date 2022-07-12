@@ -57,7 +57,7 @@ module Discorb
     # @async
     #
     # @return [Async::Task<void>] The task.
-    def delete!: -> Async::Task[void]
+    def delete: -> Async::Task[void]
 
     #
     # Fetches the event users.

@@ -121,7 +121,7 @@ module Discorb
     #
     # @return [Async::Task<self>] The deleted emoji.
     #
-    def delete!(reason: nil)
+    def delete(reason: nil)
       Async do
         @client.http.request(
           Route.new("/guilds/#{@guild.id}/emojis/#{@id}", "//guilds/:guild_id/emojis/:emoji_id",

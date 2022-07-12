@@ -29,7 +29,7 @@ module Discorb
     # @async
     #
     # @return [Async::Task<void>] The task.
-    def leave!: -> Async::Task[void]
+    def leave: -> Async::Task[void]
 
     #
     # Fetch scheduled events for the guild.

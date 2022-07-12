@@ -45,7 +45,7 @@ module Discorb
     # @async
     #
     # @return [Async::Task<void>] The task.
-    def delete_original_message!: -> Async::Task[void]
+    def delete_original_message: -> Async::Task[void]
 
     #
     # Create a new Interaction instance from the data.

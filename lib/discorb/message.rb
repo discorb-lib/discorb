@@ -282,7 +282,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def delete!(reason: nil)
+    def delete(reason: nil)
       Async do
         channel.delete_message!(@id, reason: reason).wait
       end

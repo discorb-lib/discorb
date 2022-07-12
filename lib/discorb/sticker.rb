@@ -100,7 +100,7 @@ module Discorb
       #
       # @param [String] reason The reason for the deletion.
       #
-      def delete!(reason: nil)
+      def delete(reason: nil)
         Async do
           @client.http.request(
             Route.new("/guilds/#{@guild_id}/stickers/#{@id}", "//guilds/:guild_id/stickers/:sticker_id",

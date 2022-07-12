@@ -33,7 +33,7 @@ module Discorb
     # @async
     #
     # @return [Async::Task<void>] The task.
-    def delete!: -> Async::Task[void]
+    def delete: -> Async::Task[void]
 
     # @return [String] The code of the template.
     attr_reader code: String

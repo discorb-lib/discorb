@@ -135,7 +135,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def delete!
+    def delete
       Async do
         @http.request(Route.new(url, "//webhooks/:webhook_id/:token", :delete)).wait
         self
@@ -191,7 +191,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def delete_message!(message)
+    def delete_message(message)
       Async do
         @http.request(
           Route.new(
@@ -385,7 +385,7 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       #
-      def delete!
+      def delete
         Async do
           @webhook.delete_message!(self).wait
         end

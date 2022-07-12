@@ -196,7 +196,7 @@ module Discorb
       #
       # @return [Async::Task<void>] The task.
       #
-      def delete!
+      def delete
         Async do
           @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
                                          "//webhooks/:webhook_id/:token/messages/@original", :delete)).wait

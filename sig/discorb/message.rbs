@@ -68,7 +68,7 @@ module Discorb
     # @param [String] reason The reason for deleting the message.
     #
     # @return [Async::Task<void>] The task.
-    def delete!: (?reason: String?) -> Async::Task[void]
+    def delete: (?reason: String?) -> Async::Task[void]
 
     #
     # Convert the message to reference object.

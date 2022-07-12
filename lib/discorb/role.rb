@@ -165,7 +165,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def delete!(reason: nil)
+    def delete(reason: nil)
       Async do
         @client.http.request(
           Route.new("/guilds/#{@guild.id}/roles/#{@id}", "//guilds/:guild_id/roles/:role_id",

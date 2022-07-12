@@ -135,7 +135,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def delete_messages!(*messages, force: false)
+    def delete_messages(*messages, force: false)
       Async do
         messages = messages.flatten
         unless force

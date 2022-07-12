@@ -2321,7 +2321,7 @@ module Discorb
 
     #
     # Stops the client.
-    def close!: -> void
+    def close: -> void
 
     private
 

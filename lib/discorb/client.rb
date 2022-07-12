@@ -473,7 +473,7 @@ module Discorb
     #
     # Stops the client.
     #
-    def close!
+    def close
       if @shards.any?
         @shards.each_value(&:close!)
       else

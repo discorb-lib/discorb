@@ -224,7 +224,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def delete!
+    def delete
       Async do
         @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}",
                                        "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :delete)).wait

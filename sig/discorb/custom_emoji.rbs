@@ -51,7 +51,7 @@ module Discorb
     # @param [String] reason The reason for deleting the emoji.
     #
     # @return [Async::Task<self>] The deleted emoji.
-    def delete!: (?reason: String?) -> Async::Task[self]
+    def delete: (?reason: String?) -> Async::Task[self]
 
     #
     # Converts the object to a hash.

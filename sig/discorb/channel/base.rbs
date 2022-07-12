@@ -95,7 +95,7 @@ module Discorb
     # @param [String] reason The reason of deleting the channel.
     #
     # @return [Async::Task<self>] The deleted channel.
-    def delete!: (?reason: String?) -> Async::Task[self]
+    def delete: (?reason: String?) -> Async::Task[self]
 
     #
     # Moves the channel to another position.

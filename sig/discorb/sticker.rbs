@@ -75,7 +75,7 @@ module Discorb
       # @async
       #
       # @param [String] reason The reason for the deletion.
-      def delete!: (?reason: String?) -> untyped
+      def delete: (?reason: String?) -> untyped
 
       # @!attribute [r] guild
       #   @macro client_cache

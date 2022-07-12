@@ -154,7 +154,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def delete!(reason: nil)
+    def delete(reason: nil)
       Async do
         @client.http.request(
           Route.new(

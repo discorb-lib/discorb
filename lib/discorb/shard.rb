@@ -61,7 +61,7 @@ module Discorb
     #
     # @return [void]
     #
-    def close!
+    def close
       @status = :closed
       @main_task&.stop
       @thread.kill

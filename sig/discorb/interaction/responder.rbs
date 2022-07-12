@@ -90,7 +90,7 @@ module Discorb
       # @note This will fail if the message is ephemeral.
       #
       # @return [Async::Task<void>] The task.
-      def delete!: -> Async::Task[void]
+      def delete: -> Async::Task[void]
 
       def inspect: -> String
     end

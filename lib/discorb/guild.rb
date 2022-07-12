@@ -179,7 +179,7 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def leave!
+    def leave
       Async do
         @client.http.request(Route.new("/users/@me/guilds/#{@id}", "//users/@me/guilds/:guild_id", :delete)).wait
         @client.guilds.delete(@id)

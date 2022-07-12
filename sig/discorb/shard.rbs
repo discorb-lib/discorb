@@ -27,7 +27,7 @@ module Discorb
     # Stops the shard.
     #
     # @return [void]
-    def close!: -> void
+    def close: -> void
 
     def inspect: -> String
 

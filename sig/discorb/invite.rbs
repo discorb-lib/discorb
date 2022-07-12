@@ -20,7 +20,7 @@ module Discorb
     # Delete the invite.
     # @async
     # @return [Async::Task<void>] The task.
-    def delete!: (?reason: String) -> Async::Task[void]
+    def delete: (?reason: String) -> Async::Task[void]
 
     # @return [String] The code of invite.
     attr_reader code: String

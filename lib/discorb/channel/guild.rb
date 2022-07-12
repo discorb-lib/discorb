@@ -89,7 +89,7 @@ module Discorb
     #
     # @return [Async::Task<self>] The deleted channel.
     #
-    def delete!(reason: nil)
+    def delete(reason: nil)
       Async do
         @client.http.request(Route.new(base_url.wait.to_s, "//webhooks/:webhook_id/:token", :delete), {},
                              audit_log_reason: reason).wait

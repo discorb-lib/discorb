@@ -24,7 +24,7 @@ module Discorb
     # @param [String] reason The reason for deleting the integration.
     #
     # @return [Async::Task<void>] The task.
-    def delete!: (?reason: String?) -> Async::Task[void]
+    def delete: (?reason: String?) -> Async::Task[void]
 
     # @return [Discorb::Snowflake] The ID of the integration.
     attr_reader id: Discorb::Snowflake
