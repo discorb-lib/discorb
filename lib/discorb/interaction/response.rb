@@ -125,57 +125,56 @@ module Discorb
           ret
         end
       end
+    end
+
+    #
+    # Represents of a callback message of interaction.
+    #
+    class CallbackMessage
+      #
+      # Initializes a new instance of CallbackMessage.
+      # @private
+      #
+      # @param [Client] client The client.
+      # @param [Hash] data The payload.
+      # @param [String] application_id The application ID.
+      # @param [String] token The token.
+      #
+      def initialize(client, data, application_id, token)
+        @client = client
+        @data = data
+        @application_id = application_id
+        @token = token
+      end
 
       #
-      # Edit the original message.
-      # This method is low-level.
-      #
+      # Edits the callback message.
       # @async
+      # @macro edit
       #
-      # @param [String] content The content of the response.
-      # @param [Boolean] tts Whether to send the message as text-to-speech.
-      # @param [Discorb::Embed] embed The embed to send.
-      # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
-      # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
-      # @param [Discorb::Attachment] attachment The attachment to send.
-      # @param [Array<Discorb::Attachment>] attachments The attachments to send. (max: 10)
-      # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
-      # @param [Boolean] ephemeral Whether to make the response ephemeral.
+      # @param [String] content The new content of the message.
+      # @param [Discorb::Embed] embed The new embed of the message.
+      # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
+      # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
+      # @param [Discorb::Attachment] file The file to send.
+      # @param [Array<Discorb::Attachment>] files The files to send.
       #
       # @return [Async::Task<void>] The task.
       #
-      # @see CallbackMessage#edit
-      #
-      def edit_original_message(
-        content = nil,
-        tts: false,
-        embed: nil,
-        embeds: nil,
-        allowed_mentions: nil,
-        attachment: nil,
-        attachments: nil,
-        components: nil,
-        ephemeral: false
+      def edit(
+        content = Discorb::Unset,
+        embed: Discorb::Unset, embeds: Discorb::Unset,
+        file: Discorb::Unset, files: Discorb::Unset,
+        attachments: Discorb::Unset
       )
         Async do
           payload = {}
-          payload[:content] = content if content
-          payload[:tts] = tts
-          payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }
-          payload[:allowed_mentions] =
-            allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
-          payload[:components] = Component.to_payload(components) if components
-          payload[:flags] = (ephemeral ? 1 << 6 : 0)
-          attachments ||= attachment ? [attachment] : []
-
-          payload[:attachments] = attachments.map.with_index do |a, i|
-            {
-              id: i,
-              filename: a.filename,
-              description: a.description,
-            }
-          end
-
+          payload[:content] = content if content != Discorb::Unset
+          payload[:embeds] = embed ? [embed.to_hash] : [] if embed != Discorb::Unset
+          payload[:embeds] = embeds.map(&:to_hash) if embeds != Discorb::Unset
+          payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
+          files = [file] if file != Discorb::Unset
+          files = [] if files == Discorb::Unset
           @client.http.multipart_request(
             Route.new(
               "/webhooks/#{@application_id}/#{@token}/messages/@original",
@@ -183,90 +182,29 @@ module Discorb
               :patch
             ),
             payload,
-            attachments
+            files,
           ).wait
         end
       end
 
+      alias modify edit
+
       #
-      # Represents of a callback message of interaction.
+      # Deletes the callback message.
+      # @async
+      # @note This will fail if the message is ephemeral.
       #
-      class CallbackMessage
-        #
-        # Initializes a new instance of CallbackMessage.
-        # @private
-        #
-        # @param [Client] client The client.
-        # @param [Hash] data The payload.
-        # @param [String] application_id The application ID.
-        # @param [String] token The token.
-        #
-        def initialize(client, data, application_id, token)
-          @client = client
-          @data = data
-          @application_id = application_id
-          @token = token
+      # @return [Async::Task<void>] The task.
+      #
+      def delete!
+        Async do
+          @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
+                                         "//webhooks/:webhook_id/:token/messages/@original", :delete)).wait
         end
+      end
 
-        #
-        # Edits the callback message.
-        # @async
-        # @macro edit
-        #
-        # @param [String] content The new content of the message.
-        # @param [Discorb::Embed] embed The new embed of the message.
-        # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
-        # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
-        # @param [Discorb::Attachment] file The file to send.
-        # @param [Array<Discorb::Attachment>] files The files to send.
-        #
-        # @return [Async::Task<void>] The task.
-        #
-        def edit(
-          content = Discorb::Unset,
-          embed: Discorb::Unset, embeds: Discorb::Unset,
-          file: Discorb::Unset, files: Discorb::Unset,
-          attachments: Discorb::Unset
-        )
-          Async do
-            payload = {}
-            payload[:content] = content if content != Discorb::Unset
-            payload[:embeds] = embed ? [embed.to_hash] : [] if embed != Discorb::Unset
-            payload[:embeds] = embeds.map(&:to_hash) if embeds != Discorb::Unset
-            payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
-            files = [file] if file != Discorb::Unset
-            files = [] if files == Discorb::Unset
-            @client.http.multipart_request(
-              Route.new(
-                "/webhooks/#{@application_id}/#{@token}/messages/@original",
-                "//webhooks/:webhook_id/:token/messages/@original",
-                :patch
-              ),
-              payload,
-              files,
-            ).wait
-          end
-        end
-
-        alias modify edit
-
-        #
-        # Deletes the callback message.
-        # @async
-        # @note This will fail if the message is ephemeral.
-        #
-        # @return [Async::Task<void>] The task.
-        #
-        def delete!
-          Async do
-            @client.http.request(Route.new("/webhooks/#{@application_id}/#{@token}/messages/@original",
-                                           "//webhooks/:webhook_id/:token/messages/@original", :delete)).wait
-          end
-        end
-
-        def inspect
-          "#<#{self.class.name} application_id=#{@application_id}"
-        end
+      def inspect
+        "#<#{self.class.name} application_id=#{@application_id}"
       end
     end
 

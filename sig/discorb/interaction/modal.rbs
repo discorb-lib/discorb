@@ -38,8 +38,7 @@ module Discorb
       ?components: (::Array[Discorb::Component]
       | ::Array[::Array[Discorb::Component]])?,
       ?ephemeral: bool
-    ) -> (Discorb::Interaction::SourceResponder::CallbackMessage
-    | Discorb::Webhook::Message)
+    ) -> (Discorb::Interaction::CallbackMessage | Discorb::Webhook::Message)
 
     # @return [String] The custom id of the modal.
     attr_reader custom_id: String

@@ -83,6 +83,150 @@ module Discorb
       "#<#{self.class} id=#{@id}>"
     end
 
+    #
+    # Send followup message.
+    #
+    # @async
+    #
+    # @param [String] content The content of the response.
+    # @param [Boolean] tts Whether to send the message as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Discorb::Attachment] attachment The attachment to send.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to send. (max: 10)
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+    # @param [Boolean] ephemeral Whether to make the response ephemeral.
+    #
+    # @return [Discorb::Webhook::Message] The message.
+    #
+    def post(
+      content = nil,
+      tts: false,
+      embed: nil,
+      embeds: nil,
+      allowed_mentions: nil,
+      attachment: nil,
+      attachments: nil,
+      components: nil,
+      ephemeral: false
+    )
+      Async do
+        payload = {}
+        payload[:content] = content if content
+        payload[:tts] = tts
+        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }
+        payload[:allowed_mentions] =
+          allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
+        payload[:components] = Component.to_payload(components) if components
+        payload[:flags] = (ephemeral ? 1 << 6 : 0)
+        attachments ||= attachment ? [attachment] : []
+
+        payload[:attachments] = attachments.map.with_index do |a, i|
+          {
+            id: i,
+            filename: a.filename,
+            description: a.description,
+          }
+        end
+
+        _resp, data = @client.http.multipart_request(
+          Route.new(
+            "/webhooks/#{@application_id}/#{@token}",
+            "//webhooks/:webhook_id/:token",
+            :post
+          ),
+          payload,
+          attachments
+        ).wait
+        webhook = Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}")
+        Webhook::Message.new(webhook, data, @client)
+        ret
+      end
+    end
+
+    #
+    # Edit the original response message.
+    # This method is low-level.
+    #
+    # @async
+    #
+    # @param [String] content The content of the response.
+    # @param [Boolean] tts Whether to send the message as text-to-speech.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
+    # @param [Discorb::Attachment] attachment The attachment to send.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to send. (max: 10)
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+    # @param [Boolean] ephemeral Whether to make the response ephemeral.
+    #
+    # @return [Async::Task<void>] The task.
+    #
+    # @see CallbackMessage#edit
+    #
+    def edit_original_message(
+      content = nil,
+      tts: false,
+      embed: nil,
+      embeds: nil,
+      allowed_mentions: nil,
+      attachment: nil,
+      attachments: nil,
+      components: nil,
+      ephemeral: false
+    )
+      Async do
+        payload = {}
+        payload[:content] = content if content
+        payload[:tts] = tts
+        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }
+        payload[:allowed_mentions] =
+          allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
+        payload[:components] = Component.to_payload(components) if components
+        payload[:flags] = (ephemeral ? 1 << 6 : 0)
+        attachments ||= attachment ? [attachment] : []
+
+        payload[:attachments] = attachments.map.with_index do |a, i|
+          {
+            id: i,
+            filename: a.filename,
+            description: a.description,
+          }
+        end
+
+        @client.http.multipart_request(
+          Route.new(
+            "/webhooks/#{@application_id}/#{@token}/messages/@original",
+            "//webhooks/:webhook_id/:token/messages/@original",
+            :patch
+          ),
+          payload,
+          attachments
+        ).wait
+      end
+    end
+
+    #
+    # Delete the original response message.
+    # This method is low-level.
+    #
+    # @async
+    #
+    # @return [Async::Task<void>] The task.
+    #
+    def delete_original_message
+      Async do
+        @client.http.request(
+          Route.new(
+            "/webhooks/#{@application_id}/#{@token}/messages/@original",
+            "//webhooks/:webhook_id/:token/messages/@original",
+            :delete
+          )
+        ).wait
+      end
+    end
+
     class << self
       # @private
       attr_reader :interaction_type, :interaction_name, :event_name

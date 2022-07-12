@@ -41,59 +41,58 @@ module Discorb
         ?components: (::Array[Discorb::Component]
         | ::Array[::Array[Discorb::Component]])?,
         ?ephemeral: bool
-      ) -> (Discorb::Interaction::SourceResponder::CallbackMessage
-      | Discorb::Webhook::Message)
+      ) -> (Discorb::Interaction::CallbackMessage | Discorb::Webhook::Message)
+    end
+
+    #
+    # Represents of a callback message of interaction.
+    class CallbackMessage
+      #
+      # Initializes a new instance of CallbackMessage.
+      # @private
+      #
+      # @param [Client] client The client.
+      # @param [Hash] data The payload.
+      # @param [String] application_id The application ID.
+      # @param [String] token The token.
+      def initialize: (
+        Client client,
+        Discorb::json data,
+        String application_id,
+        String token
+      ) -> void
 
       #
-      # Represents of a callback message of interaction.
-      class CallbackMessage
-        #
-        # Initializes a new instance of CallbackMessage.
-        # @private
-        #
-        # @param [Client] client The client.
-        # @param [Hash] data The payload.
-        # @param [String] application_id The application ID.
-        # @param [String] token The token.
-        def initialize: (
-          Client client,
-          Discorb::json data,
-          String application_id,
-          String token
-        ) -> void
+      # Edits the callback message.
+      # @async
+      # @macro edit
+      #
+      # @param [String] content The new content of the message.
+      # @param [Discorb::Embed] embed The new embed of the message.
+      # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
+      # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
+      # @param [Discorb::Attachment] file The file to send.
+      # @param [Array<Discorb::Attachment>] files The files to send.
+      #
+      # @return [Async::Task<void>] The task.
+      def edit: (
+        ?String content,
+        ?embed: Discorb::Embed,
+        ?embeds: ::Array[Discorb::Embed],
+        ?file: Discorb::Attachment,
+        ?files: ::Array[Discorb::Attachment],
+        ?attachments: ::Array[Discorb::Attachment]
+      ) -> Async::Task[void]
 
-        #
-        # Edits the callback message.
-        # @async
-        # @macro edit
-        #
-        # @param [String] content The new content of the message.
-        # @param [Discorb::Embed] embed The new embed of the message.
-        # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
-        # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
-        # @param [Discorb::Attachment] file The file to send.
-        # @param [Array<Discorb::Attachment>] files The files to send.
-        #
-        # @return [Async::Task<void>] The task.
-        def edit: (
-          ?String content,
-          ?embed: Discorb::Embed,
-          ?embeds: ::Array[Discorb::Embed],
-          ?file: Discorb::Attachment,
-          ?files: ::Array[Discorb::Attachment],
-          ?attachments: ::Array[Discorb::Attachment]
-        ) -> Async::Task[void]
+      #
+      # Deletes the callback message.
+      # @async
+      # @note This will fail if the message is ephemeral.
+      #
+      # @return [Async::Task<void>] The task.
+      def delete!: -> Async::Task[void]
 
-        #
-        # Deletes the callback message.
-        # @async
-        # @note This will fail if the message is ephemeral.
-        #
-        # @return [Async::Task<void>] The task.
-        def delete!: -> Async::Task[void]
-
-        def inspect: -> String
-      end
+      def inspect: -> String
     end
 
     #

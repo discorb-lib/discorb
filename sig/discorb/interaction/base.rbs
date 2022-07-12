@@ -19,6 +19,35 @@ module Discorb
     def inspect: -> String
 
     #
+    # Edit the original response message.
+    # @async
+    # @macro edit
+    #
+    # @param [String] content The new content of the message.
+    # @param [Discorb::Embed] embed The new embed of the message.
+    # @param [Array<Discorb::Embed>] embeds The new embeds of the message.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to remain.
+    # @param [Discorb::Attachment] file The file to send.
+    # @param [Array<Discorb::Attachment>] files The files to send.
+    #
+    # @return [Async::Task<void>] The task.
+    def edit_original_message: (
+      ?String content,
+      ?embed: Discorb::Embed,
+      ?embeds: ::Array[Discorb::Embed],
+      ?file: Discorb::Attachment,
+      ?files: ::Array[Discorb::Attachment],
+      ?attachments: ::Array[Discorb::Attachment]
+    ) -> Async::Task[void]
+
+    #
+    # Delete the original response message.
+    # @async
+    #
+    # @return [Async::Task<void>] The task.
+    def delete_original_message!: -> Async::Task[void]
+
+    #
     # Create a new Interaction instance from the data.
     # @private
     #
