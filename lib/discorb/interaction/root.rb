@@ -185,6 +185,7 @@ module Discorb
             description: a.description,
           }
         end
+        payload.compact!
 
         @client.http.multipart_request(
           Route.new(
