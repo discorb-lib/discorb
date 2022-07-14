@@ -142,7 +142,7 @@ module Discorb
       end
     end
 
-    alias destroy! delete!
+    alias destroy delete
 
     #
     # Edits the webhook's message.
@@ -387,7 +387,7 @@ module Discorb
       #
       def delete
         Async do
-          @webhook.delete_message!(self).wait
+          @webhook.delete_message(self).wait
         end
       end
 

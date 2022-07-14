@@ -156,8 +156,8 @@ module Discorb
       end
     end
 
-    alias bulk_delete! delete_messages!
-    alias destroy_messages! delete_messages!
+    alias bulk_delete delete_messages
+    alias destroy_messages delete_messages
 
     #
     # Follow the existing announcement channel.

@@ -81,7 +81,7 @@ module Discorb
       end
     end
 
-    alias destroy! delete!
+    alias destroy delete
 
     private
 

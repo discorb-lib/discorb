@@ -231,7 +231,7 @@ module Discorb
       end
     end
 
-    alias destroy! delete!
+    alias destroy delete
 
     #
     # Fetches the event users.

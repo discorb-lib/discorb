@@ -98,8 +98,8 @@ module Discorb
       end
     end
 
-    alias close! delete!
-    alias destroy! delete!
+    alias close delete
+    alias destroy delete
 
     #
     # Moves the channel to another position.

@@ -284,7 +284,7 @@ module Discorb
     #
     def delete(reason: nil)
       Async do
-        channel.delete_message!(@id, reason: reason).wait
+        channel.delete_message(@id, reason: reason).wait
       end
     end
 

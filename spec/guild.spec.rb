@@ -17,7 +17,7 @@ RSpec.describe Discorb::Guild do
         body: {},
       }
     end
-    guild.leave!.wait
+    guild.leave.wait
   end
 
   it "requests to POST /guilds/:guild_id/channels with text channel payload" do

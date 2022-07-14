@@ -132,7 +132,7 @@ module Discorb
       end
     end
 
-    alias destroy! delete!
+    alias destroy delete
 
     #
     # Converts the object to a hash.

@@ -174,7 +174,7 @@ module Discorb
       end
     end
 
-    alias destroy! delete!
+    alias destroy delete
 
     def tag
       Tag.new(@tags)

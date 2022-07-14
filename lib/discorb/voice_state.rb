@@ -223,8 +223,8 @@ module Discorb
       end
     end
 
-    alias destroy! delete!
-    alias end! delete!
+    alias destroy delete
+    alias end delete
 
     private
 

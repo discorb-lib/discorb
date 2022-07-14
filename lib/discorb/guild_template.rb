@@ -100,7 +100,7 @@ module Discorb
       end
     end
 
-    alias destroy! delete!
+    alias destroy delete
 
     #
     # Represents a guild in guild template.

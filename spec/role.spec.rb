@@ -31,7 +31,7 @@ RSpec.describe Discorb::Role do
       expect_request(:delete, "/guilds/#{guild.id}/roles/#{data[:id]}", headers: { audit_log_reason: "reason" }) do
         { code: 204, body: {} }
       end
-      role.delete!(reason: "reason").wait
+      role.delete(reason: "reason").wait
     end
   end
 end

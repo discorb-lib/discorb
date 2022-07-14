@@ -146,7 +146,7 @@ module Discorb
       end
     end
 
-    alias destroy_message! delete_message!
+    alias destroy_message delete_message
 
     #
     # Fetch a message from ID.
