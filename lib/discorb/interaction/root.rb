@@ -174,7 +174,7 @@ module Discorb
       Async do
         payload = {}
         payload[:content] = content if content
-        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }.then { _1.empty? ? nil : _ }
+        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }.then { _1.empty? ? nil : _1 }
         payload[:components] = Component.to_payload(components) if components
         attachments ||= attachment && [attachment]
 
