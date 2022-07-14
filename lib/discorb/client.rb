@@ -567,7 +567,7 @@ module Discorb
       Signal.trap(:SIGINT) do
         logger.info "SIGINT received, closing..."
         Signal.trap(:SIGINT, "DEFAULT")
-        close!
+        close
       end
       if shards.nil?
         main_loop(nil)
