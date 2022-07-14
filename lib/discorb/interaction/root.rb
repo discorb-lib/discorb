@@ -152,14 +152,12 @@ module Discorb
     # @async
     #
     # @param [String] content The content of the response.
-    # @param [Boolean] tts Whether to send the message as text-to-speech.
     # @param [Discorb::Embed] embed The embed to send.
     # @param [Array<Discorb::Embed>] embeds The embeds to send. (max: 10)
     # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions to send.
     # @param [Discorb::Attachment] attachment The attachment to send.
     # @param [Array<Discorb::Attachment>] attachments The attachments to send. (max: 10)
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
-    # @param [Boolean] ephemeral Whether to make the response ephemeral.
     #
     # @return [Async::Task<void>] The task.
     #
@@ -167,27 +165,20 @@ module Discorb
     #
     def edit_original_message(
       content = nil,
-      tts: false,
       embed: nil,
       embeds: nil,
-      allowed_mentions: nil,
       attachment: nil,
       attachments: nil,
-      components: nil,
-      ephemeral: false
+      components: nil
     )
       Async do
         payload = {}
         payload[:content] = content if content
-        payload[:tts] = tts
-        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }
-        payload[:allowed_mentions] =
-          allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
+        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }.then { _1.empty? ? nil : _ }
         payload[:components] = Component.to_payload(components) if components
-        payload[:flags] = (ephemeral ? 1 << 6 : 0)
-        attachments ||= attachment ? [attachment] : []
+        attachments ||= attachment && [attachment]
 
-        payload[:attachments] = attachments.map.with_index do |a, i|
+        payload[:attachments] = attachments&.map&.with_index do |a, i|
           {
             id: i,
             filename: a.filename,
