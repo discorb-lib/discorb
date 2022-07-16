@@ -75,7 +75,7 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
     $next_gateway_request[:opcode] = 2
     $next_gateway_request[:payload] = {
       compress: false, intents: Discorb::Intents.default.value,
-      properties: { "$browser" => "discorb", "$device" => "discorb", "$os" => RUBY_PLATFORM },
+      properties: { "browser" => "discorb", "device" => "discorb", "os" => RUBY_PLATFORM },
       token: "Token",
     }
 
