@@ -124,7 +124,7 @@ RSpec.describe Discorb::Client do
         opcode: 2,
         payload: {
           compress: false, intents: Discorb::Intents.default.value,
-          properties: { "$browser" => "discorb", "$device" => "discorb", "$os" => RUBY_PLATFORM },
+          properties: { "browser" => "discorb", "device" => "discorb", "os" => RUBY_PLATFORM },
           token: "Token",
         },
       }
