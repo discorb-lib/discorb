@@ -48,11 +48,21 @@ module Discorb
               alpn_protocols: Async::HTTP::Protocol::HTTP11.names,
             )
             begin
-              self.connection = Async::WebSocket::Client.connect(
-                endpoint,
-                headers: [["User-Agent", Discorb::USER_AGENT]],
-                handler: RawConnection,
-              )
+              reconnect_count = 0
+              begin
+                self.connection = Async::WebSocket::Client.connect(
+                  endpoint,
+                  headers: [["User-Agent", Discorb::USER_AGENT]],
+                  handler: RawConnection,
+                )
+              rescue Async::WebSocket::ProtocolError => e
+                raise if reconnect_count > 3
+
+                logger.info "Failed to connect to gateway, retrying...: #{e.message}"
+                reconnect_count += 1
+                sleep 2 ** reconnect_count
+                retry
+              end
               con = self.connection
               zlib_stream = Zlib::Inflate.new(Zlib::MAX_WBITS)
               buffer = +""
@@ -82,7 +92,7 @@ module Discorb
                      IOError => e
                 next if @status == :closed
 
-                logger.error "Gateway connection closed accidentally: #{e.class}: #{e.message}"
+                logger.info "Gateway connection closed, reconnecting: #{e.class}: #{e.message}"
                 con.force_close
                 connect_gateway(true)
                 next
