@@ -173,7 +173,7 @@ module Discorb
                 token: @token,
                 intents: @intents.value,
                 compress: false,
-                properties: { "$os" => RUBY_PLATFORM, "$browser" => "discorb", "$device" => "discorb" },
+                properties: { "os" => RUBY_PLATFORM, "browser" => "discorb", "device" => "discorb" },
               }
               payload[:shard] = [shard_id, @shard_count] if shard_id
               payload[:presence] = @identify_presence if @identify_presence
