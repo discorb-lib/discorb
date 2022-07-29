@@ -57,7 +57,7 @@ module Discorb
     def multipart_request: (
       Discorb::Route path,
       json | String body,
-      ::Array[Discorb::Attachment] files,
+      ::Array[Discorb::Attachment]? files,
       ?audit_log_reason: String?,
       **untyped kwargs
     ) -> Async::Task[[Net::HTTPResponse, json]]

@@ -30,8 +30,6 @@ module Discorb
     #   this will be required in September 1, 2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
     #   You should specify `message_content` intent for preventing unexpected changes in the future.
     def initialize: (
-      automod_configuration: bool,
-      automod_execution: bool,
       ?guilds: bool,
       ?members: bool,
       ?bans: bool,
@@ -48,7 +46,9 @@ module Discorb
       ?dm_reactions: bool,
       ?dm_typing: bool,
       ?message_content: bool?,
-      ?scheduled_events: bool
+      ?scheduled_events: bool,
+      ?automod_configuration: bool,
+      ?automod_execution: bool
     ) -> void
 
     #

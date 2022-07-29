@@ -1720,9 +1720,9 @@ module Discorb
       ) -> untyped
 
       # @return [Hash{Symbol => Array<Discorb::EventHandler>}] The events of the extension.
-      attr_reader events: ::Hash[Symbol, [Symbol?, Hash[untyped, untyped], ^(
+      attr_reader events: ::Hash[Symbol, Array[[Symbol?, Hash[untyped, untyped], ^(
         *untyped
-      ) -> void]]
+      ) -> void]]]
 
       # @return [Array<Discorb::ApplicationCommand::Command>] The commands of the extension.
       attr_reader commands: ::Array[Discorb::ApplicationCommand::Command]

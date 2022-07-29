@@ -27,6 +27,14 @@ module Discorb
     def inspect: -> String
 
     #
+    # Convert the attachment to hash.
+    #
+    # @return [Hash] The action hash.
+    #
+    %{pure}
+    def to_hash: -> Discorb::json
+
+    #
     # Creates a new file from a hash.
     # @private
     def self.from_hash: (untyped data) -> untyped

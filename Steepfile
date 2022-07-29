@@ -20,11 +20,11 @@ target :lib do
   end
 end
 
-target :test do
-  signature "sig"
-  signature "examples/sig"
+# target :test do
+#   signature "sig"
+#   signature "examples/sig"
 
-  check "examples/**/*.rb"
+#   check "examples/**/*.rb"
 
-  library "net-http", "timeout"
-end
+#   library "net-http", "timeout"
+# end

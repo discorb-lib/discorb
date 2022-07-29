@@ -588,12 +588,12 @@ module Discorb
       String name,
       Discorb::AutoModRule::trigger_type trigger_type,
       Array[Discorb::AutoModRule::Action] actions,
-      ?:send_message event_type,
+      ?:message_send event_type,
       ?enabled: bool,
       ?exempt_roles: Array[Discorb::Role],
       ?exempt_channels: Array[Discorb::Channel],
       ?keyword_filter: Array[String]?,
-      ?presets: :profanity | :sexual_content | :slurs,
+      ?presets: Discorb::AutoModRule::preset_type?,
       ?reason: nil
     ) -> Async::Task[void]
 

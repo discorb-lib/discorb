@@ -1188,7 +1188,7 @@ module Discorb
       name,
       trigger_type,
       actions,
-      event_type = :send_message,
+      event_type = :message_send,
       enabled: false,
       exempt_roles: [],
       exempt_channels: [],
@@ -1381,7 +1381,7 @@ module Discorb
       #
       # @return [String] The url of the banner.
       #
-      def banner(guild_id, style: "banner")
+      def banner(guild_id, style: :banner)
         "#{Discorb::API_BASE_URL}/guilds/#{guild_id}/widget.png&style=#{style}"
       end
     end

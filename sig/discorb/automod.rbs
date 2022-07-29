@@ -76,7 +76,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     def edit: (
       ?name: String,
-      ?event_type: :send_message,
+      ?event_type: :message_send,
       ?actions: Array[Discorb::AutoModRule::Action],
       ?enabled: bool,
       ?exempt_roles: Array[Discorb::Role],
@@ -95,16 +95,26 @@ module Discorb
     def delete: (?reason: nil) -> Async::Task[void]
 
     class Action < Discorb::DiscordModel
+      type action_type = :ban | :kick | :mute | :warn
+
       # @return [Hash{Integer => Symbol}] The mapping of action types.
       # @private
-      ACTION_TYPES: Hash[Integer, Symbol]
+      ACTION_TYPES: Hash[Integer, action_type]
 
       # @return [Symbol] Returns the type of the action.
-      attr_reader type: :ban | :kick | :mute | :warn
+      attr_reader type: action_type
 
       # @return [Integer] The duration of the timeout.
       # @note This is only available if the action type is `:timeout`.
       attr_reader duration_seconds: Integer?
+
+      #
+      # Convert the action to hash.
+      #
+      # @return [Hash] The action hash.
+      #
+      %{pure}
+      def to_hash: -> Discorb::json
 
       #
       # Initialize a new action.
@@ -115,7 +125,7 @@ module Discorb
       # @param [Discorb::Channel] channel The channel that the alert message is sent to.
       #   This is only available if the action type is `:send_alert_message`.
       def initialize: (
-        Symbol `type`,
+        action_type `type`,
         ?duration_seconds: Integer?,
         ?channel: Discorb::Channel?
       ) -> void

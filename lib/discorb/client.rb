@@ -475,7 +475,7 @@ module Discorb
     #
     def close
       if @shards.any?
-        @shards.each_value(&:close!)
+        @shards.each_value(&:close)
       else
         @connection.send_close
       end
@@ -521,9 +521,7 @@ module Discorb
       setup_commands(token, guild_ids: guild_ids).wait
       clear_commands(token, ENV.fetch("DISCORB_SETUP_CLEAR_GUILDS", "").split(","))
       if ENV.fetch("DISCORB_SETUP_SCRIPT", nil) == "true"
-        @events[:setup]&.each do |event|
-          event.call
-        end
+        @events[:setup]&.each(&:call)
         self.on_setup if respond_to? :on_setup
       end
     end
