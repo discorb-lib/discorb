@@ -18,7 +18,7 @@ gem "parallel_tests", "~> 3.8"
 gem "rspec", "~> 3.11"
 
 # Typecheck
-gem "steep", "~> 1.0"
+gem "steep", "~> 1.1"
 
 # Other development tools
 gem "lefthook", "~> 0.7.7"

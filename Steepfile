@@ -15,6 +15,8 @@ target :lib do
     config[D::Ruby::UnexpectedSuper] = nil
     config[D::Ruby::UnexpectedPositionalArgument] = nil
     config[D::Ruby::InsufficientPositionalArguments] = nil
+    config[D::Ruby::UnknownInstanceVariable] = nil
+    config[D::Ruby::UnknownGlobalVariable] = nil
   end
 end
 
