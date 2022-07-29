@@ -13,8 +13,10 @@ module Discorb
     # Formats the image as a Discord style.
     #
     # @return [String] The image as a Discord style.
+    %a{pure}
     def to_s: -> String
 
+    %a{pure}
     def inspect: -> String
   end
 end

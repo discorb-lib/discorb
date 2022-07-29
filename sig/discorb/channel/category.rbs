@@ -4,6 +4,7 @@ module Discorb
   class CategoryChannel < Discorb::GuildChannel
     include Discorb::ChannelContainer
 
+    %a{pure}
     def channels: -> Array[Discorb::GuildChannel]
 
     def create_text_channel: (

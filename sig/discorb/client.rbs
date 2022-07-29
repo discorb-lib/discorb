@@ -2300,6 +2300,7 @@ module Discorb
         (*untyped) -> boolish
       } -> Async::Task[untyped]
 
+    %a{pure}
     def inspect: -> String
 
     #

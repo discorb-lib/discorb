@@ -24,14 +24,14 @@ module Discorb
     # @private
     def initialize_hash: (untyped data) -> untyped
 
+    %a{pure}
     def inspect: -> String
 
     #
     # Convert the attachment to hash.
     #
     # @return [Hash] The action hash.
-    #
-    %{pure}
+    %a{pure}
     def to_hash: -> Discorb::json
 
     #

@@ -10,14 +10,17 @@ module Discorb
     def initialize: (String name, ?tone: Integer) -> void
 
     # @return [String] The unicode string of the emoji.
+    %a{pure}
     def to_s: -> String
 
     #
     # Format the emoji for URI.
     #
     # @return [String] the formatted emoji.
+    %a{pure}
     def to_uri: -> String
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -25,6 +28,7 @@ module Discorb
     # @private
     #
     # @return [Hash] The hash represents the object.
+    %a{pure}
     def to_hash: -> Discorb::json
 
     # @return [String] The name of the emoji. (e.g. :grinning:)

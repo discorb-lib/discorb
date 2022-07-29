@@ -15,16 +15,22 @@ module Discorb
       ?no_cache: bool
     ) -> void
 
-    def guild: -> untyped
+    %a{pure}
+    def guild: -> Discorb::Guild
 
-    def channel: -> untyped
+    %a{pure}
+    def channel: -> Discorb::StageChannel
 
+    %a{pure}
     def discoverable?: -> bool
 
+    %a{pure}
     def public?: -> bool
 
+    %a{pure}
     def guild_only?: -> bool
 
+    %a{pure}
     def inspect: -> String
 
     #

@@ -29,6 +29,7 @@ module Discorb
     # @return [void]
     def close: -> void
 
+    %a{pure}
     def inspect: -> String
 
     # @return [Integer] The ID of the shard.

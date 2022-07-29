@@ -18,6 +18,7 @@ module Discorb
     # rubocop: disable Lint/UnusedMethodArgument
     def url: (?image_format: String?, ?size: Integer) -> String
 
+    %a{pure}
     def inspect: -> String
 
     # @return [false] For compatibility with {Asset}, always `false`.

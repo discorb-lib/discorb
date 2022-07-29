@@ -22,6 +22,7 @@ module Discorb
       bool is_create_event
     ) -> void
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -858,6 +859,7 @@ module Discorb
         Discorb::json data
       ) -> void
 
+      %a{pure}
       def inspect: -> String
 
       # @return [Discorb::User] The user.

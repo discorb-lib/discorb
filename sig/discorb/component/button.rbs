@@ -28,8 +28,10 @@ module Discorb
     # @see https://discord.com/developers/docs/interactions/message-components#button-object-button-structure
     #  Official Discord API docs
     # @return [Hash] A hash representation of the button.
+    %a{pure}
     def to_hash: -> Discorb::json
 
+    %a{pure}
     def inspect: -> String
 
     #

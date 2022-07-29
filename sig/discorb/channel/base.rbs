@@ -16,6 +16,7 @@ module Discorb
     # @return [Boolean] True if the channel is other channel.
     def ==: (Discorb::Channel other) -> bool
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -36,6 +37,7 @@ module Discorb
       ?no_cache: bool
     ) -> untyped
 
+    %a{pure}
     def `type`: -> String
 
     #
@@ -78,14 +80,19 @@ module Discorb
     # Stringifies the channel.
     #
     # @return [String] The name of the channel with `#`.
+    %a{pure}
     def to_s: -> String
 
+    %a{pure}
     def mention: -> String
 
+    %a{pure}
     def parent: -> Discorb::CategoryChannel?
 
+    %a{pure}
     def guild: -> Discorb::Guild
 
+    %a{pure}
     def inspect: -> String
 
     #

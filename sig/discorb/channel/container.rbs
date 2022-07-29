@@ -6,24 +6,28 @@ module Discorb
     # Returns text channels.
     #
     # @return [Array<Discorb::TextChannel>] The text channels.
+    %a{pure}
     def text_channels: -> ::Array[Discorb::TextChannel]
 
     #
     # Returns voice channels.
     #
     # @return [Array<Discorb::VoiceChannel>] The voice channels.
+    %a{pure}
     def voice_channels: -> ::Array[Discorb::VoiceChannel]
 
     #
     # Returns news channels.
     #
     # @return [Array<Discorb::NewsChannel>] The news channels.
+    %a{pure}
     def news_channels: -> ::Array[Discorb::NewsChannel]
 
     #
     # Returns stage channels.
     #
     # @return [Array<Discorb::StageChannel>] The stage channels.
+    %a{pure}
     def stage_channels: -> ::Array[Discorb::StageChannel]
   end
 end

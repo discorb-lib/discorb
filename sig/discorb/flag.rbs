@@ -47,8 +47,10 @@ module Discorb
     # @return [Discorb::Flag] The negation of the flag.
     def ~: -> instance
 
+    %a{pure}
     def to_i: -> Integer
 
+    %a{pure}
     def inspect: -> String
 
     #

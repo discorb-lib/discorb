@@ -14,6 +14,7 @@ module Discorb
       # @param [Hash] data The data of the event.
       def initialize: (Discorb::json data) -> void
 
+      %a{pure}
       def inspect: -> String
     end
 
@@ -430,14 +431,17 @@ module Discorb
 
       # @!attribute [r] guild
       #   @return [Discorb::Guild] The guild where the rule was executed.
+      %a{pure}
       def guild: -> Discorb::Guild
 
       # @!attribute [r] channel
       #   @return [Discorb::Channel] The channel where the rule was executed.
+      %a{pure}
       def channel: -> Discorb::Channel
 
       # @!attribute [r] member
       #   @return [Discorb::Member] The member that triggered the action.
+      %a{pure}
       def member: -> Discorb::Member
 
       alias user member
@@ -463,6 +467,7 @@ module Discorb
     # A class for connecting websocket with raw bytes data.
     # @private
     class RawConnection < Async::WebSocket::Connection
+      %a{pure}
       def inspect: -> String
 
       def closed?: -> bool

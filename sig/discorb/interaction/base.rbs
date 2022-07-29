@@ -12,10 +12,13 @@ module Discorb
     # @param [Hash] data The data of the interaction.
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
+    %a{pure}
     def guild: -> Discorb::Guild?
 
+    %a{pure}
     def channel: -> Discorb::Channel
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -38,7 +41,7 @@ module Discorb
       ?attachment: Discorb::Attachment?,
       ?attachments: ::Array[Discorb::Attachment]?,
       ?components: (::Array[Discorb::Component]
-      | ::Array[::Array[Discorb::Component]])?,
+      | ::Array[::Array[Discorb::Component]])?
     ) -> Async::Task[void]
 
     #

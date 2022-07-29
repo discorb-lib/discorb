@@ -7,6 +7,7 @@ module Discorb
   module Extension
     def initialize: (untyped client) -> void
 
+    %a{pure}
     def events: -> untyped
 
     def self.included: (untyped base) -> untyped

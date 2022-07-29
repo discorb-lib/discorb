@@ -13,14 +13,17 @@ module Discorb
     # Format the emoji for URI.
     #
     # @return [String] the formatted emoji.
+    %a{pure}
     def to_uri: -> String
 
+    %a{pure}
     def inspect: -> String
 
     #
     # Format the emoji for sending.
     #
     # @return [String] the formatted emoji.
+    %a{pure}
     def to_s: -> String
 
     # @return [Discorb::Snowflake] The ID of the emoji.

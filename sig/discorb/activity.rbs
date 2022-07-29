@@ -18,6 +18,7 @@ module Discorb
     # @return [Hash] A hash representation of the activity.
     def to_hash: -> Discorb::json
 
+    %a{pure}
     def inspect: -> String
   end
 end

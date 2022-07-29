@@ -57,6 +57,7 @@ module Discorb
     # Returns the values of the dictionary.
     #
     # @return [Array] The values of the dictionary.
+    %a{pure}
     def values: -> ::Array[V]
 
     #
@@ -77,6 +78,7 @@ module Discorb
       untyped kwargs
     ) -> bool
 
+    %a{pure}
     def inspect: -> String
 
     # @return [Integer] The maximum number of items in the dictionary.

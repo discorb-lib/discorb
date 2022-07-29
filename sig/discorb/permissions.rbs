@@ -91,20 +91,26 @@ module Discorb
     # @param deny [Integer] The denied permissions.
     def initialize: (Integer allow, Integer deny) -> void
 
+    %a{pure}
     def allow: -> Discorb::Permission
 
+    %a{pure}
     def deny: -> Discorb::Permission
 
+    %a{pure}
     def allow_value: -> Integer
 
+    %a{pure}
     def deny_value: -> Integer
 
+    %a{pure}
     def inspect: -> String
 
     #
     # Converts the permission overwrite to a hash.
     #
     # @return [Hash] The permission overwrite as a hash.
+    %a{pure}
     def to_hash: -> Hash[Symbol, bool]
 
     #
@@ -121,6 +127,7 @@ module Discorb
     # @param [Symbol] field The field to check.
     #
     # @return [true, false, nil] Whether the field is allowed, denied or not set.
+    %a{pure}
     def []: (Symbol field) -> bool?
 
     #

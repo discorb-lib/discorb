@@ -44,6 +44,7 @@ module Discorb
       #
       # @return [Hash] The hash.
       # @see https://discord.com/developers/docs/resources/guild#welcome-screen-object
+      %a{pure}
       def to_hash: -> Discorb::json
 
       #

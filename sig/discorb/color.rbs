@@ -12,18 +12,21 @@ module Discorb
     # Integerize a color.
     #
     # @return [Integer] A color value.
+    %a{pure}
     def to_i: -> Integer
 
     #
     # Convert a color to a hexadecimal value.
     #
     # @return [String] A hexadecimal value.
+    %a{pure}
     def to_hex: -> String
 
     #
     # Convert a color to RGB array.
     #
     # @return [Array(Integer, Integer, Integer)] A RGB array.
+    %a{pure}
     def to_rgb: -> [Integer, Integer, Integer]
 
     alias to_a to_rgb
@@ -33,6 +36,7 @@ module Discorb
     # Convert a color to RGB hash.
     #
     # @return [Hash{:r, :g, :b => Integer}] A RGB hash.
+    %a{pure}
     def to_rgb_hash: -> { r: Integer, g: Integer, b: Integer }
 
     alias deconstruct_keys to_rgb_hash
@@ -41,8 +45,10 @@ module Discorb
     # Converts a color to a `#000000` string.
     #
     # @return [String] Converted string.
+    %a{pure}
     def to_s: -> String
 
+    %a{pure}
     def inspect: -> String
 
     #

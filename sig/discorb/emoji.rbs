@@ -8,6 +8,7 @@ module Discorb
 
     def ==: (untyped other) -> untyped
 
+    %a{pure}
     def inspect: -> String
   end
 end

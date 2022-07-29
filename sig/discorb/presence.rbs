@@ -10,6 +10,7 @@ module Discorb
     # @param [Hash] data The data of the presence.
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
+    %a{pure}
     def inspect: -> String
 
     # @return [:online, :idle, :dnd, :offline] The status of the user.
@@ -46,6 +47,7 @@ module Discorb
       # Convert the activity to a string.
       #
       # @return [String] The string representation of the activity.
+      %a{pure}
       def to_s: -> String
 
       # @return [String] The name of the activity.

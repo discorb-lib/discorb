@@ -32,6 +32,7 @@ module Discorb
     # @see https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure
     #   Official Discord API docs
     # @return [Hash] A hash representation of the text input.
+    %a{pure}
     def to_hash: -> Discorb::json
 
     #

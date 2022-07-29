@@ -202,7 +202,9 @@ module Discorb
     def +(other)
       result = to_hash
       self.class.bits.each_key do |field|
-        result[field] = other[field] unless other[field].nil?
+        unless other[field].nil?
+          result[field] = (other[field] || raise(KeyError, "field #{field} not found in #{other.inspect}"))
+        end
       end
       self.class.from_hash(result)
     end

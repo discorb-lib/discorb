@@ -61,6 +61,7 @@ module Discorb
     # @return [Integer] The value of the intent.
     def value: -> Integer
 
+    %a{pure}
     def inspect: -> String
 
     def to_h: -> Hash[Symbol, bool]

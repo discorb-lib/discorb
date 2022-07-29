@@ -171,6 +171,7 @@ module Discorb
     ) -> Async::Task[Discorb::ThreadChannel]
 
     # Meta
+    %a{pure}
     def inspect: -> String
 
     # @return [Discorb::Snowflake] The ID of the message.
@@ -386,6 +387,7 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#message-reference-object
       def self.from_hash: (Discorb::json data) -> Discorb::Message::Reference
 
+      %a{pure}
       def inspect: -> String
 
       # @return [Discorb::Snowflake] The guild ID.
@@ -406,6 +408,7 @@ module Discorb
     class Sticker
       def initialize: (untyped data) -> void
 
+      %a{pure}
       def inspect: -> String
 
       # @return [Discorb::Snowflake] The sticker ID.
@@ -429,6 +432,7 @@ module Discorb
       # @param [Hash] data The interaction data.
       def initialize: (Discorb::Client client, Discorb::json data) -> void
 
+      %a{pure}
       def inspect: -> String
 
       # @return [Discorb::Snowflake] The interaction ID.
@@ -457,6 +461,7 @@ module Discorb
       # @param [Hash] data The activity data.
       def initialize: (Discorb::json data) -> void
 
+      %a{pure}
       def inspect: -> String
 
       # @return [String] The name of activity.

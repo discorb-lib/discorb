@@ -27,8 +27,10 @@ module Discorb
       ?reason: String?
     ) -> Async::Task[self]
 
+    %a{pure}
     def voice_states: -> Array[Discorb::VoiceState]
 
+    %a{pure}
     def members: -> Array[Discorb::Member]
 
     # @return [Integer] The bitrate of the voice channel.

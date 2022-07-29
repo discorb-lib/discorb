@@ -139,6 +139,7 @@ module Discorb
       # @!visibility private
       def initialize: (untyped data) -> void
 
+      %a{pure}
       def inspect: -> String
 
       # @return [String, nil] The location of the event. Only present if the event is a external event.

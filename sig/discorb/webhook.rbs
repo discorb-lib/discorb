@@ -11,6 +11,7 @@ module Discorb
     # @param [Hash] data The data of the webhook.
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -98,9 +99,7 @@ module Discorb
     # @param [Discorb::Webhook::Message] message The message to delete.
     #
     # @return [Async::Task<void>] The task.
-    def delete_message: (
-      Discorb::Webhook::Message message
-    ) -> Async::Task[void]
+    def delete_message: (Discorb::Webhook::Message message) -> Async::Task[void]
 
     #
     # Creates URLWebhook.
@@ -209,6 +208,7 @@ module Discorb
         # @param [Hash] data The data of the guild.
         def initialize: (Discorb::json data) -> void
 
+        %a{pure}
         def inspect: -> String
 
         # @return [Discorb::Snowflake] The ID of the guild.
@@ -231,6 +231,7 @@ module Discorb
         # @param [Hash] data The data of the channel.
         def initialize: (Discorb::json data) -> void
 
+        %a{pure}
         def inspect: -> String
 
         # @return [Discorb::Snowflake] The ID of the channel.
@@ -309,8 +310,10 @@ module Discorb
         # Format author with `Name#Discriminator` style.
         #
         # @return [String] Formatted author.
+        %a{pure}
         def to_s: -> String
 
+        %a{pure}
         def inspect: -> String
 
         # @return [Boolean] Whether the author is a bot.

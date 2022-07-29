@@ -16,6 +16,7 @@ module Discorb
       ?replied_user: bool?
     ) -> void
 
+    %a{pure}
     def inspect: -> String
 
     #

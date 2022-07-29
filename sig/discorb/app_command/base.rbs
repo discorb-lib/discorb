@@ -83,6 +83,7 @@ module Discorb
       # @private
       #
       # @return [Hash] The hash represents the object.
+      %a{pure}
       def to_hash: -> Discorb::json
 
       # @return [Hash{String => String}] The name of the command.
@@ -143,6 +144,7 @@ module Discorb
         # Returns the commands name.
         #
         # @return [String] The name of the command.
+        %a{pure}
         def to_s: -> String
 
         #
@@ -150,6 +152,7 @@ module Discorb
         # @private
         #
         # @return [Hash] The hash represents the object.
+        %a{pure}
         def to_hash: -> Discorb::json
 
         # @return [Hash{String => String}] The description of the command.
@@ -219,6 +222,7 @@ module Discorb
         # Returns the command name.
         #
         # @return [String] The command name.
+        %a{pure}
         def to_s: -> String
 
         #
@@ -233,6 +237,7 @@ module Discorb
         # @private
         #
         # @return [Hash] The hash represents the object.
+        %a{pure}
         def to_hash: -> Discorb::json
 
         # @return [Array<Discorb::ApplicationCommand::Command>] The subcommands of the command.
@@ -260,6 +265,7 @@ module Discorb
           Discorb::Client client
         ) -> void
 
+        %a{pure}
         def to_s: -> untyped
 
         #

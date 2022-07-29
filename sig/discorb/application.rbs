@@ -10,6 +10,7 @@ module Discorb
     # @param [Hash] data The data of the object.
     def initialize: (Discorb::Client client, Discorb::json data) -> void
 
+    %a{pure}
     def inspect: -> String
 
     # @return [Discorb::Snowflake] The application's ID.
@@ -85,8 +86,10 @@ module Discorb
       # The team's owner.
       #
       # @return [Discorb::Application::Team::Member] The team's owner.
+      %a{pure}
       def owner: -> Discorb::Application::Team::Member
 
+      %a{pure}
       def inspect: -> String
 
       # @return [Discorb::Snowflake] The team's ID.
@@ -111,6 +114,7 @@ module Discorb
 
         def initialize: (untyped client, untyped team, untyped data) -> void
 
+        %a{pure}
         def inspect: -> String
 
         def ==: (untyped other) -> untyped

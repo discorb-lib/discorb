@@ -16,8 +16,10 @@ module Discorb
     # Format the user as `Username#Discriminator` style.
     #
     # @return [String] The formatted username.
+    %a{pure}
     def to_s: -> String
 
+    %a{pure}
     def inspect: -> String
 
     #

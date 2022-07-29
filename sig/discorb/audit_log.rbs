@@ -7,6 +7,7 @@ module Discorb
     # @private
     def initialize: (untyped client, untyped data, untyped guild) -> void
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -50,6 +51,7 @@ module Discorb
       # @return [nil] The change with the given key does not exist.
       def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
 
+      %a{pure}
       def inspect: -> String
 
       # @return [Discorb::Snowflake] The ID of the entry.
@@ -145,12 +147,14 @@ module Discorb
 
         #
         # Formats the changes into a string.
+        %a{pure}
         def inspect: -> String
 
         #
         # Get keys of changes.
         #
         # @return [Array<Symbol>] The keys of the changes.
+        %a{pure}
         def keys: -> ::Array[Symbol]
 
         #
@@ -160,6 +164,7 @@ module Discorb
         #
         # @return [Discorb::AuditLog::Entry::Change] The change with the given key.
         # @return [nil] The change with the given key does not exist.
+        %a{pure}
         def []: (Symbol key) -> Discorb::AuditLog::Entry::Change
 
         # Returns the value of attribute data.
@@ -183,6 +188,7 @@ module Discorb
         # Format the change into a string.
         #
         # @return [String] The string representation of the change.
+        %a{pure}
         def inspect: -> String
 
         #
@@ -213,6 +219,7 @@ module Discorb
       # @private
       def initialize: (untyped data) -> void
 
+      %a{pure}
       def inspect: -> String
 
       # @return [Discorb::Snowflake] The ID of the integration.

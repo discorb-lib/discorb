@@ -54,12 +54,16 @@ module Discorb
     # @return [Async::Task<nil>] If there is no current stage instance.
     def fetch_stage_instance: -> Async::Task[StageInstance]
 
+    %a{pure}
     def voice_states: -> Array[Discorb::VoiceState]
 
+    %a{pure}
     def members: -> Array[Discorb::Member]
 
+    %a{pure}
     def speakers: -> Array[Discorb::Member]
 
+    %a{pure}
     def audiences: -> Array[Discorb::Member]
 
     # @return [Integer] The bitrate of the voice channel.

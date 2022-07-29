@@ -24,8 +24,10 @@ module Discorb
     # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure
     #   Official Discord API docs
     # @return [Hash] A hash representation of the select menu.
+    %a{pure}
     def to_hash: -> Discorb::json
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -76,8 +78,10 @@ module Discorb
       # @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
       #   Official Discord API docs
       # @return [Hash] Hash representation of the option.
+      %a{pure}
       def to_hash: -> Discorb::json
 
+      %a{pure}
       def inspect: -> String
 
       #

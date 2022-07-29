@@ -34,7 +34,7 @@ module Discorb
       ?rate_limit_per_user: Integer,
       ?slowmode: Integer,
       ?default_auto_archive_duration: 60 | 1440 | 4320 | 10080,
-      ?archive_in: Integer,
+      ?archive_in: 60 | 1440 | 4320 | 10080,
       ?reason: String?
     ) -> Async::Task[self]
 

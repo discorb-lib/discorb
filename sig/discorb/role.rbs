@@ -17,6 +17,7 @@ module Discorb
       Discorb::json data
     ) -> void
 
+    %a{pure}
     def icon: -> (Discorb::Asset | Discorb::emoji | nil)
 
     #
@@ -31,12 +32,16 @@ module Discorb
     # Formats the role as a string.
     #
     # @return [String] The formatted string.
+    %a{pure}
     def to_s: -> String
 
+    %a{pure}
     def mention: -> String
 
+    %a{pure}
     def color?: -> bool
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -81,6 +86,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     def delete: (?reason: String?) -> Async::Task[void]
 
+    %a{pure}
     def tag: -> Discorb::Role::Tag
 
     # @return [Discorb::Snowflake] The ID of the role.

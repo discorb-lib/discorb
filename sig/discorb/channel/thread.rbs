@@ -79,16 +79,22 @@ module Discorb
     # @note This method won't unarchive the thread. Use {#unarchive} instead.
     def unlock: (?reason: String?) -> Async::Task[self]
 
+    %a{pure}
     def parent: -> untyped
 
+    %a{pure}
     def me: -> untyped
 
+    %a{pure}
     def joined?: -> bool
 
+    %a{pure}
     def guild: -> untyped
 
+    %a{pure}
     def owner: -> untyped
 
+    %a{pure}
     def inspect: -> String
 
     #
@@ -168,14 +174,19 @@ module Discorb
         _ToS guild_id
       ) -> void
 
+      %a{pure}
       def thread: -> Discorb::ThreadChannel
 
+      %a{pure}
       def member: -> Discorb::Member
 
+      %a{pure}
       def id: -> Discorb::Snowflake
 
+      %a{pure}
       def user: -> Discorb::User
 
+      %a{pure}
       def inspect: -> String
 
       # Returns the value of attribute joined_at.

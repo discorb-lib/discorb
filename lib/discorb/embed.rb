@@ -124,7 +124,7 @@ module Discorb
       ret[:image] = @image&.to_hash if @image
       ret[:thumbnail] = @thumbnail&.to_hash if @thumbnail
       ret[:author] = @author&.to_hash if @author
-      ret[:fields] = @fields&.map { |f| f.to_hash } if @fields.any?
+      ret[:fields] = @fields&.map(&:to_hash) if @fields.any?
       ret
     end
 

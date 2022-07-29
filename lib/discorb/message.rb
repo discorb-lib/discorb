@@ -408,10 +408,10 @@ module Discorb
     #
     # @return [Async::Task<Array<Discorb::User>>] The users.
     #
-    def fetch_reacted_users(emoji, limit: nil, after: 0)
+    def fetch_reacted_users(emoji, limit: nil, after: Discorb::Snowflake.new("0"))
       Async do
         if limit.nil? || !limit.positive?
-          after = 0
+          after = Discorb::Snowflake.new("0")
           users = []
           loop do
             _resp, data = @client.http.request(

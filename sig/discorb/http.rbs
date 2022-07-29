@@ -62,6 +62,7 @@ module Discorb
       **untyped kwargs
     ) -> Async::Task[[Net::HTTPResponse, json]]
 
+    %a{pure}
     def inspect: -> String
 
     private
@@ -100,6 +101,7 @@ module Discorb
   class Route
     def initialize: (untyped url, untyped key, untyped method) -> void
 
+    %a{pure}
     def inspect: -> String
 
     def hash: -> untyped
@@ -129,6 +131,7 @@ module Discorb
     # @param [Discorb::Client] client The client.
     def initialize: (Discorb::Client client) -> void
 
+    %a{pure}
     def inspect: -> String
 
     #

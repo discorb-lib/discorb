@@ -34,20 +34,27 @@ module Discorb
 
     # @return [Symbol] Returns the type of the preset.
     # @note This is only available if the trigger type is `:keyword_preset`.
+    %a{pure}
     def preset_type: -> preset_type
 
     # @return [Symbol] Returns the type of the trigger.
+    %a{pure}
     def trigger_type: -> trigger_type
 
     # @return [Symbol] Returns the type of the event.
+    %a{pure}
     def event_type: -> :message_send
 
+    %a{pure}
     def creator: -> Discorb::Member
 
+    %a{pure}
     def guild: -> Discorb::Guild
 
+    %a{pure}
     def exempt_roles: -> Array[Discorb::Role]
 
+    %a{pure}
     def exempt_channels: -> Array[Discorb::Channel]
 
     #
@@ -112,8 +119,7 @@ module Discorb
       # Convert the action to hash.
       #
       # @return [Hash] The action hash.
-      #
-      %{pure}
+      %a{pure}
       def to_hash: -> Discorb::json
 
       #
@@ -132,6 +138,7 @@ module Discorb
 
       # @return [Discorb::Channel] The channel that the alert message is sent to.
       # @note This is only available if the action type is `:send_alert_message`.
+      %a{pure}
       def channel: -> Discorb::Channel?
     end
   end

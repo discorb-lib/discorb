@@ -1203,7 +1203,7 @@ module Discorb
           trigger_type: Discorb::AutoModRule::TRIGGER_TYPES.key(trigger_type),
           metadata: {
             keyword_filter: keyword_filter,
-            presets: Discorb::AutoModRule::PRESET_TYPES.key(presets),
+            presets: presets && Discorb::AutoModRule::PRESET_TYPES.key(presets),
           },
           actions: actions.map(&:to_hash),
           enabled: enabled,

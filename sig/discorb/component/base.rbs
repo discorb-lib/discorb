@@ -3,6 +3,7 @@ module Discorb
   # @abstract
   # Represents a Discord component.
   class Component
+    %a{pure}
     def inspect: -> String
 
     #
