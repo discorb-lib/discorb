@@ -4,7 +4,7 @@ module Discorb
   # @return [String] The API base URL.
   API_BASE_URL = "https://discord.com/api/v10"
   # @return [String] The version of discorb.
-  VERSION = "0.18.1"
+  VERSION = "0.19.0"
   # @return [Array<Integer>] The version array of discorb.
   VERSION_ARRAY = VERSION.split(".").map(&:to_i).freeze
   # @return [String] The user agent for the bot.

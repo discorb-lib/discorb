@@ -4,6 +4,15 @@
 
 # Changelog
 
+## v0.19
+
+### v0.19.0
+
+- Change!: All bang methods don't have bang anymore. (ex: `Message#delete!`)
+- Add: Add `%a{pure}` annotation to rbs.
+- Add: Add low level APIs to Interaction.
+- Update: Update IDENTIFY key.
+
 ## v0.18
 
 ### v0.18.1
