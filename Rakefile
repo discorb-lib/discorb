@@ -71,7 +71,7 @@ namespace :document do
   version = current_version
   desc "Just generate document"
   task :yard do
-    sh "bundle exec yardoc -o doc/#{version} --locale #{ENV.fetch("rake_locale", nil) or "en"}"
+    sh "yardoc -o doc/#{version} --locale #{ENV.fetch("rake_locale", nil) or "en"}"
   end
 
   desc "Replace files"
