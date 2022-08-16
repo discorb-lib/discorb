@@ -31,8 +31,12 @@ module Discorb
             end
 
             @http = HTTP.new(self)
-            _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
-            gateway_url = gateway_response[:url]
+            gateway_url = if reconnect
+                @resume_gateway_url
+              else
+                _, gateway_response = @http.request(Route.new("/gateway", "//gateway", :get)).wait
+                gateway_response[:url]
+              end
             gateway_version = if @intents.to_h[:message_content].nil?
                 unless @message_content_intent_warned
                   warn "message_content intent not set, using gateway version 9. " \
@@ -236,6 +240,7 @@ module Discorb
           @api_version = data[:v]
           self.session_id = data[:session_id]
           @user = ClientUser.new(self, data[:user])
+          @resume_gateway_url = data[:resume_gateway_url]
           @uncached_guilds = data[:guilds].map { |g| g[:id] }
           ready if (@uncached_guilds == []) || !@intents.guilds
           dispatch(:ready)
