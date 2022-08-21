@@ -28,6 +28,10 @@ module Discorb
     # @return [Array<Discorb::AutoModRule::Action>] The actions of the rule.
     attr_reader actions: Array[Discorb::AutoModRule::Action]
 
+    # @return [Array<String>] Substrings which will be exempt from triggering the preset trigger type.
+    # @note This is only available if the trigger type is `:keyword_preset`.
+    attr_reader allow_list: Array[String]?
+
     # @return [Array<String>] The keywords that the rule is triggered by.
     # @note This is only available if the trigger type is `:keyword`.
     attr_reader keyword_filter: Array[String]?
