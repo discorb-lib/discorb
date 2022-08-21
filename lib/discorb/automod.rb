@@ -12,6 +12,7 @@ module Discorb
       2 => :harmful_link,
       3 => :spam,
       4 => :keyword_preset,
+      5 => :mention_spam,
     }.freeze
     # @return [Hash{Integer => Symbol}] The mapping of preset types.
     # @private
@@ -38,6 +39,9 @@ module Discorb
     # @return [Array<String>] The keywords that the rule is triggered by.
     # @note This is only available if the trigger type is `:keyword`.
     attr_reader :keyword_filter
+    # @return [Integer] Total number of mentions allowed per message.
+    # @note This is only available if the trigger type is `:mention_spam`.
+    attr_reader :mention_total_limit
 
     #
     # Initialize a new auto mod.
@@ -181,6 +185,8 @@ module Discorb
         @keyword_filter = data[:trigger_metadata][:keyword_filter]
       when :presets
         @presets_raw = data[:trigger_metadata][:presets]
+      when :mention_spam
+        @mention_total_limit = data[:metadata][:mention_total_limit]
       end
       @enabled = data[:enabled]
       @exempt_roles_id = data[:exempt_roles]

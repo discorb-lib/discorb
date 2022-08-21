@@ -595,6 +595,7 @@ module Discorb
       ?exempt_channels: Array[Discorb::Channel],
       ?keyword_filter: Array[String]?,
       ?presets: Discorb::AutoModRule::preset_type?,
+      ?mention_total_limit: Integer?,
       ?reason: nil
     ) -> Async::Task[void]
 

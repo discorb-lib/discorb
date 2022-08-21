@@ -1,6 +1,6 @@
 module Discorb
   class AutoModRule < DiscordModel
-    type trigger_type = :keyword | :harmful_link | :spam | :keyword_preset
+    type trigger_type = :keyword | :harmful_link | :spam | :keyword_preset | :mention_spam
     type preset_type = :profanity | :sexual_content | :slurs
 
     # @return [Hash{Integer => Symbol}] The mapping of trigger types.
@@ -31,6 +31,10 @@ module Discorb
     # @return [Array<String>] The keywords that the rule is triggered by.
     # @note This is only available if the trigger type is `:keyword`.
     attr_reader keyword_filter: Array[String]?
+
+    # @return [Integer] Total number of mentions allowed per message.
+    # @note This is only available if the trigger type is `:mention_spam`.
+    attr_reader mention_total_limit: Integer?
 
     # @return [Symbol] Returns the type of the preset.
     # @note This is only available if the trigger type is `:keyword_preset`.
