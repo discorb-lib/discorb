@@ -39,6 +39,9 @@ module Discorb
     # @return [Array<String>] The keywords that the rule is triggered by.
     # @note This is only available if the trigger type is `:keyword`.
     attr_reader :keyword_filter
+    # @return [Array<String>] Substrings which will be exempt from triggering the preset trigger type.
+    # @note This is only available if the trigger type is `:keyword_preset`.
+    attr_reader :allow_list
     # @return [Integer] Total number of mentions allowed per message.
     # @note This is only available if the trigger type is `:mention_spam`.
     attr_reader :mention_total_limit
@@ -183,8 +186,9 @@ module Discorb
       case trigger_type
       when :keyword
         @keyword_filter = data[:trigger_metadata][:keyword_filter]
-      when :presets
+      when :keyword_preset
         @presets_raw = data[:trigger_metadata][:presets]
+        @allow_list = data[:trigger_metadata][:allow_list]
       when :mention_spam
         @mention_total_limit = data[:metadata][:mention_total_limit]
       end

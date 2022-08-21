@@ -1179,6 +1179,7 @@ module Discorb
     # @param [Array<Discorb::Role>] exempt_roles The roles that are exempt from the rule.
     # @param [Array<Discorb::Channel>] exempt_channels The channels that are exempt from the rule.
     # @param [Array<String>] keyword_filter The keywords to filter.
+    # @param [Array<String>] allow_list Substrings which will be exempt from triggering the preset trigger type.
     # @param [Integer] mention_total_limit The total number of mentions allowed per message.
     # @param [Symbol] presets The preset of the rule. See {Discorb::AutoModRule::PRESET_TYPES}.
     # @param [String] reason The reason for creating the rule.
@@ -1195,6 +1196,7 @@ module Discorb
       exempt_channels: [],
       keyword_filter: nil,
       mention_total_limit: nil,
+      allow_list: nil,
       presets: nil,
       reason: nil
     )
@@ -1206,6 +1208,7 @@ module Discorb
           metadata: {
             keyword_filter: keyword_filter,
             presets: presets && Discorb::AutoModRule::PRESET_TYPES.key(presets),
+            allow_list: allow_list,
             mention_total_limit: mention_total_limit,
           },
           actions: actions.map(&:to_hash),

@@ -596,6 +596,7 @@ module Discorb
       ?keyword_filter: Array[String]?,
       ?presets: Discorb::AutoModRule::preset_type?,
       ?mention_total_limit: Integer?,
+      ?allow_list: Array[String]?,
       ?reason: nil
     ) -> Async::Task[void]
 
