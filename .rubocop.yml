@@ -4,101 +4,35 @@ AllCops:
   Exclude:
     - lib/discorb/emoji_table.rb
 
+inherit_gem:
+  syntax_tree: config/rubocop.yml
+
 require:
 - rubocop-rake
 - rubocop-rspec
 
-# Layout:
-#   Enabled: false
+Naming/VariableNumber:
+  Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false
+
 Metrics:
   Enabled: false
 
-Layout/EndOfLine:
-  EnforcedStyle: lf
-
-Layout/IndentationWidth:
-  AllowedPatterns: ['if']
-
-Layout/HeredocIndentation:
+Style/GlobalVars:
   Enabled: false
 
-Layout/ClosingHeredocIndentation:
+Style/GuardClause:
   Enabled: false
 
-Layout/CaseIndentation:
+Lint/AssignmentInCondition:
   Enabled: false
 
-Layout/ElseAlignment:
+Style/IfUnlessModifier:
   Enabled: false
 
-Layout/EndAlignment:
-  Enabled: false
-
-Style/TrailingCommaInHashLiteral:  # Disabled for rufo
-  EnforcedStyleForMultiline: consistent_comma
-
-Style/TrailingCommaInArrayLiteral:  # Disabled for rufo
-  EnforcedStyleForMultiline: consistent_comma
-
-Style/StringLiterals:  # Disabled for rufo
-  Enabled: true
-  EnforcedStyle: double_quotes
-
-Style/TrailingCommaInArguments:  # Disabled for rufo
-  Enabled: false
-
-Style/StringLiteralsInInterpolation:  # Disabled for rufo
-  Enabled: false
-
-Layout/SpaceAroundOperators:  # Changed for rufo
-  EnforcedStyleForExponentOperator: space
-
-Style/StringConcatenation:  # + looks better
-  Enabled: false
-
-Lint/MissingSuper:  # For abstract classes
-  Enabled: false
-
-Lint/AssignmentInCondition:  # Looks bad
-  Enabled: false
-
-Style/PerlBackrefs:  # It will be longer
-  Enabled: false
-
-Style/RedundantSelf:  # Looks local variable
-  Enabled: false
-
-Naming/VariableNumber:  # Discord API docs naming
-  Enabled: false
-
-Style/ParallelAssignment:  # It will be longer
-  Enabled: false
-
-Style/RedundantInterpolation:  # For make it extendable
-  Enabled: false
-
-Style/Next:  # For make it extendable
-  Enabled: false
-
-Lint/ShadowedException:  # False positive
-  Enabled: false
-
-Lint/AmbiguousOperatorPrecedence:  # Not needed
-  Enabled: false
-
-Style/GlobalVars: # For /exe
-  Enabled: false
-
-Lint/Debugger: # For /exe
-  Enabled: false
-
-Style/GuardClause: # For make it extendable
-  Enabled: false
-
-Lint/ScriptPermission: # For GitHub Actions
-  Enabled: false
-
-Style/NumericLiterals:  # For style
+Style/OptionalBooleanParameter:
   Enabled: false
 
 RSpec/FilePath:

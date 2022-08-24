@@ -64,11 +64,12 @@ module Discorb
     def self.make_channel(client, data, no_cache: false)
       descendants.each do |klass|
         if !klass.channel_type.nil? && klass.channel_type == data[:type]
-          return klass.new(client, data,
-                           no_cache: no_cache)
+          return klass.new(client, data, no_cache: no_cache)
         end
       end
-      client.logger.warn("Unknown channel type #{data[:type]}, initialized GuildChannel")
+      client.logger.warn(
+        "Unknown channel type #{data[:type]}, initialized GuildChannel"
+      )
       GuildChannel.new(client, data)
     end
 
@@ -91,9 +92,7 @@ module Discorb
     # @return [Async::Task<Discorb::Snowflake>] A task that resolves to the channel id.
     #
     def channel_id
-      Async do
-        @id
-      end
+      Async { @id }
     end
 
     private

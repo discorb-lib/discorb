@@ -81,7 +81,7 @@ module Discorb
       request_to_speak: 32,
       manage_threads: 34,
       use_public_threads: 35,
-      use_private_threads: 36,
+      use_private_threads: 36
     }.freeze
   end
 
@@ -134,7 +134,7 @@ module Discorb
       request_to_speak: 32,
       manage_threads: 34,
       use_public_threads: 35,
-      use_private_threads: 36,
+      use_private_threads: 36
     }.freeze
     @bits = @raw_bits.transform_values { |v| 1 << v }.freeze
 
@@ -151,13 +151,17 @@ module Discorb
     end
 
     def allow
-      self.class.bits.keys.filter { |field| @allow & self.class.bits[field] != 0 }
+      self.class.bits.keys.filter do |field|
+        @allow & self.class.bits[field] != 0
+      end
     end
 
     alias +@ allow
 
     def deny
-      self.class.bits.keys.filter { |field| @deny & self.class.bits[field] != 0 }
+      self.class.bits.keys.filter do |field|
+        @deny & self.class.bits[field] != 0
+      end
     end
 
     alias -@ deny
@@ -187,7 +191,7 @@ module Discorb
             true
           elsif @deny & self.class.bits[field] != 0
             false
-          end,
+          end
         ]
       end
     end
@@ -202,9 +206,11 @@ module Discorb
     def +(other)
       result = to_hash
       self.class.bits.each_key do |field|
-        unless other[field].nil?
-          result[field] = (other[field] || raise(KeyError, "field #{field} not found in #{other.inspect}"))
-        end
+        next if other[field].nil?
+        result[field] = (
+          other[field] ||
+            raise(KeyError, "field #{field} not found in #{other.inspect}")
+        )
       end
       self.class.from_hash(result)
     end
@@ -276,13 +282,17 @@ module Discorb
       def from_hash(hash)
         allow = 0
         deny = 0
-        hash.filter { |k, v| self.class.bits.keys.include?(k) && [true, false].include?(v) }.each do |k, v|
-          if v
-            allow += self.class.bits[k]
-          else
-            deny += self.class.bits[k]
+        hash
+          .filter do |k, v|
+            self.class.bits.keys.include?(k) && [true, false].include?(v)
           end
-        end
+          .each do |k, v|
+            if v
+              allow += self.class.bits[k]
+            else
+              deny += self.class.bits[k]
+            end
+          end
 
         new(allow, deny)
       end

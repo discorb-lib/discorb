@@ -5,7 +5,9 @@ require_relative "./common"
 RSpec.describe Discorb::Intents do
   Discorb::Intents::INTENT_BITS.each do |key, value|
     specify "##{key} is associated with #{value}" do
-      expect(described_class.from_value(value)).to(satisfy { |intent| intent.send(key) })
+      expect(described_class.from_value(value)).to(
+        satisfy { |intent| intent.send(key) }
+      )
     end
 
     specify "value of .new with `#{key}: true` is #{value}" do

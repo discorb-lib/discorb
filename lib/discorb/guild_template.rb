@@ -64,10 +64,17 @@ module Discorb
         payload = {}
         payload[:name] = name if name
         payload[:description] = description if description != Discorb::Unset
-        @client.http.request(
-          Route.new("/guilds/#{@source_guild_id}/templates/#{@code}", "//guilds/:guild_id/templates/:code",
-                    :patch), payload
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@source_guild_id}/templates/#{@code}",
+              "//guilds/:guild_id/templates/:code",
+              :patch
+            ),
+            payload
+          )
+          .wait
       end
     end
 
@@ -81,8 +88,17 @@ module Discorb
     #
     def update
       Async do
-        _resp, data = @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}",
-                                                     "//guilds/:guild_id/templates/:code", :put)).wait
+        _resp, data =
+          @client
+            .http
+            .request(
+              Route.new(
+                "/guilds/#{@source_guild_id}/templates/#{@code}",
+                "//guilds/:guild_id/templates/:code",
+                :put
+              )
+            )
+            .wait
         _set_data(data)
       end
     end
@@ -95,8 +111,16 @@ module Discorb
     #
     def delete
       Async do
-        @client.http.request(Route.new("/guilds/#{@source_guild_id}/templates/#{@code}",
-                                       "//guilds/:guild_id/templates/:code", :delete)).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@source_guild_id}/templates/#{@code}",
+              "//guilds/:guild_id/templates/:code",
+              :delete
+            )
+          )
+          .wait
       end
     end
 
@@ -142,14 +166,22 @@ module Discorb
         @name = data[:name]
         @description = data[:description]
         @region = data[:region]
-        @verification_level = Discorb::Guild::MFA_LEVELS[data[:verification_level]]
-        @default_message_notifications = Discorb::Guild::NOTIFICATION_LEVELS[data[:default_message_notifications]]
-        @explicit_content_filter = Discorb::Guild::EXPLICIT_CONTENT_FILTERS[data[:explicit_content_filter]]
+        @verification_level =
+          Discorb::Guild::MFA_LEVELS[data[:verification_level]]
+        @default_message_notifications =
+          Discorb::Guild::NOTIFICATION_LEVELS[
+            data[:default_message_notifications]
+          ]
+        @explicit_content_filter =
+          Discorb::Guild::EXPLICIT_CONTENT_FILTERS[
+            data[:explicit_content_filter]
+          ]
         @preferred_locale = data[:preferred_locale]
         @afk_timeout = data[:afk_timeout]
         @roles = data[:roles].map { |r| Role.new(r) }
         @channels = data[:channels].map { |c| Channel.new(c) }
-        @system_channel_flags = Discorb::SystemChannelFlag.new(data[:system_channel_flags])
+        @system_channel_flags =
+          Discorb::SystemChannelFlag.new(data[:system_channel_flags])
       end
 
       #
@@ -214,10 +246,17 @@ module Discorb
           @nsfw = data[:nsfw]
           @rate_limit_per_user = data[:rate_limit_per_user]
           @parent_id = data[:parent_id]
-          @permission_overwrites = data[:permission_overwrites].to_h do |ow|
-            [Snowflake.new(ow[:id]), PermissionOverwrite.new(ow[:allow], ow[:deny])]
-          end
-          @type = Discorb::Channel.descendants.find { |c| c.channel_type == data[:type] }
+          @permission_overwrites =
+            data[:permission_overwrites].to_h do |ow|
+              [
+                Snowflake.new(ow[:id]),
+                PermissionOverwrite.new(ow[:allow], ow[:deny])
+              ]
+            end
+          @type =
+            Discorb::Channel.descendants.find do |c|
+              c.channel_type == data[:type]
+            end
         end
       end
     end

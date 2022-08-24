@@ -44,7 +44,8 @@ module Discorb
     def _set_data(data)
       @count = data[:count]
       @me = data[:me]
-      @emoji = if data[:emoji][:id].nil?
+      @emoji =
+        if data[:emoji][:id].nil?
           UnicodeEmoji.new(data[:emoji][:name])
         else
           PartialEmoji.new(data[:emoji])

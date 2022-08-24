@@ -18,11 +18,11 @@ RSpec.describe Discorb::Component do
                 emoji: nil,
                 label: "label",
                 style: 1,
-                type: 2,
-              },
+                type: 2
+              }
             ],
-            type: 1,
-          },
+            type: 1
+          }
         ]
       )
     end
@@ -38,10 +38,10 @@ RSpec.describe Discorb::Component do
                 emoji: nil,
                 label: "label",
                 style: 1,
-                type: 2,
-              },
+                type: 2
+              }
             ],
-            type: 1,
+            type: 1
           },
           {
             components: [
@@ -51,11 +51,11 @@ RSpec.describe Discorb::Component do
                 emoji: nil,
                 label: "label",
                 style: 1,
-                type: 2,
-              },
+                type: 2
+              }
             ],
-            type: 1,
-          },
+            type: 1
+          }
         ]
       )
     end
@@ -72,11 +72,11 @@ RSpec.describe Discorb::Component do
                 min_values: 1,
                 options: [],
                 placeholder: nil,
-                type: 3,
-              },
+                type: 3
+              }
             ],
-            type: 1,
-          },
+            type: 1
+          }
         ]
       )
     end
@@ -92,10 +92,10 @@ RSpec.describe Discorb::Component do
                 emoji: nil,
                 label: "label",
                 style: 1,
-                type: 2,
-              },
+                type: 2
+              }
             ],
-            type: 1,
+            type: 1
           },
           {
             components: [
@@ -106,10 +106,10 @@ RSpec.describe Discorb::Component do
                 min_values: 1,
                 options: [],
                 placeholder: nil,
-                type: 3,
-              },
+                type: 3
+              }
             ],
-            type: 1,
+            type: 1
           },
           {
             components: [
@@ -119,11 +119,11 @@ RSpec.describe Discorb::Component do
                 emoji: nil,
                 label: "label",
                 style: 1,
-                type: 2,
-              },
+                type: 2
+              }
             ],
-            type: 1,
-          },
+            type: 1
+          }
         ]
       )
     end

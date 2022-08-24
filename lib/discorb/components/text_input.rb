@@ -6,10 +6,7 @@ module Discorb
   #
   class TextInput < Component
     # @private
-    STYLES = {
-      short: 1,
-      paragraph: 2,
-    }.freeze
+    STYLES = { short: 1, paragraph: 2 }.freeze
 
     # @return [String] The label of the text input.
     attr_accessor :label
@@ -77,7 +74,7 @@ module Discorb
         max_length: @max_length,
         required: @required,
         value: @value,
-        placeholder: @placeholder,
+        placeholder: @placeholder
       }
     end
 
@@ -98,7 +95,7 @@ module Discorb
           max_length: data[:max_length],
           required: data[:required],
           value: data[:value],
-          placeholder: data[:placeholder],
+          placeholder: data[:placeholder]
         )
       end
     end

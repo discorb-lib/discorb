@@ -21,12 +21,21 @@ module Discorb
     def initialize(client, data, guild)
       @client = client
       @guild = guild
-      @webhooks = data[:webhooks].map { |webhook| Webhook.from_data(@client, webhook) }
-      @users = data[:users].map { |user| client.users[user[:id]] || User.new(@client, user) }
-      @threads = data[:threads].map do |thread|
-        client.channels[thread[:id]] || Channel.make_channel(@client, thread, no_cache: true)
-      end
-      @entries = data[:audit_log_entries].map { |entry| AuditLog::Entry.new(@client, entry, guild.id) }
+      @webhooks =
+        data[:webhooks].map { |webhook| Webhook.from_data(@client, webhook) }
+      @users =
+        data[:users].map do |user|
+          client.users[user[:id]] || User.new(@client, user)
+        end
+      @threads =
+        data[:threads].map do |thread|
+          client.channels[thread[:id]] ||
+            Channel.make_channel(@client, thread, no_cache: true)
+        end
+      @entries =
+        data[:audit_log_entries].map do |entry|
+          AuditLog::Entry.new(@client, entry, guild.id)
+        end
     end
 
     def inspect
@@ -175,7 +184,7 @@ module Discorb
         140 => :automod_rule_create,
         141 => :automod_rule_update,
         142 => :automod_rule_delete,
-        143 => :automod_block_message,
+        143 => :automod_block_message
       }.freeze
 
       #
@@ -185,10 +194,14 @@ module Discorb
       CONVERTERS = {
         channel: ->(client, id, _guild_id) { client.channels[id] },
         thread: ->(client, id, _guild_id) { client.channels[id] },
-        role: ->(client, id, guild_id) { client.guilds[guild_id]&.roles&.[](id) },
-        member: ->(client, id, guild_id) { client.guilds[guild_id]&.members&.[](id) },
+        role: ->(client, id, guild_id) do
+          client.guilds[guild_id]&.roles&.[](id)
+        end,
+        member: ->(client, id, guild_id) do
+          client.guilds[guild_id]&.members&.[](id)
+        end,
         guild: ->(client, id, _guild_id) { client.guilds[id] },
-        message: ->(client, id, _guild_id) { client.messages[id] },
+        message: ->(client, id, _guild_id) { client.messages[id] }
       }.freeze
 
       #
@@ -202,15 +215,25 @@ module Discorb
         @user_id = Snowflake.new(data[:user_id])
         @target_id = Snowflake.new(data[:target_id])
         @type = EVENTS[data[:action_type]] || :unknown
-        @target = CONVERTERS[@type.to_s.split("_")[0].to_sym]&.call(client, @target_id, @gui)
+        @target =
+          CONVERTERS[@type.to_s.split("_")[0].to_sym]&.call(
+            client,
+            @target_id,
+            @gui
+          )
         @target ||= Snowflake.new(data[:target_id])
         @changes = data[:changes] && Changes.new(data[:changes])
         @reason = data[:reason]
         data[:options]&.each do |option, value|
           define_singleton_method(option) { value }
-          if option.end_with?("_id") && CONVERTERS.key?(option.to_s.split("_")[0].to_sym)
+          if option.end_with?("_id") &&
+               CONVERTERS.key?(option.to_s.split("_")[0].to_sym)
             define_singleton_method(option.to_s.sub("_id", "")) do
-              CONVERTERS[option.to_s.split("_")[0].to_sym]&.call(client, value, @guild_id)
+              CONVERTERS[option.to_s.split("_")[0].to_sym]&.call(
+                client,
+                value,
+                @guild_id
+              )
             end
           end
         end
@@ -255,9 +278,7 @@ module Discorb
         #
         def initialize(data)
           @data = data.to_h { |d| [d[:key].to_sym, d] }
-          @data.each do |k, v|
-            define_singleton_method(k) { Change.new(v) }
-          end
+          @data.each { |k, v| define_singleton_method(k) { Change.new(v) } }
         end
 
         #
@@ -307,7 +328,8 @@ module Discorb
         #
         def initialize(data)
           @key = data[:key].to_sym
-          method = case @key.to_s
+          method =
+            case @key.to_s
             when /.*_id$/, "id"
               ->(v) { Snowflake.new(v) }
             when "permissions"
@@ -317,7 +339,10 @@ module Discorb
             when "entity_type"
               ->(v) { Discorb::ScheduledEvent::ENTITY_TYPE[v] }
             when "privacy_level"
-              ->(v) { Discorb::StageInstance::PRIVACY_LEVEL[v] || Discorb::ScheduledEvent::PRIVACY_LEVEL[v] }
+              ->(v) do
+                Discorb::StageInstance::PRIVACY_LEVEL[v] ||
+                  Discorb::ScheduledEvent::PRIVACY_LEVEL[v]
+              end
             else
               ->(v) { v }
             end
@@ -374,7 +399,9 @@ module Discorb
         @type = data[:type].to_sym
         @name = data[:name]
         @data = data
-        @account = Discorb::Integration::Account.new(@data[:account]) if @data[:account]
+        @account = Discorb::Integration::Account.new(@data[:account]) if @data[
+          :account
+        ]
       end
 
       def inspect

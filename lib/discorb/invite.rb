@@ -68,11 +68,7 @@ module Discorb
 
     # @private
     # @return [{Integer => Symbol}] The mapping of target types.
-    TARGET_TYPES = {
-      nil => :voice,
-      1 => :stream,
-      2 => :guild,
-    }.freeze
+    TARGET_TYPES = { nil => :voice, 1 => :stream, 2 => :guild }.freeze
 
     #
     # Initialize a new invite.
@@ -101,7 +97,7 @@ module Discorb
     end
 
     def remain_uses
-      @max_uses && @max_uses - @uses
+      @max_uses && (@max_uses - @uses)
     end
 
     def temporary?
@@ -114,7 +110,11 @@ module Discorb
     #
     def delete(reason: nil)
       Async do
-        @client.http.request(Route.new("/invites/#{@code}", "//invites/:code", :delete), {}, audit_log_reason: reason)
+        @client.http.request(
+          Route.new("/invites/#{@code}", "//invites/:code", :delete),
+          {},
+          audit_log_reason: reason
+        )
       end
     end
 
@@ -135,8 +135,9 @@ module Discorb
       @inviter_data = data[:inviter]
       @target_type = TARGET_TYPES[data[:target_type]]
       if data[:target_user]
-        @target_user = @client.users[data[:target_user][:id]] || User.new(@client,
-                                                                          data[:target_user])
+        @target_user =
+          @client.users[data[:target_user][:id]] ||
+            User.new(@client, data[:target_user])
       end
       # @target_application = nil
 

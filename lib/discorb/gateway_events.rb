@@ -77,21 +77,29 @@ module Discorb
         @user = client.users[data[:user_id]]
 
         unless @guild.nil?
-          @user = if data.key?(:member)
-            @guild.members[data[:member][:user][:id]] ||
-              Member.new(
-                @client,
-                @guild_id,
-                data[:member][:user],
-                data[:member]
-              )
-          else
-            @guild.members[data[:user_id]]
-          end || @user
+          @user =
+            if data.key?(:member)
+              @guild.members[data[:member][:user][:id]] ||
+                Member.new(
+                  @client,
+                  @guild_id,
+                  data[:member][:user],
+                  data[:member]
+                )
+            else
+              @guild.members[data[:user_id]]
+            end || @user
         end
 
         @message = client.messages[data[:message_id]]
-        @emoji = data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
+        @emoji =
+          (
+            if data[:emoji][:id].nil?
+              UnicodeEmoji.new(data[:emoji][:name])
+            else
+              PartialEmoji.new(data[:emoji])
+            end
+          )
       end
 
       # Fetch the message.
@@ -239,7 +247,14 @@ module Discorb
         @guild = client.guilds[data[:guild_id]]
         @channel = client.channels[data[:channel_id]]
         @message = client.messages[data[:message_id]]
-        @emoji = data[:emoji][:id].nil? ? DiscordEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
+        @emoji =
+          (
+            if data[:emoji][:id].nil?
+              DiscordEmoji.new(data[:emoji][:name])
+            else
+              PartialEmoji.new(data[:emoji])
+            end
+          )
       end
 
       # Fetch the message.
@@ -333,9 +348,22 @@ module Discorb
         @content = data[:content]
         @timestamp = Time.iso8601(data[:edited_timestamp])
         @mention_everyone = data[:mention_everyone]
-        @mention_roles = data[:mention_roles].map { |r| guild.roles[r] } if data.key?(:mention_roles)
-        @attachments = data[:attachments].map { |a| Attachment.from_hash(a) } if data.key?(:attachments)
-        @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : [] if data.key?(:embeds)
+        @mention_roles =
+          data[:mention_roles].map { |r| guild.roles[r] } if data.key?(
+          :mention_roles
+        )
+        @attachments =
+          data[:attachments].map { |a| Attachment.from_hash(a) } if data.key?(
+          :attachments
+        )
+        @embeds =
+          (
+            if data[:embeds]
+              data[:embeds].map { |e| Embed.from_hash(e) }
+            else
+              []
+            end
+          ) if data.key?(:embeds)
       end
 
       def channel
@@ -351,9 +379,7 @@ module Discorb
       #
       # @return [Async::Task<Discorb::Message>] The message.
       def fetch_message
-        Async do
-          channel.fetch_message(@id).wait
-        end
+        Async { channel.fetch_message(@id).wait }
       end
     end
 
@@ -465,12 +491,14 @@ module Discorb
         @user_id = Snowflake.new(data[:user_id])
         @timestamp = Time.at(data[:timestamp])
         if guild
-          @member = guild.members[@user_id] || Member.new(
-            @client,
-            @guild_id,
-            @client.users[@user_id].instance_variable_get(:@data),
-            data[:member]
-          )
+          @member =
+            guild.members[@user_id] ||
+              Member.new(
+                @client,
+                @guild_id,
+                @client.users[@user_id].instance_variable_get(:@data),
+                data[:member]
+              )
         end
       end
 
@@ -507,7 +535,8 @@ module Discorb
         @client = client
         @data = data
         @message = message
-        @type = if message.nil?
+        @type =
+          if message.nil?
             :unknown
           elsif @message.pinned?
             :pinned
@@ -602,13 +631,16 @@ module Discorb
         @client = client
         @data = data
         @rule_id = Snowflake.new(data[:rule_id])
-        @rule_trigger_type = Discorb::AutoModRule::TRIGGER_TYPES[data[:rule_trigger_type]]
+        @rule_trigger_type =
+          Discorb::AutoModRule::TRIGGER_TYPES[data[:rule_trigger_type]]
         @action = Discorb::AutoModRule::Action.new(data[:action])
         @user_id = Snowflake.new(data[:user_id])
         @guild_id = Snowflake.new(data[:guild_id])
         @channel_id = data[:channel_id] && Snowflake.new(data[:channel_id])
         @message_id = data[:message_id] && Snowflake.new(data[:message_id])
-        @alert_system_message_id = data[:alert_system_message_id] && Snowflake.new(data[:alert_system_message_id])
+        @alert_system_message_id =
+          data[:alert_system_message_id] &&
+            Snowflake.new(data[:alert_system_message_id])
         @content = data[:content]
         @matched_keyword = data[:matched_keyword]
         @matched_content = data[:matched_content]

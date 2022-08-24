@@ -7,24 +7,18 @@ module Discorb
   class ScheduledEvent < DiscordModel
     # @private
     # @return [{Integer => Symbol}] The mapping of privacy level.
-    PRIVACY_LEVEL = {
-      2 => :guild_only,
-    }.freeze
+    PRIVACY_LEVEL = { 2 => :guild_only }.freeze
     # @private
     # @return [{Integer => Symbol}] The mapping of status.
     STATUS = {
       1 => :scheduled,
       2 => :active,
       3 => :completed,
-      4 => :canceled,
+      4 => :canceled
     }.freeze
     # @private
     # @return [{Integer => Symbol}] The mapping of entity_type.
-    ENTITY_TYPE = {
-      1 => :stage_instance,
-      2 => :voice,
-      3 => :external,
-    }.freeze
+    ENTITY_TYPE = { 1 => :stage_instance, 2 => :voice, 3 => :external }.freeze
 
     # @!visibility private
     def initialize(client, data)
@@ -136,36 +130,55 @@ module Discorb
       status: Discorb::Unset
     )
       Async do
-        payload = case type == Discorb::Unset ? @entity_type : type
+        payload =
+          case type == Discorb::Unset ? @entity_type : type
           when :stage_instance
-            raise ArgumentError, "channel must be provided for stage_instance events" unless channel
+            unless channel
+              raise ArgumentError,
+                    "channel must be provided for stage_instance events"
+            end
 
             {
               name: name,
               description: description,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
-              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) || Discorb::Unset,
+              privacy_level:
+                Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) ||
+                  Discorb::Unset,
               channel_id: channel&.id,
-              entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:stage_instance),
-              status: Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset,
+              entity_type:
+                Discorb::ScheduledEvent::ENTITY_TYPE.key(:stage_instance),
+              status:
+                Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset
             }.reject { |_, v| v == Discorb::Unset }
           when :voice
-            raise ArgumentError, "channel must be provided for voice events" unless channel
+            unless channel
+              raise ArgumentError, "channel must be provided for voice events"
+            end
 
             {
               name: name,
               description: description,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
-              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) || Discorb::Unset,
+              privacy_level:
+                Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) ||
+                  Discorb::Unset,
               channel_id: channel&.id,
               entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:voice),
-              status: Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset,
+              status:
+                Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset
             }.reject { |_, v| v == Discorb::Unset }
           when :external
-            raise ArgumentError, "location must be provided for external events" unless location
-            raise ArgumentError, "end_time must be provided for external events" unless end_time
+            unless location
+              raise ArgumentError,
+                    "location must be provided for external events"
+            end
+            unless end_time
+              raise ArgumentError,
+                    "end_time must be provided for external events"
+            end
 
             {
               name: name,
@@ -173,23 +186,30 @@ module Discorb
               channel_id: nil,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time.iso8601,
-              privacy_level: Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) || Discorb::Unset,
+              privacy_level:
+                Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level) ||
+                  Discorb::Unset,
               entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:external),
               entity_metadata: {
-                location: location,
+                location: location
               },
-              status: Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset,
+              status:
+                Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset
             }.reject { |_, v| v == Discorb::Unset }
           else
             raise ArgumentError, "Invalid scheduled event type: #{type}"
           end
-        @client.http.request(
-          Route.new(
-            "/guilds/#{@guild_id}/scheduled-events/#{@id}",
-            "//guilds/:guild_id/scheduled-events/:scheduled_event_id",
-            :patch
-          ), payload
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild_id}/scheduled-events/#{@id}",
+              "//guilds/:guild_id/scheduled-events/:scheduled_event_id",
+              :patch
+            ),
+            payload
+          )
+          .wait
       end
     end
 
@@ -226,8 +246,16 @@ module Discorb
     #
     def delete
       Async do
-        @client.http.request(Route.new("/guilds/#{@guild_id}/scheduled-events/#{@id}",
-                                       "//guilds/:guild_id/scheduled-events/:scheduled_event_id", :delete)).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild_id}/scheduled-events/#{@id}",
+              "//guilds/:guild_id/scheduled-events/:scheduled_event_id",
+              :delete
+            )
+          )
+          .wait
       end
     end
 
@@ -253,34 +281,48 @@ module Discorb
           after = 0
           res = []
           loop do
-            _resp, users = @client.http.request(
-              Route.new(
-                "/guilds/#{@guild_id}/scheduled-events/#{@id}/users?limit=100&after=#{after}&with_member=true",
-                "//guilds/:guild_id/scheduled-events/:scheduled_event_id/users",
-                :get
-              )
-            ).wait
+            _resp, users =
+              @client
+                .http
+                .request(
+                  Route.new(
+                    "/guilds/#{@guild_id}/scheduled-events/#{@id}/users?limit=100&after=#{after}&with_member=true",
+                    "//guilds/:guild_id/scheduled-events/:scheduled_event_id/users",
+                    :get
+                  )
+                )
+                .wait
             break if users.empty?
 
-            res += users.map { |u| Member.new(@client, @guild_id, u[:user], u[:member]) }
+            res +=
+              users.map do |u|
+                Member.new(@client, @guild_id, u[:user], u[:member])
+              end
             after = users.last[:user][:id]
           end
           res
         else
-          params = {
-            limit: limit,
-            before: Discorb::Utils.try(before, :id),
-            after: Discorb::Utils.try(after, :id),
-            with_member: with_member,
-          }.filter { |_k, v| !v.nil? }.to_h
-          _resp, messages = @client.http.request(
-            Route.new(
-              "/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}",
-              "//channels/:channel_id/messages",
-              :get
-            )
-          ).wait
-          messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
+          params =
+            {
+              limit: limit,
+              before: Discorb::Utils.try(before, :id),
+              after: Discorb::Utils.try(after, :id),
+              with_member: with_member
+            }.filter { |_k, v| !v.nil? }.to_h
+          _resp, messages =
+            @client
+              .http
+              .request(
+                Route.new(
+                  "/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}",
+                  "//channels/:channel_id/messages",
+                  :get
+                )
+              )
+              .wait
+          messages.map do |m|
+            Message.new(@client, m.merge({ guild_id: @guild_id.to_s }))
+          end
         end
       end
     end
@@ -297,13 +339,17 @@ module Discorb
       @name = data[:name]
       @description = data[:description]
       @scheduled_start_time = Time.iso8601(data[:scheduled_start_time])
-      @scheduled_end_time = data[:scheduled_end_time] && Time.iso8601(data[:scheduled_end_time])
+      @scheduled_end_time =
+        data[:scheduled_end_time] && Time.iso8601(data[:scheduled_end_time])
       @privacy_level = :guild_only # data[:privacy_level]
       @status = STATUS[data[:status]]
       @entity_type = ENTITY_TYPE[data[:entity_type]]
       @entity_id = data[:entity_id] && Snowflake.new(data[:entity_id])
-      @entity_metadata = data[:entity_metadata] && Metadata.new(data[:entity_metadata])
-      @creator = @client.users[@creator_id] || (data[:creator] && User.new(@client, data[:creator]))
+      @entity_metadata =
+        data[:entity_metadata] && Metadata.new(data[:entity_metadata])
+      @creator =
+        @client.users[@creator_id] ||
+          (data[:creator] && User.new(@client, data[:creator]))
       @user_count = data[:user_count]
     end
 

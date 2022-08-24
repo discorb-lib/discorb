@@ -8,7 +8,8 @@ module Discorb
   # @return [Array<Integer>] The version array of discorb.
   VERSION_ARRAY = VERSION.split(".").map(&:to_i).freeze
   # @return [String] The user agent for the bot.
-  USER_AGENT = "DiscordBot (https://discorb-lib.github.io #{VERSION}) Ruby/#{RUBY_VERSION}".freeze
+  USER_AGENT =
+    "DiscordBot (https://discorb-lib.github.io #{VERSION}) Ruby/#{RUBY_VERSION}".freeze
 
   #
   # @abstract
@@ -138,7 +139,7 @@ module Discorb
     end
 
     def inspect
-      "#<#{self.class} #{self.identifier}>"
+      "#<#{self.class} #{identifier}>"
     end
 
     def hash
@@ -153,7 +154,10 @@ module Discorb
       param_type = @key.split("/").find { |k| k.start_with?(":") }
       return "" unless param_type
 
-      param = url.gsub(API_BASE_URL, "").split("/")[@key.split("/").index(param_type) - 1]
+      param =
+        url.gsub(API_BASE_URL, "").split("/")[
+          @key.split("/").index(param_type) - 1
+        ]
       %w[:channel_id :guild_id :webhook_id].include?(param_type) ? param : ""
     end
   end

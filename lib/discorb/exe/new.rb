@@ -157,7 +157,7 @@ FILES = {
   ".env.sample" => <<~BASH,
     %<token>s=
   BASH
-  "README.md" => <<~MARKDOWN,
+  "README.md" => <<~MARKDOWN
     # %<name>s
 
     Welcome to your bot: %<name>s!
@@ -193,8 +193,9 @@ FILES = {
 # @private
 def create_file(name)
   template_name = name
-  template_name += "_nc" if !$values[:comment] && FILES.key?(name + "_nc")
-  content = format(FILES[template_name], token: $values[:token], name: $values[:name])
+  template_name += "_nc" if !$values[:comment] && FILES.key?("#{name}_nc")
+  content =
+    format(FILES[template_name], token: $values[:token], name: $values[:name])
   File.write($path + "/#{name}", content, mode: "wb")
 end
 
@@ -246,7 +247,7 @@ $values = {
   token: "TOKEN",
   descs: false,
   name: nil,
-  comment: true,
+  comment: true
 }
 
 opt.on("--[no-]bundle", "Whether to use bundle. Default to true.") do |v|
@@ -257,25 +258,32 @@ opt.on("--[no-]git", "Whether to initialize git. Default to false.") do |v|
   $values[:git] = v
 end
 
-opt.on("--[no-]descs", "Whether to put some file for description. Default to false.") do |v|
-  $values[:descs] = v
-end
+opt.on(
+  "--[no-]descs",
+  "Whether to put some file for description. Default to false."
+) { |v| $values[:descs] = v }
 
 opt.on("--[no-]comment", "Whether to write comment. Default to true.") do |v|
   $values[:comment] = v
 end
 
-opt.on("-t NAME", "--token NAME", "The name of token environment variable. Default to TOKEN.") do |v|
-  $values[:token] = v
-end
+opt.on(
+  "-t NAME",
+  "--token NAME",
+  "The name of token environment variable. Default to TOKEN."
+) { |v| $values[:token] = v }
 
-opt.on("-n NAME", "--name NAME", "The name of your project. Default to the directory name.") do |v|
-  $values[:name] = v
-end
+opt.on(
+  "-n NAME",
+  "--name NAME",
+  "The name of your project. Default to the directory name."
+) { |v| $values[:name] = v }
 
-opt.on("--force", "-f", "Whether to force use directory. Default to false.") do |v|
-  $values[:force] = v
-end
+opt.on(
+  "--force",
+  "-f",
+  "Whether to force use directory. Default to false."
+) { |v| $values[:force] = v }
 
 opt.parse!(ARGV)
 

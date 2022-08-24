@@ -26,7 +26,13 @@ module Discorb
     # @param [Integer] min_values The minimum number of values.
     # @param [Integer] max_values The maximum number of values.
     #
-    def initialize(custom_id, options, placeholder: nil, min_values: 1, max_values: 1)
+    def initialize(
+      custom_id,
+      options,
+      placeholder: nil,
+      min_values: 1,
+      max_values: 1
+    )
       @custom_id = custom_id
       @options = options
       @placeholder = placeholder
@@ -49,7 +55,7 @@ module Discorb
         placeholder: @placeholder,
         min_values: @min_values,
         max_values: @max_values,
-        disabled: @disabled,
+        disabled: @disabled
       }
     end
 
@@ -71,7 +77,7 @@ module Discorb
           data[:options].map { |o| SelectMenu::Option.from_hash(o) },
           placeholder: data[:placeholder],
           min_values: data[:min_values],
-          max_values: data[:max_values],
+          max_values: data[:max_values]
         )
       end
     end
@@ -120,7 +126,7 @@ module Discorb
           value: @value,
           description: @description,
           emoji: @emoji&.to_hash,
-          default: @default,
+          default: @default
         }
       end
 
@@ -137,7 +143,13 @@ module Discorb
         # @return [Discorb::SelectMenu::Option] A new option.
         #
         def from_hash(data)
-          new(data[:label], data[:value], description: data[:description], emoji: data[:emoji], default: data[:default])
+          new(
+            data[:label],
+            data[:value],
+            description: data[:description],
+            emoji: data[:emoji],
+            default: data[:default]
+          )
         end
       end
     end

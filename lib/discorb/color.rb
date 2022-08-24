@@ -37,7 +37,7 @@ module Discorb
       greyple: 0x99aab5,
       dark_theme: 0x36393f,
       fuchsia: 0xeb459e,
-      yellow: 0xfee75c,
+      yellow: 0xfee75c
     }.freeze
 
     #
@@ -85,11 +85,7 @@ module Discorb
     # @return [Hash{:r, :g, :b => Integer}] A RGB hash.
     #
     def to_rgb_hash
-      {
-        r: @value / (256 * 256),
-        g: @value / 256 % 256,
-        b: @value % 256,
-      }
+      { r: @value / (256 * 256), g: @value / 256 % 256, b: @value % 256 }
     end
 
     alias deconstruct_keys to_rgb_hash
@@ -128,7 +124,7 @@ module Discorb
     # @return [Discorb::Color] A color object.
     #
     def self.from_rgb(red, green, blue)
-      new(red * 256 * 256 + green * 256 + blue)
+      new((red * 256 * 256) + (green * 256) + blue)
     end
 
     #

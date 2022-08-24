@@ -81,7 +81,8 @@ module Discorb
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
-        tmp_embed = if embed
+        tmp_embed =
+          if embed
             [embed]
           elsif embeds
             embeds
@@ -91,15 +92,16 @@ module Discorb
         payload[:username] = username if username
         payload[:avatar_url] = avatar_url if avatar_url != Discorb::Unset
         attachments = [attachment] if attachment
-        _resp, data = @http.multipart_request(
-          Route.new(
-            "#{url}?wait=#{wait}",
-            "//webhooks/:webhook_id/:token",
-            :post
-          ),
-          attachments,
-          payload
-        ).wait
+        _resp, data =
+          @http.multipart_request(
+            Route.new(
+              "#{url}?wait=#{wait}",
+              "//webhooks/:webhook_id/:token",
+              :post
+            ),
+            attachments,
+            payload
+          ).wait
         data && Webhook::Message.new(self, data)
       end
     end
@@ -117,13 +119,21 @@ module Discorb
     #
     # @return [Async::Task<void>] The task.
     #
-    def edit(name: Discorb::Unset, avatar: Discorb::Unset, channel: Discorb::Unset)
+    def edit(
+      name: Discorb::Unset,
+      avatar: Discorb::Unset,
+      channel: Discorb::Unset
+    )
       Async do
         payload = {}
         payload[:name] = name if name != Discorb::Unset
         payload[:avatar] = avatar if avatar != Discorb::Unset
-        payload[:channel_id] = Utils.try(channel, :id) if channel != Discorb::Unset
-        @http.request(Route.new(url, "//webhooks/:webhook_id/:token", :patch), payload).wait
+        payload[:channel_id] = Utils.try(channel, :id) if channel !=
+          Discorb::Unset
+        @http.request(
+          Route.new(url, "//webhooks/:webhook_id/:token", :patch),
+          payload
+        ).wait
       end
     end
 
@@ -137,7 +147,9 @@ module Discorb
     #
     def delete
       Async do
-        @http.request(Route.new(url, "//webhooks/:webhook_id/:token", :delete)).wait
+        @http.request(
+          Route.new(url, "//webhooks/:webhook_id/:token", :delete)
+        ).wait
         self
       end
     end
@@ -161,24 +173,36 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def edit_message(
-      message, content = Discorb::Unset,
-      embed: Discorb::Unset, embeds: Discorb::Unset,
-      file: Discorb::Unset, files: Discorb::Unset,
+      message,
+      content = Discorb::Unset,
+      embed: Discorb::Unset,
+      embeds: Discorb::Unset,
+      file: Discorb::Unset,
+      files: Discorb::Unset,
       attachments: Discorb::Unset,
       allowed_mentions: Discorb::Unset
     )
       Async do
         payload = {}
         payload[:content] = content if content != Discorb::Unset
-        payload[:embeds] = embed ? [embed.to_hash] : [] if embed != Discorb::Unset
+        payload[:embeds] = embed ? [embed.to_hash] : [] if embed !=
+          Discorb::Unset
         payload[:embeds] = embeds.map(&:to_hash) if embeds != Discorb::Unset
-        payload[:attachments] = attachments.map(&:to_hash) if attachments != Discorb::Unset
-        payload[:allowed_mentions] = allowed_mentions if allowed_mentions != Discorb::Unset
+        payload[:attachments] = attachments.map(&:to_hash) if attachments !=
+          Discorb::Unset
+        payload[:allowed_mentions] = allowed_mentions if allowed_mentions !=
+          Discorb::Unset
         files = [file] if file != Discorb::Unset
-        _resp, data = @http.multipart_request(
-          Route.new("#{url}/messages/#{Utils.try(message, :id)}", "//webhooks/:webhook_id/:token/messages/:message_id",
-                    :patch), payload, files
-        ).wait
+        _resp, data =
+          @http.multipart_request(
+            Route.new(
+              "#{url}/messages/#{Utils.try(message, :id)}",
+              "//webhooks/:webhook_id/:token/messages/:message_id",
+              :patch
+            ),
+            payload,
+            files
+          ).wait
         message.send(:_set_data, data)
         message
       end
@@ -196,7 +220,8 @@ module Discorb
         @http.request(
           Route.new(
             "#{url}/messages/#{Utils.try(message, :id)}",
-            "//webhooks/:webhook_id/:token/messages/:message_id", :delete
+            "//webhooks/:webhook_id/:token/messages/:message_id",
+            :delete
           )
         ).wait
         message
@@ -374,9 +399,7 @@ module Discorb
       # @return [Async::Task<void>] The task.
       #
       def edit(...)
-        Async do
-          @webhook.edit_message(self, ...).wait
-        end
+        Async { @webhook.edit_message(self, ...).wait }
       end
 
       #
@@ -386,9 +409,7 @@ module Discorb
       # @return [Async::Task<void>] The task.
       #
       def delete
-        Async do
-          @webhook.delete_message(self).wait
-        end
+        Async { @webhook.delete_message(self).wait }
       end
 
       private
@@ -400,14 +421,16 @@ module Discorb
         @channel_id = Snowflake.new(data[:channel_id])
         @author = Author.new(data[:author])
         @attachments = data[:attachments].map { |a| Attachment.new(a) }
-        @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : []
+        @embeds =
+          data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : []
         @mentions = data[:mentions].map { |m| Mention.new(m) }
         @mention_roles = data[:mention_roles].map { |m| Snowflake.new(m) }
         @mention_everyone = data[:mention_everyone]
         @pinned = data[:pinned]
         @tts = data[:tts]
         @created_at = data[:edited_timestamp] && Time.iso8601(data[:timestamp])
-        @updated_at = data[:edited_timestamp] && Time.iso8601(data[:edited_timestamp])
+        @updated_at =
+          data[:edited_timestamp] && Time.iso8601(data[:edited_timestamp])
         @flags = Message::Flag.new(data[:flags])
         @webhook_id = Snowflake.new(data[:webhook_id])
       end
@@ -441,7 +464,14 @@ module Discorb
           @bot = data[:bot]
           @id = Snowflake.new(data[:id])
           @username = data[:username]
-          @avatar = data[:avatar] ? Asset.new(self, data[:avatar]) : DefaultAvatar.new(data[:discriminator])
+          @avatar =
+            (
+              if data[:avatar]
+                Asset.new(self, data[:avatar])
+              else
+                DefaultAvatar.new(data[:discriminator])
+              end
+            )
           @discriminator = data[:discriminator]
         end
 

@@ -27,7 +27,13 @@ module Discorb
     #
     def initialize(client, data)
       super
-      @message = Message.new(@client, data[:message].merge({ member: data[:member], guild_id: data[:guild_id] }))
+      @message =
+        Message.new(
+          @client,
+          data[:message].merge(
+            { member: data[:member], guild_id: data[:guild_id] }
+          )
+        )
     end
 
     class << self
@@ -41,12 +47,14 @@ module Discorb
       #
       def make_interaction(client, data)
         nested_classes.each do |klass|
-          if !klass.component_type.nil? && klass.component_type == data[:data][:component_type]
-            return klass.new(client,
-                             data)
+          if !klass.component_type.nil? &&
+               klass.component_type == data[:data][:component_type]
+            return klass.new(client, data)
           end
         end
-        client.logger.warn("Unknown component type #{data[:component_type]}, initialized Interaction")
+        client.logger.warn(
+          "Unknown component type #{data[:component_type]}, initialized Interaction"
+        )
         MessageComponentInteraction.new(client, data)
       end
 
@@ -55,7 +63,9 @@ module Discorb
       # @private
       #
       def nested_classes
-        constants.select { |c| const_get(c).is_a? Class }.map { |c| const_get(c) }
+        constants
+          .select { |c| const_get(c).is_a? Class }
+          .map { |c| const_get(c) }
       end
     end
 

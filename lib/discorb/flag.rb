@@ -21,9 +21,7 @@ module Discorb
     def initialize(value)
       @value = value
       @values = {}
-      self.class.bits.each do |bn, bv|
-        @values[bn] = value & (1 << bv) != 0
-      end
+      self.class.bits.each { |bn, bv| @values[bn] = value & (1 << bv) != 0 }
     end
 
     #
@@ -114,7 +112,7 @@ module Discorb
       # @return [Integer] the max value of the flag.
       #
       def max_value
-        2 ** @bits.values.max - 1
+        (2**@bits.values.max) - 1
       end
 
       #

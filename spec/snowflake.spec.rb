@@ -3,7 +3,12 @@
 require_relative "./common"
 
 RSpec.describe Discorb::Snowflake do
-  %w[863581274916913193 686547120534454315 613425648685547541 81384788765712384].each do |id|
+  %w[
+    863581274916913193
+    686547120534454315
+    613425648685547541
+    81384788765712384
+  ].each do |id|
     context "with id #{id}" do
       let(:snowflake) { described_class.new(id) }
 
@@ -17,7 +22,7 @@ RSpec.describe Discorb::Snowflake do
 
       it "returns timestamp" do
         expect(snowflake.timestamp).to satisfy do |t|
-          (t.to_f * 1000).floor == (id.to_i >> 22) + 1420070400000
+          (t.to_f * 1000).floor == (id.to_i >> 22) + 1_420_070_400_000
         end
       end
 

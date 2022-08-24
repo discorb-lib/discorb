@@ -3,7 +3,9 @@
 require_relative "common"
 
 RSpec.describe Discorb::AutoModRule do
-  let(:data) { JSON.load_file(__dir__ + "/payloads/automod.json", symbolize_names: true) }
+  let(:data) do
+    JSON.load_file("#{__dir__}/payloads/automod.json", symbolize_names: true)
+  end
   let(:rule) { described_class.new(client, data) }
 
   it "initializes successfully" do
@@ -42,6 +44,11 @@ RSpec.describe Discorb::AutoModRule do
   end
 
   it "returns keyword filter" do
-    expect(rule.keyword_filter).to eq ["cat*", "*dog", "*ana*", "i like javascript"]
+    expect(rule.keyword_filter).to eq [
+         "cat*",
+         "*dog",
+         "*ana*",
+         "i like javascript"
+       ]
   end
 end

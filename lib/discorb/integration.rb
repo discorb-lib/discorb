@@ -40,10 +40,7 @@ module Discorb
 
     # @private
     # @return [{Integer => String}] The map of the expire behavior.
-    EXPIRE_BEHAVIOR = {
-      0 => :remove_role,
-      1 => :kick,
-    }.freeze
+    EXPIRE_BEHAVIOR = { 0 => :remove_role, 1 => :kick }.freeze
 
     #
     # Initialize a new integration.
@@ -74,10 +71,18 @@ module Discorb
     #
     def delete(reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/guilds/#{@guild}/integrations/#{@id}", "//guilds/:guild_id/integrations/:integration_id",
-                    :delete), {}, audit_log_reason: reason
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild}/integrations/#{@id}",
+              "//guilds/:guild_id/integrations/:integration_id",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -94,11 +99,13 @@ module Discorb
       @enable_emoticons = data[:enable_emoticons]
       @expire_behavior = EXPIRE_BEHAVIOR[data[:expire_behavior]]
       @expire_grace_period = data[:expire_grace_period]
-      @user = @client.users[data[:user][:id]] or Discorb::User.new(@client, data[:user])
+      @user = @client.users[data[:user][:id]] or
+        Discorb::User.new(@client, data[:user])
       @account = Account.new(data[:account])
       @subscriber_count = data[:subscriber_count]
       @revoked = data[:revoked]
-      @application = data[:application] and Application.new(@client, data[:application])
+      @application = data[:application] and
+        Application.new(@client, data[:application])
     end
 
     #
@@ -154,7 +161,8 @@ module Discorb
         @icon = data[:icon] && Asset.new(self, data[:icon])
         @description = data[:description]
         @summary = data[:summary]
-        @bot = data[:bot] and client.users[data[:bot][:id]] || Discorb::User.new(client, data[:bot])
+        @bot = data[:bot] and
+          client.users[data[:bot][:id]] || Discorb::User.new(client, data[:bot])
       end
     end
   end

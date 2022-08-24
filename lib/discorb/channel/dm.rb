@@ -14,9 +14,7 @@ module Discorb
     # @return [Async::Task<Discorb::Snowflake>] A task that resolves to the channel id.
     #
     def channel_id
-      Async do
-        @id
-      end
+      Async { @id }
     end
 
     private

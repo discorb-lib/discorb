@@ -95,8 +95,14 @@ module Discorb
       Async do
         next @dm_channel_id if @dm_channel_id
 
-        _resp, dm_channel = @client.http.request(Route.new("/users/@me/channels", "//users/@me/channels", :post),
-                                                 { recipient_id: @id }).wait
+        _resp, dm_channel =
+          @client
+            .http
+            .request(
+              Route.new("/users/@me/channels", "//users/@me/channels", :post),
+              { recipient_id: @id }
+            )
+            .wait
         @dm_channel_id = dm_channel[:id]
         @dm_channel_id
       end
@@ -134,7 +140,7 @@ module Discorb
         verified_bot: 16,
         early_verified_bot_developer: 17,
         discord_certified_moderator: 18,
-        bot_http_interactions: 19,
+        bot_http_interactions: 19
       }.freeze
     end
 
@@ -146,7 +152,14 @@ module Discorb
       @id = Snowflake.new(data[:id])
       @flag = User::Flag.new(data[:public_flags] | (data[:flags] || 0))
       @discriminator = data[:discriminator]
-      @avatar = data[:avatar] ? Asset.new(self, data[:avatar]) : DefaultAvatar.new(data[:discriminator])
+      @avatar =
+        (
+          if data[:avatar]
+            Asset.new(self, data[:avatar])
+          else
+            DefaultAvatar.new(data[:discriminator])
+          end
+        )
       @bot = data[:bot] || false
       @raw_data = data
       @client.users[@id] = self unless data[:no_cache]
@@ -180,7 +193,10 @@ module Discorb
         else
           payload[:avatar] = avatar.to_s
         end
-        @client.http.request(Route.new("/users/@me", "//users/@me", :patch), payload).wait
+        @client
+          .http
+          .request(Route.new("/users/@me", "//users/@me", :patch), payload)
+          .wait
         self
       end
     end

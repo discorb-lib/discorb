@@ -35,16 +35,18 @@ module Discorb
       @session_id = nil
       @next_shard = nil
       @main_task = nil
-      @logger = client.logger.dup.tap { |l| l.progname = "discorb: shard #{id}" }
-      @thread = Thread.new do
-        Thread.current.thread_variable_set("shard_id", id)
-        Thread.current.thread_variable_set("shard", self)
-        if @index.positive?
-          Thread.stop
-          sleep 5 # Somehow discord disconnects the shard without a little sleep.
+      @logger =
+        client.logger.dup.tap { |l| l.progname = "discorb: shard #{id}" }
+      @thread =
+        Thread.new do
+          Thread.current.thread_variable_set("shard_id", id)
+          Thread.current.thread_variable_set("shard", self)
+          if @index.positive?
+            Thread.stop
+            sleep 5 # Somehow discord disconnects the shard without a little sleep.
+          end
+          client.send(:main_loop, id)
         end
-        client.send(:main_loop, id)
-      end
     end
 
     #

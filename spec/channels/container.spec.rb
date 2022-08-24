@@ -7,16 +7,17 @@ RSpec.describe Discorb::ChannelContainer do
     text_channels: Discorb::TextChannel,
     voice_channels: Discorb::VoiceChannel,
     news_channels: Discorb::NewsChannel,
-    stage_channels: Discorb::StageChannel,
+    stage_channels: Discorb::StageChannel
   }
   let(:dummy) do
     Class.new do
       include Discorb::ChannelContainer
 
       define_method(:channels) do
-        channel_classes.values.map do |channel_class|
-          [channel_class.allocate] * 2
-        end.flatten
+        channel_classes
+          .values
+          .map { |channel_class| [channel_class.allocate] * 2 }
+          .flatten
       end
     end
   end

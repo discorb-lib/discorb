@@ -91,8 +91,18 @@ module Discorb
     #
     def delete(reason: nil)
       Async do
-        @client.http.request(Route.new(base_url.wait.to_s, "//webhooks/:webhook_id/:token", :delete), {},
-                             audit_log_reason: reason).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              base_url.wait.to_s,
+              "//webhooks/:webhook_id/:token",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
         @deleted = true
         self
       end
@@ -112,16 +122,29 @@ module Discorb
     #
     # @return [Async::Task<self>] The moved channel.
     #
-    def move(position, lock_permissions: false, parent: Discorb::Unset, reason: nil)
+    def move(
+      position,
+      lock_permissions: false,
+      parent: Discorb::Unset,
+      reason: nil
+    )
       Async do
         # @type var payload: Hash[Symbol, untyped]
-        payload = {
-          position: position,
-        }
+        payload = { position: position }
         payload[:lock_permissions] = lock_permissions
         payload[:parent_id] = parent&.id if parent != Discorb::Unset
-        @client.http.request(Route.new("/guilds/#{@guild_id}/channels", "//guilds/:guild_id/channels", :patch),
-                             payload, audit_log_reason: reason).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild_id}/channels",
+              "//guilds/:guild_id/channels",
+              :patch
+            ),
+            payload,
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -146,12 +169,20 @@ module Discorb
         payload = {
           allow: allow_value,
           deny: deny_value,
-          type: target.is_a?(Member) ? 1 : 0,
+          type: target.is_a?(Member) ? 1 : 0
         }
-        @client.http.request(
-          Route.new("/channels/#{@id}/permissions/#{target.id}", "//channels/:channel_id/permissions/:target_id",
-                    :put), payload, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{@id}/permissions/#{target.id}",
+              "//channels/:channel_id/permissions/:target_id",
+              :put
+            ),
+            payload,
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -171,10 +202,18 @@ module Discorb
     #
     def delete_permissions(target, reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/channels/#{@id}/permissions/#{target.id}", "//channels/:channel_id/permissions/:target_id",
-                    :delete), {}, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{@id}/permissions/#{target.id}",
+              "//channels/:channel_id/permissions/:target_id",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -190,8 +229,17 @@ module Discorb
     #
     def fetch_invites
       Async do
-        _resp, data = @client.http.request(Route.new("/channels/#{@id}/invites", "//channels/:channel_id/invites",
-                                                     :get)).wait
+        _resp, data =
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{@id}/invites",
+                "//channels/:channel_id/invites",
+                :get
+              )
+            )
+            .wait
         data.map { |invite| Invite.new(@client, invite, false) }
       end
     end
@@ -209,16 +257,32 @@ module Discorb
     #
     # @return [Async::Task<Invite>] The created invite.
     #
-    def create_invite(max_age: nil, max_uses: nil, temporary: false, unique: false, reason: nil)
+    def create_invite(
+      max_age: nil,
+      max_uses: nil,
+      temporary: false,
+      unique: false,
+      reason: nil
+    )
       Async do
-        _resp, data = @client.http.request(
-          Route.new("/channels/#{@id}/invites", "//channels/:channel_id/invites", :post), {
-            max_age: max_age,
-            max_uses: max_uses,
-            temporary: temporary,
-            unique: unique,
-          }, audit_log_reason: reason,
-        ).wait
+        _resp, data =
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{@id}/invites",
+                "//channels/:channel_id/invites",
+                :post
+              ),
+              {
+                max_age: max_age,
+                max_uses: max_uses,
+                temporary: temporary,
+                unique: unique
+              },
+              audit_log_reason: reason
+            )
+            .wait
         Invite.new(@client, data, false)
       end
     end
@@ -228,11 +292,12 @@ module Discorb
     def _set_data(data)
       @guild_id = data[:guild_id]
       @position = data[:position]
-      @permission_overwrites = if data[:permission_overwrites]
+      @permission_overwrites =
+        if data[:permission_overwrites]
           data[:permission_overwrites].to_h do |ow|
             [
               (ow[:type] == 1 ? guild.roles : guild.members)[ow[:id]],
-              PermissionOverwrite.new(ow[:allow].to_i, ow[:deny].to_i),
+              PermissionOverwrite.new(ow[:allow].to_i, ow[:deny].to_i)
             ]
           end
         else

@@ -12,7 +12,7 @@ module Discorb
       streaming: 1,
       listening: 2,
       watching: 3,
-      competing: 5,
+      competing: 5
     }.freeze
 
     #
@@ -24,7 +24,8 @@ module Discorb
     #
     def initialize(name, type = :playing, url = nil)
       @name = name
-      @type = TYPES[type] or raise ArgumentError, "Invalid activity type: #{type}"
+      @type = TYPES[type] or
+        raise ArgumentError, "Invalid activity type: #{type}"
       @url = url
     end
 
@@ -34,11 +35,7 @@ module Discorb
     # @return [Hash] A hash representation of the activity.
     #
     def to_hash
-      {
-        name: @name,
-        type: @type,
-        url: @url,
-      }
+      { name: @name, type: @type, url: @url }
     end
 
     def inspect

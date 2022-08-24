@@ -110,7 +110,7 @@ module Discorb
       20 => :chat_input_command,
       21 => :thread_starter_message,
       22 => :guild_invite_reminder,
-      23 => :context_menu_command,
+      23 => :context_menu_command
     }.freeze
 
     # @!attribute [r] channel
@@ -202,29 +202,34 @@ module Discorb
     #
     # @return [String] The cleaned content of the message.
     #
-    def clean_content(user: true, channel: true, role: true, emoji: true, everyone: true, codeblock: false)
+    def clean_content(
+      user: true,
+      channel: true,
+      role: true,
+      emoji: true,
+      everyone: true,
+      codeblock: false
+    )
       ret = @content.dup
       if user
         ret.gsub!(/<@!?(\d+)>/) do |_match|
-          member = guild&.members&.[]($1)
-          member ||= @client.users[$1]
+          member = guild&.members&.[](Regexp.last_match(1))
+          member ||= @client.users[Regexp.last_match(1)]
           member ? "@#{member.name}" : "@Unknown User"
         end
       end
       ret.gsub!(/<#(\d+)>/) do |_match|
-        channel = @client.channels[$1]
+        channel = @client.channels[Regexp.last_match(1)]
         channel ? "<##{channel.id}>" : "#Unknown Channel"
       end
       if role
         ret.gsub!(/<@&(\d+)>/) do |_match|
-          r = guild&.roles&.[]($1)
+          r = guild&.roles&.[](Regexp.last_match(1))
           r ? "@#{r.name}" : "@Unknown Role"
         end
       end
       if emoji
-        ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) do |_match|
-          $1
-        end
+        ret.gsub!(/<a?:([a-zA-Z0-9_]+):\d+>/) { |_match| Regexp.last_match(1) }
       end
       ret.gsub!(/@(everyone|here)/, "@\u200b\\1") if everyone
       if codeblock
@@ -235,7 +240,7 @@ module Discorb
         res = []
         max = codeblocks.length
         codeblocks.each_with_index do |single_codeblock, i|
-          res << if max.even? && i == max - 1 || i.even?
+          res << if (max.even? && i == max - 1) || i.even?
             single_codeblock
           else
             original_codeblocks[i / 2]
@@ -269,8 +274,16 @@ module Discorb
       supress: Discorb::Unset
     )
       Async do
-        channel.edit_message(@id, content, embed: embed, embeds: embeds, allowed_mentions: allowed_mentions,
-                                           attachments: attachments, components: components, supress: supress).wait
+        channel.edit_message(
+          @id,
+          content,
+          embed: embed,
+          embeds: embeds,
+          allowed_mentions: allowed_mentions,
+          attachments: attachments,
+          components: components,
+          supress: supress
+        ).wait
       end
     end
 
@@ -283,9 +296,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def delete(reason: nil)
-      Async do
-        channel.delete_message(@id, reason: reason).wait
-      end
+      Async { channel.delete_message(@id, reason: reason).wait }
     end
 
     #
@@ -301,7 +312,7 @@ module Discorb
           message_id: @id,
           channel_id: @channel_id,
           guild_id: @guild_id,
-          fail_if_not_exists: fail_if_not_exists,
+          fail_if_not_exists: fail_if_not_exists
         }
       )
     end
@@ -315,9 +326,7 @@ module Discorb
     # @param (see #post)
     # @return [Async::Task<Discorb::Message>] The message.
     def reply(*args, **kwargs)
-      Async do
-        channel.post(*args, reference: self, **kwargs).wait
-      end
+      Async { channel.post(*args, reference: self, **kwargs).wait }
     end
 
     #
@@ -328,7 +337,10 @@ module Discorb
     #
     def publish
       Async do
-        channel.post("/channels/#{@channel_id}/messages/#{@id}/crosspost", nil).wait
+        channel.post(
+          "/channels/#{@channel_id}/messages/#{@id}/crosspost",
+          nil
+        ).wait
       end
     end
 
@@ -342,10 +354,17 @@ module Discorb
     #
     def add_reaction(emoji)
       Async do
-        @client.http.request(
-          Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me",
-                    "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me", :put), nil
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me",
+              "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me",
+              :put
+            ),
+            nil
+          )
+          .wait
       end
     end
 
@@ -361,11 +380,16 @@ module Discorb
     #
     def remove_reaction(emoji)
       Async do
-        @client.http.request(
-          Route.new("/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me",
-                    "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me",
-                    :delete)
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/@me",
+              "//channels/:channel_id/messages/:message_id/reactions/:emoji/@me",
+              :delete
+            )
+          )
+          .wait
       end
     end
 
@@ -382,17 +406,18 @@ module Discorb
     #
     def remove_reaction_of(emoji, member)
       Async do
-        @client.http.request(
-          Route.new(
-            "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{if member.is_a?(Member)
-              member.id
-            else
-              member
-            end}",
-            "//channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id",
-            :delete
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}/#{
+                member.is_a?(Member) ? member.id : member
+              }",
+              "//channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id",
+              :delete
+            )
           )
-        ).wait
+          .wait
       end
     end
 
@@ -408,22 +433,34 @@ module Discorb
     #
     # @return [Async::Task<Array<Discorb::User>>] The users.
     #
-    def fetch_reacted_users(emoji, limit: nil, after: Discorb::Snowflake.new("0"))
+    def fetch_reacted_users(
+      emoji,
+      limit: nil,
+      after: Discorb::Snowflake.new("0")
+    )
       Async do
         if limit.nil? || !limit.positive?
           after = Discorb::Snowflake.new("0")
           users = []
           loop do
-            _resp, data = @client.http.request(
-              Route.new(
-                "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=100&after=#{after}",
-                "//channels/:channel_id/messages/:message_id/reactions/:emoji",
-                :get
-              )
-            ).wait
+            _resp, data =
+              @client
+                .http
+                .request(
+                  Route.new(
+                    "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=100&after=#{after}",
+                    "//channels/:channel_id/messages/:message_id/reactions/:emoji",
+                    :get
+                  )
+                )
+                .wait
             break if data.empty?
 
-            users += data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
+            users +=
+              data.map do |r|
+                guild&.members&.[](r[:id]) || @client.users[r[:id]] ||
+                  User.new(@client, r)
+              end
 
             break if data.length < 100
 
@@ -431,14 +468,23 @@ module Discorb
           end
           next users
         else
-          _resp, data = @client.http.request(
-            Route.new(
-              "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=#{limit}&after=#{after}",
-              "//channels/:channel_id/messages/:message_id/reactions/:emoji",
-              :get
-            )
-          ).wait
-          next data.map { |r| guild&.members&.[](r[:id]) || @client.users[r[:id]] || User.new(@client, r) }
+          _resp, data =
+            @client
+              .http
+              .request(
+                Route.new(
+                  "/channels/#{@channel_id}/messages/#{@id}/reactions/#{emoji.to_uri}?limit=#{limit}&after=#{after}",
+                  "//channels/:channel_id/messages/:message_id/reactions/:emoji",
+                  :get
+                )
+              )
+              .wait
+          next(
+            data.map do |r|
+              guild&.members&.[](r[:id]) || @client.users[r[:id]] ||
+                User.new(@client, r)
+            end
+          )
         end
       end
     end
@@ -452,9 +498,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def pin(reason: nil)
-      Async do
-        channel.pin_message(self, reason: reason).wait
-      end
+      Async { channel.pin_message(self, reason: reason).wait }
     end
 
     #
@@ -466,9 +510,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def unpin(reason: nil)
-      Async do
-        channel.unpin_message(self, reason: reason).wait
-      end
+      Async { channel.unpin_message(self, reason: reason).wait }
     end
 
     #
@@ -480,9 +522,7 @@ module Discorb
     # @return [Async::Task<Discorb::ThreadChannel>] <description>
     #
     def start_thread(*args, **kwargs)
-      Async do
-        channel.start_thread(*args, message: self, **kwargs).wait
-      end
+      Async { channel.start_thread(*args, message: self, **kwargs).wait }
     end
 
     alias create_thread start_thread
@@ -511,32 +551,63 @@ module Discorb
         @webhook_id = Snowflake.new(data[:webhook_id])
         @author = Webhook::Message::Author.new(data[:author])
       elsif data[:guild_id].nil? || data[:guild_id].empty? || data[:member].nil?
-        @author = @client.users[data[:author][:id]] || User.new(@client, data[:author])
+        @author =
+          @client.users[data[:author][:id]] || User.new(@client, data[:author])
       else
-        @author = guild&.members&.get(data[:author][:id]) || Member.new(@client,
-                                                                        @guild_id, data[:author], data[:member])
+        @author =
+          guild&.members&.get(data[:author][:id]) ||
+            Member.new(@client, @guild_id, data[:author], data[:member])
       end
       @content = data[:content]
       @created_at = Time.iso8601(data[:timestamp])
-      @updated_at = data[:edited_timestamp].nil? ? nil : Time.iso8601(data[:edited_timestamp])
+      @updated_at =
+        (
+          if data[:edited_timestamp].nil?
+            nil
+          else
+            Time.iso8601(data[:edited_timestamp])
+          end
+        )
 
       @tts = data[:tts]
       @mention_everyone = data[:mention_everyone]
       @mention_roles = data[:mention_roles].map { |r| guild.roles[r] }
       @attachments = data[:attachments].map { |a| Attachment.from_hash(a) }
-      @embeds = data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : []
-      @reactions = data[:reactions] ? data[:reactions].map { |r| Reaction.new(self, r) } : []
+      @embeds =
+        data[:embeds] ? data[:embeds].map { |e| Embed.from_hash(e) } : []
+      @reactions =
+        (
+          if data[:reactions]
+            data[:reactions].map { |r| Reaction.new(self, r) }
+          else
+            []
+          end
+        )
       @pinned = data[:pinned]
       @type = MESSAGE_TYPE[data[:type]]
       @activity = data[:activity] && Activity.new(data[:activity])
       @application_id = data[:application_id]
-      @message_reference = data[:message_reference] && Reference.from_hash(data[:message_reference])
+      @message_reference =
+        data[:message_reference] &&
+          Reference.from_hash(data[:message_reference])
       @flag = Flag.new(0b111 - data[:flags])
-      @sticker_items = data[:sticker_items] ? data[:sticker_items].map { |s| Message::Sticker.new(s) } : []
+      @sticker_items =
+        (
+          if data[:sticker_items]
+            data[:sticker_items].map { |s| Message::Sticker.new(s) }
+          else
+            []
+          end
+        )
       # @referenced_message = data[:referenced_message] && Message.new(@client, data[:referenced_message])
-      @interaction = data[:interaction] && Message::Interaction.new(@client, data[:interaction])
+      @interaction =
+        data[:interaction] &&
+          Message::Interaction.new(@client, data[:interaction])
       @thread = data[:thread] && Channel.make_channel(@client, data[:thread])
-      @components = data[:components].map { |c| c[:components].map { |co| Component.from_hash(co) } }
+      @components =
+        data[:components].map do |c|
+          c[:components].map { |co| Component.from_hash(co) }
+        end
       @data.update(data)
       @deleted = false
     end

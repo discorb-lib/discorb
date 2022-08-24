@@ -50,8 +50,14 @@ module Discorb
         payload[:user_limit] = user_limit if user_limit != Discorb::Unset
         payload[:rtc_region] = rtc_region if rtc_region != Discorb::Unset
 
-        @client.http.request(Route.new("/channels/#{@id}", "//channels/:channel_id", :patch), payload,
-                             audit_log_reason: reason).wait
+        @client
+          .http
+          .request(
+            Route.new("/channels/#{@id}", "//channels/:channel_id", :patch),
+            payload,
+            audit_log_reason: reason
+          )
+          .wait
         self
       end
     end

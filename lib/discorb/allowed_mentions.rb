@@ -42,9 +42,7 @@ module Discorb
     # @return [Hash] The hash.
     #
     def to_hash(other = nil)
-      payload = {
-        parse: %w[everyone roles users],
-      }
+      payload = { parse: %w[everyone roles users] }
       replied_user = nil_merge(@replied_user, other&.replied_user)
       everyone = nil_merge(@everyone, other&.everyone)
       roles = nil_merge(@roles, other&.roles)
@@ -63,9 +61,7 @@ module Discorb
     end
 
     def nil_merge(*args)
-      args.each do |a|
-        return a unless a.nil?
-      end
+      args.each { |a| return a unless a.nil? }
       nil
     end
   end

@@ -20,9 +20,13 @@ module Discorb
 
     def _set_data(data)
       @custom_id = data[:custom_id]
-      @contents = data[:components].to_h do |component|
-        [component[:components][0][:custom_id], component[:components][0][:value]]
-      end
+      @contents =
+        data[:components].to_h do |component|
+          [
+            component[:components][0][:custom_id],
+            component[:components][0][:value]
+          ]
+        end
     end
 
     class << self

@@ -94,7 +94,7 @@ module Discorb
         2 => :listening,
         3 => :watching,
         4 => :custom,
-        5 => :competing,
+        5 => :competing
       }.freeze
 
       #
@@ -109,11 +109,17 @@ module Discorb
         @url = data[:url]
         @created_at = Time.at(data[:created_at])
         @timestamps = data[:timestamps] && Timestamps.new(data[:timestamps])
-        @application_id = data[:application_id] && Snowflake.new(data[:application_id])
+        @application_id =
+          data[:application_id] && Snowflake.new(data[:application_id])
         @details = data[:details]
         @state = data[:state]
-        @emoji = if data[:emoji]
-            data[:emoji][:id].nil? ? UnicodeEmoji.new(data[:emoji][:name]) : PartialEmoji.new(data[:emoji])
+        @emoji =
+          if data[:emoji]
+            if data[:emoji][:id].nil?
+              UnicodeEmoji.new(data[:emoji][:name])
+            else
+              PartialEmoji.new(data[:emoji])
+            end
           end
         @party = data[:party] && Party.new(data[:party])
         @assets = data[:assets] && Asset.new(data[:assets])
@@ -239,7 +245,7 @@ module Discorb
           spectate: 2,
           join_request: 3,
           sync: 4,
-          play: 5,
+          play: 5
         }
       end
 

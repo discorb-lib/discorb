@@ -18,13 +18,9 @@ module Discorb
     def _recr_items(key, item, res)
       case item
       when Array
-        item.each_with_index do |v, i|
-          _recr_items (key + [i]), v, res
-        end
+        item.each_with_index { |v, i| _recr_items (key + [i]), v, res }
       when Hash
-        item.each do |k, v|
-          _recr_items (key + [k]), v, res
-        end
+        item.each { |k, v| _recr_items (key + [k]), v, res }
       else
         res[key.join(".").gsub("_errors.", "")] = item
       end
@@ -64,13 +60,17 @@ module Discorb
     def initialize(resp, data)
       @code = data[:code]
       @response = resp
-      DiscorbError.instance_method(:initialize).bind(self).call(
-        [
-          data[:message] + " (#{@code})", enumerate_errors(data[:errors])
-            .map { |ek, ev| "#{ek}=>#{ev}" }
-            .join("\n"),
-        ].join("\n")
-      )
+      DiscorbError
+        .instance_method(:initialize)
+        .bind(self)
+        .call(
+          [
+            data[:message] + " (#{@code})",
+            enumerate_errors(data[:errors])
+              .map { |ek, ev| "#{ek}=>#{ev}" }
+              .join("\n")
+          ].join("\n")
+        )
     end
   end
 

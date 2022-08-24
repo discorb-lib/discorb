@@ -102,10 +102,17 @@ module Discorb
       Async do
         payload = {}
         payload[:name] = name if name != Discorb::Unset
-        payload[:roles] = roles.map { |r| Discorb::Utils.try(r, :id) } if roles != Discorb::Unset
+        payload[:roles] = roles.map do |r|
+          Discorb::Utils.try(r, :id)
+        end if roles != Discorb::Unset
         @client.http.request(
-          Route.new("/guilds/#{@guild.id}/emojis/#{@id}", "//guilds/:guild_id/emojis/:emoji_id",
-                    :patch), payload, audit_log_reason: reason,
+          Route.new(
+            "/guilds/#{@guild.id}/emojis/#{@id}",
+            "//guilds/:guild_id/emojis/:emoji_id",
+            :patch
+          ),
+          payload,
+          audit_log_reason: reason
         )
         self
       end
@@ -123,10 +130,18 @@ module Discorb
     #
     def delete(reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/guilds/#{@guild.id}/emojis/#{@id}", "//guilds/:guild_id/emojis/:emoji_id",
-                    :delete), {}, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild.id}/emojis/#{@id}",
+              "//guilds/:guild_id/emojis/:emoji_id",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
         @available = false
         self
       end
@@ -141,11 +156,7 @@ module Discorb
     # @return [Hash] The hash represents the object.
     #
     def to_hash
-      {
-        name: @name,
-        id: @id,
-        animated: @animated,
-      }
+      { name: @name, id: @id, animated: @animated }
     end
 
     private
@@ -153,7 +164,8 @@ module Discorb
     def _set_data(data)
       @id = Snowflake.new(data[:id])
       @name = data[:name]
-      @roles = data[:role] ? data[:role].map { |r| Role.new(@client, guild, r) } : []
+      @roles =
+        data[:role] ? data[:role].map { |r| Role.new(@client, guild, r) } : []
       @user = User.new(@client, data[:user]) if data[:user]
       @require_colons = data[:require_colons]
       @managed = data[:managed]
@@ -254,8 +266,7 @@ module Discorb
       end
       if tone.positive?
         unless @value = EmojiTable::DISCORD_TO_UNICODE["#{name}_tone#{tone}"]
-          raise ArgumentError,
-                "Invalid skin tone for emoji: #{name}"
+          raise ArgumentError, "Invalid skin tone for emoji: #{name}"
         end
 
         @name = "#{name}_tone#{tone}"
@@ -288,11 +299,7 @@ module Discorb
     # @return [Hash] The hash represents the object.
     #
     def to_hash
-      {
-        name: @value,
-        id: nil,
-        animated: false,
-      }
+      { name: @value, id: nil, animated: false }
     end
 
     class << self

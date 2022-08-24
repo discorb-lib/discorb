@@ -36,30 +36,43 @@ module Discorb
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
-        tmp_embed = if embed
+        tmp_embed =
+          if embed
             [embed]
           elsif embeds
             embeds
           end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
-        payload[:allowed_mentions] =
-          allowed_mentions ? allowed_mentions.to_hash(@client.allowed_mentions) : @client.allowed_mentions.to_hash
-        payload[:message_reference] = reference.to_reference.to_hash if reference
+        payload[:allowed_mentions] = (
+          if allowed_mentions
+            allowed_mentions.to_hash(@client.allowed_mentions)
+          else
+            @client.allowed_mentions.to_hash
+          end
+        )
+        payload[
+          :message_reference
+        ] = reference.to_reference.to_hash if reference
         payload[:components] = Component.to_payload(components) if components
         attachments ||= attachment ? [attachment] : []
 
         payload[:attachments] = attachments.map.with_index do |a, i|
-          {
-            id: i,
-            filename: a.filename,
-            description: a.description,
-          }
+          { id: i, filename: a.filename, description: a.description }
         end
 
-        _resp, data = @client.http.multipart_request(
-          Route.new("/channels/#{channel_id.wait}/messages", "//channels/:channel_id/messages",
-                    :post), payload, attachments
-        ).wait
+        _resp, data =
+          @client
+            .http
+            .multipart_request(
+              Route.new(
+                "/channels/#{channel_id.wait}/messages",
+                "//channels/:channel_id/messages",
+                :post
+              ),
+              payload,
+              attachments
+            )
+            .wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -95,34 +108,38 @@ module Discorb
       Async do
         payload = {}
         payload[:content] = content if content != Discorb::Unset
-        tmp_embed = if embed != Discorb::Unset
+        tmp_embed =
+          if embed != Discorb::Unset
             [embed]
           elsif embeds != Discorb::Unset
             embeds
           end
         payload[:embeds] = tmp_embed.map(&:to_hash) if tmp_embed
         payload[:allowed_mentions] = if allowed_mentions == Discorb::Unset
-            @client.allowed_mentions.to_hash
-          else
-            allowed_mentions.to_hash(@client.allowed_mentions)
-          end
-        payload[:components] = Component.to_payload(components) if components != Discorb::Unset
+          @client.allowed_mentions.to_hash
+        else
+          allowed_mentions.to_hash(@client.allowed_mentions)
+        end
+        payload[:components] = Component.to_payload(components) if components !=
+          Discorb::Unset
         payload[:flags] = (supress ? 1 << 2 : 0) if supress != Discorb::Unset
         if attachments != Discorb::Unset
           payload[:attachments] = attachments.map.with_index do |a, i|
-            {
-              id: i,
-              filename: a.filename,
-              description: a.description,
-            }
+            { id: i, filename: a.filename, description: a.description }
           end
         end
-        @client.http.multipart_request(
-          Route.new("/channels/#{channel_id.wait}/messages/#{message_id}",
-                    "//channels/:channel_id/messages/:message_id", :patch),
-          payload,
-          attachments == Discorb::Unset ? [] : attachments
-        ).wait
+        @client
+          .http
+          .multipart_request(
+            Route.new(
+              "/channels/#{channel_id.wait}/messages/#{message_id}",
+              "//channels/:channel_id/messages/:message_id",
+              :patch
+            ),
+            payload,
+            attachments == Discorb::Unset ? [] : attachments
+          )
+          .wait
       end
     end
 
@@ -137,12 +154,18 @@ module Discorb
     #
     def delete_message(message_id, reason: nil)
       Async do
-        @client.http.request(
-          Route.new(
-            "/channels/#{channel_id.wait}/messages/#{message_id}", "//channels/:channel_id/messages/:message_id",
-            :delete
-          ), {}, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{channel_id.wait}/messages/#{message_id}",
+              "//channels/:channel_id/messages/:message_id",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -159,8 +182,17 @@ module Discorb
     #
     def fetch_message(id)
       Async do
-        _resp, data = @client.http.request(Route.new("/channels/#{channel_id.wait}/messages/#{id}",
-                                                     "//channels/:channel_id/messages/:message_id", :get)).wait
+        _resp, data =
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{channel_id.wait}/messages/#{id}",
+                "//channels/:channel_id/messages/:message_id",
+                :get
+              )
+            )
+            .wait
         Message.new(@client, data.merge({ guild_id: @guild_id.to_s }))
       end
     end
@@ -178,19 +210,27 @@ module Discorb
     #
     def fetch_messages(limit = 50, before: nil, after: nil, around: nil)
       Async do
-        params = {
-          limit: limit,
-          before: Discorb::Utils.try(after, :id),
-          after: Discorb::Utils.try(around, :id),
-          around: Discorb::Utils.try(before, :id),
-        }.filter { |_k, v| !v.nil? }.to_h
-        _resp, messages = @client.http.request(
-          Route.new(
-            "/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}", "//channels/:channel_id/messages",
-            :get
-          )
-        ).wait
-        messages.map { |m| Message.new(@client, m.merge({ guild_id: @guild_id.to_s })) }
+        params =
+          {
+            limit: limit,
+            before: Discorb::Utils.try(after, :id),
+            after: Discorb::Utils.try(around, :id),
+            around: Discorb::Utils.try(before, :id)
+          }.filter { |_k, v| !v.nil? }.to_h
+        _resp, messages =
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{channel_id.wait}/messages?#{URI.encode_www_form(params)}",
+                "//channels/:channel_id/messages",
+                :get
+              )
+            )
+            .wait
+        messages.map do |m|
+          Message.new(@client, m.merge({ guild_id: @guild_id.to_s }))
+        end
       end
     end
 
@@ -202,8 +242,17 @@ module Discorb
     #
     def fetch_pins
       Async do
-        _resp, data = @client.http.request(Route.new("/channels/#{channel_id.wait}/pins",
-                                                     "//channels/:channel_id/pins", :get)).wait
+        _resp, data =
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{channel_id.wait}/pins",
+                "//channels/:channel_id/pins",
+                :get
+              )
+            )
+            .wait
         data.map { |pin| Message.new(@client, pin) }
       end
     end
@@ -219,10 +268,18 @@ module Discorb
     #
     def pin_message(message, reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/channels/#{channel_id.wait}/pins/#{message.id}", "//channels/:channel_id/pins/:message_id",
-                    :put), {}, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{channel_id.wait}/pins/#{message.id}",
+              "//channels/:channel_id/pins/:message_id",
+              :put
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -237,10 +294,18 @@ module Discorb
     #
     def unpin_message(message, reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/channels/#{channel_id.wait}/pins/#{message.id}", "//channels/:channel_id/pins/:message_id",
-                    :delete), {}, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/channels/#{channel_id.wait}/pins/#{message.id}",
+              "//channels/:channel_id/pins/:message_id",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -259,12 +324,20 @@ module Discorb
     def typing
       if block_given?
         begin
-          post_task = Async do
-            loop do
-              @client.http.request(Route.new("/channels/#{@id}/typing", "//channels/:channel_id/typing", :post), {})
-              sleep(5)
+          post_task =
+            Async do
+              loop do
+                @client.http.request(
+                  Route.new(
+                    "/channels/#{@id}/typing",
+                    "//channels/:channel_id/typing",
+                    :post
+                  ),
+                  {}
+                )
+                sleep(5)
+              end
             end
-          end
           ret = yield
         ensure
           post_task.stop
@@ -272,7 +345,14 @@ module Discorb
         ret
       else
         Async do |_task|
-          @client.http.request(Route.new("/channels/#{@id}/typing", "//channels/:channel_id/typing", :post), {})
+          @client.http.request(
+            Route.new(
+              "/channels/#{@id}/typing",
+              "//channels/:channel_id/typing",
+              :post
+            ),
+            {}
+          )
         end
       end
     end
@@ -284,7 +364,8 @@ module Discorb
   #
   module Connectable
     def connect
-      raise NotImplementedError, "This method is implemented by discord-voice gem."
+      raise NotImplementedError,
+            "This method is implemented by discord-voice gem."
     end
   end
 end

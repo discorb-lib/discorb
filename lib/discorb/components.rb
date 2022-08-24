@@ -55,7 +55,9 @@ module Discorb
           end
         end
         tmp_components << tmp_row
-        tmp_components.filter { |c| c.length.positive? }.map { |c| { type: 1, components: c.map(&:to_hash) } }
+        tmp_components
+          .filter { |c| c.length.positive? }
+          .map { |c| { type: 1, components: c.map(&:to_hash) } }
       end
     end
   end

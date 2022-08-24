@@ -24,11 +24,7 @@ module Discorb
 
       # @private
       # @return [{Integer => Symbol}] The mapping of raw types to types.
-      TYPES = {
-        1 => :chat_input,
-        2 => :user,
-        3 => :message,
-      }.freeze
+      TYPES = { 1 => :chat_input, 2 => :user, 3 => :message }.freeze
 
       #
       # Initialize a new command.
@@ -41,8 +37,22 @@ module Discorb
       # @param [Boolean] dm_permission Whether the command is enabled in DMs.
       # @param [Discorb::Permission] default_permission The default permission of the command.
       #
-      def initialize(name, guild_ids, block, type, dm_permission = true, default_permission = nil) # rubocop:disable Style/OptionalBooleanParameter
-        @name = name.is_a?(String) ? { "default" => name } : ApplicationCommand.modify_localization_hash(name)
+      def initialize(
+        name,
+        guild_ids,
+        block,
+        type,
+        dm_permission = true,
+        default_permission = nil
+      )
+        @name =
+          (
+            if name.is_a?(String)
+              { "default" => name }
+            else
+              ApplicationCommand.modify_localization_hash(name)
+            end
+          )
         @guild_ids = guild_ids&.map(&:to_s)
         @block = block
         @type = Discorb::ApplicationCommand::Command::TYPES[type]
@@ -59,9 +69,7 @@ module Discorb
       #
       def replace_block(instance)
         current_block = @block.dup
-        @block = proc do |*args|
-          instance.instance_exec(*args, &current_block)
-        end
+        @block = proc { |*args| instance.instance_exec(*args, &current_block) }
       end
 
       #
@@ -76,7 +84,7 @@ module Discorb
           name_localizations: @name.except("default"),
           type: @type_raw,
           dm_permission: @dm_permission,
-          default_member_permissions: @default_permission&.value&.to_s,
+          default_member_permissions: @default_permission&.value&.to_s
         }
       end
 
@@ -105,12 +113,21 @@ module Discorb
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
         #
-        def initialize(name, description, options, guild_ids, block, type, parent, dm_permission, default_permission)
+        def initialize(
+          name,
+          description,
+          options,
+          guild_ids,
+          block,
+          type,
+          parent,
+          dm_permission,
+          default_permission
+        )
           super(name, guild_ids, block, type, dm_permission, default_permission)
-          @description = if description.is_a?(String)
-              {
-                "default" => description,
-              }
+          @description =
+            if description.is_a?(String)
+              { "default" => description }
             else
               ApplicationCommand.modify_localization_hash(description)
             end
@@ -134,73 +151,89 @@ module Discorb
         # @return [Hash] The hash represents the object.
         #
         def to_hash
-          options_payload = options.map do |name, value|
-            ret = {
-              type: case value[:type]
-              when String, :string, :str
-                3
-              when Integer, :integer, :int
-                4
-              when TrueClass, FalseClass, :boolean, :bool
-                5
-              when Discorb::User, Discorb::Member, :user, :member
-                6
-              when Discorb::Channel, :channel
-                7
-              when Discorb::Role, :role
-                8
-              when :mentionable
-                9
-              when Float, :float
-                10
-              when :attachment
-                11
+          options_payload =
+            options.map do |name, value|
+              ret = {
+                type:
+                  case value[:type]
+                  when String, :string, :str
+                    3
+                  when Integer, :integer, :int
+                    4
+                  when TrueClass, FalseClass, :boolean, :bool
+                    5
+                  when Discorb::User, Discorb::Member, :user, :member
+                    6
+                  when Discorb::Channel, :channel
+                    7
+                  when Discorb::Role, :role
+                    8
+                  when :mentionable
+                    9
+                  when Float, :float
+                    10
+                  when :attachment
+                    11
+                  else
+                    raise ArgumentError, "Invalid option type: #{value[:type]}"
+                  end,
+                name: name,
+                name_localizations:
+                  ApplicationCommand.modify_localization_hash(
+                    value[:name_localizations]
+                  ),
+                required:
+                  value[:required].nil? ? !value[:optional] : value[:required]
+              }
+
+              if value[:description].is_a?(String)
+                ret[:description] = value[:description]
               else
-                raise ArgumentError, "Invalid option type: #{value[:type]}"
-              end,
-              name: name,
-              name_localizations: ApplicationCommand.modify_localization_hash(value[:name_localizations]),
-              required: value[:required].nil? ? !value[:optional] : value[:required],
-            }
-
-            if value[:description].is_a?(String)
-              ret[:description] = value[:description]
-            else
-              description = ApplicationCommand.modify_localization_hash(value[:description])
-              ret[:description] = description["default"]
-              ret[:description_localizations] = description.except("default")
-            end
-            if value[:choices]
-              ret[:choices] = value[:choices].map do |k, v|
-                r = {
-                  name: k, value: v,
-                }
-                if choices_localizations = value[:choices_localizations].clone
-                  name_localizations = ApplicationCommand.modify_localization_hash(choices_localizations.delete(k) do
-                    warn "Missing localization for #{k}"
-                    {}
-                  end)
-                  r[:name_localizations] = name_localizations.except("default")
-                  r[:name] = name_localizations["default"]
-                  r.delete(:name_localizations) if r[:name_localizations].nil?
-                end
-                r
+                description =
+                  ApplicationCommand.modify_localization_hash(
+                    value[:description]
+                  )
+                ret[:description] = description["default"]
+                ret[:description_localizations] = description.except("default")
               end
-            end
+              if value[:choices]
+                ret[:choices] = value[:choices].map do |k, v|
+                  r = { name: k, value: v }
+                  if choices_localizations = value[:choices_localizations].clone
+                    name_localizations =
+                      ApplicationCommand.modify_localization_hash(
+                        choices_localizations.delete(k) do
+                          warn "Missing localization for #{k}"
+                          {}
+                        end
+                      )
+                    r[:name_localizations] = name_localizations.except(
+                      "default"
+                    )
+                    r[:name] = name_localizations["default"]
+                    r.delete(:name_localizations) if r[:name_localizations].nil?
+                  end
+                  r
+                end
+              end
 
-            ret[:channel_types] = value[:channel_types].map(&:channel_type) if value[:channel_types]
+              ret[:channel_types] = value[:channel_types].map(
+                &:channel_type
+              ) if value[:channel_types]
 
-            ret[:autocomplete] = !value[:autocomplete].nil? if value[:autocomplete]
-            if value[:range]
-              ret[:min_value] = value[:range].begin
-              ret[:max_value] = value[:range].end
+              ret[:autocomplete] = !value[:autocomplete].nil? if value[
+                :autocomplete
+              ]
+              if value[:range]
+                ret[:min_value] = value[:range].begin
+                ret[:max_value] = value[:range].end
+              end
+              if value[:length]
+                ret[:min_length] = value[:length].begin
+                ret[:max_length] = value[:length].end
+              end
+              ret
             end
-            if value[:length]
-              ret[:min_length] = value[:length].begin
-              ret[:max_length] = value[:length].end
-            end
-            ret
-          end
           {
             name: @name["default"],
             name_localizations: @name.except("default"),
@@ -208,7 +241,7 @@ module Discorb
             description_localizations: @description.except("default"),
             options: options_payload,
             dm_permission: @dm_permission,
-            default_member_permissions: @default_permission&.value&.to_s,
+            default_member_permissions: @default_permission&.value&.to_s
           }
         end
       end
@@ -233,12 +266,18 @@ module Discorb
         # @param [Boolean] dm_permission Whether the command is enabled in DMs.
         # @param [Discorb::Permission] default_permission The default permission of the command.
         #
-        def initialize(name, description, guild_ids, client, dm_permission, default_permission)
+        def initialize(
+          name,
+          description,
+          guild_ids,
+          client,
+          dm_permission,
+          default_permission
+        )
           super(name, guild_ids, block, 1, dm_permission, default_permission)
-          @description = if description.is_a?(String)
-              {
-                "default" => description,
-              }
+          @description =
+            if description.is_a?(String)
+              { "default" => description }
             else
               ApplicationCommand.modify_localization_hash(description)
             end
@@ -252,18 +291,26 @@ module Discorb
         # @param (see Discorb::ApplicationCommand::Handler#slash)
         # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
         #
-        def slash(command_name, description, options = {}, dm_permission: true, default_permission: nil, &block)
-          command = Discorb::ApplicationCommand::Command::ChatInputCommand.new(
-            command_name,
-            description,
-            options,
-            [],
-            block,
-            1,
-            self,
-            dm_permission,
-            default_permission
-          )
+        def slash(
+          command_name,
+          description,
+          options = {},
+          dm_permission: true,
+          default_permission: nil,
+          &block
+        )
+          command =
+            Discorb::ApplicationCommand::Command::ChatInputCommand.new(
+              command_name,
+              description,
+              options,
+              [],
+              block,
+              1,
+              self,
+              dm_permission,
+              default_permission
+            )
           @client.callable_commands << command
           @commands << command
           command
@@ -283,7 +330,13 @@ module Discorb
         # @see file:docs/application_command.md Application Commands
         #
         def group(command_name, description)
-          command = Discorb::ApplicationCommand::Command::SubcommandGroup.new(command_name, description, self, @client)
+          command =
+            Discorb::ApplicationCommand::Command::SubcommandGroup.new(
+              command_name,
+              description,
+              self,
+              @client
+            )
           yield command if block_given?
           @commands << command
           command
@@ -316,29 +369,36 @@ module Discorb
         # @return [Hash] The hash represents the object.
         #
         def to_hash
-          options_payload = @commands.map do |command|
-            if command.is_a?(ChatInputCommand)
-              {
-                name: command.name["default"],
-                name_localizations: command.name.except("default"),
-                description: command.description["default"],
-                description_localizations: command.description.except("default"),
-                type: 1,
-                options: command.to_hash[:options],
-              }
-            else
-              {
-                name: command.name["default"],
-                name_localizations: command.name.except("default"),
-                description: command.description["default"],
-                description_localizations: command.description.except("default"),
-                type: 2,
-                options: command.commands.map do |c|
-                  c.to_hash.merge(type: 1).except(:dm_permission, :default_member_permissions)
-                end,
-              }
+          options_payload =
+            @commands.map do |command|
+              if command.is_a?(ChatInputCommand)
+                {
+                  name: command.name["default"],
+                  name_localizations: command.name.except("default"),
+                  description: command.description["default"],
+                  description_localizations:
+                    command.description.except("default"),
+                  type: 1,
+                  options: command.to_hash[:options]
+                }
+              else
+                {
+                  name: command.name["default"],
+                  name_localizations: command.name.except("default"),
+                  description: command.description["default"],
+                  description_localizations:
+                    command.description.except("default"),
+                  type: 2,
+                  options:
+                    command.commands.map do |c|
+                      c
+                        .to_hash
+                        .merge(type: 1)
+                        .except(:dm_permission, :default_member_permissions)
+                    end
+                }
+              end
             end
-          end
 
           {
             name: @name["default"],
@@ -347,7 +407,7 @@ module Discorb
             description_localizations: @description.except("default"),
             dm_permission: @dm_permission,
             default_member_permissions: @default_permission&.value&.to_s,
-            options: options_payload,
+            options: options_payload
           }
         end
       end
@@ -384,10 +444,18 @@ module Discorb
         # @return [Discorb::ApplicationCommand::Command::ChatInputCommand] The added subcommand.
         #
         def slash(command_name, description, options = {}, &block)
-          command = Discorb::ApplicationCommand::Command::ChatInputCommand.new(
-            command_name, description, options, [],
-            block, 1, self, nil, nil
-          )
+          command =
+            Discorb::ApplicationCommand::Command::ChatInputCommand.new(
+              command_name,
+              description,
+              options,
+              [],
+              block,
+              1,
+              self,
+              nil,
+              nil
+            )
           @commands << command
           @client.callable_commands << command
           command

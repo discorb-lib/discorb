@@ -4,7 +4,7 @@ require_relative "common"
 
 RSpec.describe Discorb::UnicodeEmoji do
   it "parses emoji" do
-    parsed = described_class.new("\u{1f600}")  # :grinning:
+    parsed = described_class.new("\u{1f600}") # :grinning:
     expect(parsed.name).to eq("grinning")
     expect(parsed.value).to eq("\u{1f600}")
   end
@@ -16,7 +16,9 @@ RSpec.describe Discorb::UnicodeEmoji do
   end
 
   it "raises error" do
-    expect { described_class.new("unknown_emoji") }.to raise_error(ArgumentError)
+    expect { described_class.new("unknown_emoji") }.to raise_error(
+      ArgumentError
+    )
   end
 
   %w[🖐🏻 🖐🏼 🖐🏽 🖐🏾 🖐🏿].each.with_index do |emoji, i|
@@ -32,6 +34,8 @@ RSpec.describe Discorb::UnicodeEmoji do
   end
 
   it "raises error because the emoji doesn't support skin tone" do
-    expect { described_class.new("grinning", tone: 1) }.to raise_error(ArgumentError)
+    expect { described_class.new("grinning", tone: 1) }.to raise_error(
+      ArgumentError
+    )
   end
 end

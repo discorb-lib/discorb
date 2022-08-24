@@ -15,11 +15,16 @@ opt = OptionParser.new <<~BANNER
 
                          Usage: discorb irb [options]
                        BANNER
-opt.on("-i", "--intents", "intents to use, default to all") { |v| intents_value = v }
-opt.on("-t", "--token-file", "token file to load, default to \"token\"") { |v| token_file = v }
+opt.on("-i", "--intents", "intents to use, default to all") do |v|
+  intents_value = v
+end
+opt.on("-t", "--token-file", "token file to load, default to \"token\"") do |v|
+  token_file = v
+end
 opt.parse!(ARGV)
 
-client = Discorb::Client.new(intents: Discorb::Intents.from_value(intents_value))
+client =
+  Discorb::Client.new(intents: Discorb::Intents.from_value(intents_value))
 $messages = []
 
 client.on :standby do
@@ -44,7 +49,7 @@ client.on :standby do
     Type \e[90mdirb_help\e[m to help.
        FIRST_MESSAGE
 
-  binding.irb
+  binding.irb # rubocop:disable Lint/Debugger
 
   client.close!
 end

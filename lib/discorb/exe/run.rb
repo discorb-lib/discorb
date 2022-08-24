@@ -14,17 +14,18 @@ opt = OptionParser.new <<~BANNER
 
                                    script                     The script to run. Defaults to 'main.rb'.
                        BANNER
-options = {
-  title: nil,
-  setup: nil,
-  token: false,
-}
-opt.on("-s", "--setup", "Whether to setup application commands.") { |v| options[:setup] = v }
-opt.on("-e", "--env [ENV]",
-       "The name of the environment variable to use for token, or just `-e` or `--env` for intractive prompt.") do |v|
-  options[:token] = v
+options = { title: nil, setup: nil, token: false }
+opt.on("-s", "--setup", "Whether to setup application commands.") do |v|
+  options[:setup] = v
 end
-opt.on("-t", "--title TITLE", "The title of process.") { |v| options[:title] = v }
+opt.on(
+  "-e",
+  "--env [ENV]",
+  "The name of the environment variable to use for token, or just `-e` or `--env` for intractive prompt."
+) { |v| options[:token] = v }
+opt.on("-t", "--title TITLE", "The title of process.") do |v|
+  options[:title] = v
+end
 opt.parse!(ARGV)
 
 script = ARGV[0]

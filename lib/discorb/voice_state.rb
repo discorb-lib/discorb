@@ -94,8 +94,15 @@ module Discorb
       @channel_id = data[:channel_id]
       @user_id = data[:user_id]
       unless guild.nil?
-        @member = if data.key?(:member)
-            guild.members[data[:user_id]] || Member.new(@client, @guild_id, data[:member][:user], data[:member])
+        @member =
+          if data.key?(:member)
+            guild.members[data[:user_id]] ||
+              Member.new(
+                @client,
+                @guild_id,
+                data[:member][:user],
+                data[:member]
+              )
           else
             guild.members[data[:user_id]]
           end
@@ -108,7 +115,9 @@ module Discorb
       @self_stream = data[:self_stream]
       @self_video = data[:self_video]
       @suppress = data[:suppress]
-      @request_to_speak_timestamp = data[:request_to_speak_timestamp] && Time.iso8601(data[:request_to_speak_timestamp])
+      @request_to_speak_timestamp =
+        data[:request_to_speak_timestamp] &&
+          Time.iso8601(data[:request_to_speak_timestamp])
     end
   end
 
@@ -136,10 +145,7 @@ module Discorb
     # @!attribute [r] guild_only?
     #   @return [Boolean] Whether the stage instance is guild-only.
 
-    @privacy_level = {
-      1 => :public,
-      2 => :guild_only,
-    }
+    @privacy_level = { 1 => :public, 2 => :guild_only }
 
     #
     # Initialize a new instance of the StageInstance class.
@@ -195,11 +201,21 @@ module Discorb
       Async do
         payload = {}
         payload[:topic] = topic if topic != Discorb::Unset
-        payload[:privacy_level] = PRIVACY_LEVEL.key(privacy_level) if privacy_level != Discorb::Unset
-        @client.http.request(
-          Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:channel_id",
-                    :patch), payload, audit_log_reason: reason,
-        ).wait
+        payload[:privacy_level] = PRIVACY_LEVEL.key(
+          privacy_level
+        ) if privacy_level != Discorb::Unset
+        @client
+          .http
+          .request(
+            Route.new(
+              "/stage-instances/#{@channel_id}",
+              "//stage-instances/:channel_id",
+              :patch
+            ),
+            payload,
+            audit_log_reason: reason
+          )
+          .wait
         self
       end
     end
@@ -215,10 +231,18 @@ module Discorb
     #
     def delete(reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/stage-instances/#{@channel_id}", "//stage-instances/:stage_instance_id",
-                    :delete), {}, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/stage-instances/#{@channel_id}",
+              "//stage-instances/:stage_instance_id",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
         self
       end
     end

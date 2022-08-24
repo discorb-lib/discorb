@@ -28,7 +28,7 @@ module Discorb
         urgent: 4,
         has_thread: 5,
         ephemeral: 6,
-        loading: 7,
+        loading: 7
       }.freeze
     end
 
@@ -72,7 +72,7 @@ module Discorb
           message_id: @message_id,
           channel_id: @channel_id,
           guild_id: @guild_id,
-          fail_if_not_exists: @fail_if_not_exists,
+          fail_if_not_exists: @fail_if_not_exists
         }
       end
 
@@ -85,7 +85,12 @@ module Discorb
       # @see https://discord.com/developers/docs/resources/channel#message-reference-object
       #
       def self.from_hash(data)
-        new(data[:guild_id], data[:channel_id], data[:message_id], fail_if_not_exists: data[:fail_if_not_exists])
+        new(
+          data[:guild_id],
+          data[:channel_id],
+          data[:message_id],
+          fail_if_not_exists: data[:fail_if_not_exists]
+        )
       end
 
       def inspect
@@ -139,8 +144,12 @@ module Discorb
       def initialize(client, data)
         @id = Snowflake.new(data[:id])
         @name = data[:name]
-        @type = (Discorb::Interaction.descendants.find { |c| c.interaction_type == data[:type] } or
-                 raise "Unknown interaction type: #{data[:type]}")
+        @type =
+          (
+            Discorb::Interaction.descendants.find do |c|
+              c.interaction_type == data[:type]
+            end or raise "Unknown interaction type: #{data[:type]}"
+          )
         @user = client.users[data[:user][:id]] || User.new(client, data[:user])
       end
 
@@ -164,7 +173,7 @@ module Discorb
         1 => :join,
         2 => :spectate,
         3 => :listen,
-        5 => :join_request,
+        5 => :join_request
       }.freeze
 
       #

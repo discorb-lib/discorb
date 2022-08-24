@@ -3,11 +3,7 @@
 require_relative "./common"
 
 RSpec.describe Discorb::Dictionary do
-  let(:dict) do
-    described_class.new(
-      { foo: :bar, fizz: :buzz, hoge: :fuga }
-    )
-  end
+  let(:dict) { described_class.new({ foo: :bar, fizz: :buzz, hoge: :fuga }) }
 
   describe ".new" do
     it "creates an empty dictionary" do
@@ -16,9 +12,7 @@ RSpec.describe Discorb::Dictionary do
 
     it "creates with elements" do
       expect do
-        described_class.new(
-          { foo: :bar, fizz: :buzz }
-        )
+        described_class.new({ foo: :bar, fizz: :buzz })
       end.not_to raise_error
     end
   end
@@ -34,20 +28,19 @@ RSpec.describe Discorb::Dictionary do
     end
 
     it "sorts keys" do
-      new_dict = described_class.new(
-        { hoge: :fuga, foo: :bar, fizz: :buzz },
-        sort: proc { |a, _b| a.to_s },
-      )
+      new_dict =
+        described_class.new(
+          { hoge: :fuga, foo: :bar, fizz: :buzz },
+          sort: proc { |a, _b| a.to_s }
+        )
       expect(new_dict[0]).to be :buzz
       new_dict[:a] = :b
       expect(new_dict[0]).to be :b
     end
 
     it "follows limits" do
-      new_dict = described_class.new(
-        { hoge: :fuga, foo: :bar, fizz: :buzz },
-        limit: 4,
-      )
+      new_dict =
+        described_class.new({ hoge: :fuga, foo: :bar, fizz: :buzz }, limit: 4)
       expect(new_dict.size).to eq 3
       new_dict[:a] = :b
       new_dict[:b] = :c
@@ -57,11 +50,9 @@ RSpec.describe Discorb::Dictionary do
 
   describe "#to_h" do
     it "returns hash" do
-      expect(dict.to_h).to eq({
-                                "foo" => :bar,
-                                "fizz" => :buzz,
-                                "hoge" => :fuga,
-                              })
+      expect(dict.to_h).to eq(
+        { "foo" => :bar, "fizz" => :buzz, "hoge" => :fuga }
+      )
     end
   end
 
@@ -81,9 +72,7 @@ RSpec.describe Discorb::Dictionary do
 
   describe "#merge" do
     it "merges dictionary" do
-      dict2 = described_class.new(
-        { piyo: :poyo, fizz: :buzz2 }
-      )
+      dict2 = described_class.new({ piyo: :poyo, fizz: :buzz2 })
       dict.merge(dict2)
       expect(dict.to_h).to eq(
         { "foo" => :bar, "fizz" => :buzz2, "hoge" => :fuga, "piyo" => :poyo }
@@ -94,9 +83,7 @@ RSpec.describe Discorb::Dictionary do
   describe "#remove" do
     it "removes item" do
       dict.remove("foo")
-      expect(dict.to_h).to eq(
-        { "fizz" => :buzz, "hoge" => :fuga }
-      )
+      expect(dict.to_h).to eq({ "fizz" => :buzz, "hoge" => :fuga })
     end
   end
 end

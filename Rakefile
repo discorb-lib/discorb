@@ -8,11 +8,7 @@ task default: %i[]
 def current_version
   require_relative "lib/discorb/common"
   tag = `git tag --points-at HEAD`.force_encoding("utf-8").strip
-  if tag.empty?
-    "main"
-  else
-    Discorb::VERSION
-  end
+  tag.empty? ? "main" : Discorb::VERSION
 end
 
 desc "Run spec with parallel_rspec"
@@ -38,31 +34,30 @@ task :emoji_table do
 
   table_script = File.read("lib/discorb/emoji_table.rb")
 
-  table_script.gsub!(/(?<=UNICODE_TO_DISCORD = {\n)[\s\S]+(?=}\.freeze)/, res_text)
+  table_script.gsub!(
+    /(?<=UNICODE_TO_DISCORD = {\n)[\s\S]+(?=}\.freeze)/,
+    res_text
+  )
 
-  File.open("lib/discorb/emoji_table.rb", "w") do |f|
-    f.print(table_script)
-  end
+  File.open("lib/discorb/emoji_table.rb", "w") { |f| f.print(table_script) }
   `rufo lib/discorb/emoji_table.rb`
   sputs "Successfully made emoji_table.rb"
 end
 
 desc "Format files"
 task :format do
-  Dir.glob("**/*.rb").each do |file|
-    next if file.start_with?("vendor")
+  Dir
+    .glob("**/*.rb")
+    .each do |file|
+      next if file.start_with?("vendor")
 
-    iputs "Formatting #{file}"
-    `rufo ./#{file}`
-    content = ""
-    File.open(file, "rb") do |f|
-      content = f.read
+      iputs "Formatting #{file}"
+      `rufo ./#{file}`
+      content = ""
+      File.open(file, "rb") { |f| content = f.read }
+      content.gsub!("\r\n", "\n")
+      File.open(file, "wb") { |f| f.print(content) }
     end
-    content.gsub!("\r\n", "\n")
-    File.open(file, "wb") do |f|
-      f.print(content)
-    end
-  end
 end
 
 desc "Generate document and replace"
@@ -80,10 +75,15 @@ namespace :document do
     desc "Replace CSS"
     task :css do
       iputs "Replacing css"
-      Dir.glob("template-replace/files/**/*.*")
-         .map { |f| f.delete_prefix("template-replace/files") }.each do |file|
-        FileUtils.cp("template-replace/files" + file, "doc/#{version}/#{file}")
-      end
+      Dir
+        .glob("template-replace/files/**/*.*")
+        .map { |f| f.delete_prefix("template-replace/files") }
+        .each do |file|
+          FileUtils.cp(
+            "template-replace/files#{file}",
+            "doc/#{version}/#{file}"
+          )
+        end
       sputs "Successfully replaced css"
     end
 
@@ -97,7 +97,9 @@ namespace :document do
       require_relative "template-replace/scripts/arrow"
       iputs "Resetting changes"
       Dir.glob("doc/#{version}/**/*.html") do |f|
-        next if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
+        if (m = f.match(/[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?/)) && m[0] != version
+          next
+        end
 
         content = File.read(f)
         content.gsub!(/<!--od-->[\s\S]*<!--eod-->/, "")
@@ -129,13 +131,9 @@ namespace :document do
         next unless %w[html css js].include? file.split(".").last
 
         content = ""
-        File.open(file, "rb") do |f|
-          content = f.read
-        end
+        File.open(file, "rb") { |f| content = f.read }
         content.gsub!("\r\n", "\n")
-        File.open(file, "wb") do |f|
-          f.print(content)
-        end
+        File.open(file, "wb") { |f| f.print(content) }
       end
       sputs "Successfully replaced CRLF with LF"
     end
@@ -166,7 +164,10 @@ namespace :document do
     Rake::Task["document:replace:css"].execute
     Rake::Task["document:replace:eol"].execute
     Rake::Task["document:replace:locale"].execute
-    tags = `git tag`.force_encoding("utf-8").split("\n").sort_by { |t| t[1..].split(".").map(&:to_i) }
+    tags =
+      `git tag`.force_encoding("utf-8")
+        .split("\n")
+        .sort_by { |t| t[1..].split(".").map(&:to_i) }
     tags.each do |tag|
       sh "git checkout #{tag} -f"
       iputs "Building #{tag}"
@@ -207,17 +208,16 @@ namespace :document do
     task :ja do
       require "crowdin-api"
       require "zip"
-      crowdin = Crowdin::Client.new do |config|
-        config.api_token = ENV.fetch("CROWDIN_PERSONAL_TOKEN", nil)
-        config.project_id = ENV["CROWDIN_PROJECT_ID"].to_i
-      end
+      crowdin =
+        Crowdin::Client.new do |config|
+          config.api_token = ENV.fetch("CROWDIN_PERSONAL_TOKEN", nil)
+          config.project_id = ENV["CROWDIN_PROJECT_ID"].to_i
+        end
       build = crowdin.build_project_translation["data"]["id"]
       crowdin.download_project_translations("./tmp.zip", build)
 
       Zip::File.open("tmp.zip") do |zip|
-        zip.each do |entry|
-          zip.extract(entry, entry.name) { true }
-        end
+        zip.each { |entry| zip.extract(entry, entry.name) { true } }
       end
       ENV["rake_locale"] = "ja"
       Rake::Task["document:yard"].execute
@@ -248,7 +248,8 @@ namespace :rbs do
       header, content = event.split("`\n", 2)
       name = header.split("(")[0]
       description = content.split("| Parameter", 2)[0].strip
-      parameters = if content.include?("| Parameter")
+      parameters =
+        if content.include?("| Parameter")
           content.scan(/\| `(.*?)` +\| (.*?) +\| (.*?) +\|/)
         else
           []
@@ -256,7 +257,8 @@ namespace :rbs do
       events << {
         name: name,
         description: description,
-        parameters: parameters.map { |p| { name: p[0], type: p[1], description: p[2] } },
+        parameters:
+          parameters.map { |p| { name: p[0], type: p[1], description: p[2] } }
       }
     end
     event_sig = +""
@@ -267,24 +269,28 @@ namespace :rbs do
       event[:parameters].each do |parameter|
         args << {
           name: parameter[:name],
-          type: if parameter[:type].start_with?("?")
-            parameter[:type][1..]
-          else
-            parameter[:type]
-          end.tr("{}`", "").tr("<>", "[]").gsub(", ", " | ").then do |t|
-            if event[:name] == "event_receive"
-              case t
-              when "Hash"
-                next "Discorb::json"
+          type:
+            if parameter[:type].start_with?("?")
+              parameter[:type][1..]
+            else
+              parameter[:type]
+            end.tr("{}`", "")
+              .tr("<>", "[]")
+              .gsub(", ", " | ")
+              .then do |t|
+                if event[:name] == "event_receive"
+                  case t
+                  when "Hash"
+                    next "Discorb::json"
+                  end
+                end
+                t
               end
-            end
-            t
-          end,
         }
       end
       sig = args.map { |a| "#{a[:type]} #{a[:name]}" }.join(", ")
       tuple_sig = args.map { |a| a[:type] }.join(", ")
-      tuple_sig = "[" + tuple_sig + "]" if args.length > 1
+      tuple_sig = "[#{tuple_sig}]" if args.length > 1
       tuple_sig = "void" if args.length.zero?
       event_sig << <<~RBS
         | (:#{event[:name]} event_name, ?id: Symbol?, **untyped metadata) { (#{sig}) -> void } -> Discorb::EventHandler
@@ -314,36 +320,61 @@ namespace :rbs do
     res = client_rbs.gsub!(/(?<=def once:\n)(?:[\s\S]*?)(?=\n\n)/, event_sig)
     raise "Failed to generate Client#once" unless res
 
-    res = client_rbs.gsub!(/(?<=def event_lock:\n)(?:[\s\S]*?)(?=\n\n)/, event_lock_sig)
+    res =
+      client_rbs.gsub!(
+        /(?<=def event_lock:\n)(?:[\s\S]*?)(?=\n\n)/,
+        event_lock_sig
+      )
     raise "Failed to generate Client#event_lock" unless res
 
-    res = extension_rbs.gsub!(/(?<=def event:\n)(?:[\s\S]*?)(?=\n\n)/, extension_sig)
+    res =
+      extension_rbs.gsub!(
+        /(?<=def event:\n)(?:[\s\S]*?)(?=\n\n)/,
+        extension_sig
+      )
     raise "Failed to generate Extension.event" unless res
 
-    res = extension_rbs.gsub!(/(?<=def once_event:\n)(?:[\s\S]*?)(?=\n\n)/, extension_sig)
+    res =
+      extension_rbs.gsub!(
+        /(?<=def once_event:\n)(?:[\s\S]*?)(?=\n\n)/,
+        extension_sig
+      )
     raise "Failed to generate Extension.once_event" unless res
 
-    File.write("sig/discorb/client.rbs", SyntaxTree::RBS.format(client_rbs), mode: "wb")
-    File.write("sig/discorb/extension.rbs", SyntaxTree::RBS.format(extension_rbs), mode: "wb")
+    File.write(
+      "sig/discorb/client.rbs",
+      SyntaxTree::RBS.format(client_rbs),
+      mode: "wb"
+    )
+    File.write(
+      "sig/discorb/extension.rbs",
+      SyntaxTree::RBS.format(extension_rbs),
+      mode: "wb"
+    )
   end
 
   desc "Generate rbs file using sord"
   task :sord do
     require "open3"
-    # rubocop: disable Layout/LineLength
     type_errors = {
-      "SORD_ERROR_SymbolSymbolSymbolInteger" => "{ r: Integer, g: Integer, b: Integer}",
-      "SORD_ERROR_DiscorbRoleDiscorbMemberDiscorbPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
-      "SORD_ERROR_DiscorbRoleDiscorbMemberPermissionOverwrite" => "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
-      "SORD_ERROR_f | SORD_ERROR_F | SORD_ERROR_d | SORD_ERROR_D | SORD_ERROR_t | SORD_ERROR_T | SORD_ERROR_R" => '"f" | "F" | "d" | "D" | "t" | "T" | "R"',
+      "SORD_ERROR_SymbolSymbolSymbolInteger" =>
+        "{ r: Integer, g: Integer, b: Integer}",
+      "SORD_ERROR_DiscorbRoleDiscorbMemberDiscorbPermissionOverwrite" =>
+        "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
+      "SORD_ERROR_DiscorbRoleDiscorbMemberPermissionOverwrite" =>
+        "Hash[Discorb::Role | Discorb::Member, Discorb::PermissionOverwrite]",
+      "SORD_ERROR_f | SORD_ERROR_F | SORD_ERROR_d | SORD_ERROR_D | SORD_ERROR_t | SORD_ERROR_T | SORD_ERROR_R" =>
+        '"f" | "F" | "d" | "D" | "t" | "T" | "R"',
       "SORD_ERROR_dark | SORD_ERROR_light" => '"dark" | "light"',
-      "SORD_ERROR_SymbolStringSymbolboolSymbolObject" => "String | Integer | Float",
+      "SORD_ERROR_SymbolStringSymbolboolSymbolObject" =>
+        "String | Integer | Float"
     }
-    # rubocop: enable Layout/LineLength
-    regenerate = ARGV.include?("--regenerate") || ARGV.include?("-r")
+        regenerate = ARGV.include?("--regenerate") || ARGV.include?("-r")
 
-    sh "sord gen sig/discorb.rbs --keep-original-comments --no-sord-comments" +
-       (regenerate ? " --regenerate" : " --no-regenerate")
+    sh(
+         "sord gen sig/discorb.rbs --keep-original-comments " \
+           "--no-sord-comments#{regenerate ? " --regenerate" : " --no-regenerate"}"
+       )
     base = File.read("sig/discorb.rbs")
     base.gsub!(/\n +def _set_data: \(.+\) -> untyped\n\n/, "\n")
     # base.gsub!(/(  )?( *)# @private.+?(?:\n\n(?=\1\2#)|(?=\n\2end))/sm, "")
@@ -421,9 +452,7 @@ namespace :rbs do
     end
     RBS
     # #endregion
-    type_errors.each do |error, type|
-      base.gsub!(error, type)
-    end
+    type_errors.each { |error, type| base.gsub!(error, type) }
     base.gsub!("end\n\n\nend", "end\n")
     base.gsub!(/ +$/m, "")
     File.write("sig/discorb.rbs", base)

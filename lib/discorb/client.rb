@@ -85,20 +85,22 @@ module Discorb
     #  The title of the process. `false` to default of ruby, `nil` to `discorb: User#0000`. Default to `nil`.
     #
     def initialize(
-      allowed_mentions: nil, intents: nil, message_caches: 1000,
+      allowed_mentions: nil,
+      intents: nil,
+      message_caches: 1000,
       logger: nil,
-      wait_until_ready: true, fetch_member: false,
+      wait_until_ready: true,
+      fetch_member: false,
       title: nil
     )
-      @allowed_mentions = allowed_mentions || AllowedMentions.new(everyone: true, roles: true, users: true)
+      @allowed_mentions =
+        allowed_mentions ||
+          AllowedMentions.new(everyone: true, roles: true, users: true)
       @intents = (intents or Intents.default)
       @events = {}
       @api_version = nil
-      @logger = logger || Logger.new(
-        $stdout,
-        progname: "discorb",
-        level: Logger::ERROR,
-      )
+      @logger =
+        logger || Logger.new($stdout, progname: "discorb", level: Logger::ERROR)
       @user = nil
       @users = Discorb::Dictionary.new
       @channels = Discorb::Dictionary.new
@@ -190,8 +192,8 @@ module Discorb
           end
         end
         events = @events[event_name].dup || []
-        if respond_to?("on_" + event_name.to_s)
-          event_method = method("on_" + event_name.to_s)
+        if respond_to?("on_#{event_name}")
+          event_method = method("on_#{event_name}")
           class << event_method
             def id
               "method"
@@ -207,7 +209,9 @@ module Discorb
         events.each do |block|
           Async do
             Async(annotation: "Discorb event: #{event_name}") do |_task|
-              @events[event_name].delete(block) if block.is_a?(Discorb::EventHandler) && block.metadata[:once]
+              if block.is_a?(Discorb::EventHandler) && block.metadata[:once]
+                @events[event_name].delete(block)
+              end
               block.call(*args)
               logger.debug "Dispatched proc with ID #{block.id.inspect}"
             rescue StandardError, ScriptError => e
@@ -234,7 +238,10 @@ module Discorb
     #
     def fetch_user(id)
       Async do
-        _resp, data = @http.request(Route.new("/users/#{id}", "//users/:user_id", :get)).wait
+        _resp, data =
+          @http.request(
+            Route.new("/users/#{id}", "//users/:user_id", :get)
+          ).wait
         User.new(self, data)
       end
     end
@@ -251,7 +258,10 @@ module Discorb
     #
     def fetch_channel(id)
       Async do
-        _resp, data = @http.request(Route.new("/channels/#{id}", "//channels/:channel_id", :get)).wait
+        _resp, data =
+          @http.request(
+            Route.new("/channels/#{id}", "//channels/:channel_id", :get)
+          ).wait
         Channel.make_channel(self, data)
       end
     end
@@ -268,7 +278,10 @@ module Discorb
     #
     def fetch_guild(id)
       Async do
-        _resp, data = @http.request(Route.new("/guilds/#{id}", "//guilds/:guild_id", :get)).wait
+        _resp, data =
+          @http.request(
+            Route.new("/guilds/#{id}", "//guilds/:guild_id", :get)
+          ).wait
         Guild.new(self, data, false)
       end
     end
@@ -285,13 +298,14 @@ module Discorb
     #
     def fetch_invite(code, with_count: true, with_expiration: true)
       Async do
-        _resp, data = @http.request(
-          Route.new(
-            "/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}",
-            "//invites/:code",
-            :get
-          )
-        ).wait
+        _resp, data =
+          @http.request(
+            Route.new(
+              "/invites/#{code}?with_count=#{with_count}&with_expiration=#{with_expiration}",
+              "//invites/:code",
+              :get
+            )
+          ).wait
         Invite.new(self, data, false)
       end
     end
@@ -309,7 +323,14 @@ module Discorb
       Async do
         next @application if @application && !force
 
-        _resp, data = @http.request(Route.new("/oauth2/applications/@me", "//oauth2/applications/@me", :get)).wait
+        _resp, data =
+          @http.request(
+            Route.new(
+              "/oauth2/applications/@me",
+              "//oauth2/applications/@me",
+              :get
+            )
+          ).wait
         @application = Application.new(self, data)
         @application
       end
@@ -323,7 +344,10 @@ module Discorb
     #
     def fetch_nitro_sticker_packs
       Async do
-        _resp, data = @http.request(Route.new("/sticker-packs", "//sticker-packs", :get)).wait
+        _resp, data =
+          @http.request(
+            Route.new("/sticker-packs", "//sticker-packs", :get)
+          ).wait
         data[:sticker_packs].map { |pack| Sticker::Pack.new(self, pack) }
       end
     end
@@ -335,18 +359,11 @@ module Discorb
     # @param [:online, :idle, :dnd, :invisible] status The status to update.
     #
     def update_presence(activity = nil, status: nil)
-      payload = {
-        activities: [],
-        status: status,
-        since: nil,
-        afk: nil,
-      }
+      payload = { activities: [], status: status, since: nil, afk: nil }
       payload[:activities] = [activity.to_hash] unless activity.nil?
       payload[:status] = status unless status.nil?
       if connection
-        Async do
-          send_gateway(3, **payload)
-        end
+        Async { send_gateway(3, **payload) }
       else
         @identify_presence = payload
       end
@@ -374,12 +391,15 @@ module Discorb
         if timeout.nil?
           value = condition.wait
         else
-          timeout_task = task.with_timeout(timeout) do
-            condition.wait
-          rescue Async::TimeoutError
-            @conditions[event].delete_if { |c| c.first == condition }
-            raise Discorb::TimeoutError, "Timeout waiting for event #{event}", cause: nil
-          end
+          timeout_task =
+            task.with_timeout(timeout) do
+              condition.wait
+            rescue Async::TimeoutError
+              @conditions[event].delete_if { |c| c.first == condition }
+              raise Discorb::TimeoutError,
+                    "Timeout waiting for event #{event}",
+                    cause: nil
+            end
           value = timeout_task
         end
         value.length <= 1 ? value.first : value
@@ -401,7 +421,9 @@ module Discorb
     def load_extension(ext, ...)
       case ext
       when Class
-        raise ArgumentError, "#{ext} is not a extension" unless ext < Discorb::Extension
+        unless ext < Discorb::Extension
+          raise ArgumentError, "#{ext} is not a extension"
+        end
 
         ins = ext.new(self, ...)
       when Discorb::Extension
@@ -415,9 +437,7 @@ module Discorb
       end
       ins.events.each do |name, events|
         @events[name] ||= []
-        events.each do |event|
-          @events[name] << event
-        end
+        events.each { |event| @events[name] << event }
       end
       @commands.delete_if do |cmd|
         cmd.respond_to? :extension and cmd.extension == ins.class.name
@@ -457,7 +477,10 @@ module Discorb
     #
     def run(token = nil, shards: nil, shard_count: nil)
       token ||= ENV.fetch("DISCORB_CLI_TOKEN", nil)
-      raise ArgumentError, "Token is not specified, and -e/--env is not specified" if token.nil?
+      if token.nil?
+        raise ArgumentError,
+              "Token is not specified, and -e/--env is not specified"
+      end
 
       case ENV.fetch("DISCORB_CLI_FLAG", nil)
       when nil
@@ -474,21 +497,13 @@ module Discorb
     # Stops the client.
     #
     def close
-      if @shards.any?
-        @shards.each_value(&:close)
-      else
-        @connection.send_close
-      end
+      @shards.any? ? @shards.each_value(&:close) : @connection.send_close
       @tasks.each(&:stop)
       @status = :closed
     end
 
     def session_id
-      if shard
-        shard.session_id
-      else
-        @session_id
-      end
+      shard ? shard.session_id : @session_id
     end
 
     def logger
@@ -507,7 +522,8 @@ module Discorb
 
     def before_run(token)
       require "json"
-      options = JSON.parse(ENV.fetch("DISCORB_CLI_OPTIONS", nil), symbolize_names: true)
+      options =
+        JSON.parse(ENV.fetch("DISCORB_CLI_OPTIONS", nil), symbolize_names: true)
       setup_commands(token) if options[:setup]
     end
 
@@ -519,10 +535,13 @@ module Discorb
       end
       guild_ids = false if guild_ids == ["global"]
       setup_commands(token, guild_ids: guild_ids).wait
-      clear_commands(token, ENV.fetch("DISCORB_SETUP_CLEAR_GUILDS", "").split(","))
+      clear_commands(
+        token,
+        ENV.fetch("DISCORB_SETUP_CLEAR_GUILDS", "").split(",")
+      )
       if ENV.fetch("DISCORB_SETUP_SCRIPT", nil) == "true"
         @events[:setup]&.each(&:call)
-        self.on_setup if respond_to? :on_setup
+        on_setup if respond_to? :on_setup
       end
     end
 
@@ -535,11 +554,7 @@ module Discorb
     end
 
     def connection
-      if shard_id
-        @shards[shard_id].connection
-      else
-        @connection
-      end
+      shard_id ? @shards[shard_id].connection : @connection
     end
 
     def connection=(value)
@@ -570,9 +585,10 @@ module Discorb
       if shards.nil?
         main_loop(nil)
       else
-        @shards = shards.to_h.with_index do |shard, i|
-          [shard, Shard.new(self, shard, shard_count, i)]
-        end
+        @shards =
+          shards.to_h.with_index do |shard, i|
+            [shard, Shard.new(self, shard, shard_count, i)]
+          end
         @shards.values[..-1].each_with_index do |shard, i|
           shard.next_shard = @shards.values[i + 1]
         end
@@ -589,11 +605,7 @@ module Discorb
     end
 
     def main_task
-      if shard_id
-        shard.main_task
-      else
-        @main_task
-      end
+      shard_id ? shard.main_task : @main_task
     end
 
     def main_task=(value)
@@ -606,14 +618,16 @@ module Discorb
 
     def set_default_events
       on :error, override: true do |event_name, _args, e|
-        message = "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
+        message =
+          "An error occurred while dispatching #{event_name}:\n#{e.full_message}"
         logger.error message
       end
 
       once :standby do
         next if @title == false
 
-        title = @title || ENV.fetch("DISCORB_CLI_TITLE", nil) || "discorb: #{@user}"
+        title =
+          @title || ENV.fetch("DISCORB_CLI_TITLE", nil) || "discorb: #{@user}"
         Process.setproctitle title
       end
     end

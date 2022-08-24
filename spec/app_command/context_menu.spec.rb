@@ -16,8 +16,9 @@ RSpec.describe Discorb::ApplicationCommand::Command do
         default_member_permissions: nil,
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        type: 2,
+        name_localizations: {
+        },
+        type: 2
       }
     )
   end
@@ -33,14 +34,17 @@ RSpec.describe Discorb::ApplicationCommand::Command do
         default_member_permissions: nil,
         dm_permission: false,
         name: "test",
-        name_localizations: {},
-        type: 2,
+        name_localizations: {
+        },
+        type: 2
       }
     )
   end
 
   it "registers user command with admin permission" do
-    client.user_command "test", default_permission: Discorb::Permission.from_keys(:administrator) do
+    client.user_command "test",
+                        default_permission:
+                          Discorb::Permission.from_keys(:administrator) do
       # do nothing
     end
 
@@ -50,8 +54,9 @@ RSpec.describe Discorb::ApplicationCommand::Command do
         default_member_permissions: "8",
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        type: 2,
+        name_localizations: {
+        },
+        type: 2
       }
     )
   end
@@ -67,8 +72,9 @@ RSpec.describe Discorb::ApplicationCommand::Command do
         default_member_permissions: nil,
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        type: 3,
+        name_localizations: {
+        },
+        type: 3
       }
     )
   end
@@ -84,14 +90,17 @@ RSpec.describe Discorb::ApplicationCommand::Command do
         default_member_permissions: nil,
         dm_permission: false,
         name: "test",
-        name_localizations: {},
-        type: 3,
+        name_localizations: {
+        },
+        type: 3
       }
     )
   end
 
   it "registers message command with admin permission" do
-    client.message_command "test", default_permission: Discorb::Permission.from_keys(:administrator) do
+    client.message_command "test",
+                           default_permission:
+                             Discorb::Permission.from_keys(:administrator) do
       # do nothing
     end
 
@@ -101,8 +110,9 @@ RSpec.describe Discorb::ApplicationCommand::Command do
         default_member_permissions: "8",
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        type: 3,
+        name_localizations: {
+        },
+        type: 3
       }
     )
   end

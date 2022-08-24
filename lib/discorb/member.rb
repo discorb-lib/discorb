@@ -109,7 +109,8 @@ module Discorb
     end
 
     def roles
-      @role_ids.map { |r| guild.roles[r] }.sort_by(&:position).reverse + [guild.roles[guild.id]]
+      @role_ids.map { |r| guild.roles[r] }.sort_by(&:position).reverse +
+        [guild.roles[guild.id]]
     end
 
     def permissions
@@ -159,10 +160,18 @@ module Discorb
     #
     def add_role(role, reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}",
-                    "//guilds/:guild_id/members/:user_id/roles/:role_id", :put), nil, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}",
+              "//guilds/:guild_id/members/:user_id/roles/:role_id",
+              :put
+            ),
+            nil,
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -177,10 +186,18 @@ module Discorb
     #
     def remove_role(role, reason: nil)
       Async do
-        @client.http.request(
-          Route.new("/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}",
-                    "//guilds/:guild_id/members/:user_id/roles/:role_id", :delete), {}, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild_id}/members/#{@id}/roles/#{role.is_a?(Role) ? role.id : role}",
+              "//guilds/:guild_id/members/:user_id/roles/:role_id",
+              :delete
+            ),
+            {},
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -216,16 +233,26 @@ module Discorb
         payload[:roles] = role if role != Discorb::Unset
         payload[:mute] = mute if mute != Discorb::Unset
         payload[:deaf] = deaf if deaf != Discorb::Unset
-        communication_disabled_until = timeout_until if timeout_until != Discorb::Unset
+        communication_disabled_until = timeout_until if timeout_until !=
+          Discorb::Unset
         if communication_disabled_until != Discorb::Unset
-          payload[:communication_disabled_until] =
-            communication_disabled_until&.iso8601
+          payload[
+            :communication_disabled_until
+          ] = communication_disabled_until&.iso8601
         end
         payload[:channel_id] = channel&.id if channel != Discorb::Unset
-        @client.http.request(
-          Route.new("/guilds/#{@guild_id}/members/#{@id}", "//guilds/:guild_id/members/:user_id",
-                    :patch), payload, audit_log_reason: reason,
-        ).wait
+        @client
+          .http
+          .request(
+            Route.new(
+              "/guilds/#{@guild_id}/members/#{@id}",
+              "//guilds/:guild_id/members/:user_id",
+              :patch
+            ),
+            payload,
+            audit_log_reason: reason
+          )
+          .wait
       end
     end
 
@@ -255,9 +282,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def kick(reason: nil)
-      Async do
-        guild.kick_member(self, reason: reason).wait
-      end
+      Async { guild.kick_member(self, reason: reason).wait }
     end
 
     #
@@ -271,7 +296,11 @@ module Discorb
     #
     def ban(delete_message_days: 0, reason: nil)
       Async do
-        guild.ban_member(self, delete_message_days: delete_message_days, reason: reason).wait
+        guild.ban_member(
+          self,
+          delete_message_days: delete_message_days,
+          reason: reason
+        ).wait
       end
     end
 
@@ -294,17 +323,21 @@ module Discorb
     def _set_data(user_data, member_data)
       user_data ||= member_data[:user]
       @role_ids = member_data[:roles]
-      @premium_since = member_data[:premium_since] && Time.iso8601(member_data[:premium_since])
+      @premium_since =
+        member_data[:premium_since] && Time.iso8601(member_data[:premium_since])
       @pending = member_data[:pending]
       @nick = member_data[:nick]
       @mute = member_data[:mute]
-      @joined_at = member_data[:joined_at] && Time.iso8601(member_data[:joined_at])
+      @joined_at =
+        member_data[:joined_at] && Time.iso8601(member_data[:joined_at])
       @hoisted_role_id = member_data[:hoisted_role]
       @deaf = member_data[:deaf]
-      @custom_avatar = member_data[:avatar] && Asset.new(self, member_data[:avatar])
+      @custom_avatar =
+        member_data[:avatar] && Asset.new(self, member_data[:avatar])
       super(user_data)
       @display_avatar = @custom_avatar || @avatar
-      @client.guilds[@guild_id].members[@id] = self unless @guild_id.nil? || @client.guilds[@guild_id].nil?
+      @client.guilds[@guild_id].members[@id] = self unless @guild_id.nil? ||
+        @client.guilds[@guild_id].nil?
       @_member_data.update(member_data)
     end
   end

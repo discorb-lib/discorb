@@ -24,7 +24,7 @@ module Discorb
       message_content: 1 << 15,
       scheduled_events: 1 << 16,
       automod_configuration: 1 << 20,
-      automod_execution: 1 << 21,
+      automod_execution: 1 << 21
     }.freeze
 
     #
@@ -93,7 +93,7 @@ module Discorb
         message_content: message_content,
         scheduled_events: scheduled_events,
         automod_configuration: automod_configuration,
-        automod_execution: automod_execution,
+        automod_execution: automod_execution
       }
     end
 
@@ -104,7 +104,9 @@ module Discorb
       if @raw_value.key?(name)
         @raw_value[name]
       elsif name.end_with?("=") && @raw_value.key?(name[0..-2].to_sym)
-        raise ArgumentError, "true/false expected" unless args.is_a?(TrueClass) || args.is_a?(FalseClass)
+        unless args.is_a?(TrueClass) || args.is_a?(FalseClass)
+          raise ArgumentError, "true/false expected"
+        end
 
         @raw_value[name[0..-2].to_sym] = args
       else
@@ -120,9 +122,7 @@ module Discorb
     # @return [Integer] The value of the intent.
     def value
       res = 0
-      INTENT_BITS.each do |intent, bit|
-        res += bit if @raw_value[intent]
-      end
+      INTENT_BITS.each { |intent, bit| res += bit if @raw_value[intent] }
       res
     end
 
@@ -139,9 +139,7 @@ module Discorb
       # @param value [Integer] The value of the intent.
       def from_value(value)
         raw_value = {}
-        INTENT_BITS.each do |intent, bit|
-          raw_value[intent] = value & bit != 0
-        end
+        INTENT_BITS.each { |intent, bit| raw_value[intent] = value & bit != 0 }
         new(**raw_value)
       end
 

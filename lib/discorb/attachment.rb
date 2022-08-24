@@ -49,15 +49,19 @@ module Discorb
     #   If failed to guess, it is set to `application/octet-stream`.
     # @param [Boolean] will_close Whether the IO will be closed after the attachment is sent.
     #
-    def initialize(source, filename = nil, description: nil, content_type: nil, will_close: true)
-      @io = if source.respond_to?(:read)
-          source
-        else
-          File.open(source, "rb")
-        end
-      @filename = filename || (@io.respond_to?(:path) ? @io.path : @io.object_id)
+    def initialize(
+      source,
+      filename = nil,
+      description: nil,
+      content_type: nil,
+      will_close: true
+    )
+      @io = (source.respond_to?(:read) ? source : File.open(source, "rb"))
+      @filename =
+        filename || (@io.respond_to?(:path) ? @io.path : @io.object_id)
       @description = description
-      @content_type = content_type || MIME::Types.type_for(@filename.to_s)[0].to_s
+      @content_type =
+        content_type || MIME::Types.type_for(@filename.to_s)[0].to_s
       @content_type = "application/octet-stream" if @content_type == ""
       @will_close = will_close
       @created_by = :client
@@ -110,10 +114,21 @@ module Discorb
     #
     # @return [Discorb::Attachment] The new file.
     #
-    def self.from_string(string, filename = nil, content_type: nil, description: nil)
+    def self.from_string(
+      string,
+      filename = nil,
+      content_type: nil,
+      description: nil
+    )
       io = StringIO.new(string)
-      filename ||= string.object_id.to_s + ".txt"
-      new(io, filename, content_type: content_type, description: description, will_close: true)
+      filename ||= "#{string.object_id}.txt"
+      new(
+        io,
+        filename,
+        content_type: content_type,
+        description: description,
+        will_close: true
+      )
     end
   end
 end

@@ -65,17 +65,18 @@ module Discorb
         description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::ChatInputCommand.new(
-          command_name,
-          description,
-          options,
-          guild_ids,
-          block,
-          1,
-          nil,
-          dm_permission,
-          default_permission
-        )
+        command =
+          Discorb::ApplicationCommand::Command::ChatInputCommand.new(
+            command_name,
+            description,
+            options,
+            guild_ids,
+            block,
+            1,
+            nil,
+            dm_permission,
+            default_permission
+          )
         @commands << command
         @callable_commands << command
         command
@@ -99,19 +100,26 @@ module Discorb
       # @see file:docs/application_command.md Application Commands
       # @see file:docs/cli/setup.md CLI: setup
       #
-      def slash_group(command_name, description, guild_ids: nil, dm_permission: true, default_permission: nil)
+      def slash_group(
+        command_name,
+        description,
+        guild_ids: nil,
+        dm_permission: true,
+        default_permission: nil
+      )
         command_name = { default: command_name } if command_name.is_a?(String)
         description = { default: description } if description.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
         description = ApplicationCommand.modify_localization_hash(description)
-        command = Discorb::ApplicationCommand::Command::GroupCommand.new(
-          command_name,
-          description,
-          guild_ids,
-          self,
-          dm_permission,
-          default_permission
-        )
+        command =
+          Discorb::ApplicationCommand::Command::GroupCommand.new(
+            command_name,
+            description,
+            guild_ids,
+            self,
+            dm_permission,
+            default_permission
+          )
         yield command if block_given?
         @commands << command
         command
@@ -132,17 +140,24 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.
       #
-      def message_command(command_name, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
+      def message_command(
+        command_name,
+        guild_ids: nil,
+        dm_permission: true,
+        default_permission: nil,
+        &block
+      )
         command_name = { default: command_name } if command_name.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
-        command = Discorb::ApplicationCommand::Command.new(
-          command_name,
-          guild_ids,
-          block,
-          3,
-          dm_permission,
-          default_permission
-        )
+        command =
+          Discorb::ApplicationCommand::Command.new(
+            command_name,
+            guild_ids,
+            block,
+            3,
+            dm_permission,
+            default_permission
+          )
         @commands << command
         command
       end
@@ -162,11 +177,24 @@ module Discorb
       #
       # @return [Discorb::ApplicationCommand::Command] Command object.
       #
-      def user_command(command_name, guild_ids: nil, dm_permission: true, default_permission: nil, &block)
+      def user_command(
+        command_name,
+        guild_ids: nil,
+        dm_permission: true,
+        default_permission: nil,
+        &block
+      )
         command_name = { default: command_name } if command_name.is_a?(String)
         command_name = ApplicationCommand.modify_localization_hash(command_name)
-        command = Discorb::ApplicationCommand::Command.new(command_name, guild_ids, block, 2, dm_permission,
-                                                           default_permission)
+        command =
+          Discorb::ApplicationCommand::Command.new(
+            command_name,
+            guild_ids,
+            block,
+            2,
+            dm_permission,
+            default_permission
+          )
         @commands << command
         command
       end
@@ -186,8 +214,12 @@ module Discorb
         Async do
           @token ||= token
           @http = HTTP.new(self)
-          global_commands = @commands.select { |c| c.guild_ids == false or c.guild_ids == [] }
-          local_commands = @commands.select { |c| c.guild_ids.is_a?(Array) and c.guild_ids.any? }
+          global_commands =
+            @commands.select { |c| c.guild_ids == false or c.guild_ids == [] }
+          local_commands =
+            @commands.select do |c|
+              c.guild_ids.is_a?(Array) and c.guild_ids.any?
+            end
           default_commands = @commands.select { |c| c.guild_ids.nil? }
           if guild_ids.is_a?(Array)
             default_commands.each do |command|
@@ -197,7 +229,8 @@ module Discorb
           else
             global_commands += default_commands
           end
-          final_guild_ids = local_commands.map(&:guild_ids).flatten.map(&:to_s).uniq
+          final_guild_ids =
+            local_commands.map(&:guild_ids).flatten.map(&:to_s).uniq
           app_info = fetch_application.wait
           unless global_commands.empty?
             @http.request(
@@ -217,17 +250,18 @@ module Discorb
           end
           unless final_guild_ids.empty?
             final_guild_ids.each do |guild_id|
-              commands = local_commands.select { |c| c.guild_ids.include?(guild_id) }
+              commands =
+                local_commands.select { |c| c.guild_ids.include?(guild_id) }
               @http.request(
-                Route.new("/applications/#{app_info.id}/guilds/#{guild_id}/commands",
-                          "//applications/:application_id/guilds/:guild_id/commands",
-                          :put),
+                Route.new(
+                  "/applications/#{app_info.id}/guilds/#{guild_id}/commands",
+                  "//applications/:application_id/guilds/:guild_id/commands",
+                  :put
+                ),
                 commands.map(&:to_hash)
               ).wait
               sputs "Registered commands for #{guild_id}:"
-              commands.each do |command|
-                iputs "- #{command.name["default"]}"
-              end
+              commands.each { |command| iputs "- #{command.name["default"]}" }
             end
           end
           @logger.info "Successfully setup commands"
@@ -252,13 +286,17 @@ module Discorb
 
           guild_ids.each do |guild_id|
             @http.request(
-              Route.new("/applications/#{app_info.id}/guilds/#{guild_id}/commands",
-                        "//applications/:application_id/guilds/:guild_id/commands",
-                        :put),
+              Route.new(
+                "/applications/#{app_info.id}/guilds/#{guild_id}/commands",
+                "//applications/:application_id/guilds/:guild_id/commands",
+                :put
+              ),
               []
             ).wait
           end
-          sputs "Cleared commands for #{guild_ids.length} guilds." if ENV.fetch("DISCORB_CLI_FLAG", nil) == "setup"
+          if ENV.fetch("DISCORB_CLI_FLAG", nil) == "setup"
+            sputs "Cleared commands for #{guild_ids.length} guilds."
+          end
         end
       end
     end

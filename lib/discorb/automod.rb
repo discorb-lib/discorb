@@ -12,20 +12,14 @@ module Discorb
       2 => :harmful_link,
       3 => :spam,
       4 => :keyword_preset,
-      5 => :mention_spam,
+      5 => :mention_spam
     }.freeze
     # @return [Hash{Integer => Symbol}] The mapping of preset types.
     # @private
-    PRESET_TYPES = {
-      1 => :profanity,
-      2 => :sexual_content,
-      3 => :slurs,
-    }.freeze
+    PRESET_TYPES = { 1 => :profanity, 2 => :sexual_content, 3 => :slurs }.freeze
     # @return [Hash{Integer => Symbol}] The mapping of event types.
     # @private
-    EVENT_TYPES = {
-      1 => :message_send,
-    }.freeze
+    EVENT_TYPES = { 1 => :message_send }.freeze
 
     # @return [Discorb::Snowflake] The ID of the rule.
     attr_reader :id
@@ -131,17 +125,22 @@ module Discorb
       reason: nil
     )
       # @type var payload: Hash[Symbol, untyped]
-      payload = {
-        metadata: {},
-      }
+      payload = { metadata: {} }
       payload[:name] = name unless name == Discorb::Unset
-      payload[:event_type] = EVENT_TYPES.key(event_type) unless event_type == Discorb::Unset
+      payload[:event_type] = EVENT_TYPES.key(event_type) unless event_type ==
+        Discorb::Unset
       payload[:actions] = actions unless actions == Discorb::Unset
       payload[:enabled] = enabled unless enabled == Discorb::Unset
-      payload[:exempt_roles] = exempt_roles.map(&:id) unless exempt_roles == Discorb::Unset
-      payload[:exempt_channels] = exempt_channels.map(&:id) unless exempt_channels == Discorb::Unset
-      payload[:metadata][:keyword_filter] = keyword_filter unless keyword_filter == Discorb::Unset
-      payload[:metadata][:presets] = PRESET_TYPES.key(presets) unless presets == Discorb::Unset
+      payload[:exempt_roles] = exempt_roles.map(&:id) unless exempt_roles ==
+        Discorb::Unset
+      payload[:exempt_channels] = exempt_channels.map(
+        &:id
+      ) unless exempt_channels == Discorb::Unset
+      payload[:metadata][
+        :keyword_filter
+      ] = keyword_filter unless keyword_filter == Discorb::Unset
+      payload[:metadata][:presets] = PRESET_TYPES.key(presets) unless presets ==
+        Discorb::Unset
 
       @client.http.request(
         Route.new(
@@ -150,7 +149,7 @@ module Discorb
           :patch
         ),
         payload,
-        audit_log_reason: reason,
+        audit_log_reason: reason
       )
     end
 
@@ -169,7 +168,7 @@ module Discorb
             "//guilds/:guild_id/automod/rules/:id",
             :delete
           ),
-          audit_log_reason: reason,
+          audit_log_reason: reason
         )
       end
     end
@@ -182,7 +181,8 @@ module Discorb
       @creator_id = data[:creator_id]
       @trigger_type_raw = data[:trigger_type]
       @event_type_raw = data[:event_type]
-      @actions = data[:actions].map { |action| Action.from_hash(@client, action) }
+      @actions =
+        data[:actions].map { |action| Action.from_hash(@client, action) }
       case trigger_type
       when :keyword
         @keyword_filter = data[:trigger_metadata][:keyword_filter]
@@ -206,7 +206,7 @@ module Discorb
       ACTION_TYPES = {
         1 => :block_message,
         2 => :send_alert_message,
-        3 => :timeout,
+        3 => :timeout
       }.freeze
 
       # @return [Symbol] Returns the type of the action.
@@ -240,8 +240,8 @@ module Discorb
           type: @type,
           metadata: {
             channel_id: @channel&.id,
-            duration_seconds: @duration_seconds,
-          },
+            duration_seconds: @duration_seconds
+          }
         }
       end
 

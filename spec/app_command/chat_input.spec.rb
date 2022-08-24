@@ -16,11 +16,13 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        options: [],
+        name_localizations: {
+        },
+        options: []
       }
     )
   end
@@ -42,35 +44,42 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test group description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test_group",
-        name_localizations: {},
+        name_localizations: {
+        },
         options: [
           {
             description: "test command description",
-            description_localizations: {},
+            description_localizations: {
+            },
             name: "test",
-            name_localizations: {},
+            name_localizations: {
+            },
             options: [],
-            type: 1,
+            type: 1
           },
           {
             description: "test command description 2",
-            description_localizations: {},
+            description_localizations: {
+            },
             name: "test2",
-            name_localizations: {},
+            name_localizations: {
+            },
             options: [],
-            type: 1,
-          },
-        ],
+            type: 1
+          }
+        ]
       }
     )
   end
 
   it "registers subcommand gruop" do
     client.slash_group "test_group", "test group description" do |group|
-      group.group "test_subgroup", "test subcommand group description" do |subgroup|
+      group.group "test_subgroup",
+                  "test subcommand group description" do |subgroup|
         subgroup.slash "test", "test command description" do
           # do nothing
         end
@@ -83,27 +92,35 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test group description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test_group",
-        name_localizations: {},
+        name_localizations: {
+        },
         options: [
           {
             description: "test subcommand group description",
-            description_localizations: {},
+            description_localizations: {
+            },
             name: "test_subgroup",
-            name_localizations: {},
-            options: [{
-              description: "test command description",
-              description_localizations: {},
-              name: "test",
-              name_localizations: {},
-              options: [],
-              type: 1,
-            }],
-            type: 2,
-          },
-        ],
+            name_localizations: {
+            },
+            options: [
+              {
+                description: "test command description",
+                description_localizations: {
+                },
+                name: "test",
+                name_localizations: {
+                },
+                options: [],
+                type: 1
+              }
+            ],
+            type: 2
+          }
+        ]
       }
     )
   end
@@ -120,15 +137,16 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
     role: 8,
     mentionable: 9,
     float: 10,
-    attachment: 11,
+    attachment: 11
   }.each do |type, value|
     it "registers chat input command with #{type} options" do
-      client.slash "test", "test command description",
+      client.slash "test",
+                   "test command description",
                    {
                      "arg1" => {
                        description: "test arg1 description",
-                       type: type,
-                     },
+                       type: type
+                     }
                    } do
         # do nothing
       end
@@ -139,32 +157,36 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
         {
           default_member_permissions: nil,
           description: "test command description",
-          description_localizations: {},
+          description_localizations: {
+          },
           dm_permission: true,
           name: "test",
-          name_localizations: {},
+          name_localizations: {
+          },
           options: [
             {
               description: "test arg1 description",
               name: "arg1",
-              name_localizations: {},
+              name_localizations: {
+              },
               required: true,
-              type: value,
-            },
-          ],
+              type: value
+            }
+          ]
         }
       )
     end
   end
 
   it "registers chat input command with optional options by :optional key" do
-    client.slash "test", "test command description",
+    client.slash "test",
+                 "test command description",
                  {
                    "arg1" => {
                      description: "test arg1 description",
                      type: :str,
-                     optional: true,
-                   },
+                     optional: true
+                   }
                  } do
       # do nothing
     end
@@ -175,31 +197,35 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
+        name_localizations: {
+        },
         options: [
           {
             description: "test arg1 description",
             name: "arg1",
-            name_localizations: {},
+            name_localizations: {
+            },
             required: false,
-            type: 3,
-          },
-        ],
+            type: 3
+          }
+        ]
       }
     )
   end
 
   it "registers chat input command with optional options by :required key" do
-    client.slash "test", "test command description",
+    client.slash "test",
+                 "test command description",
                  {
                    "arg1" => {
                      description: "test arg1 description",
                      type: :str,
-                     required: false,
-                   },
+                     required: false
+                   }
                  } do
       # do nothing
     end
@@ -210,34 +236,38 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
+        name_localizations: {
+        },
         options: [
           {
             description: "test arg1 description",
             name: "arg1",
-            name_localizations: {},
+            name_localizations: {
+            },
             required: false,
-            type: 3,
-          },
-        ],
+            type: 3
+          }
+        ]
       }
     )
   end
 
   it "registers chat input command with choice" do
-    client.slash "test", "test command description",
+    client.slash "test",
+                 "test command description",
                  {
                    "arg1" => {
                      description: "test arg1 description",
                      type: :str,
                      choices: {
                        "choice 1" => "choice_1_value",
-                       "choice 2" => "choice_2_value",
-                     },
-                   },
+                       "choice 2" => "choice_2_value"
+                     }
+                   }
                  } do
       # do nothing
     end
@@ -248,39 +278,34 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
+        name_localizations: {
+        },
         options: [
           {
             description: "test arg1 description",
             name: "arg1",
-            name_localizations: {},
+            name_localizations: {
+            },
             required: true,
             type: 3,
             choices: [
-              {
-                name: "choice 1",
-                value: "choice_1_value",
-              },
-              {
-                name: "choice 2",
-                value: "choice_2_value",
-              },
-            ],
-          },
-        ],
+              { name: "choice 1", value: "choice_1_value" },
+              { name: "choice 2", value: "choice_2_value" }
+            ]
+          }
+        ]
       }
     )
   end
 
   it "registers chat input command with localized name" do
     client.slash(
-      {
-        default: "test",
-        ja: "test_ja",
-      }, "test command description"
+      { default: "test", ja: "test_ja" },
+      "test command description"
     ) do
       # do nothing
     end
@@ -291,13 +316,14 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
         name_localizations: {
-          "ja" => "test_ja",
+          "ja" => "test_ja"
         },
-        options: [],
+        options: []
       }
     )
   end
@@ -305,10 +331,7 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
   it "registers chat input command with localized description" do
     client.slash(
       "test",
-      {
-        default: "test description",
-        ja: "test description_ja",
-      }
+      { default: "test description", ja: "test description_ja" }
     ) do
       # do nothing
     end
@@ -320,37 +343,39 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
         default_member_permissions: nil,
         description: "test description",
         description_localizations: {
-          "ja" => "test description_ja",
+          "ja" => "test description_ja"
         },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        options: [],
+        name_localizations: {
+        },
+        options: []
       }
     )
   end
 
   it "registers chat input command with localized choice" do
-    client.slash "test", "test command description",
+    client.slash "test",
+                 "test command description",
                  {
                    "arg1" => {
                      description: "test arg1 description",
                      type: :str,
                      choices: {
                        "choice 1" => "choice_1_value",
-                       "choice 2" => "choice_2_value",
+                       "choice 2" => "choice_2_value"
                      },
                      choices_localizations: {
                        "choice 1" => {
                          default: "choice 1",
-                         ja: "choice 1_ja",
+                         ja: "choice 1_ja"
                        },
                        "choice 2" => {
                          default: "choice 2",
-                         ja: "choice 2_ja",
-                       },
-                     },
-                   },
+                         ja: "choice 2_ja"
+                       }
+                     }
+                   }
                  } do
       # do nothing
     end
@@ -361,51 +386,54 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
+        name_localizations: {
+        },
         options: [
           {
             choices: [
               {
                 name: "choice 1",
                 name_localizations: {
-                  "ja" => "choice 1_ja",
+                  "ja" => "choice 1_ja"
                 },
-                value: "choice_1_value",
+                value: "choice_1_value"
               },
               {
                 name: "choice 2",
                 name_localizations: {
-                  "ja" => "choice 2_ja",
+                  "ja" => "choice 2_ja"
                 },
-                value: "choice_2_value",
-              },
+                value: "choice_2_value"
+              }
             ],
             description: "test arg1 description",
             name: "arg1",
-            name_localizations: {},
+            name_localizations: {
+            },
             required: true,
-            type: 3,
-          },
-        ],
+            type: 3
+          }
+        ]
       }
     )
   end
 
   it "registers chat input command with autocomplete option" do
-    client.slash "test", "test command description",
+    client.slash "test",
+                 "test command description",
                  {
                    "arg1" => {
                      description: "test arg1 description",
                      type: :str,
-                     autocomplete: proc { |_interaction, _arg1|
-                       {
-                         "choice 1" => "choice_1_value",
+                     autocomplete:
+                       proc { |_interaction, _arg1|
+                         { "choice 1" => "choice_1_value" }
                        }
-                     },
-                   },
+                   }
                  } do
       # do nothing
     end
@@ -416,36 +444,37 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
+        name_localizations: {
+        },
         options: [
           {
             description: "test arg1 description",
             name: "arg1",
-            name_localizations: {},
+            name_localizations: {
+            },
             required: true,
             type: 3,
-            autocomplete: true,
-          },
-        ],
+            autocomplete: true
+          }
+        ]
       }
     )
   end
 
-  {
-    int: 4,
-    float: 10,
-  }.each do |type, value|
+  { int: 4, float: 10 }.each do |type, value|
     it "registers chat input command with #{type} option with max limit" do
-      client.slash "test", "test command description",
+      client.slash "test",
+                   "test command description",
                    {
                      "arg1" => {
                        description: "test arg1 description",
                        type: type,
-                       range: ..10,
-                     },
+                       range: ..10
+                     }
                    } do
         # do nothing
       end
@@ -456,33 +485,37 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
         {
           default_member_permissions: nil,
           description: "test command description",
-          description_localizations: {},
+          description_localizations: {
+          },
           dm_permission: true,
           name: "test",
-          name_localizations: {},
+          name_localizations: {
+          },
           options: [
             {
               description: "test arg1 description",
               name: "arg1",
-              name_localizations: {},
+              name_localizations: {
+              },
               required: true,
               type: value,
               min_value: nil,
-              max_value: 10,
-            },
-          ],
+              max_value: 10
+            }
+          ]
         }
       )
     end
 
     it "registers chat input command with #{type} option with min limit" do
-      client.slash "test", "test command description",
+      client.slash "test",
+                   "test command description",
                    {
                      "arg1" => {
                        description: "test arg1 description",
                        type: type,
-                       range: 10..,
-                     },
+                       range: 10..
+                     }
                    } do
         # do nothing
       end
@@ -493,33 +526,37 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
         {
           default_member_permissions: nil,
           description: "test command description",
-          description_localizations: {},
+          description_localizations: {
+          },
           dm_permission: true,
           name: "test",
-          name_localizations: {},
+          name_localizations: {
+          },
           options: [
             {
               description: "test arg1 description",
               name: "arg1",
-              name_localizations: {},
+              name_localizations: {
+              },
               required: true,
               type: value,
               min_value: 10,
-              max_value: nil,
-            },
-          ],
+              max_value: nil
+            }
+          ]
         }
       )
     end
 
     it "registers chat input command with #{type} option with max and min limit" do
-      client.slash "test", "test command description",
+      client.slash "test",
+                   "test command description",
                    {
                      "arg1" => {
                        description: "test arg1 description",
                        type: type,
-                       range: 0..10,
-                     },
+                       range: 0..10
+                     }
                    } do
         # do nothing
       end
@@ -530,21 +567,24 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
         {
           default_member_permissions: nil,
           description: "test command description",
-          description_localizations: {},
+          description_localizations: {
+          },
           dm_permission: true,
           name: "test",
-          name_localizations: {},
+          name_localizations: {
+          },
           options: [
             {
               description: "test arg1 description",
               name: "arg1",
-              name_localizations: {},
+              name_localizations: {
+              },
               required: true,
               type: value,
               min_value: 0,
-              max_value: 10,
-            },
-          ],
+              max_value: 10
+            }
+          ]
         }
       )
     end
@@ -561,18 +601,22 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: false,
         name: "test",
-        name_localizations: {},
-        options: [],
+        name_localizations: {
+        },
+        options: []
       }
     )
   end
 
   it "registers chat input command that requires admin permissions" do
-    client.slash "test", "test command description",
-                 default_permission: Discorb::Permission.from_keys(:administrator) do
+    client.slash "test",
+                 "test command description",
+                 default_permission:
+                   Discorb::Permission.from_keys(:administrator) do
       # do nothing
     end
 
@@ -582,17 +626,21 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: "8",
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        options: [],
+        name_localizations: {
+        },
+        options: []
       }
     )
   end
 
   it "registers group command that is disabled in dm" do
-    client.slash_group "test", "test command description", dm_permission: false do
+    client.slash_group "test",
+                       "test command description",
+                       dm_permission: false do
       # do nothing
     end
 
@@ -601,18 +649,22 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: nil,
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: false,
         name: "test",
-        name_localizations: {},
-        options: [],
+        name_localizations: {
+        },
+        options: []
       }
     )
   end
 
   it "registers group command that requires admin permissions" do
-    client.slash_group "test", "test command description",
-                       default_permission: Discorb::Permission.from_keys(:administrator) do
+    client.slash_group "test",
+                       "test command description",
+                       default_permission:
+                         Discorb::Permission.from_keys(:administrator) do
       # do nothing
     end
 
@@ -621,11 +673,13 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
       {
         default_member_permissions: "8",
         description: "test command description",
-        description_localizations: {},
+        description_localizations: {
+        },
         dm_permission: true,
         name: "test",
-        name_localizations: {},
-        options: [],
+        name_localizations: {
+        },
+        options: []
       }
     )
   end

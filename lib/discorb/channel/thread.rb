@@ -99,10 +99,18 @@ module Discorb
         payload[:name] = name if name != Discorb::Unset
         payload[:archived] = archived if archived != Discorb::Unset
         auto_archive_duration ||= archive_in
-        payload[:auto_archive_duration] = auto_archive_duration if auto_archive_duration != Discorb::Unset
+        payload[
+          :auto_archive_duration
+        ] = auto_archive_duration if auto_archive_duration != Discorb::Unset
         payload[:locked] = locked if locked != Discorb::Unset
-        @client.http.request(Route.new("/channels/#{@id}", "//channels/:channel_id", :patch), payload,
-                             audit_log_reason: reason).wait
+        @client
+          .http
+          .request(
+            Route.new("/channels/#{@id}", "//channels/:channel_id", :patch),
+            payload,
+            audit_log_reason: reason
+          )
+          .wait
         self
       end
     end
@@ -191,11 +199,27 @@ module Discorb
     def add_member(member = :me)
       Async do
         if member == :me
-          @client.http.request(Route.new("/channels/#{@id}/thread-members/@me",
-                                         "//channels/:channel_id/thread-members/@me", :post)).wait
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{@id}/thread-members/@me",
+                "//channels/:channel_id/thread-members/@me",
+                :post
+              )
+            )
+            .wait
         else
-          @client.http.request(Route.new("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}",
-                                         "//channels/:channel_id/thread-members/:user_id", :post)).wait
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{@id}/thread-members/#{Utils.try(member, :id)}",
+                "//channels/:channel_id/thread-members/:user_id",
+                :post
+              )
+            )
+            .wait
         end
       end
     end
@@ -212,11 +236,27 @@ module Discorb
     def remove_member(member = :me)
       Async do
         if member == :me
-          @client.http.request(Route.new("/channels/#{@id}/thread-members/@me",
-                                         "//channels/:channel_id/thread-members/@me", :delete)).wait
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{@id}/thread-members/@me",
+                "//channels/:channel_id/thread-members/@me",
+                :delete
+              )
+            )
+            .wait
         else
-          @client.http.request(Route.new("/channels/#{@id}/thread-members/#{Utils.try(member, :id)}",
-                                         "//channels/:channel_id/thread-members/:user_id", :delete)).wait
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{@id}/thread-members/#{Utils.try(member, :id)}",
+                "//channels/:channel_id/thread-members/:user_id",
+                :delete
+              )
+            )
+            .wait
         end
       end
     end
@@ -230,8 +270,17 @@ module Discorb
     #
     def fetch_members
       Async do
-        _resp, data = @client.http.request(Route.new("/channels/#{@id}/thread-members",
-                                                     "//channels/:channel_id/thread-members", :get)).wait
+        _resp, data =
+          @client
+            .http
+            .request(
+              Route.new(
+                "/channels/#{@id}/thread-members",
+                "//channels/:channel_id/thread-members",
+                :get
+              )
+            )
+            .wait
         data.map { |d| @members[d[:id]] = Member.new(@client, d, @guild_id) }
       end
     end
@@ -306,18 +355,18 @@ module Discorb
       @archived = data[:thread_metadata][:archived]
       @owner_id = data[:owner_id]
       @archived_timestamp =
-        data[:thread_metadata][:archived_timestamp] && Time.iso8601(data[:thread_metadata][:archived_timestamp])
+        data[:thread_metadata][:archived_timestamp] &&
+          Time.iso8601(data[:thread_metadata][:archived_timestamp])
       @auto_archive_duration = data[:thread_metadata][:auto_archive_duration]
       @locked = data[:thread_metadata][:locked]
       @member_count = data[:member_count]
       @message_count = data[:message_count]
       if data[:member]
-        @members[@client.user.id] =
-          ThreadChannel::Member.new(
-            @client,
-            data[:member].merge({ id: data[:id], user_id: @client.user.id }),
-            @guild_id
-          )
+        @members[@client.user.id] = ThreadChannel::Member.new(
+          @client,
+          data[:member].merge({ id: data[:id], user_id: @client.user.id }),
+          @guild_id
+        )
       end
       @data.merge!(data)
     end

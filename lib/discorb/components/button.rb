@@ -23,13 +23,7 @@ module Discorb
 
     # @private
     # @return [{Symbol => Integer}] The mapping of button styles.
-    STYLES = {
-      primary: 1,
-      secondary: 2,
-      success: 3,
-      danger: 4,
-      link: 5,
-    }.freeze
+    STYLES = { primary: 1, secondary: 2, success: 3, danger: 4, link: 5 }.freeze
 
     #
     # Initialize a new button.
@@ -41,7 +35,14 @@ module Discorb
     # @param [String] url The URL of the button.
     # @param [Boolean] disabled Whether the button is disabled.
     #
-    def initialize(label, style = :primary, emoji: nil, custom_id: nil, url: nil, disabled: false)
+    def initialize(
+      label,
+      style = :primary,
+      emoji: nil,
+      custom_id: nil,
+      url: nil,
+      disabled: false
+    )
       @label = label
       @style = style
       @emoji = emoji
@@ -65,7 +66,7 @@ module Discorb
           style: STYLES[@style],
           url: @url,
           emoji: @emoji&.to_hash,
-          disabled: @disabled,
+          disabled: @disabled
         }
       else
         {
@@ -74,7 +75,7 @@ module Discorb
           style: STYLES[@style],
           custom_id: @custom_id,
           emoji: @emoji&.to_hash,
-          disabled: @disabled,
+          disabled: @disabled
         }
       end
     end
@@ -98,7 +99,7 @@ module Discorb
           emoji: data[:emoji],
           custom_id: data[:custom_id],
           url: data[:url],
-          disabled: data[:disabled],
+          disabled: data[:disabled]
         )
       end
     end

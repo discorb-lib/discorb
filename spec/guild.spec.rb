@@ -3,7 +3,9 @@
 require_relative "common"
 
 RSpec.describe Discorb::Guild do
-  let(:data) { JSON.load_file(__dir__ + "/payloads/guild.json", symbolize_names: true) }
+  let(:data) do
+    JSON.load_file("#{__dir__}/payloads/guild.json", symbolize_names: true)
+  end
   let(:guild) { described_class.new(client, data, false) }
 
   it "initializes successfully" do
@@ -12,10 +14,7 @@ RSpec.describe Discorb::Guild do
 
   it "requests to DELETE /users/@me/guilds/:guild_id" do
     expect_request(:delete, "/users/@me/guilds/#{guild.id}") do
-      {
-        code: 204,
-        body: {},
-      }
+      { code: 204, body: {} }
     end
     guild.leave.wait
   end
@@ -26,13 +25,19 @@ RSpec.describe Discorb::Guild do
       "/guilds/#{guild.id}/channels",
       body: {
         type: Discorb::TextChannel.channel_type,
-        name: "new_channel",
+        name: "new_channel"
       },
-      headers: { audit_log_reason: "reason" },
+      headers: {
+        audit_log_reason: "reason"
+      }
     ) do
       {
         code: 200,
-        body: JSON.load_file(__dir__ + "/payloads/channels/text_channel.json", symbolize_names: true),
+        body:
+          JSON.load_file(
+            "#{__dir__}/payloads/channels/text_channel.json",
+            symbolize_names: true
+          )
       }
     end
     guild.create_text_channel("new_channel", reason: "reason").wait
@@ -45,13 +50,19 @@ RSpec.describe Discorb::Guild do
       body: {
         type: Discorb::VoiceChannel.channel_type,
         name: "new_channel",
-        bitrate: 64000,
+        bitrate: 64_000
       },
-      headers: { audit_log_reason: "reason" },
+      headers: {
+        audit_log_reason: "reason"
+      }
     ) do
       {
         code: 200,
-        body: JSON.load_file(__dir__ + "/payloads/channels/voice_channel.json", symbolize_names: true),
+        body:
+          JSON.load_file(
+            "#{__dir__}/payloads/channels/voice_channel.json",
+            symbolize_names: true
+          )
       }
     end
     guild.create_voice_channel("new_channel", reason: "reason").wait

@@ -56,15 +56,18 @@ module Discorb
       @guild_id = data[:guild_id] && Snowflake.new(data[:guild_id])
       @channel_id = data[:channel_id] && Snowflake.new(data[:channel_id])
       if data[:member]
-        @user = guild.members[data[:member][:id]] || Member.new(@client, @guild_id, data[:member][:user],
-                                                                data[:member])
+        @user =
+          guild.members[data[:member][:id]] ||
+            Member.new(@client, @guild_id, data[:member][:user], data[:member])
       elsif data[:user]
-        @user = @client.users[data[:user][:id]] || User.new(@client, data[:user])
+        @user =
+          @client.users[data[:user][:id]] || User.new(@client, data[:user])
       end
       @token = data[:token]
       @locale = data[:locale].to_s.gsub("-", "_").to_sym
       @guild_locale = data[:guild_locale].to_s.gsub("-", "_").to_sym
-      @app_permissions = data[:app_permissions] && Permission.new(data[:app_permissions].to_i)
+      @app_permissions =
+        data[:app_permissions] && Permission.new(data[:app_permissions].to_i)
       @version = data[:version]
       @defered = false
       @responded = false
@@ -115,31 +118,35 @@ module Discorb
         payload = {}
         payload[:content] = content if content
         payload[:tts] = tts
-        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }
-        payload[:allowed_mentions] =
-          allowed_mentions&.to_hash(@client.allowed_mentions) || @client.allowed_mentions.to_hash
+        payload[:embeds] = (embeds || [embed])
+          .map { |e| e&.to_hash }
+          .filter { _1 }
+        payload[:allowed_mentions] = allowed_mentions&.to_hash(
+          @client.allowed_mentions
+        ) || @client.allowed_mentions.to_hash
         payload[:components] = Component.to_payload(components) if components
         payload[:flags] = (ephemeral ? 1 << 6 : 0)
         attachments ||= attachment ? [attachment] : []
 
         payload[:attachments] = attachments.map.with_index do |a, i|
-          {
-            id: i,
-            filename: a.filename,
-            description: a.description,
-          }
+          { id: i, filename: a.filename, description: a.description }
         end
 
-        _resp, data = @client.http.multipart_request(
-          Route.new(
-            "/webhooks/#{@application_id}/#{@token}",
-            "//webhooks/:webhook_id/:token",
-            :post
-          ),
-          payload,
-          attachments
-        ).wait
-        webhook = Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}")
+        _resp, data =
+          @client
+            .http
+            .multipart_request(
+              Route.new(
+                "/webhooks/#{@application_id}/#{@token}",
+                "//webhooks/:webhook_id/:token",
+                :post
+              ),
+              payload,
+              attachments
+            )
+            .wait
+        webhook =
+          Webhook::URLWebhook.new("/webhooks/#{@application_id}/#{@token}")
         Webhook::Message.new(webhook, data, @client)
         ret
       end
@@ -174,28 +181,30 @@ module Discorb
       Async do
         payload = {}
         payload[:content] = content if content
-        payload[:embeds] = (embeds || [embed]).map { |e| e&.to_hash }.filter { _1 }.then { _1.empty? ? nil : _1 }
+        payload[:embeds] = (embeds || [embed])
+          .map { |e| e&.to_hash }
+          .filter { _1 }
+          .then { _1.empty? ? nil : _1 }
         payload[:components] = Component.to_payload(components) if components
         attachments ||= attachment && [attachment]
 
         payload[:attachments] = attachments&.map&.with_index do |a, i|
-          {
-            id: i,
-            filename: a.filename,
-            description: a.description,
-          }
+          { id: i, filename: a.filename, description: a.description }
         end
         payload.compact!
 
-        @client.http.multipart_request(
-          Route.new(
-            "/webhooks/#{@application_id}/#{@token}/messages/@original",
-            "//webhooks/:webhook_id/:token/messages/@original",
-            :patch
-          ),
-          payload,
-          attachments
-        ).wait
+        @client
+          .http
+          .multipart_request(
+            Route.new(
+              "/webhooks/#{@application_id}/#{@token}/messages/@original",
+              "//webhooks/:webhook_id/:token/messages/@original",
+              :patch
+            ),
+            payload,
+            attachments
+          )
+          .wait
       end
     end
 
@@ -209,13 +218,16 @@ module Discorb
     #
     def delete_original_message
       Async do
-        @client.http.request(
-          Route.new(
-            "/webhooks/#{@application_id}/#{@token}/messages/@original",
-            "//webhooks/:webhook_id/:token/messages/@original",
-            :delete
+        @client
+          .http
+          .request(
+            Route.new(
+              "/webhooks/#{@application_id}/#{@token}/messages/@original",
+              "//webhooks/:webhook_id/:token/messages/@original",
+              :delete
+            )
           )
-        ).wait
+          .wait
       end
     end
 
@@ -233,13 +245,15 @@ module Discorb
       def make_interaction(client, data)
         interaction = nil
         descendants.each do |klass|
-          if !klass.interaction_type.nil? && klass.interaction_type == data[:type]
-            interaction = klass.make_interaction(client,
-                                                 data)
+          if !klass.interaction_type.nil? &&
+               klass.interaction_type == data[:type]
+            interaction = klass.make_interaction(client, data)
           end
         end
         if interaction.nil?
-          client.logger.warn("Unknown interaction type #{data[:type]}, initialized Interaction")
+          client.logger.warn(
+            "Unknown interaction type #{data[:type]}, initialized Interaction"
+          )
           interaction = Interaction.new(client, data)
         end
         interaction

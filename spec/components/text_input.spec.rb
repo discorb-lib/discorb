@@ -20,7 +20,7 @@ RSpec.describe Discorb::Button do
         required: false,
         style: 1,
         type: 4,
-        value: nil,
+        value: nil
       }
     )
   end

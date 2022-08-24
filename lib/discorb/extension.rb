@@ -18,9 +18,13 @@ module Discorb
       ret = {}
       self.class.events.each do |event, handlers|
         ret[event] = handlers.map do |handler|
-          Discorb::EventHandler.new(proc { |*args, **kwargs|
-            instance_exec(*args, **kwargs, &handler[2])
-          }, handler[0], handler[1])
+          Discorb::EventHandler.new(
+            proc do |*args, **kwargs|
+              instance_exec(*args, **kwargs, &handler[2])
+            end,
+            handler[0],
+            handler[1]
+          )
         end
       end
       @events = ret
@@ -46,11 +50,13 @@ module Discorb
       # @param [Hash] metadata Other metadata.
       #
       def event(event_name, id: nil, **metadata, &block)
-        raise ArgumentError, "Event name must be a symbol" unless event_name.is_a?(Symbol)
+        unless event_name.is_a?(Symbol)
+          raise ArgumentError, "Event name must be a symbol"
+        end
         raise ArgumentError, "block must be given" unless block_given?
 
         @events[event_name] ||= []
-        metadata[:extension] = self.name
+        metadata[:extension] = name
         @events[event_name] << [id, metadata, block]
       end
 

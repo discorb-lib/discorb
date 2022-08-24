@@ -65,7 +65,9 @@ module Discorb
       @fields = fields || []
       @footer = footer
       @image = image && (image.is_a?(String) ? Image.new(image) : image)
-      @thumbnail = thumbnail && (thumbnail.is_a?(String) ? Thumbnail.new(thumbnail) : thumbnail)
+      @thumbnail =
+        thumbnail &&
+          (thumbnail.is_a?(String) ? Thumbnail.new(thumbnail) : thumbnail)
       @type = :rich
     end
 
@@ -82,16 +84,31 @@ module Discorb
       @timestamp = data[:timestamp] && Time.iso8601(data[:timestamp])
       @type = data[:type]
       @color = data[:color] && Color.new(data[:color])
-      @footer = data[:footer] && Footer.new(data[:footer][:text], icon: data[:footer][:icon_url])
-      @author = if data[:author]
-          Author.new(data[:author][:name], icon: data[:author][:icon_url],
-                                           url: data[:author][:url])
+      @footer =
+        data[:footer] &&
+          Footer.new(data[:footer][:text], icon: data[:footer][:icon_url])
+      @author =
+        if data[:author]
+          Author.new(
+            data[:author][:name],
+            icon: data[:author][:icon_url],
+            url: data[:author][:url]
+          )
         end
       @thumbnail = data[:thumbnail] && Thumbnail.new(data[:thumbnail])
       @image = data[:image] && Image.new(data[:image])
       @video = data[:video] && Video.new(data[:video])
       @provider = data[:provider] && Provider.new(data[:provider])
-      @fields = data[:fields] ? data[:fields].map { |f| Field.new(f[:name], f[:value], inline: f[:inline]) } : []
+      @fields =
+        (
+          if data[:fields]
+            data[:fields].map do |f|
+              Field.new(f[:name], f[:value], inline: f[:inline])
+            end
+          else
+            []
+          end
+        )
     end
 
     def image=(value)
@@ -177,11 +194,7 @@ module Discorb
       # @return [Hash] Converted author.
       #
       def to_hash
-        {
-          name: @name,
-          url: @url,
-          icon_url: @icon,
-        }
+        { name: @name, url: @url, icon_url: @icon }
       end
     end
 
@@ -210,10 +223,7 @@ module Discorb
       # @return [Hash] Converted footer.
       #
       def to_hash
-        {
-          text: @text,
-          icon_url: @icon,
-        }
+        { text: @text, icon_url: @icon }
       end
     end
 
@@ -249,11 +259,7 @@ module Discorb
       # @return [Hash] Converted field.
       #
       def to_hash
-        {
-          name: @name,
-          value: @value,
-          inline: @inline,
-        }
+        { name: @name, value: @value, inline: @inline }
       end
     end
 

@@ -48,7 +48,8 @@ module Discorb
       @bot_public = data[:bot_public]
       @bot_require_code_grant = data[:bot_require_code_grant]
       @verify_key = data[:verify_key]
-      @owner = @client.users[data[:owner][:id]] || User.new(@client, data[:owner])
+      @owner =
+        @client.users[data[:owner][:id]] || User.new(@client, data[:owner])
       @team = data[:team] && Team.new(@client, data[:team])
       @flags = Flag.new(data[:flags])
     end
@@ -85,7 +86,7 @@ module Discorb
         verification_pending_guild_limit: 16,
         embedded: 17,
         gateway_message_content: 18,
-        gateway_message_content_limited: 19,
+        gateway_message_content_limited: 19
       }
     end
 
@@ -157,16 +158,14 @@ module Discorb
 
         # @private
         # @return [{Integer => Symbol}] The permission map.
-        MEMBERSHIP_STATE = {
-          1 => :invited,
-          2 => :accepted,
-        }.freeze
+        MEMBERSHIP_STATE = { 1 => :invited, 2 => :accepted }.freeze
 
         def initialize(client, team, data)
           @client = client
           @data = data
           @team = team
-          @user = client.users[data[:user][:id]] || User.new(client, data[:user])
+          @user =
+            client.users[data[:user][:id]] || User.new(client, data[:user])
           @team_id = Snowflake.new(data[:team_id])
           @membership_state = MEMBERSHIP_STATE[data[:membership_state]]
           @permissions = data[:permissions].map(&:to_sym)

@@ -9,7 +9,7 @@ informations = {
   "Documentation" => "https://discorb-lib.github.io",
   "RubyGems" => "https://rubygems.org/gems/discorb",
   "Changelog" => "https://discorb-lib.github.io/file.Changelog.html",
-  "License" => "MIT License",
+  "License" => "MIT License"
 }
 
 informations.each do |key, value|

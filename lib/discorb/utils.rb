@@ -4,11 +4,7 @@ module Discorb
   # @private
   module Utils
     def try(object, message, ...)
-      if object.respond_to?(message)
-        object.send(message, ...)
-      else
-        object
-      end
+      object.respond_to?(message) ? object.send(message, ...) : object
     end
 
     module_function :try
