@@ -2,7 +2,6 @@
 
 require "bundler/gem_tasks"
 require_relative "lib/discorb/utils/colored_puts"
-require "parallel_tests"
 task default: %i[]
 
 # @private
