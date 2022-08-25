@@ -81,7 +81,11 @@ module Discorb
       request_to_speak: 32,
       manage_threads: 34,
       use_public_threads: 35,
-      use_private_threads: 36
+      use_private_threads: 36,
+      use_external_stickers: 37,
+      send_messages_in_threads: 38,
+      use_embedded_activities: 39,
+      moderate_members: 40
     }.freeze
   end
 
