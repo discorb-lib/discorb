@@ -35,7 +35,6 @@ jobs:
         run: |
           bundle config --local with 'docs development lint'
           bundle install
-          gem update uri
       - name: Generate document
         run: rake document:build_all
       - name: Push document

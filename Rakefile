@@ -65,7 +65,7 @@ namespace :document do
   version = current_version
   desc "Just generate document"
   task :yard do
-    sh "yardoc -o doc/#{version} --locale #{ENV.fetch("rake_locale", nil) or "en"}"
+    sh "yard -o doc/#{version} --locale #{ENV.fetch("rake_locale", nil) or "en"}"
   end
 
   desc "Replace files"
@@ -369,12 +369,12 @@ namespace :rbs do
       "SORD_ERROR_SymbolStringSymbolboolSymbolObject" =>
         "String | Integer | Float"
     }
-        regenerate = ARGV.include?("--regenerate") || ARGV.include?("-r")
+    regenerate = ARGV.include?("--regenerate") || ARGV.include?("-r")
 
     sh(
-         "sord gen sig/discorb.rbs --keep-original-comments " \
-           "--no-sord-comments#{regenerate ? " --regenerate" : " --no-regenerate"}"
-       )
+      "sord gen sig/discorb.rbs --keep-original-comments " \
+        "--no-sord-comments#{regenerate ? " --regenerate" : " --no-regenerate"}"
+    )
     base = File.read("sig/discorb.rbs")
     base.gsub!(/\n +def _set_data: \(.+\) -> untyped\n\n/, "\n")
     # base.gsub!(/(  )?( *)# @private.+?(?:\n\n(?=\1\2#)|(?=\n\2end))/sm, "")
