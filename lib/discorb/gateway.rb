@@ -39,17 +39,7 @@ module Discorb
                   @http.request(Route.new("/gateway", "//gateway", :get)).wait
                 gateway_response[:url]
               end
-            gateway_version =
-              if @intents.to_h[:message_content].nil?
-                unless @message_content_intent_warned
-                  warn "message_content intent not set, using gateway version 9. " \
-                         "You should specify `message_content` intent for preventing unexpected changes in the future."
-                  @message_content_intent_warned = true
-                end
-                9
-              else
-                10
-              end
+            gateway_version = 10
             endpoint =
               Async::HTTP::Endpoint.parse(
                 "#{gateway_url}?v=#{gateway_version}&encoding=json&compress=zlib-stream&_=#{Time.now.to_i}",
