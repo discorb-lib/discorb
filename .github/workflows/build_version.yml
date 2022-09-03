@@ -35,6 +35,7 @@ jobs:
         run: |
           bundle config --local with 'docs development lint'
           bundle install
+          gem install yard
       - name: Generate document
         run: rake document:build_all
       - name: Push document
