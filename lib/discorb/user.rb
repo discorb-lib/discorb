@@ -111,35 +111,36 @@ module Discorb
     #
     # Represents the user's flags.
     # ## Flag fields
-    # |`1 << 0`|`:discord_employee`|
-    # |`1 << 1`|`:partnered_server_owner`|
-    # |`1 << 2`|`:hypesquad_events`|
+    # |`1 << 0`|`:staff`|
+    # |`1 << 1`|`:partner`|
+    # |`1 << 2`|`:hypesquad`|
     # |`1 << 3`|`:bug_hunter_level_1`|
-    # |`1 << 6`|`:house_bravery`|
-    # |`1 << 7`|`:house_brilliance`|
-    # |`1 << 8`|`:house_balance`|
-    # |`1 << 9`|`:early_supporter`|
-    # |`1 << 10`|`:team_user`|
+    # |`1 << 6`|`:hypesquad_online_house_1`|
+    # |`1 << 7`|`:hypesquad_online_house_2`|
+    # |`1 << 8`|`:hypesquad_online_house_3`|
+    # |`1 << 9`|`:premium_early_supporter`|
+    # |`1 << 10`|`:team_psuedo_user`|
     # |`1 << 14`|`:bug_hunter_level_2`|
     # |`1 << 16`|`:verified_bot`|
-    # |`1 << 17`|`:early_verified_bot_developer`|
-    # |`1 << 18`|`:discord_certified_moderator`|
+    # |`1 << 17`|`:verified_developer`|
+    # |`1 << 18`|`:certified_moderator`|
+    # |`1 << 19`|`:bot_http_interactions`|
     #
     class Flag < Discorb::Flag
       @bits = {
-        discord_employee: 0,
-        partnered_server_owner: 1,
-        hypesquad_events: 2,
+        staff: 0,
+        partner: 1,
+        hypesquad: 2,
         bug_hunter_level_1: 3,
-        house_bravery: 6,
-        house_brilliance: 7,
-        house_balance: 8,
-        early_supporter: 9,
-        team_user: 10,
+        hypesquad_online_house_1: 6,
+        hypesquad_online_house_2: 7,
+        hypesquad_online_house_3: 8,
+        premium_early_supporter: 9,
+        team_psuedo_user: 10,
         bug_hunter_level_2: 14,
         verified_bot: 16,
-        early_verified_bot_developer: 17,
-        discord_certified_moderator: 18,
+        verified_developer: 17,
+        certified_moderator: 18,
         bot_http_interactions: 19
       }.freeze
     end
