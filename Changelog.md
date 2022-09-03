@@ -4,6 +4,16 @@
 
 # Changelog
 
+## v0.20
+
+### v0.20.0
+
+- Update!: All flags are updated. `User::Flag` has many renames.
+- Change!: Gateway version is always 10 now.
+- Add: Add permissions field.
+- Add: Support resume_gateway_url.
+- Add: Add `AutoModRule#mention_total_limit`, `AutoModRule#allow_list`, and parameters to `Guild#create_automod_rule`.
+
 ## v0.19
 
 ### v0.19.0
