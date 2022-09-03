@@ -344,6 +344,7 @@ module Discorb
     # |`1 << 5`|`:has_thread`|
     # |`1 << 6`|`:ephemeral`|
     # |`1 << 7`|`:loading`|
+    # |`1 << 8`|`:failed_to_mention_some_roles_in_thread`|
     class Flag < Discorb::Flag
       attr_accessor crossposted: bool
       attr_accessor crosspost: bool
@@ -353,6 +354,7 @@ module Discorb
       attr_accessor has_thread: bool
       attr_accessor ephemeral: bool
       attr_accessor loading: bool
+      attr_accessor failed_to_mention_some_roles_in_thread: bool
     end
 
     #

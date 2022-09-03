@@ -18,6 +18,7 @@ module Discorb
     # |`1 << 5`|`:has_thread`|
     # |`1 << 6`|`:ephemeral`|
     # |`1 << 7`|`:loading`|
+    # |`1 << 8`|`:failed_to_mention_some_roles_in_thread`|
     #
     class Flag < Discorb::Flag
       @bits = {
@@ -28,7 +29,8 @@ module Discorb
         urgent: 4,
         has_thread: 5,
         ephemeral: 6,
-        loading: 7
+        loading: 7,
+        failed_to_mention_some_roles_in_thread: 8
       }.freeze
     end
 

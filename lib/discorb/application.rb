@@ -76,6 +76,7 @@ module Discorb
     # | `1 << 17` | `:embedded` |
     # | `1 << 18` | `:gateway_message_content` |
     # | `1 << 19` | `:gateway_message_content_limited` |
+    # | `1 << 23` | `:application_command_badge` |
     #
     class Flag < Discorb::Flag
       @bits = {
@@ -86,7 +87,8 @@ module Discorb
         verification_pending_guild_limit: 16,
         embedded: 17,
         gateway_message_content: 18,
-        gateway_message_content_limited: 19
+        gateway_message_content_limited: 19,
+        application_command_badge: 23
       }
     end
 

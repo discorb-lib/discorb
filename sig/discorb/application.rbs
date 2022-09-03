@@ -60,6 +60,7 @@ module Discorb
     # | `1 << 17` | `:embedded` |
     # | `1 << 18` | `:gateway_message_content` |
     # | `1 << 19` | `:gateway_message_content_limited` |
+    # | `1 << 23` | `:application_command_badge` |
     class Flag < Discorb::Flag
       attr_accessor gateway_presence: bool
       attr_accessor gateway_presence_limited: bool
@@ -69,6 +70,7 @@ module Discorb
       attr_accessor embedded: bool
       attr_accessor gateway_message_content: bool
       attr_accessor gateway_message_content_limited: bool
+      attr_accessor application_command_badge: bool
     end
 
     #

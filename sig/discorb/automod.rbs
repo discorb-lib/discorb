@@ -1,6 +1,7 @@
 module Discorb
   class AutoModRule < DiscordModel
-    type trigger_type = :keyword | :harmful_link | :spam | :keyword_preset | :mention_spam
+    type trigger_type =
+      :keyword | :harmful_link | :spam | :keyword_preset | :mention_spam
     type preset_type = :profanity | :sexual_content | :slurs
 
     # @return [Hash{Integer => Symbol}] The mapping of trigger types.
