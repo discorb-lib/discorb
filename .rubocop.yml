@@ -35,6 +35,9 @@ Style/IfUnlessModifier:
 Style/OptionalBooleanParameter:
   Enabled: false
 
+Lint/ScriptPermission:
+  Enabled: false
+
 RSpec/FilePath:
   Enabled: false
 
