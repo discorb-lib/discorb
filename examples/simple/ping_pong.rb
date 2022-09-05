@@ -8,11 +8,8 @@ client.once :standby do
   puts "Logged in as #{client.user}"
 end
 
-client.on :message do |message|
-  next if message.author.bot?
-  next unless message.content == "ping"
-
-  message.channel.post("Pong!")
+client.slash("ping", "Ping!") do |interaction|
+  interaction.post("Pong!", ephemeral: true)
 end
 
 client.run(ENV.fetch("DISCORD_BOT_TOKEN", nil))

@@ -2,7 +2,10 @@
 
 require "discorb"
 
-client = Discorb::Client.new
+intents = Discorb::Intents.new
+intents.message_content = true
+
+client = Discorb::Client.new(intents: intents)
 
 client.once :standby do
   puts "Logged in as #{client.user}"
@@ -21,9 +24,12 @@ client.on :message do |message|
   val = num1.send(operator, num2)
   message.channel.post("Quiz: `#{num1} #{operator} #{num2}`")
   begin
-    msg = client.event_lock(:message, 30) do |m|
-      m.content == val.to_s && m.channel == message.channel
-    end.wait
+    msg =
+      client
+        .event_lock(:message, 30) do |m|
+          m.content == val.to_s && m.channel == message.channel
+        end
+        .wait
   rescue Discorb::TimeoutError
     message.channel.post("No one answered...")
   else

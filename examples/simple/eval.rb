@@ -2,7 +2,10 @@
 
 require "discorb"
 
-client = Discorb::Client.new
+intents = Discorb::Intents.new
+intents.message_content = true
+
+client = Discorb::Client.new(intents: intents)
 
 client.once :standby do
   puts "Logged in as #{client.user}"
@@ -17,7 +20,12 @@ client.on :message do |message|
     next
   end
 
-  code = message.content.delete_prefix("eval ").delete_prefix("```rb").delete_suffix("```")
+  code =
+    message
+      .content
+      .delete_prefix("eval ")
+      .delete_prefix("```rb")
+      .delete_suffix("```")
   message.add_reaction(Discorb::UnicodeEmoji["clock3"])
   res = eval("Async { |task| #{code} }.wait", binding, __FILE__, __LINE__) # rubocop:disable Security/Eval
   message.remove_reaction(Discorb::UnicodeEmoji["clock3"])
@@ -27,8 +35,12 @@ client.on :message do |message|
     message.channel.post("```rb\n#{res.inspect[...1990]}\n```")
   end
 rescue Exception => e # rubocop:disable Lint/RescueException
-  message.reply embed: Discorb::Embed.new("Error!", "```rb\n#{e.full_message(highlight: false)[...1990]}\n```",
-                                          color: Discorb::Color[:red])
+  message.reply embed:
+                  Discorb::Embed.new(
+                    "Error!",
+                    "```rb\n#{e.full_message(highlight: false)[...1990]}\n```",
+                    color: Discorb::Color[:red]
+                  )
 end
 
 client.run(ENV.fetch("discord_bot_token", nil))

@@ -23,7 +23,7 @@ SECTIONS = [
     > So I decided to make it.
     Matsumoto describes the design of Ruby as being like a simple Lisp language at its core, with an object system like that of Smalltalk, blocks inspired by higher-order functions, and practical utility like that of Perl.
   WIKI
-  ["First publication", <<~WIKI],
+  ["First publication", <<~WIKI]
     The first public release of Ruby 0.95 was announced on Japanese domestic newsgroups on December 21, 1995.
     Subsequently, three more versions of Ruby were released in two days.
     The release coincided with the launch of the Japanese-language ruby-list mailing list, which was the first mailing list for the new language.
@@ -32,21 +32,25 @@ SECTIONS = [
   WIKI
 ].freeze
 
-WIKIPEDIA_CREDIT = "(From: [Wikipedia](https://en.wikipedia.org/wiki/Ruby_(programming_language)))"
+WIKIPEDIA_CREDIT =
+  "(From: [Wikipedia](https://en.wikipedia.org/wiki/Ruby_(programming_language)))"
 
 client.once :standby do
   puts "Logged in as #{client.user}"
 end
 
-client.on :message do |message|
-  next if message.author.bot?
-  next unless message.content == "!ruby"
-
-  options = SECTIONS.map.with_index do |section, i|
-    Discorb::SelectMenu::Option.new("Page #{i + 1}", "sections:#{i}", description: section[0])
-  end
-  message.channel.post(
-    "Select a section", components: [Discorb::SelectMenu.new("sections", options)],
+client.slash("ruby", "Learn more about Ruby.") do |interaction|
+  options =
+    SECTIONS.map.with_index do |section, i|
+      Discorb::SelectMenu::Option.new(
+        "Page #{i + 1}",
+        "sections:#{i}",
+        description: section[0]
+      )
+    end
+  interaction.post(
+    "Select a section",
+    components: [Discorb::SelectMenu.new("sections", options)]
   )
 end
 
@@ -57,8 +61,9 @@ client.on :select_menu_select do |response|
   selected_section = SECTIONS[id.to_i]
   response.post(
     "**#{selected_section[0]}**\n" \
-    "#{selected_section[1].strip}\n\n" \
-    "#{WIKIPEDIA_CREDIT}", ephemeral: true,
+      "#{selected_section[1].strip}\n\n" \
+      "#{WIKIPEDIA_CREDIT}",
+    ephemeral: true
   )
 end
 
