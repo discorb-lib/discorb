@@ -48,10 +48,7 @@ module Discorb
     # @param scheduled_events [Boolean] Whether events related scheduled events are enabled.
     # @param automod_configuration [Boolean] Whether automod configuration related events are enabled.
     # @param automod_execution [Boolean] Whether automod execution related events are enabled.
-    # @note You must enable privileged intents to use `members` and/or `presences` intents.
-    # @note Message Content Intent is not required to use `message_content` intents for now,
-    #   this will be required in September 1, 2022. [Learn More](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
-    #   You should specify `message_content` intent for preventing unexpected changes in the future.
+    # @note You must enable privileged intents to use `members` `presences` and/or `message_content` intents.
     #
     def initialize(
       guilds: true,
@@ -69,7 +66,7 @@ module Discorb
       dm_messages: true,
       dm_reactions: true,
       dm_typing: true,
-      message_content: nil,
+      message_content: false,
       scheduled_events: true,
       automod_configuration: true,
       automod_execution: true
