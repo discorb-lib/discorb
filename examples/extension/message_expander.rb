@@ -10,7 +10,7 @@ class MessageExpander
 
   MESSAGE_PATTERN = Regexp.new(
     '(?!<)https://(?:ptb\.|canary\.)?discord(?:app)?\.com/channels/' \
-    "(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18,19})(?!>)"
+    "(?<guild>[0-9]{17,19})/(?<channel>[0-9]{17,19})/(?<message>[0-9]{17,19})(?!>)"
   )
 
   event :message do |message|
