@@ -10,7 +10,7 @@ class MessageExpander
 
   MESSAGE_PATTERN = Regexp.new(
     '(?!<)https://(?:ptb\.|canary\.)?discord(?:app)?\.com/channels/' \
-    "(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18})(?!>)"
+    "(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18,19})(?!>)"
   )
 
   event :message do |message|
@@ -23,7 +23,7 @@ class MessageExpander
       begin
         url_message = ch.fetch_message(match[:message]).wait
       rescue Discorb::NotFoundError
-        url_message.add_reaction(Discorb::UnicodeEmoji["x"])
+        message.add_reaction(Discorb::UnicodeEmoji["x"])
       else
         embed = Discorb::Embed.new(
           nil, url_message.content,
