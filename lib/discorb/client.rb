@@ -586,10 +586,10 @@ module Discorb
         main_loop(nil)
       else
         @shards =
-          shards.to_h.with_index do |shard, i|
+          shards.each_with_index.to_h do |shard, i|
             [shard, Shard.new(self, shard, shard_count, i)]
           end
-        @shards.values[..-1].each_with_index do |shard, i|
+        @shards.values.each_with_index do |shard, i|
           shard.next_shard = @shards.values[i + 1]
         end
         @shards.each_value { |s| s.thread.join }
