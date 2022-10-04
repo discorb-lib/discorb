@@ -10,6 +10,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.0
-          bundler-cache: true
       - name: rubocop
         uses: reviewdog/action-rubocop@v2
+        with:
+          rubocop_extensions: rubocop-rake:gemfile rubocop-rspec:gemfile syntax_tree:gemfile
