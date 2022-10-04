@@ -5,68 +5,80 @@
 
 require "io/console"
 require "discorb"
+require "dotenv/load"
 require "optparse"
 
-intents_value = Discorb::Intents.all.value
-token_file = "token"
+options = {
+  intents_value: Discorb::Intents.all,
+}
 
-opt = OptionParser.new <<~BANNER
-                         This command will start an interactive Ruby shell with connected client.
+OptionParser.new do |opts|
+  opts.banner = <<~BANNER
+                  This command will start an interactive Ruby shell with connected client.
 
-                         Usage: discorb irb [options]
-                       BANNER
-opt.on("-i", "--intents", "intents to use, default to all") do |v|
-  intents_value = v
-end
-opt.on("-t", "--token-file", "token file to load, default to \"token\"") do |v|
-  token_file = v
-end
-opt.parse!(ARGV)
+                  Usage: discorb irb [options]
+                BANNER
 
-client =
-  Discorb::Client.new(intents: Discorb::Intents.from_value(intents_value))
-$messages = []
+  opts.accept(Discorb::Intents) do |value|
+    Discorb::Intents.from_value(Integer(value))
+  end
 
-client.on :standby do
-  puts "\e[96mLogged in as #{client.user}\e[m"
+  opts.on("-i", "--intents=INTENTS", Discorb::Intents, "The intents to use, all will be used if not specified") do |v|
+    options[:intents_value] = v
+  end
+
+  opts.on("-t", "--token-file=FILE", "The token file to load") do |v|
+    options[:token_file] = v
+  end
+end.parse!
+
+client = Discorb::Client.new(intents: options[:intents_value])
+
+client.on :ready do
+  $messages = []
 
   def message
     $messages.last
   end
 
   def dirb_help
-    puts <<~MESSAGE
+    puts <<~HELP
            \e[96mDiscord-IRB\e[m
            This is a debug client for Discord.
-           \e[90mmessage\e[m to get latest message.
+           Type \e[31mmessage\e[m to get latest message.
 
            \e[36mhttps://discorb-lib.github.io/#{Discorb::VERSION}/file.irb.html\e[m for more information.
-         MESSAGE
+         HELP
   end
 
-  puts <<~FIRST_MESSAGE
+  puts "\e[96mLogged in as #{client.user}\e[m"
+  puts <<~INFO
          Running on \e[31mRuby #{RUBY_VERSION}\e[m, disco\e[31mrb #{Discorb::VERSION}\e[m
-    Type \e[90mdirb_help\e[m to help.
-       FIRST_MESSAGE
+         Type \e[31mdirb_help\e[m to help.
+       INFO
 
+  # Begin the user's IRB session
   binding.irb # rubocop:disable Lint/Debugger
 
-  client.close!
+  # Assume once the IRB session is over the user is finished.
+  client.close
 end
 
 client.on :message do |message|
   $messages << message
 end
 
-token = ENV.fetch("DISCORD_BOT_TOKEN", nil) || ENV.fetch("DISCORD_TOKEN", nil)
-if token.nil?
-  if File.exist?(token_file)
-    token = File.read(token_file)
-  else
+# Prefer to use the token file if the option was given.
+if options[:token_file]
+  token = File.read(options[:token_file])
+else
+  token = ENV["DISCORD_BOT_TOKEN"] || ENV["DISCORD_TOKEN"] || ENV["TOKEN"]
+
+  unless token
     print "\e[90mToken?\e[m : "
     token = $stdin.noecho(&:gets).chomp
     puts
   end
 end
 
-client.run token
+client.run(token)
