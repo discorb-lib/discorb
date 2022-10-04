@@ -98,7 +98,7 @@ module Discorb
   class CloudFlareBanError < HTTPError
     def initialize(_resp, client)
       @client = client
-      @client.close!
+      @client.close
       message = <<~MESSAGE
         The client is banned from CloudFlare.
         Hint: Try to decrease the number of requests per second, e.g. Use sleep in between requests.
