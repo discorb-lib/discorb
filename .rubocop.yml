@@ -46,3 +46,9 @@ RSpec/ExampleLength:
 
 RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec:
+  Language:
+    Expectations:
+      - expect_request
+

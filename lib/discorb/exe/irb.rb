@@ -72,7 +72,7 @@ end
 if options[:token_file]
   token = File.read(options[:token_file])
 else
-  token = ENV["DISCORD_BOT_TOKEN"] || ENV["DISCORD_TOKEN"] || ENV["TOKEN"]
+  token = %w[DISCORD_BOT_TOKEN DISCORD_TOKEN TOKEN].filter_map { |key| ENV.fetch(key, nil) }.first
 
   unless token
     print "\e[90mToken?\e[m : "
