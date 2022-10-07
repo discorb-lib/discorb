@@ -51,4 +51,6 @@ RSpec:
   Language:
     Expectations:
       - expect_request
+      - expect_gateway_request
+       
 
