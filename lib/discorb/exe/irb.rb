@@ -8,29 +8,32 @@ require "discorb"
 require "dotenv/load"
 require "optparse"
 
-options = {
-  intents_value: Discorb::Intents.all,
-}
+options = { intents_value: Discorb::Intents.all }
 
-OptionParser.new do |opts|
-  opts.banner = <<~BANNER
+OptionParser
+  .new do |opts|
+    opts.banner = <<~BANNER
                   This command will start an interactive Ruby shell with connected client.
 
                   Usage: discorb irb [options]
                 BANNER
 
-  opts.accept(Discorb::Intents) do |value|
-    Discorb::Intents.from_value(Integer(value))
-  end
+    opts.accept(Discorb::Intents) do |value|
+      Discorb::Intents.from_value(Integer(value))
+    end
 
-  opts.on("-i", "--intents=INTENTS", Discorb::Intents, "The intents to use, all will be used if not specified") do |v|
-    options[:intents_value] = v
-  end
+    opts.on(
+      "-i",
+      "--intents=INTENTS",
+      Discorb::Intents,
+      "The intents to use, all will be used if not specified"
+    ) { |v| options[:intents_value] = v }
 
-  opts.on("-t", "--token-file=FILE", "The token file to load") do |v|
-    options[:token_file] = v
+    opts.on("-t", "--token-file=FILE", "The token file to load") do |v|
+      options[:token_file] = v
+    end
   end
-end.parse!
+  .parse!
 
 client = Discorb::Client.new(intents: options[:intents_value])
 
@@ -72,7 +75,10 @@ end
 if options[:token_file]
   token = File.read(options[:token_file])
 else
-  token = %w[DISCORD_BOT_TOKEN DISCORD_TOKEN TOKEN].filter_map { |key| ENV.fetch(key, nil) }.first
+  token =
+    %w[DISCORD_BOT_TOKEN DISCORD_TOKEN TOKEN]
+      .filter_map { |key| ENV.fetch(key, nil) }
+      .first
 
   unless token
     print "\e[90mToken?\e[m : "

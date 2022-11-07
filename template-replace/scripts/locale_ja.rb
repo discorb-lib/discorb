@@ -5,16 +5,15 @@ LOCALES = {
       "Classes" => "クラス",
       "Methods" => "メソッド",
       "Files" => "ファイル",
-      "Versions" => "バージョン",
+      "Versions" => "バージョン"
     },
     title: {
       "Class List" => "クラス一覧",
       "Method List" => "メソッド一覧",
       "File List" => "ファイル一覧",
-      "Version List" => "バージョン一覧",
-    },
-  },
-
+      "Version List" => "バージョン一覧"
+    }
+  }
 }.freeze
 
 def replace_sidebar_name(dir)
@@ -26,7 +25,10 @@ def replace_sidebar_name(dir)
     content.scan(regex) do |_url, name|
       new_content.gsub!(
         Regexp.last_match[0],
-        Regexp.last_match[0].gsub(name, LOCALES[ENV["rake_locale"]][:selector][name])
+        Regexp.last_match[0].gsub(
+          name,
+          LOCALES[ENV.fetch("rake_locale", nil)][:selector][name]
+        )
       )
     end
     File.write(file, new_content)
@@ -34,7 +36,8 @@ def replace_sidebar_name(dir)
 end
 
 def replace_title(dir)
-  regex = %r{(?:<h1 id="full_list_header">|<title>)([a-zA-Z ]+?)(?:</title>|</h1>)}
+  regex =
+    %r{(?:<h1 id="full_list_header">|<title>)([a-zA-Z ]+?)(?:</title>|</h1>)}
 
   Dir.glob("#{dir}/*.html") do |file|
     content = File.read(file)
@@ -42,7 +45,10 @@ def replace_title(dir)
     content.scan(regex) do |title, _|
       new_content.gsub!(
         Regexp.last_match[0],
-        Regexp.last_match[0].gsub(title, LOCALES[ENV["rake_locale"]][:title][title])
+        Regexp.last_match[0].gsub(
+          title,
+          LOCALES[ENV.fetch("rake_locale", nil)][:title][title]
+        )
       )
     end
     File.write(file, new_content)

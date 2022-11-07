@@ -258,11 +258,7 @@ module Discorb
       @mentionable = data[:mentionable]
       @tags = data[:tags] || {}
       @custom_icon =
-        (
-          if data[:icon]
-            Asset.new(self, data[:icon], path: "role-icons/#{@id}")
-          end
-        )
+        (Asset.new(self, data[:icon], path: "role-icons/#{@id}") if data[:icon])
       @emoji =
         data[:unicode_emoji] ? UnicodeEmoji.new(data[:unicode_emoji]) : nil
       @guild.roles[@id] = self unless data[:no_cache]

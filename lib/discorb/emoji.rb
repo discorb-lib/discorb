@@ -17,6 +17,11 @@ module Discorb
     def inspect
       "#<#{self.class}>"
     end
+
+    # @return [Hash] The hash represents the emoji.
+    def to_hash
+      raise NotImplementedError
+    end
   end
 
   # Represents a custom emoji in discord.
