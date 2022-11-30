@@ -297,6 +297,15 @@ module Discorb
     #
     class Public < ThreadChannel
       @channel_type = 11
+
+      # @private
+      def self.new(client, data, no_cache: false)
+        if client.channels[data[:id]].is_a?(ForumChannel)
+          ForumChannel::Post.new(client, data, no_cache: no_cache)
+        else
+          super
+        end
+      end
     end
 
     #

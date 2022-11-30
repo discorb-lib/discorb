@@ -6,10 +6,10 @@ require "optparse"
 options = {
   bundler: true,
 }
-discorb_paths = $LOAD_PATH.filter { |path| File.directory?(path + "/discorb") }
+discorb_paths = $LOAD_PATH.filter { |path| File.directory?("#{path}/discorb") }
 scripts = {}
 discorb_paths.each do |discorb_path|
-  Dir.glob(discorb_path + "/discorb/exe/*.rb") do |exe_script|
+  Dir.glob("#{discorb_path}/discorb/exe/*.rb") do |exe_script|
     name = File.basename(exe_script, ".rb")
     description = File.read(exe_script).match(/# description: (.+)/)&.[](1) || "No description"
     scripts[name] = description

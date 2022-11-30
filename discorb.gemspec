@@ -44,6 +44,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "async-websocket", "~> 0.19.0"
 
   spec.add_dependency "mime-types", "~> 3.3"
+  spec.add_dependency "dotenv", "~> 2.8"
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
   spec.metadata["rubygems_mfa_required"] = "true"
