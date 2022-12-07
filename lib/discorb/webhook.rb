@@ -99,8 +99,8 @@ module Discorb
               "//webhooks/:webhook_id/:token",
               :post
             ),
-            attachments,
             payload
+            attachments,
           ).wait
         data && Webhook::Message.new(self, data)
       end
