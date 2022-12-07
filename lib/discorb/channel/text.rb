@@ -125,7 +125,7 @@ module Discorb
               payload
             )
             .wait
-        Webhook.from_data(data, client: @client)
+        Webhook.from_data(@client, data)
       end
     end
 
@@ -148,7 +148,7 @@ module Discorb
               )
             )
             .wait
-        data.map { |webhook| Webhook.from_data(webhook, client: @client) }
+        data.map { |webhook| Webhook.from_data(@client, webhook) }
       end
     end
 
