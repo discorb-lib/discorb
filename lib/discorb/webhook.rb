@@ -494,22 +494,6 @@ module Discorb
 
     class << self
       #
-      # Creates URLWebhook.
-      #
-      # @param [String] url The URL of the webhook.
-      # @param [Discorb::Client] client The client to associate with the webhook.
-      #
-      # @return [Discorb::Webhook::URLWebhook] The URLWebhook.
-      #
-      def new(url, client: nil)
-        if self == Webhook
-          URLWebhook.new(url, client: client)
-        else
-          super
-        end
-      end
-
-      #
       # Creates Webhook with discord data.
       # @private
       #
