@@ -526,7 +526,7 @@ module Discorb
           FollowerWebhook
         when 3
           ApplicationWebhook
-        end.new(client, data)
+        end.new(data, client: @client)
       end
 
       def from_url(url)
