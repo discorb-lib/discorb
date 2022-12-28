@@ -10,8 +10,6 @@ module Discorb
     alias topic guideline
     # @return [Boolean] Whether the channel is nsfw.
     attr_reader :nsfw
-    # @return [Discorb::Snowflake] The id of the last message.
-    attr_reader :last_message_id
     # @return [Integer] The rate limit to create thread per user (Slowmode) in the channel.
     attr_reader :rate_limit_per_user
     alias slowmode rate_limit_per_user
@@ -367,7 +365,7 @@ module Discorb
     alias modify edit
 
     #
-    # Creates tags to the channel.
+    # Creates tags in the channel.
     # @async
     #
     # @param [Array<Discorb::ForumChannel::Tag>] tags The tags to create.
@@ -450,47 +448,7 @@ module Discorb
     end
 
     #
-    # Bulk delete messages in the channel.
-    # @async
-    #
-    # @param [Discorb::Message] messages The messages to delete.
-    # @param [Boolean] force Whether to ignore the validation for message (14 days limit).
-    #
-    # @return [Async::Task<void>] The task.
-    #
-    def delete_messages(*messages, force: false)
-      Async do
-        messages = messages.flatten
-        unless force
-          time = Time.now
-          messages.delete_if do |message|
-            next false unless message.is_a?(Message)
-
-            time - message.created_at > 60 * 60 * 24 * 14
-          end
-        end
-
-        message_ids = messages.map { |m| Discorb::Utils.try(m, :id).to_s }
-
-        @client
-          .http
-          .request(
-            Route.new(
-              "/channels/#{@id}/messages/bulk-delete",
-              "//channels/:channel_id/messages/bulk-delete",
-              :post
-            ),
-            { messages: message_ids }
-          )
-          .wait
-      end
-    end
-
-    alias bulk_delete delete_messages
-    alias destroy_messages delete_messages
-
-    #
-    # Start thread in the channel.
+    # Create post in the channel.
     # @async
     #
     # @param [Title] title The title of the thread.
@@ -508,7 +466,7 @@ module Discorb
     #
     # @return [Async::Task<Discorb::PublicThread>] The created thread.
     #
-    def post(
+    def create_post(
       title,
       content = nil,
       embed: nil,
@@ -577,7 +535,7 @@ module Discorb
       end
     end
 
-    alias start_thread post
+    alias start_thread create_post
     alias create_thread start_thread
 
     #
@@ -608,7 +566,6 @@ module Discorb
     def _set_data(data)
       @topic = data[:topic]
       @nsfw = data[:nsfw]
-      @last_message_id = Snowflake.new data[:last_message_id]
       @rate_limit_per_user = data[:rate_limit_per_user]
       @default_auto_archive_duration = data[:default_auto_archive_duration]
       @message_rate_limit_per_user = data[:message_rate_limit_per_user]
