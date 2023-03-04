@@ -3,6 +3,8 @@ module Discorb
   # Represents a channel of Discord.
   # @abstract
   class Channel < Discorb::DiscordModel
+    @client: Discorb::Client
+
     #
     # Initializes a new instance of the Channel class.
     # @private

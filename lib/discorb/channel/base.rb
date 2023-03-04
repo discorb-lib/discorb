@@ -22,6 +22,7 @@ module Discorb
     # @private
     #
     def initialize(client, data, no_cache: false)
+      # @type [Discorb::Client]
       @client = client
       @data = {}
       @no_cache = no_cache

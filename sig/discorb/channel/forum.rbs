@@ -1,0 +1,321 @@
+module Discorb
+  #
+  # Represents a text channel.
+  class ForumChannel < Discorb::GuildChannel
+    # @return [String] The guideline of the channel.
+    attr_reader guideline: String
+    alias topic guideline
+
+    # @return [Boolean] Whether the channel is nsfw.
+    attr_reader nsfw: bool
+
+    # @return [Discorb::Snowflake] The id of the last message.
+    attr_reader last_message_id: Discorb::Snowflake
+
+    # @return [Integer] The rate limit to create thread per user (Slowmode) in the channel.
+    attr_reader rate_limit_per_user: Integer
+    alias slowmode rate_limit_per_user
+    alias thread_slowmode rate_limit_per_user
+
+    # @return [Integer] The rate limit to send message per user (Slowmode) in the channel.
+    attr_reader message_rate_limit_per_user: Integer
+    alias message_slowmode message_rate_limit_per_user
+
+    # @return [Integer] The default value of duration of auto archive.
+    attr_reader default_auto_archive_duration: Integer
+
+    # @return [:latest_activity, :creation_date] The default sort order of the channel.
+    attr_reader default_sort_order: :latest_activity | :creation_date
+
+    # @return [Array<Discorb::ForumChannel::Tag>] The tags in the channel.
+    attr_reader tags: Array[Discorb::ForumChannel::Tag]
+
+    # @return [Boolean] Whether at least one tag is required.
+    attr_reader require_tag: bool
+    alias require_tag? require_tag
+
+    %a{pure}
+    def threads: -> Array[Discorb::ThreadChannel]
+
+    class Tag < Discorb::DiscordModel
+      # @return [Discorb::Snowflake] The id of the tag.
+      attr_reader id: Discorb::Snowflake?
+
+      # @return [String] The name of the tag.
+      attr_reader name: String
+
+      # @return [Boolean] Whether the tag is moderated. (aka moderator only)
+      attr_reader moderated: bool
+      alias moderated? moderated
+
+      # @return [Discorb::Emoji] The emoji of the tag.
+      attr_reader emoji: Discorb::emoji
+
+      #
+      # Initializes a new tag.
+      #
+      # @param [String] name The name of the tag.
+      # @param [Discorb::Emoji] emoji The emoji of the tag.
+      # @param [Boolean] moderated Whether the tag is moderated. (aka moderator only)
+      #
+      # @return [Discorb::ForumChannel::Tag] The new tag.
+      def initialize: (
+        String name,
+        Discorb::emoji emoji,
+        ?moderated: bool
+      ) -> Discorb::ForumChannel::Tag
+
+      # Returns the tag as a hash.
+      #
+      # @return [Hash] The tag as a hash.
+      def to_hash: -> {
+        id: Discorb::Snowflake?,
+        name: String,
+        moderated: bool,
+        emoji: Discorb::emoji
+      }
+    end
+
+    class Post < Discorb::ThreadChannel
+      # @return [Array<Discorb::ForumChannel::Tag>] The tags of the post.
+      attr_reader tags: Array[Discorb::ForumChannel::Tag]
+
+      # @return [Boolean] Whether the post is pinned.
+      attr_reader pinned: bool
+      alias pinned? pinned
+
+      #
+      # Edit the thread.
+      # @async
+      # @macro edit
+      #
+      # @param [String] name The name of the thread.
+      # @param [Boolean] archived Whether the thread is archived or not.
+      # @param [Integer] auto_archive_duration The auto archive duration in seconds.
+      # @param [Integer] archive_in Alias of `auto_archive_duration`.
+      # @param [Boolean] locked Whether the thread is locked or not.
+      # @param [String] reason The reason of editing the thread.
+      # @param [Boolean] pinned Whether the thread is pinned or not.
+      # @param [Array<Discorb::ForumChannel::Tag>] tags The tags of the thread.
+      #
+      # @return [Async::Task<self>] The edited thread.
+      #
+      # @see #archive
+      # @see #lock
+      # @see #unarchive
+      # @see #unlock
+      # @see #pin
+      # @see #unpin
+      # @see #add_tags
+      # @see #remove_tags
+      def edit: (
+        ?name: String,
+        ?archived: bool,
+        ?auto_archive_duration: Integer,
+        ?archive_in: Integer,
+        ?locked: bool,
+        ?reason: String,
+        ?pinned: bool,
+        ?tags: Array[Discorb::ForumChannel::Tag]
+      ) -> Async::Task[self]
+
+      #
+      # Pins the thread.
+      # @async
+      #
+      # @param [String] reason The reason of pinning the thread.
+      #
+      # @return [Async::Task<self>] The pinned thread.
+      #
+      # @see #unpin
+      # @see #pinned?
+      def pin: (?reason: String) -> Async::Task[self]
+
+      #
+      # Unpins the thread.
+      # @async
+      #
+      # @param [String] reason The reason of unpinning the thread.
+      #
+      # @return [Async::Task<self>] The unpinned thread.
+      #
+      # @see #pin
+      # @see #pinned?
+      def unpin: (?reason: String) -> Async::Task[self]
+
+      #
+      # Adds tags to the thread.
+      # @async
+      #
+      # @param [Array<Discorb::ForumChannel::Tag>] tags The tags to add.
+      # @param [String] reason The reason of adding tags.
+      # @return [Async::Task<self>] The thread with added tags.
+      #
+      # @see #remove_tags
+      # @see #tags
+      def add_tags: (
+        Array[Discorb::ForumChannel::Tag] tags,
+        ?reason: String
+      ) -> Async::Task[self]
+
+      #
+      # Removes tags from the thread.
+      # @async
+      #
+      # @param [Array<Discorb::ForumChannel::Tag>] tags The tags to remove.
+      # @param [String] reason The reason of removing tags.
+      # @return [Async::Task<self>] The thread with removed tags.
+      #
+      # @see #add_tags
+      # @see #tags
+      def remove_tags: (
+        Array[Discorb::ForumChannel::Tag] tags,
+        ?reason: String
+      ) -> Async::Task[self]
+    end
+
+    #
+    # Edits the channel.
+    # @async
+    # @macro edit
+    #
+    # @param [String] name The name of the channel.
+    # @param [Integer] position The position of the channel.
+    # @param [Discorb::CategoryChannel, nil] category The parent of channel. Specify `nil` to remove the parent.
+    # @param [Discorb::CategoryChannel, nil] parent Alias of `category`.
+    # @param [String] topic The topic of the channel.
+    # @param [String] guideline Alias of `topic`.
+    # @param [Boolean] nsfw Whether the channel is nsfw.
+    # @param [Integer] rate_limit_per_user The rate limit per user (Slowmode) in the channel.
+    # @param [Integer] slowmode Alias of `rate_limit_per_user`.
+    # @param [Integer] thread_rate_limit_per_user The rate limit per user (Slowmode) in threads.
+    # @param [Integer] thread_slowmode Alias of `thread_rate_limit_per_user`.
+    # @param [Integer] default_auto_archive_duration The default auto archive duration of the channel.
+    # @param [Integer] archive_in Alias of `default_auto_archive_duration`.
+    # @param [Boolean] require_tag Whether the channel requires tag to create thread.
+    # @param [Discorb::Emoji] default_reaction_emoji The default reaction emoji of the channel.
+    # @param [:latest_activity, :creation_date] default_sort_order The default sort order of the channel.
+    # @param [Array<Discorb::ForumChannel::Tag>] tags The tags of the channel.
+    # @param [String] reason The reason of editing the channel.
+    #
+    # @return [Async::Task<self>] The edited channel.
+    #
+    # @see #create_tags
+    # @see #delete_tags
+    def edit: (
+      ?name: String,
+      ?position: Integer,
+      ?category: Discorb::CategoryChannel | nil,
+      ?parent: Discorb::CategoryChannel | nil,
+      ?topic: String,
+      ?guideline: String,
+      ?nsfw: bool,
+      ?rate_limit_per_user: Integer,
+      ?slowmode: Integer,
+      ?thread_rate_limit_per_user: Integer,
+      ?thread_slowmode: Integer,
+      ?default_auto_archive_duration: Integer,
+      ?archive_in: Integer,
+      ?require_tag: bool,
+      ?default_reaction_emoji: Discorb::emoji,
+      ?default_sort_order: :latest_activity | :creation_date,
+      ?tags: Array[Discorb::ForumChannel::Tag],
+      ?reason: String
+    ) -> Async::Task[self]
+
+    alias modify edit
+
+    #
+    # Creates tags in the channel.
+    # @async
+    #
+    # @param [Array<Discorb::ForumChannel::Tag>] tags The tags to create.
+    # @param [String] reason The reason of creating tags.
+    #
+    # @return [Async::Task<self>] The edited channel.
+    #
+    # @see #edit
+    def create_tags: (
+      Array[Discorb::ForumChannel::Tag] tags,
+      ?reason: String
+    ) -> Async::Task[self]
+
+    #
+    # Deletes tags from the channel.
+    # @async
+    #
+    # @param [Array<Discorb::ForumChannel::Tag>] tags The tags to delete.
+    # @param [String] reason The reason of deleting tags.
+    #
+    # @return [Async::Task<self>] The edited channel.
+    #
+    # @see #edit
+    def delete_tags: (
+      Array[Discorb::ForumChannel::Tag] tags,
+      ?reason: String
+    ) -> Async::Task[self]
+
+    #
+    # Create webhook in the channel.
+    # @async
+    #
+    # @param [String] name The name of the webhook.
+    # @param [Discorb::Image] avatar The avatar of the webhook.
+    #
+    # @return [Async::Task<Discorb::Webhook::IncomingWebhook>] The created webhook.
+    def create_webhook: (
+      String name,
+      ?avatar: Discorb::Image
+    ) -> Async::Task[Discorb::Webhook::IncomingWebhook]
+
+    #
+    # Fetch webhooks in the channel.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::Webhook>>] The webhooks in the channel.
+    def fetch_webhooks: -> Async::Task[Array[Discorb::Webhook]]
+
+    #
+    # Create post in the channel.
+    # @async
+    #
+    # @param [Title] title The title of the thread.
+    # @param [String] content The message content.
+    # @param [Discorb::Embed] embed The embed to send.
+    # @param [Array<Discorb::Embed>] embeds The embeds to send.
+    # @param [Discorb::AllowedMentions] allowed_mentions The allowed mentions.
+    # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
+    # @param [Discorb::Attachment] attachment The attachment to send.
+    # @param [Array<Discorb::Attachment>] attachments The attachments to send.
+    # @param [Array<Discorb::ForumChannel::Tag>] tags The tags to attach.
+    # @param [:hour, :day, :three_days, :week] auto_archive_duration The duration of auto-archiving.
+    # @param [Integer] rate_limit_per_user The rate limit per user.
+    # @param [Integer] slowmode Alias of `rate_limit_per_user`.
+    #
+    # @return [Async::Task<Discorb::PublicThread>] The created thread.
+    def create_post: (
+      title: String,
+      ?content: String,
+      ?embed: Discorb::Embed,
+      ?embeds: Array[Discorb::Embed],
+      ?allowed_mentions: Discorb::AllowedMentions,
+      ?components: Array[Discorb::Component] | Array[Array[Discorb::Component]],
+      ?attachment: Discorb::Attachment,
+      ?attachments: Array[Discorb::Attachment],
+      ?tags: Array[Discorb::ForumChannel::Tag],
+      ?auto_archive_duration: :hour | :day | :three_days | :week,
+      ?rate_limit_per_user: Integer,
+      ?slowmode: Integer
+    ) -> Async::Task[Discorb::PublicThread]
+
+    alias start_thread create_post
+    alias create_thread start_thread
+
+    #
+    # Fetch archived threads in the channel.
+    # @async
+    #
+    # @return [Async::Task<Array<Discorb::ThreadChannel>>] The archived threads in the channel.
+    def fetch_archived_threads: -> Async::Task[Array[Discorb::ThreadChannel]]
+  end
+end

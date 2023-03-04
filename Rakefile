@@ -291,7 +291,7 @@ namespace :rbs do
       sig = args.map { |a| "#{a[:type]} #{a[:name]}" }.join(", ")
       tuple_sig = args.map { |a| a[:type] }.join(", ")
       tuple_sig = "[#{tuple_sig}]" if args.length > 1
-      tuple_sig = "void" if args.length.zero?
+      tuple_sig = "void" if args.empty?
       event_sig << <<~RBS
         | (:#{event[:name]} event_name, ?id: Symbol?, **untyped metadata) { (#{sig}) -> void } -> Discorb::EventHandler
       RBS
