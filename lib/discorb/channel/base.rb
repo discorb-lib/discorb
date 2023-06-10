@@ -64,7 +64,7 @@ module Discorb
     #
     def self.make_channel(client, data, no_cache: false)
       descendants.each do |klass|
-        if !klass.channel_type.nil? && klass.channel_type == data[:type]
+        if !klass.channel_type.nil? && klass.channel_type == data[:type] && klass != ForumChannel::Post
           return klass.new(client, data, no_cache: no_cache)
         end
       end
