@@ -9,7 +9,7 @@ Let's get started!
 
 ## Requirements
 
-- Ruby 3.0.0+
+- Ruby 3.1.1+
 - Basic knowledge of ruby  
    These documents will help you:
   - [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
