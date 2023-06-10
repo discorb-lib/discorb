@@ -68,7 +68,7 @@ module Discorb
               begin
                 while (message = con.read)
                   buffer << message
-                  unless message.end_with?(
+                  unless message.buffer.end_with?(
                            (+"\x00\x00\xff\xff").force_encoding("ASCII-8BIT")
                          )
                     next
@@ -87,7 +87,6 @@ module Discorb
                 end
               rescue Async::Wrapper::Cancelled,
                      OpenSSL::SSL::SSLError,
-                     Async::Wrapper::WaitError,
                      IOError => e
                 next if @status == :closed
 
@@ -950,10 +949,11 @@ module Discorb
         @closed
       end
 
-      def close
+      def close(...)
         super
         @closed = true
-      rescue StandardError
+      rescue StandardError => e
+        warn "Failed to close connection: #{e.message}"
         force_close
       end
 

@@ -43,12 +43,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  spec.add_dependency "async", "~> 1.30.1"
-  spec.add_dependency "async-http", "~> 0.56.5"
-  spec.add_dependency "async-websocket", "~> 0.19.0"
+  spec.add_dependency "async", "~> 2.6"
+  spec.add_dependency "async-http", "~> 0.60"
+  spec.add_dependency "async-websocket", "~> 0.25"
 
   spec.add_dependency "dotenv", "~> 2.8"
-  spec.add_dependency "mime-types", "~> 3.3"
+  spec.add_dependency "mime-types", "~> 3.4"
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
   spec.metadata["rubygems_mfa_required"] = "true"

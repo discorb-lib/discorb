@@ -63,6 +63,7 @@ client.on :ready do
   # Begin the user's IRB session
   binding.irb # rubocop:disable Lint/Debugger
 
+  puts "\e[96mLogging out...\e[m"
   # Assume once the IRB session is over the user is finished.
   client.close
 end
