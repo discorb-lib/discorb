@@ -13,9 +13,9 @@ gem "rubocop-rake", "~> 0.6.0"
 gem "rubocop-rspec", "~> 2.9"
 
 # RSpec
-gem "async-rspec", "~> 1.16"
-gem "parallel_tests", "~> 3.8"
-gem "rspec", "~> 3.11"
+gem "async-rspec", "~> 1.17"
+gem "parallel_tests", "~> 4.2"
+gem "rspec", "~> 3.12"
 
 # Typecheck
 gem "steep", "~> 1.1"
