@@ -541,11 +541,11 @@ module Discorb
             return logger.warn "Unknown guild id #{data[:guild_id]}, ignoring"
           end
 
-          before_emojis = guild.emojis.values.map(&:id).to_set
+          before_emojis = guild.emojis.values.to_set(&:id)
           data[:emojis].each do |emoji|
             guild.emojis[emoji[:id]] = CustomEmoji.new(self, guild, emoji)
           end
-          deleted_emojis = before_emojis - guild.emojis.values.map(&:id).to_set
+          deleted_emojis = before_emojis - guild.emojis.values.to_set(&:id)
           deleted_emojis.each { |emoji| guild.emojis.delete(emoji) }
         when "GUILD_INTEGRATIONS_UPDATE"
           dispatch(:guild_integrations_update, @guilds[data[:guild_id]])

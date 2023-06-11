@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   RDOC
   spec.homepage = "https://github.com/discorb-lib/discorb"
   spec.license = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.1.1")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/discorb-lib/discorb"
