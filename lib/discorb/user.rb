@@ -15,7 +15,7 @@ module Discorb
     # @return [Discorb::User::Flag] The user's flags.
     attr_reader :flag
     # @return [String] The user's discriminator. ("0" for new users, "7740" for old users.)
-    # @deprecated This will be removed in the future because of discord.
+    # @deprecated This will be removed in the future because of discord changes.
     attr_reader :discriminator
     # @return [String] The user's global name. ("Nanashi." for new users, old users have no global name.)
     attr_reader :global_name

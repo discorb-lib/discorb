@@ -80,7 +80,7 @@ module Discorb
     end
 
     #
-    # Format the member to `Username#Discriminator` style.
+    # Format the user as `Display name (@Username)` or `Display name#Discriminator` style.
     #
     # @return [String] The formatted member.
     #
