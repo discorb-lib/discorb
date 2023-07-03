@@ -255,8 +255,8 @@ namespace :rbs do
           []
         end
       events << {
-        name: name,
-        description: description,
+        name:,
+        description:,
         parameters:
           parameters.map { |p| { name: p[0], type: p[1], description: p[2] } }
       }

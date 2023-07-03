@@ -150,11 +150,11 @@ module Discorb
             path,
             body,
             files,
-            audit_log_reason: audit_log_reason,
+            audit_log_reason:,
             **kwargs
           ).wait
         else
-          request(path, body, audit_log_reason: audit_log_reason, **kwargs).wait
+          request(path, body, audit_log_reason:, **kwargs).wait
         end
       when "400"
         raise BadRequestError.new(resp, data)

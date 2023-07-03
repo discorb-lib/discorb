@@ -123,7 +123,7 @@ module Discorb
     # @return [Async::Task<self>] The archived thread.
     #
     def archive(reason: nil)
-      edit(archived: true, reason: reason)
+      edit(archived: true, reason:)
     end
 
     #
@@ -134,7 +134,7 @@ module Discorb
     # @return [Async::Task<self>] The locked thread.
     #
     def lock(reason: nil)
-      edit(archived: true, locked: true, reason: reason)
+      edit(archived: true, locked: true, reason:)
     end
 
     #
@@ -145,7 +145,7 @@ module Discorb
     # @return [Async::Task<self>] The unarchived thread.
     #
     def unarchive(reason: nil)
-      edit(archived: false, reason: reason)
+      edit(archived: false, reason:)
     end
 
     #
@@ -158,7 +158,7 @@ module Discorb
     # @note This method won't unarchive the thread. Use {#unarchive} instead.
     #
     def unlock(reason: nil)
-      edit(archived: !unarchive, locked: false, reason: reason)
+      edit(archived: !unarchive, locked: false, reason:)
     end
 
     def parent
@@ -301,7 +301,7 @@ module Discorb
       # @private
       def self.new(client, data, no_cache: false)
         if client.channels[data[:id]].is_a?(ForumChannel)
-          ForumChannel::Post.new(client, data, no_cache: no_cache)
+          ForumChannel::Post.new(client, data, no_cache:)
         else
           super
         end

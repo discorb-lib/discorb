@@ -72,25 +72,25 @@ module Discorb
       automod_execution: true
     )
       @raw_value = {
-        guilds: guilds,
-        members: members,
-        bans: bans,
-        emojis: emojis,
-        integrations: integrations,
-        webhooks: webhooks,
-        invites: invites,
-        voice_states: voice_states,
-        presences: presences,
-        messages: messages,
-        reactions: reactions,
-        typing: typing,
-        dm_messages: dm_messages,
-        dm_reactions: dm_reactions,
-        dm_typing: dm_typing,
-        message_content: message_content,
-        scheduled_events: scheduled_events,
-        automod_configuration: automod_configuration,
-        automod_execution: automod_execution
+        guilds:,
+        members:,
+        bans:,
+        emojis:,
+        integrations:,
+        webhooks:,
+        invites:,
+        voice_states:,
+        presences:,
+        messages:,
+        reactions:,
+        typing:,
+        dm_messages:,
+        dm_reactions:,
+        dm_typing:,
+        message_content:,
+        scheduled_events:,
+        automod_configuration:,
+        automod_execution:
       }
     end
 

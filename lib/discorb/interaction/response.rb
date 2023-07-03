@@ -351,8 +351,8 @@ module Discorb
       def show_modal(title, custom_id, components)
         Async do
           payload = {
-            title: title,
-            custom_id: custom_id,
+            title:,
+            custom_id:,
             components: Component.to_payload(components)
           }
           @client

@@ -272,7 +272,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def timeout(time, reason: nil)
-      edit(communication_disabled_until: time, reason: reason)
+      edit(communication_disabled_until: time, reason:)
     end
 
     alias disable_communication timeout
@@ -286,7 +286,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def kick(reason: nil)
-      Async { guild.kick_member(self, reason: reason).wait }
+      Async { guild.kick_member(self, reason:).wait }
     end
 
     #
@@ -302,8 +302,8 @@ module Discorb
       Async do
         guild.ban_member(
           self,
-          delete_message_days: delete_message_days,
-          reason: reason
+          delete_message_days:,
+          reason:
         ).wait
       end
     end

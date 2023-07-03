@@ -286,8 +286,8 @@ module Discorb
             end
 
             {
-              name: name,
-              description: description,
+              name:,
+              description:,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
               privacy_level:
@@ -302,8 +302,8 @@ module Discorb
             end
 
             {
-              name: name,
-              description: description,
+              name:,
+              description:,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
               privacy_level:
@@ -322,15 +322,15 @@ module Discorb
             end
 
             {
-              name: name,
-              description: description,
+              name:,
+              description:,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time.iso8601,
               privacy_level:
                 Discorb::ScheduledEvent::PRIVACY_LEVEL.key(privacy_level),
               entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:external),
               entity_metadata: {
-                location: location
+                location:
               }
             }
           else
@@ -434,7 +434,7 @@ module Discorb
                 :post
               ),
               {
-                name: name,
+                name:,
                 image: image.to_s,
                 roles: roles.map { |r| Discorb::Utils.try(r, :id) }
               }
@@ -893,7 +893,7 @@ module Discorb
               .request(
                 Route.new(
                   "/guilds/#{@id}/members?#{
-                    URI.encode_www_form({ after: after, limit: limit })
+                    URI.encode_www_form({ after:, limit: })
                   }",
                   "//guilds/:guild_id/members",
                   :get
@@ -905,7 +905,7 @@ module Discorb
         ret = []
         after = 0
         loop do
-          params = { after: after, limit: 100 }
+          params = { after:, limit: 100 }
           _resp, data =
             @client
               .http
@@ -944,7 +944,7 @@ module Discorb
             .request(
               Route.new(
                 "/guilds/#{@id}/members/search?#{
-                  URI.encode_www_form({ query: name, limit: limit })
+                  URI.encode_www_form({ query: name, limit: })
                 }",
                 "//guilds/:guild_id/members/search",
                 :get
@@ -1037,7 +1037,7 @@ module Discorb
       Async do
         params =
           {
-            limit: limit,
+            limit:,
             before: Discorb::Utils.try(after, :id),
             after: Discorb::Utils.try(around, :id),
             around: Discorb::Utils.try(before, :id)
@@ -1119,7 +1119,7 @@ module Discorb
                 "//guilds/:guild_id/bans",
                 :post
               ),
-              { user: member.id, delete_message_days: delete_message_days },
+              { user: member.id, delete_message_days: },
               audit_log_reason: reason
             )
             .wait
@@ -1229,7 +1229,7 @@ module Discorb
     #
     def fetch_prune(days = 7, roles: [])
       Async do
-        params = { days: days, include_roles: @id.to_s }
+        params = { days:, include_roles: @id.to_s }
         param[:include_roles] = roles
           .map(&:id)
           .map(&:to_s)
@@ -1270,7 +1270,7 @@ module Discorb
                 "//guilds/:guild_id/prune",
                 :post
               ),
-              { days: days, roles: roles.map(&:id) },
+              { days:, roles: roles.map(&:id) },
               audit_log_reason: reason
             )
             .wait
@@ -1521,7 +1521,7 @@ module Discorb
                 "//guilds/:guild_id/templates",
                 :post
               ),
-              { name: name, description: description },
+              { name:, description: },
               audit_log_reason: reason
             )
             .wait
@@ -1610,17 +1610,17 @@ module Discorb
     )
       Async do
         payload = {
-          name: name,
+          name:,
           event_type: Discorb::AutoModRule::EVENT_TYPES.key(event_type),
           trigger_type: Discorb::AutoModRule::TRIGGER_TYPES.key(trigger_type),
           metadata: {
-            keyword_filter: keyword_filter,
+            keyword_filter:,
             presets: presets && Discorb::AutoModRule::PRESET_TYPES.key(presets),
-            allow_list: allow_list,
-            mention_total_limit: mention_total_limit
+            allow_list:,
+            mention_total_limit:
           },
           actions: actions.map(&:to_hash),
-          enabled: enabled,
+          enabled:,
           exempt_roles: exempt_roles.map(&:id),
           exempt_channels: exempt_channels.map(&:id)
         }
