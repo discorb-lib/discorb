@@ -85,11 +85,15 @@ module Discorb
     # @return [String] The formatted member.
     #
     def to_s
-      "#{username}##{discriminator}"
+      if @discriminator == "0"
+        "#{name} (@#{@username})"
+      else
+        "#{username}##{discriminator}"
+      end
     end
 
     def name
-      @nick || @username
+      @nick || @global_name || @username
     end
 
     def mention

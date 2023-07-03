@@ -7,15 +7,18 @@ module Discorb
   class User < DiscordModel
     # @return [Boolean] Whether the user is verified.
     attr_reader :verified
-    # @return [String] The user's username.
+    # @return [String] The user's username. ("sevenc_nanashi" for new users, "Nanashi." for old users.)
     attr_reader :username
     alias name username
     # @return [Discorb::Snowflake] The user's ID.
     attr_reader :id
     # @return [Discorb::User::Flag] The user's flags.
     attr_reader :flag
-    # @return [String] The user's discriminator.
+    # @return [String] The user's discriminator. ("0" for new users, "7740" for old users.)
+    # @deprecated This will be removed in the future because of discord.
     attr_reader :discriminator
+    # @return [String] The user's global name. ("Nanashi." for new users, old users have no global name.)
+    attr_reader :global_name
     # @return [Discorb::Asset, Discorb::DefaultAvatar] The user's avatar.
     attr_reader :avatar
     # @return [Boolean] Whether the user is a bot.
@@ -44,12 +47,16 @@ module Discorb
     end
 
     #
-    # Format the user as `Username#Discriminator` style.
+    # Format the user as `Global name (@Username)` or `Username#Discriminator` style.
     #
     # @return [String] The formatted username.
     #
     def to_s
-      "#{@username}##{@discriminator}"
+      if @discriminator == "0"
+        "#{@global_name} (@#{@username})"
+      else
+        "#{@username}##{@discriminator}"
+      end
     end
 
     def mention
@@ -149,6 +156,7 @@ module Discorb
 
     def _set_data(data)
       @username = data[:username]
+      @global_name = data[:global_name]
       @verified = data[:verified]
       @id = Snowflake.new(data[:id])
       @flag = User::Flag.new(data[:public_flags] | (data[:flags] || 0))
