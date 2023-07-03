@@ -123,6 +123,7 @@ module Discorb
     end
 
     alias id to_s
+    alias to_str to_s
   end
 
   #
