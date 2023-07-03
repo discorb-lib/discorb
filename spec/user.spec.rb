@@ -3,7 +3,7 @@
 require_relative "./common"
 
 RSpec.describe Discorb::User do
-  %w[user bot].each do |data_name|
+  %w[new_user user bot].each do |data_name|
     let(:data) do
       JSON.load_file(
         __dir__ + "/payloads/users/#{data_name}.json",
