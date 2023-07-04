@@ -131,7 +131,7 @@ RSpec.describe Discorb::Client do
       allow(client).to receive(:http).and_return(http)
       allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
       allow(client).to receive(:send_gateway) { |opcode, **payload|
-        expect({ opcode: opcode, payload: payload }).to eq(
+        expect({ opcode:, payload: }).to eq(
           $next_gateway_request
         )
       }
@@ -185,11 +185,11 @@ RSpec.describe Discorb::Client do
         expect_gateway_request(
           3,
           activities: [],
-          status: status,
+          status:,
           since: nil,
           afk: nil
         )
-        client.change_presence(status: status).wait
+        client.change_presence(status:).wait
       end
     end
   end

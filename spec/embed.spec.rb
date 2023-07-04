@@ -24,7 +24,7 @@ RSpec.describe Discorb::Embed do
 
   it "sets timestamp" do
     timestamp = Time.now
-    expect(described_class.new("t", "d", timestamp: timestamp).to_hash).to eq(
+    expect(described_class.new("t", "d", timestamp:).to_hash).to eq(
       {
         type: "rich",
         title: "t",

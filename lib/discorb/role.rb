@@ -114,7 +114,7 @@ module Discorb
               "//guilds/:guild_id/roles",
               :patch
             ),
-            { id: @id, position: position },
+            { id: @id, position: },
             audit_log_reason: reason
           )
           .wait

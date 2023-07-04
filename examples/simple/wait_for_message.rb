@@ -5,7 +5,7 @@ require "discorb"
 intents = Discorb::Intents.new
 intents.message_content = true
 
-client = Discorb::Client.new(intents: intents)
+client = Discorb::Client.new(intents:)
 
 client.once :standby do
   puts "Logged in as #{client.user}"

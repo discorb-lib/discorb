@@ -145,7 +145,7 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
                    {
                      "arg1" => {
                        description: "test arg1 description",
-                       type: type
+                       type:
                      }
                    } do
         # do nothing
@@ -472,7 +472,7 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
                    {
                      "arg1" => {
                        description: "test arg1 description",
-                       type: type,
+                       type:,
                        range: ..10
                      }
                    } do
@@ -513,7 +513,7 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
                    {
                      "arg1" => {
                        description: "test arg1 description",
-                       type: type,
+                       type:,
                        range: 10..
                      }
                    } do
@@ -554,7 +554,7 @@ RSpec.describe Discorb::ApplicationCommand::Command::ChatInputCommand do
                    {
                      "arg1" => {
                        description: "test arg1 description",
-                       type: type,
+                       type:,
                        range: 0..10
                      }
                    } do

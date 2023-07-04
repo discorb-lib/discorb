@@ -125,8 +125,8 @@ module Discorb
       new(
         io,
         filename,
-        content_type: content_type,
-        description: description,
+        content_type:,
+        description:,
         will_close: true
       )
     end

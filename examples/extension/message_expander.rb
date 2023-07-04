@@ -48,7 +48,7 @@ class MessageExpander
                   icon: url_message.guild.icon&.url
                 )
             )
-          message.reply embed: embed
+          message.reply embed:
         end
       end
   end

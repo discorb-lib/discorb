@@ -139,8 +139,8 @@ module Discorb
             end
 
             {
-              name: name,
-              description: description,
+              name:,
+              description:,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
               privacy_level:
@@ -158,8 +158,8 @@ module Discorb
             end
 
             {
-              name: name,
-              description: description,
+              name:,
+              description:,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time&.iso8601,
               privacy_level:
@@ -181,8 +181,8 @@ module Discorb
             end
 
             {
-              name: name,
-              description: description,
+              name:,
+              description:,
               channel_id: nil,
               scheduled_start_time: start_time.iso8601,
               scheduled_end_time: end_time.iso8601,
@@ -191,7 +191,7 @@ module Discorb
                   Discorb::Unset,
               entity_type: Discorb::ScheduledEvent::ENTITY_TYPE.key(:external),
               entity_metadata: {
-                location: location
+                location:
               },
               status:
                 Discorb::ScheduledEvent::STATUS.key(status) || Discorb::Unset
@@ -304,10 +304,10 @@ module Discorb
         else
           params =
             {
-              limit: limit,
+              limit:,
               before: Discorb::Utils.try(before, :id),
               after: Discorb::Utils.try(after, :id),
-              with_member: with_member
+              with_member:
             }.filter { |_k, v| !v.nil? }.to_h
           _resp, messages =
             @client

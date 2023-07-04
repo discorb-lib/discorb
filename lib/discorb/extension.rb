@@ -69,7 +69,7 @@ module Discorb
       # @param [Proc] block The block to execute when the event is triggered.
       #
       def once_event(event_name, id: nil, **metadata, &block)
-        event(event_name, id: id, once: true, **metadata, &block)
+        event(event_name, id:, once: true, **metadata, &block)
       end
 
       # @return [Hash{Symbol => Array<Discorb::EventHandler>}] The events of the extension.

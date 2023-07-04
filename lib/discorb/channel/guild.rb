@@ -130,7 +130,7 @@ module Discorb
     )
       Async do
         # @type var payload: Hash[Symbol, untyped]
-        payload = { position: position }
+        payload = { position: }
         payload[:lock_permissions] = lock_permissions
         payload[:parent_id] = parent&.id if parent != Discorb::Unset
         @client
@@ -275,10 +275,10 @@ module Discorb
                 :post
               ),
               {
-                max_age: max_age,
-                max_uses: max_uses,
-                temporary: temporary,
-                unique: unique
+                max_age:,
+                max_uses:,
+                temporary:,
+                unique:
               },
               audit_log_reason: reason
             )

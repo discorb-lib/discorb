@@ -73,7 +73,7 @@ module Discorb
       # @return [Hash] The tag as a hash.
       #
       def to_hash
-        { id: id, name: name, moderated: moderated, emoji: emoji }
+        { id:, name:, moderated:, emoji: }
       end
 
       # @private
@@ -184,7 +184,7 @@ module Discorb
       # @see #pinned?
       #
       def pin(reason: nil)
-        edit(pinned: true, reason: reason)
+        edit(pinned: true, reason:)
       end
 
       #
@@ -199,7 +199,7 @@ module Discorb
       # @see #pinned?
       #
       def unpin(reason: nil)
-        edit(pinned: false, reason: reason)
+        edit(pinned: false, reason:)
       end
 
       #
@@ -214,7 +214,7 @@ module Discorb
       # @see #tags
       #
       def add_tags(*tags, reason: nil)
-        edit(tags: self.tags + tags, reason: reason)
+        edit(tags: self.tags + tags, reason:)
       end
 
       #
@@ -229,7 +229,7 @@ module Discorb
       # @see #tags
       #
       def remove_tags(*tags, reason: nil)
-        edit(tags: self.tags - tags, reason: reason)
+        edit(tags: self.tags - tags, reason:)
       end
 
       private
@@ -344,7 +344,7 @@ module Discorb
             .http
             .request(
               Route.new("/channels/#{id}", "//channels/:channel_id", :patch),
-              reason: reason
+              reason:
             )
             .wait
         _set_data(ret)
@@ -376,7 +376,7 @@ module Discorb
     # @see #edit
     #
     def create_tags(*tags, reason: nil)
-      edit(tags: self.tags + tags, reason: reason)
+      edit(tags: self.tags + tags, reason:)
     end
 
     #
@@ -391,7 +391,7 @@ module Discorb
     # @see #edit
     #
     def delete_tags(*tags, reason: nil)
-      edit(tags: self.tags - tags, reason: reason)
+      edit(tags: self.tags - tags, reason:)
     end
 
     #

@@ -16,11 +16,11 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
     &response
   )
     $next_request = {
-      method: method,
-      path: path,
-      body: body,
-      files: files,
-      headers: headers
+      method:,
+      path:,
+      body:,
+      files:,
+      headers:
     }
     $next_response = response
   end
@@ -39,10 +39,10 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
         {
           method: path.method,
           path: path.url,
-          body: body,
+          body:,
           files: {
           },
-          headers: headers
+          headers:
         }
       ).to eq($next_request)
       Async do
@@ -55,9 +55,9 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
         {
           method: path.method,
           path: path.url,
-          body: body,
+          body:,
           files: files.to_h { |f| [f.name, f.read] },
-          headers: headers
+          headers:
         }
       ).to eq($next_request)
       Async do
@@ -76,7 +76,7 @@ RSpec.shared_context "mocks" do # rubocop:disable RSpec/ContextWording
     allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
     allow(client).to receive(:send_gateway) { |opcode, **payload|
       if $next_gateway_request
-        expect({ opcode: opcode, payload: payload }).to eq(
+        expect({ opcode:, payload: }).to eq(
           $next_gateway_request
         )
       end

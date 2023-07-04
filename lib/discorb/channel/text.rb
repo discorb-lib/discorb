@@ -254,8 +254,8 @@ module Discorb
                   :post
                 ),
                 {
-                  name: name,
-                  auto_archive_duration: auto_archive_duration,
+                  name:,
+                  auto_archive_duration:,
                   type: public ? 11 : 10,
                   rate_limit_per_user: rate_limit_per_user || slowmode
                 },
@@ -271,7 +271,7 @@ module Discorb
                   "//channels/:channel_id/messages/:message_id/threads",
                   :post
                 ),
-                { name: name, auto_archive_duration: auto_archive_duration },
+                { name:, auto_archive_duration: },
                 audit_log_reason: reason
               )
               .wait

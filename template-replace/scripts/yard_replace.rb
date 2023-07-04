@@ -21,7 +21,7 @@ def yard_replace(dir, version)
     Generated from <a href="https://github.com/discorb-lib/discorb/tree/#{sha}"><code>#{sha}</code></a>, version #{tag}, with YARD #{YARD::VERSION}.
     </div>
     HTML2
-    contents.gsub!(<<-'HTML3', "")
+    contents.gsub!(<<-HTML3, "")
 <h1 class="noborder title">Documentation by YARD 0.9.26</h1>
     HTML3
     display_version = (version == "main" ? "(main)" : "v#{version}")

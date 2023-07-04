@@ -153,7 +153,7 @@ module Discorb
     #
     def once(event_name, id: nil, **metadata, &block)
       metadata[:once] = true
-      on(event_name, id: id, **metadata, &block)
+      on(event_name, id:, **metadata, &block)
     end
 
     #
@@ -359,7 +359,7 @@ module Discorb
     # @param [:online, :idle, :dnd, :invisible] status The status to update.
     #
     def update_presence(activity = nil, status: nil)
-      payload = { activities: [], status: status, since: nil, afk: nil }
+      payload = { activities: [], status:, since: nil, afk: nil }
       payload[:activities] = [activity.to_hash] unless activity.nil?
       payload[:status] = status unless status.nil?
       if connection
@@ -484,10 +484,10 @@ module Discorb
 
       case ENV.fetch("DISCORB_CLI_FLAG", nil)
       when nil
-        start_client(token, shards: shards, shard_count: shard_count)
+        start_client(token, shards:, shard_count:)
       when "run"
         before_run(token)
-        start_client(token, shards: shards, shard_count: shard_count)
+        start_client(token, shards:, shard_count:)
       when "setup"
         run_setup(token)
       end
@@ -534,7 +534,7 @@ module Discorb
         guild_ids = guilds.split(",")
       end
       guild_ids = false if guild_ids == ["global"]
-      setup_commands(token, guild_ids: guild_ids).wait
+      setup_commands(token, guild_ids:).wait
       clear_commands(
         token,
         ENV.fetch("DISCORB_SETUP_CLEAR_GUILDS", "").split(",")

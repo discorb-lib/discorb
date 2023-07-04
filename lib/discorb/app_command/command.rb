@@ -177,7 +177,7 @@ module Discorb
                   else
                     raise ArgumentError, "Invalid option type: #{value[:type]}"
                   end,
-                name: name,
+                name:,
                 name_localizations:
                   ApplicationCommand.modify_localization_hash(
                     value[:name_localizations]

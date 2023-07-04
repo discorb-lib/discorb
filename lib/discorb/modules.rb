@@ -212,7 +212,7 @@ module Discorb
       Async do
         params =
           {
-            limit: limit,
+            limit:,
             before: Discorb::Utils.try(after, :id),
             after: Discorb::Utils.try(around, :id),
             around: Discorb::Utils.try(before, :id)

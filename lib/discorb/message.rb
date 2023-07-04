@@ -277,12 +277,12 @@ module Discorb
         channel.edit_message(
           @id,
           content,
-          embed: embed,
-          embeds: embeds,
-          allowed_mentions: allowed_mentions,
-          attachments: attachments,
-          components: components,
-          supress: supress
+          embed:,
+          embeds:,
+          allowed_mentions:,
+          attachments:,
+          components:,
+          supress:
         ).wait
       end
     end
@@ -296,7 +296,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def delete(reason: nil)
-      Async { channel.delete_message(@id, reason: reason).wait }
+      Async { channel.delete_message(@id, reason:).wait }
     end
 
     #
@@ -312,7 +312,7 @@ module Discorb
           message_id: @id,
           channel_id: @channel_id,
           guild_id: @guild_id,
-          fail_if_not_exists: fail_if_not_exists
+          fail_if_not_exists:
         }
       )
     end
@@ -498,7 +498,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def pin(reason: nil)
-      Async { channel.pin_message(self, reason: reason).wait }
+      Async { channel.pin_message(self, reason:).wait }
     end
 
     #
@@ -510,7 +510,7 @@ module Discorb
     # @return [Async::Task<void>] The task.
     #
     def unpin(reason: nil)
-      Async { channel.unpin_message(self, reason: reason).wait }
+      Async { channel.unpin_message(self, reason:).wait }
     end
 
     #

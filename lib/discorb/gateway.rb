@@ -162,7 +162,7 @@ module Discorb
           when 10
             @heartbeat_interval = data[:heartbeat_interval]
             if reconnect
-              payload = { token: @token, session_id: session_id, seq: @last_s }
+              payload = { token: @token, session_id:, seq: @last_s }
               send_gateway(6, **payload)
             else
               payload = {

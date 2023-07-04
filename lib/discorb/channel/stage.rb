@@ -92,7 +92,7 @@ module Discorb
             .http
             .request(
               Route.new("/stage-instances", "//stage-instances", :post),
-              { channel_id: @id, topic: topic, public: public ? 2 : 1 },
+              { channel_id: @id, topic:, public: public ? 2 : 1 },
               audit_log_reason: reason
             )
             .wait
