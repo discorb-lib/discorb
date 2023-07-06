@@ -5,7 +5,7 @@ require "logger"
 
 require "async"
 require "async/websocket/client"
-require_relative "./utils/colored_puts"
+require_relative "utils/colored_puts"
 
 module Discorb
   #
