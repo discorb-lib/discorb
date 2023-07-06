@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./common"
+require_relative "common"
 
 RSpec.describe Discorb::User do
   %w[new_user user bot].each do |data_name|

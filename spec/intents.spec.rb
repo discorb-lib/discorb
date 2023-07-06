@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./common"
+require_relative "common"
 
 RSpec.describe Discorb::Intents do
   Discorb::Intents::INTENT_BITS.each do |key, value|

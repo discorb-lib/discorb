@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./common"
+require_relative "common"
 
 RSpec.describe Discorb::Dictionary do
   let(:dict) { described_class.new({ foo: :bar, fizz: :buzz, hoge: :fuga }) }
