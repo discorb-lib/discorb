@@ -7,8 +7,6 @@ target :lib do
 
   check "lib"
 
-  library "net-http", "timeout"
-
   configure_code_diagnostics(D::Ruby.lenient)
   configure_code_diagnostics do |config|
     config[D::Ruby::UnsupportedSyntax] = nil

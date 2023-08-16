@@ -1,80 +1,13 @@
 ---
 sources:
-- name: ruby/gem_rbs_collection
+- type: git
+  name: ruby/gem_rbs_collection
+  revision: 8a678b2ec20e9d594055f53745399814e3a887dc
   remote: https://github.com/ruby/gem_rbs_collection.git
-  revision: main
   repo_dir: gems
 path: ".gem_rbs_collection"
 gems:
-- name: net-http
-  version: '0'
-  source:
-    type: stdlib
 - name: logger
-  version: '0'
-  source:
-    type: stdlib
-- name: ast
-  version: '2.4'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
-- name: forwardable
-  version: '0'
-  source:
-    type: stdlib
-- name: i18n
-  version: '1.10'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
-- name: listen
-  version: '3.2'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
-- name: minitest
-  version: '0'
-  source:
-    type: stdlib
-- name: parallel
-  version: '1.20'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
-- name: prime
-  version: '0'
-  source:
-    type: stdlib
-- name: rainbow
-  version: '3.0'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 347858a6750d478f6cf1285b4ebd6ae945af2609
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
-- name: singleton
-  version: '0'
-  source:
-    type: stdlib
-- name: uri
-  version: '0'
-  source:
-    type: stdlib
-- name: timeout
   version: '0'
   source:
     type: stdlib
@@ -82,7 +15,16 @@ gems:
   version: '0'
   source:
     type: stdlib
-- name: mutex_m
+- name: net-http
   version: '0'
   source:
     type: stdlib
+- name: timeout
+  version: '0'
+  source:
+    type: stdlib
+- name: uri
+  version: '0'
+  source:
+    type: stdlib
+gemfile_lock_path: Gemfile.lock

@@ -4,13 +4,23 @@ module Discorb
   class Activity
     TYPES: untyped
 
+    type types = :playing | :streaming | :listening | :watching | :custom | :competing
+
+    # @return [String] The text of the activity.
+    attr_reader text: String
+    # @return [:playing, :streaming, :listening, :watching, :competing] The type of the activity.
+    attr_reader type: types
+    # @return [String] The URL of the activity.
+    attr_reader url: String?
+
     #
     # Initializes a new Activity.
     #
-    # @param [String] name The name of the activity.
-    # @param [:playing, :streaming, :listening, :watching, :competing] type The type of activity.
+    # @param [String] text The text of the activity.
+    # @param [:playing, :streaming, :listening, :watching, :custom, :competing] type The type of activity.
     # @param [String] url The URL of the activity.
-    def initialize: (String name, ?Symbol `type`, ?String? url) -> void
+    #
+    def initialize: (String text, types type, ?url: String?) -> void
 
     #
     # Converts the activity to a hash.

@@ -63,7 +63,7 @@ module Discorb
         String name,
         Discorb::emoji emoji,
         ?moderated: bool
-      ) -> Discorb::ForumChannel::Tag
+      ) -> void
 
       # Returns the tag as a hash.
       #
@@ -292,7 +292,7 @@ module Discorb
     # @param [Integer] rate_limit_per_user The rate limit per user.
     # @param [Integer] slowmode Alias of `rate_limit_per_user`.
     #
-    # @return [Async::Task<Discorb::PublicThread>] The created thread.
+    # @return [Async::Task<Discorb::ForumChannel::Post>] The created thread.
     def create_post: (
       title: String,
       ?content: String,
@@ -306,7 +306,7 @@ module Discorb
       ?auto_archive_duration: :hour | :day | :three_days | :week,
       ?rate_limit_per_user: Integer,
       ?slowmode: Integer
-    ) -> Async::Task[Discorb::PublicThread]
+    ) -> Async::Task[Discorb::ForumChannel::Post]
 
     alias start_thread create_post
     alias create_thread start_thread

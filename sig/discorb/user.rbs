@@ -35,7 +35,7 @@ module Discorb
     attr_reader verified: bool
 
     # @return [String] The user's username. ("sevenc_nanashi" for new users, "Nanashi." for old users.)
-    attr_reader :username
+    attr_reader username: String
     alias name username
 
     # @return [Discorb::Snowflake] The user's ID.
@@ -46,10 +46,10 @@ module Discorb
 
     # @return [String] The user's discriminator. ("0" for new users, "7740" for old users.)
     # @deprecated This will be removed in the future because of discord changes.
-    attr_reader :discriminator
+    attr_reader discriminator: String
 
     # @return [String] The user's global name. ("Nanashi." for new users, old users have no global name.)
-    attr_reader :global_name
+    attr_reader global_name: String
 
     # @return [Discorb::Asset, Discorb::DefaultAvatar] The user's avatar.
     attr_reader avatar: Discorb::Asset | Discorb::DefaultAvatar

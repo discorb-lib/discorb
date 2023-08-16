@@ -10,7 +10,9 @@ module Discorb
     include Discorb::ChannelContainer
 
     def channels
-      @client.channels.values.filter { |channel| channel.parent == self }
+      @client.channels.values.filter do |channel|
+        channel.parent == self && channel.is_a?(Discorb::GuildChannel)
+      end
     end
 
     def create_text_channel(*args, **kwargs)

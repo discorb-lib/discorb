@@ -50,6 +50,7 @@ module Discorb
       # @param [Hash] metadata Other metadata.
       #
       def event(event_name, id: nil, **metadata, &block)
+        # @type var event_name: Symbol
         unless event_name.is_a?(Symbol)
           raise ArgumentError, "Event name must be a symbol"
         end
