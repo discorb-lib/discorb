@@ -21,8 +21,7 @@ gem "rspec", "~> 3.12"
 gem "steep", "~> 1.1"
 
 # Other development tools
-gem "lefthook", "~> 0.7.7"
-gem "rufo", "~> 0.13.0"
+gem "lefthook", "~> 1.4.3"
 gem "sord", "~> 3.0.1"
 
 group :docs, optional: true do
