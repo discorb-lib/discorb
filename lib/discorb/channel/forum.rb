@@ -464,7 +464,7 @@ module Discorb
     # @param [Integer] rate_limit_per_user The rate limit per user.
     # @param [Integer] slowmode Alias of `rate_limit_per_user`.
     #
-    # @return [Async::Task<Discorb::PublicThread>] The created thread.
+    # @return [Async::Task<Discorb::ForumChannel::Post>] The created thread.
     #
     def create_post(
       title,
