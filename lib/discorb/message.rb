@@ -179,7 +179,7 @@ module Discorb
     end
 
     def webhook?
-      @webhook_id != nil
+      @webhook_id != false
     end
 
     def jump_url
