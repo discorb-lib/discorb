@@ -7,7 +7,7 @@ def add_favicon(dir)
     .each do |file|
       content = File.read(file)
       content.gsub!(
-        /<head>/,
+        "<head>",
         "<head>\n<link rel=\"shortcut icon\" href=\"/favicon.png\" />"
       )
       File.write(file, content)
