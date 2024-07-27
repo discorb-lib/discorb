@@ -122,13 +122,7 @@ module Discorb
     )
       io = StringIO.new(string)
       filename ||= "#{string.object_id}.txt"
-      new(
-        io,
-        filename,
-        content_type:,
-        description:,
-        will_close: true
-      )
+      new(io, filename, content_type:, description:, will_close: true)
     end
   end
 end

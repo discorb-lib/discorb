@@ -267,7 +267,10 @@ module Discorb
         @name = EmojiTable::UNICODE_TO_DISCORD[name2].first
         @value = name
       else
-        raise ArgumentError, "No such emoji: #{name}"
+        @client.logger.warn "Unknown emoji: #{name}"
+
+        @name = name
+        @value = name
       end
       if tone.positive?
         unless @value = EmojiTable::DISCORD_TO_UNICODE["#{name}_tone#{tone}"]

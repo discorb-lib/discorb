@@ -16,48 +16,14 @@ task :spec do
   sh "parallel_rspec spec/*.spec.rb spec/**/*.spec.rb"
 end
 
-desc "Build emoji_table.rb"
-task :emoji_table do
-  require_relative "lib/discorb"
-
-  iputs "Building emoji_table.rb"
-  res = {}
-  Discorb::EmojiTable::DISCORD_TO_UNICODE.each do |discord, unicode|
-    res[unicode] ||= []
-    res[unicode] << discord
-  end
-
-  res_text = +""
-  res.each do |unicode, discord|
-    res_text << %(#{unicode.unpack("C*").pack("C*").inspect} => %w[#{discord.join(" ")}],\n)
-  end
-
-  table_script = File.read("lib/discorb/emoji_table.rb")
-
-  table_script.gsub!(
-    /(?<=UNICODE_TO_DISCORD = {\n)[\s\S]+(?=}\.freeze)/,
-    res_text
-  )
-
-  File.open("lib/discorb/emoji_table.rb", "w") { |f| f.print(table_script) }
-  `rufo lib/discorb/emoji_table.rb`
-  sputs "Successfully made emoji_table.rb"
-end
-
 desc "Format files"
 task :format do
-  Dir
+  files = Dir
     .glob("**/*.rb")
-    .each do |file|
-      next if file.start_with?("vendor")
-
-      iputs "Formatting #{file}"
-      `rufo ./#{file}`
-      content = ""
-      File.open(file, "rb") { |f| content = f.read }
-      content.gsub!("\r\n", "\n")
-      File.open(file, "wb") { |f| f.print(content) }
+    .reject do |file|
+      file.start_with?("vendor")
     end
+  sh "stree write #{files.join(" ")}"
 end
 
 desc "Generate document and replace"

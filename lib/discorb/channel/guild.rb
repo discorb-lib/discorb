@@ -274,12 +274,7 @@ module Discorb
                 "//channels/:channel_id/invites",
                 :post
               ),
-              {
-                max_age:,
-                max_uses:,
-                temporary:,
-                unique:
-              },
+              { max_age:, max_uses:, temporary:, unique: },
               audit_log_reason: reason
             )
             .wait

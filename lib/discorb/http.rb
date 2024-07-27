@@ -146,13 +146,7 @@ module Discorb
         )
         sleep(data[:retry_after])
         if files
-          multipart_request(
-            path,
-            body,
-            files,
-            audit_log_reason:,
-            **kwargs
-          ).wait
+          multipart_request(path, body, files, audit_log_reason:, **kwargs).wait
         else
           request(path, body, audit_log_reason:, **kwargs).wait
         end

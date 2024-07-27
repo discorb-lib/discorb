@@ -131,9 +131,7 @@ RSpec.describe Discorb::Client do
       allow(client).to receive(:http).and_return(http)
       allow(client).to receive(:handle_heartbeat).and_return(Async { nil })
       allow(client).to receive(:send_gateway) { |opcode, **payload|
-        expect({ opcode:, payload: }).to eq(
-          $next_gateway_request
-        )
+        expect({ opcode:, payload: }).to eq($next_gateway_request)
       }
       class << client
         attr_accessor :next_gateway_request, :token
@@ -182,13 +180,7 @@ RSpec.describe Discorb::Client do
     it "sends valid payload to change presence" do
       client # initialize client
       %i[online idle dnd offline].each do |status|
-        expect_gateway_request(
-          3,
-          activities: [],
-          status:,
-          since: nil,
-          afk: nil
-        )
+        expect_gateway_request(3, activities: [], status:, since: nil, afk: nil)
         client.change_presence(status:).wait
       end
     end

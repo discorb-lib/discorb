@@ -299,13 +299,7 @@ module Discorb
     # @return [Async::Task<Discorb::Guild::Ban>] The ban.
     #
     def ban(delete_message_days: 0, reason: nil)
-      Async do
-        guild.ban_member(
-          self,
-          delete_message_days:,
-          reason:
-        ).wait
-      end
+      Async { guild.ban_member(self, delete_message_days:, reason:).wait }
     end
 
     #
