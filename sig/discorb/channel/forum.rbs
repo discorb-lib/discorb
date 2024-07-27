@@ -27,6 +27,9 @@ module Discorb
     # @return [:latest_activity, :creation_date] The default sort order of the channel.
     attr_reader default_sort_order: :latest_activity | :creation_date
 
+    # @return [nil, :list_view, :gallery_view] The default view of the channel.
+    attr_reader default_forum_view: nil | :list_view | :gallery_view
+
     # @return [Array<Discorb::ForumChannel::Tag>] The tags in the channel.
     attr_reader tags: Array[Discorb::ForumChannel::Tag]
 
@@ -192,6 +195,7 @@ module Discorb
     # @param [Integer] thread_slowmode Alias of `thread_rate_limit_per_user`.
     # @param [Integer] default_auto_archive_duration The default auto archive duration of the channel.
     # @param [Integer] archive_in Alias of `default_auto_archive_duration`.
+    # @param [nil, :list_view, :gallery_view] default_forum_view The default view of the channel.
     # @param [Boolean] require_tag Whether the channel requires tag to create thread.
     # @param [Discorb::Emoji] default_reaction_emoji The default reaction emoji of the channel.
     # @param [:latest_activity, :creation_date] default_sort_order The default sort order of the channel.
@@ -216,6 +220,7 @@ module Discorb
       ?thread_slowmode: Integer,
       ?default_auto_archive_duration: Integer,
       ?archive_in: Integer,
+      ?default_forum_view: nil | :list_view | :gallery_view,
       ?require_tag: bool,
       ?default_reaction_emoji: Discorb::emoji,
       ?default_sort_order: :latest_activity | :creation_date,

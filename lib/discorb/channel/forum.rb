@@ -21,6 +21,8 @@ module Discorb
     attr_reader :default_auto_archive_duration
     # @return [:latest_activity, :creation_date] The default sort order of the channel.
     attr_reader :default_sort_order
+    # @return [nil, :list_view, :gallery_view] The default view of the channel.
+    attr_reader :default_forum_view
     # @return [Array<Discorb::ForumChannel::Tag>] The tags in the channel.
     attr_reader :tags
     # @return [Boolean] Whether at least one tag is required.
@@ -36,6 +38,7 @@ module Discorb
     end
 
     DEFAULT_SORT_ORDER = { 1 => :latest_activity, 2 => :creation_date }.freeze
+    DEFAULT_FORUM_VIEW = { 0 => nil, 1 => :list_view, 2 => :gallery_view }.freeze
 
     #
     # Represents a tag in the forum channel.
@@ -271,6 +274,7 @@ module Discorb
     # @param [Boolean] require_tag Whether the channel requires tag to create thread.
     # @param [Discorb::Emoji] default_reaction_emoji The default reaction emoji of the channel.
     # @param [:latest_activity, :creation_date] default_sort_order The default sort order of the channel.
+    # @param [nil, :list_view, :gallery_view] default_forum_view The default view of the channel.
     # @param [Array<Discorb::ForumChannel::Tag>] tags The tags of the channel.
     # @param [String] reason The reason of editing the channel.
     #
@@ -296,6 +300,7 @@ module Discorb
       require_tag: Discorb::Unset,
       default_reaction_emoji: Discorb::Unset,
       default_sort_order: Discorb::Unset,
+      default_forum_view: Discorb::Unset,
       tags: Discorb::Unset,
       reason: nil
     )
@@ -337,6 +342,9 @@ module Discorb
         payload[:default_sort_order] = DEFAULT_SORT_ORDER.key(
           default_sort_order
         ) unless default_sort_order == Discorb::Unset
+        payload[:default_forum_view] = DEFAULT_FORUM_VIEW.key(
+          default_forum_view
+        ) unless default_forum_view == Discorb::Unset
         payload[:available_tags] = tags.map(&:to_hash) unless tags ==
           Discorb::Unset
         ret =
