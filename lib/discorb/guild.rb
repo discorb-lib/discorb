@@ -1230,7 +1230,7 @@ module Discorb
     def fetch_prune(days = 7, roles: [])
       Async do
         params = { days:, include_roles: @id.to_s }
-        param[:include_roles] = roles
+        params[:include_roles] = roles
           .map(&:id)
           .map(&:to_s)
           .join(";") if roles.any?
