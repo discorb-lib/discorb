@@ -18,6 +18,8 @@ module Discorb
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Discorb::Attachment] attachment The attachment to send.
     # @param [Array<Discorb::Attachment>] attachments The attachments to send.
+    # @param [Array<Discorb::Sticker>] stickers The stickers to send.
+    # @param [Discorb::Sticker] sticker The sticker to send.
     #
     # @return [Async::Task<Discorb::Message>] The message sent.
     #
@@ -30,7 +32,9 @@ module Discorb
       reference: nil,
       components: nil,
       attachment: nil,
-      attachments: nil
+      attachments: nil,
+      stickers: nil,
+      sticker: nil
     )
       Async do
         payload = {}
@@ -59,6 +63,8 @@ module Discorb
         payload[:attachments] = attachments.map.with_index do |a, i|
           { id: i, filename: a.filename, description: a.description }
         end
+
+        payload[:sticker_ids] = sticker ? [sticker.id] : (stickers.map(&:id) if stickers)
 
         _resp, data =
           @client
