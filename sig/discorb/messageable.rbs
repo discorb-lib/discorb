@@ -22,6 +22,8 @@ module Discorb
     # @param [Array<Discorb::Component>, Array<Array<Discorb::Component>>] components The components to send.
     # @param [Discorb::Attachment] attachment The attachment to send.
     # @param [Array<Discorb::Attachment>] attachments The attachments to send.
+    # @param [Array<Discorb::Sticker>] stickers The stickers to send.
+    # @param [Discorb::Sticker] sticker The sticker to send.
     #
     # @return [Async::Task<Discorb::Message>] The message sent.
     def post: (
@@ -34,7 +36,9 @@ module Discorb
       ?components: (::Array[Discorb::Component]
       | ::Array[::Array[Discorb::Component]])?,
       ?attachment: Discorb::Attachment?,
-      ?attachments: ::Array[Discorb::Attachment]?
+      ?attachments: ::Array[Discorb::Attachment]?,
+      ?sticker: Discorb::Sticker?,
+      ?stickers: ::Array[Discorb::Sticker]?
     ) -> Async::Task[Discorb::Message]
 
     #
