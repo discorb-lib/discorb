@@ -64,7 +64,8 @@ module Discorb
           { id: i, filename: a.filename, description: a.description }
         end
 
-        payload[:sticker_ids] = sticker ? [sticker.id] : (stickers.map(&:id) if stickers)
+        stickers = [sticker.id] if stickers.nil? && !sticker.nil?
+        payload[:sticker_ids] = stickers.map(&:id) if stickers
 
         _resp, data =
           @client
